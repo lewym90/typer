@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Typer</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Typer">
+<meta name="theme-color" content="#0E2A20">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF2EA; --surface:#FFFFFF; --sunk:#E3E9DF; --line:#D3DCCF; --text:#10291F; --muted:#56695E;
+  --accent:#9A6F00; --accent-bg:#FBEFC6; --win:#1E7B4A; --loss:#B8372B; --pitch:#1E5A40;
+  --num:"Barlow Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
+  --body:"Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E2A20; --surface:#143427; --sunk:#0B231A; --line:rgba(238,243,236,.13); --text:#EEF3EC; --muted:#9DB5A8;
+    --accent:#F2C94C; --accent-bg:rgba(242,201,76,.13); --win:#7ED3A0; --loss:#EF7C70; --pitch:#2F6B4F;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E2A20; --surface:#143427; --sunk:#0B231A; --line:rgba(238,243,236,.13); --text:#EEF3EC; --muted:#9DB5A8;
+  --accent:#F2C94C; --accent-bg:rgba(242,201,76,.13); --win:#7ED3A0; --loss:#EF7C70; --pitch:#2F6B4F;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.45 var(--body);-webkit-text-size-adjust:100%}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:560px;margin:0 auto;padding:0 16px 96px}
+header{display:flex;align-items:flex-end;justify-content:space-between;padding:18px 0 10px}
+header h1{font:700 34px/1 var(--num);margin:0;letter-spacing:.2px}
+header .meta{font-size:13px;color:var(--muted);text-align:right}
+.gear{background:none;border:1px solid var(--line);border-radius:10px;padding:6px 10px;margin-left:10px;cursor:pointer}
+.banner{background:var(--accent-bg);border-left:3px solid var(--accent);padding:10px 12px;border-radius:6px;font-size:14px;margin:6px 0 14px}
+.lead{color:var(--muted);font-size:14px;margin:2px 0 14px}
+h2{font:600 24px/1.1 var(--num);margin:18px 0 4px}
+.bet{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 14px 12px;margin:0 0 12px}
+.bet .top{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted)}
+.bet .match{font:600 21px/1.15 var(--num);margin:4px 0 8px}
+.pick{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-top:1px dashed var(--line);padding-top:8px}
+.pick .name{font-weight:600;font-size:17px}
+.pick .name small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.pick .odds{font:700 30px/1 var(--num);color:var(--accent);white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
+.cell{background:var(--sunk);border-radius:8px;padding:6px 8px}
+.cell b{display:block;font:600 19px/1.1 var(--num)}
+.cell span{font-size:12px;color:var(--muted)}
+.bar{position:relative;height:6px;background:var(--sunk);border-radius:3px;margin-top:10px;overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--pitch);border-radius:3px}
+.bar::after{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--muted);opacity:.5}
+.scores{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;align-items:center}
+.scores .lbl{font-size:12px;color:var(--muted);margin-right:2px}
+.tile{display:inline-flex;align-items:baseline;gap:5px;background:var(--sunk);border-radius:6px;padding:3px 7px}
+.tile b{font:700 18px/1 var(--num);letter-spacing:1px}
+.tile span{font-size:12px;color:var(--muted)}
+.note{font-size:13px;color:var(--muted);margin-top:8px}
+.warn{color:var(--loss)}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:18px;color:var(--muted)}
+.rank{font:700 15px/1 var(--num);color:var(--muted);margin-right:6px}
+.big{font:700 44px/1 var(--num)}
+/* analiza */
+label{display:block;font-size:14px;color:var(--muted);margin:12px 0 4px}
+input[type=text],input[type=number],select{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:11px 12px;font-size:16px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.check{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:15px}
+.btn{display:block;width:100%;margin-top:16px;background:var(--pitch);color:#fff;border:0;border-radius:12px;padding:13px;font-weight:600;font-size:17px;cursor:pointer}
+details{margin-top:12px}
+summary{cursor:pointer;color:var(--muted);font-size:15px}
+.odds-in{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.odds-in label{margin-top:8px;font-size:13px}
+.board{background:var(--pitch);color:#fff;border-radius:16px;padding:16px;margin-top:18px;text-align:center}
+.board .teams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;font:600 18px/1.15 var(--num)}
+.board .digits{display:flex;gap:6px;justify-content:center}
+.board .digits span{background:#0B231A;color:#F2C94C;font:700 56px/1 var(--num);padding:6px 12px;border-radius:8px;min-width:52px}
+.board .cap{font-size:13px;opacity:.85;margin-top:10px}
+.mk{display:grid;grid-template-columns:1fr auto auto;gap:4px 12px;align-items:center;margin-top:6px}
+.mk .n{font-size:15px}
+.mk .p{font:600 18px/1 var(--num);text-align:right}
+.mk .f{font-size:13px;color:var(--muted);text-align:right;min-width:52px}
+.mk .ev{grid-column:1/-1;font-size:13px;margin:-2px 0 4px}
+.mk hr{grid-column:1/-1;border:0;border-top:1px solid var(--line);margin:4px 0}
+/* dziennik */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.stats .cell b{font-size:24px}
+svg.curve{width:100%;height:120px;display:block;margin-top:12px}
+.log{list-style:none;padding:0;margin:10px 0 0}
+.log li{display:grid;grid-template-columns:22px 1fr auto;gap:8px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.log li b{font-weight:600}
+.log .r{text-align:right;font:600 16px/1.2 var(--num)}
+.pos{color:var(--win)} .neg{color:var(--loss)}
+/* nawigacja */
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+nav .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+nav button{background:none;border:0;padding:9px 0 8px;font-size:12px;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button .ic{font-size:20px;line-height:1}
+nav button[aria-selected="true"]{color:var(--text);font-weight:600}
+nav button[aria-selected="true"] .ic{transform:translateY(-1px)}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;z-index:9}
+.sheet.open{display:flex}
+.sheet .card{background:var(--bg);width:100%;max-width:560px;margin:0 auto;border-radius:18px 18px 0 0;padding:18px 16px calc(24px + env(safe-area-inset-bottom,0px))}
+footer{font-size:12px;color:var(--muted);margin-top:26px;line-height:1.5}
+@media (prefers-reduced-motion:no-preference){ .board .digits span{animation:flip .5s ease-out both} .board .digits span:nth-child(3){animation-delay:.08s} }
+@keyframes flip{from{transform:rotateX(90deg);opacity:0}to{transform:none;opacity:1}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Typer</h1>
+    <div style="display:flex;align-items:flex-end">
+      <div class="meta" id="meta">…</div>
+      <button class="gear" id="openSettings" aria-label="Ustawienia">⚙︎</button>
+    </div>
+  </header>
+  <div id="demo"></div>
+  <main id="view"></main>
+  <footer>Tylko dla osób pełnoletnich. Program liczy prawdopodobieństwa – nie daje pewnych typów. Graj tylko kwotami, których stratę możesz spokojnie przyjąć. Pomoc przy problemach z hazardem: 801 889 880.</footer>
+</div>
+
+<nav><div class="in" role="tablist">
+  <button role="tab" data-tab="value"><span class="ic">💰</span>Value</button>
+  <button role="tab" data-tab="pewne"><span class="ic">🔒</span>Pewne</button>
+  <button role="tab" data-tab="mecz"><span class="ic">🔎</span>Mecz</button>
+  <button role="tab" data-tab="dziennik"><span class="ic">📒</span>Dziennik</button>
+</div></nav>
+
+<div class="sheet" id="settings"><div class="card">
+  <h2 style="margin-top:0">Ustawienia</h2>
+  <label for="bankroll">Twój budżet na zakłady (zł)</label>
+  <input type="number" id="bankroll" inputmode="numeric" min="0" step="50">
+  <p class="note">Z budżetu liczone są sugerowane stawki (ostrożne 1/4 Kelly'ego, maks. 2% budżetu na typ). Zapisuje się tylko na tym telefonie.</p>
+  <button class="btn" id="saveSettings">Zapisz</button>
+</div></div>
+
+<script type="application/json" id="dane-osadzone"></script>
+<script>
+"use strict";
+/* ---------- dane ---------- */
+const S = {dzis:null, modele:null, dziennik:null, demo:false, tab:'value'};
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+let BANK = store.get('bankroll', 1000);
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pct = (p, d=0) => (p*100).toFixed(d).replace('.', ',') + '%';
+const num = (x, d=2) => Number(x).toFixed(d).replace('.', ',');
+const sgn = x => (x >= 0 ? '+' : '') + pct(x, 1);
+
+async function laduj(){
+  const osadz = $('#dane-osadzone').textContent.trim();
+  if (osadz){ const d = JSON.parse(osadz); Object.assign(S, d); S.demo = !!d.demo; return; }
+  const get = async f => { const r = await fetch('data/' + f + '?t=' + Date.now()); if(!r.ok) throw new Error(f); return r.json(); };
+  const [a, b, c] = await Promise.allSettled([get('dzis.json'), get('modele.json'), get('dziennik.json')]);
+  S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null;
+}
+
+/* ---------- model (ten sam co w Pythonie) ---------- */
+const MAXG = 10;
+function pois(l){ const out = [Math.exp(-l)]; for(let k=1;k<=MAXG;k++) out.push(out[k-1]*l/k); return out; }
+function macierz(lh, la, rho){
+  const a = pois(lh), b = pois(la); let s = 0; const M = [];
+  for(let i=0;i<=MAXG;i++){ M.push([]); for(let j=0;j<=MAXG;j++){ let v = a[i]*b[j];
+    if(i===0&&j===0) v*=1-lh*la*rho; else if(i===0&&j===1) v*=1+lh*rho; else if(i===1&&j===0) v*=1+la*rho; else if(i===1&&j===1) v*=1-rho;
+    M[i].push(v); s+=v; } }
+  return M.map(r => r.map(v => v/s));
+}
+function rynki(M){
+  const o = {'1':0,'X':0,'2':0,'BTTS Tak':0}; const tot = {};
+  for(let i=0;i<=MAXG;i++) for(let j=0;j<=MAXG;j++){ const v=M[i][j];
+    if(i>j) o['1']+=v; else if(i===j) o['X']+=v; else o['2']+=v;
+    if(i>0&&j>0) o['BTTS Tak']+=v; tot[i+j]=(tot[i+j]||0)+v; }
+  o['1X']=o['1']+o['X']; o['X2']=o['X']+o['2']; o['12']=o['1']+o['2']; o['BTTS Nie']=1-o['BTTS Tak'];
+  for(const l of [0.5,1.5,2.5,3.5,4.5]){ let s=0; for(const t in tot) if(+t>l) s+=tot[t]; o['Powyżej '+l]=s; o['Poniżej '+l]=1-s; }
+  return o;
+}
+function topWyniki(M, k){
+  const f=[]; for(let i=0;i<=MAXG;i++) for(let j=0;j<=MAXG;j++) f.push([i,j,M[i][j]]);
+  return f.sort((a,b)=>b[2]-a[2]).slice(0,k);
+}
+function oczekiwaneGole(m, h, a, neutral, kal){
+  const H = m.druzyny[h], A = m.druzyny[a];
+  let lh = Math.exp(m.mu + (neutral?0:m.home) + H[0] + A[1]), la = Math.exp(m.mu + A[0] + H[1]);
+  const t = lh + la, f = (m.T + kal*(t - m.T)) / t; return [lh*f, la*f];
+}
+const kelly = (p, k) => Math.max(0, Math.min(((p*k-1)/(k-1))*0.25, 0.02));
+
+/* ---------- nazwy reprezentacji po polsku ---------- */
+const PL = {Poland:'Polska',Germany:'Niemcy',Spain:'Hiszpania',France:'Francja',England:'Anglia',Italy:'Włochy',Netherlands:'Holandia',
+ Belgium:'Belgia',Portugal:'Portugalia',Croatia:'Chorwacja','Czech Republic':'Czechy',Slovakia:'Słowacja',Ukraine:'Ukraina',Austria:'Austria',
+ Switzerland:'Szwajcaria',Denmark:'Dania',Sweden:'Szwecja',Norway:'Norwegia',Finland:'Finlandia',Scotland:'Szkocja',Wales:'Walia',
+ 'Republic of Ireland':'Irlandia','Northern Ireland':'Irlandia Północna',Hungary:'Węgry',Romania:'Rumunia',Serbia:'Serbia',Greece:'Grecja',
+ Turkey:'Turcja',Albania:'Albania',Slovenia:'Słowenia','Bosnia and Herzegovina':'Bośnia i Hercegowina',Iceland:'Islandia',Lithuania:'Litwa',
+ Latvia:'Łotwa',Estonia:'Estonia',Georgia:'Gruzja',Armenia:'Armenia',Bulgaria:'Bułgaria','North Macedonia':'Macedonia Północna',
+ Montenegro:'Czarnogóra',Moldova:'Mołdawia',Belarus:'Białoruś',Kazakhstan:'Kazachstan',Brazil:'Brazylia',Argentina:'Argentyna',
+ Mexico:'Meksyk','United States':'USA',Japan:'Japonia','South Korea':'Korea Płd.',Morocco:'Maroko',Colombia:'Kolumbia',Uruguay:'Urugwaj',
+ Israel:'Izrael',Cyprus:'Cypr',Luxembourg:'Luksemburg',Malta:'Malta',Andorra:'Andora','San Marino':'San Marino',Kosovo:'Kosowo',
+ 'Faroe Islands':'Wyspy Owcze',Gibraltar:'Gibraltar',Azerbaijan:'Azerbejdżan',Liechtenstein:'Liechtenstein',Canada:'Kanada',Australia:'Australia',
+ Egypt:'Egipt',Senegal:'Senegal',Nigeria:'Nigeria',Tunisia:'Tunezja',Algeria:'Algieria',Iran:'Iran','Saudi Arabia':'Arabia Saudyjska'};
+const plN = t => PL[t] || t;
+const plMecz = m => String(m).split(' – ').map(plN).join(' – ');
+const pokaz = (liga, t) => liga === 'Reprezentacje' && PL[t] ? PL[t] : t;
+const norm = s => String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ł/g,'l').replace(/Ł/g,'L').toLowerCase().trim();
+function znajdzDruzyne(liga, tekst){
+  const m = S.modele.modele[liga]; if(!m) return null; const q = norm(tekst); if(!q) return null;
+  let best = null;
+  for(const t of Object.keys(m.druzyny)){
+    const a = norm(t), b = norm(pokaz(liga, t));
+    if(a===q || b===q) return t;
+    if(!best && (a.startsWith(q) || b.startsWith(q) || q.startsWith(a))) best = t;
+  }
+  return best;
+}
+
+/* ---------- widoki ---------- */
+function kafelkiWynikow(w){
+  if(!w || !w.length) return '';
+  return `<div class="scores"><span class="lbl">Dokładny wynik:</span>${w.map(x=>`<span class="tile"><b>${esc(x.wynik)}</b><span>${pct(x.szansa)} · kurs ${num(x.kurs_uczciwy,1)}</span></span>`).join('')}</div>`;
+}
+function glowa(t){
+  return `<div class="top"><span>${esc(t.liga)}</span><span>dziś ${esc(t.godzina)}</span></div><div class="match">${esc(plN(t.gospodarz) + ' – ' + plN(t.gosc))}</div>`;
+}
+function widokValue(){
+  const d = S.dzis;
+  if(!d) return `<div class="empty">Brak danych na dziś. Program odświeża typy codziennie rano.</div>`;
+  let h = `<h2>Value w Betclic</h2><p class="lead">Betclic płaci więcej, niż wynika z uczciwych kursów Pinnacle i giełdy Betfair. Na dłuższą metę to jedyne zakłady z potencjalną przewagą – ale każdy pojedynczy może przegrać.</p>`;
+  if(d.blad) h += `<div class="banner">${esc(d.blad)}</div>`;
+  if(!d.value.length) return h + `<div class="empty">Dziś brak zakładów value. To normalne – w większości dni bukmacher wycenia mecze poprawnie. Zajrzyj do zakładki Pewne albo przeanalizuj wybrany mecz.</div>`;
+  for(const t of d.value){
+    const stawka = Math.round(BANK * kelly(t.szansa, t.kurs));
+    h += `<article class="bet">${glowa(t)}
+      <div class="pick"><div class="name">${esc(t.zaklad)}${t.opis?`<small>${esc(t.opis)}</small>`:''}</div><div class="odds">${num(t.kurs)}</div></div>
+      <div class="grid">
+        <div class="cell"><b>${num(t.kurs_uczciwy)}</b><span>kurs uczciwy</span></div>
+        <div class="cell"><b>${pct(t.szansa)}</b><span>szansa</span></div>
+        <div class="cell"><b class="pos">${sgn(t.ev)}</b><span>przewaga</span></div>
+      </div>
+      <div class="bar"><i style="width:${(t.szansa*100).toFixed(1)}%"></i></div>
+      <div class="note">Sugerowana stawka: <b>${stawka} zł</b> · źródło kursu uczciwego: ${esc(t.zrodlo)}</div>
+      ${kafelkiWynikow(t.wyniki)}
+    </article>`;
+  }
+  return h + `<p class="note">Kursy pochodzą z Betclic FR. Sprawdź kurs w aplikacji Betclic – jeśli jest niższy niż uczciwy, zakład traci wartość.</p>`;
+}
+function widokPewne(){
+  const d = S.dzis;
+  if(!d) return `<div class="empty">Brak danych na dziś.</div>`;
+  let h = `<h2>Najpewniejsze na dziś</h2><p class="lead">Zakłady z największą szansą wejścia z dzisiejszych meczów. Graj tam, gdzie kurs jest najwyższy – Betclic, Fortuna, STS. Nie łącz ich w jeden kupon.</p>`;
+  if(!d.pewne.length) return h + `<div class="empty">Dziś brak meczów w obsługiwanych ligach.</div>`;
+  d.pewne.forEach((t, i) => {
+    h += `<article class="bet">${glowa(t)}
+      <div class="pick"><div class="name"><span class="rank">${i+1}.</span>${esc(t.zaklad)}${t.opis?`<small>${esc(t.opis)}</small>`:''}</div><div class="big">${pct(t.szansa)}</div></div>
+      <div class="bar"><i style="width:${(t.szansa*100).toFixed(1)}%"></i></div>
+      <div class="note">Szukaj kursu co najmniej <b>${num(t.kurs_uczciwy)}</b> (minimum ${num(t.kurs_min)}).</div>
+      ${t.nizsza_pewnosc?'<div class="note warn">Niższa pewność – dobrany, żeby było minimum 5 typów.</div>':''}
+      ${t.uwaga?`<div class="note warn">${esc(t.uwaga)}</div>`:''}
+      ${kafelkiWynikow(t.wyniki)}
+    </article>`;
+  });
+  return h + `<p class="note">W testach na meczach z lat 2023–2026 średnio wchodziły 4 z 5 typów, wszystkie 5 – w co trzecim dniu. Typ z szansą 75% przegrywa mniej więcej raz na cztery.</p>`;
+}
+function widokMecz(){
+  if(!S.modele) return `<div class="empty">Brak danych modelu. Program pobierze je przy najbliższym odświeżeniu.</div>`;
+  const ligi = Object.keys(S.modele.modele);
+  const st = store.get('mecz', {liga: ligi.includes('Reprezentacje') ? 'Reprezentacje' : ligi[0], g:'', a:'', n:false});
+  const lista = l => Object.keys(S.modele.modele[l].druzyny).map(t => pokaz(l, t)).sort((a,b)=>a.localeCompare(b,'pl'));
+  let h = `<h2>Analiza meczu</h2><p class="lead">Wybierz rozgrywki i drużyny. Wynik liczy się od razu w telefonie.</p>
+    <label for="liga">Rozgrywki</label>
+    <select id="liga">${ligi.map(l=>`<option ${l===st.liga?'selected':''}>${esc(l)}</option>`).join('')}</select>
+    <div class="row"><div><label for="gosp">Gospodarz</label><input type="text" id="gosp" list="dl" value="${esc(st.g)}" autocomplete="off"></div>
+    <div><label for="gosc">Gość</label><input type="text" id="gosc" list="dl" value="${esc(st.a)}" autocomplete="off"></div></div>
+    <datalist id="dl">${lista(st.liga).map(t=>`<option value="${esc(t)}">`).join('')}</datalist>
+    <label class="check"><input type="checkbox" id="neutral" ${st.n?'checked':''}> Teren neutralny</label>
+    <details><summary>Dodaj kursy bukmachera (opcjonalnie)</summary><div class="odds-in">
+      ${['1','X','2','Powyżej 2.5','Poniżej 2.5','BTTS Tak'].map((z,i)=>`<div><label for="k${i}">${z}</label><input type="number" inputmode="decimal" step="0.01" id="k${i}" data-z="${z}" placeholder="—"></div>`).join('')}
+    </div></details>
+    <button class="btn" id="licz">Analizuj mecz</button>
+    <div id="wynik"></div>`;
+  return h;
+}
+function licz(){
+  const liga = $('#liga').value, g = $('#gosp').value, a = $('#gosc').value, neu = $('#neutral').checked;
+  store.set('mecz', {liga, g, a, n: neu});
+  const H = znajdzDruzyne(liga, g), A = znajdzDruzyne(liga, a), out = $('#wynik');
+  if(!H || !A || H===A){ out.innerHTML = `<div class="empty" style="margin-top:14px">Nie znaleziono ${!H?'gospodarza':'gościa'} w rozgrywkach „${esc(liga)}”. Zacznij pisać nazwę i wybierz ją z podpowiedzi.</div>`; return; }
+  const m = S.modele.modele[liga], [lh, la] = oczekiwaneGole(m, H, A, neu, S.modele.kalibracja);
+  const M = macierz(lh, la, m.rho), r = rynki(M), top = topWyniki(M, 5);
+  const kursy = {}; document.querySelectorAll('.odds-in input').forEach(i => { const v = parseFloat(String(i.value).replace(',','.')); if(v>1) kursy[i.dataset.z]=v; });
+  const [ti, tj, tp] = top[0];
+  let h = `<div class="board">
+    <div class="teams"><span>${esc(pokaz(liga,H))}</span><div class="digits"><span>${ti}</span><span>${tj}</span></div><span>${esc(pokaz(liga,A))}</span></div>
+    <div class="cap">Najbardziej prawdopodobny wynik – ${pct(tp)} szans · oczekiwane gole ${num(lh)} : ${num(la)}</div></div>
+    <div class="scores">${top.map(([i,j,p])=>`<span class="tile"><b>${i}:${j}</b><span>${pct(p)} · kurs ${num(1/p,1)}</span></span>`).join('')}</div>`;
+  const dane = m.druzyny;
+  if(Math.min(dane[H][2], dane[A][2]) < 10) h += `<p class="note warn">Mało danych o jednej z drużyn – wynik mniej pewny.</p>`;
+  const grupy = [['1','X','2'],['1X','X2','12'],['Powyżej 1.5','Powyżej 2.5','Poniżej 2.5','Poniżej 3.5'],['BTTS Tak','BTTS Nie']];
+  const nazwy = {'1':'Wygra '+pokaz(liga,H),'X':'Remis','2':'Wygra '+pokaz(liga,A),'1X':'1X – gospodarz lub remis','X2':'X2 – gość lub remis','12':'12 – bez remisu','BTTS Tak':'Obie strzelą','BTTS Nie':'Nie obie strzelą'};
+  h += `<h2>Szanse</h2><div class="mk">`;
+  grupy.forEach((g, gi) => { if(gi) h += '<hr>'; for(const z of g){ const p = r[z];
+    h += `<span class="n">${esc(nazwy[z] || z + ' gola')}</span><span class="p">${pct(p)}</span><span class="f">kurs ${num(1/p)}</span>`;
+    if(kursy[z]){ const ev = p*kursy[z]-1; h += `<span class="ev ${ev>=0.03?'pos':(ev<0?'neg':'')}">Twój kurs ${num(kursy[z])}: ${ev>=0.03?'opłaca się':'nie opłaca się'} (${sgn(ev)})</span>`; }
+  }});
+  h += `</div><p class="note">Szanse z modelu statystycznego (siła ataku i obrony, przewaga własnego boiska). Nie uwzględniają składów ani kontuzji.</p>`;
+  out.innerHTML = h;
+}
+function krzywa(pkt){
+  if(!pkt || pkt.length < 2) return '';
+  const w = 320, hgt = 110, mn = Math.min(0, ...pkt), mx = Math.max(0, ...pkt), sp = (mx - mn) || 1;
+  const x = i => (i/(pkt.length-1))*w, y = v => hgt - ((v - mn)/sp)*(hgt-10) - 5;
+  const d = pkt.map((v,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join('');
+  const ost = pkt[pkt.length-1];
+  return `<svg class="curve" viewBox="0 0 ${w} ${hgt}" preserveAspectRatio="none" role="img" aria-label="Wynik narastająco">
+    <line x1="0" x2="${w}" y1="${y(0)}" y2="${y(0)}" stroke="currentColor" stroke-opacity=".3" stroke-dasharray="3 4"/>
+    <path d="${d}" fill="none" stroke="${ost>=0?'var(--win)':'var(--loss)'}" stroke-width="2.2" vector-effect="non-scaling-stroke"/></svg>`;
+}
+function widokDziennik(){
+  const d = S.dziennik;
+  let h = `<h2>Dziennik value</h2><p class="lead">Każdy typ value zapisuje się automatycznie i rozlicza po meczu – niezależnie od tego, czy go postawisz.</p>`;
+  if(!d || !d.statystyki) return h + `<div class="empty">Dziennik jest jeszcze pusty. Typy pojawią się tu po pierwszym dniu z zakładami value.</div>`;
+  const s = d.statystyki;
+  h += `<div class="stats">
+    <div class="cell"><b>${s.rozliczonych}</b><span>rozliczonych (czeka ${s.czeka})</span></div>
+    <div class="cell"><b>${s.rozliczonych?pct(s.trafione/s.rozliczonych):'–'}</b><span>trafionych</span></div>
+    <div class="cell"><b class="${(s.zysk_10zl||0)>=0?'pos':'neg'}">${s.zysk_10zl!=null?(s.zysk_10zl>=0?'+':'')+num(s.zysk_10zl)+' zł':'–'}</b><span>przy 10 zł na typ</span></div>
+    <div class="cell"><b>${s.roi!=null?sgn(s.roi):'–'}</b><span>zwrot (ROI)</span></div>
+  </div>${krzywa(s.krzywa)}`;
+  if(s.clv!=null) h += `<p class="note">CLV: średnio ${sgn(s.clv)} względem kursu zamknięcia.</p>`;
+  if(s.rozliczonych < 300) h += `<p class="note">Za mało typów na wnioski (${s.rozliczonych}/300). Przy tej liczbie wynik to głównie szczęście lub pech.</p>`;
+  else if(s.roi_dol > 0) h += `<p class="note pos">Strategia ma udowodnioną przewagę.</p>`;
+  else if(s.roi_gora < 0) h += `<p class="note neg">Strategia udowodnienie traci – lepiej z niej zrezygnować.</p>`;
+  else h += `<p class="note">Brak dowodu przewagi w żadną stronę.</p>`;
+  h += `<ul class="log">` + d.typy.slice(0, 60).map(t => {
+    const z = t.zysk_na_1zl; const ic = z==null ? '⏳' : (z>0 ? '✅' : (z===0 ? '↩️' : '❌'));
+    return `<li><span>${ic}</span><span><b>${esc(plMecz(t.mecz))}</b><br>${esc(t.zaklad)} @ ${num(t.kurs_betclic)} · ${esc(String(t.start).slice(5,10).split('-').reverse().join('.'))}${t.wynik?` · ${esc(t.wynik)}`:''}</span><span class="r ${z>0?'pos':(z<0?'neg':'')}">${z==null?'':(z>=0?'+':'')+num(z*10)+' zł'}</span></li>`;
+  }).join('') + `</ul>`;
+  return h;
+}
+
+/* ---------- nawigacja ---------- */
+function renderuj(){
+  const v = {value:widokValue, pewne:widokPewne, mecz:widokMecz, dziennik:widokDziennik}[S.tab]();
+  $('#view').innerHTML = v;
+  document.querySelectorAll('nav button').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === S.tab));
+  if(S.tab === 'mecz' && S.modele){
+    $('#licz').onclick = licz;
+    $('#liga').onchange = () => { const st = store.get('mecz', {}); store.set('mecz', {...st, liga: $('#liga').value, g:'', a:''}); renderuj(); };
+    const st = store.get('mecz', {}); if(st.g && st.a) licz();
+  }
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll('nav button').forEach(b => b.onclick = () => { S.tab = b.dataset.tab; store.set('tab', S.tab); renderuj(); });
+$('#openSettings').onclick = () => { $('#bankroll').value = BANK; $('#settings').classList.add('open'); };
+$('#settings').onclick = e => { if(e.target.id === 'settings') $('#settings').classList.remove('open'); };
+$('#saveSettings').onclick = () => { const v = parseFloat($('#bankroll').value); if(v >= 0){ BANK = v; store.set('bankroll', v); } $('#settings').classList.remove('open'); renderuj(); };
+
+(async () => {
+  try{ await laduj(); }catch(e){}
+  S.tab = store.get('tab', 'value');
+  const dz = S.dzis;
+  $('#meta').innerHTML = dz ? `${esc(String(dz.data).split('-').reverse().join('.'))}<br>odświeżono ${esc(String(dz.wygenerowano).slice(11))}` : 'brak danych';
+  if(S.demo) $('#demo').innerHTML = `<div class="banner">Wersja pokazowa: prawdziwy model i analiza meczu, ale kursy i dziennik są przykładowe. Po uruchomieniu na GitHubie pojawią się prawdziwe typy na dziś.</div>`;
+  renderuj();
+})();
+</script>
+</body>
+</html>
