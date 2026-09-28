@@ -196,11 +196,11 @@ def kelly(p, kurs, frakcja=0.25, maks=0.02):
 
 # ===== SKANER =====
 LIGI_DO_SKANU = {  # klucz The Odds API -> model; kolejność = popularność (najpopularniejsze pierwsze)
- 'soccer_uefa_champs_league':None, 'soccer_fifa_world_cup':'Reprezentacje', 'soccer_uefa_european_championship':'Reprezentacje',
+ 'soccer_uefa_champs_league':'Puchary europejskie', 'soccer_fifa_world_cup':'Reprezentacje', 'soccer_uefa_european_championship':'Reprezentacje',
  'soccer_uefa_nations_league':'Reprezentacje', 'soccer_fifa_world_cup_qualifiers_europe':'Reprezentacje',
  'soccer_uefa_euro_qualification':'Reprezentacje', 'soccer_epl':'Anglia', 'soccer_spain_la_liga':'Hiszpania',
  'soccer_poland_ekstraklasa':'Polska', 'soccer_italy_serie_a':'Włochy', 'soccer_germany_bundesliga':'Niemcy',
- 'soccer_france_ligue_one':'Francja', 'soccer_uefa_europa_league':None, 'soccer_uefa_europa_conference_league':None,
+ 'soccer_france_ligue_one':'Francja', 'soccer_uefa_europa_league':'Puchary europejskie', 'soccer_uefa_europa_conference_league':'Puchary europejskie',
  'soccer_international_friendlies':'Reprezentacje', 'soccer_portugal_primeira_liga':'Portugalia',
  'soccer_netherlands_eredivisie':'Holandia', 'soccer_efl_champ':'Anglia', 'soccer_germany_bundesliga2':'Niemcy',
  'soccer_turkey_super_league':'Turcja', 'soccer_belgium_first_div':'Belgia', 'soccer_spl':'Szkocja',
@@ -486,6 +486,150 @@ def pobierz_dane():
     
     for k, d in DANE.items(): print(f"{k:14s} {len(d):6d} meczów")
 
+# ===== DOPASOWANIE NAZW Z PUCHARÓW =====
+STOP = set('fc cf ac afc sc sv ssc ss as acf bc rc rcd cd ud sd club de del 1909 1907 1846 1899 1904 1900 1913 1910 04 05 29 osc losc bsc fk sk nk gnk kv rsc pae sfp cp sl tsg vfb vfl rb ogc balompie calcio 1 hotspur football the'.split())
+def nrm(s):
+    s = unicodedata.normalize('NFKD', str(s)).encode('ascii','ignore').decode().lower()
+    s = s.replace('&',' and ').replace("'",'').replace('-',' ').replace('.',' ')
+    return ' '.join(t for t in s.split() if t not in STOP)
+ALIAS = {'manchester city':'man city','manchester united':'man united','brighton and hove albion':'brighton','newcastle united':'newcastle',
+ 'west ham united':'west ham','nottingham forest':'nottm forest','wolverhampton wanderers':'wolves','leicester city':'leicester',
+ 'internazionale milano':'inter','atletico madrid':'ath madrid','atletico madrid':'ath madrid','athletic':'ath bilbao','athletic bilbao':'ath bilbao',
+ 'real sociedad':'sociedad','real betis':'betis','paris saint germain':'paris sg','olympique lyonnais':'lyon','olympique marseille':'marseille',
+ 'stade rennais':'rennes','stade brestois':'brest','bayern munchen':'bayern munich','borussia monchengladbach':'mgladbach',
+ 'eintracht frankfurt':'ein frankfurt','bayer leverkusen':'leverkusen','borussia dortmund':'dortmund','koln':'fc koln','celta vigo':'celta',
+ 'rayo vallecano':'vallecano','espanyol':'espanol','hellas verona':'verona','union berlin':'union berlin','leipzig':'rb leipzig',
+ 'sporting lisbon':'sp lisbon','sporting portugal':'sp lisbon','nice':'nice','fiorentina':'fiorentina','granada':'granada',
+ 'atletico':'ath madrid', 'bor monchengladbach':'mgladbach', 'lazio roma':'lazio','villarreal':'villarreal','sevilla':'sevilla','napoli':'napoli','lazio':'lazio','roma':'roma'}
+def dopasuj_puchar(nazwa, domowe):
+    """Nazwa z danych pucharowych -> nazwa drużyny w danych ligowych jej kraju (albo None)."""
+    n = nrm(nazwa); n = ALIAS.get(n, n)
+    mapa = {nrm(t): t for t in domowe}
+    if n in mapa: return mapa[n]
+    tn = set(n.split())
+    for k, t in mapa.items():
+        tk = set(k.split())
+        if tk and (tk <= tn or tn <= tk) and len(k) >= 4: return t
+    m = difflib.get_close_matches(n, list(mapa), n=1, cutoff=0.8)
+    return mapa[m[0]] if m else None
+
+# ===== WSPÓLNY MODEL =====
+def fit_joint(df, ref_date, half_life_days=365, reg_team=0.3, reg_league=0.01, kal=0.7):
+    """Wspólny model wszystkich lig: siła drużyny = poziom ligi + odchylenie drużyny.
+    df: date, home, away, hg, ag, neutral, lh (liga gosp.), la (liga gościa)"""
+    d = df[(df.date < ref_date)].dropna(subset=['hg','ag']).copy()
+    age = (pd.Timestamp(ref_date) - d.date).dt.days.values
+    w = 0.5 ** (age / half_life_days); keep = w > 0.02; d, w = d[keep], w[keep]
+    liga_druz = {}
+    for t, l in zip(pd.concat([d.home, d.away]), pd.concat([d.lh, d.la])): liga_druz.setdefault(t, l)
+    teams = sorted(liga_druz); ti = {t:i for i,t in enumerate(teams)}
+    ligi = sorted(set(liga_druz.values())); li = {l:i for i,l in enumerate(ligi)}
+    n, L = len(teams), len(ligi); tl = np.array([li[liga_druz[t]] for t in teams])
+    hi, ai = d.home.map(ti).values, d.away.map(ti).values
+    hg, ag = d.hg.values.astype(float), d.ag.values.astype(float); neu = d.neutral.values.astype(float)
+    cup = (d.lh != d.la).values.astype(float) if 'cup' not in d else d.cup.values.astype(float)
+    def f(p):
+        a, b, A, B, mu, home, hc = p[:n], p[n:2*n], p[2*n:2*n+L], p[2*n+L:2*n+2*L], p[-3], p[-2], p[-1]
+        att, dfn = a + A[tl], b + B[tl]
+        lh_ = mu + (home + hc*cup)*(1-neu) + att[hi] + dfn[ai]; la_ = mu + att[ai] + dfn[hi]
+        eh, ea = np.exp(lh_), np.exp(la_)
+        v = -np.sum(w*(hg*lh_ - eh + ag*la_ - ea)) + reg_team*(a@a + b@b) + reg_league*(A@A + B@B)
+        rh, ra = w*(hg-eh), w*(ag-ea)
+        gatt = -(np.bincount(hi, rh, n) + np.bincount(ai, ra, n)); gdfn = -(np.bincount(ai, rh, n) + np.bincount(hi, ra, n))
+        g = np.zeros_like(p)
+        g[:n] = gatt + 2*reg_team*a; g[n:2*n] = gdfn + 2*reg_team*b
+        g[2*n:2*n+L] = np.bincount(tl, gatt, L) + 2*reg_league*A; g[2*n+L:2*n+2*L] = np.bincount(tl, gdfn, L) + 2*reg_league*B
+        g[-3] = -(rh.sum()+ra.sum()); g[-2] = -np.sum(rh*(1-neu)); g[-1] = -np.sum(rh*(1-neu)*cup) + 2*0.5*hc; v += 0.5*hc*hc; return v, g
+    p0 = np.zeros(2*n+2*L+3); p0[-3] = np.log(1.35)
+    p = minimize(f, p0, jac=True, method='L-BFGS-B').x
+    a, b, A, B, mu, home, hc = p[:n], p[n:2*n], p[2*n:2*n+L], p[2*n+L:2*n+2*L], p[-3], p[-2], p[-1]
+    att, dfn = a + A[tl], b + B[tl]
+    lh_ = np.exp(mu + (home + hc*cup)*(1-neu) + att[hi] + dfn[ai]); la_ = np.exp(mu + att[ai] + dfn[hi])
+    def rn(r):
+        t = np.ones(len(d)); m=(hg==0)&(ag==0); t[m]=1-lh_[m]*la_[m]*r; m=(hg==0)&(ag==1); t[m]=1+lh_[m]*r
+        m=(hg==1)&(ag==0); t[m]=1+la_[m]*r; m=(hg==1)&(ag==1); t[m]=1-r; return -np.sum(w*np.log(np.clip(t,1e-9,None)))
+    rho = minimize_scalar(rn, bounds=(-.2,.2), method='bounded').x
+    cnt = pd.concat([d.home, d.away]).value_counts()
+    T = np.average(hg+ag, weights=w)
+    return dict(teams=ti, att=att, dfn=dfn, mu=mu, home=home, home_cup=hc, rho=rho, T=T, n_matches=cnt.to_dict(),
+                liga=liga_druz, ligi={l:(A[li[l]], B[li[l]]) for l in ligi}, kal=kal)
+def xg(m, h, a, neutral=False, puchar=True):
+    i, j = m['teams'][h], m['teams'][a]
+    lh = np.exp(m['mu'] + (0 if neutral else m['home'] + (m['home_cup'] if puchar else 0)) + m['att'][i] + m['dfn'][j]); la = np.exp(m['mu'] + m['att'][j] + m['dfn'][i])
+    t = lh + la; f = (m['T'] + m['kal']*(t - m['T']))/t; return lh*f, la*f
+
+# ===== PUCHARY EUROPEJSKIE: wspólny model wszystkich lig =====
+import re as _re
+KRAJ_KODY = {'ENG':'Anglia','SCO':'Szkocja','GER':'Niemcy','ITA':'Włochy','ESP':'Hiszpania','FRA':'Francja','NED':'Holandia',
+ 'BEL':'Belgia','POR':'Portugalia','TUR':'Turcja','GRE':'Grecja','POL':'Polska','AUT':'Austria','DEN':'Dania','FIN':'Finlandia',
+ 'IRL':'Irlandia','NOR':'Norwegia','ROU':'Rumunia','RUS':'Rosja','SWE':'Szwecja','SUI':'Szwajcaria'}
+PIERWSZE_LIGI = {'E0','SC0','D1','I1','SP1','F1','N1','B1','P1','T1','G1','POL','AUT','DNK','FIN','IRL','NOR','ROU','RUS','SWE','SWZ'}
+_MIES = {m:i+1 for i,m in enumerate('Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split())}
+
+def parsuj_puchary(txt, comp):
+    rows, year, date, final = [], None, None, False
+    for line in txt.replace('\r','').split('\n'):
+        if line.startswith('▪'): final = line.strip() == '▪ Final'
+        m = _re.search(r'(Mon|Tue|Wed|Thu|Fri|Sat|Sun) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{1,2})(?: (\d{4}))?', line)
+        if m and ' v ' not in line:
+            if m.group(4): year = int(m.group(4))
+            mo = _MIES[m.group(2)]
+            if date is not None and not m.group(4) and mo < date.month - 6: year += 1
+            if year: date = pd.Timestamp(year, mo, int(m.group(3)))
+            continue
+        mm = _re.search(r'^\s*(?:\d{1,2}[.:]\d{2}\s+)?(.+?) \(([A-Z]{3})\)\s+v\s+(.+?) \(([A-Z]{3})\)\s+(.*)$', line)
+        if not mm or date is None: continue
+        rest = mm.group(5)
+        s = _re.search(r'\((\d+)-(\d+)', rest) if ('a.e.t' in rest or 'pen' in rest) else _re.match(r'(\d+)-(\d+)', rest)
+        if not s: continue
+        rows.append(dict(date=date, home=mm.group(1).strip(), hc=mm.group(2), away=mm.group(3).strip(), ac=mm.group(4),
+                         hg=int(s.group(1)), ag=int(s.group(2)), comp=comp, neutral=final))
+    return rows
+
+def pobierz_puchary(sezony_wstecz=4):
+    t = pd.Timestamp.today(); y = t.year if t.month >= 7 else t.year - 1
+    rows = []
+    for i in range(sezony_wstecz):
+        s = f"{y-i}-{(y-i+1)%100:02d}"
+        for comp in ('cl', 'el', 'conf'):
+            try:
+                r = requests.get(f"https://raw.githubusercontent.com/openfootball/champions-league/master/{s}/{comp}.txt", timeout=30)
+                if r.status_code == 200: rows += parsuj_puchary(r.content.decode('utf-8'), comp)
+            except Exception as e: print('puchary', s, comp, e)
+    return pd.DataFrame(rows)
+
+def trenuj_puchary():
+    C = pobierz_puchary()
+    if not len(C): print('Brak danych pucharowych'); return None
+    # drużyny krajowe: grupa = liga (dywizja), w której grały ostatnio
+    dom, dywizja, kraj_druzyn = [], {}, {}
+    for k, d in DANE.items():
+        if k == 'Reprezentacje': continue
+        d = d.sort_values('date')
+        for t, l in zip(pd.concat([d.home, d.away]), pd.concat([d.liga, d.liga])): dywizja[t] = l
+        kraj_druzyn[k] = sorted(set(d.home) | set(d.away))
+        dom.append(d[['date','home','away','hg','ag']].assign(neutral=False))
+    dom = pd.concat(dom, ignore_index=True)
+    dom['lh'] = dom.home.map(dywizja); dom['la'] = dom.away.map(dywizja); dom['cup'] = 0.0
+    def mapuj(n, c):
+        k = KRAJ_KODY.get(c)
+        if k in kraj_druzyn:
+            t = dopasuj_puchar(n, kraj_druzyn[k])
+            if t: return t, dywizja[t]
+        return f"{n} ({c})", c
+    C[['home', 'lh']] = [mapuj(n, c) for n, c in zip(C.home, C.hc)]
+    C[['away', 'la']] = [mapuj(n, c) for n, c in zip(C.away, C.ac)]
+    C['cup'] = 1.0
+    ALL = pd.concat([dom, C[['date','home','away','hg','ag','neutral','lh','la','cup']]], ignore_index=True)
+    DZIS = pd.Timestamp.today().normalize() + pd.Timedelta(days=1)
+    m = fit_joint(ALL, DZIS, kal=KALIBRACJA_GOLI)
+    druzyny_pucharowe = set(C.home) | set(C.away)
+    m['eksport'] = [t for t in m['teams'] if m['liga'][t] in PIERWSZE_LIGI or t in druzyny_pucharowe]
+    m['home'] = m['home'] + m['home_cup']          # w pucharach przewaga własnego boiska jest większa
+    m['n_matches'] = {t: int(m['n_matches'].get(t, 0)) for t in m['teams']}
+    print(f"Puchary: {len(C)} meczów, {len(m['eksport'])} drużyn w rankingu")
+    return m
+
 # ===== MODELE =====
 MODELE = {}
 def trenuj():
@@ -494,3 +638,7 @@ def trenuj():
     for k, d in DANE.items():
         if k == 'Reprezentacje': MODELE[k] = fit_model(d, DZIS, half_life_days=1095, reg=0.1, weight_col='w')
         else: MODELE[k] = fit_model(d, DZIS, half_life_days=365, reg=0.3)
+    try:
+        m = trenuj_puchary()
+        if m: MODELE['Puchary europejskie'] = m
+    except Exception as e: print('Model pucharowy nie powstał:', e)

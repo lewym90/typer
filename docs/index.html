@@ -97,6 +97,19 @@ summary{cursor:pointer;color:var(--muted);font-size:15px}
 .typ .main b{font:700 26px/1.1 var(--num)}
 .typ .main span{font:700 34px/1 var(--num);color:var(--accent)}
 .typ .alt{border-top:1px dashed var(--line);margin-top:10px;padding-top:8px;font-size:15px}
+.tier{border-top:1px dashed var(--line);padding-top:9px;margin-top:9px}
+.tier .lbl2{font-size:13px;color:var(--muted);display:flex;justify-content:space-between}
+.tier .row2{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:2px}
+.tier .row2 .name{font-weight:600;font-size:17px}
+.tier .row2 .name small{display:block;font-weight:400;color:var(--muted);font-size:13px}
+.tier .row2 .pp{font:700 30px/1 var(--num)}
+.tier.main .row2 .pp{font-size:40px}
+.tier .k{font-size:14px;color:var(--muted);margin-top:4px}
+.tier .k b{color:var(--text)}
+.mini{display:flex;align-items:center;gap:10px;background:var(--pitch);color:#fff;border-radius:10px;padding:8px 10px;margin:2px 0 4px}
+.mini .d{display:flex;gap:4px}
+.mini .d span{background:#0B231A;color:#F2C94C;font:700 26px/1 var(--num);padding:3px 7px;border-radius:5px;min-width:26px;text-align:center}
+.mini .t{font-size:13px;line-height:1.3;opacity:.92}
 /* dziennik */
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .stats .cell b{font-size:24px}
@@ -261,22 +274,35 @@ function widokValue(){
   }
   return h + `<p class="note">Kursy pochodzą z Betclic FR. Sprawdź kurs w aplikacji Betclic – jeśli jest niższy niż uczciwy, zakład traci wartość.</p>`;
 }
+function poziomTypu(t, ikona, tytul, klasa){
+  if(!t) return '';
+  const bk = t.kurs_betclic ? ` · Betclic: <b>${num(t.kurs_betclic)}</b> ${t.kurs_betclic*t.szansa >= 1 ? '✅' : '(poniżej uczciwego)'}` : '';
+  return `<div class="tier ${klasa||''}"><div class="lbl2"><span>${ikona} ${tytul}</span></div>
+    <div class="row2"><div class="name">${esc(t.zaklad)}${t.opis?`<small>${esc(t.opis)}</small>`:''}</div><div class="pp">${pct(t.szansa)}</div></div>
+    <div class="k">Kurs uczciwy <b>${num(t.kurs_uczciwy)}</b> – graj przy kursie ≥ ${num(t.kurs_uczciwy)} (min. ${num(t.kurs_min)})${bk}</div></div>`;
+}
+function miniTablica(t){
+  if(!t.wyniki || !t.wyniki.length) return '';
+  const [a, b] = t.wyniki[0].wynik.split(':');
+  return `<div class="mini"><div class="d"><span>${esc(a)}</span><span>${esc(b)}</span></div>
+    <div class="t">Przewidywany wynik (${pct(t.wyniki[0].szansa)} szans)${t.xg_gosp!=null?`<br>oczekiwane gole ${num(t.xg_gosp)} : ${num(t.xg_gosc)}`:''}</div></div>`;
+}
 function widokPewne(){
   const d = S.dzis;
   if(!d) return `<div class="empty">Brak danych na dziś.</div>`;
-  let h = `<h2>Najpewniejsze na dziś</h2><p class="lead">Zakłady z największą szansą wejścia z dzisiejszych meczów. Graj tam, gdzie kurs jest najwyższy – Betclic, Fortuna, STS. Nie łącz ich w jeden kupon.</p>`;
+  let h = `<h2>Najpewniejsze na dziś</h2><p class="lead">Przy każdym meczu trzy typy: najpewniejszy, z lepszym kursem i ryzykowny. Im wyższy kurs, tym mniejsza szansa – tego nie da się obejść. Graj tam, gdzie kurs jest najwyższy, i nie łącz wszystkiego w jeden kupon.</p>`;
   if(!d.pewne.length) return h + `<div class="empty">Dziś brak meczów w obsługiwanych ligach.</div>`;
   d.pewne.forEach((t, i) => {
-    h += `<article class="bet">${glowa(t)}
-      <div class="pick"><div class="name"><span class="rank">${i+1}.</span>${esc(t.zaklad)}${t.opis?`<small>${esc(t.opis)}</small>`:''}</div><div class="big">${pct(t.szansa)}</div></div>
-      <div class="bar"><i style="width:${(t.szansa*100).toFixed(1)}%"></i></div>
-      <div class="note">Szukaj kursu co najmniej <b>${num(t.kurs_uczciwy)}</b> (minimum ${num(t.kurs_min)}).</div>
+    h += `<article class="bet">${glowa(t)}${miniTablica(t)}
+      ${poziomTypu(t, '🔒', (i+1) + '. Najpewniejszy', 'main')}
       ${t.nizsza_pewnosc?'<div class="note warn">Niższa pewność – dobrany, żeby było minimum 5 typów.</div>':''}
+      ${poziomTypu(t.lepszy_kurs, '⚖️', 'Lepszy kurs')}
+      ${poziomTypu(t.ryzykowny, '🎯', 'Ryzykowny')}
       ${t.uwaga?`<div class="note warn">${esc(t.uwaga)}</div>`:''}
       ${kafelkiWynikow(t.wyniki)}
     </article>`;
   });
-  return h + `<p class="note">W testach na meczach z lat 2023–2026 średnio wchodziły 4 z 5 typów, wszystkie 5 – w co trzecim dniu. Typ z szansą 75% przegrywa mniej więcej raz na cztery.</p>`;
+  return h + `<p class="note">Testy 2023–2026: najpewniejsze typy wchodziły średnio w 4 z 5 przypadków. Typy „lepszy kurs” wchodzą ok. 5–6 razy na 10, „ryzykowne” zwykle 2–4 razy na 10 – stawiaj na nie mniejsze kwoty. Typy łączone (np. „1 i powyżej 1.5 gola”) nie były osobno testowane.</p>`;
 }
 function widokMecz(){
   if(!S.modele) return `<div class="empty">Brak danych modelu. Program pobierze je przy najbliższym odświeżeniu.</div>`;
@@ -313,6 +339,7 @@ function licz(){
     + typAlgorytmu(r, kursy, H, A, liga, M);
   const dane = m.druzyny;
   if(Math.min(dane[H][2], dane[A][2]) < 10) h += `<p class="note warn">Mało danych o jednej z drużyn – wynik mniej pewny.</p>`;
+  if(liga === 'Puchary europejskie') h += `<p class="note">Mecz pucharowy: model porównuje ligi na wspólnej skali (ligi + mecze Ligi Mistrzów, Ligi Europy i Ligi Konferencji). W dwumeczu nie uwzględnia wyniku pierwszego meczu.</p>`;
   const grupy = [['1','X','2'],['1X','X2','12'],['Powyżej 1.5','Powyżej 2.5','Poniżej 2.5','Poniżej 3.5'],['BTTS Tak','BTTS Nie']];
   const nazwy = {'1':'Wygra '+pokaz(liga,H),'X':'Remis','2':'Wygra '+pokaz(liga,A),'1X':'1X – gospodarz lub remis','X2':'X2 – gość lub remis','12':'12 – bez remisu','BTTS Tak':'Obie strzelą','BTTS Nie':'Nie obie strzelą'};
   h += `<h2>Szanse</h2><div class="mk">`;
@@ -325,6 +352,27 @@ function licz(){
 }
 
 /* ---------- typ algorytmu ---------- */
+const LEPSZY = ['1','2','1X','X2','12','Over 1.5','Over 2.5','Under 2.5','Under 3.5','BTTS Tak','BTTS Nie','H -1.5','A -1.5','H -2.5','A -2.5','H -3.5','A -3.5','Over 3.5','Over 4.5','H o1.5','A o1.5','H o2.5','A o2.5','H o0.5','A o0.5'];
+const RYZYK = ['1','X','2','Over 2.5','Over 3.5','Under 1.5','BTTS Tak','H -1.5','A -1.5','H -2.5','A -2.5','H -3.5','A -3.5','H -4.5','A -4.5','Over 4.5','Over 5.5','H o2.5','A o2.5','H o1.5','A o1.5','1 & o1.5','2 & o1.5','1 & o2.5','2 & o2.5','X & u2.5','BTTS & o2.5'];
+function rozszerzone(M, H, A){
+  const r = {}; const add = (k, f, n, o) => { let s = 0; for(let i=0;i<=MAXG;i++) for(let j=0;j<=MAXG;j++) if(f(i,j,i+j,i-j)) s += M[i][j]; r[k] = [s, n, o, f]; };
+  add('1',(i,j,t,d)=>d>0,'1','wygra '+H); add('X',(i,j,t,d)=>d===0,'X','remis'); add('2',(i,j,t,d)=>d<0,'2','wygra '+A);
+  add('1X',(i,j,t,d)=>d>=0,'1X',H+' lub remis'); add('X2',(i,j,t,d)=>d<=0,'X2',A+' lub remis'); add('12',(i,j,t,d)=>d!==0,'12','bez remisu');
+  add('BTTS Tak',(i,j)=>i>0&&j>0,'Obie strzelą – tak',''); add('BTTS Nie',(i,j)=>i===0||j===0,'Obie strzelą – nie','');
+  add('H -1.5',(i,j,t,d)=>d>=2,'Handicap '+H+' -1.5',H+' wygra różnicą 2+ goli'); add('A -1.5',(i,j,t,d)=>d<=-2,'Handicap '+A+' -1.5',A+' wygra różnicą 2+ goli');
+  add('H -2.5',(i,j,t,d)=>d>=3,'Handicap '+H+' -2.5',H+' wygra różnicą 3+ goli'); add('A -2.5',(i,j,t,d)=>d<=-3,'Handicap '+A+' -2.5',A+' wygra różnicą 3+ goli');
+  add('H -3.5',(i,j,t,d)=>d>=4,'Handicap '+H+' -3.5',H+' wygra różnicą 4+ goli'); add('A -3.5',(i,j,t,d)=>d<=-4,'Handicap '+A+' -3.5',A+' wygra różnicą 4+ goli');
+  add('H -4.5',(i,j,t,d)=>d>=5,'Handicap '+H+' -4.5',H+' wygra różnicą 5+ goli'); add('A -4.5',(i,j,t,d)=>d<=-5,'Handicap '+A+' -4.5',A+' wygra różnicą 5+ goli');
+  add('H o2.5',(i)=>i>=3,H+' powyżej 2.5 gola',H+' strzeli 3+ gole'); add('A o2.5',(i,j)=>j>=3,A+' powyżej 2.5 gola',A+' strzeli 3+ gole');
+  add('H o1.5',(i)=>i>=2,H+' powyżej 1.5 gola',H+' strzeli 2+ gole'); add('A o1.5',(i,j)=>j>=2,A+' powyżej 1.5 gola',A+' strzeli 2+ gole');
+  add('H o0.5',(i)=>i>=1,H+' powyżej 0.5 gola',H+' strzeli gola'); add('A o0.5',(i,j)=>j>=1,A+' powyżej 0.5 gola',A+' strzeli gola');
+  add('1 & o1.5',(i,j,t,d)=>d>0&&t>=2,'1 i powyżej 1.5 gola',H+' wygra, w meczu 2+ gole'); add('2 & o1.5',(i,j,t,d)=>d<0&&t>=2,'2 i powyżej 1.5 gola',A+' wygra, w meczu 2+ gole');
+  add('1 & o2.5',(i,j,t,d)=>d>0&&t>=3,'1 i powyżej 2.5 gola',H+' wygra, w meczu 3+ gole'); add('2 & o2.5',(i,j,t,d)=>d<0&&t>=3,'2 i powyżej 2.5 gola',A+' wygra, w meczu 3+ gole');
+  add('X & u2.5',(i,j,t,d)=>d===0&&t<=2,'X i poniżej 2.5 gola','remis 0:0 lub 1:1'); add('BTTS & o2.5',(i,j,t)=>i>0&&j>0&&t>=3,'Obie strzelą i powyżej 2.5','');
+  for(const l of [1.5,2.5,3.5,4.5,5.5]){ add('Over '+l,(i,j,t)=>t>l,'Powyżej '+l+' gola',''); add('Under '+l,(i,j,t)=>t<l,'Poniżej '+l+' gola',''); }
+  return r;
+}
+
 function dodatkoweRynki(M){
   const o = {'H -1.5':0,'A -1.5':0,'H -2.5':0,'A -2.5':0,'Gosp. powyżej 1.5':0,'Gość powyżej 1.5':0};
   for(let i=0;i<=MAXG;i++) for(let j=0;j<=MAXG;j++){ const v=M[i][j], d=i-j;
@@ -343,15 +391,30 @@ function typAlgorytmu(r, kursy, H, A, liga, M){
   // rynki, które w testach 2023–2026 były dobrze skalibrowane przy wysokich szansach (jak w zakładce Pewne)
   // przy dużej przewadze jednej drużyny dochodzą handicapy i gole drużyny – zwykłe rynki mają wtedy za niskie kursy
   const kand = ['1','2','1X','X2','12','Powyżej 1.5','Powyżej 2.5','Poniżej 3.5','Powyżej 3.5','H -1.5','A -1.5','H -2.5','A -2.5','Gosp. powyżej 1.5','Gość powyżej 1.5']
-    .map(z => ({z, p: r[z] + (z==='12' ? -0.035 : 0)})).filter(t => t.p > 0 && 1/t.p >= 1.25).sort((a,b) => b.p - a.p);
+    // korekty z testów: w ligach '12' było przeceniane o ~3,5 pkt, w pucharach 'X2' o ~5 pkt
+    .map(z => { const pu = liga === 'Puchary europejskie'; const k = pu ? (z==='X2' ? -0.05 : 0) : (z==='12' ? -0.035 : 0); return {z, p: r[z] + k}; })
+    .filter(t => t.p > 0 && 1/t.p >= 1.25).sort((a,b) => b.p - a.p);
   const glowny = kand[0];
-  const alt = kand.filter(t => t.z !== glowny.z && 1/t.p >= 1.6 && t.p >= 0.4).sort((a,b) => b.p - a.p)[0];
+  const R2 = rozszerzone(M, pokaz(liga,H), pokaz(liga,A));
+  const pu = liga === 'Puchary europejskie';
+  const kor = z => pu ? (z==='X2' ? -0.05 : 0) : (z==='12' ? -0.035 : 0);
+  const PRZ = {'BTTS Tak':'BTTS Nie','1X':'2','X2':'1','12':'X','Over 1.5':'Under 1.5','Over 2.5':'Under 2.5','Over 3.5':'Under 3.5','Over 4.5':'Under 4.5'};
+  for(const [a,b] of Object.entries({...PRZ})) PRZ[b] = a;
+  const razem = (a, b) => { let s = 0; for(let i=0;i<=MAXG;i++) for(let j=0;j<=MAXG;j++) if(R2[a][3](i,j,i+j,i-j) && R2[b][3](i,j,i+j,i-j)) s += M[i][j]; return s; };
+  const wyb = (lista, kmin, kmax, pmin, wyk) => lista.filter(z => !wyk.includes(z) && !wyk.filter(w => R2[w]).some(w => razem(z, w) < 0.03)).map(z => ({z, p: R2[z][0] + kor(z)}))
+      .filter(t => t.p > pmin && 1/t.p >= kmin && 1/t.p <= kmax).sort((a,b) => b.p - a.p)[0];
+  const ekw = {'Powyżej 1.5':'Over 1.5','Powyżej 2.5':'Over 2.5','Poniżej 3.5':'Under 3.5','Powyżej 3.5':'Over 3.5','Gosp. powyżej 1.5':'H o1.5','Gość powyżej 1.5':'A o1.5'};
+  const gz = ekw[glowny.z] || glowny.z;
+  const alt = wyb(LEPSZY, 1.55, 2.30, 0.40, [gz]);
+  const ryz = wyb(RYZYK, 2.50, 5.00, 0.18, [gz, alt ? alt.z : '']);
   const poziom = glowny.p >= 0.75 ? 'wysoka' : glowny.p >= 0.65 ? 'średnia' : 'niska';
+  const nz = t => (R2[t.z] ? R2[t.z][1] : nazwa[t.z]); const oz = t => (R2[t.z] ? R2[t.z][2] : '');
   let h = `<div class="typ"><h3>Typ algorytmu (pewność: ${poziom})</h3>
     <div class="main"><b>${esc(nazwa[glowny.z])}</b><span>${pct(glowny.p)}</span></div>
     <div class="note">Szukaj kursu co najmniej <b>${num(1/glowny.p)}</b>${kursy[glowny.z] ? ` – Twój kurs ${num(kursy[glowny.z])} ${glowny.p*kursy[glowny.z] >= 1 ? '✅ opłaca się' : '❌ za niski'}` : ''}.</div>`;
   if(poziom === 'niska') h += `<div class="note warn">Żaden zakład z sensownym kursem nie ma tu wysokiej szansy. Rozważ odpuszczenie.</div>`;
-  if(alt) h += `<div class="alt">Wyższy kurs, mniejsza szansa: <b>${esc(nazwa[alt.z])}</b> – ${pct(alt.p)}, kurs uczciwy ${num(1/alt.p)}</div>`;
+  if(alt) h += poziomTypu({zaklad: nz(alt), opis: oz(alt), szansa: alt.p, kurs_uczciwy: 1/alt.p, kurs_min: 0.95/alt.p}, '⚖️', 'Lepszy kurs');
+  if(ryz) h += poziomTypu({zaklad: nz(ryz), opis: oz(ryz), szansa: ryz.p, kurs_uczciwy: 1/ryz.p, kurs_min: 0.95/ryz.p}, '🎯', 'Ryzykowny');
   const value = Object.keys(kursy).map(z => ({z, p: r[z], ev: r[z]*kursy[z]-1})).filter(t => t.ev >= 0.05 && t.p >= 0.35).sort((a,b) => b.ev - a.ev)[0];
   if(value) h += `<div class="alt">Z Twoich kursów najbardziej opłaca się: <b>${esc(nazwa[value.z] || value.z)}</b> po ${num(kursy[value.z])} (przewaga ${sgn(value.ev)}, szansa ${pct(value.p)})</div>`;
   return h + `<div class="note">Typ to zakład z największą szansą wejścia według modelu, a nie pewniak – przy ${pct(glowny.p)} przegrywa średnio ${Math.round((1-glowny.p)*10)} na 10 razy.</div></div>`;
