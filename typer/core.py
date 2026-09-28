@@ -3,7 +3,7 @@ import numpy as np, pandas as pd
 ODDS_API_KEY = os.environ.get('ODDS_API_KEY', '')
 BANKROLL = 1000
 SEZONY_WSTECZ = 3
-WAGA_MODELU = 0.35
+WAGA_MODELU = 0.0   # test 2022-2026 (25 tys. meczów): dokładanie modelu do kursów Pinnacle pogarsza trafność
 MIN_EV_Z_RYNKIEM = 0.04
 MIN_EV_SAM_MODEL = 0.10
 KURS_MIN, KURS_MAX = 1.30, 4.00
@@ -290,14 +290,17 @@ def macierz_meczu(ev, preferowany):
     k, h, a = znajdz_model(home, away, preferowany)
     neutral = preferowany == 'Reprezentacje' and (ev['sport_key'].endswith('world_cup') or 'championship' in ev['sport_key'])
     M_mod = score_matrix(*expected_goals(MODELE[k], h, a, neutral), MODELE[k]['rho']) if k else None
-    M_mkt = score_matrix(*market_lambdas(*p_mkt, p_over=p_ov), -0.05) if p_mkt is not None else None
-    if M_mod is not None and M_mkt is not None: M, tryb, prog = WAGA_MODELU * M_mod + (1 - WAGA_MODELU) * M_mkt, f'model+{zrodlo}', MIN_EV_Z_RYNKIEM
-    elif M_mkt is not None: M, tryb, prog = M_mkt, f'rynek ({zrodlo})', MIN_EV_Z_RYNKIEM
+    lam_mkt = market_lambdas(*p_mkt, p_over=p_ov) if p_mkt is not None else None
+    M_mkt = score_matrix(*lam_mkt, -0.05) if lam_mkt is not None else None
+    if M_mkt is not None: M, tryb, prog = M_mkt, f'rynek ({zrodlo})', MIN_EV_Z_RYNKIEM
     elif M_mod is not None: M, tryb, prog = M_mod, 'tylko model', MIN_EV_SAM_MODEL
     else: return None
     uwaga = ''
-    if k and min(MODELE[k]['n_matches'][h], MODELE[k]['n_matches'][a]) < 10: uwaga = '⚠ mało danych o drużynie'
-    return dict(M=M, M_mod=M_mod, M_mkt=M_mkt, p_mkt=p_mkt, ostry=zrodlo in ('Pinnacle', 'Betfair', 'Pinnacle+Betfair'), betclic=betclic, tryb=tryb, prog=prog, uwaga=uwaga, home=home, away=away,
+    if k and min(MODELE[k]['n_matches'][h], MODELE[k]['n_matches'][a]) < 10 and M_mkt is None: uwaga = '⚠ mało danych o drużynie'
+    if M_mod is not None and M_mkt is not None:
+        a1, b1 = markets(M_mod), markets(M_mkt)
+        if max(abs(a1[z] - b1[z]) for z in '1X2') > 0.12: uwaga = '⚠ rynek i model mocno się różnią – możliwe braki w składzie'
+    return dict(M=M, M_mod=M_mod, M_mkt=M_mkt, lam_mkt=lam_mkt, model_key=k, model_h=h, model_a=a, p_mkt=p_mkt, ostry=zrodlo in ('Pinnacle', 'Betfair', 'Pinnacle+Betfair'), betclic=betclic, tryb=tryb, prog=prog, uwaga=uwaga, home=home, away=away,
                 start=pd.Timestamp(ev['commence_time']).tz_convert('Europe/Warsaw'), event_id=ev['id'], sport_key=ev['sport_key'])
 
 def oferty_betclic(x):
@@ -489,10 +492,16 @@ def pobierz_dane():
 # ===== DOPASOWANIE NAZW Z PUCHARÓW =====
 STOP = set('fc cf ac afc sc sv ssc ss as acf bc rc rcd cd ud sd club de del 1909 1907 1846 1899 1904 1900 1913 1910 04 05 29 osc losc bsc fk sk nk gnk kv rsc pae sfp cp sl tsg vfb vfl rb ogc balompie calcio 1 hotspur football the'.split())
 def nrm(s):
-    s = unicodedata.normalize('NFKD', str(s)).encode('ascii','ignore').decode().lower()
+    s = str(s).translate(str.maketrans({'ø':'o','Ø':'O','æ':'ae','Æ':'AE','ß':'ss','ł':'l','Ł':'L','ı':'i','đ':'d','Đ':'D'}))
+    s = unicodedata.normalize('NFKD', s).encode('ascii','ignore').decode().lower()
     s = s.replace('&',' and ').replace("'",'').replace('-',' ').replace('.',' ')
     return ' '.join(t for t in s.split() if t not in STOP)
-ALIAS = {'manchester city':'man city','manchester united':'man united','brighton and hove albion':'brighton','newcastle united':'newcastle',
+ALIAS = {'sporting braga':'sp braga', 'sporting clube braga':'sp braga', 'braga':'sp braga', 'sporting clube portugal':'sp lisbon', 'sporting':'sp lisbon',
+ 'aek athen':'aek', 'aek athens':'aek', 'istanbul basaksehir':'buyuksehyr', 'basaksehir':'buyuksehyr', 'kobenhavn':'fc copenhagen', 'copenhagen':'fc copenhagen',
+ 'heart midlothian':'hearts', 'heart of midlothian':'hearts', 'union saint gilloise':'st gilloise', 'royale union saint gilloise':'st gilloise', 'hjk helsinki':'hjk',
+ 'olympiakos piraeus':'olympiakos', 'olympiacos':'olympiakos', 'fcsb':'fcsb', 'steaua bucuresti':'fcsb', 'rapid wien':'sk rapid', 'rapid bucuresti':'fc rapid bucuresti',
+ 'bodo glimt':'bodo/glimt', 'malmo':'malmo ff', 'psv':'psv eindhoven', 'az':'az alkmaar',
+ 'manchester city':'man city','manchester united':'man united','brighton and hove albion':'brighton','newcastle united':'newcastle',
  'west ham united':'west ham','nottingham forest':'nottm forest','wolverhampton wanderers':'wolves','leicester city':'leicester',
  'internazionale milano':'inter','atletico madrid':'ath madrid','atletico madrid':'ath madrid','athletic':'ath bilbao','athletic bilbao':'ath bilbao',
  'real sociedad':'sociedad','real betis':'betis','paris saint germain':'paris sg','olympique lyonnais':'lyon','olympique marseille':'marseille',
@@ -629,6 +638,65 @@ def trenuj_puchary():
     m['n_matches'] = {t: int(m['n_matches'].get(t, 0)) for t in m['teams']}
     print(f"Puchary: {len(C)} meczów, {len(m['eksport'])} drużyn w rankingu")
     return m
+
+# ===== KALIBRACJA SZANS MODELU (ogólna metoda, przeliczana co tydzień) =====
+# Test 2022-2026: uczona na starszych meczach i sprawdzana na nowszych zmniejszyła średni błąd na kraj z 2,0 do 1,4 pkt proc.
+from scipy.stats import poisson as _poi
+_G = np.arange(MAXG + 1); _I, _J = np.meshgrid(_G, _G, indexing='ij'); _T, _D = _I + _J, _I - _J
+MASKI = {'1': _D > 0, 'X': _D == 0, '2': _D < 0, '1X': _D >= 0, 'X2': _D <= 0, '12': _D != 0,
+ 'BTTS Tak': (_I > 0) & (_J > 0), 'BTTS Nie': (_I == 0) | (_J == 0),
+ 'H -1.5': _D >= 2, 'A -1.5': _D <= -2, 'H -2.5': _D >= 3, 'A -2.5': _D <= -3, 'H -3.5': _D >= 4, 'A -3.5': _D <= -4, 'H -4.5': _D >= 5, 'A -4.5': _D <= -5,
+ 'H o0.5': _I >= 1, 'A o0.5': _J >= 1, 'H o1.5': _I >= 2, 'A o1.5': _J >= 2, 'H o2.5': _I >= 3, 'A o2.5': _J >= 3,
+ '1 & o1.5': (_D > 0) & (_T >= 2), '2 & o1.5': (_D < 0) & (_T >= 2), '1 & o2.5': (_D > 0) & (_T >= 3), '2 & o2.5': (_D < 0) & (_T >= 3),
+ 'X & u2.5': (_D == 0) & (_T <= 2), 'BTTS & o2.5': (_I > 0) & (_J > 0) & (_T >= 3)}
+for _l in (1.5, 2.5, 3.5, 4.5, 5.5): MASKI[f'Over {_l}'] = _T > _l; MASKI[f'Under {_l}'] = _T < _l
+KALIBRACJA_PUCHARY = {"1": [0.1869, 0.9074], "X": [0.2576, 1.3499], "2": [-0.1057, 0.9817], "1X": [0.1058, 0.9817], "X2": [-0.1869, 0.9074], "12": [-0.2576, 1.3499], "Over 1.5": [0.7299, 0.5229], "Over 2.5": [0.1729, 0.943], "Under 2.5": [-0.1729, 0.943], "Under 3.5": [-0.0388, 0.8399], "Over 3.5": [0.0388, 0.8399], "BTTS Tak": [0.2075, 0.3284], "BTTS Nie": [-0.2075, 0.3283], "H -1.5": [-0.0018, 0.8572], "A -1.5": [-0.1258, 1.0171], "H o1.5": [0.1756, 0.8932], "A o1.5": [-0.0127, 0.9243], "H o0.5": [0.4844, 0.8207], "A o0.5": [0.0877, 0.8564], "1 & o1.5": [0.131, 0.908], "2 & o1.5": [-0.0905, 0.9421], "1 & o2.5": [0.12, 0.9349], "2 & o2.5": [-0.0738, 0.928], "X & u2.5": [0.9263, 1.739], "BTTS & o2.5": [-0.0263, 0.282], "H -2.5": [-0.1159, 0.8247], "A -2.5": [-0.3921, 0.8342], "Under 1.5": [-0.7299, 0.5228]}
+_lg = lambda p: np.log(np.clip(p, 1e-6, 1 - 1e-6) / (1 - np.clip(p, 1e-6, 1 - 1e-6)))
+_sg = lambda x: 1 / (1 + np.exp(-x))
+
+def _macierze(lh, la, rho):
+    ph = _poi.pmf(_G[None, :], lh[:, None]); pa = _poi.pmf(_G[None, :], la[:, None]); M = ph[:, :, None] * pa[:, None, :]
+    M[:, 0, 0] *= 1 - lh * la * rho; M[:, 0, 1] *= 1 + lh * rho; M[:, 1, 0] *= 1 + la * rho; M[:, 1, 1] *= 1 - rho
+    return M / M.sum((1, 2))[:, None, None]
+
+def policz_kalibracje(dni=540, krok=14, lam=60.0):
+    """Test krokowy na ostatnich ~1,5 roku każdej ligi -> skalowanie Platta dla każdego rynku + ostrożne przesunięcie dla kraju."""
+    L, H, A, R_, TT, HG, AG, KR = [], [], [], [], [], [], [], []
+    for k, d in DANE.items():
+        start = pd.Timestamp.today().normalize() - pd.Timedelta(days=dni)
+        test = d[(d.date >= start) & d.hg.notna()]
+        intl = k == 'Reprezentacje'
+        for _, g in test.groupby((test.date - start).dt.days // krok):
+            m = fit_model(d, g.date.min(), half_life_days=1095 if intl else 365, reg=0.1 if intl else 0.3, weight_col='w' if intl else None)
+            for x in g.itertuples():
+                if x.home not in m['teams'] or x.away not in m['teams'] or min(m['n_matches'][x.home], m['n_matches'][x.away]) < 8: continue
+                lh, la = expected_goals(m, x.home, x.away, bool(getattr(x, 'neutral', False)))
+                H.append(lh); A.append(la); R_.append(m['rho']); HG.append(int(x.hg)); AG.append(int(x.ag)); KR.append(k)
+    if len(H) < 500: return None
+    M = _macierze(np.array(H), np.array(A), np.array(R_)); HG, AG, KR = np.clip(HG, 0, MAXG), np.clip(AG, 0, MAXG), np.array(KR)
+    out = {}
+    for z, mask in MASKI.items():
+        p = (M * mask).sum((1, 2)); y = mask[HG, AG].astype(float); ok = (p > 0.03) & (p < 0.97)
+        if ok.sum() < 300: continue
+        x, yy = _lg(p[ok]), y[ok]
+        f = lambda ab: -np.sum(yy * np.log(_sg(ab[0] + ab[1] * x) + 1e-12) + (1 - yy) * np.log(1 - _sg(ab[0] + ab[1] * x) + 1e-12))
+        a, b = minimize(f, [0, 1], method='Nelder-Mead').x
+        q = _sg(a + b * x); kr = KR[ok]
+        off = {k: round(float(np.sum(yy[kr == k] - q[kr == k]) / (np.sum(q[kr == k] * (1 - q[kr == k])) + lam)), 4) for k in np.unique(kr)}
+        out[z] = dict(a=round(float(a), 4), b=round(float(b), 4), kraje=off)
+    for z, (a, b) in KALIBRACJA_PUCHARY.items():
+        out.setdefault(z, dict(a=0.0, b=1.0, kraje={}))['puchary'] = [a, b]
+    return dict(data=pd.Timestamp.today().strftime('%Y-%m-%d'), meczow=len(H), rynki=out)
+
+KALIBRACJA = None
+def kalibruj(z, p, model_key):
+    """Poprawia szansę z MODELU (nie z rynku) według kalibracji; model_key = liga/kraj modelu."""
+    if not KALIBRACJA or z not in KALIBRACJA['rynki']: return p
+    c = KALIBRACJA['rynki'][z]
+    if model_key == 'Puchary europejskie':
+        if 'puchary' not in c: return p
+        a, b = c['puchary']; return float(_sg(a + b * _lg(p)))
+    return float(_sg(c['a'] + c['b'] * _lg(p) + c['kraje'].get(model_key, 0.0)))
 
 # ===== MODELE =====
 MODELE = {}

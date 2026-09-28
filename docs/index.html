@@ -110,6 +110,24 @@ summary{cursor:pointer;color:var(--muted);font-size:15px}
 .mini .d{display:flex;gap:4px}
 .mini .d span{background:#0B231A;color:#F2C94C;font:700 26px/1 var(--num);padding:3px 7px;border-radius:5px;min-width:26px;text-align:center}
 .mini .t{font-size:13px;line-height:1.3;opacity:.92}
+.x12{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px;text-align:center}
+.x12 b{display:block;font:700 20px/1.1 var(--num)} .x12 span{font-size:12px;color:var(--muted)}
+.x12bar{display:flex;height:6px;border-radius:3px;overflow:hidden;margin-top:6px;background:var(--sunk)}
+.x12bar i{display:block;background:var(--pitch)} .x12bar i.x{background:var(--muted);opacity:.6} .x12bar i.a{background:var(--accent)}
+.muted{color:var(--muted)}
+details.rap{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px} details.rap summary{font-weight:600;font-size:15px}
+ul.news{margin:4px 0 0;padding-left:18px;font-size:13px} ul.news li{margin:3px 0} ul.news a{color:var(--text)}
+.lv{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 8px}
+.lv.moj{border:2px solid var(--accent)}
+.lv .hd{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.lv .st{font-weight:600} .lv .st.in{color:var(--loss)} .lv .st.in::before{content:"● ";animation:pul 1.4s infinite}
+@keyframes pul{50%{opacity:.25}}
+.lv .rw{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;margin-top:4px;font-size:16px}
+.lv .rw b{font:700 24px/1.1 var(--num);text-align:right}
+.lv .ev2{font-size:12px;color:var(--muted);margin-top:4px}
+.lv .ty{margin-top:6px;border-top:1px dashed var(--line);padding-top:6px;font-size:14px}
+.lv .ty div{margin:2px 0}
+.lgh{font:600 16px/1.2 var(--num);color:var(--muted);margin:14px 0 6px}
 /* dziennik */
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .stats .cell b{font-size:24px}
@@ -121,7 +139,7 @@ svg.curve{width:100%;height:120px;display:block;margin-top:12px}
 .pos{color:var(--win)} .neg{color:var(--loss)}
 /* nawigacja */
 nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
-nav .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+nav .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
 nav button{background:none;border:0;padding:9px 0 8px;font-size:12px;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
 nav button .ic{font-size:20px;line-height:1}
 nav button[aria-selected="true"]{color:var(--text);font-weight:600}
@@ -149,6 +167,7 @@ footer{font-size:12px;color:var(--muted);margin-top:26px;line-height:1.5}
 </div>
 
 <nav><div class="in" role="tablist">
+  <button role="tab" data-tab="live"><span class="ic">⚡</span>Na żywo</button>
   <button role="tab" data-tab="value"><span class="ic">💰</span>Value</button>
   <button role="tab" data-tab="pewne"><span class="ic">🔒</span>Pewne</button>
   <button role="tab" data-tab="mecz"><span class="ic">🔎</span>Mecz</button>
@@ -183,8 +202,8 @@ async function laduj(){
   const osadz = $('#dane-osadzone').textContent.trim();
   if (osadz){ const d = JSON.parse(osadz); Object.assign(S, d); S.demo = !!d.demo; return; }
   const get = async f => { const r = await fetch('data/' + f + '?t=' + Date.now()); if(!r.ok) throw new Error(f); return r.json(); };
-  const [a, b, c] = await Promise.allSettled([get('dzis.json'), get('modele.json'), get('dziennik.json')]);
-  S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null;
+  const [a, b, c, k] = await Promise.allSettled([get('dzis.json'), get('modele.json'), get('dziennik.json'), get('kalibracja.json')]);
+  S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null;
 }
 
 /* ---------- model (ten sam co w Pythonie) ---------- */
@@ -215,6 +234,14 @@ function oczekiwaneGole(m, h, a, neutral, kal){
   let lh = Math.exp(m.mu + (neutral?0:m.home) + H[0] + A[1]), la = Math.exp(m.mu + A[0] + H[1]);
   const t = lh + la, f = (m.T + kal*(t - m.T)) / t; return [lh*f, la*f];
 }
+const lgt = p => { p = Math.min(Math.max(p, 1e-6), 1-1e-6); return Math.log(p/(1-p)); }, sgm = x => 1/(1+Math.exp(-x));
+function kal(z, p, liga){   // kalibracja szans z MODELU (jak w Pythonie) + samokorekta z dziennika
+  const K = S.kal && S.kal.rynki && S.kal.rynki[z];
+  if(K){ if(liga === 'Puchary europejskie'){ if(K.puchary) p = sgm(K.puchary[0] + K.puchary[1]*lgt(p)); }
+         else p = sgm(K.a + K.b*lgt(p) + ((K.kraje||{})[liga] || 0)); }
+  const sk = S.dziennik && S.dziennik.samokorekta; if(sk && sk[z]) p += sk[z];
+  return Math.min(0.99, Math.max(0.01, p));
+}
 const kelly = (p, k) => Math.max(0, Math.min(((p*k-1)/(k-1))*0.25, 0.02));
 
 /* ---------- nazwy reprezentacji po polsku ---------- */
@@ -229,7 +256,10 @@ const PL = {Poland:'Polska',Germany:'Niemcy',Spain:'Hiszpania',France:'Francja',
  Israel:'Izrael',Cyprus:'Cypr',Luxembourg:'Luksemburg',Malta:'Malta',Andorra:'Andora','San Marino':'San Marino',Kosovo:'Kosowo',
  'Faroe Islands':'Wyspy Owcze',Gibraltar:'Gibraltar',Azerbaijan:'Azerbejdżan',Liechtenstein:'Liechtenstein',Canada:'Kanada',Australia:'Australia',
  Egypt:'Egipt',Senegal:'Senegal',Nigeria:'Nigeria',Tunisia:'Tunezja',Algeria:'Algieria',Iran:'Iran','Saudi Arabia':'Arabia Saudyjska'};
+Object.assign(PL, {'Bosnia & Herzegovina':'Bośnia i Hercegowina','Bosnia-Herzegovina':'Bośnia i Hercegowina',Czechia:'Czechy','Türkiye':'Turcja',
+ 'Ireland':'Irlandia','North Macedonia':'Macedonia Północna','Faroe Islands':'Wyspy Owcze','Korea Republic':'Korea Płd.',USA:'USA','Ivory Coast':'Wybrzeże Kości Słoniowej'});
 const plN = t => PL[t] || t;
+const plTxt = (s, t) => { let o = String(s ?? ''); for(const n of [t.gospodarz, t.gosc]) if(n && PL[n]) o = o.split(n).join(PL[n]); return o; };
 const plMecz = m => String(m).split(' – ').map(plN).join(' – ');
 const pokaz = (liga, t) => liga === 'Reprezentacje' && PL[t] ? PL[t] : t;
 const norm = s => String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ł/g,'l').replace(/Ł/g,'L').toLowerCase().trim();
@@ -261,48 +291,68 @@ function widokValue(){
   for(const t of d.value){
     const stawka = Math.round(BANK * kelly(t.szansa, t.kurs));
     h += `<article class="bet">${glowa(t)}
-      <div class="pick"><div class="name">${esc(t.zaklad)}${t.opis?`<small>${esc(t.opis)}</small>`:''}</div><div class="odds">${num(t.kurs)}</div></div>
+      <div class="pick"><div class="name">${esc(plTxt(t.zaklad, t))}${t.opis?`<small>${esc(plTxt(t.opis, t))}</small>`:''}</div><div class="odds">${num(t.kurs)}</div></div>
       <div class="grid">
         <div class="cell"><b>${num(t.kurs_uczciwy)}</b><span>kurs uczciwy</span></div>
         <div class="cell"><b>${pct(t.szansa)}</b><span>szansa</span></div>
         <div class="cell"><b class="pos">${sgn(t.ev)}</b><span>przewaga</span></div>
       </div>
       <div class="bar"><i style="width:${(t.szansa*100).toFixed(1)}%"></i></div>
+      <div class="note">🔎 <b>Szukaj kursu ≥ ${num(t.kurs_szukaj || t.kurs_uczciwy*1.02)}</b> w Betclic, Fortunie, STS, Superbecie – graj tam, gdzie najwyższy.</div>
       <div class="note">Sugerowana stawka: <b>${stawka} zł</b> · źródło kursu uczciwego: ${esc(t.zrodlo)}</div>
-      ${kafelkiWynikow(t.wyniki)}
+      ${obrazMeczu(t)}${raportHTML(t.raport, t)}
     </article>`;
   }
-  return h + `<p class="note">Kursy pochodzą z Betclic FR. Sprawdź kurs w aplikacji Betclic – jeśli jest niższy niż uczciwy, zakład traci wartość.</p>`;
+  return h + `<p class="note">Kursy pochodzą z Betclic FR – sprawdź je w polskiej aplikacji. Testy 2022–2026: przewagę dawało szukanie <b>najlepszego kursu u wielu bukmacherów</b> (+5,6% na 3 188 zakładach), a nie gra u jednego. ⚠️ Podatek 12% zjada taką przewagę – value ma sens głównie przy grze bez podatku.</p>`;
 }
-function poziomTypu(t, ikona, tytul, klasa){
-  if(!t) return '';
+function poziomTypu(t, ikona, tytul, klasa, mecz){
+  if(!t) return ''; const P = x => mecz ? plTxt(x, mecz) : x;
   const bk = t.kurs_betclic ? ` · Betclic: <b>${num(t.kurs_betclic)}</b> ${t.kurs_betclic*t.szansa >= 1 ? '✅' : '(poniżej uczciwego)'}` : '';
   return `<div class="tier ${klasa||''}"><div class="lbl2"><span>${ikona} ${tytul}</span></div>
-    <div class="row2"><div class="name">${esc(t.zaklad)}${t.opis?`<small>${esc(t.opis)}</small>`:''}</div><div class="pp">${pct(t.szansa)}</div></div>
+    <div class="row2"><div class="name">${esc(P(t.zaklad))}${t.opis?`<small>${esc(P(t.opis))}</small>`:''}</div><div class="pp">${pct(t.szansa)}</div></div>
     <div class="k">Kurs uczciwy <b>${num(t.kurs_uczciwy)}</b> – graj przy kursie ≥ ${num(t.kurs_uczciwy)} (min. ${num(t.kurs_min)})${bk}</div></div>`;
 }
-function miniTablica(t){
-  if(!t.wyniki || !t.wyniki.length) return '';
-  const [a, b] = t.wyniki[0].wynik.split(':');
-  return `<div class="mini"><div class="d"><span>${esc(a)}</span><span>${esc(b)}</span></div>
-    <div class="t">Przewidywany wynik (${pct(t.wyniki[0].szansa)} szans)${t.xg_gosp!=null?`<br>oczekiwane gole ${num(t.xg_gosp)} : ${num(t.xg_gosc)}`:''}</div></div>`;
+function obrazMeczu(t){
+  const sz = t.szanse || {}, n = t.najczestsze || {}, H = plN(t.gospodarz), A = plN(t.gosc);
+  let h = '';
+  if(t.wyniki && t.wyniki.length){ const [a, b] = t.wyniki[0].wynik.split(':');
+    h += `<div class="mini"><div class="d"><span>${esc(a)}</span><span>${esc(b)}</span></div>
+      <div class="t">Najczęstszy pojedynczy wynik (${pct(t.wyniki[0].szansa)})${t.xg_gosp!=null?`<br>oczekiwane gole ${num(t.xg_gosp)} : ${num(t.xg_gosc)}`:''}</div></div>`; }
+  if(sz['1'] != null) h += `<div class="x12"><div><b>${pct(sz['1'])}</b><span>wygra ${esc(H)}</span></div><div><b>${pct(sz['X'])}</b><span>remis</span></div><div><b>${pct(sz['2'])}</b><span>wygra ${esc(A)}</span></div></div>
+    <div class="x12bar"><i style="width:${sz['1']*100}%"></i><i class="x" style="width:${sz['X']*100}%"></i><i class="a" style="width:${sz['2']*100}%"></i></div>`;
+  if(n['1']) h += `<div class="note">Jeśli wygra ${esc(H)} – najczęściej <b>${esc(n['1'].wynik)}</b> · remis – <b>${esc(n['X'].wynik)}</b> · jeśli wygra ${esc(A)} – <b>${esc(n['2'].wynik)}</b></div>`;
+  return h;
+}
+function raportHTML(r, t){
+  if(!r) return (S.dzis && S.dzis.raport_dostepny === false) ? '' : '';
+  const H = plN(t.gospodarz), A = plN(t.gosc), br = r.braki || {};
+  const lista = (b) => b && b.length ? b.map(p => `${p.kluczowy ? '<b>⭐ ' : ''}${esc(p.zawodnik)}${p.kluczowy ? '</b>' : ''} <span class="muted">(${esc(p.powod || p.typ)}${/question/i.test(p.typ) ? ', niepewny' : ''})</span>`).join(', ') : '<span class="muted">brak zgłoszonych</span>';
+  let h = `<details class="rap"${(r.ostrzezenia||[]).length ? ' open' : ''}><summary>📰 Raport przedmeczowy${(r.ostrzezenia||[]).length ? ' <span class="warn">⚠️ ' + r.ostrzezenia.length + '</span>' : ''}</summary>`;
+  for(const o of (r.ostrzezenia || [])) h += `<div class="note warn">⚠️ ${esc(plTxt(o, t))}</div>`;
+  if(r.dostepne){ h += `<div class="note"><b>Braki – ${esc(H)}:</b> ${lista(br.gosp)}</div><div class="note"><b>Braki – ${esc(A)}:</b> ${lista(br.gosc)}</div>`; }
+  for(const u of (r.uwagi || [])) if(!(r.ostrzezenia||[]).includes(u)) h += `<div class="note">• ${esc(plTxt(u, t))}</div>`;
+  const ng = [...((r.naglowki||{}).gosp || []), ...((r.naglowki||{}).gosc || [])];
+  if(ng.length) h += `<div class="note"><b>Najnowsze wiadomości:</b></div><ul class="news">` + ng.map(x => `<li><a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.tytul)}</a> <span class="muted">${esc(x.data)}</span></li>`).join('') + `</ul>`;
+  if(!r.dostepne) h += `<div class="note muted">Kontuzje i składy pojawią się po dodaniu klucza API-Football.</div>`;
+  return h + `</details>`;
 }
 function widokPewne(){
   const d = S.dzis;
   if(!d) return `<div class="empty">Brak danych na dziś.</div>`;
-  let h = `<h2>Najpewniejsze na dziś</h2><p class="lead">Przy każdym meczu trzy typy: najpewniejszy, z lepszym kursem i ryzykowny. Im wyższy kurs, tym mniejsza szansa – tego nie da się obejść. Graj tam, gdzie kurs jest najwyższy, i nie łącz wszystkiego w jeden kupon.</p>`;
+  let h = `<h2>Najpewniejsze na dziś</h2><p class="lead">Przy każdym meczu trzy typy: najpewniejszy, z lepszym kursem i ryzykowny, szanse 1/X/2 i raport przedmeczowy. Im wyższy kurs, tym mniejsza szansa – tego nie da się obejść. Graj tam, gdzie kurs jest najwyższy, i nie łącz wszystkiego w jeden kupon.</p>`;
   if(!d.pewne.length) return h + `<div class="empty">Dziś brak meczów w obsługiwanych ligach.</div>`;
   d.pewne.forEach((t, i) => {
-    h += `<article class="bet">${glowa(t)}${miniTablica(t)}
-      ${poziomTypu(t, '🔒', (i+1) + '. Najpewniejszy', 'main')}
+    h += `<article class="bet">${glowa(t)}${obrazMeczu(t)}
+      ${poziomTypu(t, '🔒', (i+1) + '. Najpewniejszy', 'main', t)}
       ${t.nizsza_pewnosc?'<div class="note warn">Niższa pewność – dobrany, żeby było minimum 5 typów.</div>':''}
-      ${poziomTypu(t.lepszy_kurs, '⚖️', 'Lepszy kurs')}
-      ${poziomTypu(t.ryzykowny, '🎯', 'Ryzykowny')}
+      ${poziomTypu(t.lepszy_kurs, '⚖️', 'Lepszy kurs', '', t)}
+      ${poziomTypu(t.ryzykowny, '🎯', 'Ryzykowny', '', t)}
       ${t.uwaga?`<div class="note warn">${esc(t.uwaga)}</div>`:''}
+      ${raportHTML(t.raport, t)}
       ${kafelkiWynikow(t.wyniki)}
     </article>`;
   });
-  return h + `<p class="note">Testy 2023–2026: najpewniejsze typy wchodziły średnio w 4 z 5 przypadków. Typy „lepszy kurs” wchodzą ok. 5–6 razy na 10, „ryzykowne” zwykle 2–4 razy na 10 – stawiaj na nie mniejsze kwoty. Typy łączone (np. „1 i powyżej 1.5 gola”) nie były osobno testowane.</p>`;
+  return h + `<p class="note">Szanse pochodzą z kursów Pinnacle i giełdy Betfair (test 2022–2026: dokładniejsze niż model), a gdy ich brak – z modelu po kalibracji. Mecze z ostrzeżeniem w raporcie (brak kluczowego gracza, rotacja) trafiają na koniec listy. Testy: najpewniejsze wchodzą ok. 3 na 4 razy, „lepszy kurs” ok. 6 na 10, „ryzykowne” ok. 3–4 na 10.</p>`;
 }
 function widokMecz(){
   if(!S.modele) return `<div class="empty">Brak danych modelu. Program pobierze je przy najbliższym odświeżeniu.</div>`;
@@ -323,31 +373,49 @@ function widokMecz(){
     <div id="wynik"></div>`;
   return h;
 }
+function meczDzis(liga, H, A){
+  return ((S.dzis && S.dzis.mecze) || []).find(m => m.analiza && m.analiza.model === liga && m.analiza.h === H && m.analiza.a === A);
+}
 function licz(){
   const liga = $('#liga').value, g = $('#gosp').value, a = $('#gosc').value, neu = $('#neutral').checked;
   store.set('mecz', {liga, g, a, n: neu});
   const H = znajdzDruzyne(liga, g), A = znajdzDruzyne(liga, a), out = $('#wynik');
   if(!H || !A || H===A){ out.innerHTML = `<div class="empty" style="margin-top:14px">Nie znaleziono ${!H?'gospodarza':'gościa'} w rozgrywkach „${esc(liga)}”. Zacznij pisać nazwę i wybierz ją z podpowiedzi.</div>`; return; }
-  const m = S.modele.modele[liga], [lh, la] = oczekiwaneGole(m, H, A, neu, S.modele.kalibracja);
-  const M = macierz(lh, la, m.rho), r = rynki(M), top = topWyniki(M, 5);
+  const m = S.modele.modele[liga]; const dz = meczDzis(liga, H, A);
+  const rynek = !!(dz && dz.analiza.lam);
+  const [lh, la] = rynek ? dz.analiza.lam : oczekiwaneGole(m, H, A, neu, S.modele.kalibracja);
+  const M = macierz(lh, la, rynek ? -0.05 : m.rho), top = topWyniki(M, 5);
+  const R2 = rozszerzone(M, pokaz(liga,H), pokaz(liga,A));
+  const P = z => rynek ? R2[z][0] : kal(z, R2[z][0], liga);          // szansa po kalibracji (model) albo rynkowa
   const kursy = {}; document.querySelectorAll('.odds-in input').forEach(i => { const v = parseFloat(String(i.value).replace(',','.')); if(v>1) kursy[i.dataset.z]=v; });
   const [ti, tj, tp] = top[0];
+  const naj = k => { let best=null; for(let i=0;i<=MAXG;i++) for(let j=0;j<=MAXG;j++){ if((k==='1'&&i>j)||(k==='X'&&i===j)||(k==='2'&&i<j)) if(!best||M[i][j]>best[2]) best=[i,j,M[i][j]]; } return best; };
+  const [n1, nx, n2] = ['1','X','2'].map(naj);
+  const HN = pokaz(liga,H), AN = pokaz(liga,A);
   let h = `<div class="board">
-    <div class="teams"><span>${esc(pokaz(liga,H))}</span><div class="digits"><span>${ti}</span><span>${tj}</span></div><span>${esc(pokaz(liga,A))}</span></div>
-    <div class="cap">Najbardziej prawdopodobny wynik – ${pct(tp)} szans · oczekiwane gole ${num(lh)} : ${num(la)}</div></div>
-    <div class="scores">${top.map(([i,j,p])=>`<span class="tile"><b>${i}:${j}</b><span>${pct(p)} · kurs ${num(1/p,1)}</span></span>`).join('')}</div>`
-    + typAlgorytmu(r, kursy, H, A, liga, M);
+    <div class="teams"><span>${esc(HN)}</span><div class="digits"><span>${ti}</span><span>${tj}</span></div><span>${esc(AN)}</span></div>
+    <div class="cap">Najczęstszy pojedynczy wynik – ${pct(tp)} szans · oczekiwane gole ${num(lh)} : ${num(la)}</div></div>
+    <div class="x12"><div><b>${pct(P('1'))}</b><span>wygra ${esc(HN)}</span></div><div><b>${pct(P('X'))}</b><span>remis</span></div><div><b>${pct(P('2'))}</b><span>wygra ${esc(AN)}</span></div></div>
+    <div class="note">Jeśli wygra ${esc(HN)} – najczęściej <b>${n1[0]}:${n1[1]}</b> · remis – <b>${nx[0]}:${nx[1]}</b> · jeśli wygra ${esc(AN)} – <b>${n2[0]}:${n2[1]}</b></div>
+    <div class="scores">${top.map(([i,j,p])=>`<span class="tile"><b>${i}:${j}</b><span>${pct(p)} · kurs ${num(1/p,1)}</span></span>`).join('')}</div>`;
+  h += rynek ? `<div class="banner" style="margin-top:12px">Ten mecz jest dziś w ofercie – szanse pochodzą z kursów Pinnacle/Betfair z ${esc(String(S.dzis.wygenerowano).slice(11))}, które uwzględniają składy i kontuzje znane rynkowi.</div>`
+             : `<p class="note">Szanse z modelu statystycznego po kalibracji. Nie uwzględniają składów ani kontuzji.</p>`;
+  h += typAlgorytmu(R2, P, kursy, HN, AN, liga, M);
+  if(dz && dz.raport) h += raportHTML(dz.raport, dz);
   const dane = m.druzyny;
-  if(Math.min(dane[H][2], dane[A][2]) < 10) h += `<p class="note warn">Mało danych o jednej z drużyn – wynik mniej pewny.</p>`;
+  if(!rynek && Math.min(dane[H][2], dane[A][2]) < 10) h += `<p class="note warn">Mało danych o jednej z drużyn – wynik mniej pewny.</p>`;
   if(liga === 'Puchary europejskie') h += `<p class="note">Mecz pucharowy: model porównuje ligi na wspólnej skali (ligi + mecze Ligi Mistrzów, Ligi Europy i Ligi Konferencji). W dwumeczu nie uwzględnia wyniku pierwszego meczu.</p>`;
-  const grupy = [['1','X','2'],['1X','X2','12'],['Powyżej 1.5','Powyżej 2.5','Poniżej 2.5','Poniżej 3.5'],['BTTS Tak','BTTS Nie']];
-  const nazwy = {'1':'Wygra '+pokaz(liga,H),'X':'Remis','2':'Wygra '+pokaz(liga,A),'1X':'1X – gospodarz lub remis','X2':'X2 – gość lub remis','12':'12 – bez remisu','BTTS Tak':'Obie strzelą','BTTS Nie':'Nie obie strzelą'};
+  const grupy = [['1','X','2'],['1X','X2','12'],['Over 1.5','Over 2.5','Under 2.5','Under 3.5'],['BTTS Tak','BTTS Nie']];
+  const nazwy = {'1':'Wygra '+HN,'X':'Remis','2':'Wygra '+AN,'1X':'1X – '+HN+' lub remis','X2':'X2 – '+AN+' lub remis','12':'12 – bez remisu','BTTS Tak':'Obie strzelą','BTTS Nie':'Nie obie strzelą',
+    'Over 1.5':'Powyżej 1.5 gola','Over 2.5':'Powyżej 2.5 gola','Under 2.5':'Poniżej 2.5 gola','Under 3.5':'Poniżej 3.5 gola'};
+  const kz = {'Powyżej 2.5':'Over 2.5','Poniżej 2.5':'Under 2.5'};
+  const kursyK = {}; for(const [z,v] of Object.entries(kursy)) kursyK[kz[z]||z] = v;
   h += `<h2>Szanse</h2><div class="mk">`;
-  grupy.forEach((g, gi) => { if(gi) h += '<hr>'; for(const z of g){ const p = r[z];
-    h += `<span class="n">${esc(nazwy[z] || z + ' gola')}</span><span class="p">${pct(p)}</span><span class="f">kurs ${num(1/p)}</span>`;
-    if(kursy[z]){ const ev = p*kursy[z]-1; h += `<span class="ev ${ev>=0.03?'pos':(ev<0?'neg':'')}">Twój kurs ${num(kursy[z])}: ${ev>=0.03?'opłaca się':'nie opłaca się'} (${sgn(ev)})</span>`; }
+  grupy.forEach((g, gi) => { if(gi) h += '<hr>'; for(const z of g){ const p = P(z);
+    h += `<span class="n">${esc(nazwy[z])}</span><span class="p">${pct(p)}</span><span class="f">kurs ${num(1/p)}</span>`;
+    if(kursyK[z]){ const ev = p*kursyK[z]-1; h += `<span class="ev ${ev>=0.03?'pos':(ev<0?'neg':'')}">Twój kurs ${num(kursyK[z])}: ${ev>=0.03?'opłaca się':'nie opłaca się'} (${sgn(ev)})</span>`; }
   }});
-  h += `</div><p class="note">Szanse z modelu statystycznego (siła ataku i obrony, przewaga własnego boiska). Nie uwzględniają składów ani kontuzji.</p>`;
+  h += `</div>`;
   out.innerHTML = h;
 }
 
@@ -373,51 +441,26 @@ function rozszerzone(M, H, A){
   return r;
 }
 
-function dodatkoweRynki(M){
-  const o = {'H -1.5':0,'A -1.5':0,'H -2.5':0,'A -2.5':0,'Gosp. powyżej 1.5':0,'Gość powyżej 1.5':0};
-  for(let i=0;i<=MAXG;i++) for(let j=0;j<=MAXG;j++){ const v=M[i][j], d=i-j;
-    if(d>=2) o['H -1.5']+=v; if(d>=3) o['H -2.5']+=v; if(d<=-2) o['A -1.5']+=v; if(d<=-3) o['A -2.5']+=v;
-    if(i>=2) o['Gosp. powyżej 1.5']+=v; if(j>=2) o['Gość powyżej 1.5']+=v; }
-  return o;
-}
-function typAlgorytmu(r, kursy, H, A, liga, M){
-  const nazwa = {'1':'Wygra '+pokaz(liga,H), '2':'Wygra '+pokaz(liga,A), '1X':'1X – '+pokaz(liga,H)+' lub remis',
-    'X2':'X2 – '+pokaz(liga,A)+' lub remis', '12':'12 – bez remisu', 'Powyżej 1.5':'Powyżej 1.5 gola',
-    'Powyżej 2.5':'Powyżej 2.5 gola', 'Poniżej 3.5':'Poniżej 3.5 gola', 'X':'Remis', 'Poniżej 2.5':'Poniżej 2.5 gola', 'BTTS Tak':'Obie strzelą',
-    'Powyżej 3.5':'Powyżej 3.5 gola', 'H -1.5':pokaz(liga,H)+' wygra różnicą 2+ goli (handicap -1.5)', 'A -1.5':pokaz(liga,A)+' wygra różnicą 2+ goli (handicap -1.5)',
-    'H -2.5':pokaz(liga,H)+' wygra różnicą 3+ goli (handicap -2.5)', 'A -2.5':pokaz(liga,A)+' wygra różnicą 3+ goli (handicap -2.5)',
-    'Gosp. powyżej 1.5':pokaz(liga,H)+' strzeli 2+ gole', 'Gość powyżej 1.5':pokaz(liga,A)+' strzeli 2+ gole'};
-  r = Object.assign({}, r, dodatkoweRynki(M));
-  // rynki, które w testach 2023–2026 były dobrze skalibrowane przy wysokich szansach (jak w zakładce Pewne)
-  // przy dużej przewadze jednej drużyny dochodzą handicapy i gole drużyny – zwykłe rynki mają wtedy za niskie kursy
-  const kand = ['1','2','1X','X2','12','Powyżej 1.5','Powyżej 2.5','Poniżej 3.5','Powyżej 3.5','H -1.5','A -1.5','H -2.5','A -2.5','Gosp. powyżej 1.5','Gość powyżej 1.5']
-    // korekty z testów: w ligach '12' było przeceniane o ~3,5 pkt, w pucharach 'X2' o ~5 pkt
-    .map(z => { const pu = liga === 'Puchary europejskie'; const k = pu ? (z==='X2' ? -0.05 : 0) : (z==='12' ? -0.035 : 0); return {z, p: r[z] + k}; })
-    .filter(t => t.p > 0 && 1/t.p >= 1.25).sort((a,b) => b.p - a.p);
-  const glowny = kand[0];
-  const R2 = rozszerzone(M, pokaz(liga,H), pokaz(liga,A));
-  const pu = liga === 'Puchary europejskie';
-  const kor = z => pu ? (z==='X2' ? -0.05 : 0) : (z==='12' ? -0.035 : 0);
-  const PRZ = {'BTTS Tak':'BTTS Nie','1X':'2','X2':'1','12':'X','Over 1.5':'Under 1.5','Over 2.5':'Under 2.5','Over 3.5':'Under 3.5','Over 4.5':'Under 4.5'};
-  for(const [a,b] of Object.entries({...PRZ})) PRZ[b] = a;
+const NAJ = ['1','2','1X','X2','12','Over 1.5','Over 2.5','Under 3.5','Over 3.5','H -1.5','A -1.5','H -2.5','A -2.5','H o1.5','A o1.5'];
+function typAlgorytmu(R2, P, kursy, HN, AN, liga, M){
   const razem = (a, b) => { let s = 0; for(let i=0;i<=MAXG;i++) for(let j=0;j<=MAXG;j++) if(R2[a][3](i,j,i+j,i-j) && R2[b][3](i,j,i+j,i-j)) s += M[i][j]; return s; };
-  const wyb = (lista, kmin, kmax, pmin, wyk) => lista.filter(z => !wyk.includes(z) && !wyk.filter(w => R2[w]).some(w => razem(z, w) < 0.03)).map(z => ({z, p: R2[z][0] + kor(z)}))
+  const wyb = (lista, kmin, kmax, pmin, wyk) => lista.filter(z => R2[z] && !wyk.includes(z) && !wyk.some(w => razem(z, w) < 0.03)).map(z => ({z, p: P(z)}))
       .filter(t => t.p > pmin && 1/t.p >= kmin && 1/t.p <= kmax).sort((a,b) => b.p - a.p)[0];
-  const ekw = {'Powyżej 1.5':'Over 1.5','Powyżej 2.5':'Over 2.5','Poniżej 3.5':'Under 3.5','Powyżej 3.5':'Over 3.5','Gosp. powyżej 1.5':'H o1.5','Gość powyżej 1.5':'A o1.5'};
-  const gz = ekw[glowny.z] || glowny.z;
-  const alt = wyb(LEPSZY, 1.55, 2.30, 0.40, [gz]);
-  const ryz = wyb(RYZYK, 2.50, 5.00, 0.18, [gz, alt ? alt.z : '']);
+  const glowny = wyb(NAJ, 1.25, 99, 0, []);
+  if(!glowny) return '';
+  const alt = wyb(LEPSZY, 1.55, 2.30, 0.40, [glowny.z]);
+  const ryz = wyb(RYZYK, 2.50, 5.00, 0.18, [glowny.z].concat(alt ? [alt.z] : []));
   const poziom = glowny.p >= 0.75 ? 'wysoka' : glowny.p >= 0.65 ? 'średnia' : 'niska';
-  const nz = t => (R2[t.z] ? R2[t.z][1] : nazwa[t.z]); const oz = t => (R2[t.z] ? R2[t.z][2] : '');
+  const kz = {'Powyżej 2.5':'Over 2.5','Poniżej 2.5':'Under 2.5'}; const kursyK = {}; for(const [z,v] of Object.entries(kursy)) kursyK[kz[z]||z] = v;
   let h = `<div class="typ"><h3>Typ algorytmu (pewność: ${poziom})</h3>
-    <div class="main"><b>${esc(nazwa[glowny.z])}</b><span>${pct(glowny.p)}</span></div>
-    <div class="note">Szukaj kursu co najmniej <b>${num(1/glowny.p)}</b>${kursy[glowny.z] ? ` – Twój kurs ${num(kursy[glowny.z])} ${glowny.p*kursy[glowny.z] >= 1 ? '✅ opłaca się' : '❌ za niski'}` : ''}.</div>`;
+    <div class="main"><b>${esc(R2[glowny.z][1])}</b><span>${pct(glowny.p)}</span></div>${R2[glowny.z][2] ? `<div class="note">${esc(R2[glowny.z][2])}</div>` : ''}
+    <div class="note">Szukaj kursu co najmniej <b>${num(1/glowny.p)}</b>${kursyK[glowny.z] ? ` – Twój kurs ${num(kursyK[glowny.z])} ${glowny.p*kursyK[glowny.z] >= 1 ? '✅ opłaca się' : '❌ za niski'}` : ''}.</div>`;
   if(poziom === 'niska') h += `<div class="note warn">Żaden zakład z sensownym kursem nie ma tu wysokiej szansy. Rozważ odpuszczenie.</div>`;
-  if(alt) h += poziomTypu({zaklad: nz(alt), opis: oz(alt), szansa: alt.p, kurs_uczciwy: 1/alt.p, kurs_min: 0.95/alt.p}, '⚖️', 'Lepszy kurs');
-  if(ryz) h += poziomTypu({zaklad: nz(ryz), opis: oz(ryz), szansa: ryz.p, kurs_uczciwy: 1/ryz.p, kurs_min: 0.95/ryz.p}, '🎯', 'Ryzykowny');
-  const value = Object.keys(kursy).map(z => ({z, p: r[z], ev: r[z]*kursy[z]-1})).filter(t => t.ev >= 0.05 && t.p >= 0.35).sort((a,b) => b.ev - a.ev)[0];
-  if(value) h += `<div class="alt">Z Twoich kursów najbardziej opłaca się: <b>${esc(nazwa[value.z] || value.z)}</b> po ${num(kursy[value.z])} (przewaga ${sgn(value.ev)}, szansa ${pct(value.p)})</div>`;
-  return h + `<div class="note">Typ to zakład z największą szansą wejścia według modelu, a nie pewniak – przy ${pct(glowny.p)} przegrywa średnio ${Math.round((1-glowny.p)*10)} na 10 razy.</div></div>`;
+  if(alt) h += poziomTypu({zaklad: R2[alt.z][1], opis: R2[alt.z][2], szansa: alt.p, kurs_uczciwy: 1/alt.p, kurs_min: 0.95/alt.p}, '⚖️', 'Lepszy kurs');
+  if(ryz) h += poziomTypu({zaklad: R2[ryz.z][1], opis: R2[ryz.z][2], szansa: ryz.p, kurs_uczciwy: 1/ryz.p, kurs_min: 0.95/ryz.p}, '🎯', 'Ryzykowny');
+  const value = Object.keys(kursyK).filter(z => R2[z]).map(z => ({z, p: P(z), ev: P(z)*kursyK[z]-1})).filter(t => t.ev >= 0.05 && t.p >= 0.35).sort((a,b) => b.ev - a.ev)[0];
+  if(value) h += `<div class="alt">Z Twoich kursów najbardziej opłaca się: <b>${esc(R2[value.z][1])}</b> po ${num(kursyK[value.z])} (przewaga ${sgn(value.ev)}, szansa ${pct(value.p)})</div>`;
+  return h + `<div class="note">Typ to zakład z największą szansą wejścia, a nie pewniak – przy ${pct(glowny.p)} przegrywa średnio ${Math.round((1-glowny.p)*10)} na 10 razy.</div></div>`;
 }
 function krzywa(pkt){
   if(!pkt || pkt.length < 2) return '';
@@ -429,9 +472,25 @@ function krzywa(pkt){
     <line x1="0" x2="${w}" y1="${y(0)}" y2="${y(0)}" stroke="currentColor" stroke-opacity=".3" stroke-dasharray="3 4"/>
     <path d="${d}" fill="none" stroke="${ost>=0?'var(--win)':'var(--loss)'}" stroke-width="2.2" vector-effect="non-scaling-stroke"/></svg>`;
 }
+function widokPewneStat(){
+  const p = S.dziennik && S.dziennik.pewne;
+  let h = `<h2>Dziennik typów „Pewne”</h2><p class="lead">Wszystkie trzy poziomy z zakładki Pewne zapisują się codziennie i rozliczają po meczu.</p>`;
+  if(!p || !p.rozliczonych) return h + `<div class="empty">Brak rozliczonych typów – pojawią się po pierwszych meczach.${p && p.czeka ? ` Czeka na wynik: ${p.czeka}.` : ''}</div>`;
+  const nazwy = {najpewniejszy:'🔒 Najpewniejsze', lepszy_kurs:'⚖️ Lepszy kurs', ryzykowny:'🎯 Ryzykowne'};
+  h += `<div class="mk">` + ['najpewniejszy','lepszy_kurs','ryzykowny'].filter(k => p.poziomy[k]).map(k => { const v = p.poziomy[k];
+    return `<span class="n">${nazwy[k]} <span class="muted">(${v.n})</span></span><span class="p">${pct(v.weszlo)}</span><span class="f">przew. ${pct(v.przewidywane)}</span>` +
+      (v.zysk_betclic_10zl != null ? `<span class="ev ${v.zysk_betclic_10zl>=0?'pos':'neg'}">Przy 10 zł na typ po kursach Betclic (${v.z_kursem} typów): ${v.zysk_betclic_10zl>=0?'+':''}${num(v.zysk_betclic_10zl)} zł</span>` : ''); }).join('') + `</div>`;
+  h += `<p class="note">Rozliczonych: ${p.rozliczonych}, czeka: ${p.czeka}. ${p.rozliczonych < 100 ? 'Przy mniej niż ok. 100 typach różnice to głównie przypadek.' : ''}</p>`;
+  if(p.z_ostrzezeniem && p.z_ostrzezeniem.length > 1) h += `<p class="note">Z ostrzeżeniem w raporcie: ` + p.z_ostrzezeniem.map(x => `${x.ostrzezenie ? '⚠️ tak' : 'nie'} – weszło ${pct(x.weszlo)} (przew. ${pct(x.przewidywane)}, ${x.n})`).join(' · ') + `</p>`;
+  const sk = S.dziennik.samokorekta || {}; const ks = Object.keys(sk);
+  h += `<p class="note">Samokorekta z dziennika: ${ks.length ? ks.map(k => `${esc(k)} ${sk[k]>=0?'+':''}${(sk[k]*100).toFixed(1).replace('.', ',')} pkt`).join(', ') : 'jeszcze nieaktywna (potrzeba min. 100 typów danego rodzaju)'}.</p>`;
+  h += `<ul class="log">` + (p.ostatnie || []).slice(0, 40).map(t => { const ic = t.trafiony == null ? '⏳' : (t.trafiony ? '✅' : '❌');
+    return `<li><span>${ic}</span><span><b>${esc(plMecz(t.mecz))}</b><br>${nazwy[t.poziom] ? nazwy[t.poziom].split(' ')[0] : ''} ${esc(t.zaklad)} · ${pct(t.szansa)} · ${esc(String(t.start).slice(5,10).split('-').reverse().join('.'))}</span><span class="r">${esc(t.wynik || '')}</span></li>`; }).join('') + `</ul>`;
+  return h;
+}
 function widokDziennik(){
   const d = S.dziennik;
-  let h = `<h2>Dziennik value</h2><p class="lead">Każdy typ value zapisuje się automatycznie i rozlicza po meczu – niezależnie od tego, czy go postawisz.</p>`;
+  let h = widokPewneStat() + `<h2>Dziennik value</h2><p class="lead">Każdy typ value zapisuje się automatycznie i rozlicza po meczu – niezależnie od tego, czy go postawisz.</p>`;
   if(!d || !d.statystyki) return h + `<div class="empty">Dziennik jest jeszcze pusty. Typy pojawią się tu po pierwszym dniu z zakładami value.</div>`;
   const s = d.statystyki;
   h += `<div class="stats">
@@ -452,9 +511,131 @@ function widokDziennik(){
   return h;
 }
 
+
+/* ---------- NA ŻYWO (ESPN, publiczne dane) ---------- */
+const ESPN_LIGI = {'uefa.champions':'Liga Mistrzów','uefa.europa':'Liga Europy','uefa.europa.conf':'Liga Konferencji','uefa.nations':'Liga Narodów',
+ 'fifa.world':'Mistrzostwa świata','fifa.worldq.uefa':'El. MŚ (Europa)','uefa.euro':'Mistrzostwa Europy','uefa.euroq':'El. ME','fifa.friendly':'Mecze towarzyskie',
+ 'eng.1':'Premier League','eng.2':'Championship','eng.3':'League One','eng.4':'League Two','eng.5':'National League','esp.1':'La Liga','esp.2':'LaLiga 2',
+ 'ger.1':'Bundesliga','ger.2':'2. Bundesliga','ita.1':'Serie A','ita.2':'Serie B','fra.1':'Ligue 1','fra.2':'Ligue 2','ned.1':'Eredivisie','por.1':'Liga Portugal',
+ 'pol.1':'Ekstraklasa','sco.1':'Premiership (SCO)','sco.2':'Championship (SCO)','bel.1':'Jupiler Pro League','tur.1':'Süper Lig','gre.1':'Super League (GRE)',
+ 'aut.1':'Bundesliga (AUT)','den.1':'Superliga (DEN)','nor.1':'Eliteserien','swe.1':'Allsvenskan','sui.1':'Super League (SUI)','irl.1':'League of Ireland',
+ 'rou.1':'Liga I (ROU)','fin.1':'Veikkausliiga'};
+const LIVE = {mecze:[], czas:null, blad:null, timer:null, ligiDzis:null};
+const dz2 = s => { s = norm(s).replace(/\b(fc|cf|afc|sc|ac|fk|sk|club|de|the)\b/g,' ').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
+  const b = new Set(); for(let i=0;i<s.length-1;i++) b.add(s.slice(i,i+2)); return b; };
+const podob = (a, b) => { const A = dz2(a), B = dz2(b); if(!A.size || !B.size) return 0; let k = 0; A.forEach(x => { if(B.has(x)) k++; }); return 2*k/(A.size+B.size); };
+function parsujESPN(j, slug){
+  return (j.events || []).map(e => { const c = (e.competitions || [])[0] || {}; const t = c.competitors || [];
+    const H = t.find(x => x.homeAway === 'home') || t[0] || {}, A = t.find(x => x.homeAway === 'away') || t[1] || {};
+    const st = (e.status || c.status || {}); const ty = st.type || {};
+    const zd = (c.details || []).map(d => ({typ: (d.type||{}).text || '', min: (d.clock||{}).displayValue || '', kto: ((d.athletesInvolved||[])[0]||{}).displayName || '',
+      dom: ((d.team||{}).id) === ((H.team||{}).id), gol: !!d.scoringPlay, czerw: !!d.redCard || /red card/i.test((d.type||{}).text || '')}));
+    return {id: e.id, liga: ESPN_LIGI[slug] || slug, slug, start: e.date, stan: ty.state || 'pre', opis: ty.shortDetail || ty.detail || '', minuta: st.displayClock || '',
+      dom: (H.team||{}).displayName || '?', gosc: (A.team||{}).displayName || '?', hg: parseInt(H.score ?? '') , ag: parseInt(A.score ?? ''), zdarzenia: zd};
+  });
+}
+async function pobierzLive(){
+  const d = new Date(), ds = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+  const ligi = LIVE.ligiDzis || Object.keys(ESPN_LIGI);
+  const wyn = await Promise.allSettled(ligi.map(slug => fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${slug}/scoreboard?dates=${ds}`)
+    .then(r => r.ok ? r.json() : null).then(j => j ? parsujESPN(j, slug) : [])));
+  const mecze = []; wyn.forEach(w => { if(w.status === 'fulfilled') mecze.push(...w.value); });
+  if(!mecze.length && wyn.every(w => w.status === 'rejected')) throw new Error('brak połączenia z serwisem wyników');
+  if(!LIVE.ligiDzis) LIVE.ligiDzis = [...new Set(mecze.map(m => m.slug))];   // później odświeżamy tylko ligi, które dziś grają
+  LIVE.mecze = mecze; LIVE.czas = new Date(); LIVE.blad = null;
+}
+function naszeTypy(){
+  const d = S.dzis || {}; const out = [];
+  for(const t of (d.pewne || [])){
+    const typy = [{ikona:'🔒', nazwa:t.zaklad, klucz:t.klucz}];
+    if(t.lepszy_kurs) typy.push({ikona:'⚖️', nazwa:t.lepszy_kurs.zaklad, klucz:t.lepszy_kurs.klucz});
+    if(t.ryzykowny) typy.push({ikona:'🎯', nazwa:t.ryzykowny.zaklad, klucz:t.ryzykowny.klucz});
+    out.push({gospodarz:t.gospodarz, gosc:t.gosc, typy, mecz:t});
+  }
+  for(const v of (d.value || [])){
+    let o = out.find(x => x.gospodarz === v.gospodarz && x.gosc === v.gosc);
+    if(!o){ o = {gospodarz:v.gospodarz, gosc:v.gosc, typy:[], mecz:v}; out.push(o); }
+    o.typy.push({ikona:'💰', nazwa:`${v.zaklad} @ ${num(v.kurs)}`, rynek:v.rynek, strona:v.strona, linia:v.linia, klucz: v.rynek === '1X2' ? v.strona : (v.rynek === 'btts' ? v.strona : null)});
+  }
+  return out;
+}
+function ocenTyp(t, hg, ag, koniec){
+  // zwraca [ikona, tekst]; "już" = rozstrzygnięte niezależnie od dalszej gry
+  const T = hg + ag, D = hg - ag;
+  let wynik = null, juz = null;   // wynik: 1 wygrywa, 0.5 pół, 0 zwrot/remis linii, -1 przegrywa
+  const linia = (v, l) => { const ls = Math.abs((l*4) % 2) === 1 ? [l-0.25, l+0.25] : [l]; let s = 0; for(const x of ls){ const r = v(x); s += r > 1e-9 ? 1 : (Math.abs(r) < 1e-9 ? 0 : -1); } return s / ls.length; };
+  if(t.rynek === 'gole'){ const l = +t.linia; wynik = linia(x => t.strona === 'over' ? T - x : x - T, l);
+    if(t.strona === 'over' && T > l + 0.3) juz = 1; if(t.strona === 'under' && T > l + 0.3) juz = -1; }
+  else if(t.rynek === 'handicap'){ const l = +t.linia; wynik = linia(x => t.strona === 'home' ? D + x : -D + x, l); }
+  if(wynik === null && t.klucz){
+    const m = {'BTTS Tak':'BTTS Tak','BTTS Nie':'BTTS Nie'}[t.klucz] || t.klucz;
+    const M = Array.from({length:MAXG+1}, () => Array(MAXG+1).fill(0)); M[Math.min(hg,MAXG)][Math.min(ag,MAXG)] = 1;
+    const R = rozszerzone(M, '', ''); if(R[m]) wynik = R[m][0] > 0.5 ? 1 : -1;
+    // zakłady, które po spełnieniu nie mogą już przegrać / po przekroczeniu nie mogą wygrać
+    const ov = /^Over (\d\.5)$/.exec(m), un = /^Under (\d\.5)$/.exec(m), to = /^([HA]) o(\d\.5)$/.exec(m);
+    if(ov && T > +ov[1]) juz = 1; if(un && T > +un[1]) juz = -1; if(m === 'BTTS Tak' && hg > 0 && ag > 0) juz = 1; if(m === 'BTTS Nie' && hg > 0 && ag > 0) juz = -1;
+    if(to && (to[1] === 'H' ? hg : ag) > +to[2]) juz = 1;
+  }
+  if(wynik === null) return ['•', 'nie da się ocenić'];
+  if(koniec) return wynik > 0 ? ['✅', wynik === 1 ? 'weszło' : 'połowa wygranej'] : (wynik === 0 ? ['↩️', 'zwrot'] : ['❌', 'nie weszło']);
+  if(juz === 1) return ['✅', 'już weszło']; if(juz === -1) return ['❌', 'już przegrane'];
+  return wynik > 0 ? ['🟢', 'na razie wchodzi'] : (wynik === 0 ? ['🟡', 'na razie zwrot'] : ['🔴', 'na razie nie wchodzi']);
+}
+function kartaLive(m, moje){
+  const st = m.stan === 'in' ? `<span class="st in">${esc(m.opis || m.minuta)}</span>` : m.stan === 'post' ? `<span class="st">Koniec</span>`
+    : `<span class="st">${new Date(m.start).toLocaleTimeString('pl-PL',{hour:'2-digit',minute:'2-digit'})}</span>`;
+  const gra = m.stan !== 'pre' && !isNaN(m.hg);
+  let h = `<div class="lv${moje ? ' moj' : ''}"><div class="hd"><span>${esc(m.liga)}</span>${st}</div>
+    <div class="rw"><span>${esc(plN(m.dom))}</span><b>${gra ? m.hg : ''}</b><span>${esc(plN(m.gosc))}</span><b>${gra ? m.ag : ''}</b></div>`;
+  const zd = m.zdarzenia.filter(z => z.gol || z.czerw);
+  if(zd.length) h += `<div class="ev2">${zd.map(z => `${z.czerw ? '🟥' : '⚽'} ${esc(z.min)} ${esc(z.kto)}${z.dom ? '' : ''}`).join(' · ')}</div>`;
+  if(moje) h += `<div class="ty">` + moje.typy.map(t => { const [ic, tx] = gra ? ocenTyp(t, m.hg, m.ag, m.stan === 'post') : ['⏳', 'przed meczem'];
+      return `<div>${t.ikona} ${esc(plTxt(t.nazwa, moje.mecz))} – ${ic} ${tx}</div>`; }).join('') + `</div>`;
+  return h + `</div>`;
+}
+function widokLive(){
+  let h = `<h2>Na żywo</h2><p class="lead">Mecze z obsługiwanych lig i rozgrywek. Na górze mecze z Twoimi dzisiejszymi typami z zakładek Pewne i Value. Odświeża się co 30 sekund.</p>`;
+  if(S.demo && !LIVE.mecze.length) LIVE.mecze = demoLive();
+  if(LIVE.blad) h += `<div class="banner">Nie udało się pobrać wyników: ${esc(LIVE.blad)}. Spróbuję ponownie za chwilę.</div>`;
+  if(!LIVE.czas && !S.demo) return h + `<div class="empty">Ładuję wyniki…</div>`;
+  const typy = naszeTypy(); const uzyte = new Set();
+  const znajdz = t => LIVE.mecze.find(m => podob(m.dom, t.gospodarz) >= 0.55 && podob(m.gosc, t.gosc) >= 0.55);
+  const kol = m => ({in:0, pre:1, post:2})[m.stan] ?? 1;
+  const moje = typy.map(t => ({t, m: znajdz(t)})).filter(x => x.m).sort((a,b) => kol(a.m) - kol(b.m) || new Date(a.m.start) - new Date(b.m.start));
+  if(moje.length){ h += `<div class="lgh">⭐ Twoje typy na dziś</div>`; moje.forEach(x => { uzyte.add(x.m.id); h += kartaLive(x.m, x.t); }); }
+  const bez = typy.filter(t => !znajdz(t));
+  if(bez.length) h += `<p class="note">Bez wyników na żywo (brak w serwisie): ${bez.map(t => esc(plN(t.gospodarz) + ' – ' + plN(t.gosc))).join(', ')}</p>`;
+  const reszta = LIVE.mecze.filter(m => !uzyte.has(m.id));
+  for(const [stan, tyt] of [['in','🔴 Trwają'],['pre','Dziś później'],['post','Zakończone']]){
+    const lista = reszta.filter(m => m.stan === stan).sort((a,b) => a.liga.localeCompare(b.liga,'pl') || new Date(a.start) - new Date(b.start));
+    if(!lista.length) continue;
+    h += `<div class="lgh">${tyt} (${lista.length})</div>` + lista.map(m => kartaLive(m, null)).join('');
+  }
+  if(!LIVE.mecze.length) h += `<div class="empty">Dziś brak meczów w obsługiwanych ligach.</div>`;
+  if(LIVE.czas) h += `<p class="note">Odświeżono ${LIVE.czas.toLocaleTimeString('pl-PL')}. Źródło: ESPN (nieoficjalne dane publiczne, możliwe opóźnienie do ok. minuty).</p>`;
+  if(S.demo) h += `<p class="note">Wersja pokazowa: wyniki przykładowe.</p>`;
+  return h;
+}
+function demoLive(){
+  const d = S.dzis || {}; const t0 = Date.now(); const out = [];
+  (d.pewne || []).forEach((t, i) => out.push({id:'d'+i, liga:t.liga, slug:'x', start:new Date(t0 - (i-1)*3600e3).toISOString(), stan: i === 0 ? 'post' : (i < 3 ? 'in' : 'pre'),
+    opis: i < 3 ? (i === 0 ? 'FT' : (i === 1 ? "67'" : "23'")) : '', minuta:'', dom:t.gospodarz, gosc:t.gosc, hg:[2,1,0][i] ?? 0, ag:[0,1,0][i] ?? 0,
+    zdarzenia: i === 1 ? [{gol:true, min:"12'", kto:'Gracz A', dom:true},{gol:true, min:"55'", kto:'Gracz B', dom:false}] : []}));
+  out.push({id:'x1', liga:'Premier League', slug:'eng.1', start:new Date(t0).toISOString(), stan:'in', opis:"41'", dom:'Chelsea', gosc:'Fulham', hg:1, ag:0, zdarzenia:[{gol:true,min:"30'",kto:'Palmer',dom:true}]});
+  return out;
+}
+function startLive(){
+  stopLive();
+  if(S.demo) return;
+  const tick = async () => { try { await pobierzLive(); } catch(e){ LIVE.blad = e.message; } if(S.tab === 'live') { const y = window.scrollY; $('#view').innerHTML = widokLive(); window.scrollTo(0, y); } };
+  tick(); LIVE.timer = setInterval(tick, 30000);
+}
+function stopLive(){ if(LIVE.timer){ clearInterval(LIVE.timer); LIVE.timer = null; } }
+
 /* ---------- nawigacja ---------- */
 function renderuj(){
-  const v = {value:widokValue, pewne:widokPewne, mecz:widokMecz, dziennik:widokDziennik}[S.tab]();
+  const v = {live:widokLive, value:widokValue, pewne:widokPewne, mecz:widokMecz, dziennik:widokDziennik}[S.tab]();
+  if(S.tab === 'live') { if(!LIVE.timer) startLive(); } else stopLive();
   $('#view').innerHTML = v;
   document.querySelectorAll('nav button').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === S.tab));
   if(S.tab === 'mecz' && S.modele){

@@ -5,12 +5,12 @@ a aplikacja na telefonie pokazuje wyniki i pozwala przeanalizować dowolny mecz.
 
 ## Instalacja (z telefonu)
 Cała aplikacja mieści się w jednym pliku: `.github/workflows/typer.yml`.
-1. Sekret `ODDS_API_KEY` (Settings → Secrets and variables → Actions).
+1. Sekret `ODDS_API_KEY` (Settings → Secrets and variables → Actions). Opcjonalnie `API_FOOTBALL_KEY` (darmowe konto na api-football.com) – kontuzje, zawieszenia i rotacje w raporcie przedmeczowym.
 2. Settings → Pages → Source: **GitHub Actions**.
 3. Add file → Create new file → `.github/workflows/typer.yml` → wklej zawartość → Commit.
 4. Po ok. 10 minutach aplikacja działa pod adresem `https://TWÓJ-LOGIN.github.io/typer/`.
 
-Typy odświeżają się same codziennie ok. 10:00. Ręcznie: Actions → Typer → Run workflow.
+Typy odświeżają się same codziennie o 12:00. Ręcznie: Actions → Typer → Run workflow.
 Aktualizacja programu = podmiana pliku `typer.yml` na nowy.
 
 ## Pliki
