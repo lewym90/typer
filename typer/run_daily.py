@@ -331,7 +331,7 @@ if __name__ == '__main__':
             wyn = pobierz_wyniki([l for l in set(czeka.get('liga', [])) if l])
             rozlicz(); rozlicz_pewne(wyn)
         except Exception as e: print('Rozliczenie dziennika nie powiodło się:', e)
-    today['api_football_zapytania'] = raport.licznik['zapytania']
+    today['api_football_zapytania'] = raport.licznik['zapytania']; today['api_football_bledy'] = raport.bledy[:5]
     zapisz('dzis.json', today)
     zapisz('dziennik.json', eksport_calosci())
     print('Gotowe:', len(today['value']), 'value,', len(today['pewne']), 'pewnych,', len(today['mecze']), 'meczów; API-Football:', raport.licznik['zapytania'])

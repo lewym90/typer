@@ -8,6 +8,7 @@ KLUCZ = os.environ.get('API_FOOTBALL_KEY', '')
 URL = 'https://v3.football.api-sports.io'
 PUCHARY = ('champions', 'europa', 'conference', 'cup', 'coupe', 'copa', 'coppa', 'pokal', 'beker', 'taça', 'taca', 'puchar', 'super')
 licznik = {'zapytania': 0}
+bledy = []   # błędy API-Football (np. brak dostępu do sezonu w darmowym planie) – widoczne w aplikacji
 
 def _nrm(s):
     s = unicodedata.normalize('NFKD', str(s).replace('ø', 'o').replace('ł', 'l')).encode('ascii', 'ignore').decode().lower()
@@ -19,10 +20,11 @@ def _api(sciezka, **p):
     try:
         r = requests.get(f'{URL}/{sciezka}', params=p, headers={'x-apisports-key': KLUCZ}, timeout=30); licznik['zapytania'] += 1
         j = r.json()
-        if j.get('errors'): print('API-Football:', sciezka, j['errors']); return None
+        if j.get('errors'):
+            print('API-Football:', sciezka, j['errors']); bledy.append(f"{sciezka}: {j['errors']}"); return None
         return j.get('response', [])
     except Exception as e:
-        print('API-Football błąd:', e); return None
+        print('API-Football błąd:', e); bledy.append(f'{sciezka}: {e}'); return None
 
 _mecze_dnia, _strzelcy = {}, {}
 def _znajdz_fixture(dom, gosc, data):
@@ -54,18 +56,37 @@ def _terminarz(team_id, fixture_id, start):
             elif -3 <= d < 0: uwagi.append(('zmeczenie', f'grał {round(-d)} dni temu ({nazwa})'))
     return uwagi
 
-def naglowki(druzyna, polski=False, ile=3):
-    q = quote(f'"{druzyna}" when:3d') if polski else quote(f'"{druzyna}" (football OR soccer) when:3d')
-    url = (f'https://news.google.com/rss/search?q={q}&hl=pl&gl=PL&ceid=PL:pl' if polski
-           else f'https://news.google.com/rss/search?q={q}&hl=en-GB&gl=GB&ceid=GB:en')
+SMIECI = re.compile(r'live ?stream|watch|tv channel|kick-?off time|vpn|free|online today|【|highlights|betting|odds|prediction|tip', re.I)
+
+PILKA = re.compile(r'football|soccer|nations league|league|cup|coach|manager|squad|injur|line-?up|team news|match|\\bvs?\\b|goal|striker|keeper|defender|midfield|fixture|trener|kadra|mecz|reprezentac|piłk|pilk|gol|skład|sklad|kontuzj|liga', re.I)
+
+def _tytul_ok(tytul, druzyny):
+    """Odrzuca nagłówki niezwiązane z meczem (np. wiadomości o kraju) i spam o transmisjach."""
+    if not tytul or SMIECI.search(tytul): return False
+    t = _nrm(tytul); slowa = set(t.split())
+    trafione = [d for d in druzyny if any(s in slowa for s in _nrm(d).split() if len(s) >= 4)]
+    if len(trafione) >= 2: return True
+    return bool(trafione) and bool(PILKA.search(tytul))
+
+def _rss(q, polski):
+    url = (f'https://news.google.com/rss/search?q={quote(q)}&hl=pl&gl=PL&ceid=PL:pl' if polski
+           else f'https://news.google.com/rss/search?q={quote(q)}&hl=en-GB&gl=GB&ceid=GB:en')
+    root = ET.fromstring(requests.get(url, timeout=20, headers={'User-Agent': 'Mozilla/5.0'}).content)
+    return [dict(tytul=it.findtext('title'), link=it.findtext('link'), data=(it.findtext('pubDate') or '')[:16], zrodlo=it.findtext('source') or '')
+            for it in root.iter('item')]
+
+def naglowki(druzyna, polski=False, ile=3, rywal=None):
+    """Najnowsze wiadomości o drużynie (ostatnie 3 dni); najpierw te o konkretnym meczu, bez spamu i tematów spoza piłki."""
     try:
-        root = ET.fromstring(requests.get(url, timeout=20, headers={'User-Agent': 'Mozilla/5.0'}).content)
-        out = []
-        for it in root.iter('item'):
-            out.append(dict(tytul=it.findtext('title'), link=it.findtext('link'), data=(it.findtext('pubDate') or '')[:16],
-                            zrodlo=it.findtext('source') or ''))
-            if len(out) >= ile: break
-        return out
+        wyniki, widziane = [], set()
+        zapytania = ([f'"{druzyna}" "{rywal}" when:3d'] if rywal else []) + \
+                    [f'"{druzyna}" when:3d' if polski else f'"{druzyna}" (football OR soccer) when:3d']
+        for q in zapytania:
+            for x in _rss(q, polski):
+                if x['tytul'] in widziane or not _tytul_ok(x['tytul'], [druzyna] + ([rywal] if rywal else [])): continue
+                widziane.add(x['tytul']); wyniki.append(x)
+                if len(wyniki) >= ile: return wyniki
+        return wyniki
     except Exception as e:
         print('nagłówki:', druzyna, e); return []
 
@@ -94,6 +115,8 @@ def raport(dom, gosc, start, polski=False):
         if nb >= 4: r['ostrzezenia'].append(f'dużo braków w składach ({nb} zawodników)')
     elif KLUCZ:
         r['uwagi'].append('brak meczu w API-Football – kontuzje niedostępne')
-    r['naglowki'] = {'gosp': naglowki(dom, polski), 'gosc': naglowki(gosc, polski)}
+    mecz = naglowki(dom, polski, ile=3, rywal=gosc)
+    tyt = {x['tytul'] for x in mecz}
+    r['naglowki'] = {'gosp': mecz, 'gosc': [x for x in naglowki(gosc, polski, ile=4) if x['tytul'] not in tyt][:2]}
     r['powazne'] = bool(r['ostrzezenia'])
     return r

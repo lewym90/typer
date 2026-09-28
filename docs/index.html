@@ -340,6 +340,7 @@ function widokPewne(){
   const d = S.dzis;
   if(!d) return `<div class="empty">Brak danych na dziś.</div>`;
   let h = `<h2>Najpewniejsze na dziś</h2><p class="lead">Przy każdym meczu trzy typy: najpewniejszy, z lepszym kursem i ryzykowny, szanse 1/X/2 i raport przedmeczowy. Im wyższy kurs, tym mniejsza szansa – tego nie da się obejść. Graj tam, gdzie kurs jest najwyższy, i nie łącz wszystkiego w jeden kupon.</p>`;
+  if(d.api_football_bledy && d.api_football_bledy.length) h += `<div class="banner">API-Football zgłosiło problem (kontuzje mogą być niepełne): ${esc(d.api_football_bledy[0])}</div>`;
   if(!d.pewne.length) return h + `<div class="empty">Dziś brak meczów w obsługiwanych ligach.</div>`;
   d.pewne.forEach((t, i) => {
     h += `<article class="bet">${glowa(t)}${obrazMeczu(t)}
