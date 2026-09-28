@@ -8,6 +8,7 @@ KLUCZ = os.environ.get('API_FOOTBALL_KEY', '')
 URL = 'https://v3.football.api-sports.io'
 PUCHARY = ('champions', 'europa', 'conference', 'cup', 'coupe', 'copa', 'coppa', 'pokal', 'beker', 'taça', 'taca', 'puchar', 'super')
 licznik = {'zapytania': 0}
+BLOK = set()  # endpointy niedostępne w darmowym planie (bieżący sezon) – nie marnujemy na nie zapytań
 bledy = []   # błędy API-Football (np. brak dostępu do sezonu w darmowym planie) – widoczne w aplikacji
 
 def _nrm(s):
@@ -16,12 +17,17 @@ def _nrm(s):
     return re.sub(r'[^a-z0-9 ]', ' ', re.sub(r'\s+', ' ', s)).strip()
 
 def _api(sciezka, **p):
-    if not KLUCZ or licznik['zapytania'] >= 95: return None
+    if not KLUCZ or licznik['zapytania'] >= 95 or sciezka in BLOK: return None
     try:
         r = requests.get(f'{URL}/{sciezka}', params=p, headers={'x-apisports-key': KLUCZ}, timeout=30); licznik['zapytania'] += 1
         j = r.json()
         if j.get('errors'):
-            print('API-Football:', sciezka, j['errors']); bledy.append(f"{sciezka}: {j['errors']}"); return None
+            print('API-Football:', sciezka, j['errors'])
+            if 'plan' in str(j['errors']).lower():
+                BLOK.add(sciezka)
+                bledy.append(f'darmowy plan nie obejmuje bieżącego sezonu ({sciezka})')
+            else: bledy.append(f"{sciezka}: {j['errors']}")
+            return None
         return j.get('response', [])
     except Exception as e:
         print('API-Football błąd:', e); bledy.append(f'{sciezka}: {e}'); return None
@@ -41,7 +47,7 @@ def _kluczowi(liga_id, sezon):
     if k not in _strzelcy:
         _strzelcy[k] = {}
         for i, p in enumerate(_api('players/topscorers', league=liga_id, season=sezon) or []):
-            st = p['statistics'][0]; _strzelcy[k][p['player']['id']] = (i + 1, st['goals']['total'] or 0, st['team']['id'])
+            st = p['statistics'][0]; _strzelcy[k][p['player']['id']] = (i + 1, st['goals']['total'] or 0, st['team']['id'], p['player']['name'])
     return _strzelcy[k]
 
 def _terminarz(team_id, fixture_id, start):
@@ -97,6 +103,7 @@ def raport(dom, gosc, start, polski=False):
     if f:
         fid, lid, sez = f['fixture']['id'], f['league']['id'], f['league']['season']
         ids = {'gosp': f['teams']['home']['id'], 'gosc': f['teams']['away']['id']}
+        r['api'] = dict(fixture=fid, liga=lid, sezon=sez, gosp=ids['gosp'], gosc=ids['gosc'])
         kluczowi = _kluczowi(lid, sez)
         for p in _api('injuries', fixture=fid) or []:
             strona = 'gosp' if p['team']['id'] == ids['gosp'] else 'gosc'
@@ -120,3 +127,21 @@ def raport(dom, gosc, start, polski=False):
     r['naglowki'] = {'gosp': mecz, 'gosc': [x for x in naglowki(gosc, polski, ile=4) if x['tytul'] not in tyt][:2]}
     r['powazne'] = bool(r['ostrzezenia'])
     return r
+
+
+def sklady(api_info):
+    """Oficjalne składy (zwykle ok. 60 min przed meczem) + kluczowi zawodnicy spoza pierwszej jedenastki."""
+    if not KLUCZ or not api_info: return None
+    lu = _api('fixtures/lineups', fixture=api_info['fixture'])
+    if not lu: return None
+    kluczowi = _kluczowi(api_info['liga'], api_info['sezon'])
+    out = {'gosp': [], 'gosc': [], 'poza': []}
+    for t in lu:
+        strona = 'gosp' if t['team']['id'] == api_info['gosp'] else 'gosc'
+        xi = {p['player']['id']: p['player']['name'] for p in t.get('startXI', [])}
+        lawka = {p['player']['id']: p['player']['name'] for p in t.get('substitutes', [])}
+        out[strona] = list(xi.values())
+        for pid, (poz, gole, tid, imie) in kluczowi.items():
+            if tid == t['team']['id'] and pid not in xi and poz <= 20:
+                out['poza'].append(dict(strona=strona, zawodnik=imie, gole=gole, gdzie='na ławce' if pid in lawka else 'poza kadrą meczową'))
+    return out if (out['gosp'] or out['gosc']) else None

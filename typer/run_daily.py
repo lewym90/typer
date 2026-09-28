@@ -2,7 +2,7 @@
 import json, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from core import *
-import core, raport
+import core, raport, powiadomienia as tg
 
 NAZWY_LIG = {'soccer_uefa_champs_league': 'Liga Mistrzów', 'soccer_fifa_world_cup': 'Mistrzostwa świata',
  'soccer_uefa_european_championship': 'Mistrzostwa Europy', 'soccer_uefa_nations_league': 'Liga Narodów',
@@ -12,7 +12,9 @@ NAZWY_LIG = {'soccer_uefa_champs_league': 'Liga Mistrzów', 'soccer_fifa_world_c
  'soccer_uefa_europa_league': 'Liga Europy', 'soccer_uefa_europa_conference_league': 'Liga Konferencji',
  'soccer_international_friendlies': 'Mecz towarzyski', 'soccer_portugal_primeira_liga': 'Liga Portugal',
  'soccer_netherlands_eredivisie': 'Eredivisie', 'soccer_efl_champ': 'Championship', 'soccer_germany_bundesliga2': '2. Bundesliga',
- 'soccer_turkey_super_league': 'Süper Lig', 'soccer_belgium_first_div': 'Jupiler Pro League', 'soccer_spl': 'Premiership (SCO)'}
+ 'soccer_turkey_super_league': 'Süper Lig', 'soccer_belgium_first_div': 'Jupiler Pro League', 'soccer_spl': 'Premiership (SCO)',
+ 'soccer_usa_mls': 'MLS (USA)', 'soccer_brazil_campeonato': 'Brasileirão', 'soccer_argentina_primera_division': 'Liga Profesional (ARG)',
+ 'soccer_mexico_ligamx': 'Liga MX', 'soccer_japan_j_league': 'J1 League', 'soccer_china_superleague': 'Super League (CHN)'}
 
 RAPORT_ILE_MECZOW = 8   # ile meczów sprawdzać w API-Football (darmowy plan: 100 zapytań dziennie)
 
@@ -116,6 +118,7 @@ def najczestsze(M):
 def opis_meczu(x, liga):
     mk = markets(x['M'])
     return dict(mecz=f"{x['home']} – {x['away']}", gospodarz=x['home'], gosc=x['away'], liga=NAZWY_LIG.get(liga, liga),
+                event_id=x.get('event_id'), sport_key=x.get('sport_key'),
                 start=x['start'].strftime('%Y-%m-%d %H:%M'), godzina=x['start'].strftime('%H:%M'), zrodlo=x['tryb'],
                 szanse={z: round(float(mk[z]), 4) for z in ['1', 'X', '2', 'Over 2.5', 'BTTS Tak']},
                 wyniki=wyniki_top(x['M']), uwaga=x['uwaga'], najczestsze=najczestsze(x['M']),
@@ -220,7 +223,7 @@ def rozlicz_pewne(wyniki_api):
     if not len(d): return d
     teraz = pd.Timestamp.now(tz='Europe/Warsaw').tz_localize(None)
     for i, r in d[(d.wynik.isna() | (d.wynik == '')) & (pd.to_datetime(d.start) < teraz - pd.Timedelta(hours=2.5))].iterrows():
-        w = wyniki_api.get(str(r.event_id)) or wynik_z_danych(r.gospodarz, r.gosc, r.start)
+        w = wyniki_api.get(str(r.event_id)) or (wynik_z_danych(r.gospodarz, r.gosc, r.start) if DANE else None)
         if not w or None in w or r.klucz not in MASKI: continue
         hg, ag = min(int(w[0]), MAXG), min(int(w[1]), MAXG); traf = bool(MASKI[r.klucz][hg, ag])
         d.loc[i, 'wynik'] = f"{w[0]}:{w[1]}"; d.loc[i, 'trafiony'] = float(traf)
@@ -237,6 +240,35 @@ def pobierz_wyniki(ligi):
                     sc = {x['name']: int(x['score']) for x in s['scores']}; out[s['id']] = (sc.get(s['home_team']), sc.get(s['away_team']))
         except Exception as e: print('wyniki', liga, e)
     return out
+
+def rozlicz_wszystko():
+    """Rozlicza oba dzienniki. Wyniki: najpierw ESPN (za darmo), potem The Odds API (2 kredyty na ligę), na końcu dane historyczne."""
+    teraz = pd.Timestamp.now(tz='Europe/Warsaw').tz_localize(None)
+    V, P_ = wczytaj_dziennik(), wczytaj_pewne()
+    def czeka(d):
+        if not len(d): return d
+        return d[(d.wynik.isna() | (d.wynik == '')) & (pd.to_datetime(d.start) < teraz - pd.Timedelta(hours=2.2))]
+    wyniki, braki = {}, set()
+    for d in (czeka(V), czeka(P_)):
+        for r in d.itertuples():
+            if str(r.event_id) in wyniki: continue
+            w = tg.wynik(r.liga, r.gospodarz, r.gosc, r.start)
+            if w and w[2] == 'post': wyniki[str(r.event_id)] = (w[0], w[1])
+            else: braki.add(r.liga)
+    if braki and ODDS_API_KEY:
+        try: wyniki.update({k: v for k, v in pobierz_wyniki(list(braki)).items() if k not in wyniki})
+        except Exception as e: print('wyniki API:', e)
+    def wynik_dla(r):
+        w = wyniki.get(str(r.event_id))
+        if not w and DANE: w = wynik_z_danych(r.gospodarz, r.gosc, r.start)
+        return w if w and None not in w else None
+    for i, r in czeka(V).iterrows():
+        w = wynik_dla(r)
+        if w:
+            V.loc[i, 'wynik'] = f"{w[0]}:{w[1]}"; V.loc[i, 'zysk_na_1zl'] = round(zysk_zakladu(r.rynek, r.strona, r.linia, r.kurs_betclic, *w), 4)
+    if len(V): V.to_csv(PLIK_DZIENNIKA, index=False)
+    rozlicz_pewne(wyniki)
+    return wyniki
 
 def policz_samokorekte(d, minimum=100, maks=0.05):
     """Ostrożna korekta z dziennika: tylko rodzaje typów z min. 100 wynikami, ściągana do zera i ograniczona do ±5 pkt."""
@@ -260,10 +292,145 @@ def stat_pewne(d):
     ligi = R.groupby('kraj').agg(n=('trafiony', 'size'), przewidywane=('szansa', 'mean'), weszlo=('trafiony', 'mean'))
     ligi = ligi[ligi.n >= 10].round(3).reset_index().to_dict('records')
     ostrz = R.groupby('ostrzezenie').agg(n=('trafiony', 'size'), przewidywane=('szansa', 'mean'), weszlo=('trafiony', 'mean')).round(3)
-    return dict(rozliczonych=int(len(R)), czeka=int(len(d) - len(R)), poziomy=poziomy, ligi=ligi,
+    ruch = float(R.ruch.dropna().mean()) if 'ruch' in R and R.ruch.notna().sum() >= 5 else None
+    return dict(rozliczonych=int(len(R)), czeka=int(len(d) - len(R)), poziomy=poziomy, ligi=ligi, ruch_rynku=ruch,
                 z_ostrzezeniem=ostrz.reset_index().to_dict('records'),
                 ostatnie=R.sort_values('start', ascending=False).head(60).replace({np.nan: None})[
                     ['start', 'mecz', 'poziom', 'zaklad', 'szansa', 'wynik', 'trafiony', 'kurs_betclic']].to_dict('records'))
+
+# ---------- SPRAWDZENIE PRZED MECZEM (co 30 min między 12:15 a 00:45) ----------
+POZIOMY = (('najpewniejszy', '🔒', None), ('lepszy_kurs', '⚖️', 'lepszy_kurs'), ('ryzykowny', '🎯', 'ryzykowny'))
+
+def _typy_meczu(m):
+    """Lista (poziom, ikona, klucz, nazwa, szansa) z karty meczu Pewne."""
+    out = []
+    for poz, ik, pole in POZIOMY:
+        t = m if pole is None else m.get(pole)
+        if t and t.get('klucz'): out.append((poz, ik, t['klucz'], t['zaklad'], t['szansa']))
+    return out
+
+def _mecze_dnia(d):
+    """Unikalne mecze z zakładek Pewne i Value (słowniki z pliku dzis.json)."""
+    out, ids = [], set()
+    for m in d.get('pewne', []) + d.get('value', []):
+        if m.get('event_id') and m['event_id'] not in ids: ids.add(m['event_id']); out.append(m)
+    return out
+
+def sprawdz_przed_meczem(d):
+    teraz = pd.Timestamp.now(tz='Europe/Warsaw')
+    P_, V = wczytaj_pewne(), wczytaj_dziennik(); zmiana = False
+    for m in _mecze_dnia(d):
+        start = pd.Timestamp(m['start']).tz_localize('Europe/Warsaw'); minut = (start - teraz).total_seconds() / 60
+        pm = m.get('przedmeczowe') or {}
+        if minut < 10 or minut > 100: continue
+        pierwsze = not pm
+        # 1) kursy tuż przed meczem (2 kredyty) – raz na mecz, w oknie 20–100 min
+        if not pm.get('kursy') and minut >= 20 and ODDS_API_KEY and (core.KREDYTY['pozostalo'] or 99) > 25:
+            try:
+                ev = api(f"sports/{m['sport_key']}/events/{m['event_id']}/odds", regions=REGIONY_ODDS_API, markets='h2h,totals', oddsFormat='decimal')
+                bm = {b['key']: {mk['key']: mk['outcomes'] for mk in b['markets']} for b in ev.get('bookmakers', [])}
+                p1, pov, zr = ostre_prawdopodobienstwa(bm, ev['home_team'], ev['away_team'])
+                if p1 is not None:
+                    M = score_matrix(*market_lambdas(*p1, p_over=pov), -0.05)
+                    ruch = {poz: [sz, round(float((M * MASKI[k]).sum()), 4)] for poz, ik, k, n, sz in _typy_meczu(m) if k in MASKI}
+                    pm['kursy'] = dict(czas=teraz.strftime('%H:%M'), zrodlo=zr, ruch=ruch, szanse={z: round(float((M * MASKI[z]).sum()), 4) for z in '1X2'})
+                    for poz, (a, b) in ruch.items():   # zapis do dziennika: szansa tuż przed meczem
+                        sel = (P_.event_id.astype(str) == str(m['event_id'])) & (P_.poziom == poz) if len(P_) else []
+                        if len(P_) and sel.any(): P_.loc[sel, 'szansa_przed'] = b; P_.loc[sel, 'ruch'] = round(b - a, 4)
+                    if 'rynek' in m and len(V):         # Value: CLV = wartość Twojego kursu wobec uczciwego kursu tuż przed meczem
+                        sel = (V.event_id.astype(str) == str(m['event_id'])) & (V.zaklad == m['zaklad'])
+                        if sel.any():
+                            clv = ev_zakladu(M, m['rynek'], m['strona'], m['linia'], m['kurs']); V.loc[sel, 'clv'] = round(float(clv), 4); pm['clv'] = round(float(clv), 4)
+            except Exception as e: print('kursy przed meczem:', m['mecz'], e)
+        # 2) składy – z ESPN (za darmo, wraz z liczbą zmian względem poprzedniego meczu); API-Football jako zapas
+        if not pm.get('sklady') and minut <= 80:
+            try:
+                s_ = tg.sklady_espn(m.get('sport_key'), m['gospodarz'], m['gosc'], m['start'])
+                if not s_ and (m.get('raport') or {}).get('api'): s_ = raport.sklady(m['raport']['api'])
+                if s_: pm['sklady'] = s_
+            except Exception as e: print('składy:', m['mecz'], e)
+        # 3) ostrzeżenia
+        ost = []
+        for poz, (a, b) in (pm.get('kursy') or {}).get('ruch', {}).items():
+            if b - a <= -0.05: ost.append(f"rynek odwraca się od typu ({poz.replace('_', ' ')}): {round(a*100)}% → {round(b*100)}%")
+        for p in (pm.get('sklady') or {}).get('poza', []):
+            kto = m['gospodarz'] if p['strona'] == 'gosp' else m['gosc']
+            ost.append(f"{kto}: {p['zawodnik']} ({p['gole']} goli) {p['gdzie']}")
+        for strona, n in ((pm.get('sklady') or {}).get('zmiany') or {}).items():
+            if n >= 5: ost.append(f"{m['gospodarz'] if strona == 'gosp' else m['gosc']}: mocna rotacja – {n} zmian w pierwszym składzie względem poprzedniego meczu")
+        pm['ostrzezenia'] = ost
+        if pm != (m.get('przedmeczowe') or {}) or pierwsze:
+            m['przedmeczowe'] = pm; zmiana = True
+            if pm.get('kursy') or pm.get('sklady'): tg_przed_meczem(m, pm)
+    if zmiana:
+        # to samo sprawdzenie dopisujemy do wszystkich kopii meczu (Pewne i Value mają osobne karty)
+        mapa = {m['event_id']: m.get('przedmeczowe') for m in _mecze_dnia(d)}
+        for m in d.get('pewne', []) + d.get('value', []) + d.get('mecze', []):
+            if m.get('event_id') in mapa and mapa[m['event_id']]: m['przedmeczowe'] = mapa[m['event_id']]
+        if len(P_): P_.to_csv(PLIK_PEWNE, index=False)
+        if len(V): V.to_csv(PLIK_DZIENNIKA, index=False)
+    return zmiana
+
+def tg_przed_meczem(m, pm):
+    if pm.get('wyslano'): return
+    lin = [f"🕐 <b>{esc_(m['mecz'])}</b> – {m['godzina']}"]
+    if pm.get('sklady'): lin.append('✅ Składy potwierdzone')
+    for poz, ik, k, n, sz in _typy_meczu(m):
+        nowa = (pm.get('kursy') or {}).get('ruch', {}).get(poz, [sz, None])[1]
+        lin.append(f"{ik} {esc_(n)} – {tg.pct(sz)}" + (f" → {tg.pct(nowa)}" if nowa is not None else ''))
+    if 'kurs' in m: lin.append(f"💰 {esc_(m['zaklad'])} @ {m['kurs']}" + (f" (CLV {pm['clv']*100:+.1f}%)" if pm.get('clv') is not None else ''))
+    for o in pm.get('ostrzezenia', []): lin.append(f"⚠️ {esc_(o)}")
+    if pm.get('sklady') or pm.get('ostrzezenia'):
+        if tg.wyslij('\n'.join(lin)): pm['wyslano'] = True
+
+esc_ = lambda s: tg.esc(s)
+
+def tg_typy_dnia(d):
+    if not d.get('pewne') and not d.get('value'): return
+    lin = [f"⚽ <b>Typy na {pd.Timestamp(d['data']).strftime('%d.%m')}</b>"]
+    for i, m in enumerate(d.get('pewne', []), 1):
+        lin.append(f"\n<b>{i}. {esc_(m['mecz'])}</b> ({m['godzina']}, {esc_(m['liga'])})")
+        for poz, ik, k, n, sz in _typy_meczu(m): lin.append(f"{ik} {esc_(n)} – {tg.pct(sz)} (kurs ≥ {1/sz:.2f})")
+        if (m.get('raport') or {}).get('ostrzezenia'): lin.append('⚠️ ' + esc_('; '.join(m['raport']['ostrzezenia'])))
+    if d.get('value'):
+        lin.append('\n💰 <b>Value (Betclic)</b>')
+        for v in d['value']: lin.append(f"{esc_(v['mecz'])}: {esc_(v['zaklad'])} @ {v['kurs']} (szansa {tg.pct(v['szansa'])}, szukaj ≥ {v.get('kurs_szukaj', '')})")
+    if tg.APLIKACJA: lin.append(f"\n📱 {tg.APLIKACJA}")
+    tg.wyslij('\n'.join(lin))
+
+def podsumowanie_dnia(d):
+    """Wieczorem, gdy wszystkie mecze z Pewne się skończą: wyniki z ESPN + wiadomość na Telegram."""
+    if d.get('podsumowanie_wyslane') or not d.get('pewne'): return False
+    wiersze, traf = [], {'najpewniejszy': [0, 0], 'lepszy_kurs': [0, 0], 'ryzykowny': [0, 0]}
+    for m in d['pewne']:
+        w = tg.wynik(m.get('sport_key'), m['gospodarz'], m['gosc'], m['start'])
+        if not w or w[2] != 'post':
+            ostatni = max(pd.Timestamp(x['start']) for x in d['pewne'])
+            if pd.Timestamp.now(tz='Europe/Warsaw').tz_localize(None) < ostatni + pd.Timedelta(hours=3): return False   # jeszcze trwają
+            wiersze.append(f"{esc_(m['mecz'])} – brak wyniku w serwisie"); continue
+        m['wynik_koncowy'] = f"{w[0]}:{w[1]}"
+        opis = []
+        for poz, ik, k, n, sz in _typy_meczu(m):
+            ok = bool(MASKI[k][min(w[0], MAXG), min(w[1], MAXG)]) if k in MASKI else False
+            traf[poz][0] += ok; traf[poz][1] += 1; opis.append(f"{ik}{'✅' if ok else '❌'}")
+        wiersze.append(f"{esc_(m['mecz'])} <b>{w[0]}:{w[1]}</b> {' '.join(opis)}")
+    n = lambda p: f"{traf[p][0]}/{traf[p][1]}"
+    tg.wyslij('\n'.join([f"🏁 <b>Wyniki {pd.Timestamp(d['data']).strftime('%d.%m')}</b>",
+                          f"🔒 najpewniejsze: {n('najpewniejszy')} · ⚖️ lepszy kurs: {n('lepszy_kurs')} · 🎯 ryzykowne: {n('ryzykowny')}", ''] + wiersze))
+    d['podsumowanie_wyslane'] = True
+    return True
+
+def zapisz_status(tryb, bledy=None):
+    try: st = json.load(open(os.path.join(OUT, 'status.json')))
+    except Exception: st = {}
+    teraz = pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m-%d %H:%M')
+    st['ostatnie_uruchomienie'] = teraz; st[f'ostatnie_{tryb}'] = teraz
+    if core.KREDYTY['pozostalo'] is not None:
+        st['kredyty_odds'] = dict(pozostalo=core.KREDYTY['pozostalo'], zuzyto=core.KREDYTY['zuzyto'], budzet_dzis=core.KREDYTY['na_dzis'] or st.get('kredyty_odds', {}).get('budzet_dzis'))
+    st['api_football'] = dict(klucz=bool(raport.KLUCZ), zapytania_ostatnio=raport.licznik['zapytania'], bledy=raport.bledy[:5])
+    st['telegram'] = dict(tg.STAN_TG)
+    st['bledy'] = (bledy or [])[:5]
+    zapisz('status.json', st)
 
 def eksport_modeli():
     out = {}
@@ -300,12 +467,25 @@ def zapisz(nazwa, obj):
 if __name__ == '__main__':
     os.makedirs(OUT, exist_ok=True)
     teraz = pd.Timestamp.now(tz='Europe/Warsaw')
-    # harmonogram działa o 10:00 i 11:00 UTC – liczymy raz dziennie, od 12:00 czasu polskiego (latem i zimą)
-    if os.environ.get('GITHUB_EVENT_NAME') == 'schedule':
-        try: stare = json.load(open(os.path.join(OUT, 'dzis.json')))
-        except Exception: stare = {}
-        if teraz.hour < 12 or (stare.get('data') == teraz.strftime('%Y-%m-%d') and str(stare.get('wygenerowano', ''))[11:13] >= '12'):
-            print('Nie teraz – typy na dziś już policzone albo jest przed 12:00.'); sys.exit(0)
+    try: stare = json.load(open(os.path.join(OUT, 'dzis.json')))
+    except Exception: stare = {}
+    try: core.KREDYTY['pozostalo'] = json.load(open(os.path.join(OUT, 'status.json')))['kredyty_odds']['pozostalo']
+    except Exception: pass
+    dzis_gotowe = stare.get('data') == teraz.strftime('%Y-%m-%d') and str(stare.get('wygenerowano', ''))[11:13] >= '12'
+    pelne = os.environ.get('GITHUB_EVENT_NAME') != 'schedule' or (teraz.hour >= 12 and not dzis_gotowe and teraz.hour < 23)
+    if not pelne:
+        # ---- lekkie sprawdzenie: składy, kursy przed meczem, rozliczenie, podsumowanie wieczorne ----
+        bledy = []
+        if stare.get('pewne') or stare.get('value'):
+            try: sprawdz_przed_meczem(stare)
+            except Exception as e: bledy.append(f'sprawdzenie: {e}')
+            try: podsumowanie_dnia(stare)
+            except Exception as e: bledy.append(f'podsumowanie: {e}')
+            zapisz('dzis.json', stare)
+        try: rozlicz_wszystko(); SAMOKOREKTA.update(policz_samokorekte(wczytaj_pewne())); zapisz('dziennik.json', eksport_calosci())
+        except Exception as e: bledy.append(f'rozliczenie: {e}')
+        zapisz_status('sprawdzenie', bledy); print('Sprawdzenie zakończone', bledy); sys.exit(0)
+    bledy = []
     pobierz_dane(); trenuj()
     zapisz('modele.json', eksport_modeli())
     # kalibracja: przeliczana raz w tygodniu
@@ -316,7 +496,6 @@ if __name__ == '__main__':
         print('Przeliczam kalibrację…'); K = policz_kalibracje()
         if K: zapisz('kalibracja.json', K)
     core.KALIBRACJA = K
-    # samokorekta z dziennika Pewne
     SAMOKOREKTA.update(policz_samokorekte(wczytaj_pewne()))
     today = dict(wygenerowano=teraz.strftime('%Y-%m-%d %H:%M'), data=teraz.strftime('%Y-%m-%d'), value=[], pewne=[], mecze=[], blad=None,
                  raport_dostepny=bool(raport.KLUCZ))
@@ -324,14 +503,13 @@ if __name__ == '__main__':
         today['blad'] = 'Brak klucza API (sekret ODDS_API_KEY w ustawieniach repozytorium).'
     else:
         try: today['value'], today['pewne'], today['mecze'] = typy_na_dzis()
-        except Exception as e: today['blad'] = f'Nie udało się pobrać kursów: {e}'
-        try:
-            P_ = wczytaj_pewne(); teraz_ = teraz.tz_localize(None)
-            czeka = P_[(P_.wynik.isna() | (P_.wynik == '')) & (pd.to_datetime(P_.start) < teraz_ - pd.Timedelta(hours=2.5))] if len(P_) else P_
-            wyn = pobierz_wyniki([l for l in set(czeka.get('liga', [])) if l])
-            rozlicz(); rozlicz_pewne(wyn)
-        except Exception as e: print('Rozliczenie dziennika nie powiodło się:', e)
+        except Exception as e: today['blad'] = f'Nie udało się pobrać kursów: {e}'; bledy.append(today['blad'])
+        try: rozlicz_wszystko()
+        except Exception as e: print('Rozliczenie dziennika nie powiodło się:', e); bledy.append(f'rozliczenie: {e}')
     today['api_football_zapytania'] = raport.licznik['zapytania']; today['api_football_bledy'] = raport.bledy[:5]
     zapisz('dzis.json', today)
     zapisz('dziennik.json', eksport_calosci())
+    try: tg_typy_dnia(today)
+    except Exception as e: bledy.append(f'telegram: {e}')
+    zapisz_status('pelne', bledy)
     print('Gotowe:', len(today['value']), 'value,', len(today['pewne']), 'pewnych,', len(today['mecze']), 'meczów; API-Football:', raport.licznik['zapytania'])

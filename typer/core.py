@@ -204,6 +204,8 @@ LIGI_DO_SKANU = {  # klucz The Odds API -> model; kolejność = popularność (n
  'soccer_international_friendlies':'Reprezentacje', 'soccer_portugal_primeira_liga':'Portugalia',
  'soccer_netherlands_eredivisie':'Holandia', 'soccer_efl_champ':'Anglia', 'soccer_germany_bundesliga2':'Niemcy',
  'soccer_turkey_super_league':'Turcja', 'soccer_belgium_first_div':'Belgia', 'soccer_spl':'Szkocja',
+ 'soccer_usa_mls':'USA', 'soccer_brazil_campeonato':'Brazylia', 'soccer_argentina_primera_division':'Argentyna',
+ 'soccer_mexico_ligamx':'Meksyk', 'soccer_japan_j_league':'Japonia', 'soccer_china_superleague':'Chiny',
 }
 MIN_EV_VALUE = 0.03       # Betclic musi dawać min. 3% więcej niż uczciwy kurs Pinnacle/Betfair
 PEWNE_MIN_SZANSA = 0.68   # "bezpieczne" typy: minimalna szansa wejścia
@@ -214,10 +216,22 @@ PEWNE_ILE_TYPOW = 5       # ile najpewniejszych typów pokazać
 # 'Austria','Dania','Norwegia','Szwecja','Szwajcaria','Rumunia','Finlandia','Irlandia','Rosja','Szkocja'.
 
 API = "https://api.the-odds-api.com/v4"
+KREDYTY = {'pozostalo': None, 'zuzyto': None, 'na_dzis': None, 'wydane_teraz': 0}
 def api(sciezka, **p):
     r = requests.get(f"{API}/{sciezka}", params={'apiKey': ODDS_API_KEY, **p}, timeout=30)
     if r.status_code != 200: raise RuntimeError(f"{r.status_code}: {r.text[:200]}")
+    try:
+        poz = int(float(r.headers.get('x-requests-remaining')))
+        if KREDYTY['pozostalo'] is not None: KREDYTY['wydane_teraz'] += max(0, KREDYTY['pozostalo'] - poz)
+        KREDYTY['pozostalo'] = poz; KREDYTY['zuzyto'] = int(float(r.headers.get('x-requests-used', 0)))
+    except Exception: pass
     print(f"   (kredyty pozostałe: {r.headers.get('x-requests-remaining')})"); return r.json()
+
+def budzet_dzienny(rezerwa=0.2):
+    """Ile kredytów można dziś wydać, żeby starczyło do końca miesiąca (część zostaje na sprawdzenia przed meczami)."""
+    if KREDYTY['pozostalo'] is None: return 999
+    t = pd.Timestamp.now(tz='Europe/Warsaw'); dni = (t + pd.offsets.MonthEnd(0)).day - t.day + 1
+    return max(4, int(KREDYTY['pozostalo'] / dni * (1 - rezerwa)))
 
 def pokaz_ligi():
     s = pd.DataFrame(api('sports')); print(s[s.group == 'Soccer'][['key','title']].to_string())
@@ -321,9 +335,12 @@ def oferty_betclic(x):
     return out
 
 def dzisiejsze_mecze():
-    teraz = pd.Timestamp.now(tz='Europe/Warsaw'); koniec = teraz.normalize() + pd.Timedelta(days=1)
+    """Mecze od teraz do 6:00 następnego dnia (obejmuje nocne mecze w Ameryce). Kursy pobierane w kolejności popularności lig,
+    dopóki nie wyczerpie się dzienny budżet kredytów (darmowy plan: 500/mies.)."""
+    teraz = pd.Timestamp.now(tz='Europe/Warsaw'); koniec = teraz.normalize() + pd.Timedelta(days=1, hours=6)
     f = lambda t: t.tz_convert('UTC').strftime('%Y-%m-%dT%H:%M:%SZ')
     aktywne = {s['key'] for s in api('sports')}
+    budzet = budzet_dzienny(); KREDYTY['na_dzis'] = budzet; start_kr = KREDYTY['wydane_teraz']
     wynik = []
     for key, model in LIGI_DO_SKANU.items():
         if key not in aktywne: continue
@@ -331,19 +348,13 @@ def dzisiejsze_mecze():
         try: evs = api(f'sports/{key}/events', commenceTimeFrom=f(teraz), commenceTimeTo=f(koniec))
         except Exception: continue
         if not evs: continue
+        if KREDYTY['wydane_teraz'] - start_kr + 2 > budzet:
+            print(f"→ {key}: pominięto – dzienny budżet kredytów wyczerpany ({budzet})"); continue
         print(f"→ {key}: {len(evs)} mecz(e) dziś")
-        try: odds = api(f'sports/{key}/odds', regions=REGIONY_ODDS_API, markets='h2h,totals,spreads', oddsFormat='decimal',
+        try: odds = api(f'sports/{key}/odds', regions=REGIONY_ODDS_API, markets='h2h,totals', oddsFormat='decimal',
                         commenceTimeFrom=f(teraz), commenceTimeTo=f(koniec))
         except Exception as e: print("   błąd:", e); continue
-        for ev in odds:
-            if POBIERZ_BTTS:
-                try:
-                    extra = api(f"sports/{key}/events/{ev['id']}/odds", regions=REGIONY_ODDS_API, markets='btts', oddsFormat='decimal')
-                    for b in ev['bookmakers']:
-                        for eb in extra.get('bookmakers', []):
-                            if eb['key'] == b['key']: b['markets'] += eb['markets']
-                except Exception: pass
-            wynik.append((key, model, ev))
+        for ev in odds: wynik.append((key, model, ev))
     return wynik
 
 PLIK_DZIENNIKA = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data', 'typy_value.csv')
@@ -445,7 +456,8 @@ KRAJE = {  # jeden model na kraj (awanse/spadki łączą ligi)
  'Belgia': ['B1'], 'Portugalia': ['P1'], 'Turcja': ['T1'], 'Grecja': ['G1'],
 }
 EXTRA = {'Polska':'POL','Austria':'AUT','Dania':'DNK','Finlandia':'FIN','Irlandia':'IRL','Norwegia':'NOR',
-         'Rumunia':'ROU','Rosja':'RUS','Szwecja':'SWE','Szwajcaria':'SWZ'}
+         'Rumunia':'ROU','Rosja':'RUS','Szwecja':'SWE','Szwajcaria':'SWZ',
+         'USA':'USA','Brazylia':'BRA','Argentyna':'ARG','Meksyk':'MEX','Japonia':'JPN','Chiny':'CHN'}
 
 def sezony(n):
     t = pd.Timestamp.today(); y = t.year if t.month >= 7 else t.year - 1
@@ -572,7 +584,7 @@ import re as _re
 KRAJ_KODY = {'ENG':'Anglia','SCO':'Szkocja','GER':'Niemcy','ITA':'Włochy','ESP':'Hiszpania','FRA':'Francja','NED':'Holandia',
  'BEL':'Belgia','POR':'Portugalia','TUR':'Turcja','GRE':'Grecja','POL':'Polska','AUT':'Austria','DEN':'Dania','FIN':'Finlandia',
  'IRL':'Irlandia','NOR':'Norwegia','ROU':'Rumunia','RUS':'Rosja','SWE':'Szwecja','SUI':'Szwajcaria'}
-PIERWSZE_LIGI = {'E0','SC0','D1','I1','SP1','F1','N1','B1','P1','T1','G1','POL','AUT','DNK','FIN','IRL','NOR','ROU','RUS','SWE','SWZ'}
+PIERWSZE_LIGI = {'USA','BRA','ARG','MEX','JPN','CHN','E0','SC0','D1','I1','SP1','F1','N1','B1','P1','T1','G1','POL','AUT','DNK','FIN','IRL','NOR','ROU','RUS','SWE','SWZ'}
 _MIES = {m:i+1 for i,m in enumerate('Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split())}
 
 def parsuj_puchary(txt, comp):

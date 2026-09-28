@@ -10,6 +10,9 @@ Cała aplikacja mieści się w jednym pliku: `.github/workflows/typer.yml`.
 3. Add file → Create new file → `.github/workflows/typer.yml` → wklej zawartość → Commit.
 4. Po ok. 10 minutach aplikacja działa pod adresem `https://TWÓJ-LOGIN.github.io/typer/`.
 
+Typy odświeżają się same codziennie o 12:00, a co 30 minut program sprawdza składy i kursy przed meczami.
+Opcjonalnie sekret `TELEGRAM_TOKEN` (bot z @BotFather) – powiadomienia; wyślij botowi /start.
+
 Typy odświeżają się same codziennie o 12:00. Ręcznie: Actions → Typer → Run workflow.
 Aktualizacja programu = podmiana pliku `typer.yml` na nowy.
 

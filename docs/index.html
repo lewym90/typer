@@ -38,7 +38,7 @@ html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.45 var(--body);-webkit-text-size-adjust:100%}
 button,input,select{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.wrap{max-width:560px;margin:0 auto;padding:0 16px 96px}
+.wrap{max-width:560px;margin:0 auto;padding:0 16px 150px}
 header{display:flex;align-items:flex-end;justify-content:space-between;padding:18px 0 10px}
 header h1{font:700 34px/1 var(--num);margin:0;letter-spacing:.2px}
 header .meta{font-size:13px;color:var(--muted);text-align:right}
@@ -128,6 +128,15 @@ ul.news{margin:4px 0 0;padding-left:18px;font-size:13px} ul.news li{margin:3px 0
 .lv .ty{margin-top:6px;border-top:1px dashed var(--line);padding-top:6px;font-size:14px}
 .lv .ty div{margin:2px 0}
 .lgh{font:600 16px/1.2 var(--num);color:var(--muted);margin:14px 0 6px}
+.pm{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px;font-size:14px}
+.pm .up{color:var(--win)} .pm .dn{color:var(--loss)}
+.kbtn{background:none;border:1px solid var(--line);border-radius:8px;padding:3px 8px;font-size:12px;color:var(--muted);cursor:pointer;margin-left:8px}
+.kbtn.on{background:var(--accent);color:#10291F;border-color:var(--accent)}
+.kbar{position:fixed;left:0;right:0;bottom:calc(58px + env(safe-area-inset-bottom,0px));z-index:6;display:none}
+.kbar.on{display:block} .kbar button{display:block;max-width:560px;width:calc(100% - 24px);margin:0 auto 6px;background:var(--accent);color:#10291F;border:0;border-radius:12px;padding:11px 14px;font-weight:600;font-size:15px;cursor:pointer;text-align:left}
+.klist{list-style:none;padding:0;margin:8px 0} .klist li{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
+.klist button{background:none;border:0;color:var(--loss);font-size:18px;cursor:pointer}
+.stan div{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:14px}
 /* dziennik */
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .stats .cell b{font-size:24px}
@@ -140,7 +149,7 @@ svg.curve{width:100%;height:120px;display:block;margin-top:12px}
 /* nawigacja */
 nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
 nav .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
-nav button{background:none;border:0;padding:9px 0 8px;font-size:12px;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button{background:none;border:0;padding:9px 0 8px;font-size:11px;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
 nav button .ic{font-size:20px;line-height:1}
 nav button[aria-selected="true"]{color:var(--text);font-weight:600}
 nav button[aria-selected="true"] .ic{transform:translateY(-1px)}
@@ -174,12 +183,15 @@ footer{font-size:12px;color:var(--muted);margin-top:26px;line-height:1.5}
   <button role="tab" data-tab="dziennik"><span class="ic">📒</span>Dziennik</button>
 </div></nav>
 
+<div class="kbar" id="kbar"><button id="kopen"></button></div>
+<div class="sheet" id="kupon"><div class="card" id="kcard"></div></div>
 <div class="sheet" id="settings"><div class="card">
   <h2 style="margin-top:0">Ustawienia</h2>
   <label for="bankroll">Twój budżet na zakłady (zł)</label>
   <input type="number" id="bankroll" inputmode="numeric" min="0" step="50">
   <p class="note">Z budżetu liczone są sugerowane stawki (ostrożne 1/4 Kelly'ego, maks. 2% budżetu na typ). Zapisuje się tylko na tym telefonie.</p>
   <button class="btn" id="saveSettings">Zapisz</button>
+  <h2>Stan programu</h2><div class="stan" id="stan"></div>
 </div></div>
 
 <script type="application/json" id="dane-osadzone"></script>
@@ -202,8 +214,8 @@ async function laduj(){
   const osadz = $('#dane-osadzone').textContent.trim();
   if (osadz){ const d = JSON.parse(osadz); Object.assign(S, d); S.demo = !!d.demo; return; }
   const get = async f => { const r = await fetch('data/' + f + '?t=' + Date.now()); if(!r.ok) throw new Error(f); return r.json(); };
-  const [a, b, c, k] = await Promise.allSettled([get('dzis.json'), get('modele.json'), get('dziennik.json'), get('kalibracja.json')]);
-  S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null;
+  const [a, b, c, k, st] = await Promise.allSettled([get('dzis.json'), get('modele.json'), get('dziennik.json'), get('kalibracja.json'), get('status.json')]);
+  S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null; S.status = st.value || null;
 }
 
 /* ---------- model (ten sam co w Pythonie) ---------- */
@@ -291,7 +303,7 @@ function widokValue(){
   for(const t of d.value){
     const stawka = Math.round(BANK * kelly(t.szansa, t.kurs));
     h += `<article class="bet">${glowa(t)}
-      <div class="pick"><div class="name">${esc(plTxt(t.zaklad, t))}${t.opis?`<small>${esc(plTxt(t.opis, t))}</small>`:''}</div><div class="odds">${num(t.kurs)}</div></div>
+      <div class="pick"><div class="name">${esc(plTxt(t.zaklad, t))}${kupBtn({event_id: t.event_id, mecz: t.mecz, zaklad: plTxt(t.zaklad, t) + ' @ ' + num(t.kurs), szansa: t.szansa})}${t.opis?`<small>${esc(plTxt(t.opis, t))}</small>`:''}</div><div class="odds">${num(t.kurs)}</div></div>
       <div class="grid">
         <div class="cell"><b>${num(t.kurs_uczciwy)}</b><span>kurs uczciwy</span></div>
         <div class="cell"><b>${pct(t.szansa)}</b><span>szansa</span></div>
@@ -300,7 +312,7 @@ function widokValue(){
       <div class="bar"><i style="width:${(t.szansa*100).toFixed(1)}%"></i></div>
       <div class="note">🔎 <b>Szukaj kursu ≥ ${num(t.kurs_szukaj || t.kurs_uczciwy*1.02)}</b> w Betclic, Fortunie, STS, Superbecie – graj tam, gdzie najwyższy.</div>
       <div class="note">Sugerowana stawka: <b>${stawka} zł</b> · źródło kursu uczciwego: ${esc(t.zrodlo)}</div>
-      ${obrazMeczu(t)}${raportHTML(t.raport, t)}
+      ${obrazMeczu(t)}${przedmeczoweHTML(t.przedmeczowe, t)}${raportHTML(t.raport, t)}
     </article>`;
   }
   return h + `<p class="note">Kursy pochodzą z Betclic FR – sprawdź je w polskiej aplikacji. Testy 2022–2026: przewagę dawało szukanie <b>najlepszego kursu u wielu bukmacherów</b> (+5,6% na 3 188 zakładach), a nie gra u jednego. ⚠️ Podatek 12% zjada taką przewagę – value ma sens głównie przy grze bez podatku.</p>`;
@@ -309,7 +321,7 @@ function poziomTypu(t, ikona, tytul, klasa, mecz){
   if(!t) return ''; const P = x => mecz ? plTxt(x, mecz) : x;
   const bk = t.kurs_betclic ? ` · Betclic: <b>${num(t.kurs_betclic)}</b> ${t.kurs_betclic*t.szansa >= 1 ? '✅' : '(poniżej uczciwego)'}` : '';
   return `<div class="tier ${klasa||''}"><div class="lbl2"><span>${ikona} ${tytul}</span></div>
-    <div class="row2"><div class="name">${esc(P(t.zaklad))}${t.opis?`<small>${esc(P(t.opis))}</small>`:''}</div><div class="pp">${pct(t.szansa)}</div></div>
+    <div class="row2"><div class="name">${esc(P(t.zaklad))}${mecz ? kupBtn({event_id: mecz.event_id, mecz: mecz.mecz, zaklad: P(t.zaklad), szansa: t.szansa}) : ''}${t.opis?`<small>${esc(P(t.opis))}</small>`:''}</div><div class="pp">${pct(t.szansa)}</div></div>
     <div class="k">Kurs uczciwy <b>${num(t.kurs_uczciwy)}</b> – graj przy kursie ≥ ${num(t.kurs_uczciwy)} (min. ${num(t.kurs_min)})${bk}</div></div>`;
 }
 function obrazMeczu(t){
@@ -340,7 +352,9 @@ function widokPewne(){
   const d = S.dzis;
   if(!d) return `<div class="empty">Brak danych na dziś.</div>`;
   let h = `<h2>Najpewniejsze na dziś</h2><p class="lead">Przy każdym meczu trzy typy: najpewniejszy, z lepszym kursem i ryzykowny, szanse 1/X/2 i raport przedmeczowy. Im wyższy kurs, tym mniejsza szansa – tego nie da się obejść. Graj tam, gdzie kurs jest najwyższy, i nie łącz wszystkiego w jeden kupon.</p>`;
-  if(d.api_football_bledy && d.api_football_bledy.length) h += `<div class="banner">API-Football zgłosiło problem (kontuzje mogą być niepełne): ${esc(d.api_football_bledy[0])}</div>`;
+  if(d.api_football_bledy && d.api_football_bledy.length) h += d.api_football_bledy.some(b => /darmowy plan|Free plans/i.test(b))
+    ? `<div class="banner">Darmowy plan API-Football nie obejmuje bieżącego sezonu – kontuzje i kluczowi zawodnicy mogą być niedostępne. Składy i rotację (liczbę zmian w składzie) program sprawdza w ESPN ok. godzinę przed meczem.</div>`
+    : `<div class="banner">API-Football zgłosiło problem (kontuzje mogą być niepełne): ${esc(d.api_football_bledy[0])}</div>`;
   if(!d.pewne.length) return h + `<div class="empty">Dziś brak meczów w obsługiwanych ligach.</div>`;
   d.pewne.forEach((t, i) => {
     h += `<article class="bet">${glowa(t)}${obrazMeczu(t)}
@@ -349,6 +363,7 @@ function widokPewne(){
       ${poziomTypu(t.lepszy_kurs, '⚖️', 'Lepszy kurs', '', t)}
       ${poziomTypu(t.ryzykowny, '🎯', 'Ryzykowny', '', t)}
       ${t.uwaga?`<div class="note warn">${esc(t.uwaga)}</div>`:''}
+      ${przedmeczoweHTML(t.przedmeczowe, t)}
       ${raportHTML(t.raport, t)}
       ${kafelkiWynikow(t.wyniki)}
     </article>`;
@@ -520,11 +535,16 @@ const ESPN_LIGI = {'uefa.champions':'Liga Mistrzów','uefa.europa':'Liga Europy'
  'ger.1':'Bundesliga','ger.2':'2. Bundesliga','ita.1':'Serie A','ita.2':'Serie B','fra.1':'Ligue 1','fra.2':'Ligue 2','ned.1':'Eredivisie','por.1':'Liga Portugal',
  'pol.1':'Ekstraklasa','sco.1':'Premiership (SCO)','sco.2':'Championship (SCO)','bel.1':'Jupiler Pro League','tur.1':'Süper Lig','gre.1':'Super League (GRE)',
  'aut.1':'Bundesliga (AUT)','den.1':'Superliga (DEN)','nor.1':'Eliteserien','swe.1':'Allsvenskan','sui.1':'Super League (SUI)','irl.1':'League of Ireland',
- 'rou.1':'Liga I (ROU)','fin.1':'Veikkausliiga'};
+ 'rou.1':'Liga I (ROU)','fin.1':'Veikkausliiga','usa.1':'MLS (USA)','bra.1':'Brasileirão','arg.1':'Liga Profesional (ARG)',
+ 'mex.1':'Liga MX','jpn.1':'J1 League','chn.1':'Super League (CHN)'};
 const LIVE = {mecze:[], czas:null, blad:null, timer:null, ligiDzis:null};
 const dz2 = s => { s = norm(s).replace(/\b(fc|cf|afc|sc|ac|fk|sk|club|de|the)\b/g,' ').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
   const b = new Set(); for(let i=0;i<s.length-1;i++) b.add(s.slice(i,i+2)); return b; };
-const podob = (a, b) => { const A = dz2(a), B = dz2(b); if(!A.size || !B.size) return 0; let k = 0; A.forEach(x => { if(B.has(x)) k++; }); return 2*k/(A.size+B.size); };
+const ALIAS_LIVE = {'turkiye':'turkey','czechia':'czech republic','korea republic':'south korea','usa':'united states','bosnia herzegovina':'bosnia and herzegovina',
+ 'bosnia':'bosnia and herzegovina','cote d ivoire':'ivory coast','republic of ireland':'ireland','north macedonia':'macedonia','cabo verde':'cape verde','kyrgyz republic':'kyrgyzstan'};
+const nazwaLive = s => { let n = norm(s).replace(/&/g,' and ').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim(); return ALIAS_LIVE[n] || n; };
+const podob = (a, b) => { const x = nazwaLive(a), y = nazwaLive(b); if(x === y) return 1; if(x.length >= 4 && y.length >= 4 && (x.includes(y) || y.includes(x))) return 0.9;
+  const A = dz2(x), B = dz2(y); if(!A.size || !B.size) return 0; let k = 0; A.forEach(z => { if(B.has(z)) k++; }); return 2*k/(A.size+B.size); };
 function parsujESPN(j, slug){
   return (j.events || []).map(e => { const c = (e.competitions || [])[0] || {}; const t = c.competitors || [];
     const H = t.find(x => x.homeAway === 'home') || t[0] || {}, A = t.find(x => x.homeAway === 'away') || t[1] || {};
@@ -600,7 +620,10 @@ function widokLive(){
   if(LIVE.blad) h += `<div class="banner">Nie udało się pobrać wyników: ${esc(LIVE.blad)}. Spróbuję ponownie za chwilę.</div>`;
   if(!LIVE.czas && !S.demo) return h + `<div class="empty">Ładuję wyniki…</div>`;
   const typy = naszeTypy(); const uzyte = new Set();
-  const znajdz = t => LIVE.mecze.find(m => podob(m.dom, t.gospodarz) >= 0.55 && podob(m.gosc, t.gosc) >= 0.55);
+  const znajdz = t => { const t0 = t.mecz && t.mecz.start ? new Date(String(t.mecz.start).replace(' ', 'T')).getTime() : null; let best = null, bs = 0;
+    for(const m of LIVE.mecze){ const a = podob(m.dom, t.gospodarz), b = podob(m.gosc, t.gosc); const dt = t0 ? Math.abs(new Date(m.start).getTime() - t0) / 60000 : 999;
+      if(((a >= 0.55 && b >= 0.55) || (Math.max(a, b) >= 0.8 && dt <= 20)) && a + b > bs){ bs = a + b; best = m; } }
+    return best; };
   const kol = m => ({in:0, pre:1, post:2})[m.stan] ?? 1;
   const moje = typy.map(t => ({t, m: znajdz(t)})).filter(x => x.m).sort((a,b) => kol(a.m) - kol(b.m) || new Date(a.m.start) - new Date(b.m.start));
   if(moje.length){ h += `<div class="lgh">⭐ Twoje typy na dziś</div>`; moje.forEach(x => { uzyte.add(x.m.id); h += kartaLive(x.m, x.t); }); }
@@ -633,6 +656,83 @@ function startLive(){
 }
 function stopLive(){ if(LIVE.timer){ clearInterval(LIVE.timer); LIVE.timer = null; } }
 
+
+/* ---------- sprawdzenie przed meczem ---------- */
+function przedmeczoweHTML(pm, t){
+  if(!pm || (!pm.kursy && !pm.sklady && !(pm.ostrzezenia||[]).length)) return '';
+  const naz = {najpewniejszy:'🔒', lepszy_kurs:'⚖️', ryzykowny:'🎯'};
+  let h = `<div class="pm"><b>🕐 Przed meczem</b>${pm.kursy ? ` <span class="muted">(${esc(pm.kursy.czas)})</span>` : ''}`;
+  h += pm.sklady ? `<div>✅ Składy potwierdzone${pm.sklady.zrodlo ? ' <span class="muted">(' + esc(pm.sklady.zrodlo) + ')</span>' : ''}</div>` : `<div class="muted">Składy jeszcze nieogłoszone</div>`;
+  const zm = (pm.sklady || {}).zmiany || {};
+  if(Object.keys(zm).length) h += `<div>🔄 Zmiany w pierwszym składzie vs poprzedni mecz: ${Object.entries(zm).map(([s, n]) => `${esc(plN(s === 'gosp' ? t.gospodarz : t.gosc))} <b class="${n >= 5 ? 'dn' : ''}">${n}</b>`).join(' · ')}</div>`;
+  if(pm.kursy) for(const [poz, [a, b]] of Object.entries(pm.kursy.ruch || {})){ const d = b - a;
+    h += `<div>${naz[poz]||''} szansa ${pct(a)} → <b class="${d >= 0.01 ? 'up' : (d <= -0.01 ? 'dn' : '')}">${pct(b)}</b> ${d >= 0.01 ? '▲' : (d <= -0.01 ? '▼' : '')}</div>`; }
+  if(pm.clv != null) h += `<div>💰 Twój kurs wobec rynku tuż przed meczem (CLV): <b class="${pm.clv >= 0 ? 'up' : 'dn'}">${sgn(pm.clv)}</b></div>`;
+  for(const o of (pm.ostrzezenia || [])) h += `<div class="warn">⚠️ ${esc(plTxt(o, t))}</div>`;
+  return h + `</div>`;
+}
+/* ---------- kupon ---------- */
+const KUP = {opcje: {}, wybrane: store.get('kupon', [])};
+function kupBtn(obj){
+  const id = (obj.event_id || obj.mecz) + '|' + obj.zaklad; KUP.opcje[id] = Object.assign({id}, obj);
+  const on = KUP.wybrane.some(x => x.id === id);
+  return `<button class="kbtn${on ? ' on' : ''}" data-kid="${esc(id)}">${on ? '✓ w kuponie' : '+ kupon'}</button>`;
+}
+function kupPodsumowanie(){
+  const w = KUP.wybrane; if(!w.length) return null;
+  const p = w.reduce((a, x) => a * x.szansa, 1); const mecze = new Set(w.map(x => x.event_id || x.mecz));
+  return {p, kurs: 1/p, n: w.length, powiazane: mecze.size < w.length};
+}
+function odswiezKupon(){
+  const s = kupPodsumowanie(), bar = $('#kbar');
+  if(!s){ bar.classList.remove('on'); return; }
+  bar.classList.add('on'); $('#kopen').textContent = `🧾 Kupon: ${s.n} ${s.n === 1 ? 'typ' : 'typy'} · szansa ${pct(s.p)} · kurs uczciwy ${num(s.kurs)}  ›`;
+}
+function widokKuponu(){
+  const s = kupPodsumowanie(); const kk = store.get('kuponKurs', ''), st = store.get('kuponStawka', 10);
+  if(!s) return `<h2 style="margin-top:0">Kupon</h2><div class="empty">Kupon jest pusty. Dodawaj typy przyciskiem „+ kupon”.</div>`;
+  let h = `<h2 style="margin-top:0">Kupon (${s.n})</h2><ul class="klist">` + KUP.wybrane.map(x => `<li><span><b>${esc(plMecz(x.mecz))}</b><br>${esc(x.zaklad)}</span><span>${pct(x.szansa)}</span><button data-kdel="${esc(x.id)}" aria-label="Usuń">✕</button></li>`).join('') + `</ul>`;
+  h += `<div class="grid"><div class="cell"><b>${pct(s.p)}</b><span>szansa całego kuponu</span></div><div class="cell"><b>${num(s.kurs)}</b><span>kurs uczciwy</span></div><div class="cell"><b>${Math.round(1/s.p*10)/10}</b><span>wchodzi ~1 na tyle razy</span></div></div>`;
+  if(s.powiazane) h += `<p class="note warn">Kilka typów z tego samego meczu – są od siebie zależne, więc szansa jest tylko przybliżona (bukmacherzy często nie pozwalają ich łączyć).</p>`;
+  h += `<div class="row"><div><label for="kkurs">Kurs kuponu u bukmachera</label><input type="number" inputmode="decimal" step="0.01" id="kkurs" value="${esc(kk)}" placeholder="np. 2,93"></div>
+        <div><label for="kst">Stawka (zł)</label><input type="number" inputmode="decimal" id="kst" value="${esc(st)}"></div></div><div id="kwyn"></div>
+        <p class="note">Marża bukmachera mnoży się przy każdym typie – w testach 2024–2026 kupony z 5 typów traciły średnio ok. 13%, z 2 typów ok. 11%.</p>
+        <button class="btn" id="kclear" style="background:var(--loss)">Wyczyść kupon</button>`;
+  return h;
+}
+function kuponWynik(){
+  const s = kupPodsumowanie(); const k = parseFloat(String($('#kkurs').value).replace(',', '.')), st = parseFloat(String($('#kst').value).replace(',', '.')) || 0;
+  store.set('kuponKurs', $('#kkurs').value); store.set('kuponStawka', st);
+  if(!(k > 1)){ $('#kwyn').innerHTML = ''; return; }
+  const ev = s.p * k - 1;
+  $('#kwyn').innerHTML = `<p class="note">Wygrana: <b>${num(st*k)} zł</b> · oczekiwany wynik na dłuższą metę: <b class="${ev>=0?'pos':'neg'}">${ev>=0?'+':''}${num(st*ev)} zł</b> (${sgn(ev)}) – ${ev >= 0 ? 'kurs jest wyższy niż uczciwy ✅' : 'kurs jest niższy niż uczciwy ❌'}</p>`;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-kid]');
+  if(b){ const id = b.dataset.kid; const i = KUP.wybrane.findIndex(x => x.id === id);
+    if(i >= 0) KUP.wybrane.splice(i, 1); else if(KUP.opcje[id]) KUP.wybrane.push(KUP.opcje[id]);
+    store.set('kupon', KUP.wybrane); b.classList.toggle('on', i < 0); b.textContent = i < 0 ? '✓ w kuponie' : '+ kupon'; odswiezKupon(); return; }
+  const d = e.target.closest('[data-kdel]');
+  if(d){ KUP.wybrane = KUP.wybrane.filter(x => x.id !== d.dataset.kdel); store.set('kupon', KUP.wybrane); $('#kcard').innerHTML = widokKuponu(); podepnijKupon(); odswiezKupon(); renderuj(); }
+});
+function podepnijKupon(){
+  const k = $('#kkurs'); if(k){ k.oninput = kuponWynik; $('#kst').oninput = kuponWynik; kuponWynik(); }
+  const c = $('#kclear'); if(c) c.onclick = () => { KUP.wybrane = []; store.set('kupon', []); $('#kupon').classList.remove('open'); odswiezKupon(); renderuj(); };
+}
+/* ---------- stan programu ---------- */
+function widokStanu(){
+  const s = S.status; if(!s) return `<p class="note">Brak danych o stanie (pojawią się po najbliższym uruchomieniu).</p>`;
+  const k = s.kredyty_odds || {}, af = s.api_football || {}, t = s.telegram || {};
+  const wiersz = (a, b, cls) => `<div><span>${a}</span><b class="${cls||''}">${b}</b></div>`;
+  let h = wiersz('Ostatnie pełne liczenie typów', esc(s.ostatnie_pelne || '–')) + wiersz('Ostatnie sprawdzenie', esc(s.ostatnie_sprawdzenie || '–'));
+  h += wiersz('Kredyty API kursów (zostało)', k.pozostalo != null ? `${k.pozostalo}${k.pozostalo < 60 ? ' ⚠️' : ''}` : '–', k.pozostalo != null && k.pozostalo < 60 ? 'neg' : '');
+  if(k.budzet_dzis) h += wiersz('Dzienny budżet kredytów', k.budzet_dzis);
+  h += wiersz('API-Football', af.klucz ? `${af.zapytania_ostatnio || 0} zapytań${(af.bledy||[]).length ? ' ⚠️' : ' ✅'}` : 'brak klucza');
+  h += wiersz('Telegram', !t.wlaczony ? 'wyłączony' : (t.ostatni_blad ? '⚠️ problem' : '✅ działa'), t.ostatni_blad ? 'neg' : '');
+  for(const b of [...(s.bledy || []), ...((af.bledy)||[]), ...(t.ostatni_blad ? [t.ostatni_blad] : [])]) h += `<p class="note warn">${esc(b)}</p>`;
+  return h;
+}
+
 /* ---------- nawigacja ---------- */
 function renderuj(){
   const v = {live:widokLive, value:widokValue, pewne:widokPewne, mecz:widokMecz, dziennik:widokDziennik}[S.tab]();
@@ -647,7 +747,9 @@ function renderuj(){
   window.scrollTo(0, 0);
 }
 document.querySelectorAll('nav button').forEach(b => b.onclick = () => { S.tab = b.dataset.tab; store.set('tab', S.tab); renderuj(); });
-$('#openSettings').onclick = () => { $('#bankroll').value = BANK; $('#settings').classList.add('open'); };
+$('#openSettings').onclick = () => { $('#bankroll').value = BANK; $('#stan').innerHTML = widokStanu(); $('#settings').classList.add('open'); };
+$('#kopen').onclick = () => { $('#kcard').innerHTML = widokKuponu(); podepnijKupon(); $('#kupon').classList.add('open'); };
+$('#kupon').onclick = e => { if(e.target.id === 'kupon') $('#kupon').classList.remove('open'); };
 $('#settings').onclick = e => { if(e.target.id === 'settings') $('#settings').classList.remove('open'); };
 $('#saveSettings').onclick = () => { const v = parseFloat($('#bankroll').value); if(v >= 0){ BANK = v; store.set('bankroll', v); } $('#settings').classList.remove('open'); renderuj(); };
 
@@ -657,7 +759,7 @@ $('#saveSettings').onclick = () => { const v = parseFloat($('#bankroll').value);
   const dz = S.dzis;
   $('#meta').innerHTML = dz ? `${esc(String(dz.data).split('-').reverse().join('.'))}<br>odświeżono ${esc(String(dz.wygenerowano).slice(11))}` : 'brak danych';
   if(S.demo) $('#demo').innerHTML = `<div class="banner">Wersja pokazowa: prawdziwy model i analiza meczu, ale kursy i dziennik są przykładowe. Po uruchomieniu na GitHubie pojawią się prawdziwe typy na dziś.</div>`;
-  renderuj();
+  renderuj(); odswiezKupon();
 })();
 </script>
 </body>
