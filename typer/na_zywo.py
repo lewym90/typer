@@ -7,6 +7,7 @@ import pandas as pd
 import powiadomienia as tg
 from nazwy import pl, pl_txt, pl_mecz
 from core import MASKI, MAXG, zysk_zakladu
+import sporty
 
 KATALOG = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
 PLIK_STANU = os.path.join(KATALOG, 'na_zywo.json')
@@ -287,14 +288,16 @@ def obieg(stan, sl, pierwszy):
 
 def main():
     t0 = time.time(); stan = wczytaj_stan(); ostatni_pull = time.time()
-    d = dzis_json(); pierwszy = True
+    d = dzis_json(); pierwszy = True; inne = sporty.wczytaj_json()
     while True:
         if komendy(stan): zapisz_stan(stan, commit=True, opis='Obserwowane mecze')
-        if time.time() - ostatni_pull > 600: odswiez_repo(); d = dzis_json(); ostatni_pull = time.time()
+        if time.time() - ostatni_pull > 600: odswiez_repo(); d = dzis_json(); inne = sporty.wczytaj_json(); ostatni_pull = time.time()
         dzis = teraz().strftime('%Y-%m-%d')
         if d.get('data') != dzis: d = {}
         sl = sledzone(d, stan)
         aktywne = obieg(stan, sl, pierwszy); pierwszy = False
+        try: trwa_i, przyszle_i = sporty.obieg_na_zywo(stan, inne)   # 🎾 tenis i 🥊 walki
+        except Exception as e: print('tenis/walki na żywo:', e); trwa_i, przyszle_i = False, []
         zapisz_stan(stan)
         # podsumowanie: gdy wszystkie mecze z Pewne i Value się skończyły
         wytyp = [m for m in sl.values() if m['wytypowany']]
@@ -304,8 +307,9 @@ def main():
         # kiedy kończyć: nic nie trwa i najbliższy start za ponad 75 min (lekkie sprawdzenie uruchomi strażnika ponownie)
         trwa = [k for k in aktywne if stan['mecze'].get(k, {}).get('stan') == 'in']
         przyszle = [pd.Timestamp(sl[k]['start']).tz_localize('Europe/Warsaw') for k in aktywne if k in sl and stan['mecze'].get(k, {}).get('stan') == 'pre']
+        przyszle += [pd.Timestamp(t).tz_localize('Europe/Warsaw') for t in przyszle_i]
         najblizszy = min(przyszle) if przyszle else None
-        if not trwa and (najblizszy is None or najblizszy > teraz() + pd.Timedelta(minutes=75)):
+        if not trwa and not trwa_i and (najblizszy is None or najblizszy > teraz() + pd.Timedelta(minutes=75)):
             print('Koniec pracy strażnika – nic nie trwa, najbliższy start:', najblizszy); break
         if time.time() - t0 > LIMIT_S:
             print('Limit czasu – uruchamiam następcę'); zapisz_stan(stan, commit=True); uruchom_nastepce(); return

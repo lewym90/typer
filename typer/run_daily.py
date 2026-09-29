@@ -3,7 +3,7 @@ import json, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from core import *
 import copy, hashlib, requests
-import core, raport, powiadomienia as tg, zrodla, ai_raport
+import core, raport, powiadomienia as tg, zrodla, ai_raport, sporty
 from nazwy import pl, pl_txt, pl_mecz
 
 NAZWY_LIG = {'soccer_uefa_champs_league': 'Liga Mistrzów', 'soccer_fifa_world_cup': 'Mistrzostwa świata',
@@ -521,6 +521,12 @@ def pilnuj_straznika(d):
     if nz.get('podsumowanie') == teraz.strftime('%Y-%m-%d'): starty = []
     starty += [pd.Timestamp(o['start']) for o in nz.get('obserwowane', [])]
     potrzebny = any(teraz - pd.Timedelta(hours=2.5) <= t <= teraz + pd.Timedelta(minutes=60) for t in starty)
+    if not potrzebny:   # tenis i walki (tenis: mecz może zacząć się kilka godzin po planowanej godzinie)
+        try:
+            ni = nz.get('inne', {})
+            potrzebny = any(teraz - pd.Timedelta(hours=7 if sp == 'tenis' else 4) <= t <= teraz + pd.Timedelta(minutes=60)
+                            and (ni.get(eid) or {}).get('stan') != 'post' for sp, eid, t in sporty.starty_dla_straznika(sporty.wczytaj_json()))
+        except Exception as e: print('strażnik (tenis/walki):', e)
     if not potrzebny:   # prośby o obserwowanie czekające u bota
         try: potrzebny = any('/start' in ((u.get('message') or {}).get('text') or '') for u in
                              requests.get(f'https://api.telegram.org/bot{tg.TOKEN}/getUpdates', params={'offset': nz.get('tg_offset', 0) + 1}, timeout=20).json().get('result', []))
@@ -557,6 +563,9 @@ def zapisz_status(tryb, bledy=None, st=None, tg_info=None):
     if DIAG: st['przedmeczowe'] = dict(czas=teraz, mecze=DIAG[:12])
     if tg_info: st['telegram_typy'] = dict(wynik=tg_info, czas=teraz)
     if STRAZNIK: st['na_zywo'] = dict(straznik=STRAZNIK[-1], czas=teraz)
+    if tryb == 'pelne' or sporty.STAN['bledy']:
+        st['sporty'] = dict(tenis=sporty.STAN['tenis'], walki=sporty.STAN['walki'], kredyty=sporty.STAN['kredyty'],
+                            pominiete=sporty.STAN['pominiete'][:6], bledy=sporty.STAN['bledy'][:6], czas=teraz)
     st['telegram'] = dict(tg.STAN_TG, bot=tg.nazwa_bota() or (st.get('telegram') or {}).get('bot'))
     st['bledy'] = (bledy or [])[:5]
     zapisz('status.json', st)
@@ -615,6 +624,8 @@ if __name__ == '__main__':
         except Exception as e: bledy.append(f'strażnik: {e}')
         try: rozlicz_wszystko(); SAMOKOREKTA.update(policz_samokorekte(wczytaj_pewne())); zapisz('dziennik.json', eksport_calosci())
         except Exception as e: bledy.append(f'rozliczenie: {e}')
+        try: sporty.rozlicz(); sporty.zapisz_json()
+        except Exception as e: bledy.append(f'tenis/walki rozliczenie: {e}')
         zapisz_status('sprawdzenie', bledy); print('Sprawdzenie zakończone', bledy); sys.exit(0)
     bledy = []
     pobierz_dane(); trenuj()
@@ -639,11 +650,18 @@ if __name__ == '__main__':
         except Exception as e: print('Rozliczenie dziennika nie powiodło się:', e); bledy.append(f'rozliczenie: {e}')
     today['api_football_zapytania'] = raport.licznik['zapytania']; today['api_football_bledy'] = raport.bledy[:5]
     zapisz('dzis.json', today)
+    inne = None
+    if ODDS_API_KEY:   # 🎾 tenis i 🥊 walki – po piłce, z osobnym limitem kredytów
+        try: w = sporty.licz(); sporty.rozlicz(pelne=True); inne = sporty.zapisz_json(w)
+        except Exception as e: print('Tenis/walki:', e); bledy.append(f'tenis/walki: {e}')
     zapisz('dziennik.json', eksport_calosci())
     try: STRAZNIK.append(pilnuj_straznika(today))
     except Exception as e: bledy.append(f'strażnik: {e}')
     st = wczytaj_status(); tg_info = None
     try: tg_info = tg_typy_dnia(today, st)
     except Exception as e: bledy.append(f'telegram: {e}')
+    if inne:
+        try: st['telegram_sporty'] = dict(wynik=sporty.tg_typy(inne, st), czas=teraz.strftime('%H:%M'))
+        except Exception as e: bledy.append(f'telegram (tenis/walki): {e}')
     zapisz_status('pelne', bledy, st, tg_info)
     print('Gotowe:', len(today['value']), 'value,', len(today['pewne']), 'pewnych,', len(today['mecze']), 'meczów; API-Football:', raport.licznik['zapytania'])

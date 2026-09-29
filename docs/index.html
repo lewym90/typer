@@ -148,7 +148,13 @@ svg.curve{width:100%;height:120px;display:block;margin-top:12px}
 .pos{color:var(--win)} .neg{color:var(--loss)}
 /* nawigacja */
 nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
-nav .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+nav .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:4px 0 10px}
+.seg button{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:10px;padding:9px 0;font-size:15px;cursor:pointer}
+.seg button.on{background:var(--pitch);color:#fff;border-color:var(--pitch);font-weight:600}
+.x12.dwa{grid-template-columns:repeat(2,1fr)}
+.row3{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.row3 .r{text-align:right;white-space:nowrap}
 nav button{background:none;border:0;padding:9px 0 8px;font-size:11px;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
 nav button .ic{font-size:20px;line-height:1}
 nav button[aria-selected="true"]{color:var(--text);font-weight:600}
@@ -184,6 +190,7 @@ footer{font-size:12px;color:var(--muted);margin-top:26px;line-height:1.5}
   <button role="tab" data-tab="value"><span class="ic">💰</span>Value</button>
   <button role="tab" data-tab="pewne"><span class="ic">🔒</span>Pewne</button>
   <button role="tab" data-tab="mecz"><span class="ic">🔎</span>Mecz</button>
+  <button role="tab" data-tab="inne"><span class="ic">🎾</span>Tenis·MMA</button>
   <button role="tab" data-tab="dziennik"><span class="ic">📒</span>Dziennik</button>
 </div></nav>
 
@@ -218,8 +225,8 @@ async function laduj(){
   const osadz = $('#dane-osadzone').textContent.trim();
   if (osadz){ const d = JSON.parse(osadz); Object.assign(S, d); S.demo = !!d.demo; return; }
   const get = async f => { const r = await fetch('data/' + f + '?t=' + Date.now()); if(!r.ok) throw new Error(f); return r.json(); };
-  const [a, b, c, k, st] = await Promise.allSettled([get('dzis.json'), get('modele.json'), get('dziennik.json'), get('kalibracja.json'), get('status.json')]);
-  S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null; S.status = st.value || null;
+  const [a, b, c, k, st, inn] = await Promise.allSettled([get('dzis.json'), get('modele.json'), get('dziennik.json'), get('kalibracja.json'), get('status.json'), get('inne.json')]);
+  S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null; S.status = st.value || null; S.inne = inn.value || null;
 }
 
 /* ---------- model (ten sam co w Pythonie) ---------- */
@@ -544,6 +551,97 @@ function widokDziennik(){
 }
 
 
+/* ---------- TENIS i WALKI (inne.json) ---------- */
+const IK_SP = {tenis:'🎾', walki:'🥊'};
+function wynikInne(sp, eid){ const o = (((S.inne||{}).dziennik||{})[sp]||{}).ostatnie || []; return o.filter(t => t.event_id == eid && t.rodzaj === 'pewne'); }
+function kartaInne(m, nr, sp){
+  const pm = {event_id: m.event_id, mecz: m.mecz, gospodarz: m.a, gosc: m.b};
+  const tur = esc(m.turniej) + (m.kategoria ? ` · kat. ${esc(m.kategoria)}` : '') + (m.bo === 5 ? ' · do 3 wygranych setów' : '');
+  let h = `<article class="bet"><div class="top"><span>${IK_SP[sp]} ${tur}</span><span>${esc(m.dzien)} ${esc(m.godzina)}</span></div><div class="match">${esc(m.mecz)}</div>`;
+  const r3 = m.szansa_remis;
+  h += `<div class="x12 ${r3 ? '' : 'dwa'}"><div><b>${pct(m.szansa_a)}</b><span>wygra ${esc(m.a)}</span></div>${r3 ? `<div><b>${pct(r3)}</b><span>remis</span></div>` : ''}<div><b>${pct(m.szansa_b)}</b><span>wygra ${esc(m.b)}</span></div></div>
+    <div class="x12bar"><i style="width:${m.szansa_a*100}%"></i>${r3 ? `<i class="x" style="width:${r3*100}%"></i>` : ''}<i class="a" style="width:${m.szansa_b*100}%"></i></div>`;
+  if(m.wyniki) h += `<div class="scores"><span class="lbl">Wynik w setach:</span>${m.wyniki.map(w => `<span class="tile"><b>${w.a}:${w.b}</b><span>${pct(w.szansa)}</span></span>`).join('')}</div>`;
+  if(m.metody){ const x = m.metody;
+    h += `<div class="note">Jak skończy się walka: <b>${esc(m.a)}</b> przed czasem ${pct(x.a_ko)} · na punkty ${pct(x.a_pkt)}<br><b>${esc(m.b)}</b> przed czasem ${pct(x.b_ko)} · na punkty ${pct(x.b_pkt)}<br>Przed czasem łącznie: <b>${pct(m.przed_czasem)}</b>${m.kategoria ? '' : ' <span class="muted">(kategoria wagowa nieznana – średnia UFC)</span>'}</div>`; }
+  h += poziomTypu(m.najpewniejszy, '🔒', (nr ? nr + '. ' : '') + 'Najpewniejszy', 'main', pm);
+  if(m.nizsza_pewnosc) h += '<div class="note warn">Niższa pewność – dobrany, żeby było minimum 5 typów.</div>';
+  h += poziomTypu(m.lepszy_kurs, '⚖️', 'Lepszy kurs', '', pm) + poziomTypu(m.ryzykowny, '🎯', 'Ryzykowny', '', pm);
+  const r = m.raport || {}, ai = r.ai;
+  if(r.ostrzezenie) h += `<div class="note warn">⚠️ ${esc(r.ostrzezenie)}</div>`;
+  const ng = [...((m.naglowki||{}).a || []), ...((m.naglowki||{}).b || [])];
+  if(ai || ng.length){
+    h += `<details class="rap"${ai ? ' open' : ''}><summary>📰 Raport${r.ostrzezenie ? ' <span class="warn">⚠️</span>' : ''}</summary>`;
+    if(ai){ h += `<div class="note ai"><b>🤖 Raport AI</b> <span class="muted">(${esc(ai.czas || '')}${ai.szukal ? ', na podstawie wyszukiwania' : ', z nagłówków'})</span><br>${esc(ai.tekst)}</div>`;
+      if((ai.problemy_a||[]).length) h += `<div class="note"><b>${esc(m.a)}:</b> ${esc(ai.problemy_a.join(', '))}</div>`;
+      if((ai.problemy_b||[]).length) h += `<div class="note"><b>${esc(m.b)}:</b> ${esc(ai.problemy_b.join(', '))}</div>`;
+      if((ai.zrodla||[]).length) h += `<div class="note muted">Źródła: ` + ai.zrodla.map(z => `<a href="${esc(z.link)}" target="_blank" rel="noopener">${esc(z.tytul)}</a>`).join(' · ') + `</div>`; }
+    if(ng.length) h += `<ul class="news">` + ng.map(x => `<li><a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.tytul)}</a> <span class="muted">${esc(x.data)}</span></li>`).join('') + `</ul>`;
+    h += `</details>`;
+  }
+  const w = wynikInne(sp, m.event_id).filter(t => t.wynik || t.status);
+  if(w.length) h += `<div class="note"><b>Wynik:</b> ${esc(w[0].wynik || w[0].status)} · ` + w.map(t => ({najpewniejszy:'🔒', lepszy_kurs:'⚖️', ryzykowny:'🎯'}[t.poziom] || '') + (t.trafiony == null ? (t.status ? '↩️' : '⏳') : (t.trafiony ? '✅' : '❌'))).join(' ') + `</div>`;
+  h += `<div class="note">Źródło szans: ${esc(m.zrodlo)}</div>`;
+  return h + `</article>`;
+}
+function statInne(sp){
+  const s = (((S.inne||{}).dziennik)||{})[sp] || {}, T = ((S.inne||{}).testy||{})[sp] || {};
+  const nazwy = {najpewniejszy:'🔒 Najpewniejsze', lepszy_kurs:'⚖️ Lepszy kurs', ryzykowny:'🎯 Ryzykowne'};
+  let h = `<h2>📒 Dziennik – ${sp === 'tenis' ? 'tenis' : 'walki'}</h2>`;
+  const poz = ['najpewniejszy','lepszy_kurs','ryzykowny'].filter(k => s[k]);
+  if(poz.length) h += `<div class="mk">` + poz.map(k => `<span class="n">${nazwy[k]} <span class="muted">(${s[k].n})</span></span><span class="p">${pct(s[k].traf)}</span><span class="f">przew. ${pct(s[k].przew)}</span>`).join('') + `</div>`;
+  else h += `<div class="empty">Brak rozliczonych typów – pojawią się po pierwszych ${sp === 'tenis' ? 'meczach' : 'walkach'}.${s.czeka ? ` Czeka na wynik: ${s.czeka}.` : ''}</div>`;
+  if(s.value) h += `<p class="note">💰 Value: ${s.value.n} zakładów, trafione ${s.value.trafione}, ROI ${sgn(s.value.roi)}, przy 10 zł na typ ${s.value.zysk_10zl >= 0 ? '+' : ''}${num(s.value.zysk_10zl)} zł.</p>`;
+  if(poz.length) h += `<p class="note">Czeka na wynik: ${s.czeka || 0}. Przy mniej niż ok. 100 typach różnice to głównie przypadek.${sp === 'tenis' ? ' Kreczów i walkowerów nie liczymy do skuteczności.' : ''}</p>`;
+  if(T.opis){
+    h += `<details class="rap"><summary>🧪 Test historyczny</summary><div class="note">${esc(T.opis)}</div>`;
+    if(sp === 'tenis'){ const f = (k, n) => T[k] ? `<div class="note">${n}: przewidywane ${pct(T[k][0],1)} → weszło <b>${pct(T[k][1],1)}</b> (${T[k][2]} typów)</div>` : '';
+      h += f('najpewniejszy','🔒 Najpewniejsze') + f('lepszy_kurs','⚖️ Lepszy kurs') + f('ryzykowny','🎯 Ryzykowne');
+      const p = T.pewne5; if(p) h += `<div class="note">5 dziennie: przew. ${pct(p.przew,1)} → weszło <b>${pct(p.weszlo,1)}</b>; wszystkie 5 w ${pct(p.wszystkie5)} dni, 4 z 5 w ${pct(p.cztery)}, 3 w ${pct(p.trzy)}, 2 lub mniej w ${pct(p.dwa_lub_mniej)}.</div>`;
+      if(T.value) h += `<div class="note">💰 ${esc(T.value)}</div>`;
+    } else {
+      if(T.faworyt68) h += `<div class="note">Faworyci ≥68%: przew. ${pct(T.faworyt68[0],1)} → wygrali <b>${pct(T.faworyt68[1],1)}</b> (${T.faworyt68[2]} walk)</div>`;
+      if(T.przed_czasem) h += `<div class="note">„Przed czasem”: przew. ${pct(T.przed_czasem[0],1)} → było <b>${pct(T.przed_czasem[1],1)}</b> (${T.przed_czasem[2]} walk)</div>`;
+    }
+    if(T.uwaga) h += `<div class="note">${esc(T.uwaga)}</div>`;
+    h += `</details>`;
+  }
+  const ost = s.ostatnie || [];
+  if(ost.length) h += `<ul class="log">` + ost.slice(0, 40).map(t => { const z = t.zysk_na_1zl, v = t.rodzaj === 'value';
+      const ic = v ? (z == null ? (t.status ? '↩️' : '⏳') : (z > 0 ? '✅' : (z === 0 ? '↩️' : '❌'))) : (t.trafiony == null ? (t.status ? '↩️' : '⏳') : (t.trafiony ? '✅' : '❌'));
+      const pz = {najpewniejszy:'🔒', lepszy_kurs:'⚖️', ryzykowny:'🎯', value:'💰'}[t.poziom] || '';
+      return `<li><span>${ic}</span><span><b>${esc(t.a)} – ${esc(t.b)}</b><br>${pz} ${esc(t.zaklad)}${v ? ' @ ' + num(t.kurs) : ' · ' + pct(t.szansa)} · ${esc(String(t.start).slice(5,10).split('-').reverse().join('.'))}${t.wynik ? ' · ' + esc(t.wynik) : (t.status ? ' · ' + esc(t.status) : '')}</span><span class="r ${v && z > 0 ? 'pos' : (v && z < 0 ? 'neg' : '')}">${v && z != null ? (z >= 0 ? '+' : '') + num(z*10) + ' zł' : ''}</span></li>`; }).join('') + `</ul>`;
+  return h;
+}
+function widokInne(){
+  const sp = store.get('inneSp', 'tenis'), d = S.inne;
+  let h = `<div class="seg"><button data-sp="tenis" class="${sp === 'tenis' ? 'on' : ''}">🎾 Tenis</button><button data-sp="walki" class="${sp === 'walki' ? 'on' : ''}">🥊 Walki (MMA, boks)</button></div>`;
+  if(!d) return h + `<div class="empty">Brak danych – pojawią się po najbliższym liczeniu typów (codziennie o 12:00).</div>`;
+  const s = d[sp] || {}, mecze = s.mecze || [], byid = Object.fromEntries(mecze.map(m => [m.event_id, m]));
+  const pewne = (s.pewne || []).map(i => byid[i]).filter(Boolean);
+  h += `<h2>${IK_SP[sp]} Pewne – ${sp === 'tenis' ? 'tenis' : 'walki'}</h2><p class="lead">${sp === 'tenis'
+      ? 'Szanse z kursów Pinnacle i giełdy Betfair (bez marży). Rozkład setów z modelu dopasowanego do 14 625 meczów ATP. Mecze bez tych kursów są pomijane.'
+      : 'Szanse z kursów Pinnacle i giełdy Betfair, w MMA poprawione o to, że rynek nie docenia wyraźnych faworytów (test na 6 916 walkach UFC). Boks – tylko kto wygra.'}</p>`;
+  if(d.data && S.dzis && d.data !== S.dzis.data) h += `<div class="banner">Typy z dnia ${esc(String(d.data).split('-').reverse().join('.'))}.</div>`;
+  if(!pewne.length) h += `<div class="empty">${mecze.length ? 'Brak typów spełniających warunki.' : (sp === 'tenis' ? 'Dziś brak meczów z kursami Pinnacle/Betfair (turnieje w ofercie API to głównie Wielkie Szlemy i turnieje 1000/500).' : 'Brak gal w najbliższej dobie (walki są głównie w weekendy).')}</div>`;
+  pewne.forEach((m, i) => h += kartaInne(m, i + 1, sp));
+  const V = s.value || [];
+  if(V.length){ h += `<h2>💰 Value – ${sp === 'tenis' ? 'tenis' : 'walki'}</h2>`;
+    for(const v of V){ const stawka = Math.round(BANK * kelly(v.szansa, v.kurs));
+      h += `<article class="bet"><div class="top"><span>${IK_SP[sp]} ${esc(v.turniej)}</span><span>${esc(v.dzien)} ${esc(v.godzina)}</span></div><div class="match">${esc(v.mecz)}</div>
+      <div class="pick"><div class="name">${esc(v.zaklad)}${kupBtn({event_id: v.event_id, mecz: v.mecz, zaklad: v.zaklad + ' @ ' + num(v.kurs), szansa: v.szansa})}</div><div class="odds">${num(v.kurs)}</div></div>
+      <div class="grid"><div class="cell"><b>${num(v.kurs_uczciwy)}</b><span>kurs uczciwy</span></div><div class="cell"><b>${pct(v.szansa)}</b><span>szansa</span></div><div class="cell"><b class="pos">${sgn(v.ev)}</b><span>przewaga</span></div></div>
+      <div class="note">🔎 <b>Szukaj kursu ≥ ${num(v.kurs_szukaj)}</b> · sugerowana stawka ${stawka} zł · źródło: ${esc(v.zrodlo)}</div></article>`; } }
+  const reszta = mecze.filter(m => !(s.pewne || []).includes(m.event_id));
+  if(reszta.length){
+    h += `<details class="rap"><summary>Wszystkie ${sp === 'tenis' ? 'mecze' : 'walki'} z kursami (${mecze.length})</summary>` + reszta.map(m => {
+      const t = m.najpewniejszy || m.lepszy_kurs;
+      return `<details class="rap"><summary><div class="row3"><span>${esc(m.godzina)} · <b>${esc(m.mecz)}</b><br><span class="muted">${esc(m.turniej)}${t ? ' · ' + (m.najpewniejszy ? '🔒 ' : '⚖️ ') + esc(t.zaklad) + ' ' + pct(t.szansa) : ''}</span></span><span class="r">${pct(m.szansa_a)} / ${pct(m.szansa_b)}</span></div></summary>${kartaInne(m, 0, sp)}</details>`; }).join('') + `</details>`;
+  }
+  if(sp === 'tenis') h += `<p class="note">Krecz (poddanie w trakcie meczu): bukmacherzy rozliczają różnie – sprawdź regulamin. W dzienniku taki typ nie wlicza się do skuteczności.</p>`;
+  return h + statInne(sp);
+}
+
 /* ---------- NA ŻYWO (ESPN, publiczne dane) ---------- */
 const ESPN_LIGI = {'uefa.champions':'Liga Mistrzów','uefa.europa':'Liga Europy','uefa.europa.conf':'Liga Konferencji','uefa.nations':'Liga Narodów',
  'fifa.world':'Mistrzostwa świata','fifa.worldq.uefa':'El. MŚ (Europa)','uefa.euro':'Mistrzostwa Europy','uefa.euroq':'El. ME','fifa.friendly':'Mecze towarzyskie',
@@ -763,16 +861,21 @@ function widokStanu(){
   if(k.budzet_dzis) h += wiersz('Dzienny budżet kredytów', k.budzet_dzis);
   h += wiersz('API-Football', af.klucz ? `${af.zapytania_ostatnio || 0} zapytań${(af.bledy||[]).length ? ' ⚠️' : ' ✅'}` : 'brak klucza');
   h += wiersz('Telegram', !t.wlaczony ? 'wyłączony' : (t.ostatni_blad ? '⚠️ problem' : '✅ działa'), t.ostatni_blad ? 'neg' : '');
+  const sp = s.sporty; if(sp){ const f = x => x ? `${x.z_kursami || 0} z kursami (z ${x.mecze || 0}), pewnych ${x.pewne || 0}` : '–';
+    h += wiersz('🎾 Tenis', f(sp.tenis)) + wiersz('🥊 Walki', f(sp.walki)) + wiersz('Kredyty na tenis i walki', sp.kredyty != null ? sp.kredyty : '–');
+    for(const p of (sp.pominiete || [])) h += `<p class="note warn">Pominięto: ${esc(p)}</p>`;
+    for(const b of (sp.bledy || [])) h += `<p class="note warn">Tenis/walki: ${esc(b)}</p>`; }
   for(const b of [...(s.bledy || []), ...((af.bledy)||[]), ...(t.ostatni_blad ? [t.ostatni_blad] : [])]) h += `<p class="note warn">${esc(b)}</p>`;
   return h;
 }
 
 /* ---------- nawigacja ---------- */
 function renderuj(){
-  const v = {live:widokLive, value:widokValue, pewne:widokPewne, mecz:widokMecz, dziennik:widokDziennik}[S.tab]();
+  const v = ({live:widokLive, value:widokValue, pewne:widokPewne, mecz:widokMecz, inne:widokInne, dziennik:widokDziennik}[S.tab] || widokValue)();
   if(S.tab === 'live') { if(!LIVE.timer) startLive(); } else stopLive();
   $('#view').innerHTML = v;
   document.querySelectorAll('nav button').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === S.tab));
+  document.querySelectorAll('[data-sp]').forEach(b => b.onclick = () => { store.set('inneSp', b.dataset.sp); renderuj(); });
   if(S.tab === 'mecz' && S.modele){
     $('#licz').onclick = licz;
     $('#liga').onchange = () => { const st = store.get('mecz', {}); store.set('mecz', {...st, liga: $('#liga').value, g:'', a:''}); renderuj(); };

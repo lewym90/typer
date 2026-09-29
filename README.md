@@ -1,4 +1,4 @@
-# ⚽ Typer – aplikacja z typami piłkarskimi
+# ⚽🎾🥊 Typer – aplikacja z typami (piłka, tenis, MMA, boks)
 
 Program codziennie rano sam liczy typy (Value w Betclic, 5 najpewniejszych, dziennik),
 a aplikacja na telefonie pokazuje wyniki i pozwala przeanalizować dowolny mecz.
@@ -15,6 +15,11 @@ Opcjonalnie sekret `TELEGRAM_TOKEN` (bot z @BotFather) – powiadomienia; wyśli
 
 Typy odświeżają się same codziennie o 12:00. Ręcznie: Actions → Typer → Run workflow.
 Aktualizacja programu = podmiana pliku `typer.yml` na nowy.
+
+## Tenis i walki (od wersji 5)
+Zakładka „🎾 Tenis·MMA”: typy z kursów Pinnacle/Betfair (mecze bez nich są pomijane), osobne listy Pewne, Value, dziennik (`docs/data/typy_inne.csv`, `inne.json`). Maks. 16 kredytów Odds API dziennie, po piłce.
+- `typer/sporty.py` – pobieranie, typy, dziennik, Telegram, na żywo
+- `typer/tenis.py`, `typer/walki.py` – modele (sety w tenisie; kalibracja i sposób zwycięstwa w MMA)
 
 ## Pliki
 - `typer/core.py` – model, pobieranie danych, kursy, dziennik
