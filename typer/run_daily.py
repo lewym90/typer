@@ -2,7 +2,9 @@
 import json, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from core import *
-import core, raport, powiadomienia as tg
+import copy, hashlib, requests
+import core, raport, powiadomienia as tg, zrodla, ai_raport
+from nazwy import pl, pl_txt, pl_mecz
 
 NAZWY_LIG = {'soccer_uefa_champs_league': 'Liga Mistrzów', 'soccer_fifa_world_cup': 'Mistrzostwa świata',
  'soccer_uefa_european_championship': 'Mistrzostwa Europy', 'soccer_uefa_nations_league': 'Liga Narodów',
@@ -90,7 +92,7 @@ PRZECIWNE.update({v: k for k, v in list(PRZECIWNE.items())})
 
 def wybierz(x, liga, lista, kmin, kmax, pmin=0.0, wyklucz=()):
     wyklucz = [z for z in wyklucz if z]
-    r = rynki_rozszerzone(x['M'], x['home'], x['away']); najlepszy = None
+    r = rynki_rozszerzone(x['M'], pl(x['home']), pl(x['away'])); najlepszy = None
     for z in lista:
         if z in wyklucz: continue
         # bez zakładów sprzecznych z już wybranymi (nie mogą wejść razem)
@@ -164,10 +166,13 @@ def typy_na_dzis():
     for t in wszystkie:
         if not any(t['x'] is k for k in kandydaci): kandydaci.append(t['x'])
         if len(kandydaci) >= RAPORT_ILE_MECZOW: break
+    n_pewnych = len(kandydaci)   # raport AI tylko dla kandydatów do Pewnych (limit darmowego Gemini)
     for v in value_x:
         if not any(v is k for k in kandydaci): kandydaci.append(v)
-    for x in kandydaci:
-        try: x['raport'] = raport.raport(x['home'], x['away'], x['start'], polski=x['sport_key'] == 'soccer_poland_ekstraklasa')
+    for i, x in enumerate(kandydaci):
+        polski = x['sport_key'] == 'soccer_poland_ekstraklasa' or 'Poland' in (x['home'], x['away'])
+        try: x['raport'] = raport.raport(x['home'], x['away'], x['start'], polski=polski, sport_key=x['sport_key'],
+                                         rozgrywki=NAZWY_LIG.get(x['sport_key'], ''), ai=i < n_pewnych)
         except Exception as e: print('raport:', x['home'], e)
     for v in value:  # dołącz raporty do kart Value
         for x in value_x:
@@ -295,8 +300,9 @@ def stat_pewne(d):
     ruch = float(R.ruch.dropna().mean()) if 'ruch' in R and R.ruch.notna().sum() >= 5 else None
     return dict(rozliczonych=int(len(R)), czeka=int(len(d) - len(R)), poziomy=poziomy, ligi=ligi, ruch_rynku=ruch,
                 z_ostrzezeniem=ostrz.reset_index().to_dict('records'),
-                ostatnie=R.sort_values('start', ascending=False).head(60).replace({np.nan: None})[
-                    ['start', 'mecz', 'poziom', 'zaklad', 'szansa', 'wynik', 'trafiony', 'kurs_betclic']].to_dict('records'))
+                ostatnie=[dict(r_, zaklad=pl_txt(r_['zaklad'], *str(r_['mecz']).split(' – '))) for r_ in
+                          R.sort_values('start', ascending=False).head(60).replace({np.nan: None})[
+                    ['start', 'mecz', 'poziom', 'zaklad', 'szansa', 'wynik', 'trafiony', 'kurs_betclic']].to_dict('records')])
 
 # ---------- SPRAWDZENIE PRZED MECZEM (co 30 min między 12:15 a 00:45) ----------
 POZIOMY = (('najpewniejszy', '🔒', None), ('lepszy_kurs', '⚖️', 'lepszy_kurs'), ('ryzykowny', '🎯', 'ryzykowny'))
@@ -316,14 +322,29 @@ def _mecze_dnia(d):
         if m.get('event_id') and m['event_id'] not in ids: ids.add(m['event_id']); out.append(m)
     return out
 
+STRAZNIK = []
+DIAG = []   # co zrobiło sprawdzenie przed meczem (zapisywane w status.json – zmiana A)
+
 def sprawdz_przed_meczem(d):
     teraz = pd.Timestamp.now(tz='Europe/Warsaw')
     P_, V = wczytaj_pewne(), wczytaj_dziennik(); zmiana = False
     for m in _mecze_dnia(d):
         start = pd.Timestamp(m['start']).tz_localize('Europe/Warsaw'); minut = (start - teraz).total_seconds() / 60
-        pm = m.get('przedmeczowe') or {}
-        if minut < 10 or minut > 100: continue
-        pierwsze = not pm
+        diag = dict(mecz=pl_mecz(m['mecz']), minut=round(minut))
+        # 0) raport AI odświeżany ok. 2 h przed meczem (tylko mecze z Pewnych) – wiadomość tylko, gdy wniósł coś nowego
+        r = m.get('raport')
+        if r is not None and 'klucz' in m and 90 <= minut <= 150 and not r.get('ai_odswiezony') and ai_raport.KLUCZ:
+            try:
+                polski = m.get('sport_key') == 'soccer_poland_ekstraklasa' or 'Poland' in (m['gospodarz'], m['gosc'])
+                istotna = raport.odswiez_ai(r, m, polski=polski); r['ai_odswiezony'] = True; zmiana = True
+                diag['ai'] = 'odświeżony' + (' – zmiana' if istotna else '')
+                if istotna and r.get('ai'): tg_aktualizacja_raportu(m, r)
+            except Exception as e: diag['ai'] = f'błąd: {e}'
+        if minut < 10 or minut > 100:
+            if 'ai' in diag: DIAG.append(diag)
+            continue
+        stare = copy.deepcopy(m.get('przedmeczowe') or {})
+        pm = copy.deepcopy(stare); pierwsze = not stare
         # 1) kursy tuż przed meczem (2 kredyty) – raz na mecz, w oknie 20–100 min
         if not pm.get('kursy') and minut >= 20 and ODDS_API_KEY and (core.KREDYTY['pozostalo'] or 99) > 25:
             try:
@@ -341,94 +362,198 @@ def sprawdz_przed_meczem(d):
                         sel = (V.event_id.astype(str) == str(m['event_id'])) & (V.zaklad == m['zaklad'])
                         if sel.any():
                             clv = ev_zakladu(M, m['rynek'], m['strona'], m['linia'], m['kurs']); V.loc[sel, 'clv'] = round(float(clv), 4); pm['clv'] = round(float(clv), 4)
-            except Exception as e: print('kursy przed meczem:', m['mecz'], e)
-        # 2) składy – z ESPN (za darmo, wraz z liczbą zmian względem poprzedniego meczu); API-Football jako zapas
+                diag['kursy'] = 'tak' if pm.get('kursy') else 'brak ostrych kursów'
+            except Exception as e: print('kursy przed meczem:', m['mecz'], e); diag['kursy'] = f'błąd: {str(e)[:80]}'
+        # 2) składy – ESPN (za darmo, z liczbą zmian względem poprzedniego meczu); zapas: BSD, potem API-Football (plan płatny)
         if not pm.get('sklady') and minut <= 80:
             try:
-                s_ = tg.sklady_espn(m.get('sport_key'), m['gospodarz'], m['gosc'], m['start'])
+                slug, em = tg.znajdz_espn(m.get('sport_key'), m['gospodarz'], m['gosc'], m['start'])
+                diag['espn_mecz'] = bool(em)
+                s_ = tg.sklady_espn(m.get('sport_key'), m['gospodarz'], m['gosc'], m['start']) if em else None
+                if not s_: s_ = zrodla.sklad_bsd(m['gospodarz'], m['gosc'], m['start'])
                 if not s_ and (m.get('raport') or {}).get('api'): s_ = raport.sklady(m['raport']['api'])
                 if s_: pm['sklady'] = s_
-            except Exception as e: print('składy:', m['mecz'], e)
+                diag['sklady'] = s_.get('zrodlo', 'API-Football') if s_ else 'jeszcze nie ma'
+            except Exception as e: print('składy:', m['mecz'], e); diag['sklady'] = f'błąd: {str(e)[:80]}'
+        elif pm.get('sklady'): diag['sklady'] = 'już są'
         # 3) ostrzeżenia
         ost = []
         for poz, (a, b) in (pm.get('kursy') or {}).get('ruch', {}).items():
             if b - a <= -0.05: ost.append(f"rynek odwraca się od typu ({poz.replace('_', ' ')}): {round(a*100)}% → {round(b*100)}%")
         for p in (pm.get('sklady') or {}).get('poza', []):
-            kto = m['gospodarz'] if p['strona'] == 'gosp' else m['gosc']
+            kto = pl(m['gospodarz']) if p['strona'] == 'gosp' else pl(m['gosc'])
             ost.append(f"{kto}: {p['zawodnik']} ({p['gole']} goli) {p['gdzie']}")
         for strona, n in ((pm.get('sklady') or {}).get('zmiany') or {}).items():
-            if n >= 5: ost.append(f"{m['gospodarz'] if strona == 'gosp' else m['gosc']}: mocna rotacja – {n} zmian w pierwszym składzie względem poprzedniego meczu")
+            if n >= 5: ost.append(f"{pl(m['gospodarz']) if strona == 'gosp' else pl(m['gosc'])}: mocna rotacja – {n} zmian w pierwszym składzie względem poprzedniego meczu")
         pm['ostrzezenia'] = ost
-        if pm != (m.get('przedmeczowe') or {}) or pierwsze:
-            m['przedmeczowe'] = pm; zmiana = True
+        if pm != stare or pierwsze:
             if pm.get('kursy') or pm.get('sklady'): tg_przed_meczem(m, pm)
+            m['przedmeczowe'] = pm; zmiana = True
+        diag['wyslano_tg'] = bool(pm.get('wyslano'))
+        DIAG.append(diag)
     if zmiana:
         # to samo sprawdzenie dopisujemy do wszystkich kopii meczu (Pewne i Value mają osobne karty)
-        mapa = {m['event_id']: m.get('przedmeczowe') for m in _mecze_dnia(d)}
+        mapa = {m['event_id']: (m.get('przedmeczowe'), m.get('raport')) for m in _mecze_dnia(d)}
         for m in d.get('pewne', []) + d.get('value', []) + d.get('mecze', []):
-            if m.get('event_id') in mapa and mapa[m['event_id']]: m['przedmeczowe'] = mapa[m['event_id']]
+            if m.get('event_id') in mapa:
+                pm_, r_ = mapa[m['event_id']]
+                if pm_: m['przedmeczowe'] = pm_
+                if r_ and m.get('raport') is not None: m['raport'] = r_
         if len(P_): P_.to_csv(PLIK_PEWNE, index=False)
         if len(V): V.to_csv(PLIK_DZIENNIKA, index=False)
     return zmiana
 
 def tg_przed_meczem(m, pm):
     if pm.get('wyslano'): return
-    lin = [f"🕐 <b>{esc_(m['mecz'])}</b> – {m['godzina']}"]
-    if pm.get('sklady'): lin.append('✅ Składy potwierdzone')
+    lin = [f"🕐 <b>{esc_(pl_mecz(m['mecz']))}</b> – {m['godzina']}"]
+    if pm.get('sklady'): lin.append(f"✅ Składy potwierdzone ({esc_(pm['sklady'].get('zrodlo', ''))})")
     for poz, ik, k, n, sz in _typy_meczu(m):
         nowa = (pm.get('kursy') or {}).get('ruch', {}).get(poz, [sz, None])[1]
-        lin.append(f"{ik} {esc_(n)} – {tg.pct(sz)}" + (f" → {tg.pct(nowa)}" if nowa is not None else ''))
-    if 'kurs' in m: lin.append(f"💰 {esc_(m['zaklad'])} @ {m['kurs']}" + (f" (CLV {pm['clv']*100:+.1f}%)" if pm.get('clv') is not None else ''))
+        lin.append(f"{ik} {esc_(pl_txt(n, m['gospodarz'], m['gosc']))} – {tg.pct(sz)}" + (f" → {tg.pct(nowa)}" if nowa is not None else ''))
+    if 'kurs' in m: lin.append(f"💰 {esc_(pl_txt(m['zaklad'], m['gospodarz'], m['gosc']))} @ {m['kurs']}" + (f" (CLV {pm['clv']*100:+.1f}%)" if pm.get('clv') is not None else ''))
     for o in pm.get('ostrzezenia', []): lin.append(f"⚠️ {esc_(o)}")
     if pm.get('sklady') or pm.get('ostrzezenia'):
         if tg.wyslij('\n'.join(lin)): pm['wyslano'] = True
 
 esc_ = lambda s: tg.esc(s)
 
-def tg_typy_dnia(d):
-    if not d.get('pewne') and not d.get('value'): return
-    lin = [f"⚽ <b>Typy na {pd.Timestamp(d['data']).strftime('%d.%m')}</b>"]
+def _raport_tg(m, nr=None):
+    """Blok raportu jednego meczu do wiadomości na Telegramie."""
+    r = m.get('raport') or {}; ai = r.get('ai')
+    naglowek = f"<b>{str(nr) + '. ' if nr else ''}{esc_(pl_mecz(m['mecz']))}</b> ({m['godzina']})"
+    lin = [naglowek]
+    if ai:
+        lin.append(esc_(ai['tekst']))
+        for s, kto in (('braki_gosp', pl(m['gospodarz'])), ('braki_gosc', pl(m['gosc']))):
+            if ai.get(s): lin.append(f"❌ {esc_(kto)}: {esc_(', '.join(ai[s][:6]))}")
+        if ai.get('niepewni'): lin.append(f"❓ Niepewni: {esc_(', '.join(ai['niepewni'][:5]))}")
+        zr = [z['tytul'] for z in ai.get('zrodla', [])][:3]
+        if zr: lin.append(f"<i>Źródła: {esc_(', '.join(zr))}</i>")
+    else:
+        br = r.get('braki') or {}
+        for s, kto in (('gosp', pl(m['gospodarz'])), ('gosc', pl(m['gosc']))):
+            if br.get(s): lin.append(f"❌ {esc_(kto)}: {esc_(', '.join(p['zawodnik'] + (' (?)' if p.get('niepewny') else '') for p in br[s][:6]))}")
+        if len(lin) == 1: lin.append('Raport AI niedostępny dla tego meczu; brak nieobecnych w bazach danych.' if ai_raport.KLUCZ else 'Brak nieobecnych w bazach danych.')
+    for o in r.get('ostrzezenia', []): lin.append(f"⚠️ {esc_(o)}")
+    return '\n'.join(lin)
+
+def tg_raporty(d):
+    """Druga wiadomość: raporty przedmeczowe dla meczów z Pewnych (zmiana J)."""
+    if not d.get('pewne'): return
+    czesci = [f"📰 <b>Raporty na {pd.Timestamp(d['data']).strftime('%d.%m')}</b>"]
+    czesci += [_raport_tg(m, i) for i, m in enumerate(d['pewne'], 1)]
+    if not any((m.get('raport') or {}).get('ai') for m in d['pewne']):
+        czesci.append('<i>Raport AI niedostępny – pokazuję nieobecnych z baz danych.</i>')
+    tg.wyslij_dlugi('\n\n'.join(czesci))
+
+def tg_aktualizacja_raportu(m, r):
+    tg.wyslij('🔄 <b>Aktualizacja raportu</b>\n' + _raport_tg(dict(m, raport=r)))
+
+def _podpis_typow(d):
+    """Odcisk typów dnia – ta sama lista typów nie jest wysyłana drugi raz (zmiana G)."""
+    t = [(m['mecz'], [k for _, _, k, _, _ in _typy_meczu(m)]) for m in d.get('pewne', [])] + [(v['mecz'], v['zaklad']) for v in d.get('value', [])]
+    return hashlib.md5(json.dumps(t, ensure_ascii=False).encode()).hexdigest()[:12]
+
+def tg_typy_dnia(d, status):
+    """Typy dnia + raporty. Raz dziennie; ponownie tylko przy zmianie typów; nie w nocy (00–08)."""
+    if not d.get('pewne') and not d.get('value'): return 'brak typów'
+    teraz = pd.Timestamp.now(tz='Europe/Warsaw')
+    if teraz.hour < 8: return 'wstrzymane (noc) – wyślę po 12:00'
+    wys = status.get('tg_typy') or {}
+    podpis = _podpis_typow(d)
+    if wys.get('data') == d['data'] and wys.get('podpis') == podpis: return 'już wysłane dziś (typy bez zmian)'
+    zmiana = wys.get('data') == d['data']
+    lin = [f"⚽ <b>{'Zaktualizowane typy' if zmiana else 'Typy'} na {pd.Timestamp(d['data']).strftime('%d.%m')}</b>"]
     for i, m in enumerate(d.get('pewne', []), 1):
-        lin.append(f"\n<b>{i}. {esc_(m['mecz'])}</b> ({m['godzina']}, {esc_(m['liga'])})")
-        for poz, ik, k, n, sz in _typy_meczu(m): lin.append(f"{ik} {esc_(n)} – {tg.pct(sz)} (kurs ≥ {1/sz:.2f})")
+        lin.append(f"\n<b>{i}. {esc_(pl_mecz(m['mecz']))}</b> ({m['godzina']}, {esc_(m['liga'])})")
+        for poz, ik, k, n, sz in _typy_meczu(m): lin.append(f"{ik} {esc_(pl_txt(n, m['gospodarz'], m['gosc']))} – {tg.pct(sz)} (kurs ≥ {1/sz:.2f})")
         if (m.get('raport') or {}).get('ostrzezenia'): lin.append('⚠️ ' + esc_('; '.join(m['raport']['ostrzezenia'])))
     if d.get('value'):
         lin.append('\n💰 <b>Value (Betclic)</b>')
-        for v in d['value']: lin.append(f"{esc_(v['mecz'])}: {esc_(v['zaklad'])} @ {v['kurs']} (szansa {tg.pct(v['szansa'])}, szukaj ≥ {v.get('kurs_szukaj', '')})")
+        for v in d['value']: lin.append(f"{esc_(pl_mecz(v['mecz']))}: {esc_(pl_txt(v['zaklad'], v.get('gospodarz'), v.get('gosc')))} @ {v['kurs']} (szansa {tg.pct(v['szansa'])}, szukaj ≥ {v.get('kurs_szukaj', '')})")
     if tg.APLIKACJA: lin.append(f"\n📱 {tg.APLIKACJA}")
-    tg.wyslij('\n'.join(lin))
+    if tg.wyslij_dlugi('\n'.join(lin)):
+        status['tg_typy'] = dict(data=d['data'], podpis=podpis, czas=teraz.strftime('%H:%M'))
+        tg_raporty(d)
+        return 'wysłane'
+    return 'błąd wysyłki'
+
+def _stan_na_zywo():
+    try: return json.load(open(os.path.join(OUT, 'na_zywo.json')))
+    except Exception: return {}
 
 def podsumowanie_dnia(d):
-    """Wieczorem, gdy wszystkie mecze z Pewne się skończą: wyniki z ESPN + wiadomość na Telegram."""
+    """ZAPAS: podsumowanie wysyła strażnik na żywo; to wysyłamy tylko, gdy go zabrakło (4 h po ostatnim starcie)."""
     if d.get('podsumowanie_wyslane') or not d.get('pewne'): return False
+    if _stan_na_zywo().get('podsumowanie') == d.get('data'): d['podsumowanie_wyslane'] = True; return True
+    ostatni = max(pd.Timestamp(x['start']) for x in d['pewne'] + d.get('value', []))
+    if pd.Timestamp.now(tz='Europe/Warsaw').tz_localize(None) < ostatni + pd.Timedelta(hours=4): return False
     wiersze, traf = [], {'najpewniejszy': [0, 0], 'lepszy_kurs': [0, 0], 'ryzykowny': [0, 0]}
     for m in d['pewne']:
         w = tg.wynik(m.get('sport_key'), m['gospodarz'], m['gosc'], m['start'])
         if not w or w[2] != 'post':
             ostatni = max(pd.Timestamp(x['start']) for x in d['pewne'])
             if pd.Timestamp.now(tz='Europe/Warsaw').tz_localize(None) < ostatni + pd.Timedelta(hours=3): return False   # jeszcze trwają
-            wiersze.append(f"{esc_(m['mecz'])} – brak wyniku w serwisie"); continue
+            wiersze.append(f"{esc_(pl_mecz(m['mecz']))} – brak wyniku w serwisie"); continue
         m['wynik_koncowy'] = f"{w[0]}:{w[1]}"
         opis = []
         for poz, ik, k, n, sz in _typy_meczu(m):
             ok = bool(MASKI[k][min(w[0], MAXG), min(w[1], MAXG)]) if k in MASKI else False
             traf[poz][0] += ok; traf[poz][1] += 1; opis.append(f"{ik}{'✅' if ok else '❌'}")
-        wiersze.append(f"{esc_(m['mecz'])} <b>{w[0]}:{w[1]}</b> {' '.join(opis)}")
+        wiersze.append(f"{esc_(pl_mecz(m['mecz']))} <b>{w[0]}:{w[1]}</b> {' '.join(opis)}")
     n = lambda p: f"{traf[p][0]}/{traf[p][1]}"
     tg.wyslij('\n'.join([f"🏁 <b>Wyniki {pd.Timestamp(d['data']).strftime('%d.%m')}</b>",
                           f"🔒 najpewniejsze: {n('najpewniejszy')} · ⚖️ lepszy kurs: {n('lepszy_kurs')} · 🎯 ryzykowne: {n('ryzykowny')}", ''] + wiersze))
     d['podsumowanie_wyslane'] = True
     return True
 
-def zapisz_status(tryb, bledy=None):
-    try: st = json.load(open(os.path.join(OUT, 'status.json')))
-    except Exception: st = {}
+def pilnuj_straznika(d):
+    """Uruchamia strażnika na żywo (osobne zadanie GitHub), gdy wytypowany lub obserwowany mecz zaczyna się w ciągu 60 min
+    albo trwa, a strażnik nie działa. Zwraca opis do status.json."""
+    repo, token = os.environ.get('GITHUB_REPOSITORY'), os.environ.get('GH_TOKEN')
+    if not (repo and token and tg.TOKEN): return 'wyłączony (brak tokenu GitHub lub Telegram)'
+    teraz = pd.Timestamp.now(tz='Europe/Warsaw').tz_localize(None); nz = _stan_na_zywo()
+    starty = [pd.Timestamp(m['start']) for m in d.get('pewne', []) + d.get('value', [])] if d.get('data') == teraz.strftime('%Y-%m-%d') else []
+    if nz.get('podsumowanie') == teraz.strftime('%Y-%m-%d'): starty = []
+    starty += [pd.Timestamp(o['start']) for o in nz.get('obserwowane', [])]
+    potrzebny = any(teraz - pd.Timedelta(hours=2.5) <= t <= teraz + pd.Timedelta(minutes=60) for t in starty)
+    if not potrzebny:   # prośby o obserwowanie czekające u bota
+        try: potrzebny = any('/start' in ((u.get('message') or {}).get('text') or '') for u in
+                             requests.get(f'https://api.telegram.org/bot{tg.TOKEN}/getUpdates', params={'offset': nz.get('tg_offset', 0) + 1}, timeout=20).json().get('result', []))
+        except Exception: pass
+    if not potrzebny: return 'niepotrzebny'
+    h = {'Authorization': f'Bearer {token}', 'Accept': 'application/vnd.github+json'}
+    try:
+        for st_ in ('in_progress', 'queued'):
+            runs = requests.get(f'https://api.github.com/repos/{repo}/actions/runs', params={'status': st_, 'per_page': 20}, headers=h, timeout=20).json().get('workflow_runs', [])
+            if any(r.get('display_title') == 'Na żywo' for r in runs): return 'działa'
+        r = requests.post(f'https://api.github.com/repos/{repo}/actions/workflows/typer.yml/dispatches', headers=h, timeout=20,
+                          json={'ref': os.environ.get('GITHUB_REF_NAME', 'main'), 'inputs': {'tryb': 'na_zywo'}})
+        return 'uruchomiony' if r.status_code == 204 else f'błąd uruchomienia: HTTP {r.status_code} {r.text[:120]}'
+    except Exception as e: return f'błąd: {e}'
+
+def wczytaj_status():
+    try: return json.load(open(os.path.join(OUT, 'status.json')))
+    except Exception: return {}
+
+def zapisz_status(tryb, bledy=None, st=None, tg_info=None):
+    st = st if st is not None else wczytaj_status()
     teraz = pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m-%d %H:%M')
     st['ostatnie_uruchomienie'] = teraz; st[f'ostatnie_{tryb}'] = teraz
     if core.KREDYTY['pozostalo'] is not None:
         st['kredyty_odds'] = dict(pozostalo=core.KREDYTY['pozostalo'], zuzyto=core.KREDYTY['zuzyto'], budzet_dzis=core.KREDYTY['na_dzis'] or st.get('kredyty_odds', {}).get('budzet_dzis'))
-    st['api_football'] = dict(klucz=bool(raport.KLUCZ), zapytania_ostatnio=raport.licznik['zapytania'], bledy=raport.bledy[:5])
-    st['telegram'] = dict(tg.STAN_TG)
+    st['api_football'] = dict(klucz=bool(os.environ.get('API_FOOTBALL_KEY')), uzywany=bool(raport.KLUCZ),
+                              uwaga=None if raport.KLUCZ else 'wyłączony – darmowy plan nie obejmuje bieżącego sezonu (włączysz zmienną API_FOOTBALL_PRO=1)',
+                              zapytania_ostatnio=raport.licznik['zapytania'], bledy=raport.bledy[:5])
+    if tryb == 'pelne' or zrodla.STAN['bsd']['zapytania'] or zrodla.STAN['bigballs']['zapytania']:
+        st['bsd'] = dict(zrodla.STAN['bsd'], bledy=zrodla.STAN['bsd']['bledy'][:4], czas=teraz)
+        st['bigballs'] = dict(zrodla.STAN['bigballs'], bledy=zrodla.STAN['bigballs']['bledy'][:4], czas=teraz)
+    if ai_raport.STAN['zapytania'] or tryb == 'pelne':
+        st['gemini'] = dict(ai_raport.STAN, bledy=ai_raport.STAN['bledy'][:4], czas=teraz)
+    if DIAG: st['przedmeczowe'] = dict(czas=teraz, mecze=DIAG[:12])
+    if tg_info: st['telegram_typy'] = dict(wynik=tg_info, czas=teraz)
+    if STRAZNIK: st['na_zywo'] = dict(straznik=STRAZNIK[-1], czas=teraz)
+    st['telegram'] = dict(tg.STAN_TG, bot=tg.nazwa_bota() or (st.get('telegram') or {}).get('bot'))
     st['bledy'] = (bledy or [])[:5]
     zapisz('status.json', st)
 
@@ -482,6 +607,8 @@ if __name__ == '__main__':
             try: podsumowanie_dnia(stare)
             except Exception as e: bledy.append(f'podsumowanie: {e}')
             zapisz('dzis.json', stare)
+        try: STRAZNIK.append(pilnuj_straznika(stare))
+        except Exception as e: bledy.append(f'strażnik: {e}')
         try: rozlicz_wszystko(); SAMOKOREKTA.update(policz_samokorekte(wczytaj_pewne())); zapisz('dziennik.json', eksport_calosci())
         except Exception as e: bledy.append(f'rozliczenie: {e}')
         zapisz_status('sprawdzenie', bledy); print('Sprawdzenie zakończone', bledy); sys.exit(0)
@@ -498,7 +625,7 @@ if __name__ == '__main__':
     core.KALIBRACJA = K
     SAMOKOREKTA.update(policz_samokorekte(wczytaj_pewne()))
     today = dict(wygenerowano=teraz.strftime('%Y-%m-%d %H:%M'), data=teraz.strftime('%Y-%m-%d'), value=[], pewne=[], mecze=[], blad=None,
-                 raport_dostepny=bool(raport.KLUCZ))
+                 raport_dostepny=bool(raport.KLUCZ) or zrodla.dostepne(), raport_ai=bool(ai_raport.KLUCZ))
     if not ODDS_API_KEY:
         today['blad'] = 'Brak klucza API (sekret ODDS_API_KEY w ustawieniach repozytorium).'
     else:
@@ -509,7 +636,10 @@ if __name__ == '__main__':
     today['api_football_zapytania'] = raport.licznik['zapytania']; today['api_football_bledy'] = raport.bledy[:5]
     zapisz('dzis.json', today)
     zapisz('dziennik.json', eksport_calosci())
-    try: tg_typy_dnia(today)
+    try: STRAZNIK.append(pilnuj_straznika(today))
+    except Exception as e: bledy.append(f'strażnik: {e}')
+    st = wczytaj_status(); tg_info = None
+    try: tg_info = tg_typy_dnia(today, st)
     except Exception as e: bledy.append(f'telegram: {e}')
-    zapisz_status('pelne', bledy)
+    zapisz_status('pelne', bledy, st, tg_info)
     print('Gotowe:', len(today['value']), 'value,', len(today['pewne']), 'pewnych,', len(today['mecze']), 'meczów; API-Football:', raport.licznik['zapytania'])

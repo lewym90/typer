@@ -159,6 +159,10 @@ nav button[aria-selected="true"] .ic{transform:translateY(-1px)}
 footer{font-size:12px;color:var(--muted);margin-top:26px;line-height:1.5}
 @media (prefers-reduced-motion:no-preference){ .board .digits span{animation:flip .5s ease-out both} .board .digits span:nth-child(3){animation-delay:.08s} }
 @keyframes flip{from{transform:rotateX(90deg);opacity:0}to{transform:none;opacity:1}}
+.note.ai{border-left:3px solid var(--accent);padding-left:10px;line-height:1.45}
+.bell{text-decoration:none;font-size:17px;padding:2px 6px;border-radius:6px;opacity:.55}
+.bell.on{opacity:1;background:var(--accent-bg)}
+.bell:focus-visible{opacity:1}
 </style>
 </head>
 <body>
@@ -336,16 +340,28 @@ function obrazMeczu(t){
   return h;
 }
 function raportHTML(r, t){
-  if(!r) return (S.dzis && S.dzis.raport_dostepny === false) ? '' : '';
-  const H = plN(t.gospodarz), A = plN(t.gosc), br = r.braki || {};
-  const lista = (b) => b && b.length ? b.map(p => `${p.kluczowy ? '<b>⭐ ' : ''}${esc(p.zawodnik)}${p.kluczowy ? '</b>' : ''} <span class="muted">(${esc(p.powod || p.typ)}${/question/i.test(p.typ) ? ', niepewny' : ''})</span>`).join(', ') : '<span class="muted">brak zgłoszonych</span>';
-  let h = `<details class="rap"${(r.ostrzezenia||[]).length ? ' open' : ''}><summary>📰 Raport przedmeczowy${(r.ostrzezenia||[]).length ? ' <span class="warn">⚠️ ' + r.ostrzezenia.length + '</span>' : ''}</summary>`;
-  for(const o of (r.ostrzezenia || [])) h += `<div class="note warn">⚠️ ${esc(plTxt(o, t))}</div>`;
-  if(r.dostepne){ h += `<div class="note"><b>Braki – ${esc(H)}:</b> ${lista(br.gosp)}</div><div class="note"><b>Braki – ${esc(A)}:</b> ${lista(br.gosc)}</div>`; }
-  for(const u of (r.uwagi || [])) if(!(r.ostrzezenia||[]).includes(u)) h += `<div class="note">• ${esc(plTxt(u, t))}</div>`;
+  if(!r) return '';
+  const H = plN(t.gospodarz), A = plN(t.gosc), br = r.braki || {}, ai = r.ai, ost = r.ostrzezenia || [];
+  const lista = (b) => b && b.length ? b.map(p => `${p.kluczowy ? '<b>⭐ ' : ''}${esc(p.zawodnik)}${p.kluczowy ? '</b>' : ''} <span class="muted">(${esc(p.powod || p.typ || 'nieobecny')}${p.niepewny ? ', niepewny' : ''})</span>`).join(', ') : '<span class="muted">brak zgłoszonych</span>';
+  let h = `<details class="rap"${ost.length || ai ? ' open' : ''}><summary>📰 Raport przedmeczowy${ost.length ? ' <span class="warn">⚠️ ' + ost.length + '</span>' : ''}</summary>`;
+  for(const o of ost) h += `<div class="note warn">⚠️ ${esc(plTxt(o, t))}</div>`;
+  if(ai){
+    h += `<div class="note ai"><b>🤖 Raport AI</b> <span class="muted">(${esc(ai.czas || '')}${ai.szukal ? ', na podstawie wyszukiwania' : ', z zebranych danych'})</span><br>${esc(ai.tekst)}</div>`;
+    if((ai.braki_gosp||[]).length) h += `<div class="note"><b>Nie zagrają – ${esc(H)}:</b> ${esc(ai.braki_gosp.join(', '))}</div>`;
+    if((ai.braki_gosc||[]).length) h += `<div class="note"><b>Nie zagrają – ${esc(A)}:</b> ${esc(ai.braki_gosc.join(', '))}</div>`;
+    if((ai.niepewni||[]).length) h += `<div class="note"><b>Niepewni:</b> ${esc(ai.niepewni.join(', '))}</div>`;
+    if((ai.zrodla||[]).length) h += `<div class="note muted">Źródła: ` + ai.zrodla.map(z => `<a href="${esc(z.link)}" target="_blank" rel="noopener">${esc(z.tytul)}</a>`).join(' · ') + `</div>`;
+  }
+  if(r.dostepne && ((br.gosp||[]).length || (br.gosc||[]).length || !ai)){
+    const zr = (r.zrodla_brakow || []).length ? ` <span class="muted">(${esc(r.zrodla_brakow.join(', '))})</span>` : '';
+    h += `<div class="note"><b>Braki w bazie danych${zr}</b></div><div class="note"><b>${esc(H)}:</b> ${lista(br.gosp)}</div><div class="note"><b>${esc(A)}:</b> ${lista(br.gosc)}</div>`;
+  }
+  for(const u of (r.uwagi || [])) if(!ost.includes(u)) h += `<div class="note">• ${esc(plTxt(u, t))}</div>`;
   const ng = [...((r.naglowki||{}).gosp || []), ...((r.naglowki||{}).gosc || [])];
-  if(ng.length) h += `<div class="note"><b>Najnowsze wiadomości:</b></div><ul class="news">` + ng.map(x => `<li><a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.tytul)}</a> <span class="muted">${esc(x.data)}</span></li>`).join('') + `</ul>`;
-  if(!r.dostepne) h += `<div class="note muted">Kontuzje i składy pojawią się po dodaniu klucza API-Football.</div>`;
+  if(ng.length){
+    const li = ng.map(x => `<li><a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.tytul)}</a> <span class="muted">${esc(x.data)}</span></li>`).join('');
+    h += ai ? `<details class="rap"><summary>Nagłówki (${ng.length})</summary><ul class="news">${li}</ul></details>` : `<div class="note"><b>Najnowsze wiadomości:</b></div><ul class="news">${li}</ul>`;
+  }
   return h + `</details>`;
 }
 function widokPewne(){
@@ -537,7 +553,25 @@ const ESPN_LIGI = {'uefa.champions':'Liga Mistrzów','uefa.europa':'Liga Europy'
  'aut.1':'Bundesliga (AUT)','den.1':'Superliga (DEN)','nor.1':'Eliteserien','swe.1':'Allsvenskan','sui.1':'Super League (SUI)','irl.1':'League of Ireland',
  'rou.1':'Liga I (ROU)','fin.1':'Veikkausliiga','usa.1':'MLS (USA)','bra.1':'Brasileirão','arg.1':'Liga Profesional (ARG)',
  'mex.1':'Liga MX','jpn.1':'J1 League','chn.1':'Super League (CHN)'};
-const LIVE = {mecze:[], czas:null, blad:null, timer:null, ligiDzis:null};
+const LIVE = {mecze:[], czas:null, blad:null, timer:null, ligiDzis:null, obs:null};
+/* dzwonek 🔔: obserwowanie meczu przez bota Telegram (stan z pliku na_zywo.json w repozytorium) */
+const OBS_LOK = () => { const o = store.get('obs', {}); const t = Date.now(); for(const k in o) if(t - o[k].t > 36e5*20) delete o[k]; return o; };
+async function pobierzObs(){
+  try{ const [u, r] = [location.hostname.split('.')[0], location.pathname.split('/')[1]];
+    if(!/github\.io$/.test(location.hostname) || !r) return;
+    const j = await fetch(`https://raw.githubusercontent.com/${u}/${r}/main/docs/data/na_zywo.json?t=${Date.now()}`).then(x => x.ok ? x.json() : null);
+    if(j) LIVE.obs = new Set((j.obserwowane || []).map(o => o.slug + '_' + o.id));
+  }catch(e){}
+}
+function obserwowany(m){ const k = m.slug + '_' + m.id, l = OBS_LOK()[k]; if(l && (!LIVE.obs || l.t > (LIVE.obsCzas||0))) return l.on; return LIVE.obs ? LIVE.obs.has(k) : false; }
+function dzwonek(m){
+  const bot = ((S.status || {}).telegram || {}).bot; if(!bot || m.stan === 'post') return '';
+  const on = obserwowany(m), kod = `${on ? 'x' : 'o'}_${m.slug.replace(/\./g,'-')}_${m.id}`;
+  return `<a class="bell${on ? ' on' : ''}" href="https://t.me/${esc(bot)}?start=${esc(kod)}" target="_blank" rel="noopener" data-obs="${esc(m.slug + '_' + m.id)}" data-on="${on ? 1 : 0}" title="${on ? 'Wyłącz powiadomienia' : 'Powiadomienia o tym meczu na Telegramie'}" aria-label="${on ? 'Wyłącz powiadomienia' : 'Włącz powiadomienia'}">${on ? '🔔' : '🔕'}</a>`;
+}
+document.addEventListener('click', e => { const a = e.target.closest('a.bell'); if(!a) return;
+  const o = OBS_LOK(); o[a.dataset.obs] = {on: a.dataset.on !== '1', t: Date.now()}; store.set('obs', o);
+  setTimeout(() => { if(S.tab === 'live') $('#view').innerHTML = widokLive(); }, 300); });
 const dz2 = s => { s = norm(s).replace(/\b(fc|cf|afc|sc|ac|fk|sk|club|de|the)\b/g,' ').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
   const b = new Set(); for(let i=0;i<s.length-1;i++) b.add(s.slice(i,i+2)); return b; };
 const ALIAS_LIVE = {'turkiye':'turkey','czechia':'czech republic','korea republic':'south korea','usa':'united states','bosnia herzegovina':'bosnia and herzegovina',
@@ -606,7 +640,7 @@ function kartaLive(m, moje){
   const st = m.stan === 'in' ? `<span class="st in">${esc(m.opis || m.minuta)}</span>` : m.stan === 'post' ? `<span class="st">Koniec</span>`
     : `<span class="st">${new Date(m.start).toLocaleTimeString('pl-PL',{hour:'2-digit',minute:'2-digit'})}</span>`;
   const gra = m.stan !== 'pre' && !isNaN(m.hg);
-  let h = `<div class="lv${moje ? ' moj' : ''}"><div class="hd"><span>${esc(m.liga)}</span>${st}</div>
+  let h = `<div class="lv${moje ? ' moj' : ''}"><div class="hd"><span>${esc(m.liga)}</span><span>${moje ? '<span class="muted" title="Powiadomienia na Telegramie">📣</span> ' : dzwonek(m) + ' '}${st}</span></div>
     <div class="rw"><span>${esc(plN(m.dom))}</span><b>${gra ? m.hg : ''}</b><span>${esc(plN(m.gosc))}</span><b>${gra ? m.ag : ''}</b></div>`;
   const zd = m.zdarzenia.filter(z => z.gol || z.czerw);
   if(zd.length) h += `<div class="ev2">${zd.map(z => `${z.czerw ? '🟥' : '⚽'} ${esc(z.min)} ${esc(z.kto)}${z.dom ? '' : ''}`).join(' · ')}</div>`;
@@ -615,7 +649,7 @@ function kartaLive(m, moje){
   return h + `</div>`;
 }
 function widokLive(){
-  let h = `<h2>Na żywo</h2><p class="lead">Mecze z obsługiwanych lig i rozgrywek. Na górze mecze z Twoimi dzisiejszymi typami z zakładek Pewne i Value. Odświeża się co 30 sekund.</p>`;
+  let h = `<h2>Na żywo</h2><p class="lead">Mecze z obsługiwanych lig i rozgrywek. Na górze mecze z Twoimi dzisiejszymi typami z zakładek Pewne i Value (📣 – start, gole i koniec przychodzą na Telegram). Przy innych meczach dotknij 🔕, a potem <b>Start</b> w Telegramie, żeby też dostawać powiadomienia. Odświeża się co 30 sekund.</p>`;
   if(S.demo && !LIVE.mecze.length) LIVE.mecze = demoLive();
   if(LIVE.blad) h += `<div class="banner">Nie udało się pobrać wyników: ${esc(LIVE.blad)}. Spróbuję ponownie za chwilę.</div>`;
   if(!LIVE.czas && !S.demo) return h + `<div class="empty">Ładuję wyniki…</div>`;
@@ -651,7 +685,7 @@ function demoLive(){
 function startLive(){
   stopLive();
   if(S.demo) return;
-  const tick = async () => { try { await pobierzLive(); } catch(e){ LIVE.blad = e.message; } if(S.tab === 'live') { const y = window.scrollY; $('#view').innerHTML = widokLive(); window.scrollTo(0, y); } };
+  const tick = async () => { try { await pobierzLive(); if(!LIVE.obsT || Date.now() - LIVE.obsT > 120000){ LIVE.obsT = Date.now(); await pobierzObs(); LIVE.obsCzas = Date.now() - 27e5; } } catch(e){ LIVE.blad = e.message; } if(S.tab === 'live') { const y = window.scrollY; $('#view').innerHTML = widokLive(); window.scrollTo(0, y); } };
   tick(); LIVE.timer = setInterval(tick, 30000);
 }
 function stopLive(){ if(LIVE.timer){ clearInterval(LIVE.timer); LIVE.timer = null; } }

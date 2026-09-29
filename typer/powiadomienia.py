@@ -33,6 +33,35 @@ def wyslij(tekst):
     except Exception as e:
         STAN_TG['ostatni_blad'] = str(e); return False
 
+def wyslij_dlugi(tekst, limit=3900):
+    """Dzieli długą wiadomość na części (Telegram przyjmuje maks. 4096 znaków) – po pustych liniach, potem po liniach."""
+    czesci, biez = [], ''
+    for blok in tekst.split('\n\n'):
+        for kawalek in ([blok] if len(blok) <= limit else [blok[i:i + limit] for i in range(0, len(blok), limit)]):
+            if biez and len(biez) + 2 + len(kawalek) > limit: czesci.append(biez); biez = kawalek
+            else: biez = f'{biez}\n\n{kawalek}' if biez else kawalek
+    if biez: czesci.append(biez)
+    ok = True
+    for c in czesci: ok = wyslij(c) and ok
+    return ok
+
+def wyslij_do(chat_id, tekst):
+    """Prywatna odpowiedź bota (np. potwierdzenie obserwowania meczu)."""
+    if not TOKEN or not chat_id: return False
+    try: return bool(requests.post(f'https://api.telegram.org/bot{TOKEN}/sendMessage', timeout=20,
+                                   data=dict(chat_id=chat_id, text=tekst[:4000], disable_web_page_preview='true')).json().get('ok'))
+    except Exception: return False
+
+_bot = {}
+def nazwa_bota():
+    """Nazwa użytkownika bota – aplikacja tworzy z niej link dzwonka 🔔 (t.me/<bot>?start=...)."""
+    if 'n' not in _bot:
+        _bot['n'] = None
+        if TOKEN:
+            try: _bot['n'] = requests.get(f'https://api.telegram.org/bot{TOKEN}/getMe', timeout=20).json()['result']['username']
+            except Exception: pass
+    return _bot['n']
+
 def esc(s): return str(s).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
 pct = lambda p: f"{round(p * 100)}%"
 
@@ -140,3 +169,12 @@ def sklady_espn(sport_key, dom, gosc, start):
         stare = _starterzy(slug, prev).get(str(tid), [])
         if stare: out['zmiany'][strona] = len(set(out[strona]) - set(stare))
     return out
+
+NAZWY_ESPN = {'uefa.champions': 'Liga Mistrzów', 'uefa.europa': 'Liga Europy', 'uefa.europa.conf': 'Liga Konferencji', 'uefa.nations': 'Liga Narodów',
+ 'fifa.world': 'Mistrzostwa świata', 'fifa.worldq.uefa': 'El. MŚ (Europa)', 'uefa.euro': 'Mistrzostwa Europy', 'uefa.euroq': 'El. ME', 'fifa.friendly': 'Mecze towarzyskie',
+ 'eng.1': 'Premier League', 'eng.2': 'Championship', 'eng.3': 'League One', 'eng.4': 'League Two', 'eng.5': 'National League', 'esp.1': 'La Liga', 'esp.2': 'LaLiga 2',
+ 'ger.1': 'Bundesliga', 'ger.2': '2. Bundesliga', 'ita.1': 'Serie A', 'ita.2': 'Serie B', 'fra.1': 'Ligue 1', 'fra.2': 'Ligue 2', 'ned.1': 'Eredivisie', 'por.1': 'Liga Portugal',
+ 'pol.1': 'Ekstraklasa', 'sco.1': 'Premiership (SCO)', 'sco.2': 'Championship (SCO)', 'bel.1': 'Jupiler Pro League', 'tur.1': 'Süper Lig', 'gre.1': 'Super League (GRE)',
+ 'aut.1': 'Bundesliga (AUT)', 'den.1': 'Superliga (DEN)', 'nor.1': 'Eliteserien', 'swe.1': 'Allsvenskan', 'sui.1': 'Super League (SUI)', 'irl.1': 'League of Ireland',
+ 'rou.1': 'Liga I (ROU)', 'fin.1': 'Veikkausliiga', 'usa.1': 'MLS (USA)', 'bra.1': 'Brasileirão', 'arg.1': 'Liga Profesional (ARG)',
+ 'mex.1': 'Liga MX', 'jpn.1': 'J1 League', 'chn.1': 'Super League (CHN)'}
