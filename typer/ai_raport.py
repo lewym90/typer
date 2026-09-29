@@ -6,8 +6,9 @@ import pandas as pd
 
 KLUCZ = os.environ.get('GEMINI_API_KEY', '')
 URL = 'https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent'
-MODELE = ['gemini-flash-latest', 'gemini-2.5-flash', 'gemini-flash-lite-latest', 'gemini-2.5-flash-lite']
-MAKS_DZIENNIE = 24      # zapas: ok. 8 raportów o 12:00 + odświeżenia; modele Flash-Lite mają wyższy limit
+MODELE = ['gemini-flash-latest', 'gemini-flash-lite-latest']   # zapas, gdy nie uda się pobrać listy modeli
+BEZ_SZUKANIA = 'Nie masz dostępu do internetu – opieraj się tylko na danych poniżej (a nazwy źródeł pomiń). '
+MAKS_DZIENNIE = 45      # wszystkie zapytania (także ponowienia); modele Flash-Lite mają w darmowym planie ok. 500 dziennie
 STAN = dict(klucz=bool(KLUCZ), zapytania=0, dzis=0, udane=0, model=None, wyszukiwanie=None, bledy=[])
 PLIK_LICZNIKA = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data', 'ai_licznik.json')
 
@@ -24,7 +25,7 @@ def _licznik(dodaj=0):
     STAN['dzis'] = d['n']
     return d['n']
 _zly = set()            # modele, które odpowiedziały błędem limitu / brakiem – pomijamy do końca uruchomienia
-_szukanie = {'ok': True}
+_szukanie = {'ok': True}   # False, gdy Google odrzuca wyszukiwanie (400/403) – wtedy tylko streszczanie
 
 def _blad(t):
     t = str(t)[:180]; print('AI:', t)
@@ -63,31 +64,60 @@ def _wyciagnij_json(t):
     a, b = t.find('{'), t.rfind('}')
     return json.loads(t[a:b + 1]) if a >= 0 and b > a else None
 
-def _zapytaj(tekst, szukaj):
-    for m in MODELE:
+_modele = {}
+_bez_szukania = set()   # modele, którym skończył się limit wyszukiwania Google
+def modele():
+    """Lista modeli dostępnych dla Twojego klucza (Google zmienia nazwy i wycofuje stare) – najpierw Flash, potem Flash-Lite."""
+    if 'lista' in _modele: return _modele['lista']
+    nazwy = []
+    try:
+        j = requests.get('https://generativelanguage.googleapis.com/v1beta/models', params={'pageSize': 200}, timeout=30,
+                         headers={'x-goog-api-key': KLUCZ}).json()
+        for m in j.get('models', []):
+            n = m.get('name', '').replace('models/', '')
+            if 'generateContent' not in (m.get('supportedGenerationMethods') or []): continue
+            if 'flash' not in n or re.search(r'image|tts|audio|live|embed|thinking|exp|customtools', n): continue
+            nazwy.append(n)
+    except Exception as e: _blad(f'lista modeli: {e}')
+    def ranga(n):   # stabilne przed "preview", nowsze wersje przed starszymi, Flash przed Flash-Lite
+        w = re.search(r'(\d+(?:\.\d+)?)', n); wer = float(w.group(1)) if w else 0
+        return ('lite' in n, 'preview' in n, 'latest' in n, -wer, n)
+    lista = sorted(set(nazwy), key=ranga) or MODELE
+    _modele['lista'] = lista[:6]; STAN['modele'] = _modele['lista']
+    return _modele['lista']
+
+def _zapytaj(tekst_szukaj, tekst_bez):
+    """Pyta kolejne modele. Limit (429) przy wyszukiwaniu Google = spróbuj tego samego modelu bez wyszukiwania."""
+    for m in modele():
         if m in _zly: continue
-        body = {'contents': [{'parts': [{'text': tekst}]}], 'generationConfig': {'temperature': 0.2, 'maxOutputTokens': 1200}}
-        if szukaj: body['tools'] = [{'google_search': {}}]
-        try:
-            STAN['zapytania'] += 1; _licznik(1)
-            r = requests.post(URL.format(m=m), json=body, timeout=90, headers={'x-goog-api-key': KLUCZ})
-        except Exception as e: _blad(f'{m}: {e}'); continue
-        if r.status_code == 200:
-            j = r.json(); c = (j.get('candidates') or [{}])[0]
-            txt = ''.join(p.get('text', '') for p in (c.get('content') or {}).get('parts', []))
-            zr = []
-            for ch in ((c.get('groundingMetadata') or {}).get('groundingChunks') or []):
-                w = ch.get('web') or {}
-                if w.get('uri'): zr.append(dict(tytul=w.get('title') or w['uri'][:40], link=w['uri']))
-            STAN['model'] = m
-            return txt, zr
-        opis = r.text[:200]
-        if szukaj and r.status_code in (400, 403) and re.search(r'search|ground|tool', opis, re.I):
-            _szukanie['ok'] = False; _blad(f'wyszukiwanie Google niedostępne ({r.status_code}) – streszczam zebrane dane'); return None, 'bez_szukania'
-        _blad(f'{m}: HTTP {r.status_code} {opis[:120]}')
-        if r.status_code in (404, 429, 403): _zly.add(m)
-        if r.status_code == 429: time.sleep(3)
-    return None, []
+        for z_szukaniem in ((True, False) if _szukanie['ok'] and m not in _bez_szukania else (False,)):
+            body = {'contents': [{'parts': [{'text': tekst_szukaj if z_szukaniem else tekst_bez}]}],
+                    'generationConfig': {'temperature': 0.2, 'maxOutputTokens': 1500}}
+            if z_szukaniem: body['tools'] = [{'google_search': {}}]
+            try:
+                STAN['zapytania'] += 1; _licznik(1)
+                r = requests.post(URL.format(m=m), json=body, timeout=90, headers={'x-goog-api-key': KLUCZ})
+            except Exception as e: _blad(f'{m}: {e}'); continue
+            if r.status_code == 200:
+                j = r.json(); c = (j.get('candidates') or [{}])[0]
+                txt = ''.join(p.get('text', '') for p in (c.get('content') or {}).get('parts', []))
+                zr = []
+                for ch in ((c.get('groundingMetadata') or {}).get('groundingChunks') or []):
+                    w = ch.get('web') or {}
+                    if w.get('uri'): zr.append(dict(tytul=w.get('title') or w['uri'][:40], link=w['uri']))
+                STAN['model'] = m; STAN['wyszukiwanie'] = z_szukaniem
+                time.sleep(4)   # darmowy plan: kilka zapytań na minutę
+                return txt, zr, z_szukaniem
+            opis = re.sub(r'\s+', ' ', r.text)[:260]
+            _blad(f'{m}{" +Google" if z_szukaniem else ""}: HTTP {r.status_code} {opis}')
+            if z_szukaniem and r.status_code in (400, 403, 429):
+                if r.status_code != 429: _szukanie['ok'] = False
+                else: _bez_szukania.add(m)
+                time.sleep(3); continue          # ten sam model bez wyszukiwania
+            if r.status_code in (404, 403, 429): _zly.add(m)
+            if r.status_code == 429: time.sleep(3)
+            break
+    return None, [], False
 
 def raport_ai(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, braki=None, zapowiedz=None, naglowki=None, polski=False):
     """Zwraca słownik z raportem albo None (brak klucza, limit, błąd)."""
@@ -96,27 +126,20 @@ def raport_ai(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, braki=None, zapowied
     szukaj_txt = ('Wyszukaj w Google najnowsze wiadomości o obu drużynach (konferencje trenerów, składy, kontuzje)'
                   + (' – koniecznie w polskich źródłach (Sport.pl, TVP Sport, Meczyki, WP SportoweFakty, Przegląd Sportowy, Interia)' if polski else
                      ' – w lokalnych mediach obu krajów i w mediach angielskojęzycznych') + '.')
-    for proba in (True, False):
-        szukaj = proba and _szukanie['ok']
-        if proba and not szukaj: continue
-        tekst = POLECENIE.format(mecz=f'{dom_pl} – {gosc_pl}', rozgrywki=rozgrywki, kiedy=kiedy, dom=f'{dom_pl} ({dom})', gosc=f'{gosc_pl} ({gosc})',
-                                 szukaj=szukaj_txt if szukaj else 'Nie masz dostępu do internetu – opieraj się tylko na danych poniżej.',
-                                 kontekst=_kontekst(braki, zapowiedz, naglowki))
-        txt, zr = _zapytaj(tekst, szukaj)
-        if zr == 'bez_szukania': continue
-        if not txt:
-            if szukaj: continue
-            return None
-        try: d = _wyciagnij_json(txt)
-        except Exception: d = None
-        if not d or not d.get('podsumowanie'):
-            _blad('nieczytelna odpowiedź modelu'); continue
-        STAN['udane'] += 1; STAN['wyszukiwanie'] = bool(szukaj)
-        lista = lambda k: [str(x)[:120] for x in (d.get(k) or []) if x][:10]
-        return dict(tekst=str(d['podsumowanie'])[:600], braki_gosp=lista('braki_gosp'), braki_gosc=lista('braki_gosc'),
-                    niepewni=lista('niepewni'), powazne=bool(d.get('powazne')), powazne_dla=str(d.get('powazne_dla') or 'brak'),
-                    uzasadnienie=str(d.get('uzasadnienie') or '')[:200], zrodla=zr[:6], szukal=bool(szukaj), model=STAN['model'],
-                    czas=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%H:%M'))
+    t = lambda sz: POLECENIE.format(mecz=f'{dom_pl} – {gosc_pl}', rozgrywki=rozgrywki, kiedy=kiedy, dom=f'{dom_pl} ({dom})', gosc=f'{gosc_pl} ({gosc})',
+                                    szukaj=sz, kontekst=_kontekst(braki, zapowiedz, naglowki))
+    txt, zr, szukal = _zapytaj(t(szukaj_txt), t(BEZ_SZUKANIA))
+    if not txt: return None
+    try: d = _wyciagnij_json(txt)
+    except Exception: d = None
+    if not d or not d.get('podsumowanie'):
+        _blad('nieczytelna odpowiedź modelu: ' + txt[:120]); return None
+    STAN['udane'] += 1
+    lista = lambda k: [str(x)[:120] for x in (d.get(k) or []) if x][:10]
+    return dict(tekst=str(d['podsumowanie'])[:600], braki_gosp=lista('braki_gosp'), braki_gosc=lista('braki_gosc'),
+                niepewni=lista('niepewni'), powazne=bool(d.get('powazne')), powazne_dla=str(d.get('powazne_dla') or 'brak'),
+                uzasadnienie=str(d.get('uzasadnienie') or '')[:200], zrodla=zr[:6], szukal=bool(szukal), model=STAN['model'],
+                czas=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%H:%M'))
     return None
 
 def zmiana_istotna(stary, nowy):

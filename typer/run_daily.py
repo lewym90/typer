@@ -461,7 +461,11 @@ def tg_typy_dnia(d, status):
     if teraz.hour < 8: return 'wstrzymane (noc) – wyślę po 12:00'
     wys = status.get('tg_typy') or {}
     podpis = _podpis_typow(d)
-    if wys.get('data') == d['data'] and wys.get('podpis') == podpis: return 'już wysłane dziś (typy bez zmian)'
+    n_ai = sum(1 for m in d.get('pewne', []) if (m.get('raport') or {}).get('ai'))
+    if wys.get('data') == d['data'] and wys.get('podpis') == podpis:
+        if n_ai > wys.get('ai', 0):   # typy te same, ale raporty AI są pełniejsze niż wysłane wcześniej
+            tg_raporty(d); status['tg_typy']['ai'] = n_ai; return 'typy bez zmian – wysłane pełniejsze raporty AI'
+        return 'już wysłane dziś (typy bez zmian)'
     zmiana = wys.get('data') == d['data']
     lin = [f"⚽ <b>{'Zaktualizowane typy' if zmiana else 'Typy'} na {pd.Timestamp(d['data']).strftime('%d.%m')}</b>"]
     for i, m in enumerate(d.get('pewne', []), 1):
@@ -473,7 +477,7 @@ def tg_typy_dnia(d, status):
         for v in d['value']: lin.append(f"{esc_(pl_mecz(v['mecz']))}: {esc_(pl_txt(v['zaklad'], v.get('gospodarz'), v.get('gosc')))} @ {v['kurs']} (szansa {tg.pct(v['szansa'])}, szukaj ≥ {v.get('kurs_szukaj', '')})")
     if tg.APLIKACJA: lin.append(f"\n📱 {tg.APLIKACJA}")
     if tg.wyslij_dlugi('\n'.join(lin)):
-        status['tg_typy'] = dict(data=d['data'], podpis=podpis, czas=teraz.strftime('%H:%M'))
+        status['tg_typy'] = dict(data=d['data'], podpis=podpis, czas=teraz.strftime('%H:%M'), ai=n_ai)
         tg_raporty(d)
         return 'wysłane'
     return 'błąd wysyłki'
