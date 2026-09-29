@@ -8,7 +8,7 @@ KLUCZ = os.environ.get('GEMINI_API_KEY', '')
 URL = 'https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent'
 MODELE = ['gemini-flash-latest', 'gemini-flash-lite-latest']   # zapas, gdy nie uda się pobrać listy modeli
 BEZ_SZUKANIA = 'Nie masz dostępu do internetu – opieraj się tylko na danych poniżej (a nazwy źródeł pomiń). '
-MAKS_DZIENNIE = 45      # wszystkie zapytania (także ponowienia); modele Flash-Lite mają w darmowym planie ok. 500 dziennie
+MAKS_DZIENNIE = 150     # wszystkie zapytania (także ponowienia); modele Flash-Lite mają w darmowym planie ok. 500 dziennie
 STAN = dict(klucz=bool(KLUCZ), zapytania=0, dzis=0, udane=0, model=None, wyszukiwanie=None, bledy=[])
 PLIK_LICZNIKA = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data', 'ai_licznik.json')
 
@@ -66,6 +66,7 @@ def _wyciagnij_json(t):
 
 _modele = {}
 _bez_szukania = set()   # modele, którym skończył się limit wyszukiwania Google
+_proby = {}             # ponowienia po błędzie 503 (przeciążenie)
 def modele():
     """Lista modeli dostępnych dla Twojego klucza (Google zmienia nazwy i wycofuje stare) – najpierw Flash, potem Flash-Lite."""
     if 'lista' in _modele: return _modele['lista']
@@ -79,11 +80,12 @@ def modele():
             if 'flash' not in n or re.search(r'image|tts|audio|live|embed|thinking|exp|customtools', n): continue
             nazwy.append(n)
     except Exception as e: _blad(f'lista modeli: {e}')
-    def ranga(n):   # stabilne przed "preview", nowsze wersje przed starszymi, Flash przed Flash-Lite
+    def ranga(n):   # darmowy plan: Flash-Lite (duży limit, mniej przeciążone) przed Flash; stabilne przed "preview"; nowsze przed starszymi
         w = re.search(r'(\d+(?:\.\d+)?)', n); wer = float(w.group(1)) if w else 0
-        return ('lite' in n, 'preview' in n, 'latest' in n, -wer, n)
+        return ('lite' not in n, 'preview' in n, 'latest' in n, 'omni' in n, -wer, n)
     lista = sorted(set(nazwy), key=ranga) or MODELE
-    _modele['lista'] = lista[:6]; STAN['modele'] = _modele['lista']
+    lite = [n for n in lista if 'lite' in n][:3]; flash = [n for n in lista if 'lite' not in n][:3]
+    _modele['lista'] = lite + flash; STAN['modele'] = _modele['lista']
     return _modele['lista']
 
 def _zapytaj(tekst_szukaj, tekst_bez):
@@ -110,11 +112,13 @@ def _zapytaj(tekst_szukaj, tekst_bez):
                 return txt, zr, z_szukaniem
             opis = re.sub(r'\s+', ' ', r.text)[:260]
             _blad(f'{m}{" +Google" if z_szukaniem else ""}: HTTP {r.status_code} {opis}')
+            if r.status_code in (500, 503) and not z_szukaniem and _proby.get(m, 0) < 2:   # przeciążenie – chwilowe
+                _proby[m] = _proby.get(m, 0) + 1; time.sleep(15); return _zapytaj(tekst_szukaj, tekst_bez)
             if z_szukaniem and r.status_code in (400, 403, 429):
-                if r.status_code != 429: _szukanie['ok'] = False
-                else: _bez_szukania.add(m)
+                _bez_szukania.add(m); _szukanie['odmowy'] = _szukanie.get('odmowy', 0) + 1
+                if r.status_code != 429 or _szukanie['odmowy'] >= 2: _szukanie['ok'] = False   # darmowy plan bez wyszukiwania Google
                 time.sleep(3); continue          # ten sam model bez wyszukiwania
-            if r.status_code in (404, 403, 429): _zly.add(m)
+            if r.status_code in (404, 403, 429, 500, 503): _zly.add(m)
             if r.status_code == 429: time.sleep(3)
             break
     return None, [], False
