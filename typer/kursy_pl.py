@@ -164,11 +164,12 @@ def klucze_pilka(odds, glowne):
     for o in odds:
         c = _cena(o)
         if not c: continue
+        if ';' in str(o.get('marketName') or ''): continue          # kombinacje (bet builder) – pomijamy
         rn = _bez_ogonkow(o.get('marketName')).lower().strip(); nz = str(o.get('name') or o.get('code') or '').strip()
         nzl = _bez_ogonkow(nz).lower()
         if any(x in rn for x in ('polow', 'pol.', 'rzut', 'kartk', 'korner', 'rozn', 'faul', 'spalon', 'minut', 'strzal',
                                  'zawodnik', 'gracz', 'dogrywk', 'karn', '15 min', '10 min', 'przedzial')): continue
-        if rn in ('1x2', 'wynik meczu', 'koncowy wynik', 'zwyciezca meczu', 'wynik', 'rezultat meczu') and nz.upper() in ('1', 'X', '2'):
+        if rn in ('mecz', '1x2', 'wynik meczu', 'koncowy wynik', 'zwyciezca meczu', 'wynik', 'rezultat meczu') and nz.upper() in ('1', 'X', '2'):
             k.setdefault(nz.upper(), c)
         elif 'podwojna szansa' in rn and nz.upper().replace(' ', '') in ('1X', 'X2', '12'):
             k.setdefault(nz.upper().replace(' ', ''), c)
@@ -192,13 +193,19 @@ def klucze_duel(glowne, odwr):
         elif n == 'X': k.setdefault('D', c)
     return k
 
-def klucze_tenis(odds, glowne, odwr, bo):
+def klucze_tenis(odds, glowne, odwr, bo, A_B=('', '')):
     """Tenis: zwycięzca, dokładny wynik w setach, liczba setów. Wynik u Superbetu liczony od pierwszego zawodnika w nazwie."""
     k = klucze_duel(glowne, odwr)
     for o in odds:
         c = _cena(o)
         if not c: continue
+        if ';' in str(o.get('marketName') or ''): continue          # kombinacje – pomijamy
         rn = _bez_ogonkow(o.get('marketName')).lower(); nz = str(o.get('name') or '').strip()
+        mw = re.fullmatch(r'(.+?) wygra seta', str(o.get('marketName') or '').strip())
+        if mw and _bez_ogonkow(nz).lower() == 'tak':                  # „X wygra seta – Tak” = min. 1 set
+            kto = mw.group(1); pa, pb = podobne(kto, A_B[0]), podobne(kto, A_B[1])
+            if max(pa, pb) >= 0.6: k.setdefault(('A' if pa >= pb else 'B') + ' min. 1 set', c)
+            continue
         if 'gem' in rn or 'tie' in rn or re.search(r'\b[1-5]\. set|set [1-5]\b|[1-5] set\b', rn): continue
         m = re.fullmatch(r'(\d)\s*[:\-]\s*(\d)', nz)
         if m and 'set' in rn and ('wynik' in rn or 'dokladn' in rn):
@@ -217,7 +224,8 @@ def _zapisz_przyklad(event, odds):
     rynki = {}
     for o in odds:
         r = str(o.get('marketName'))
-        if r not in rynki and len(rynki) < 70: rynki[r] = []
+        if ';' in r: continue
+        if r not in rynki and len(rynki) < 90: rynki[r] = []
         if r in rynki and len(rynki[r]) < 4: rynki[r].append(f"{o.get('name')}|{o.get('specialBetValue', '')}|{o.get('price')}")
     DIAG['rynki_przyklad'][str(event.get('matchName'))[:60]] = rynki
 
@@ -258,7 +266,7 @@ def dopasuj_wszystko(ses, oferta):
                 odds = rynki_meczu(ses, e.get('eventId'))
                 if przyklady.get(sp, 0) < (3 if sp == 'pilka' else 2): _zapisz_przyklad(e, odds); przyklady[sp] = przyklady.get(sp, 0) + 1
             except Exception as ex: DIAG['bledy'].append(f'rynki {e.get("eventId")}: {str(ex)[:80]}')
-        k = klucze_pilka(odds, glowne) if sp == 'pilka' else (klucze_tenis(odds, glowne, odwr, bo) if sp == 'tenis' else klucze_duel(glowne, odwr))
+        k = klucze_pilka(odds, glowne) if sp == 'pilka' else (klucze_tenis(odds, glowne, odwr, bo, (h, a)) if sp == 'tenis' else klucze_duel(glowne, odwr))
         if k:
             kursy[eid] = dict(superbet=dict(id=e.get('eventId'), nazwa=e.get('matchName'), zgodnosc=round(s, 2), kursy=k))
         else:
@@ -332,7 +340,7 @@ def main():
     if stan['ok']: stan['typow'] = dopisz(kursy)
     teraz = dt.datetime.now(TZ).strftime('%Y-%m-%d %H:%M')
     nasze = len(nasze_mecze())
-    pelny = dict(czas=teraz, wersja=1, bukmacherzy=dict(superbet=stan), mecze=kursy,
+    pelny = dict(czas=teraz, wersja=2, bukmacherzy=dict(superbet=stan), mecze=kursy,
                  niedostepni=dict(betclic='blokada 403 dla serwerów spoza Polski', sts='Cloudflare – blokada', fortuna='Geoblock – tylko Polska'),
                  diag=dict(DIAG, nasze_mecze=nasze, sekund=round(time.time() - START)))
     try: _zapisz_bezpiecznie(os.path.join(OUT, 'kursy_pl.json'), pelny)
