@@ -1,0 +1,676 @@
+{
+ "czas": "2026-09-30 15:31",
+ "wersja": "test-1",
+ "chrome": true,
+ "druzyny_szukane": [
+  "New York Red Bulls",
+  "St. Louis City SC",
+  "Legia",
+  "Lech",
+  "Jagiellonia",
+  "Barcelona",
+  "Real Madryt",
+  "Bayern",
+  "Arsenal",
+  "Liverpool",
+  "Inter",
+  "Juventus"
+ ],
+ "sekund": 5,
+ "bukmacherzy": {
+  "betclic": {
+   "strony": [
+    {
+     "kod": 403,
+     "url": "https://www.betclic.pl/",
+     "typ": "text/html",
+     "serwer": "hidden",
+     "cdn": [
+      "Via",
+      "X-Amz-Cf-Id"
+     ],
+     "rozmiar": 3537,
+     "ms": 264,
+     "tryb": "requests",
+     "strona": "https://www.betclic.pl/",
+     "blokada": [],
+     "next_data": false,
+     "nuxt": false,
+     "ng_state": false,
+     "stan_okna": [],
+     "liczb_jak_kursy": 0,
+     "pola_kursow": 0,
+     "druzyny": [],
+     "tytul": "Betclic - Error 403 Forbidden"
+    },
+    {
+     "kod": 403,
+     "url": "https://www.betclic.pl/",
+     "typ": "text/html",
+     "serwer": "hidden",
+     "cdn": [
+      "via",
+      "x-amz-cf-id"
+     ],
+     "rozmiar": 3537,
+     "ms": 196,
+     "tryb": "chrome",
+     "strona": "https://www.betclic.pl/",
+     "blokada": [],
+     "next_data": false,
+     "nuxt": false,
+     "ng_state": false,
+     "stan_okna": [],
+     "liczb_jak_kursy": 0,
+     "pola_kursow": 0,
+     "druzyny": [],
+     "tytul": "Betclic - Error 403 Forbidden"
+    },
+    {
+     "kod": 403,
+     "url": "https://www.betclic.pl/pilka-nozna-s1",
+     "typ": "text/html",
+     "serwer": "hidden",
+     "cdn": [
+      "Via",
+      "X-Amz-Cf-Id"
+     ],
+     "rozmiar": 3537,
+     "ms": 8,
+     "tryb": "requests",
+     "strona": "https://www.betclic.pl/pilka-nozna-s1",
+     "blokada": [],
+     "next_data": false,
+     "nuxt": false,
+     "ng_state": false,
+     "stan_okna": [],
+     "liczb_jak_kursy": 0,
+     "pola_kursow": 0,
+     "druzyny": [],
+     "tytul": "Betclic - Error 403 Forbidden"
+    },
+    {
+     "kod": 403,
+     "url": "https://www.betclic.pl/pilka-nozna-s1",
+     "typ": "text/html",
+     "serwer": "hidden",
+     "cdn": [
+      "via",
+      "x-amz-cf-id"
+     ],
+     "rozmiar": 3537,
+     "ms": 8,
+     "tryb": "chrome",
+     "strona": "https://www.betclic.pl/pilka-nozna-s1",
+     "blokada": [],
+     "next_data": false,
+     "nuxt": false,
+     "ng_state": false,
+     "stan_okna": [],
+     "liczb_jak_kursy": 0,
+     "pola_kursow": 0,
+     "druzyny": [],
+     "tytul": "Betclic - Error 403 Forbidden"
+    }
+   ],
+   "api": [
+    {
+     "kod": null,
+     "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.betclic.pl', port=443): Max retries exceeded with url: /api/pub/v4/events?application=2&countrycode=pl&language=pl&limit=20&",
+     "ms": 19,
+     "tryb": "requests",
+     "adres": "https://offer.cdn.betclic.pl/api/pub/v4/events?application=2&countrycode=pl&language=pl&limit=20&offset=0&sitecode=plpl&sportIds=1"
+    },
+    {
+     "kod": null,
+     "blad": "DNSError: Failed to perform, curl: (6) Could not resolve host: offer.cdn.betclic.pl. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
+     "ms": 217,
+     "tryb": "chrome",
+     "adres": "https://offer.cdn.betclic.pl/api/pub/v4/events?application=2&countrycode=pl&language=pl&limit=20&offset=0&sitecode=plpl&sportIds=1"
+    },
+    {
+     "kod": null,
+     "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.betclic.pl', port=443): Max retries exceeded with url: /api/pub/v2/sports/1?application=2&countrycode=pl&language=pl&sitecod",
+     "ms": 174,
+     "tryb": "requests",
+     "adres": "https://offer.cdn.betclic.pl/api/pub/v2/sports/1?application=2&countrycode=pl&language=pl&sitecode=plpl"
+    },
+    {
+     "kod": null,
+     "blad": "DNSError: Failed to perform, curl: (6) Could not resolve host: offer.cdn.betclic.pl. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
+     "ms": 0,
+     "tryb": "chrome",
+     "adres": "https://offer.cdn.betclic.pl/api/pub/v2/sports/1?application=2&countrycode=pl&language=pl&sitecode=plpl"
+    },
+    {
+     "kod": null,
+     "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v4/events?application=2&countrycode=pl&language=pl&limit=2",
+     "ms": 36,
+     "tryb": "requests",
+     "adres": "https://offer.cdn.begmedia.com/api/pub/v4/events?application=2&countrycode=pl&language=pl&limit=20&offset=0&sitecode=plpl&sportIds=1"
+    },
+    {
+     "kod": null,
+     "blad": "DNSError: Failed to perform, curl: (6) Could not resolve host: offer.cdn.begmedia.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
+     "ms": 94,
+     "tryb": "chrome",
+     "adres": "https://offer.cdn.begmedia.com/api/pub/v4/events?application=2&countrycode=pl&language=pl&limit=20&offset=0&sitecode=plpl&sportIds=1"
+    },
+    {
+     "kod": null,
+     "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v2/sports/1?application=2&countrycode=pl&language=pl&sitec",
+     "ms": 116,
+     "tryb": "requests",
+     "adres": "https://offer.cdn.begmedia.com/api/pub/v2/sports/1?application=2&countrycode=pl&language=pl&sitecode=plpl"
+    },
+    {
+     "kod": null,
+     "blad": "DNSError: Failed to perform, curl: (6) Could not resolve host: offer.cdn.begmedia.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
+     "ms": 0,
+     "tryb": "chrome",
+     "adres": "https://offer.cdn.begmedia.com/api/pub/v2/sports/1?application=2&countrycode=pl&language=pl&sitecode=plpl"
+    }
+   ],
+   "adresy_z_kodu": [],
+   "skrypty_przejrzane": 0,
+   "sciezki_z_kodu": [],
+   "ocena": {
+    "strona_dostepna": false,
+    "api_dziala": 0,
+    "kursy_w_html": 0,
+    "blokada": [],
+    "kody": [
+     "requests:403",
+     "chrome:403",
+     "requests:403",
+     "chrome:403"
+    ],
+    "adresow_znalezionych": 0
+   }
+  },
+  "sts": {
+   "strony": [
+    {
+     "kod": 403,
+     "url": "https://www.sts.pl/",
+     "typ": "text/html; charset=UTF-8",
+     "serwer": "cloudflare",
+     "cdn": [
+      "CF-RAY"
+     ],
+     "rozmiar": 288182,
+     "ms": 312,
+     "tryb": "requests",
+     "strona": "https://www.sts.pl/",
+     "blokada": [
+      "challenge-platform"
+     ],
+     "next_data": false,
+     "nuxt": false,
+     "ng_state": false,
+     "stan_okna": [],
+     "liczb_jak_kursy": 1,
+     "pola_kursow": 0,
+     "druzyny": [
+      "Inter"
+     ],
+     "tytul": "STS | Blokada"
+    },
+    {
+     "kod": 403,
+     "url": "https://www.sts.pl/",
+     "typ": "text/html; charset=UTF-8",
+     "serwer": "cloudflare",
+     "cdn": [
+      "cf-ray"
+     ],
+     "rozmiar": 288182,
+     "ms": 207,
+     "tryb": "chrome",
+     "strona": "https://www.sts.pl/",
+     "blokada": [
+      "challenge-platform"
+     ],
+     "next_data": false,
+     "nuxt": false,
+     "ng_state": false,
+     "stan_okna": [],
+     "liczb_jak_kursy": 1,
+     "pola_kursow": 0,
+     "druzyny": [
+      "Inter"
+     ],
+     "tytul": "STS | Blokada"
+    },
+    {
+     "kod": 403,
+     "url": "https://www.sts.pl/pilka-nozna",
+     "typ": "text/html; charset=UTF-8",
+     "serwer": "cloudflare",
+     "cdn": [
+      "CF-RAY"
+     ],
+     "rozmiar": 288182,
+     "ms": 46,
+     "tryb": "requests",
+     "strona": "https://www.sts.pl/pilka-nozna",
+     "blokada": [
+      "challenge-platform"
+     ],
+     "next_data": false,
+     "nuxt": false,
+     "ng_state": false,
+     "stan_okna": [],
+     "liczb_jak_kursy": 1,
+     "pola_kursow": 0,
+     "druzyny": [
+      "Inter"
+     ],
+     "tytul": "STS | Blokada"
+    },
+    {
+     "kod": 403,
+     "url": "https://www.sts.pl/pilka-nozna",
+     "typ": "text/html; charset=UTF-8",
+     "serwer": "cloudflare",
+     "cdn": [
+      "cf-ray"
+     ],
+     "rozmiar": 288182,
+     "ms": 23,
+     "tryb": "chrome",
+     "strona": "https://www.sts.pl/pilka-nozna",
+     "blokada": [
+      "challenge-platform"
+     ],
+     "next_data": false,
+     "nuxt": false,
+     "ng_state": false,
+     "stan_okna": [],
+     "liczb_jak_kursy": 1,
+     "pola_kursow": 0,
+     "druzyny": [
+      "Inter"
+     ],
+     "tytul": "STS | Blokada"
+    }
+   ],
+   "api": [],
+   "adresy_z_kodu": [],
+   "skrypty_przejrzane": 0,
+   "sciezki_z_kodu": [],
+   "ocena": {
+    "strona_dostepna": false,
+    "api_dziala": 0,
+    "kursy_w_html": 1,
+    "blokada": [
+     "challenge-platform"
+    ],
+    "kody": [
+     "requests:403",
+     "chrome:403",
+     "requests:403",
+     "chrome:403"
+    ],
+    "adresow_znalezionych": 0
+   }
+  },
+  "fortuna": {
+   "strony": [
+    {
+     "kod": 403,
+     "url": "https://www.efortuna.pl/",
+     "typ": "text/html; charset=UTF-8",
+     "serwer": "cloudflare",
+     "cdn": [
+      "CF-RAY"
+     ],
+     "rozmiar": 880398,
+     "ms": 275,
+     "tryb": "requests",
+     "strona": "https://www.efortuna.pl/",
+     "blokada": [
+      "geoblock"
+     ],
+     "next_data": false,
+     "nuxt": false,
+     "ng_state": false,
+     "stan_okna": [],
+     "liczb_jak_kursy": 0,
+     "pola_kursow": 0,
+     "druzyny": [
+      "Lech"
+     ],
+     "tytul": "Geoblock | FORTUNA GAME a.s."
+    },
+    {
+     "kod": 403,
+     "url": "https://www.efortuna.pl/",
+     "typ": "text/html; charset=UTF-8",
+     "serwer": "cloudflare",
+     "cdn": [
+      "cf-ray"
+     ],
+     "rozmiar": 880398,
+     "ms": 86,
+     "tryb": "chrome",
+     "strona": "https://www.efortuna.pl/",
+     "blokada": [
+      "geoblock"
+     ],
+     "next_data": false,
+     "nuxt": false,
+     "ng_state": false,
+     "stan_okna": [],
+     "liczb_jak_kursy": 0,
+     "pola_kursow": 0,
+     "druzyny": [
+      "Lech"
+     ],
+     "tytul": "Geoblock | FORTUNA GAME a.s."
+    },
+    {
+     "kod": 403,
+     "url": "https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna",
+     "typ": "text/html; charset=UTF-8",
+     "serwer": "cloudflare",
+     "cdn": [
+      "CF-RAY"
+     ],
+     "rozmiar": 880398,
+     "ms": 56,
+     "tryb": "requests",
+     "strona": "https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna",
+     "blokada": [
+      "geoblock"
+     ],
+     "next_data": false,
+     "nuxt": false,
+     "ng_state": false,
+     "stan_okna": [],
+     "liczb_jak_kursy": 0,
+     "pola_kursow": 0,
+     "druzyny": [
+      "Lech"
+     ],
+     "tytul": "Geoblock | FORTUNA GAME a.s."
+    },
+    {
+     "kod": 403,
+     "url": "https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna",
+     "typ": "text/html; charset=UTF-8",
+     "serwer": "cloudflare",
+     "cdn": [
+      "cf-ray"
+     ],
+     "rozmiar": 880398,
+     "ms": 42,
+     "tryb": "chrome",
+     "strona": "https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna",
+     "blokada": [
+      "geoblock"
+     ],
+     "next_data": false,
+     "nuxt": false,
+     "ng_state": false,
+     "stan_okna": [],
+     "liczb_jak_kursy": 0,
+     "pola_kursow": 0,
+     "druzyny": [
+      "Lech"
+     ],
+     "tytul": "Geoblock | FORTUNA GAME a.s."
+    }
+   ],
+   "api": [],
+   "adresy_z_kodu": [],
+   "skrypty_przejrzane": 0,
+   "sciezki_z_kodu": [],
+   "ocena": {
+    "strona_dostepna": false,
+    "api_dziala": 0,
+    "kursy_w_html": 0,
+    "blokada": [
+     "geoblock"
+    ],
+    "kody": [
+     "requests:403",
+     "chrome:403",
+     "requests:403",
+     "chrome:403"
+    ],
+    "adresow_znalezionych": 0
+   }
+  },
+  "superbet": {
+   "strony": [
+    {
+     "kod": 200,
+     "url": "https://superbet.pl/",
+     "typ": "text/html",
+     "serwer": "AmazonS3",
+     "cdn": [
+      "Via",
+      "X-Amz-Cf-Id"
+     ],
+     "rozmiar": 6532,
+     "ms": 318,
+     "tryb": "requests",
+     "strona": "https://superbet.pl/",
+     "blokada": [],
+     "next_data": false,
+     "nuxt": false,
+     "ng_state": false,
+     "stan_okna": [],
+     "liczb_jak_kursy": 0,
+     "pola_kursow": 0,
+     "druzyny": [
+      "Inter"
+     ],
+     "tytul": "Superbet"
+    },
+    {
+     "kod": 200,
+     "url": "https://superbet.pl/",
+     "typ": "text/html",
+     "serwer": "AmazonS3",
+     "cdn": [
+      "via",
+      "x-amz-cf-id"
+     ],
+     "rozmiar": 6532,
+     "ms": 123,
+     "tryb": "chrome",
+     "strona": "https://superbet.pl/",
+     "blokada": [],
+     "next_data": false,
+     "nuxt": false,
+     "ng_state": false,
+     "stan_okna": [],
+     "liczb_jak_kursy": 0,
+     "pola_kursow": 0,
+     "druzyny": [
+      "Inter"
+     ],
+     "tytul": "Superbet"
+    },
+    {
+     "kod": 200,
+     "url": "https://superbet.pl/zaklady-bukmacherskie/pilka-nozna",
+     "typ": "text/html",
+     "serwer": "AmazonS3",
+     "cdn": [
+      "Via",
+      "X-Amz-Cf-Id"
+     ],
+     "rozmiar": 6532,
+     "ms": 16,
+     "tryb": "requests",
+     "strona": "https://superbet.pl/zaklady-bukmacherskie/pilka-nozna",
+     "blokada": [],
+     "next_data": false,
+     "nuxt": false,
+     "ng_state": false,
+     "stan_okna": [],
+     "liczb_jak_kursy": 0,
+     "pola_kursow": 0,
+     "druzyny": [
+      "Inter"
+     ],
+     "tytul": "Superbet"
+    },
+    {
+     "kod": 200,
+     "url": "https://superbet.pl/zaklady-bukmacherskie/pilka-nozna",
+     "typ": "text/html",
+     "serwer": "AmazonS3",
+     "cdn": [
+      "via",
+      "x-amz-cf-id"
+     ],
+     "rozmiar": 6532,
+     "ms": 13,
+     "tryb": "chrome",
+     "strona": "https://superbet.pl/zaklady-bukmacherskie/pilka-nozna",
+     "blokada": [],
+     "next_data": false,
+     "nuxt": false,
+     "ng_state": false,
+     "stan_okna": [],
+     "liczb_jak_kursy": 0,
+     "pola_kursow": 0,
+     "druzyny": [
+      "Inter"
+     ],
+     "tytul": "Superbet"
+    }
+   ],
+   "api": [
+    {
+     "kod": 404,
+     "url": "https://production-superbet-offer-pl.freetls.fastly.net/sb-pl/api/v2/pl-PL/events/by-date?currentStatus=active&offerState=prematch&startDate=2026-09-30%2000:00:00",
+     "typ": "",
+     "serwer": "envoy",
+     "cdn": [
+      "Via",
+      "X-Served-By"
+     ],
+     "rozmiar": 0,
+     "ms": 145,
+     "tryb": "requests",
+     "adres": "https://production-superbet-offer-pl.freetls.fastly.net/sb-pl/api/v2/pl-PL/events/by-date?currentStatus=active&offerState=prematch&startDate=2026-09-30%2000:00:00"
+    },
+    {
+     "kod": 404,
+     "url": "https://production-superbet-offer-pl.freetls.fastly.net/sb-pl/api/v2/pl-PL/events/by-date?currentStatus=active&offerState=prematch&startDate=2026-09-30%2000:00:00",
+     "typ": "",
+     "serwer": "envoy",
+     "cdn": [
+      "via",
+      "x-served-by"
+     ],
+     "rozmiar": 0,
+     "ms": 22,
+     "tryb": "chrome",
+     "adres": "https://production-superbet-offer-pl.freetls.fastly.net/sb-pl/api/v2/pl-PL/events/by-date?currentStatus=active&offerState=prematch&startDate=2026-09-30%2000:00:00"
+    },
+    {
+     "kod": 404,
+     "url": "https://production-superbet-offer-pl.freetls.fastly.net/sb-offer/api/v2/pl-PL/events/by-date?currentStatus=active&offerState=prematch&startDate=2026-09-30%2000:00:00",
+     "typ": "",
+     "serwer": "envoy",
+     "cdn": [
+      "Via",
+      "X-Served-By"
+     ],
+     "rozmiar": 0,
+     "ms": 100,
+     "tryb": "requests",
+     "adres": "https://production-superbet-offer-pl.freetls.fastly.net/sb-offer/api/v2/pl-PL/events/by-date?currentStatus=active&offerState=prematch&startDate=2026-09-30%2000:00:00"
+    },
+    {
+     "kod": 404,
+     "url": "https://production-superbet-offer-pl.freetls.fastly.net/sb-offer/api/v2/pl-PL/events/by-date?currentStatus=active&offerState=prematch&startDate=2026-09-30%2000:00:00",
+     "typ": "",
+     "serwer": "envoy",
+     "cdn": [
+      "via",
+      "x-served-by"
+     ],
+     "rozmiar": 0,
+     "ms": 7,
+     "tryb": "chrome",
+     "adres": "https://production-superbet-offer-pl.freetls.fastly.net/sb-offer/api/v2/pl-PL/events/by-date?currentStatus=active&offerState=prematch&startDate=2026-09-30%2000:00:00"
+    },
+    {
+     "kod": 200,
+     "url": "https://production-superbet-offer-pl.freetls.fastly.net/v2/pl-PL/events/by-date?currentStatus=active&offerState=prematch&startDate=2026-09-30%2000:00:00",
+     "typ": "application/json",
+     "serwer": "envoy",
+     "cdn": [
+      "Via",
+      "X-Served-By"
+     ],
+     "rozmiar": 7209145,
+     "ms": 251,
+     "tryb": "requests",
+     "adres": "https://production-superbet-offer-pl.freetls.fastly.net/v2/pl-PL/events/by-date?currentStatus=active&offerState=prematch&startDate=2026-09-30%2000:00:00",
+     "json": false,
+     "poczatek": "{\"error\":false,\"dataIn\":{\"currentStatus\":\"active\",\"lang\":\"pl-PL\",\"offerState\":\"prematch\",\"startDate\":\"2026-09-30T00:00:00Z\"},\"data\":[{\"uuid\":\"5ec992a0-0bad-5f68-ab24-619493b50cc2\",\"eventId\":15225252,\"matchDate\":\"2026-09-30 03:00:00\",\"homeTeamId\":\"558440\",\"awayTeamId\":\"35905\",\"matchCode\":6507,\"increm",
+     "druzyny": [
+      "Legia",
+      "Lech",
+      "Barcelona",
+      "Real Madryt",
+      "Bayern",
+      "Arsenal"
+     ]
+    },
+    {
+     "kod": 404,
+     "url": "https://production-superbet-offer-pl.freetls.fastly.net/sb-pl/api/v2/pl-PL/sport/5/tournaments",
+     "typ": "",
+     "serwer": "envoy",
+     "cdn": [
+      "Via",
+      "X-Served-By"
+     ],
+     "rozmiar": 0,
+     "ms": 317,
+     "tryb": "requests",
+     "adres": "https://production-superbet-offer-pl.freetls.fastly.net/sb-pl/api/v2/pl-PL/sport/5/tournaments"
+    },
+    {
+     "kod": 404,
+     "url": "https://production-superbet-offer-pl.freetls.fastly.net/sb-pl/api/v2/pl-PL/sport/5/tournaments",
+     "typ": "",
+     "serwer": "envoy",
+     "cdn": [
+      "via",
+      "x-served-by"
+     ],
+     "rozmiar": 0,
+     "ms": 10,
+     "tryb": "chrome",
+     "adres": "https://production-superbet-offer-pl.freetls.fastly.net/sb-pl/api/v2/pl-PL/sport/5/tournaments"
+    }
+   ],
+   "adresy_z_kodu": [],
+   "skrypty_przejrzane": 2,
+   "sciezki_z_kodu": [],
+   "ocena": {
+    "strona_dostepna": true,
+    "api_dziala": 0,
+    "kursy_w_html": 0,
+    "blokada": [],
+    "kody": [
+     "requests:200",
+     "chrome:200",
+     "requests:200",
+     "chrome:200"
+    ],
+    "adresow_znalezionych": 0
+   }
+  }
+ }
+}
