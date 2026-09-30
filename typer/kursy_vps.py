@@ -258,7 +258,163 @@ def siec2():
         br.close()
     zapisz_github('surowe/siec2.json', dict(czas=dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d %H:%M UTC'), wyniki=spis))
 
+# ======================================================================= CZYTNIK (wersja 1: Fortuna)
+RAW = f'https://raw.githubusercontent.com/{REPO}/main'
+FAPI = 'https://api.efortuna.pl/offer'
+KATALOG = '/opt/typer/dane'
+
+def _przygotuj(s):
+    """Pobiera z repozytorium nasze listy meczów i moduł dopasowania (ten sam co dla Superbetu)."""
+    os.makedirs(KATALOG, exist_ok=True)
+    for plik in ('typer/kursy_pl.py', 'typer/nazwy.py', 'docs/data/dzis.json', 'docs/data/inne.json'):
+        r = s.get(f'{RAW}/{plik}?t={int(time.time())}', timeout=20); r.raise_for_status()
+        open(os.path.join(KATALOG, os.path.basename(plik)), 'wb').write(r.content)
+    sys.path.insert(0, KATALOG)
+    import kursy_pl as KP
+    KP.OUT = KATALOG
+    return KP
+
+def _id_w(o, prefiks, wyn):
+    if isinstance(o, dict):
+        for k, v in o.items():
+            if k == 'id' and isinstance(v, str) and v.startswith(prefiks): wyn.append((v, o.get('name')))
+            else: _id_w(v, prefiks, wyn)
+    elif isinstance(o, list):
+        for v in o: _id_w(v, prefiks, wyn)
+    return wyn
+
+def fortuna_mecze(s, diag):
+    sporty = _id_w(s.get(f'{FAPI}/structure/api/v1_0/sports?timeFilter=all', timeout=20).json(), 'ufo:sprt:', [])
+    diag['sporty'] = sporty[:40]
+    ids = {}
+    for sid, nazwa in sporty:
+        n = (nazwa or '').lower()
+        if 'piłka nożna' == n or n.startswith('piłka nożna'): ids.setdefault('pilka', sid)
+        if n == 'tenis': ids.setdefault('tenis', sid)
+        if n in ('mma', 'boks', 'sporty walki'): ids.setdefault(n, sid)
+    ids.setdefault('pilka', 'ufo:sprt:00')
+    diag['sporty_uzyte'] = ids
+    mecze, turnieje = {}, set()
+    for sp, sid in ids.items():
+        for filtr in ('today', 'tomorrow'):
+            try:
+                j = s.get(f'{FAPI}/structure/api/v1_0/sport/{sid}/tournaments?categories=true&timeFilter={filtr}', timeout=20).json()
+                turnieje |= {(sp, tid) for tid, _ in _id_w(j, 'ufo:tour:', [])}
+            except Exception as e: diag.setdefault('bledy', []).append(f'turnieje {sid} {filtr}: {e}'[:120])
+    diag['turniejow'] = len(turnieje)
+    for sp, tid in sorted(turnieje):
+        if time.time() - START > 420: diag.setdefault('bledy', []).append('limit czasu (turnieje)'); break
+        try:
+            j = s.get(f'{FAPI}/structure/api/v1_0/tournament/{tid}/matches?timeFilter=all', timeout=20).json()
+        except Exception as e:
+            diag.setdefault('bledy', []).append(f'mecze {tid}: {e}'[:120]); continue
+        for f in j.get('fixtures') or []:
+            if f.get('kind') != 'PREMATCH': continue
+            u = {p.get('type'): p.get('name') for p in f.get('participants') or []}
+            h, a = u.get('HOME'), u.get('AWAY')
+            if not (h and a):
+                cz = re.split(r'\s+-\s+', f.get('name') or '')
+                if len(cz) == 2: h, a = cz
+            if h and a and f.get('startDatetime'):
+                mecze[f['id']] = dict(id=f['id'], sp=sp, h=h, a=a, t=dt.datetime.fromtimestamp(f['startDatetime'] / 1000, dt.timezone.utc))
+        time.sleep(0.15)
+    diag['meczow_fortuny'] = len(mecze)
+    return list(mecze.values())
+
+def _fortuna_klucze(rynki, odwr, sport):
+    k = {}
+    for m in rynki or []:
+        n = (m.get('marketTypeName') or m.get('name') or '').lower()
+        for o in m.get('outcomes') or []:
+            try: c = float(o.get('odds') or 0)
+            except Exception: continue
+            if c <= 1.0 or o.get('displayType', 'OPEN') != 'OPEN': continue
+            on = str(o.get('name') or '').strip()
+            if sport == 'pilka':
+                if n == 'wynik meczu' and on in ('1', '0', '2'): k.setdefault({'1': '1', '0': 'X', '2': '2'}[on], c)
+                elif n == 'mecz: dwójtyp' and on in ('10', '02', '12'): k.setdefault({'10': '1X', '02': 'X2', '12': '12'}[on], c)
+                elif 'obie drużyny strzelą' in n and 'połow' not in n and ';' not in n:
+                    if on.lower() == 'tak': k.setdefault('BTTS Tak', c)
+                    elif on.lower() == 'nie': k.setdefault('BTTS Nie', c)
+                elif re.fullmatch(r'(mecz: )?(liczba goli|gole|suma goli)( w meczu)?', n):
+                    mm = re.search(r'([+-]|powyżej|poniżej)\s*(\d+[.,]5)', on.lower())
+                    if mm: k.setdefault(('Over ' if mm.group(1) in ('+', 'powyżej') else 'Under ') + mm.group(2).replace(',', '.'), c)
+            else:
+                if n in ('zwycięzca meczu', 'wynik meczu', 'zwycięzca', 'mecz') and on in ('1', '2'):
+                    kl = 'A' if (on == '1') != odwr else 'B'
+                    k.setdefault(kl, c)
+    return k
+
+def czytnik():
+    s = ses(); diag = dict(bledy=[]); wynik = {}
+    try:
+        KP = _przygotuj(s)
+        nasze = KP.nasze_mecze()
+        diag['nasze_mecze'] = len(nasze)
+        oferta = fortuna_mecze(s, diag)
+        rynki_nazwy = {}
+        for sp, eid, h, a, start, bo in nasze:
+            t0 = KP._utc_nasz(start); tol = 35 if sp == 'pilka' else 360
+            best = None
+            for f in oferta:
+                if (f['sp'] == 'pilka') != (sp == 'pilka'): continue
+                if abs((f['t'] - t0).total_seconds()) / 60 > tol: continue
+                s1 = min(KP.podobne_w(h, f['h']), KP.podobne_w(a, f['a']))
+                s2 = min(KP.podobne_w(h, f['a']), KP.podobne_w(a, f['h'])) if sp != 'pilka' else 0
+                sc, odwr = (s1, False) if s1 >= s2 else (s2, True)
+                if sc >= 0.55 and (best is None or sc > best[1]): best = (f, sc, odwr)
+            if not best: diag.setdefault('niedopasowane', []).append(f'{sp}: {h} – {a}'); continue
+            f, sc, odwr = best
+            try:
+                j = s.get(f'{FAPI}/markets/api/v1_0/fixtures/markets/overview', params={'fixtureIds': f['id']}, timeout=20).json()
+                rynki = j.get(f['id']) or []
+            except Exception as e:
+                diag['bledy'].append(f'kursy {f["id"]}: {e}'[:120]); continue
+            for m in rynki:
+                rn = m.get('marketTypeName') or m.get('name')
+                if rn and len(rynki_nazwy) < 60: rynki_nazwy.setdefault(rn, [o.get('name') for o in (m.get('outcomes') or [])][:4])
+            k = _fortuna_klucze(rynki, odwr, 'pilka' if sp == 'pilka' else 'duel')
+            if k: wynik[eid] = dict(fortuna=dict(id=f['id'], nazwa=f'{f["h"]} - {f["a"]}', zgodnosc=round(sc, 2), kursy=k))
+            time.sleep(0.2)
+        diag['rynki_nazwy'] = rynki_nazwy
+    except Exception as e:
+        diag['bledy'].append(f'{type(e).__name__}: {e}'[:200])
+    dane = dict(czas=dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d %H:%M UTC'), wersja='czytnik-1',
+                bukmacherzy=dict(fortuna=dict(ok=not diag['bledy'] or bool(wynik), dopasowane=len(wynik))),
+                mecze=wynik, diag=diag, sekund=round(time.time() - START))
+    print('Fortuna: dopasowane', len(wynik), 'z', diag.get('nasze_mecze'), '| błędy:', diag['bledy'][:3])
+    zapisz_github('docs/data/kursy_vps.json', dane)
+
+def sts_zrzut():
+    """Pełne wiadomości websocketu STS (lista + turniej + mecz) – do napisania czytnika STS."""
+    from playwright.sync_api import sync_playwright
+    ramki = []
+    with sync_playwright() as pw:
+        br = pw.chromium.launch(headless=True, args=['--no-sandbox', '--disable-dev-shm-usage'])
+        pg = br.new_context(locale='pl-PL', user_agent=UA).new_page()
+        def na_ws(w):
+            if 'sbk/api/sbk' not in w.url: return
+            w.on('framereceived', lambda f: sum(len(x) for x in ramki) < 9_000_000 and ramki.append('< ' + str(f)))
+            w.on('framesent', lambda f: ramki.append('> ' + str(f)))
+        pg.on('websocket', na_ws)
+        for url in ('https://www.sts.pl/zaklady-bukmacherskie/pilka-nozna/miedzynarodowe/liga-narodow-uefa/1/3/12277',
+                    'https://www.sts.pl/pilka-nozna', 'https://www.sts.pl/tenis'):
+            try:
+                pg.goto(url, wait_until='domcontentloaded', timeout=45000); pg.wait_for_timeout(9000)
+                ramki.append('#### ' + url)
+            except Exception as e: ramki.append(f'#### BLAD {url}: {e}')
+        br.close()
+    zapisz_github('surowe/sts_ws_pelne.txt', '\n\n'.join(ramki)[:9_500_000], surowy=True)
+    try:
+        r = ses().get('https://content.sts.pl/devices/common/any/market_description/json/markets_description.json?lang=pl', timeout=30)
+        zapisz_github('surowe/sts_rynki.json', r.text, surowy=True)
+    except Exception as e: print('rynki STS:', e)
+
 def main():
+    if '--test' not in sys.argv and not any(a.startswith('--siec') or a in ('--zrzut', '--sts') for a in sys.argv[1:]):
+        czytnik(); return
+    if '--sts' in sys.argv:
+        sts_zrzut(); return
     if '--siec2' in sys.argv:
         siec2(); return
     if '--siec' in sys.argv:

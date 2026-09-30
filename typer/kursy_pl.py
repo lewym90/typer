@@ -281,14 +281,30 @@ def _typy_w(obj):
         for v in obj.values():
             if isinstance(v, dict) and 'klucz' in v and 'szansa' in v: yield v
 
+NAZWY_BUK = {'fortuna': 'Fortuna', 'sts': 'STS', 'betclic': 'Betclic PL'}
+
+def _kursy_vps():
+    """Kursy z polskiego serwera (Fortuna, później STS i Betclic) – docs/data/kursy_vps.json, jeśli świeże (do 6 h)."""
+    try:
+        d = json.load(open(os.path.join(OUT, 'kursy_vps.json')))
+        t = dt.datetime.strptime(d['czas'], '%Y-%m-%d %H:%M UTC').replace(tzinfo=dt.timezone.utc)
+        if (dt.datetime.now(dt.timezone.utc) - t).total_seconds() > 6 * 3600: DIAG['vps'] = 'nieaktualne'; return {}
+        DIAG['vps'] = dict(czas=d['czas'], mecze=len(d.get('mecze') or {}))
+        return d.get('mecze') or {}
+    except Exception as e:
+        DIAG['vps'] = f'brak: {str(e)[:60]}'; return {}
+
 def dopisz(kursy):
     ile = 0
+    vps = _kursy_vps()
     def nadaj(m, eid):
         nonlocal ile
-        sb = ((kursy.get(eid) or {}).get('superbet') or {}).get('kursy') or {}
+        zrodla = {'Superbet': ((kursy.get(eid) or {}).get('superbet') or {}).get('kursy') or {}}
+        for buk, dane in ((vps.get(eid) or {}).items()):
+            zrodla[NAZWY_BUK.get(buk, buk)] = (dane or {}).get('kursy') or {}
         for t in _typy_w(m):
-            k = sb.get(t['klucz'])
-            if k: t['kursy_pl'] = {'Superbet': k}; ile += 1
+            kp = {b: k[t['klucz']] for b, k in zrodla.items() if k.get(t['klucz'])}
+            if kp: t['kursy_pl'] = kp; ile += 1
             else: t.pop('kursy_pl', None)
     p = os.path.join(OUT, 'dzis.json')
     try:
@@ -325,6 +341,10 @@ def czy_teraz(st):
         wyg = json.load(open(os.path.join(OUT, 'dzis.json'))).get('wygenerowano')
         if wyg and dt.datetime.strptime(wyg, '%Y-%m-%d %H:%M').replace(tzinfo=TZ) > ost_t: return True
     except Exception: pass
+    try:   # nowe kursy z polskiego serwera
+        c = json.load(open(os.path.join(OUT, 'kursy_vps.json'))).get('czas')
+        if c and dt.datetime.strptime(c, '%Y-%m-%d %H:%M UTC').replace(tzinfo=dt.timezone.utc) > ost_t: return True
+    except Exception: pass
     return (dt.datetime.now(dt.timezone.utc) - ost_t).total_seconds() >= CO_ILE_MIN * 60
 
 def main():
@@ -337,10 +357,10 @@ def main():
         oferta = oferta_superbet(ses); stan['zdarzen'] = len(oferta)
         kursy = dopasuj_wszystko(ses, oferta); stan['dopasowane'] = len(kursy); stan['ok'] = True
     except Exception as e: DIAG['bledy'].append(f'Superbet: {type(e).__name__}: {str(e)[:150]}')
-    if stan['ok']: stan['typow'] = dopisz(kursy)
+    stan['typow'] = dopisz(kursy)   # także gdy Superbet nie odpowie – wtedy tylko kursy z serwera
     teraz = dt.datetime.now(TZ).strftime('%Y-%m-%d %H:%M')
     nasze = len(nasze_mecze())
-    pelny = dict(czas=teraz, wersja=2, bukmacherzy=dict(superbet=stan), mecze=kursy,
+    pelny = dict(czas=teraz, wersja=3, bukmacherzy=dict(superbet=stan), mecze=kursy,
                  niedostepni=dict(betclic='blokada 403 dla serwerów spoza Polski', sts='Cloudflare – blokada', fortuna='Geoblock – tylko Polska'),
                  diag=dict(DIAG, nasze_mecze=nasze, sekund=round(time.time() - START)))
     try: _zapisz_bezpiecznie(os.path.join(OUT, 'kursy_pl.json'), pelny)
@@ -348,7 +368,7 @@ def main():
     try: st = json.load(open(os.path.join(OUT, 'status.json')))
     except Exception: st = {}
     st['kursy_pl'] = dict(czas=teraz, utc=dt.datetime.now(dt.timezone.utc).isoformat(), superbet=stan, nasze_mecze=nasze,
-                          niedopasowane=len(DIAG['niedopasowane']), bledy=DIAG['bledy'][:4], sekund=round(time.time() - START))
+                          niedopasowane=len(DIAG['niedopasowane']), vps=DIAG.get('vps'), bledy=DIAG['bledy'][:4], sekund=round(time.time() - START))
     try: _zapisz_bezpiecznie(os.path.join(OUT, 'status.json'), st)
     except Exception as e: print('status.json:', e)
     print('Kursy PL:', json.dumps(st['kursy_pl'], ensure_ascii=False))
