@@ -338,7 +338,10 @@ function glowa(t){
 }
 function poziomTypu(t, ikona, tytul, klasa, mecz){
   if(!t) return ''; const P = x => mecz ? plTxt(x, mecz) : x;
-  const bk = t.kurs_betclic ? ` · Betclic: <b>${num(t.kurs_betclic)}</b> ${t.kurs_betclic*t.szansa >= 1 ? '✅' : '(poniżej uczciwego)'}` : '';
+  const kk = [['Betclic', t.kurs_betclic], ...Object.entries(t.kursy_pl || {})].filter(([n, k]) => k > 1);
+  const naj = kk.length ? Math.max(...kk.map(([n, k]) => k)) : 0;
+  const bk = kk.length ? ' · ' + kk.map(([n, k]) => `${esc(n)}: ${k === naj && kk.length > 1 ? `<b>${num(k)}</b> ⭐` : `<b>${num(k)}</b>`}`).join(' · ')
+    + ` ${naj*t.szansa >= 1 ? '✅' : '(poniżej uczciwego)'}` : '';
   return `<div class="tier ${klasa||''}"><div class="lbl2"><span>${ikona} ${tytul}</span></div>
     <div class="row2"><div class="name">${esc(P(t.zaklad))}${mecz ? kupBtn({event_id: mecz.event_id, mecz: mecz.mecz, zaklad: P(t.zaklad), szansa: t.szansa}) : ''}${t.opis?`<small>${esc(P(t.opis))}</small>`:''}</div><div class="pp">${pct(t.szansa)}</div></div>
     <div class="k">Kurs uczciwy <b>${num(t.kurs_uczciwy)}</b> – graj przy kursie ≥ ${num(t.kurs_uczciwy)} (min. ${num(t.kurs_min)})${bk}</div></div>`;
