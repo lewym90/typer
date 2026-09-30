@@ -289,7 +289,31 @@ const PL = {Poland:'Polska',Germany:'Niemcy',Spain:'Hiszpania',France:'Francja',
 Object.assign(PL, {'Bosnia & Herzegovina':'Bośnia i Hercegowina','Bosnia-Herzegovina':'Bośnia i Hercegowina',Czechia:'Czechy','Türkiye':'Turcja',
  'Ireland':'Irlandia','North Macedonia':'Macedonia Północna','Faroe Islands':'Wyspy Owcze','Korea Republic':'Korea Płd.',USA:'USA','Ivory Coast':'Wybrzeże Kości Słoniowej'});
 const plN = t => PL[t] || t;
-const plTxt = (s, t) => { let o = String(s ?? ''); for(const n of [t.gospodarz, t.gosc]) if(n && PL[n]) o = o.split(n).join(PL[n]); return o; };
+const przecinek = s => String(s ?? '').replace(/(\d)\.(\d)/g, '$1,$2');   // 2,5 zamiast 2.5
+const plTxt = (s, t) => { let o = String(s ?? ''); for(const n of [t.gospodarz, t.gosc]) if(n && PL[n]) o = o.split(n).join(PL[n]); return przecinek(o); };
+/* statusy z ESPN po polsku (Na żywo) */
+function stPL(s){
+  let t = String(s ?? '').trim(); if(!t) return t;
+  const stale = {'FT':'Koniec','Full Time':'Koniec','Final':'Koniec','Final/Pen':'Koniec (karne)','FT-Pens':'Koniec (karne)','AET':'Koniec po dogrywce',
+    'Final/AET':'Koniec po dogrywce','HT':'Przerwa','Halftime':'Przerwa','Half Time':'Przerwa','Postponed':'Przełożony','Canceled':'Odwołany',
+    'Cancelled':'Odwołany','Delayed':'Opóźniony','Suspended':'Przerwany','Abandoned':'Przerwany','Scheduled':'Zaplanowany','In Progress':'Trwa',
+    'Retired':'Krecz','Walkover':'Walkower','Rain Delay':'Przerwa (deszcz)','End of Period':'Przerwa','Extra Time':'Dogrywka',
+    'Penalties':'Rzuty karne','Shootout':'Rzuty karne','Pre-Game':'Przed meczem','Pre-Fight':'Przed walką','Draw':'Remis','No Contest':'Walka nieodbyta'};
+  if(stale[t]) return stale[t];
+  const r = [[/^End of (\d)(st|nd|rd|th) Set$/i, 'Po $1. secie'], [/^(\d)(st|nd|rd|th) Set$/i, '$1. set'], [/^Set (\d)$/i, '$1. set'],
+    [/^End of Round (\d)$/i, 'Po $1. rundzie'], [/^Round (\d)$/i, 'Runda $1'], [/^R(\d),?\s*(\d+:\d\d)$/i, 'Runda $1, $2'], [/^End R(\d)$/i, 'Po $1. rundzie'],
+    [/^(\d)(st|nd|rd|th) Half$/i, '$1. połowa'], [/^Decision\s*-?\s*Unanimous/i, 'Decyzja jednogłośna'], [/^Decision\s*-?\s*Split/i, 'Decyzja niejednogłośna'],
+    [/^Decision\s*-?\s*Majority/i, 'Decyzja większościowa'], [/^Decision/i, 'Decyzja sędziów'], [/^Submission/i, 'Poddanie'], [/^KO\/TKO/i, 'KO/TKO'],
+    [/^TKO/i, 'TKO'], [/^KO\b/i, 'KO'], [/^Retired/i, 'Krecz'], [/^Walkover/i, 'Walkower'], [/Final/i, 'Koniec']];
+  const TECH = {'Punches':'ciosy','Punch':'cios','Kicks':'kopnięcia','Kick':'kopnięcie','Head Kick':'kopnięcie na głowę','Body Kick':'kopnięcie na korpus',
+    'Elbows':'łokcie','Elbow':'łokieć','Knees':'kolana','Knee':'kolano','Rear Naked Choke':'duszenie zza pleców','Guillotine Choke':'gilotyna',
+    'Arm Triangle Choke':'trójkąt ramienny','Arm Triangle':'trójkąt ramienny','Triangle Choke':'trójkąt','Armbar':'dźwignia na łokieć','Kimura':'kimura',
+    'Heel Hook':'skręt pięty','Kneebar':'dźwignia na kolano','Anaconda Choke':'duszenie anakonda',"D'Arce Choke":'duszenie D’Arce','Doctor Stoppage':'decyzja lekarza',
+    'Slam':'rzut','Spinning Back Fist':'cios z obrotu','Other':'inne','Injury':'kontuzja','Corner Stoppage':'decyzja narożnika'};
+  const tech = x => x.replace(/\(([^)]+)\)/g, (_, w) => '(' + (TECH[w.trim()] || w) + ')');
+  for(const [re, z] of r) if(re.test(t)) return tech(t.replace(re, z).replace(/\bRound\b/i, 'runda'));
+  return tech(t);
+}
 const plMecz = m => String(m).split(' – ').map(plN).join(' – ');
 const pokaz = (liga, t) => liga === 'Reprezentacje' && PL[t] ? PL[t] : t;
 const norm = s => String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ł/g,'l').replace(/Ł/g,'L').toLowerCase().trim();
@@ -421,10 +445,10 @@ function licz(){
 }
 
 /* ---------- typ algorytmu ---------- */
-const LEPSZY = ['1','2','1X','X2','12','Over 1.5','Over 2.5','Under 2.5','Under 3.5','BTTS Tak','BTTS Nie','H -1.5','A -1.5','H -2.5','A -2.5','H -3.5','A -3.5','Over 3.5','Over 4.5','H o1.5','A o1.5','H o2.5','A o2.5','H o0.5','A o0.5'];
-const RYZYK = ['1','X','2','Over 2.5','Over 3.5','Under 1.5','BTTS Tak','H -1.5','A -1.5','H -2.5','A -2.5','H -3.5','A -3.5','H -4.5','A -4.5','Over 4.5','Over 5.5','H o2.5','A o2.5','H o1.5','A o1.5','1 & o1.5','2 & o1.5','1 & o2.5','2 & o2.5','X & u2.5','BTTS & o2.5'];
+const LEPSZY = ['1','2','1X','X2','12','Over 1.5','Over 2.5','Under 2.5','Under 3.5','BTTS Tak','H -1.5','A -1.5','H -2.5','A -2.5','H -3.5','A -3.5','Over 3.5','Over 4.5','H o1.5','A o1.5','H o2.5','A o2.5','H o0.5','A o0.5'];
+const RYZYK = ['1','X','2','Over 2.5','Over 3.5','Under 1.5','BTTS Tak','H -1.5','A -1.5','H -3.5','A -3.5','H -4.5','A -4.5','Over 4.5','Over 5.5','H o2.5','A o2.5','H o1.5','A o1.5','1 & o1.5','2 & o1.5','1 & o2.5','2 & o2.5','X & u2.5','BTTS & o2.5'];
 function rozszerzone(M, H, A){
-  const r = {}; const add = (k, f, n, o) => { let s = 0; for(let i=0;i<=MAXG;i++) for(let j=0;j<=MAXG;j++) if(f(i,j,i+j,i-j)) s += M[i][j]; r[k] = [s, n, o, f]; };
+  const r = {}; const add = (k, f, n, o) => { let s = 0; for(let i=0;i<=MAXG;i++) for(let j=0;j<=MAXG;j++) if(f(i,j,i+j,i-j)) s += M[i][j]; r[k] = [s, przecinek(n), przecinek(o), f]; };
   add('1',(i,j,t,d)=>d>0,'1','wygra '+H); add('X',(i,j,t,d)=>d===0,'X','remis'); add('2',(i,j,t,d)=>d<0,'2','wygra '+A);
   add('1X',(i,j,t,d)=>d>=0,'1X',H+' lub remis'); add('X2',(i,j,t,d)=>d<=0,'X2',A+' lub remis'); add('12',(i,j,t,d)=>d!==0,'12','bez remisu');
   add('BTTS Tak',(i,j)=>i>0&&j>0,'Obie strzelą – tak',''); add('BTTS Nie',(i,j)=>i===0||j===0,'Obie strzelą – nie','');
@@ -442,7 +466,7 @@ function rozszerzone(M, H, A){
   return r;
 }
 
-const NAJ = ['1','2','1X','X2','12','Over 1.5','Over 2.5','Under 3.5','Over 3.5','H -1.5','A -1.5','H -2.5','A -2.5','H o1.5','A o1.5'];
+const NAJ = ['1','2','1X','X2','12','Over 1.5','Over 2.5','Under 3.5'];   // ta sama lista co w programie (run_daily.NAJPEWNIEJSZE)
 function typAlgorytmu(R2, P, kursy, HN, AN, liga, M){
   const razem = (a, b) => { let s = 0; for(let i=0;i<=MAXG;i++) for(let j=0;j<=MAXG;j++) if(R2[a][3](i,j,i+j,i-j) && R2[b][3](i,j,i+j,i-j)) s += M[i][j]; return s; };
   const wyb = (lista, kmin, kmax, pmin, wyk) => lista.filter(z => R2[z] && !wyk.includes(z) && !wyk.some(w => razem(z, w) < 0.03)).map(z => ({z, p: P(z)}))
@@ -518,7 +542,7 @@ const IK_SP = {tenis:'🎾', walki:'🥊'};
 function wynikInne(sp, eid){ const o = (((S.inne||{}).dziennik||{})[sp]||{}).ostatnie || []; return o.filter(t => t.event_id == eid && t.rodzaj === 'pewne'); }
 function kartaInne(m, nr, sp){
   const pm = {event_id: m.event_id, mecz: m.mecz, gospodarz: m.a, gosc: m.b};
-  const tur = esc(m.turniej) + (m.kategoria ? ` · kat. ${esc(m.kategoria)}` : '') + (m.bo === 5 ? ' · do 3 wygranych setów' : '');
+  const tur = esc(m.turniej) + (m.kategoria ? ` · kat. ${esc(m.kategoria)}` : '') + (m.bo === 5 ? ' · do 3 wygranych setów' : '') + (m.rundy === 5 ? ` · ${esc(m.rundy_zrodlo || '5 rund')}` : '');
   let h = `<article class="bet"><div class="top"><span>${IK_SP[sp]} ${tur}</span><span>${esc(m.dzien)} ${esc(m.godzina)}</span></div><div class="match">${esc(m.mecz)}</div>`;
   const r3 = m.szansa_remis;
   h += `<div class="x12 ${r3 ? '' : 'dwa'}"><div><b>${pct(m.szansa_a)}</b><span>wygra ${esc(m.a)}</span></div>${r3 ? `<div><b>${pct(r3)}</b><span>remis</span></div>` : ''}<div><b>${pct(m.szansa_b)}</b><span>wygra ${esc(m.b)}</span></div></div>
@@ -564,6 +588,7 @@ function statInne(sp){
     } else {
       if(T.faworyt68) h += `<div class="note">Faworyci ≥68%: przew. ${pct(T.faworyt68[0],1)} → wygrali <b>${pct(T.faworyt68[1],1)}</b> (${T.faworyt68[2]} walk)</div>`;
       if(T.przed_czasem) h += `<div class="note">„Przed czasem”: przew. ${pct(T.przed_czasem[0],1)} → było <b>${pct(T.przed_czasem[1],1)}</b> (${T.przed_czasem[2]} walk)</div>`;
+      if(T.rundy5) h += `<div class="note">Walki 5-rundowe, „przed czasem”: przew. ${pct(T.rundy5[0],1)} → było <b>${pct(T.rundy5[1],1)}</b> (${T.rundy5[2]} walk)</div>`;
     }
     if(T.uwaga) h += `<div class="note">${esc(T.uwaga)}</div>`;
     h += `</details>`;
@@ -579,7 +604,7 @@ function statInne(sp){
 const SPORTY = [['pilka','⚽','Piłka nożna'],['tenis','🎾','Tenis'],['walki','🥊','Sporty walki']];
 const IK = {pilka:'⚽', tenis:'🎾', walki:'🥊'};
 const NAZWA_SP = {pilka:'Piłka nożna', tenis:'Tenis', walki:'Sporty walki'};
-const dzisData = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
+const dzisData = () => { const d = new Date(Date.now() - 6*36e5); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
 function chipy(klucz, zWszystkimi){
   const v = store.get(klucz, zWszystkimi ? 'wszystkie' : 'pilka');
   const opc = (zWszystkimi ? [['wszystkie','','Wszystkie']] : []).concat(SPORTY);
@@ -705,8 +730,8 @@ function widokPewneInne(sp){
   if(!d) return `<div class="empty">Brak danych – pojawią się po najbliższym liczeniu typów (codziennie o 12:00).</div>`;
   const s = d[sp] || {}, mecze = s.mecze || [], pewne = pewneSportu(sp);
   let h = `<p class="lead">${sp === 'tenis'
-      ? 'Szanse z kursów Pinnacle i giełdy Betfair (bez marży). Rozkład setów z modelu dopasowanego do 14 625 meczów ATP. Mecze bez tych kursów są pomijane.'
-      : 'Szanse z kursów Pinnacle i giełdy Betfair, w MMA poprawione o to, że rynek nie docenia wyraźnych faworytów (test na 6 916 walkach UFC). Boks – tylko kto wygra.'}</p>`;
+      ? 'Szanse z kursów Pinnacle i giełdy Betfair (bez marży). Rozkład setów z modelu sprawdzonego na 79 408 meczach ATP i WTA (kobiety mają osobne parametry – częściej wygrywają 2:0). Mecze bez tych kursów są pomijane.'
+      : 'Szanse z kursów Pinnacle i giełdy Betfair, w MMA poprawione o to, że rynek nie docenia wyraźnych faworytów (test na 6 916 walkach UFC). Walki 5-rundowe (walka wieczoru, o pas) program rozpoznaje z ESPN. Boks – tylko kto wygra.'}</p>`;
   if(d.data && d.data !== dzisData()) h += `<div class="banner">Typy z dnia ${esc(String(d.data).split('-').reverse().join('.'))}.</div>`;
   if(!pewne.length) h += `<div class="empty">${mecze.length ? 'Brak typów spełniających warunki.' : (sp === 'tenis' ? 'Dziś brak meczów z kursami Pinnacle/Betfair.' : 'Brak gal w najbliższej dobie (walki są głównie w weekendy).')}</div>`;
   pewne.forEach((m, i) => h += kartaInne(m, i + 1, sp));
@@ -719,14 +744,14 @@ function widokPewneInne(sp){
 }
 
 /* ---------- ANALIZA: tenis i walki (te same modele co w Pythonie) ---------- */
-const TEN = {platt: 1.0551, sety: {3: {g: [0.4244, 0.3665]}, 5: {g: [-0.5918, 0.4521], h: [0.3065, 0.3307]}}};
+const TEN = {platt: 1.0551, sety: {3: {g: [0.4244, 0.3665]}, 5: {g: [-0.5918, 0.4521], h: [0.3065, 0.3307]}}, wta: {g: [0.5106, 0.396]}};
 const MMA = {platt: 1.1151, a0: -0.1313, b: 0.1469, r5: 0.3389, wc: {"Bantamweight": -0.1078, "Catch Weight": 0.1707, "Featherweight": -0.097, "Flyweight": -0.1924, "Heavyweight": 0.6592,
   "Light Heavyweight": 0.5495, "Lightweight": 0.0923, "Middleweight": 0.3367, "Welterweight": 0.0546, "Women's Bantamweight": -0.3712, "Women's Featherweight": -0.1817, "Women's Flyweight": -0.4468, "Women's Strawweight": -0.5971}};
 const KAT_PL = {"Bantamweight":"kogucia","Catch Weight":"umowna","Featherweight":"piórkowa","Flyweight":"musza","Heavyweight":"ciężka","Light Heavyweight":"półciężka","Lightweight":"lekka",
   "Middleweight":"średnia","Welterweight":"półśrednia","Women's Bantamweight":"kogucia kobiet","Women's Featherweight":"piórkowa kobiet","Women's Flyweight":"musza kobiet","Women's Strawweight":"słomkowa kobiet"};
 const klamp = p => Math.min(Math.max(p, 1e-4), 1 - 1e-4);
-function tenRozklad(p, bo){
-  p = klamp(p); const q = 1 - p, g = x => sgm(TEN.sety[bo].g[0] + TEN.sety[bo].g[1] * lgt(x));
+function tenRozklad(p, bo, wta){
+  p = klamp(p); const G = (wta && bo === 3) ? TEN.wta.g : TEN.sety[bo].g, q = 1 - p, g = x => sgm(G[0] + G[1] * lgt(x));
   if(bo === 3) return {'2:0': p*g(p), '2:1': p*(1-g(p)), '1:2': q*(1-g(q)), '0:2': q*g(q)};
   const hh = x => sgm(TEN.sety[5].h[0] + TEN.sety[5].h[1] * lgt(x));
   return {'3:0': p*g(p), '3:1': p*(1-g(p))*hh(p), '3:2': p*(1-g(p))*(1-hh(p)), '0:3': q*g(q), '1:3': q*(1-g(q))*hh(q), '2:3': q*(1-g(q))*(1-hh(q))};
@@ -758,9 +783,9 @@ function wybierzTypy(R, rk, listy){
   }
   return out;
 }
-function opisTen(n, a, b){ const kto = x => x === 'A' ? a : b;
+function opisTen(n, a, b, bo){ const kto = x => x === 'A' ? a : b;
   if(n === 'A' || n === 'B') return `wygra ${kto(n)}`; if(n.endsWith('min. 1 set')) return `${kto(n[0])} wygra min. 1 seta`;
-  if(n.endsWith('+1.5')) return `${kto(n[0])} +1,5 seta (handicap)`; if(n.endsWith('-1.5')) return `${kto(n[0])} wygra bez straty seta`;
+  if(n.endsWith('+1.5')) return `${kto(n[0])} +1,5 seta (handicap)`; if(n.endsWith('-1.5')) return bo === 5 ? `${kto(n[0])} wygra, tracąc najwyżej 1 seta (handicap -1,5)` : `${kto(n[0])} wygra bez straty seta`;
   if(/^[AB] \d:\d$/.test(n)) return `${kto(n[0])} wygra ${n.slice(2)} w setach`; return n.replace('.5', ',5'); }
 function opisMma(n, a, b){ const kto = x => x === 'A' ? a : b;
   if(n === 'A' || n === 'B') return `wygra ${kto(n)}`; if(n === 'Przed czasem') return 'walka skończy się przed czasem (KO/TKO/poddanie)';
@@ -775,8 +800,8 @@ function analizujInne(sp){
   const m = {event_id: 'analiza', a: A, b: B, mecz: `${A} – ${B}`, turniej: 'Analiza ręczna', dzien: '', godzina: '', zrodlo: `Twoje kursy (marża ${pct(marza, 1)} usunięta)`};
   let R, rk, listy, op;
   if(sp === 'tenis'){
-    const bo = +g('ibo') || 3; const p = sgm(TEN.platt * lgt(klamp(pa / (pa + pb))));
-    R = tenRozklad(p, bo); rk = tenRynki(bo); listy = TEN_LISTY; op = opisTen;
+    const fmt = g('ibo') || '3', bo = fmt === '5' ? 5 : 3, wta = fmt === '3w'; const p = sgm(TEN.platt * lgt(klamp(pa / (pa + pb))));
+    R = tenRozklad(p, bo, wta); rk = tenRynki(bo); listy = TEN_LISTY; op = (k, a, b) => opisTen(k, a, b, bo);
     Object.assign(m, {bo, szansa_a: p, szansa_b: 1 - p, wyniki: Object.entries(R).sort((x, y) => y[1] - x[1]).map(([w, v]) => { const [x, y] = w.split(':'); return {a: +x, b: +y, szansa: v}; })});
   } else if(g('idys') === 'MMA'){
     const kat = g('ikat') || null, r5 = document.getElementById('ir5') && document.getElementById('ir5').checked ? 1 : 0;
@@ -804,7 +829,7 @@ function widokAnalizaInne(sp){
   if(sp === 'walki') h += `<label for="idys">Dyscyplina</label><select id="idys">${['MMA','Boks'].map(x => `<option ${st.dys === x ? 'selected' : ''}>${x}</option>`).join('')}</select>`;
   h += `<div class="row">${pole('ia', sp === 'tenis' ? 'Zawodnik/zawodniczka 1' : 'Zawodnik 1', 'text', st.a)}${pole('ib', sp === 'tenis' ? 'Zawodnik/zawodniczka 2' : 'Zawodnik 2', 'text', st.b)}</div>
     <div class="row">${pole('ka', 'Kurs na 1', 'number', st.ka, 'np. 1,55')}${pole('kb', 'Kurs na 2', 'number', st.kb, 'np. 2,50')}</div>`;
-  if(sp === 'tenis') h += `<label for="ibo">Format</label><select id="ibo"><option value="3" ${st.bo != 5 ? 'selected' : ''}>do 2 wygranych setów</option><option value="5" ${st.bo == 5 ? 'selected' : ''}>do 3 wygranych setów (Wielki Szlem, mężczyźni)</option></select>`;
+  if(sp === 'tenis') h += `<label for="ibo">Format</label><select id="ibo"><option value="3" ${!['5','3w'].includes(String(st.bo)) ? 'selected' : ''}>mężczyźni – do 2 wygranych setów</option><option value="3w" ${String(st.bo) === '3w' ? 'selected' : ''}>kobiety – do 2 wygranych setów</option><option value="5" ${String(st.bo) === '5' ? 'selected' : ''}>mężczyźni – do 3 wygranych setów (Wielki Szlem)</option></select>`;
   else h += `<div class="row">${pole('kd', 'Kurs na remis (boks, opcjonalnie)', 'number', st.kd, '—')}<div><label for="ikat">Kategoria wagowa (MMA)</label><select id="ikat"><option value="">nieznana</option>${Object.keys(KAT_PL).map(k => `<option value="${esc(k)}" ${st.kat === k ? 'selected' : ''}>${esc(KAT_PL[k])}</option>`).join('')}</select></div></div>
     <label class="check"><input type="checkbox" id="ir5" ${st.r5 ? 'checked' : ''}> Walka 5-rundowa (walka wieczoru / o pas)</label>`;
   h += `<button class="btn" id="liczInne" data-sp="${sp}">Analizuj</button><div id="wynikInne">`;
@@ -891,11 +916,11 @@ function naszeInne(sp){
   return out;
 }
 function kartaLiveInne(sp, x, moje, odwr){
-  const st = x.stan === 'in' ? `<span class="st in">${esc(x.opis || 'trwa')}</span>` : x.stan === 'post' ? `<span class="st">Koniec</span>` : `<span class="st">${x.start ? new Date(x.start).toLocaleTimeString('pl-PL', {hour:'2-digit', minute:'2-digit'}) : ''}</span>`;
+  const st = x.stan === 'in' ? `<span class="st in">${esc(stPL(x.opis) || 'trwa')}</span>` : x.stan === 'post' ? `<span class="st">Koniec</span>` : `<span class="st">${x.start ? new Date(x.start).toLocaleTimeString('pl-PL', {hour:'2-digit', minute:'2-digit'}) : ''}</span>`;
   const gem = (arr) => arr.map(v => `<i>${esc(v ?? '')}</i>`).join('');
   let h = `<div class="lv${moje ? ' moj' : ''}"><div class="hd"><span>${IK[sp]} ${esc(x.liga)}</span><span>${moje ? '<span class="muted">📣</span> ' : dzwonek(x) + ' '}${st}</span></div>`;
   if(sp === 'tenis') h += `<div class="rw ten"><span>${x.wa ? '✔ ' : ''}${esc(x.a)}</span><span class="gm">${gem(x.ga)}</span><span>${x.wb ? '✔ ' : ''}${esc(x.b)}</span><span class="gm">${gem(x.gb)}</span></div>`;
-  else h += `<div class="rw ten"><span>${x.wa ? '🏆 ' : ''}${esc(x.a)}</span><span></span><span>${x.wb ? '🏆 ' : ''}${esc(x.b)}</span><span></span></div>${x.stan === 'post' && x.opis ? `<div class="ev2">${esc(x.opis)}</div>` : ''}`;
+  else h += `<div class="rw ten"><span>${x.wa ? '🏆 ' : ''}${esc(x.a)}</span><span></span><span>${x.wb ? '🏆 ' : ''}${esc(x.b)}</span><span></span></div>${x.stan === 'post' && x.opis ? `<div class="ev2">${esc(stPL(x.opis))}</div>` : ''}`;
   if(moje) h += `<div class="ty">` + moje.typy.map(t => `<div>${t.ikona} ${esc(t.nazwa)} – ${ocenInne(sp, t, x, odwr, moje.m.bo || 3)}</div>`).join('') + `</div>`;
   return h + `</div>`;
 }
@@ -967,7 +992,7 @@ function parsujESPN(j, slug){
   });
 }
 async function pobierzLive(){
-  const d = new Date(), ds = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+  const d = new Date(Date.now() - 6*36e5), ds = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;   // noc: mecze z poprzedniej doby (daty ESPN wg czasu USA)
   const ligi = LIVE.ligiDzis || Object.keys(ESPN_LIGI);
   const wyn = await Promise.allSettled(ligi.map(slug => fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${slug}/scoreboard?dates=${ds}`)
     .then(r => r.ok ? r.json() : null).then(j => j ? parsujESPN(j, slug) : [])));
@@ -1014,7 +1039,7 @@ function ocenTyp(t, hg, ag, koniec){
   return wynik > 0 ? ['🟢', 'na razie wchodzi'] : (wynik === 0 ? ['🟡', 'na razie zwrot'] : ['🔴', 'na razie nie wchodzi']);
 }
 function kartaLive(m, moje){
-  const st = m.stan === 'in' ? `<span class="st in">${esc(m.opis || m.minuta)}</span>` : m.stan === 'post' ? `<span class="st">Koniec</span>`
+  const st = m.stan === 'in' ? `<span class="st in">${esc(stPL(m.opis) || m.minuta)}</span>` : m.stan === 'post' ? `<span class="st">Koniec</span>`
     : `<span class="st">${new Date(m.start).toLocaleTimeString('pl-PL',{hour:'2-digit',minute:'2-digit'})}</span>`;
   const gra = m.stan !== 'pre' && !isNaN(m.hg);
   let h = `<div class="lv${moje ? ' moj' : ''}"><div class="hd"><span>${esc(m.liga)}</span><span>${moje ? '<span class="muted" title="Powiadomienia na Telegramie">📣</span> ' : dzwonek(m) + ' '}${st}</span></div>

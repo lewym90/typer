@@ -1,5 +1,6 @@
 """Tenis: szanse z rynku (Pinnacle/Betfair) -> rozkład wyników w setach -> typy na trzech poziomach.
-Parametry dopasowane na 14 625 meczach ATP 2020–2026 (tennis-data.co.uk, kursy zamknięcia Pinnacle/Betfair).
+Parametry dopasowane na 14 625 meczach ATP 2020–2026 (tennis-data.co.uk, kursy zamknięcia Pinnacle/Betfair);
+test 30.09 na 79 408 meczach ATP i WTA 2010–2026. Kobiety (WTA) częściej kończą mecz 2:0 – mają osobne parametry setów.
 Prosty model „każdy set niezależnie” mylił się o 7–10 pkt (za rzadko 2:0) – dlatego rozkład setów jest liczony
 z regresji: P(wygra bez straty seta | wygra) zależy od szansy zwycięzcy."""
 import numpy as np
@@ -8,6 +9,7 @@ import numpy as np
 PLATT = 1.0551
 # P(wynik bez straty seta | wygrał) = sigmoid(a + b*logit(p_zwycięzcy)); dla 5 setów także P(3:1 | wygrał i stracił seta)
 SETY = {3: {'g': (0.4244, 0.3665)}, 5: {'g': (-0.5918, 0.4521), 'h': (0.3065, 0.3307)}}
+SETY_WTA = {'g': (0.5106, 0.396)}   # dopasowane na 38 390 meczach WTA 2010–2026 (więcej 2:0 niż u mężczyzn)
 WIELKIE_SZLEMY = ('aus_open', 'french_open', 'wimbledon', 'us_open')
 
 _sig = lambda z: 1 / (1 + np.exp(-z))
@@ -22,10 +24,14 @@ def kalibruj(p):
     p = min(max(float(p), 1e-4), 1 - 1e-4)
     return float(_sig(PLATT * _lg(p)))
 
-def rozklad(p, bo=3):
+def kobiety(sport_key):
+    return 'tennis_wta' in (sport_key or '')
+
+def rozklad(p, bo=3, wta=False):
     """Szanse wyników w setach dla zawodnika A (p = skalibrowana szansa A na wygranie meczu)."""
     p = min(max(p, 1e-4), 1 - 1e-4); q = 1 - p
-    g = lambda x: _sig(SETY[bo]['g'][0] + SETY[bo]['g'][1] * _lg(x))
+    ga, gb = SETY_WTA['g'] if (wta and bo == 3) else SETY[bo]['g']
+    g = lambda x: _sig(ga + gb * _lg(x))
     if bo == 3:
         return {(2, 0): p * g(p), (2, 1): p * (1 - g(p)), (1, 2): q * (1 - g(q)), (0, 2): q * g(q)}
     h = lambda x: _sig(SETY[5]['h'][0] + SETY[5]['h'][1] * _lg(x))
@@ -78,14 +84,16 @@ def typy(R, bo=3):
 def wszedl(nazwa, rk, a_sety, b_sety):
     return (a_sety, b_sety) in rk.get(nazwa, set())
 
-def opis(nazwa, a, b):
+def opis(nazwa, a, b, bo=3):
     """Nazwa zakładu po polsku z nazwiskami."""
     zam = lambda s: s.replace('A ', f'{a} ', 1) if s.startswith('A ') else (s.replace('B ', f'{b} ', 1) if s.startswith('B ') else s)
     if nazwa == 'A': return f'wygra {a}'
     if nazwa == 'B': return f'wygra {b}'
     if nazwa.endswith('min. 1 set'): return f"{a if nazwa[0] == 'A' else b} wygra min. 1 seta"
     if nazwa.endswith('+1.5'): return f"{a if nazwa[0] == 'A' else b} +1,5 seta (handicap)"
-    if nazwa.endswith('-1.5'): return f"{a if nazwa[0] == 'A' else b} wygra bez straty seta"
+    if nazwa.endswith('-1.5'):
+        kto = a if nazwa[0] == 'A' else b
+        return f"{kto} wygra bez straty seta" if int(bo or 3) == 3 else f"{kto} wygra, tracąc najwyżej 1 seta (handicap -1,5)"
     if ':' in nazwa:
         kto, w = nazwa.split(' '); x, y = w.split(':')
         return f"{a if kto == 'A' else b} wygra {x}:{y} w setach"

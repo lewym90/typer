@@ -2,7 +2,7 @@
 import json, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from core import *
-import copy, hashlib, requests
+import copy, hashlib, requests, re
 import core, raport, powiadomienia as tg, zrodla, ai_raport, sporty, wspolne
 from nazwy import pl, pl_txt, pl_mecz
 
@@ -58,14 +58,16 @@ def rynki_rozszerzone(M, H, A):
     }
     for l in (1.5, 2.5, 3.5, 4.5, 5.5):
         r[f'Over {l}'] = (P(T > l), f'Powyżej {l} gola', ''); r[f'Under {l}'] = (P(T < l), f'Poniżej {l} gola', '')
-    # (szansa, nazwa, opis, maska wyników)
-    return {k: (v[0][0], v[1], v[2], v[0][1]) for k, v in r.items()}
+    # (szansa, nazwa, opis, maska wyników); liczby po polsku: 2,5 zamiast 2.5
+    przec = lambda t: re.sub(r'(\d)\.(\d)', r'\1,\2', t)
+    return {k: (v[0][0], przec(v[1]), przec(v[2]), v[0][1]) for k, v in r.items()}
 
 # korekty z testów: ligi – '12' przeceniane ~3,5 pkt; puchary – 'X2' przeceniane ~5 pkt; skrajne gole i BTTS przeceniane
 NAJPEWNIEJSZE = ['1', '2', '1X', 'X2', '12', 'Over 1.5', 'Over 2.5', 'Under 3.5']
-LEPSZY_KURS = ['1', '2', '1X', 'X2', '12', 'Over 1.5', 'Over 2.5', 'Under 2.5', 'Under 3.5', 'BTTS Tak', 'BTTS Nie',
+# test 30.09 (21 556 meczów 2024–2026): „Obie strzelą – nie” jako ⚖️ 61%→55%, handicap -2,5 jako 🎯 32%→27% – wyłączone z tych poziomów
+LEPSZY_KURS = ['1', '2', '1X', 'X2', '12', 'Over 1.5', 'Over 2.5', 'Under 2.5', 'Under 3.5', 'BTTS Tak',
                'H -1.5', 'A -1.5', 'H -2.5', 'A -2.5', 'H -3.5', 'A -3.5', 'Over 3.5', 'Over 4.5', 'H o1.5', 'A o1.5', 'H o2.5', 'A o2.5', 'H o0.5', 'A o0.5']
-RYZYKOWNE = ['1', 'X', '2', 'Over 2.5', 'Over 3.5', 'Under 1.5', 'BTTS Tak', 'H -1.5', 'A -1.5', 'H -2.5', 'A -2.5',
+RYZYKOWNE = ['1', 'X', '2', 'Over 2.5', 'Over 3.5', 'Under 1.5', 'BTTS Tak', 'H -1.5', 'A -1.5',
              'H -3.5', 'A -3.5', 'H -4.5', 'A -4.5', 'Over 4.5', 'Over 5.5', 'H o2.5', 'A o2.5', 'H o1.5', 'A o1.5', '1 & o1.5', '2 & o1.5', '1 & o2.5', '2 & o2.5', 'X & u2.5', 'BTTS & o2.5']
 
 SAMOKOREKTA = {}   # z dziennika typów "Pewne" (min. 100 rozliczonych typów danego rodzaju)
@@ -217,10 +219,22 @@ def wczytaj_pewne():
     except FileNotFoundError: return pd.DataFrame()
 
 def zapisz_pewne(nowe):
+    """Jak w tenisie i walkach: typ meczu na danym poziomie zastępujemy nowym tylko tego samego dnia programu, gdy nie jest
+    rozliczony i nowe typy pójdą na Telegram (poza nocą) – dziennik rozlicza to, co dostałeś."""
     d = wczytaj_pewne(); n = pd.DataFrame(nowe)
-    if len(d):
-        klucz = set(zip(d.event_id.astype(str), d.poziom))
-        n = n[[(str(a), b) not in klucz for a, b in zip(n.event_id, n.poziom)]]
+    if len(d) and len(n):
+        dzien_nowych = wspolne.dzien_str()
+        stare = {(str(a), b): (wspolne.dzien_str(pd.Timestamp(t).tz_localize('Europe/Warsaw')) if str(t) not in ('', 'nan') else '',
+                               str(k), (pd.isna(w) or str(w) == '') and pd.isna(tr))
+                 for a, b, t, k, w, tr in zip(d.event_id, d.poziom, d.data_zapisu, d.klucz, d.wynik, d.trafiony)}
+        wolno = wspolne.mozna_podmienic_typy(); zastap, zostaw = set(), []
+        for i, r in n.iterrows():
+            k = (str(r.event_id), r.poziom)
+            if k not in stare: zostaw.append(i); continue
+            dz, klucz, otwarty = stare[k]
+            if klucz != str(r.klucz) and wolno and otwarty and dz == dzien_nowych: zastap.add(k); zostaw.append(i)
+        n = n.loc[zostaw]
+        if zastap: d = d[[(str(a), b) not in zastap for a, b in zip(d.event_id, d.poziom)]]
     if len(n): pd.concat([d, n], ignore_index=True).to_csv(PLIK_PEWNE, index=False); print(f'Dziennik Pewne: +{len(n)} typów')
 
 def rozlicz_pewne(wyniki_api):
@@ -470,11 +484,11 @@ def tg_typy_dnia(d, status):
     lin = [f"⚽ <b>{'Zaktualizowane typy' if zmiana else 'Typy'} na {pd.Timestamp(d['data']).strftime('%d.%m')}</b>"]
     for i, m in enumerate(d.get('pewne', []), 1):
         lin.append(f"\n<b>{i}. {esc_(pl_mecz(m['mecz']))}</b> ({m['godzina']}, {esc_(m['liga'])})")
-        for poz, ik, k, n, sz in _typy_meczu(m): lin.append(f"{ik} {esc_(pl_txt(n, m['gospodarz'], m['gosc']))} – {tg.pct(sz)} (kurs ≥ {1/sz:.2f})")
+        for poz, ik, k, n, sz in _typy_meczu(m): lin.append(f"{ik} {esc_(pl_txt(n, m['gospodarz'], m['gosc']))} – {tg.pct(sz)} (kurs ≥ {tg.kurs(1/sz)})")
         if (m.get('raport') or {}).get('ostrzezenia'): lin.append('⚠️ ' + esc_('; '.join(m['raport']['ostrzezenia'])))
     if d.get('value'):
         lin.append('\n💰 <b>Value (Betclic)</b>')
-        for v in d['value']: lin.append(f"{esc_(pl_mecz(v['mecz']))}: {esc_(pl_txt(v['zaklad'], v.get('gospodarz'), v.get('gosc')))} @ {v['kurs']} (szansa {tg.pct(v['szansa'])}, szukaj ≥ {v.get('kurs_szukaj', '')})")
+        for v in d['value']: lin.append(f"{esc_(pl_mecz(v['mecz']))}: {esc_(pl_txt(v['zaklad'], v.get('gospodarz'), v.get('gosc')))} @ {tg.kurs(v['kurs'])} (szansa {tg.pct(v['szansa'])}, szukaj ≥ {tg.kurs(v.get('kurs_szukaj', ''))})")
     if tg.APLIKACJA: lin.append(f"\n📱 {tg.APLIKACJA}")
     if tg.wyslij_dlugi('\n'.join(lin)):
         status['tg_typy'] = dict(data=d['data'], podpis=podpis, czas=teraz.strftime('%H:%M'), ai=n_ai)
@@ -499,14 +513,14 @@ def _linie_pewnego(sp, m, i):
     ik = wspolne.IKONA[sp]
     if sp == 'pilka':
         lin = [f"\n{ik} <b>{i}. {esc_(pl_mecz(m['mecz']))}</b> ({m['godzina']}, {esc_(m['liga'])})"]
-        for poz, ikp, k, n, sz in _typy_meczu(m): lin.append(f"{ikp} {esc_(pl_txt(n, m['gospodarz'], m['gosc']))} – {tg.pct(sz)} (kurs ≥ {1/sz:.2f})")
+        for poz, ikp, k, n, sz in _typy_meczu(m): lin.append(f"{ikp} {esc_(pl_txt(n, m['gospodarz'], m['gosc']))} – {tg.pct(sz)} (kurs ≥ {tg.kurs(1/sz)})")
         if (m.get('raport') or {}).get('ostrzezenia'): lin.append('⚠️ ' + esc_('; '.join(m['raport']['ostrzezenia'])))
     else:
-        extra = f", kat. {m['kategoria']}" if m.get('kategoria') else ''
+        extra = (f", kat. {m['kategoria']}" if m.get('kategoria') else '') + (f", {m['rundy_zrodlo']}" if m.get('rundy') == 5 else '')
         lin = [f"\n{ik} <b>{i}. {esc_(m['mecz'])}</b> ({m['dzien']} {m['godzina']}, {esc_(m['turniej'])}{extra})"]
         for poz, ikp in sporty.POZ:
             t = m.get(poz)
-            if t: lin.append(f"{ikp} {esc_(t['zaklad'])} – {tg.pct(t['szansa'])} (kurs ≥ {1/t['szansa']:.2f})")
+            if t: lin.append(f"{ikp} {esc_(t['zaklad'])} – {tg.pct(t['szansa'])} (kurs ≥ {tg.kurs(1/t['szansa'])})")
         if (m.get('raport') or {}).get('ostrzezenie'): lin.append('⚠️ ' + esc_(m['raport']['ostrzezenie']))
     if m.get('nizsza_pewnosc'): lin.append('<i>niższa pewność – dobrany, żeby było 5 typów</i>')
     return lin
@@ -541,14 +555,14 @@ def tg_typy_wszystkie(d, inne, gl, status):
         return 'już wysłane dziś (typy bez zmian)'
     zmiana = wys.get('data') == gl.get('data')
     sporty_dzis = ' '.join(wspolne.IKONA[s] for s, _, _ in wspolne.SPORTY if any(sp == s for sp, _ in pew + val))
-    lin = [f"📋 <b>{'Zaktualizowane typy' if zmiana else 'Typy'} na {teraz.strftime('%d.%m')}</b> {sporty_dzis}"]
+    lin = [f"📋 <b>{'Zaktualizowane typy' if zmiana else 'Typy'} na {pd.Timestamp(gl.get('data') or wspolne.dzien_str()).strftime('%d.%m')}</b> {sporty_dzis}"]
     for i, (sp, m) in enumerate(pew, 1): lin += _linie_pewnego(sp, m, i)
     if val:
         lin.append('\n💰 <b>Value (Betclic)</b>')
         for sp, v in val:
             mecz = pl_mecz(v['mecz']) if sp == 'pilka' else v['mecz']
             zak = pl_txt(v['zaklad'], v.get('gospodarz'), v.get('gosc')) if sp == 'pilka' else v['zaklad']
-            lin.append(f"{wspolne.IKONA[sp]} {esc_(mecz)}: {esc_(zak)} @ {v['kurs']} (szansa {tg.pct(v['szansa'])}, szukaj ≥ {v.get('kurs_szukaj', '')})")
+            lin.append(f"{wspolne.IKONA[sp]} {esc_(mecz)}: {esc_(zak)} @ {tg.kurs(v['kurs'])} (szansa {tg.pct(v['szansa'])}, szukaj ≥ {tg.kurs(v.get('kurs_szukaj', ''))})")
     if any(sp == 'tenis' for sp, _ in pew + val): lin.append('\n<i>Tenis – krecz: rozliczenie wg regulaminu bukmachera.</i>')
     if tg.APLIKACJA: lin.append(f"\n📱 {tg.APLIKACJA}")
     if tg.wyslij_dlugi('\n'.join(lin)):
@@ -598,15 +612,19 @@ def pilnuj_straznika(d):
     albo trwa, a strażnik nie działa. Zwraca opis do status.json."""
     repo, token = os.environ.get('GITHUB_REPOSITORY'), os.environ.get('GH_TOKEN')
     if not (repo and token and tg.TOKEN): return 'wyłączony (brak tokenu GitHub lub Telegram)'
-    teraz = pd.Timestamp.now(tz='Europe/Warsaw').tz_localize(None); nz = _stan_na_zywo()
-    starty = [pd.Timestamp(m['start']) for m in d.get('pewne', []) + d.get('value', [])] if d.get('data') == teraz.strftime('%Y-%m-%d') else []
-    if nz.get('podsumowanie') == teraz.strftime('%Y-%m-%d'): starty = []
+    teraz = pd.Timestamp.now(tz='Europe/Warsaw').tz_localize(None); nz = _stan_na_zywo(); dzien = wspolne.dzien_str()
+    starty = [pd.Timestamp(m['start']) for m in d.get('pewne', []) + d.get('value', [])] if d.get('data') == dzien else []
+    if nz.get('podsumowanie') == dzien: starty = []
     starty += [pd.Timestamp(o['start']) for o in nz.get('obserwowane', [])]
-    potrzebny = any(teraz - pd.Timedelta(hours=2.5) <= t <= teraz + pd.Timedelta(minutes=60) for t in starty)
+    # wieczorem (ostatnie sprawdzenia przed nocą – w nocy harmonogram nie działa) strażnik rusza także dla nocnych meczów:
+    # czeka na nie sam, do końca doby programu (6:00, walki 9:00)
+    noc = teraz.hour >= 22 or teraz.hour < 7
+    horyzont = lambda sp='pilka': (wspolne.koniec_doby(sp).tz_localize(None) if noc else teraz + pd.Timedelta(minutes=60))
+    potrzebny = any(teraz - pd.Timedelta(hours=2.5) <= t <= horyzont() for t in starty)
     if not potrzebny:   # tenis i walki (tenis: mecz może zacząć się kilka godzin po planowanej godzinie)
         try:
             ni = nz.get('inne', {})
-            potrzebny = any(teraz - pd.Timedelta(hours=7 if sp == 'tenis' else 4) <= t <= teraz + pd.Timedelta(minutes=60)
+            potrzebny = any(teraz - pd.Timedelta(hours=7 if sp == 'tenis' else 4) <= t <= horyzont(sp)
                             and (ni.get(eid) or {}).get('stan') != 'post' for sp, eid, t in sporty.starty_dla_straznika(sporty.wczytaj_json()))
         except Exception as e: print('strażnik (tenis/walki):', e)
     if not potrzebny:   # prośby o obserwowanie czekające u bota
@@ -646,7 +664,7 @@ def zapisz_status(tryb, bledy=None, st=None, tg_info=None):
     if tg_info: st['telegram_typy'] = dict(wynik=tg_info, czas=teraz)
     if STRAZNIK: st['na_zywo'] = dict(straznik=STRAZNIK[-1], czas=teraz)
     if tryb == 'pelne' or sporty.STAN['bledy']:
-        st['sporty'] = dict(tenis=sporty.STAN['tenis'], walki=sporty.STAN['walki'], kredyty=sporty.STAN['kredyty'],
+        st['sporty'] = dict(tenis=sporty.STAN['tenis'], walki=sporty.STAN['walki'], kredyty=sporty.STAN['kredyty'], rundy_walk=sporty.STAN['rundy'],
                             pominiete=sporty.STAN['pominiete'][:6], bledy=sporty.STAN['bledy'][:6], czas=teraz)
     st['telegram'] = dict(tg.STAN_TG, bot=tg.nazwa_bota() or (st.get('telegram') or {}).get('bot'))
     st['bledy'] = (bledy or [])[:5]
@@ -691,7 +709,7 @@ if __name__ == '__main__':
     except Exception: stare = {}
     try: core.KREDYTY['pozostalo'] = json.load(open(os.path.join(OUT, 'status.json')))['kredyty_odds']['pozostalo']
     except Exception: pass
-    dzis_gotowe = stare.get('data') == teraz.strftime('%Y-%m-%d') and str(stare.get('wygenerowano', ''))[11:13] >= '12'
+    dzis_gotowe = stare.get('data') == wspolne.dzien_str() and str(stare.get('wygenerowano', ''))[11:13] >= '12'
     pelne = os.environ.get('GITHUB_EVENT_NAME') != 'schedule' or (teraz.hour >= 12 and not dzis_gotowe and teraz.hour < 23)
     if not pelne:
         # ---- lekkie sprawdzenie: składy, kursy przed meczem, rozliczenie, podsumowanie wieczorne ----
@@ -721,7 +739,7 @@ if __name__ == '__main__':
         if K: zapisz('kalibracja.json', K)
     core.KALIBRACJA = K
     SAMOKOREKTA.update(policz_samokorekte(wczytaj_pewne()))
-    today = dict(wygenerowano=teraz.strftime('%Y-%m-%d %H:%M'), data=teraz.strftime('%Y-%m-%d'), value=[], pewne=[], mecze=[], blad=None,
+    today = dict(wygenerowano=teraz.strftime('%Y-%m-%d %H:%M'), data=wspolne.dzien_str(), value=[], pewne=[], mecze=[], blad=None,
                  raport_dostepny=bool(raport.KLUCZ) or zrodla.dostepne(), raport_ai=bool(ai_raport.KLUCZ))
     if not ODDS_API_KEY:
         today['blad'] = 'Brak klucza API (sekret ODDS_API_KEY w ustawieniach repozytorium).'

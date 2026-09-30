@@ -333,9 +333,10 @@ def oferty_betclic(x):
     return out
 
 def dzisiejsze_mecze():
-    """Mecze od teraz do 6:00 następnego dnia (obejmuje nocne mecze w Ameryce). Kursy pobierane w kolejności popularności lig,
-    dopóki nie wyczerpie się dzienny budżet kredytów (darmowy plan: 500/mies.)."""
-    teraz = pd.Timestamp.now(tz='Europe/Warsaw'); koniec = teraz.normalize() + pd.Timedelta(days=1, hours=6)
+    """Mecze od teraz do końca doby programu (6:00 – nocne mecze w Ameryce należą do tego samego dnia). Kursy pobierane
+    w kolejności popularności lig, dopóki nie wyczerpie się dzienny budżet kredytów (darmowy plan: 500/mies.)."""
+    import wspolne
+    teraz = pd.Timestamp.now(tz='Europe/Warsaw'); koniec = wspolne.koniec_doby('pilka', teraz)
     f = lambda t: t.tz_convert('UTC').strftime('%Y-%m-%dT%H:%M:%SZ')
     aktywne = {s['key'] for s in api('sports')}
     budzet = budzet_dzienny(); KREDYTY['na_dzis'] = budzet; start_kr = KREDYTY['wydane_teraz']

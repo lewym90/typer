@@ -4,7 +4,7 @@ import os, re, difflib, unicodedata, requests, xml.etree.ElementTree as ET
 import pandas as pd
 from urllib.parse import quote
 import zrodla, ai_raport
-from nazwy import pl
+from nazwy import pl, pl_powod
 
 # Darmowy plan API-Football nie obejmuje bieżącego sezonu – używamy go tylko, gdy ustawisz zmienną API_FOOTBALL_PRO=1 (plan płatny)
 KLUCZ = os.environ.get('API_FOOTBALL_KEY', '') if os.environ.get('API_FOOTBALL_PRO') == '1' else ''
@@ -141,7 +141,7 @@ def raport(dom, gosc, start, polski=False, sport_key=None, rozgrywki='', ai=Fals
             strona = 'gosp' if p['team']['id'] == ids['gosp'] else 'gosc'
             if any(x['zawodnik'] == p['player']['name'] for x in r['braki'][strona]): continue
             k = kluczowi.get(p['player']['id'])
-            r['braki'][strona].append(dict(zawodnik=p['player']['name'], typ=p['player'].get('type', ''), powod=p['player'].get('reason', ''),
+            r['braki'][strona].append(dict(zawodnik=p['player']['name'], typ=pl_powod(p['player'].get('type', '')), powod=pl_powod(p['player'].get('reason', '')),
                                            kluczowy=bool(k), gole=k[1] if k else None, niepewny='question' in str(p['player'].get('type', '')).lower()))
             if k and 'missing' in str(p['player'].get('type', '')).lower():
                 r['ostrzezenia'].append(f"brak kluczowego zawodnika: {p['player']['name']} ({k[1]} goli, {k[0]}. strzelec ligi)")

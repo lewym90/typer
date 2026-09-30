@@ -10,6 +10,30 @@ IKONA = {k: i for k, i, _ in SPORTY}
 PEWNE_ILE = 5
 MIN_SZANSA = 0.68
 
+# ---------- doba programu: od 6:00 do 6:00 (nocne mecze należą do poprzedniego dnia) ----------
+GODZINA_DOBY = 6
+TZ = 'Europe/Warsaw'
+
+def teraz(): return pd.Timestamp.now(tz=TZ)
+
+def dzien_programu(t=None):
+    """Dzień programu (Timestamp o północy): mecz o 2:00 w nocy należy do dnia poprzedniego."""
+    t = teraz() if t is None else pd.Timestamp(t)
+    if t.tzinfo is None: t = t.tz_localize(TZ)
+    return (t.tz_convert(TZ) - pd.Timedelta(hours=GODZINA_DOBY)).normalize()
+
+def dzien_str(t=None): return dzien_programu(t).strftime('%Y-%m-%d')
+
+def koniec_doby(sport='pilka', t=None):
+    """Do kiedy liczymy mecze dnia: 6:00 następnego dnia; walki do 9:00 (gale w USA kończą się rano)."""
+    return dzien_programu(t) + pd.Timedelta(days=1, hours=9 if sport == 'walki' else GODZINA_DOBY)
+
+def mozna_podmienic_typy(t=None):
+    """Nierozliczony typ z dziennika wolno zastąpić nowym tylko tego samego dnia programu i gdy nowe typy pójdą na Telegram
+    (w nocy 0–8 wiadomości są wstrzymane – wtedy zostaje typ, który już dostałeś)."""
+    t = teraz() if t is None else pd.Timestamp(t)
+    return t.tz_convert(TZ).hour >= 8
+
 def _pewne_pilka(dzis):
     for m in dzis.get('pewne', []):
         yield dict(sport='pilka', event_id=str(m.get('event_id') or m['mecz']), szansa=float(m['szansa']), start=m['start'],
@@ -33,7 +57,7 @@ def _value_inne(inne, sp):
 
 def wybierz(dzis, inne):
     """Najlepsze typy ze wszystkich dyscyplin: najpierw bez ostrzeżeń i z szansą ≥68%, potem najwyższa szansa."""
-    dzien = pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m-%d')
+    dzien = dzien_str()
     inne = inne if (inne or {}).get('data') == dzien else {}
     dzis = dzis if (dzis or {}).get('data') == dzien else {}
     kand = list(_pewne_pilka(dzis))

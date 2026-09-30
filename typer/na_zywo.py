@@ -7,7 +7,7 @@ import pandas as pd
 import powiadomienia as tg
 from nazwy import pl, pl_txt, pl_mecz
 from core import MASKI, MAXG, zysk_zakladu
-import sporty
+import sporty, wspolne
 
 KATALOG = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
 PLIK_STANU = os.path.join(KATALOG, 'na_zywo.json')
@@ -25,10 +25,11 @@ def wczytaj_stan():
     try: s = json.load(open(PLIK_STANU))
     except Exception: s = {}
     s.setdefault('obserwowane', []); s.setdefault('mecze', {}); s.setdefault('tg_offset', 0)
-    dzis = teraz().strftime('%Y-%m-%d')
-    if s.get('data') != dzis:   # nowy dzień: zostają tylko obserwowane mecze z dziś i później
-        s['mecze'] = {k: v for k, v in s['mecze'].items() if str(v.get('start', ''))[:10] >= dzis}
-        s['obserwowane'] = [o for o in s['obserwowane'] if str(o.get('start', ''))[:10] >= dzis]
+    dzis = wspolne.dzien_str()   # doba programu 6:00–6:00: nocne mecze należą do poprzedniego dnia
+    if s.get('data') != dzis:   # nowy dzień: zostają tylko mecze i obserwowane od początku tej doby (6:00)
+        od = (wspolne.dzien_programu() + pd.Timedelta(hours=wspolne.GODZINA_DOBY)).strftime('%Y-%m-%d %H:%M')
+        s['mecze'] = {k: v for k, v in s['mecze'].items() if str(v.get('start', '')) >= od}
+        s['obserwowane'] = [o for o in s['obserwowane'] if str(o.get('start', '')) >= od]
         s['data'] = dzis
     return s
 
@@ -205,7 +206,7 @@ def podsumowanie(sl, stan):
             else: dzien['value'][0] += z > 0; dzien['value'][1] += 1; dzien['value'][2] += z
             opis.append(f"{ik}{'✅' if z > 0 else ('↩️' if z == 0 else '❌')}")
         wiersze.append(f"{esc(pl(m['gospodarz']))} <b>{s['hg']}:{s['ag']}</b> {esc(pl(m['gosc']))} {' '.join(opis)}")
-    lin = [f"📊 <b>Podsumowanie dnia {teraz().strftime('%d.%m')}</b>", ''] + wiersze + ['', '<b>Dziś:</b>']
+    lin = [f"📊 <b>Podsumowanie dnia {wspolne.dzien_programu().strftime('%d.%m')}</b>", ''] + wiersze + ['', '<b>Dziś:</b>']
     for ik, nazwa in (('🔒', 'najpewniejsze'), ('⚖️', 'lepszy kurs'), ('🎯', 'ryzykowne')):
         a, b = dzien['pewne'][ik]
         if b: lin.append(f"{ik} {nazwa}: {a}/{b} ({round(100 * a / b)}%)")
@@ -302,7 +303,7 @@ def main():
     while True:
         if komendy(stan): zapisz_stan(stan, commit=True, opis='Obserwowane mecze')
         if time.time() - ostatni_pull > 600: odswiez_repo(); d = dzis_json(); inne = sporty.wczytaj_json(); ostatni_pull = time.time()
-        dzis = teraz().strftime('%Y-%m-%d')
+        dzis = wspolne.dzien_str()
         if d.get('data') != dzis: d = {}
         sl = sledzone(d, stan)
         aktywne = obieg(stan, sl, pierwszy); pierwszy = False
@@ -320,7 +321,13 @@ def main():
         przyszle += [pd.Timestamp(t).tz_localize('Europe/Warsaw') for t in przyszle_i]
         najblizszy = min(przyszle) if przyszle else None
         if not trwa and not trwa_i and (najblizszy is None or najblizszy > teraz() + pd.Timedelta(minutes=75)):
-            print('Koniec pracy strażnika – nic nie trwa, najbliższy start:', najblizszy); break
+            # w nocy harmonogram GitHuba nie działa – strażnik czeka sam na nocne mecze tej doby (do 6:00, walki do 9:00)
+            noc = teraz().hour >= 21 or teraz().hour < 9
+            if not (noc and najblizszy is not None and najblizszy <= wspolne.koniec_doby('walki')):
+                print('Koniec pracy strażnika – nic nie trwa, najbliższy start:', najblizszy); break
+            if time.time() - t0 > LIMIT_S:
+                print('Limit czasu – uruchamiam następcę'); zapisz_stan(stan, commit=True); uruchom_nastepce(); return
+            time.sleep(PRZERWA * 5); continue   # do najbliższego startu daleko – rzadziej sprawdzamy
         if time.time() - t0 > LIMIT_S:
             print('Limit czasu – uruchamiam następcę'); zapisz_stan(stan, commit=True); uruchom_nastepce(); return
         time.sleep(PRZERWA)

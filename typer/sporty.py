@@ -5,7 +5,7 @@ import os, re, json, time, hashlib, unicodedata, requests
 import xml.etree.ElementTree as ET
 from urllib.parse import quote
 import numpy as np, pandas as pd
-import core, tenis, walki, ai_raport, powiadomienia as tg
+import core, tenis, walki, ai_raport, powiadomienia as tg, wspolne
 
 OUT = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
 PLIK_TYPOW = os.path.join(OUT, 'typy_inne.csv')
@@ -17,7 +17,7 @@ PEWNE_ILE, PEWNE_Z_ILU = 5, 15
 POLACY = {'rebecki', 'tybura', 'swiatek', 'hurkacz', 'linette', 'frech', 'majchrzak', 'zuk', 'chwalinska', 'kawa', 'michalski', 'pawlikowski', 'fracz',
           'blachowicz', 'oleksiejczuk', 'jedrzejczyk', 'kowalkiewicz', 'kochman', 'rakoczy', 'bartosinski', 'gamrot', 'pudzianowski',
           'khalidov', 'soldic', 'szpilka', 'glowacki', 'wach', 'balski', 'rozanski', 'adamek', 'mamed'}
-STAN = dict(tenis={}, walki={}, bledy=[], kredyty=0, pominiete=[])
+STAN = dict(tenis={}, walki={}, bledy=[], kredyty=0, pominiete=[], rundy={})
 teraz = lambda: pd.Timestamp.now(tz='Europe/Warsaw')
 
 def _blad(t):
@@ -47,13 +47,48 @@ PL_OSOBY = {'iga swiatek': 'Iga Świątek', 'magdalena frech': 'Magdalena Fręch
             'marcin tybura': 'Marcin Tybura', 'lukasz rozanski': 'Łukasz Różański', 'mariusz pudzianowski': 'Mariusz Pudzianowski',
             'daniel michalski': 'Daniel Michalski', 'kacper zuk': 'Kacper Żuk', 'katarzyna kawa': 'Katarzyna Kawa'}
 TURNIEJ_PL = {'Boxing': 'Boks'}
+# nazwy turniejów tenisowych po polsku (miasto), oryginalna nazwa w nawiasie; Wielkie Szlemy i nieznane – bez zmian
+MIASTA = [('china open', 'Pekin'), ('beijing', 'Pekin'), ('japan open', 'Tokio'), ('pan pacific', 'Tokio'), ('toray', 'Tokio'),
+          ('shanghai', 'Szanghaj'), ('wuhan', 'Wuhan'), ('ningbo', 'Ningbo'), ('paris masters', 'Paryż'), ('rolex paris', 'Paryż'),
+          ('italian open', 'Rzym'), ('internazionali', 'Rzym'), ('rome', 'Rzym'), ('madrid', 'Madryt'), ('mutua', 'Madryt'),
+          ('monte carlo', 'Monte Carlo'), ('indian wells', 'Indian Wells'), ('bnp paribas open', 'Indian Wells'), ('miami', 'Miami'),
+          ('canadian open', 'Kanada'), ('national bank open', 'Kanada'), ('cincinnati', 'Cincinnati'), ('dubai', 'Dubaj'),
+          ('qatar', 'Doha'), ('doha', 'Doha'), ('korea open', 'Seul'), ('seoul', 'Seul'), ('swiss indoors', 'Bazylea'), ('basel', 'Bazylea'),
+          ('erste bank', 'Wiedeń'), ('vienna', 'Wiedeń'), ('stockholm', 'Sztokholm'), ('brisbane', 'Brisbane'), ('adelaide', 'Adelaide'),
+          ('auckland', 'Auckland'), ('rotterdam', 'Rotterdam'), ('barcelona', 'Barcelona'), ('stuttgart', 'Stuttgart'), ('halle', 'Halle'),
+          ("queen's", 'Londyn (Queen’s)'), ('queens', 'Londyn (Queen’s)'), ('eastbourne', 'Eastbourne'), ('berlin', 'Berlin'),
+          ('washington', 'Waszyngton'), ('citi open', 'Waszyngton'), ('linz', 'Linz'), ('charleston', 'Charleston'), ('guadalajara', 'Guadalajara'),
+          ('chengdu', 'Chengdu'), ('hangzhou', 'Hangzhou'), ('astana', 'Astana'), ('almaty', 'Ałmaty'), ('antwerp', 'Antwerpia'),
+          ('european open', 'Antwerpia'), ('metz', 'Metz'), ('moselle', 'Metz'), ('tokyo', 'Tokio'), ('osaka', 'Osaka'), ('hong kong', 'Hongkong'),
+          ('warsaw', 'Warszawa'), ('poland open', 'Warszawa'), ('mexican open', 'Acapulco'), ('acapulco', 'Acapulco'), ('rio', 'Rio de Janeiro'),
+          ('buenos aires', 'Buenos Aires'), ('marseille', 'Marsylia'), ('montpellier', 'Montpellier'), ('lyon', 'Lyon'), ('geneva', 'Genewa'),
+          ('munich', 'Monachium'), ('bmw open', 'Monachium'), ('hamburg', 'Hamburg'), ('umag', 'Umag'), ('kitzbuhel', 'Kitzbühel'),
+          ('gstaad', 'Gstaad'), ('bastad', 'Båstad'), ('winston', 'Winston-Salem'), ('atp finals', 'Turyn (Finały ATP)'),
+          ('wta finals', 'Finały WTA'), ('french open', 'Roland Garros'), ('roland garros', 'Roland Garros')]
+
+def turniej_pl(tytul):
+    """'ATP China Open' -> 'ATP Pekin (China Open)'; Wimbledon, US Open, Australian Open i nieznane – bez zmian."""
+    t = str(tytul or '')
+    if t in TURNIEJ_PL: return TURNIEJ_PL[t]
+    k = t.lower()
+    for klucz, miasto in MIASTA:
+        if klucz in k:
+            if klucz in ('french open', 'roland garros'):
+                return re.sub(r'(?i)french open|roland garros', 'Roland Garros', t)
+            m = re.match(r'(?i)(atp|wta)\s+(.*)', t)
+            if m:
+                reszta = m.group(2).strip()
+                return f"{m.group(1).upper()} {miasto}" + (f" ({reszta})" if miasto.lower() not in reszta.lower() else '')
+            return f"{miasto} ({t})" if miasto.lower() not in k else t
+    return t
 def pl_osoba(n): return PL_OSOBY.get(nrm(n), n)
 
 def polski(*osoby): return any(t in POLACY for o in osoby for t in nrm(o).split())
 
 # ---------------- kursy ----------------
 def _okno(sport):
-    t = teraz(); do = t.normalize() + pd.Timedelta(days=1, hours=9 if sport == 'walki' else 6)   # gale w USA kończą się rano
+    """Od teraz do końca doby programu: 6:00 (tenis), 9:00 (walki – gale w USA kończą się rano)."""
+    t = teraz(); do = wspolne.koniec_doby(sport, t)
     f = lambda x: x.tz_convert('UTC').strftime('%Y-%m-%dT%H:%M:%SZ')
     return f(t), f(do)
 
@@ -130,20 +165,23 @@ def przelicz(sp, key, tytul, grupa, ev):
     p = {pl_osoba(k): v for k, v in p.items()}; bc = {pl_osoba(k): v for k, v in bc.items()} if bc else None
     A, B = pl_osoba(A0), pl_osoba(B0)   # polskie znaki w nazwiskach Polaków (dopasowanie wyników i tak je pomija)
     start = pd.Timestamp(ev['commence_time']).tz_convert('Europe/Warsaw')
-    e = dict(sport=sp, sport_key=key, turniej=TURNIEJ_PL.get(tytul, tytul), event_id=ev['id'], a=A, b=B, mecz=f'{A} – {B}',
+    e = dict(sport=sp, sport_key=key, turniej=turniej_pl(tytul), turniej_oryg=tytul, event_id=ev['id'], a=A, b=B, mecz=f'{A} – {B}',
              start=start.strftime('%Y-%m-%d %H:%M'), godzina=start.strftime('%H:%M'), dzien=start.strftime('%d.%m'), zrodlo=zr,
              polski=polski(A, B), betclic=bc)
     if sp == 'tenis':
-        bo = tenis.do_ilu_setow(key); pa = tenis.kalibruj(p[A] / (p[A] + p[B]))
-        R = tenis.rozklad(pa, bo); T, rk = tenis.typy(R, bo); op = tenis.opis
-        e.update(dyscyplina='Tenis', bo=bo, szansa_a=round(pa, 4), szansa_b=round(1 - pa, 4),
+        bo = tenis.do_ilu_setow(key); pa = tenis.kalibruj(p[A] / (p[A] + p[B])); wta = tenis.kobiety(key)
+        R = tenis.rozklad(pa, bo, wta); T, rk = tenis.typy(R, bo); op = lambda n, a, b: tenis.opis(n, a, b, bo)
+        e.update(dyscyplina='Tenis', bo=bo, wta=wta, szansa_a=round(pa, 4), szansa_b=round(1 - pa, 4),
                  wyniki=[dict(a=w[0], b=w[1], szansa=round(float(v), 4)) for w, v in sorted(R.items(), key=lambda x: -x[1])])
     else:
         mma = grupa == 'Mixed Martial Arts'
         if mma:
             pa = walki.kalibruj_mma(p[A] / (p[A] + p[B])); kat = walki.kategoria(A, B)
-            R = walki.rozklad_mma(pa, kat)
-            e.update(dyscyplina='MMA', kategoria=walki.KATEGORIE_PL.get(kat), szansa_a=round(pa, 4), szansa_b=round(1 - pa, 4),
+            r5, rundy_zr, kat_espn = rundy_walki(dict(sport='walki', dyscyplina='MMA', start=e['start'], a=A, b=B))
+            kat = kat or kat_espn
+            R = walki.rozklad_mma(pa, kat, r5)
+            e.update(dyscyplina='MMA', kategoria=walki.KATEGORIE_PL.get(kat), rundy=5 if r5 else 3, rundy_zrodlo=rundy_zr,
+                     szansa_a=round(pa, 4), szansa_b=round(1 - pa, 4),
                      przed_czasem=round(float(R[('A', 'KO')] + R[('B', 'KO')]), 4),
                      metody=dict(a_ko=round(float(R[('A', 'KO')]), 4), a_pkt=round(float(R[('A', 'PKT')]), 4),
                                  b_ko=round(float(R[('B', 'KO')]), 4), b_pkt=round(float(R[('B', 'PKT')]), 4)))
@@ -166,7 +204,7 @@ def przelicz(sp, key, tytul, grupa, ev):
 def lista_pewnych(mecze):
     """5 najpewniejszych typów z 15 najpopularniejszych meczów (Polacy, ważne turnieje, później na gali = ważniejsza walka)."""
     def popularnosc(m):
-        if m['sport'] == 'tenis': return (not m['polski'], _ranga(m['sport_key'], m['turniej'], []), m['start'])
+        if m['sport'] == 'tenis': return (not m['polski'], _ranga(m['sport_key'], m.get('turniej_oryg') or m['turniej'], []), m['start'])
         return (not m['polski'], m['dyscyplina'] != 'MMA', tuple(-ord(c) for c in m['start']))   # później na gali = ważniejsza walka
     kol = sorted(mecze, key=popularnosc)
     for m in mecze: m.pop('nizsza_pewnosc', None)
@@ -250,18 +288,30 @@ def wczytaj_typy():
     except FileNotFoundError: return pd.DataFrame(columns=KOLUMNY)
 
 def zapisz_typy(nowe):
+    """Dopisuje typy do dziennika. Typ tego samego meczu i poziomu, który już jest w dzienniku, zostaje zastąpiony nowym TYLKO
+    tego samego dnia programu, gdy stary nie jest rozliczony i nowe typy pójdą na Telegram (poza nocą) – żeby dziennik
+    rozliczał dokładnie to, co dostałeś."""
     d = wczytaj_typy(); n = pd.DataFrame(nowe, columns=KOLUMNY)
     if not len(n): return
     if len(d):
         bylo = set(zip(d.event_id.astype(str), d.rodzaj, d.poziom.astype(str), d.klucz.astype(str)))
         n = n[[(str(a), b, str(c), str(k)) not in bylo for a, b, c, k in zip(n.event_id, n.rodzaj, n.poziom, n.klucz)]]
-        # ten sam mecz przeliczony ponownie tego dnia: nowy typ tego samego poziomu zastępuje stary nierozliczony
-        stare = set(zip(n.event_id.astype(str), n.rodzaj, n.poziom.astype(str)))
-        d = d[~(d.trafiony.isna() & d.zysk_na_1zl.isna() & pd.Series([(str(a), b, str(c)) in stare for a, b, c in zip(d.event_id, d.rodzaj, d.poziom)], index=d.index))]
+        stare = {(str(a), b, str(c)): (str(dz), pd.isna(t) and pd.isna(z) and pd.isna(st))
+                 for a, b, c, dz, t, z, st in zip(d.event_id, d.rodzaj, d.poziom, d.data, d.trafiony, d.zysk_na_1zl, d.status)}
+        wolno = wspolne.mozna_podmienic_typy()
+        zastap, zostaw = set(), []
+        for i, r in n.iterrows():
+            k = (str(r.event_id), r.rodzaj, str(r.poziom))
+            if k not in stare: zostaw.append(i); continue
+            dz, otwarty = stare[k]
+            if wolno and otwarty and dz == str(r.data): zastap.add(k); zostaw.append(i)
+        n = n.loc[zostaw]
+        if zastap:
+            d = d[[(str(a), b, str(c)) not in zastap for a, b, c in zip(d.event_id, d.rodzaj, d.poziom)]]
     if len(n): pd.concat([d, n], ignore_index=True).to_csv(PLIK_TYPOW, index=False)
 
 def wiersze_do_dziennika(sp, pewne, mecze):
-    out, dz = [], teraz().strftime('%Y-%m-%d')
+    out, dz = [], wspolne.dzien_str()
     base = lambda m: dict(data=dz, sport=sp, dyscyplina=m['dyscyplina'], sport_key=m['sport_key'], turniej=m['turniej'], event_id=m['event_id'],
                           start=m['start'], a=m['a'], b=m['b'], bo=m.get('bo'))
     for m in pewne:
@@ -301,22 +351,67 @@ def _teksty(x, acc):
     elif isinstance(x, str): acc.append(x)
     return acc
 
+WAGI_ESPN = sorted(walki.KONCZENIE['wc'], key=len, reverse=True)   # kategorie wagowe (najpierw „Women's …”, „Light Heavyweight”)
+
+def _rundy_espn(c):
+    """Liczba rund walki z ESPN (pole format.regulation.periods – różne warianty), None gdy brak."""
+    for f in (c.get('format'), (c.get('type') or {}).get('format') if isinstance(c.get('type'), dict) else None):
+        if isinstance(f, dict):
+            for k in ('regulation', 'overtime'):
+                v = (f.get(k) or {}).get('periods') if isinstance(f.get(k), dict) else None
+                if isinstance(v, (int, float)) and int(v) in (3, 5): return int(v)
+            v = f.get('periods') or f.get('rounds')
+            if isinstance(v, (int, float)) and int(v) in (3, 5): return int(v)
+    for k in ('rounds', 'scheduledRounds', 'numberOfRounds'):
+        v = c.get(k)
+        if isinstance(v, (int, float)) and int(v) in (3, 5): return int(v)
+    return None
+
 def espn_dzien(sciezka, data_ny):
     k = (sciezka, data_ny)
     if k in _espn and time.time() - _espn[k][0] < 50: return _espn[k][1]
     try: j = requests.get(ESPN.format(s=sciezka), params={'dates': data_ny}, timeout=20).json()
     except Exception as e: _blad(f'ESPN {sciezka}: {e}'); j = {}
     out = []
-    pary = [(c, e.get('name') or e.get('shortName') or '') for e in (j.get('events') or []) for c in _pojedynki(e)] or [(c, '') for c in _pojedynki(j)]
-    for c, turniej in pary:
+    pary = [(c, e.get('name') or e.get('shortName') or '', str(e.get('id') or '')) for e in (j.get('events') or []) for c in _pojedynki(e)] \
+        or [(c, '', '') for c in _pojedynki(j)]
+    ostatnie = {}   # najpóźniejsza walka każdej gali = walka wieczoru
+    for c, _, eid in pary:
+        t = str(c.get('date') or c.get('startDate') or '')
+        if t and t > ostatnie.get(eid, ''): ostatnie[eid] = t
+    for c, turniej, eid in pary:
         z = c['competitors']; st = (c.get('status') or {}); ty = st.get('type') or {}
         txt = ' '.join(_teksty(st, [])).lower() + ' ' + ' '.join(_teksty(c.get('notes') or [], [])).lower()
+        opis_walki = ' '.join(_teksty({k: v for k, v in c.items() if k not in ('status', 'competitors')}, [])).lower()
         gemy = [[s.get('value') for s in (x.get('linescores') or [])] for x in z]
+        start = c.get('date') or c.get('startDate')
+        waga = next((w for w in WAGI_ESPN if w.lower() in opis_walki), None)
         out.append(dict(a=_osoba(z[0]), b=_osoba(z[1]), wygral=[bool(x.get('winner')) for x in z], gemy=gemy, stan=ty.get('state', 'pre'),
-                        koniec=bool(ty.get('completed')) or ty.get('state') == 'post', opis=txt, start=c.get('date') or c.get('startDate'),
-                        id=str(c.get('id') or ''), turniej=turniej, sciezka=sciezka))
+                        koniec=bool(ty.get('completed')) or ty.get('state') == 'post', opis=txt, start=start,
+                        id=str(c.get('id') or ''), turniej=turniej, sciezka=sciezka, rundy=_rundy_espn(c),
+                        tytul=bool(re.search(r'title|championship|\bbelt\b', opis_walki)) and 'contender' not in opis_walki,
+                        ostatnia=bool(start) and str(start) == ostatnie.get(eid) and sum(1 for x in pary if x[2] == eid) >= 3, waga=waga))
     _espn[k] = (time.time(), out)
     return out
+
+def rundy_walki(m):
+    """(czy 5 rund, skąd wiadomo, kategoria z ESPN). Kolejno: liczba rund z ESPN; walka o pas; walka wieczoru gali UFC/PFL
+    (ostatnia na karcie, bez Contender Series); w pozostałych przypadkach 3 rundy."""
+    r5, zr, waga = _rundy_walki(m)
+    klucz = zr.split('(')[-1].rstrip(')') if '(' in zr else zr   # do status.json: skąd program wziął liczbę rund
+    STAN['rundy'][klucz] = STAN['rundy'].get(klucz, 0) + 1
+    return r5, zr, waga
+
+def _rundy_walki(m):
+    try: x, _ = znajdz_espn(m)
+    except Exception as e: _blad(f'ESPN rundy: {e}'); x = None
+    if not x: return False, '3 rundy (brak walki w ESPN – przyjęto)', None
+    gala = (x.get('turniej') or '').lower()
+    if x.get('rundy') in (3, 5): return x['rundy'] == 5, f"{x['rundy']} rund (ESPN)" if x['rundy'] == 5 else '3 rundy (ESPN)', x.get('waga')
+    if x.get('tytul'): return True, '5 rund (walka o pas)', x.get('waga')
+    if x.get('ostatnia') and x.get('sciezka') in ('mma/ufc', 'mma/pfl') and 'contender' not in gala:
+        return True, '5 rund (walka wieczoru)', x.get('waga')
+    return False, '3 rundy', x.get('waga')
 
 def _sciezki(m):
     if m['sport'] == 'tenis': return ['tennis/atp', 'tennis/wta']
@@ -331,14 +426,19 @@ def znajdz_espn(m):
                 if ta_sama_osoba(x['a'], m['b']) and ta_sama_osoba(x['b'], m['a']): return x, True
     return None, False
 
-def sety(x, odwr):
-    """Wygrane sety (A, B) z gemów ESPN; tylko zakończone sety (w trakcie meczu bez ostatniego)."""
+def _set_skonczony(a, b):
+    a, b = int(a), int(b)
+    return (max(a, b) >= 6 and abs(a - b) >= 2) or max(a, b) == 7
+
+def sety(x, odwr, krecz=False):
+    """Wygrane sety (A, B) z gemów ESPN; tylko zakończone sety (w trakcie meczu bez ostatniego; przy kreczu bez niedokończonego)."""
     ga, gb = (x['gemy'][1], x['gemy'][0]) if odwr else (x['gemy'][0], x['gemy'][1])
     n = min(len(ga), len(gb)); sa = sb = 0; wyn = []
     for i in range(n):
         a, b = ga[i], gb[i]
         if a is None or b is None: continue
         if not x['koniec'] and i == n - 1: break
+        if krecz and not _set_skonczony(a, b): wyn.append(f'{int(a)}:{int(b)}'); continue
         if a > b: sa += 1
         elif b > a: sb += 1
         wyn.append(f'{int(a)}:{int(b)}')
@@ -350,8 +450,10 @@ def wynik_meczu(m, x, odwr):
     o = x['opis']
     if m['sport'] == 'tenis':
         if re.search(r'walkover|w/o|\bwo\b', o): return 'walkower', None, 'walkower'
+        if re.search(r'retire|\bret\b|abandon|default', o):
+            sa, sb, wyn = sety(x, odwr, krecz=True)
+            return 'krecz', ('A' if wa else 'B' if wb else None, sa, sb), f"krecz – {sa}:{sb} w setach ({' '.join(wyn)})"
         sa, sb, wyn = sety(x, odwr)
-        if re.search(r'retire|\bret\b|abandon|default', o): return 'krecz', ('A' if wa else 'B' if wb else None, sa, sb), 'krecz ' + ' '.join(wyn)
         if not (wa or wb): return None, None, ''
         return 'ok', ('A' if wa else 'B', sa, sb), f"{sa}:{sb} ({' '.join(wyn)})"
     if re.search(r'\bdraw\b|no contest|\bnc\b', o): return 'remis', None, 'remis / no contest'
@@ -452,20 +554,23 @@ def statystyki():
     return out
 
 # Wyniki testów historycznych (liczone 29.09 na danych z GitHuba, jak w piłce – do pokazania w aplikacji)
-TESTY = {'tenis': dict(opis='14 625 meczów ATP 2020–2026 (tennis-data.co.uk, kursy Pinnacle/Betfair), test krokowy 2023–2026',
-                       najpewniejszy=[0.735, 0.736, 8097], lepszy_kurs=[0.609, 0.610, 7860], ryzykowny=[0.348, 0.351, 4452],
-                       pewne5=dict(przew=0.763, weszlo=0.766, dni=582, wszystkie5=0.27, cztery=0.395, trzy=0.242, dwa_lub_mniej=0.093),
+TESTY = {'tenis': dict(opis='79 408 meczów ATP i WTA 2010–2026 (tennis-data.co.uk, kursy Pinnacle/Betfair); kobiety mają osobne parametry setów',
+                       najpewniejszy=[0.735, 0.734, 77114], lepszy_kurs=[0.603, 0.598, 70882], ryzykowny=[0.354, 0.350, 40360],
+                       pewne5=dict(przew=0.774, weszlo=0.773, dni=1515, wszystkie5=0.273, cztery=0.409, trzy=0.232, dwa_lub_mniej=0.085),
                        value='Pinnacle vs najlepszy kurs rynku ≥2%: +5,9% (±3,3) na 4 343 zakładach; vs Bet365 ≥3%: +4,3% (±12,6) na 388 – niepewne',
-                       uwaga='Kobiet (WTA) nie było w danych – używamy tych samych zasad. Kreczów nie liczymy do skuteczności.'),
-         'walki': dict(opis='6 916 walk UFC 2010–2026 (kursy z ufc-master), test krokowy 2022–2026',
-                       faworyt68=[0.772, 0.781, 893], przed_czasem=[0.503, 0.500, 1899],
-                       uwaga='Boks: brak danych historycznych – szanse wprost z Pinnacle/Betfair, bez testu.')}
+                       uwaga='Mężczyźni w Wielkim Szlemie: „handicap -1,5” = wygrana 3:0 lub 3:1. Kreczów nie liczymy do skuteczności.'),
+         'walki': dict(opis='6 916 walk UFC 2010–2026 (kursy z ufc-master), test krokowy 2022–2026; 633 walki 5-rundowe',
+                       faworyt68=[0.772, 0.781, 893], przed_czasem=[0.503, 0.500, 1899], rundy5=[0.595, 0.592, 633],
+                       uwaga='Walki 5-rundowe (walka wieczoru, o pas) kończą się przed czasem częściej – program rozpoznaje je z ESPN. '
+                             'Sposób zakończenia: model zna tylko kategorię wagową, nie styl zawodników – bukmacher wie tu więcej. '
+                             'Boks: brak danych historycznych – szanse wprost z Pinnacle/Betfair, bez testu.')}
 
 # ---------------- główne ----------------
 def licz():
     """Pełne liczenie (o 12:00). Zwraca słownik do inne.json."""
     for s in ('tenis', 'walki'): STAN[s] = {}
-    dane = pobierz(); wynik = dict(wygenerowano=teraz().strftime('%Y-%m-%d %H:%M'), data=teraz().strftime('%Y-%m-%d'))
+    STAN['rundy'] = {}
+    dane = pobierz(); wynik = dict(wygenerowano=teraz().strftime('%Y-%m-%d %H:%M'), data=wspolne.dzien_str())
     nowe = []
     for sp in ('tenis', 'walki'):
         mecze = []
@@ -525,18 +630,18 @@ def tg_typy(d, status):
         e = tg.esc
         lin = [f"{IKONA[sp]} <b>{NAZWA[sp]} – {'zaktualizowane typy' if wys.get('data') == d.get('data') else 'typy'} na {pd.Timestamp(d['data']).strftime('%d.%m')}</b>"]
         for i, m in enumerate(P, 1):
-            extra = f", kat. {m['kategoria']}" if m.get('kategoria') else ''
+            extra = (f", kat. {m['kategoria']}" if m.get('kategoria') else '') + (f", {m['rundy_zrodlo']}" if m.get('rundy') == 5 else '')
             lin.append(f"\n<b>{i}. {e(m['mecz'])}</b> ({m['dzien']} {m['godzina']}, {e(m['turniej'])}{extra})")
             for poz, ik in POZ:
                 t = m.get(poz)
-                if t: lin.append(f"{ik} {e(t['zaklad'])} – {tg.pct(t['szansa'])} (kurs ≥ {1 / t['szansa']:.2f})")
+                if t: lin.append(f"{ik} {e(t['zaklad'])} – {tg.pct(t['szansa'])} (kurs ≥ {tg.kurs(1 / t['szansa'])})")
             if m.get('nizsza_pewnosc'): lin.append('<i>niższa pewność – dobrany, żeby było 5 typów</i>')
             r = m.get('raport') or {}
             if r.get('ostrzezenie'): lin.append('⚠️ ' + e(r['ostrzezenie']))
             if (r.get('ai') or {}).get('tekst'): lin.append('📰 ' + e(r['ai']['tekst'][:300]))
         if V:
             lin.append('\n💰 <b>Value (Betclic)</b>')
-            for v in V: lin.append(f"{e(v['mecz'])}: {e(v['zaklad'])} @ {v['kurs']} (szansa {tg.pct(v['szansa'])}, szukaj ≥ {v['kurs_szukaj']})")
+            for v in V: lin.append(f"{e(v['mecz'])}: {e(v['zaklad'])} @ {tg.kurs(v['kurs'])} (szansa {tg.pct(v['szansa'])}, szukaj ≥ {tg.kurs(v['kurs_szukaj'])})")
         if sp == 'tenis': lin.append('\n<i>Krecz: rozliczenie zależy od regulaminu bukmachera.</i>')
         if tg.APLIKACJA: lin.append(f"📱 {tg.APLIKACJA}")
         if tg.wyslij_dlugi('\n'.join(lin)):
@@ -546,7 +651,7 @@ def tg_typy(d, status):
 
 def starty_dla_straznika(d):
     """Starty wytypowanych meczów/walk (tenis: plan „nie wcześniej niż” – mecz może zacząć się kilka godzin później)."""
-    if d.get('data') != teraz().strftime('%Y-%m-%d'): return []
+    if d.get('data') != wspolne.dzien_str(): return []
     out = []
     for sp in ('tenis', 'walki'):
         ids = set((d.get(sp) or {}).get('pewne', [])) | {v['event_id'] for v in (d.get(sp) or {}).get('value', [])}
@@ -586,7 +691,7 @@ def _sledzone(d):
         for m in s.get('mecze', []):
             if m['event_id'] not in ids and m['event_id'] not in vals: continue
             typy = [(ik, m[p]['klucz'], m[p]['zaklad']) for p, ik in POZ if m['event_id'] in ids and m.get(p)]
-            typy += [('💰', v['klucz'], f"{v['zaklad']} @ {v['kurs']}") for v in vals.get(m['event_id'], [])]
+            typy += [('💰', v['klucz'], f"{v['zaklad']} @ {tg.kurs(v['kurs'])}") for v in vals.get(m['event_id'], [])]
             out[m['event_id']] = dict(m, typy=typy)
     return out
 
@@ -644,7 +749,7 @@ def obieg_na_zywo(stan, d):
     for sp in ('tenis', 'walki'):
         ids = [eid for eid, m in _sledzone(d).items() if m['sport'] == sp]
         if ids and all(S.get(i, {}).get('stan') == 'post' for i in ids) and stan.get(f'podsumowanie_{sp}') != d.get('data'):
-            lin = [f"📊 <b>{IKONA[sp]} {NAZWA[sp]} – podsumowanie {teraz().strftime('%d.%m')}</b>", '']
+            lin = [f"📊 <b>{IKONA[sp]} {NAZWA[sp]} – podsumowanie {pd.Timestamp(d.get('data') or wspolne.dzien_str()).strftime('%d.%m')}</b>", '']
             licz_ = {}
             for i in ids:
                 m = _sledzone(d)[i]; oc = S[i].get('ocena', [])

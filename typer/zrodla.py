@@ -6,13 +6,14 @@ Wszystko opcjonalne: bez klucza albo przy błędzie program działa dalej, a pow
 import os, re, requests
 import pandas as pd
 from powiadomienia import podob
+from nazwy import pl_powod
 
 BSD_KEY = os.environ.get('BSD_API_KEY', '')
 BB_KEY = os.environ.get('BIGBALLS_KEY', '')
 BSD_URL = 'https://sports.bzzoiro.com/api/v2'
 BB_URL = 'https://api.bigballsdata.com/v1'
 STAN = {'bsd': dict(klucz=bool(BSD_KEY), zapytania=0, dopasowane=0, szukane=0, bledy=[], probka=None),
-        'bigballs': dict(klucz=bool(BB_KEY), zapytania=0, kontuzji=0, bledy=[], as_of=None)}
+        'bigballs': dict(klucz=bool(BB_KEY), zapytania=0, kontuzji=0, bledy=[], as_of=None, probka=None)}
 BB_LIGI = {'soccer_epl', 'soccer_spain_la_liga', 'soccer_italy_serie_a', 'soccer_germany_bundesliga', 'soccer_france_ligue_one', 'soccer_usa_mls'}
 
 def _blad(zr, t):
@@ -143,15 +144,26 @@ def _kontuzje_bb():
                          headers={'x-api-key': BB_KEY, 'Authorization': f'Bearer {BB_KEY}'})
         STAN['bigballs']['zapytania'] += 1
         if r.status_code != 200: _blad('bigballs', f'HTTP {r.status_code} {r.text[:100]}'); return []
-        j = r.json(); d = j.get('data', j)
-        lista = d.get('injuries', []) if isinstance(d, dict) else (d if isinstance(d, list) else [])
-        STAN['bigballs']['as_of'] = (j.get('meta') or {}).get('as_of') or (d.get('as_of') if isinstance(d, dict) else None)
-        for x in lista:
+        j = r.json()
+        d = j.get('data', j) if isinstance(j, dict) else j
+        lista = d.get('injuries', d.get('items', [])) if isinstance(d, dict) else (d if isinstance(d, list) else [])
+        meta = (j.get('meta') if isinstance(j, dict) else None) or {}
+        STAN['bigballs']['as_of'] = (meta.get('as_of') if isinstance(meta, dict) else None) or (d.get('as_of') if isinstance(d, dict) else None)
+        tekst = lambda v: v if isinstance(v, str) else ((v.get('name') or v.get('short_name') or '') if isinstance(v, dict) else '')
+        pominiete = 0
+        for x in lista or []:
+            if not isinstance(x, dict): pominiete += 1; continue   # nieznany kształt wpisu – pomijamy zamiast przerywać całość
             st = str(x.get('status') or '').lower()
             if st in ('active', 'unknown', ''): continue
-            p = x.get('player') or {}
-            _bb['lista'].append(dict(zawodnik=p.get('name', '?'), druzyna=(p.get('team') or {}).get('name', ''), typ=x.get('status') or '',
-                                     powod=x.get('injury_type') or x.get('comment') or '', powrot=x.get('return_date')))
+            p = x.get('player')
+            imie = tekst(p) or x.get('player_name') or x.get('name') or '?'
+            druz = (p.get('team') if isinstance(p, dict) else None) or x.get('team') or x.get('team_name') or ''
+            _bb['lista'].append(dict(zawodnik=imie, druzyna=tekst(druz), typ=x.get('status') or '',
+                                     powod=tekst(x.get('injury_type')) or tekst(x.get('injury')) or tekst(x.get('comment')) or '',
+                                     powrot=x.get('return_date') or x.get('expected_return')))
+        if pominiete and STAN['bigballs'].get('probka') is None:
+            STAN['bigballs']['probka'] = dict(typ_listy=type(lista).__name__, typ_wpisu=type(lista[0]).__name__ if lista else None,
+                                              pominiete=pominiete, pola=sorted(j.keys())[:10] if isinstance(j, dict) else None)
         STAN['bigballs']['kontuzji'] = len(_bb['lista'])
     except Exception as e: _blad('bigballs', e)
     return _bb['lista']
@@ -183,7 +195,9 @@ def braki(sport_key, dom, gosc, start):
             znane = {x['zawodnik'].lower() for x in wynik[s]}
             wynik[s] += [x for x in b[s] if x['zawodnik'].lower() not in znane]
     for s in wynik:
-        for x in wynik[s]: x['niepewny'] = bool(NIEPEWNY.search(f"{x.get('typ', '')} {x.get('powod', '')}"))
+        for x in wynik[s]:
+            x['niepewny'] = bool(NIEPEWNY.search(f"{x.get('typ', '')} {x.get('powod', '')}"))
+            x['typ'], x['powod'] = pl_powod(x.get('typ')), pl_powod(x.get('powod'))   # po polsku (w aplikacji i raporcie AI)
     return wynik, zapowiedz, bid, zr
 
 def dostepne(): return bool(BSD_KEY or BB_KEY)

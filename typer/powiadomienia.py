@@ -65,6 +65,11 @@ def nazwa_bota():
 def esc(s): return str(s).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
 pct = lambda p: f"{round(p * 100)}%"
 
+def kurs(x):
+    """Kurs po polsku: 1,85 zamiast 1.85."""
+    try: return f"{float(x):.2f}".replace('.', ',')
+    except (TypeError, ValueError): return str(x or '')
+
 # ---------- wyniki ESPN (publiczne dane, bez klucza i bez kredytów) ----------
 ESPN = {'soccer_epl': 'eng.1', 'soccer_efl_champ': 'eng.2', 'soccer_spain_la_liga': 'esp.1', 'soccer_germany_bundesliga': 'ger.1',
  'soccer_germany_bundesliga2': 'ger.2', 'soccer_italy_serie_a': 'ita.1', 'soccer_france_ligue_one': 'fra.1', 'soccer_netherlands_eredivisie': 'ned.1',
