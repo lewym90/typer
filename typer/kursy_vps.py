@@ -143,7 +143,64 @@ def zrzut(s, spis):
                 if zapisz_github(plik, txt, surowy=True): spis[-1]['plik'] = plik; zapisane += 1
         lp += 1
 
+STRONY_SIEC = {
+    'sts': ['https://www.sts.pl/pilka-nozna', 'https://www.sts.pl/tenis'],
+    'fortuna': ['https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna', 'https://www.efortuna.pl/zaklady-bukmacherskie/tenis'],
+    'betclic': ['https://www.betclic.pl/pilka-nozna-sfootball', 'https://www.betclic.pl/tenis-stennis'],
+}
+
+def siec():
+    """WERSJA 3: prawdziwa przeglądarka (Chromium) – zapisuje, skąd strona pobiera dane (zapytania i odpowiedzi JSON, websockety)."""
+    from playwright.sync_api import sync_playwright
+    spis = []
+    with sync_playwright() as pw:
+        br = pw.chromium.launch(headless=True, args=['--no-sandbox', '--disable-dev-shm-usage'])
+        for nazwa, strony in STRONY_SIEC.items():
+            ctx = br.new_context(locale='pl-PL', user_agent=UA, viewport={'width': 1366, 'height': 900})
+            pg = ctx.new_page()
+            odp, ws = [], []
+            def na_odp(r, odp=odp):
+                try:
+                    typ = r.headers.get('content-type', '')
+                    if r.request.resource_type in ('image', 'font', 'stylesheet', 'media'): return
+                    if 'json' not in typ and 'text/plain' not in typ and 'protobuf' not in typ and 'grpc' not in typ: return
+                    b = r.body()
+                    odp.append(dict(url=r.url, metoda=r.request.method, kod=r.status, typ=typ[:40], rozmiar=len(b),
+                                    post=(r.request.post_data or '')[:800], kursy=len(KURS.findall(b[:3_000_000].decode('utf-8', 'ignore'))),
+                                    tresc=b[:400_000].decode('utf-8', 'ignore')))
+                except Exception as e: pass
+            def na_ws(w, ws=ws):
+                item = dict(url=w.url, ramki=[])
+                ws.append(item)
+                w.on('framereceived', lambda f, item=item: len(item['ramki']) < 15 and item['ramki'].append(str(f)[:3000]))
+                w.on('framesent', lambda f, item=item: len(item['ramki']) < 15 and item['ramki'].append('WYSLANE: ' + str(f)[:1500]))
+            pg.on('response', na_odp); pg.on('websocket', na_ws)
+            for url in strony:
+                try:
+                    pg.goto(url, wait_until='domcontentloaded', timeout=45000)
+                    for _ in range(4):
+                        pg.wait_for_timeout(3500); pg.mouse.wheel(0, 2500)
+                    try:
+                        tekst = pg.inner_text('body')[:20000]
+                    except Exception: tekst = ''
+                    spis.append(dict(bukmacher=nazwa, strona=url, tekst_strony=tekst[:6000]))
+                except Exception as e:
+                    spis.append(dict(bukmacher=nazwa, strona=url, blad=str(e)[:200]))
+            ctx.close()
+            odp.sort(key=lambda x: (-x['kursy'], -x['rozmiar']))
+            for i, o in enumerate(odp[:8]):
+                if o['kursy'] >= 5:
+                    plik = f'surowe/{nazwa}_xhr{i}.txt'
+                    if zapisz_github(plik, f"{o['metoda']} {o['url']}\nPOST: {o['post']}\n\n" + o['tresc'], surowy=True): o['plik'] = plik
+            spis.append(dict(bukmacher=nazwa, zapytania=[{k: v for k, v in o.items() if k != 'tresc'} for o in odp[:80]],
+                             websockety=ws[:6]))
+            print(nazwa, 'gotowe:', len(odp), 'odpowiedzi JSON,', len(ws), 'websocketów', round(time.time() - START), 's')
+        br.close()
+    zapisz_github('surowe/siec.json', dict(czas=dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d %H:%M UTC'), wyniki=spis))
+
 def main():
+    if '--siec' in sys.argv:
+        siec(); return
     s = ses(); wynik = {}
     for nazwa in STRONY:
         try: wynik[nazwa] = rozpoznaj(nazwa, s)
