@@ -94,22 +94,54 @@ def rozpoznaj(nazwa, s):
         w['probki_json'].append(item)
     return w
 
-def zapisz_github(sciezka, dane):
+def zapisz_github(sciezka, dane, surowy=False):
     try: token = open(TOKEN_PLIK).read().strip()
     except Exception: print('Brak tokenu w', TOKEN_PLIK); return False
     import requests
     h = {'Authorization': f'Bearer {token}', 'Accept': 'application/vnd.github+json', 'User-Agent': 'typer-vps'}
     api = f'https://api.github.com/repos/{REPO}/contents/{sciezka}'
-    tresc = json.dumps(dane, ensure_ascii=False, indent=1).encode()
+    tresc = dane.encode() if surowy else json.dumps(dane, ensure_ascii=False, indent=1).encode()
     for proba in range(3):
         r = requests.get(api, headers=h, timeout=20)
         sha = r.json().get('sha') if r.status_code == 200 else None
-        body = dict(message=f'Kursy VPS {dt.datetime.utcnow():%Y-%m-%d %H:%M}', content=base64.b64encode(tresc).decode())
+        body = dict(message=f'Kursy VPS {dt.datetime.now(dt.timezone.utc):%Y-%m-%d %H:%M}', content=base64.b64encode(tresc).decode())
         if sha: body['sha'] = sha
         r = requests.put(api, headers=h, json=body, timeout=30)
         if r.status_code in (200, 201): print('Zapisano w repozytorium:', sciezka); return True
         print('GitHub odpowiedział', r.status_code, r.text[:200]); time.sleep(5)
     return False
+
+SLOWA_JS = re.compile(r'prematch|odds|outcome|selection|market|offer|fixture|betoffer|graphql', re.I)
+
+def zrzut(s, spis):
+    """WERSJA 2: surowe strony i skrypty do analizy (katalog surowe/ w repozytorium)."""
+    lp = 0
+    for nazwa, strony in STRONY.items():
+        js, js_widz = [], set()
+        for i, url in enumerate(strony[:2]):
+            meta, txt = pobierz(s, url)
+            if not txt: continue
+            plik = f'surowe/{nazwa}_strona{i}.html'
+            if zapisz_github(plik, txt, surowy=True): spis.append(dict(plik=plik, url=url, rozmiar=len(txt)))
+            baza = re.match(r'https?://[^/]+', meta.get('url') or url).group(0)
+            for x in re.findall(r'<(?:script|link)[^>]+(?:src|href)=["\']([^"\']+\.m?js[^"\']*)["\']', txt, re.I):
+                x = x if x.startswith('http') else ('https:' + x if x.startswith('//') else baza + '/' + x.lstrip('/'))
+                if x not in js_widz: js_widz.add(x); js.append(x)
+        zapisane = 0; j = 0
+        while j < len(js) and j < 60 and time.time() - START < LIMIT + 300:
+            x = js[j]; j += 1
+            meta, txt = pobierz(s, x)
+            if not txt: continue
+            baza = x.rsplit('/', 1)[0]
+            for y in re.findall(r'["\']((?:https?://|\.{0,2}/)?[A-Za-z0-9_\-/.]{3,140}\.m?js)["\']', txt)[:300]:
+                y = y if y.startswith('http') else (re.match(r'https?://[^/]+', x).group(0) + y if y.startswith('/') else baza + '/' + y.lstrip('./'))
+                if y not in js_widz: js_widz.add(y); js.append(y)
+            traf = len(SLOWA_JS.findall(txt))
+            spis.append(dict(bukmacher=nazwa, js=x, rozmiar=len(txt), trafien=traf))
+            if traf >= 15 and len(txt) < 4_000_000 and zapisane < 6:
+                plik = f'surowe/{nazwa}_js{zapisane}.js'
+                if zapisz_github(plik, txt, surowy=True): spis[-1]['plik'] = plik; zapisane += 1
+        lp += 1
 
 def main():
     s = ses(); wynik = {}
@@ -119,13 +151,18 @@ def main():
         print(nazwa, 'gotowe', round(time.time() - START), 's')
     try: ip = s.get('https://api.ipify.org', timeout=10).text
     except Exception: ip = None
-    dane = dict(czas=dt.datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC'), wersja='vps-test-1', ip=ip,
+    dane = dict(czas=dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d %H:%M UTC'), wersja='vps-test-2', ip=ip,
                 sekund=round(time.time() - START), bukmacherzy=wynik)
     tekst = json.dumps(dane, ensure_ascii=False)
     if len(tekst) > 900_000:                           # limit rozmiaru – skracamy bloby
         for v in wynik.values():
             for b in v.get('bloby', []): b['poczatek'] = b['poczatek'][:400]
     zapisz_github(PLIK_WYNIKU, dane)
+    if '--zrzut' in sys.argv:
+        spis = []
+        try: zrzut(s, spis)
+        except Exception as e: spis.append(dict(blad=f'{type(e).__name__}: {e}'[:200]))
+        zapisz_github('surowe/spis.json', dict(czas=dane['czas'], pliki=spis))
 
 if __name__ == '__main__':
     main()
