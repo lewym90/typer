@@ -147,6 +147,13 @@ def _kontuzje_bb():
         j = r.json()
         d = j.get('data', j) if isinstance(j, dict) else j
         lista = d.get('injuries', d.get('items', [])) if isinstance(d, dict) else (d if isinstance(d, list) else [])
+        ksztalt = type(lista).__name__
+        if isinstance(lista, dict):      # 01.10: przyszedł słownik (np. {drużyna/liga: [wpisy]}) – spłaszczamy, klucz = drużyna
+            plaska = []
+            for kl, v in lista.items():
+                for x in (v if isinstance(v, list) else (v.get('injuries') or v.get('players') or [v]) if isinstance(v, dict) else []):
+                    if isinstance(x, dict): plaska.append(dict(x, _klucz=str(kl)))
+            lista = plaska
         meta = (j.get('meta') if isinstance(j, dict) else None) or {}
         STAN['bigballs']['as_of'] = (meta.get('as_of') if isinstance(meta, dict) else None) or (d.get('as_of') if isinstance(d, dict) else None)
         tekst = lambda v: v if isinstance(v, str) else ((v.get('name') or v.get('short_name') or '') if isinstance(v, dict) else '')
@@ -157,13 +164,15 @@ def _kontuzje_bb():
             if st in ('active', 'unknown', ''): continue
             p = x.get('player')
             imie = tekst(p) or x.get('player_name') or x.get('name') or '?'
-            druz = (p.get('team') if isinstance(p, dict) else None) or x.get('team') or x.get('team_name') or ''
+            druz = (p.get('team') if isinstance(p, dict) else None) or x.get('team') or x.get('team_name') or x.get('_klucz') or ''
             _bb['lista'].append(dict(zawodnik=imie, druzyna=tekst(druz), typ=x.get('status') or '',
                                      powod=tekst(x.get('injury_type')) or tekst(x.get('injury')) or tekst(x.get('comment')) or '',
                                      powrot=x.get('return_date') or x.get('expected_return')))
-        if pominiete and STAN['bigballs'].get('probka') is None:
-            STAN['bigballs']['probka'] = dict(typ_listy=type(lista).__name__, typ_wpisu=type(lista[0]).__name__ if lista else None,
-                                              pominiete=pominiete, pola=sorted(j.keys())[:10] if isinstance(j, dict) else None)
+        if STAN['bigballs'].get('probka') is None:   # kształt odpowiedzi – do diagnostyki
+            STAN['bigballs']['probka'] = dict(ksztalt=ksztalt, wpisow=len(lista), pominiete=pominiete,
+                                              pola=sorted(j.keys())[:10] if isinstance(j, dict) else None,
+                                              pola_data=sorted(d.keys())[:10] if isinstance(d, dict) else None,
+                                              pola_wpisu=sorted(lista[0].keys())[:15] if lista and isinstance(lista[0], dict) else None)
         STAN['bigballs']['kontuzji'] = len(_bb['lista'])
     except Exception as e: _blad('bigballs', e)
     return _bb['lista']

@@ -155,8 +155,18 @@ def _cena(o):
     except Exception: return None
     return c if c > 1.0 and str(o.get('status', 'active')).lower() in ('active', '', 'none', '1') else None
 
-def klucze_pilka(odds, glowne):
-    """Kursy Superbetu w naszym zapisie kluczy (piłka). glowne = kursy 1/X/2 z oferty dnia."""
+def _strona(nazwa, druzyny):
+    """'H' / 'A' – której drużynie (wg nazw Superbetu: gospodarz·gość) odpowiada tekst; None gdy niepewne."""
+    if not druzyny or len(druzyny) < 2: return None
+    ph, pa = podobne(nazwa, druzyny[0]), podobne(nazwa, druzyny[1])
+    if max(ph, pa) < 0.6 or abs(ph - pa) < 0.1: return None
+    return 'H' if ph > pa else 'A'
+
+def klucze_pilka(odds, glowne, druzyny=None):
+    """Kursy Superbetu w naszym zapisie kluczy (piłka). glowne = kursy 1/X/2 z oferty dnia.
+    druzyny = (gospodarz, gość) w nazewnictwie Superbetu – do goli drużyn, handicapu i „Mecz & liczba goli”.
+    Nazwy rynków sprawdzone na prawdziwej ofercie 01.10: „Liczba goli”, „<Drużyna> - liczba goli”, „Handicap” („Drużyna (-1.5)”),
+    „Mecz & liczba goli (2.5)” („Drużyna & powyżej 2.5”, „remis & poniżej 2.5”), „Obie drużyny strzelą gola & powyżej 2.5 gola”."""
     k = {}
     for o in glowne or []:
         n = str(o.get('name') or o.get('code') or '').upper(); c = _cena(o)
@@ -164,22 +174,40 @@ def klucze_pilka(odds, glowne):
     for o in odds:
         c = _cena(o)
         if not c: continue
-        if ';' in str(o.get('marketName') or ''): continue          # kombinacje (bet builder) – pomijamy
-        rn = _bez_ogonkow(o.get('marketName')).lower().strip(); nz = str(o.get('name') or o.get('code') or '').strip()
+        rn_oryg = str(o.get('marketName') or '')
+        if ';' in rn_oryg: continue          # kombinacje (bet builder) – pomijamy
+        rn = _bez_ogonkow(rn_oryg).lower().strip(); nz = str(o.get('name') or o.get('code') or '').strip()
         nzl = _bez_ogonkow(nz).lower()
         if any(x in rn for x in ('polow', 'pol.', 'rzut', 'kartk', 'korner', 'rozn', 'faul', 'spalon', 'minut', 'strzal',
-                                 'zawodnik', 'gracz', 'dogrywk', 'karn', '15 min', '10 min', 'przedzial')): continue
+                                 'zawodnik', 'gracz', 'dogrywk', 'karn', '15 min', '10 min', 'przedzial', 'multiwynik')): continue
         if rn in ('mecz', '1x2', 'wynik meczu', 'koncowy wynik', 'zwyciezca meczu', 'wynik', 'rezultat meczu') and nz.upper() in ('1', 'X', '2'):
             k.setdefault(nz.upper(), c)
-        elif 'podwojna szansa' in rn and nz.upper().replace(' ', '') in ('1X', 'X2', '12'):
+        elif rn == 'podwojna szansa' and nz.upper().replace(' ', '') in ('1X', 'X2', '12'):
             k.setdefault(nz.upper().replace(' ', ''), c)
-        elif ('obie' in rn and 'strzel' in rn and '&' not in rn and ' i ' not in rn) or rn in ('gg/ng', 'btts'):
+        elif rn in ('obie druzyny strzela', 'obie druzyny strzela gola', 'gg/ng', 'btts'):
             if nzl in ('tak', 'gg', 'yes'): k.setdefault('BTTS Tak', c)
             elif nzl in ('nie', 'ng', 'no'): k.setdefault('BTTS Nie', c)
-        elif ('gol' in rn or 'bramk' in rn) and any(x in rn for x in ('liczba', 'suma', 'lacznie', 'gole', 'powyzej/ponizej')) \
-                and not any(x in rn for x in ('gospodar', 'gosci', 'gosc', 'druzyn', 'zespol', 'dokladn', 'nieparzys', 'parzyst', '&', ' i ')):
+        elif rn in ('liczba goli', 'suma goli', 'gole powyzej/ponizej', 'powyzej/ponizej'):       # tylko cały mecz
             ou, ln = _ou(nz), _linia(o)
             if ou and ln: k.setdefault(f'{ou} {ln}', c)
+        elif rn.endswith(' - liczba goli'):                                   # gole jednej drużyny
+            st, ou, ln = _strona(rn_oryg[:-len(' - liczba goli')], druzyny), _ou(nz), _linia(o)
+            if st and ou == 'Over' and ln: k.setdefault(f'{st} o{ln}', c)
+        elif rn == 'handicap':                                                # „Drużyna (-1.5)”
+            m = re.fullmatch(r'(.+?)\s*\(\s*(-\d+[.,]5)\s*\)', nz)
+            if m:
+                st = _strona(m.group(1), druzyny)
+                if st: k.setdefault(f"{st} {m.group(2).replace(',', '.')}", c)
+        elif re.fullmatch(r'mecz & liczba goli \(\d[.,]5\)', rn):            # „Drużyna & powyżej 1.5”, „remis & poniżej 2.5”
+            m = re.fullmatch(r'(.+?)\s*&\s*(powyzej|ponizej)\s*(\d)[.,]5', nzl)
+            if m:
+                kto, ou, ln = m.group(1).strip(), 'o' if m.group(2) == 'powyzej' else 'u', m.group(3) + '.5'
+                if kto == 'remis': k.setdefault(f'X & {ou}{ln}', c)
+                else:
+                    st = _strona(nz.split('&')[0], druzyny)
+                    if st: k.setdefault(f"{'1' if st == 'H' else '2'} & {ou}{ln}", c)
+        elif rn == 'obie druzyny strzela gola & powyzej 2.5 gola' and nzl == 'tak':
+            k.setdefault('BTTS & o2.5', c)
     return k
 
 def klucze_duel(glowne, odwr):
@@ -194,27 +222,40 @@ def klucze_duel(glowne, odwr):
     return k
 
 def klucze_tenis(odds, glowne, odwr, bo, A_B=('', '')):
-    """Tenis: zwycięzca, dokładny wynik w setach, liczba setów. Wynik u Superbetu liczony od pierwszego zawodnika w nazwie."""
+    """Tenis: zwycięzca, min. 1 set, handicap setowy, dokładny wynik w setach, liczba setów.
+    Nazwy rynków sprawdzone 01.10: „X wygra seta” (Tak/Nie), „Handicap setowy” („Zawodnik (-1.5)”), „Dokładny wynik” (2:0… od
+    pierwszego zawodnika u Superbetu), „Liczba setów” (cały mecz; „<Zawodnik> liczba setów” to sety jednego gracza – pomijane)."""
     k = klucze_duel(glowne, odwr)
+    def kto(tekst):
+        pa, pb = podobne(tekst, A_B[0]), podobne(tekst, A_B[1])
+        return None if max(pa, pb) < 0.6 or abs(pa - pb) < 0.1 else ('A' if pa > pb else 'B')
     for o in odds:
         c = _cena(o)
         if not c: continue
         if ';' in str(o.get('marketName') or ''): continue          # kombinacje – pomijamy
-        rn = _bez_ogonkow(o.get('marketName')).lower(); nz = str(o.get('name') or '').strip()
-        mw = re.fullmatch(r'(.+?) wygra seta', str(o.get('marketName') or '').strip())
-        if mw and _bez_ogonkow(nz).lower() == 'tak':                  # „X wygra seta – Tak” = min. 1 set
-            kto = mw.group(1); pa, pb = podobne(kto, A_B[0]), podobne(kto, A_B[1])
-            if max(pa, pb) >= 0.6: k.setdefault(('A' if pa >= pb else 'B') + ' min. 1 set', c)
+        rn_oryg = str(o.get('marketName') or '').strip()
+        rn = _bez_ogonkow(rn_oryg).lower(); nz = str(o.get('name') or '').strip()
+        mw = re.fullmatch(r'(.+?) wygra seta', rn_oryg)
+        if mw:
+            if _bez_ogonkow(nz).lower() == 'tak':                        # „X wygra seta – Tak” = min. 1 set
+                g = kto(mw.group(1))
+                if g: k.setdefault(g + ' min. 1 set', c)
             continue
-        if 'gem' in rn or 'tie' in rn or re.search(r'\b[1-5]\. set|set [1-5]\b|[1-5] set\b', rn): continue
+        if rn in ('handicap setowy', 'handicap setow'):
+            m = re.fullmatch(r'(.+?)\s*\(\s*([+-]?\d+[.,]5)\s*\)', nz)
+            if m:
+                g, ln = kto(m.group(1)), float(m.group(2).replace(',', '.'))
+                if g and ln < 0: k.setdefault(f'{g} {ln:g}', c)
+                elif g and ln == 1.5 and int(bo or 3) == 3: k.setdefault(g + ' min. 1 set', c)
+            continue
         m = re.fullmatch(r'(\d)\s*[:\-]\s*(\d)', nz)
-        if m and 'set' in rn and ('wynik' in rn or 'dokladn' in rn):
+        if m and rn in ('dokladny wynik', 'dokladny wynik w setach', 'wynik w setach', 'dokladny wynik setowy'):
             x, y = int(m.group(1)), int(m.group(2))
             gp, gd = ('B', 'A') if odwr else ('A', 'B')      # gp = pierwszy u Superbetu
             kl = f'{gp} {x}:{y}' if x > y else f'{gd} {y}:{x}'
             k.setdefault(kl, c)
             if int(bo or 3) == 3 and {x, y} == {2, 0}: k.setdefault(kl.split()[0] + ' -1.5', c)
-        elif 'set' in rn and any(x in rn for x in ('liczba', 'suma', 'lacznie', 'powyzej/ponizej')):
+        elif rn in ('liczba setow', 'suma setow', 'liczba setow w meczu'):
             ou, ln = _ou(nz), _linia(o)
             if ou and ln: k.setdefault(f"{'Ponad' if ou == 'Over' else 'Poniżej'} {ln} seta", c)
     return k
@@ -266,7 +307,7 @@ def dopasuj_wszystko(ses, oferta):
                 odds = rynki_meczu(ses, e.get('eventId'))
                 if przyklady.get(sp, 0) < (3 if sp == 'pilka' else 2): _zapisz_przyklad(e, odds); przyklady[sp] = przyklady.get(sp, 0) + 1
             except Exception as ex: DIAG['bledy'].append(f'rynki {e.get("eventId")}: {str(ex)[:80]}')
-        k = klucze_pilka(odds, glowne) if sp == 'pilka' else (klucze_tenis(odds, glowne, odwr, bo, (h, a)) if sp == 'tenis' else klucze_duel(glowne, odwr))
+        k = klucze_pilka(odds, glowne, str(e.get('matchName') or '').split('·')) if sp == 'pilka' else (klucze_tenis(odds, glowne, odwr, bo, (h, a)) if sp == 'tenis' else klucze_duel(glowne, odwr))
         if k:
             kursy[eid] = dict(superbet=dict(id=e.get('eventId'), nazwa=e.get('matchName'), zgodnosc=round(s, 2), kursy=k))
         else:
