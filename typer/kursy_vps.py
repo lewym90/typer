@@ -198,7 +198,69 @@ def siec():
         br.close()
     zapisz_github('surowe/siec.json', dict(czas=dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d %H:%M UTC'), wyniki=spis))
 
+LINK_MECZU = {'fortuna': r'/zaklady-bukmacherskie/pilka-nozna/[^/?#]+/[^/?#]+/[^/?#]+',
+              'sts': r'/pilka-nozna/[^?#]*/[^?#]*/[^?#]*\d', 'betclic': r'-m\d{4,}'}
+
+def siec2():
+    """WERSJA 4: lista meczów + strona jednego meczu u każdego bukmachera; pełne ramki websocketów STS, dane strony Betclic."""
+    from playwright.sync_api import sync_playwright
+    spis = []
+    with sync_playwright() as pw:
+        br = pw.chromium.launch(headless=True, args=['--no-sandbox', '--disable-dev-shm-usage'])
+        for nazwa in ('fortuna', 'betclic', 'sts'):
+            ctx = br.new_context(locale='pl-PL', user_agent=UA, viewport={'width': 1366, 'height': 900})
+            pg = ctx.new_page()
+            stan = dict(etap='lista', odp=[], ramki=[])
+            def na_odp(r, stan=stan):
+                try:
+                    typ = r.headers.get('content-type', '')
+                    if r.request.resource_type in ('image', 'font', 'stylesheet', 'media', 'script'): return
+                    if not any(x in typ for x in ('json', 'text/plain', 'proto', 'grpc')): return
+                    if not re.search(r'efortuna|sts\.pl|begmedia|betclic', r.url): return
+                    b = r.body()
+                    stan['odp'].append(dict(etap=stan['etap'], url=r.url, metoda=r.request.method, rozmiar=len(b), typ=typ[:40],
+                                            tresc=b[:300_000].decode('utf-8', 'ignore')))
+                except Exception: pass
+            def na_ws(w, stan=stan):
+                if 'sbk/api/sbk' not in w.url and 'ws-offer' not in w.url: return
+                w.on('framereceived', lambda f, stan=stan: len(stan['ramki']) < 400 and stan['ramki'].append(dict(etap=stan['etap'], k='<', r=str(f)[:60000])))
+                w.on('framesent', lambda f, stan=stan: len(stan['ramki']) < 400 and stan['ramki'].append(dict(etap=stan['etap'], k='>', r=str(f)[:3000])))
+            pg.on('response', na_odp); pg.on('websocket', na_ws)
+            wynik = dict(bukmacher=nazwa)
+            try:
+                pg.goto(STRONY_SIEC[nazwa][0], wait_until='domcontentloaded', timeout=45000)
+                for _ in range(3): pg.wait_for_timeout(3000); pg.mouse.wheel(0, 2500)
+                ng = pg.evaluate("() => { const e = document.getElementById('ng-state'); return e ? e.textContent : '' }")
+                if ng: zapisz_github(f'surowe/{nazwa}_ngstate_lista.json', ng[:3_000_000], surowy=True); wynik['ngstate_lista'] = len(ng)
+                linki = pg.evaluate("() => Array.from(document.querySelectorAll('a[href]')).map(a => a.href)")
+                mecze = [l for l in linki if re.search(LINK_MECZU[nazwa], l)]
+                wynik['linki_meczow'] = mecze[:15]; wynik['linkow'] = len(linki)
+                if not mecze: wynik['linki_przyklad'] = linki[:120]
+                if mecze:
+                    stan['etap'] = 'mecz'
+                    pg.goto(mecze[0], wait_until='domcontentloaded', timeout=45000)
+                    for _ in range(3): pg.wait_for_timeout(3000); pg.mouse.wheel(0, 2000)
+                    ng = pg.evaluate("() => { const e = document.getElementById('ng-state'); return e ? e.textContent : '' }")
+                    if ng: zapisz_github(f'surowe/{nazwa}_ngstate_mecz.json', ng[:3_000_000], surowy=True); wynik['ngstate_mecz'] = len(ng)
+                    wynik['mecz_tekst'] = pg.inner_text('body')[:3000]
+            except Exception as e: wynik['blad'] = str(e)[:300]
+            ctx.close()
+            wynik['zapytania'] = [{k: v for k, v in o.items() if k != 'tresc'} for o in stan['odp']][:150]
+            # odpowiedzi ze strony meczu i największe z listy
+            wybrane = [o for o in stan['odp'] if o['etap'] == 'mecz'] + sorted([o for o in stan['odp'] if o['etap'] == 'lista'], key=lambda o: -o['rozmiar'])[:4]
+            tekst = '\n\n=====\n'.join(f"[{o['etap']}] {o['metoda']} {o['url']} ({o['rozmiar']} B)\n{o['tresc'][:120000]}" for o in wybrane[:14])
+            if tekst: zapisz_github(f'surowe/{nazwa}_odp.txt', tekst[:4_000_000], surowy=True)
+            if stan['ramki']:
+                zapisz_github(f'surowe/{nazwa}_ws.txt', '\n\n'.join(f"[{x['etap']}] {x['k']} {x['r']}" for x in stan['ramki'])[:5_000_000], surowy=True)
+            wynik['ramek'] = len(stan['ramki'])
+            spis.append(wynik)
+            print(nazwa, 'gotowe', round(time.time() - START), 's')
+        br.close()
+    zapisz_github('surowe/siec2.json', dict(czas=dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d %H:%M UTC'), wyniki=spis))
+
 def main():
+    if '--siec2' in sys.argv:
+        siec2(); return
     if '--siec' in sys.argv:
         siec(); return
     s = ses(); wynik = {}
