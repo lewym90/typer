@@ -321,7 +321,7 @@ def fortuna_mecze(s, diag):
     diag['meczow_fortuny'] = len(mecze)
     return list(mecze.values())
 
-def _fortuna_klucze(rynki, odwr, sport):
+def _fortuna_klucze(rynki, odwr, sport, bo=3):
     k = {}
     for m in rynki or []:
         n = (m.get('marketTypeName') or m.get('name') or '').lower()
@@ -340,9 +340,16 @@ def _fortuna_klucze(rynki, odwr, sport):
                     mm = re.search(r'([+-]|powyżej|poniżej)\s*(\d+[.,]5)', on.lower())
                     if mm: k.setdefault(('Over ' if mm.group(1) in ('+', 'powyżej') else 'Under ') + mm.group(2).replace(',', '.'), c)
             else:
-                if n in ('zwycięzca meczu', 'wynik meczu', 'zwycięzca', 'mecz') and on in ('1', '2'):
-                    kl = 'A' if (on == '1') != odwr else 'B'
-                    k.setdefault(kl, c)
+                pierwszy = lambda nr: ('A' if (nr == '1') != odwr else 'B')
+                if (n.startswith('zwycięzca meczu') or n in ('wynik meczu', 'zwycięzca', 'mecz')) and 'zwrot jeżeli' not in n and on in ('1', '2'):
+                    k.setdefault(pierwszy(on), c)
+                elif n.startswith('mecz: handicap setowy'):
+                    mm = re.fullmatch(r'([12])\s*\(([+-]1[.,]5)\)', on)
+                    if mm:
+                        kto, h = pierwszy(mm.group(1)), mm.group(2).replace(',', '.')
+                        if h == '-1.5': k.setdefault(f'{kto} -1.5', c)
+                        elif int(bo or 3) == 3: k.setdefault(f'{kto} min. 1 set', c)
+                        else: k.setdefault(f'{kto} +1.5', c)
     return k
 
 def czytnik():
@@ -373,7 +380,8 @@ def czytnik():
             for m in rynki:
                 rn = m.get('marketTypeName') or m.get('name')
                 if rn and len(rynki_nazwy) < 60: rynki_nazwy.setdefault(rn, [o.get('name') for o in (m.get('outcomes') or [])][:4])
-            k = _fortuna_klucze(rynki, odwr, 'pilka' if sp == 'pilka' else 'duel')
+            k = _fortuna_klucze(rynki, odwr, 'pilka' if sp == 'pilka' else 'duel', bo)
+            if not k: diag.setdefault('bez_kursow', []).append(f'{sp}: {h} – {a} ({f["h"]} - {f["a"]})')
             if k: wynik[eid] = dict(fortuna=dict(id=f['id'], nazwa=f'{f["h"]} - {f["a"]}', zgodnosc=round(sc, 2), kursy=k))
             time.sleep(0.2)
         diag['rynki_nazwy'] = rynki_nazwy
