@@ -16,6 +16,9 @@ Opcjonalnie sekret `TELEGRAM_TOKEN` (bot z @BotFather) – powiadomienia; wyśli
 Typy odświeżają się same codziennie o 12:00. Ręcznie: Actions → Typer → Run workflow.
 Aktualizacja programu = podmiana pliku `typer.yml` na nowy.
 
+## Wszystkie dyscypliny (od wersji 6)
+Zakładki Value i Pewne wybierają najlepsze typy ze wszystkich sportów (`typer/wspolne.py`, `docs/data/glowne.json`). Zakładka 🏟️ Sporty: każda dyscyplina ma Pewne, Value, Analizę i Dziennik.
+
 ## Tenis i walki (od wersji 5)
 Zakładka „🎾 Tenis·MMA”: typy z kursów Pinnacle/Betfair (mecze bez nich są pomijane), osobne listy Pewne, Value, dziennik (`docs/data/typy_inne.csv`, `inne.json`). Maks. 16 kredytów Odds API dziennie, po piłce.
 - `typer/sporty.py` – pobieranie, typy, dziennik, Telegram, na żywo

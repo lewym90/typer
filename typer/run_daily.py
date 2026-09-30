@@ -3,7 +3,7 @@ import json, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from core import *
 import copy, hashlib, requests
-import core, raport, powiadomienia as tg, zrodla, ai_raport, sporty
+import core, raport, powiadomienia as tg, zrodla, ai_raport, sporty, wspolne
 from nazwy import pl, pl_txt, pl_mecz
 
 NAZWY_LIG = {'soccer_uefa_champs_league': 'Liga Mistrzów', 'soccer_fifa_world_cup': 'Mistrzostwa świata',
@@ -482,6 +482,88 @@ def tg_typy_dnia(d, status):
         return 'wysłane'
     return 'błąd wysyłki'
 
+def _rozwiaz(gl, d, inne):
+    """Pozycje z glowne.json -> pełne karty (piłka z dzis.json, reszta z inne.json)."""
+    pew, val = [], []
+    for r in gl.get('pewne', []):
+        if r['sport'] == 'pilka': m = next((x for x in d.get('pewne', []) if str(x.get('event_id') or x['mecz']) == r['event_id']), None)
+        else: m = next((x for x in (inne.get(r['sport']) or {}).get('mecze', []) if str(x['event_id']) == r['event_id']), None)
+        if m: pew.append((r['sport'], m))
+    for r in gl.get('value', []):
+        zr = d.get('value', []) if r['sport'] == 'pilka' else (inne.get(r['sport']) or {}).get('value', [])
+        v = next((x for x in zr if str(x.get('event_id') or x['mecz']) == r['event_id'] and x['zaklad'] == r['zaklad']), None)
+        if v: val.append((r['sport'], v))
+    return pew, val
+
+def _linie_pewnego(sp, m, i):
+    ik = wspolne.IKONA[sp]
+    if sp == 'pilka':
+        lin = [f"\n{ik} <b>{i}. {esc_(pl_mecz(m['mecz']))}</b> ({m['godzina']}, {esc_(m['liga'])})"]
+        for poz, ikp, k, n, sz in _typy_meczu(m): lin.append(f"{ikp} {esc_(pl_txt(n, m['gospodarz'], m['gosc']))} – {tg.pct(sz)} (kurs ≥ {1/sz:.2f})")
+        if (m.get('raport') or {}).get('ostrzezenia'): lin.append('⚠️ ' + esc_('; '.join(m['raport']['ostrzezenia'])))
+    else:
+        extra = f", kat. {m['kategoria']}" if m.get('kategoria') else ''
+        lin = [f"\n{ik} <b>{i}. {esc_(m['mecz'])}</b> ({m['dzien']} {m['godzina']}, {esc_(m['turniej'])}{extra})"]
+        for poz, ikp in sporty.POZ:
+            t = m.get(poz)
+            if t: lin.append(f"{ikp} {esc_(t['zaklad'])} – {tg.pct(t['szansa'])} (kurs ≥ {1/t['szansa']:.2f})")
+        if (m.get('raport') or {}).get('ostrzezenie'): lin.append('⚠️ ' + esc_(m['raport']['ostrzezenie']))
+    if m.get('nizsza_pewnosc'): lin.append('<i>niższa pewność – dobrany, żeby było 5 typów</i>')
+    return lin
+
+def _raport_inne_tg(m, nr):
+    r = m.get('raport') or {}; ai = r.get('ai')
+    lin = [f"{wspolne.IKONA[m['sport']]} <b>{nr}. {esc_(m['mecz'])}</b> ({m['godzina']})"]
+    if ai:
+        lin.append(esc_(ai['tekst']))
+        for k, kto in (('problemy_a', m['a']), ('problemy_b', m['b'])):
+            if ai.get(k): lin.append(f"❗ {esc_(kto)}: {esc_(', '.join(ai[k][:5]))}")
+        zr = [z['tytul'] for z in ai.get('zrodla', [])][:3]
+        if zr: lin.append(f"<i>Źródła: {esc_(', '.join(zr))}</i>")
+    else:
+        ng = [h['tytul'] for k in ('a', 'b') for h in (m.get('naglowki') or {}).get(k, [])][:4]
+        lin.append(('Nagłówki: ' + esc_(' | '.join(ng))) if ng else 'Brak raportu AI i świeżych wiadomości.')
+    if r.get('ostrzezenie'): lin.append('⚠️ ' + esc_(r['ostrzezenie']))
+    return '\n'.join(lin)
+
+def tg_typy_wszystkie(d, inne, gl, status):
+    """Jedna wiadomość dziennie: 5 Pewnych i Value ze wszystkich dyscyplin, zaraz potem raporty. Ponownie tylko przy zmianie typów."""
+    pew, val = _rozwiaz(gl, d, inne)
+    if not pew and not val: return 'brak typów'
+    teraz = pd.Timestamp.now(tz='Europe/Warsaw')
+    if teraz.hour < 8: return 'wstrzymane (noc) – wyślę po 12:00'
+    podpis = hashlib.md5(json.dumps([(sp, str(m.get('event_id')), [(m.get(p) or {}).get('klucz') for p in ('lepszy_kurs', 'ryzykowny')] + [m.get('klucz') or (m.get('najpewniejszy') or {}).get('klucz')]) for sp, m in pew]
+                                    + [(sp, str(v.get('event_id')), v['zaklad']) for sp, v in val], ensure_ascii=False).encode()).hexdigest()[:12]
+    n_ai = sum(1 for _, m in pew if (m.get('raport') or {}).get('ai'))
+    wys = status.get('tg_typy') or {}
+    if wys.get('data') == gl.get('data') and wys.get('podpis') == podpis:
+        if n_ai > wys.get('ai', 0): tg_raporty_wszystkie(gl, pew); status['tg_typy']['ai'] = n_ai; return 'typy bez zmian – wysłane pełniejsze raporty AI'
+        return 'już wysłane dziś (typy bez zmian)'
+    zmiana = wys.get('data') == gl.get('data')
+    sporty_dzis = ' '.join(wspolne.IKONA[s] for s, _, _ in wspolne.SPORTY if any(sp == s for sp, _ in pew + val))
+    lin = [f"📋 <b>{'Zaktualizowane typy' if zmiana else 'Typy'} na {teraz.strftime('%d.%m')}</b> {sporty_dzis}"]
+    for i, (sp, m) in enumerate(pew, 1): lin += _linie_pewnego(sp, m, i)
+    if val:
+        lin.append('\n💰 <b>Value (Betclic)</b>')
+        for sp, v in val:
+            mecz = pl_mecz(v['mecz']) if sp == 'pilka' else v['mecz']
+            zak = pl_txt(v['zaklad'], v.get('gospodarz'), v.get('gosc')) if sp == 'pilka' else v['zaklad']
+            lin.append(f"{wspolne.IKONA[sp]} {esc_(mecz)}: {esc_(zak)} @ {v['kurs']} (szansa {tg.pct(v['szansa'])}, szukaj ≥ {v.get('kurs_szukaj', '')})")
+    if any(sp == 'tenis' for sp, _ in pew + val): lin.append('\n<i>Tenis – krecz: rozliczenie wg regulaminu bukmachera.</i>')
+    if tg.APLIKACJA: lin.append(f"\n📱 {tg.APLIKACJA}")
+    if tg.wyslij_dlugi('\n'.join(lin)):
+        status['tg_typy'] = dict(data=gl.get('data'), podpis=podpis, czas=teraz.strftime('%H:%M'), ai=n_ai)
+        tg_raporty_wszystkie(gl, pew)
+        return 'wysłane'
+    return 'błąd wysyłki'
+
+def tg_raporty_wszystkie(gl, pew):
+    if not pew: return
+    czesci = [f"📰 <b>Raporty na {pd.Timestamp(gl['data']).strftime('%d.%m')}</b>"]
+    for i, (sp, m) in enumerate(pew, 1):
+        czesci.append(wspolne.IKONA['pilka'] + ' ' + _raport_tg(m, i) if sp == 'pilka' else _raport_inne_tg(dict(m, sport=sp), i))
+    tg.wyslij_dlugi('\n\n'.join(czesci))
+
 def _stan_na_zywo():
     try: return json.load(open(os.path.join(OUT, 'na_zywo.json')))
     except Exception: return {}
@@ -658,10 +740,10 @@ if __name__ == '__main__':
     try: STRAZNIK.append(pilnuj_straznika(today))
     except Exception as e: bledy.append(f'strażnik: {e}')
     st = wczytaj_status(); tg_info = None
-    try: tg_info = tg_typy_dnia(today, st)
+    gl = {}
+    try: gl = wspolne.wybierz(today, inne or sporty.wczytaj_json()); wspolne.zapisz(gl)   # 5 Pewnych i Value ze wszystkich dyscyplin
+    except Exception as e: bledy.append(f'wspólne listy: {e}')
+    try: tg_info = tg_typy_wszystkie(today, inne or sporty.wczytaj_json(), gl, st) if gl else tg_typy_dnia(today, st)
     except Exception as e: bledy.append(f'telegram: {e}')
-    if inne:
-        try: st['telegram_sporty'] = dict(wynik=sporty.tg_typy(inne, st), czas=teraz.strftime('%H:%M'))
-        except Exception as e: bledy.append(f'telegram (tenis/walki): {e}')
     zapisz_status('pelne', bledy, st, tg_info)
     print('Gotowe:', len(today['value']), 'value,', len(today['pewne']), 'pewnych,', len(today['mecze']), 'meczów; API-Football:', raport.licznik['zapytania'])

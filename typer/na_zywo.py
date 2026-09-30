@@ -81,6 +81,7 @@ def sledzone(d, stan):
                                        sport_key=m.get('sport_key'), liga=m.get('liga', ''), typy=[], wytypowany=True)
         out[k]['typy'] += typy_meczu(m)
     for o in stan['obserwowane']:
+        if sporty.obserwowany_slug(o.get('slug', '')): continue   # tenis/MMA obsługuje sporty.obieg_na_zywo
         k = f"o_{o['slug']}_{o['id']}"
         if not any(v.get('espn') == (o['slug'], str(o['id'])) for v in out.values()):
             out[k] = dict(klucz=k, mecz=o['mecz'], gospodarz=o['dom'], gosc=o['gosc'], start=o['start'], liga=o.get('liga', ''),
@@ -169,6 +170,15 @@ def komendy(stan):
             continue
         if any(o['slug'] == slug and str(o['id']) == eid for o in stan['obserwowane']):
             tg.wyslij_do(chat, '🔔 Ten mecz już jest obserwowany.'); continue
+        if sporty.obserwowany_slug(slug):   # 🎾 tenis / 🥊 MMA
+            try: x = sporty.znajdz_po_id(slug, eid)
+            except Exception as ex: print('obserwowany (inne):', ex); x = None
+            if not x: tg.wyslij_do(chat, '⚠️ Nie znalazłem tego meczu w serwisie wyników.'); continue
+            stan['obserwowane'].append(dict(slug=slug, id=eid, dom=x['dom'], gosc=x['gosc'], mecz=f"{x['dom']} – {x['gosc']}", start=x['start'],
+                                            liga=x['liga'], kto=(msg.get('from') or {}).get('first_name', '')))
+            zmiana = True
+            tg.wyslij_do(chat, f"🔔 Obserwuję: {x['dom']} – {x['gosc']} ({x['start'][11:16]}). Start, {'sety' if slug.startswith('t.') else 'wynik walki'} i koniec pojawią się w kanale.")
+            continue
         e = None
         for dni in (0, 1):
             e = tablica(slug, (teraz() + pd.Timedelta(days=dni)).tz_convert('America/New_York').strftime('%Y%m%d')).get(eid)

@@ -307,12 +307,14 @@ def espn_dzien(sciezka, data_ny):
     try: j = requests.get(ESPN.format(s=sciezka), params={'dates': data_ny}, timeout=20).json()
     except Exception as e: _blad(f'ESPN {sciezka}: {e}'); j = {}
     out = []
-    for c in _pojedynki(j):
+    pary = [(c, e.get('name') or e.get('shortName') or '') for e in (j.get('events') or []) for c in _pojedynki(e)] or [(c, '') for c in _pojedynki(j)]
+    for c, turniej in pary:
         z = c['competitors']; st = (c.get('status') or {}); ty = st.get('type') or {}
         txt = ' '.join(_teksty(st, [])).lower() + ' ' + ' '.join(_teksty(c.get('notes') or [], [])).lower()
         gemy = [[s.get('value') for s in (x.get('linescores') or [])] for x in z]
         out.append(dict(a=_osoba(z[0]), b=_osoba(z[1]), wygral=[bool(x.get('winner')) for x in z], gemy=gemy, stan=ty.get('state', 'pre'),
-                        koniec=bool(ty.get('completed')) or ty.get('state') == 'post', opis=txt, start=c.get('date') or c.get('startDate')))
+                        koniec=bool(ty.get('completed')) or ty.get('state') == 'post', opis=txt, start=c.get('date') or c.get('startDate'),
+                        id=str(c.get('id') or ''), turniej=turniej, sciezka=sciezka))
     _espn[k] = (time.time(), out)
     return out
 
@@ -553,6 +555,28 @@ def starty_dla_straznika(d):
     return out
 
 # ---------------- na żywo (wywoływane przez strażnika co minutę) ----------------
+SCIEZKI_OBS = {'t.atp': 'tennis/atp', 't.wta': 'tennis/wta', 'm.ufc': 'mma/ufc', 'm.pfl': 'mma/pfl', 'm.bellator': 'mma/bellator'}
+def obserwowany_slug(slug): return slug in SCIEZKI_OBS
+
+def znajdz_po_id(slug, eid):
+    """Mecz/walka wskazana dzwonkiem 🔔 w aplikacji (ESPN id) – do listy obserwowanych."""
+    sc = SCIEZKI_OBS.get(slug)
+    for dni in (0, 1, -1):
+        for x in espn_dzien(sc, (teraz() + pd.Timedelta(days=dni)).tz_convert('America/New_York').strftime('%Y%m%d')):
+            if x['id'] == str(eid):
+                st = pd.Timestamp(x['start']).tz_convert('Europe/Warsaw').strftime('%Y-%m-%d %H:%M') if x.get('start') else teraz().strftime('%Y-%m-%d %H:%M')
+                return dict(dom=x['a'], gosc=x['b'], start=st, liga=x['turniej'] or sc)
+    return None
+
+def _obserwowane(stan):
+    out = {}
+    for o in stan.get('obserwowane', []):
+        if not obserwowany_slug(o.get('slug', '')): continue
+        sp = 'tenis' if o['slug'].startswith('t.') else 'walki'
+        out[f"o_{o['slug']}_{o['id']}"] = dict(sport=sp, dyscyplina='Tenis' if sp == 'tenis' else 'MMA', a=o['dom'], b=o['gosc'], mecz=o['mecz'],
+                                                start=o['start'], turniej=o.get('liga', ''), typy=[], bo=3, obserwowany=True)
+    return out
+
 def _sledzone(d):
     out = {}
     for sp in ('tenis', 'walki'):
@@ -583,7 +607,7 @@ def _stan_typu(m, klucz, w, koniec):
 def obieg_na_zywo(stan, d):
     """Start, koniec każdego seta (tenis) i wynik. Zwraca (czy coś trwa, starty meczów jeszcze przed rozpoczęciem)."""
     S = stan.setdefault('inne', {}); trwa, przyszle = False, []
-    SL = _sledzone(d)
+    SL = _sledzone(d); SL.update(_obserwowane(stan))
     for k in [k for k in S if k not in SL]: S.pop(k)
     teraz_ = teraz().tz_localize(None); starty, konce = [], []
     for eid, m in SL.items():
@@ -597,7 +621,7 @@ def obieg_na_zywo(stan, d):
         if not x or x['stan'] == 'pre':
             if teraz_ < start + limit: przyszle.append(max(start, teraz_))   # tenis: mecz może zacząć się później niż w planie
             continue
-        ik = IKONA[m['sport']]; e = tg.esc
+        ik = IKONA[m['sport']] + (' 🔔' if m.get('obserwowany') else ''); e = tg.esc
         if x['stan'] == 'in':
             trwa = True
             if s['stan'] == 'pre': starty.append(f"• {ik} {e(m['mecz'])} <i>({e(m['turniej'])})</i>"); s['stan'] = 'in'
