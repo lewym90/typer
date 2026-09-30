@@ -2,8 +2,8 @@
 Serwer pobiera ten plik z repozytorium przy każdym uruchomieniu (cron co 2 h), więc zmiany wprowadza się tylko w repozytorium.
 Wynik trafia do repozytorium przez GitHub API (token w /opt/typer/token).
 
-WERSJA 1 = ROZPOZNANIE: sprawdza, skąd strony biorą kursy (adresy danych w kodzie strony, osadzone dane),
-i zapisuje docs/data/kursy_vps_test.json. Na tej podstawie powstaną właściwe czytniki."""
+Czytniki: Fortuna (REST), STS (websocket wss://www.sts.pl/sbk/api/sbk przez przeglądarkę Playwright – python z /opt/typer/pw).
+Tryby rozpoznania (--test, --zrzut, --siec, --siec2, --sts) zostają do dalszej pracy nad Betclic PL."""
 import os, re, sys, json, time, base64, datetime as dt
 
 REPO = 'lewym90/typer'
@@ -387,11 +387,239 @@ def czytnik():
         diag['rynki_nazwy'] = rynki_nazwy
     except Exception as e:
         diag['bledy'].append(f'{type(e).__name__}: {e}'[:200])
-    dane = dict(czas=dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d %H:%M UTC'), wersja='czytnik-1',
-                bukmacherzy=dict(fortuna=dict(ok=not diag['bledy'] or bool(wynik), dopasowane=len(wynik))),
+    ile_fortuna = len(wynik)
+    sts, diag_sts = sts_z_przegladarki() if os.path.isdir(KATALOG) else ({}, dict(bledy=['brak danych']))
+    for eid, v in sts.items(): wynik.setdefault(eid, {})['sts'] = v
+    diag['sts'] = diag_sts
+    dane = dict(czas=dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d %H:%M UTC'), wersja='czytnik-2',
+                bukmacherzy=dict(fortuna=dict(ok=not diag['bledy'] or bool(ile_fortuna), dopasowane=ile_fortuna),
+                                 sts=dict(ok=not diag_sts.get('bledy') or bool(sts), dopasowane=len(sts))),
                 mecze=wynik, diag=diag, sekund=round(time.time() - START))
-    print('Fortuna: dopasowane', len(wynik), 'z', diag.get('nasze_mecze'), '| błędy:', diag['bledy'][:3])
+    print('Fortuna: dopasowane', ile_fortuna, 'z', diag.get('nasze_mecze'), '| błędy:', diag['bledy'][:3])
+    print('STS: dopasowane', len(sts), '| błędy:', (diag_sts.get('bledy') or [])[:3])
     zapisz_github('docs/data/kursy_vps.json', dane)
+
+# ======================================================================= CZYTNIK STS (websocket, przez przeglądarkę)
+STS_WS = 'wss://www.sts.pl/sbk/api/sbk'
+STS_SPORTY = {'1': 'pilka', '3': 'tenis', '166': 'walki', '19': 'walki'}   # piłka, tenis, MMA, boks
+PW_PYTHON = '/opt/typer/pw/bin/python'
+STS_WYNIK = '/opt/typer/sts_wynik.json'
+_JS_SZCZEGOLY = """async ({ids, ms}) => await new Promise(res => {
+  const out = []; let rozm = 0, ws, zamkn = false;
+  const koniec = (x) => { if (zamkn) return; zamkn = true; try { ws.close(); } catch (e) {} res(Object.assign({out}, x || {})); };
+  const dodaj = (t) => { if (typeof t !== 'string' || t.startsWith('{"s":"i_pl"') || t.startsWith('{"t":5')) return;
+                         if (rozm < 6e6) { out.push(t); rozm += t.length; } };
+  try { ws = new WebSocket('""" + STS_WS + """'); } catch (e) { res({out, blad: String(e)}); return; }
+  ws.onopen = () => {
+    ws.send(JSON.stringify({t: 1, u: [{s: 'i_pl', n: 0}]}));
+    setTimeout(() => ws.send(JSON.stringify({t: 1, u: [{s: 'i_pl'}].concat(ids.map(i => ({s: 'f_' + i + '_pl', n: 0})))})), 2500);
+    setTimeout(koniec, ms);
+  };
+  ws.onmessage = (e) => { if (typeof e.data === 'string') dodaj(e.data); else if (e.data && e.data.text) e.data.text().then(dodaj); };
+  ws.onerror = () => out.push('BLAD_WS');
+  setTimeout(() => koniec({limit: true}), ms + 10000);
+})"""
+
+def _sts_wiadomosc(tekst):
+    """Ramka STS = nagłówek JSON + '\n' + treść JSON. Zwraca (nagłówek, treść)."""
+    if not isinstance(tekst, str): tekst = tekst.decode('utf-8', 'ignore')
+    nag, _, tresc = tekst.partition('\n')
+    try: nag = json.loads(nag)
+    except Exception: nag = {}
+    try: tresc = json.loads(tresc) if tresc.strip() else None
+    except Exception: tresc = None
+    return nag, tresc
+
+def _scal(cel, zrodlo):
+    """Scalanie aktualizacji STS (None = usunięcie)."""
+    for k, v in (zrodlo or {}).items():
+        if v is None: cel.pop(k, None)
+        elif isinstance(v, dict) and isinstance(cel.get(k), dict): _scal(cel[k], v)
+        else: cel[k] = v
+    return cel
+
+def sts_mecze(snap):
+    """Z migawki i_pl: lista meczów [dict(id, sp, h, a, t, klucze_cen)] i opisy rynków sportów."""
+    mecze, opisy = [], {}
+    for sid, sport in ((snap.get('B') or {}).get('S') or {}).items():
+        if sid not in STS_SPORTY: continue
+        opisy[sid] = sport.get('m') or {}
+        for kat in (sport.get('C') or {}).values():
+            for tur in (kat.get('T') or {}).values():
+                for fid, f in (tur.get('FX') or {}).items():
+                    if f.get('ft') != 'm' or not f.get('H') or not f.get('A') or not f.get('t'): continue
+                    try: t = dt.datetime.fromisoformat(f['t'].replace('Z', '+00:00'))
+                    except Exception: continue
+                    mecze.append(dict(id=fid, sid=sid, sp=STS_SPORTY[sid], h=f['H'].get('n'), a=f['A'].get('n'), t=t,
+                                      turniej=f"{kat.get('n', '')} / {tur.get('n', '')}", ceny=list((f.get('a') or {}).keys())))
+    return mecze, opisy
+
+def _liczba_ou(tekst):
+    """'+2.5' / 'powyżej 2.5' → ('Over', '2.5'); '-2.5' / 'poniżej 2.5' → ('Under', '2.5')."""
+    t = str(tekst or '').strip().lower()
+    m = re.search(r'(\d+)[.,]5', t)
+    if not m: return None, None
+    ln = m.group(1) + '.5'
+    if t.startswith('+') or 'powyżej' in t or 'więcej' in t or 'over' in t: return 'Over', ln
+    if t.startswith('-') or 'poniżej' in t or 'mniej' in t or 'under' in t: return 'Under', ln
+    return None, ln
+
+def _liczba_ou_linia(nazwa, linia):
+    """Jak _liczba_ou, a gdy w nazwie wyniku brak liczby (np. 'powyżej'), liczba z nazwy linii."""
+    ou, ln = _liczba_ou(nazwa)
+    if ou and ln: return ou, ln
+    t = str(nazwa or '').strip().lower()
+    _, ln2 = _liczba_ou((linia or {}).get('n'))
+    kier = 'Over' if (t in ('+', 'powyżej', 'więcej', 'over') or t.startswith('powyżej')) else \
+           'Under' if (t in ('-', 'poniżej', 'mniej', 'under') or t.startswith('poniżej')) else None
+    return (kier, ln2) if kier and ln2 else (None, None)
+
+def sts_klucze(rynki, opis, sp, odwr, bo=3):
+    """Rynki STS jednego meczu → nasze klucze. rynki = {id_rynku: {'l': {linia: {'n', 'o': {id: {'O', 'n'}}}}}}."""
+    k = {}
+    def nazwa_wyn(mid, oid, o):
+        return str(o.get('n') or (((opis.get(mid) or {}).get('o') or {}).get(oid) or {}).get('n') or '').strip()
+    for mid, m in (rynki or {}).items():
+        if not isinstance(m, dict): continue
+        for lid, linia in (m.get('l') or {}).items():
+            if not isinstance(linia, dict): continue
+            for oid, o in (linia.get('o') or {}).items():
+                if not isinstance(o, dict): continue
+                try: c = float(o.get('O') or 0)
+                except Exception: continue
+                if c <= 1.0: continue
+                n = nazwa_wyn(mid, oid, o); nl = n.lower()
+                if sp == 'pilka':
+                    if mid == '1' and n in ('1', 'X', '2'): k.setdefault(n, c)
+                    elif mid == '10' and n.replace(' ', '') in ('1X', 'X2', '12'): k.setdefault(n.replace(' ', ''), c)
+                    elif mid == '43':
+                        if nl == 'tak': k.setdefault('BTTS Tak', c)
+                        elif nl == 'nie': k.setdefault('BTTS Nie', c)
+                    elif mid == '25':
+                        ou, ln = _liczba_ou_linia(n, linia)
+                        if ou: k.setdefault(f'{ou} {ln}', c)
+                    elif mid in ('28', '31'):
+                        ou, ln = _liczba_ou_linia(n, linia)
+                        if ou == 'Over': k.setdefault(f"{'H' if mid == '28' else 'A'} o{ln}", c)
+                else:
+                    pierwszy = lambda nr: ('A' if (nr == 1) != odwr else 'B')
+                    if mid == '259' and oid in ('4', '5'): k.setdefault(pierwszy(1 if oid == '4' else 2), c)
+                    elif sp == 'tenis' and mid in ('275', '276') and nl == 'tak': k.setdefault(pierwszy(1 if mid == '275' else 2) + ' min. 1 set', c)
+                    elif sp == 'tenis' and mid in ('285', '286'):
+                        mm = re.fullmatch(r'(\d):(\d)', n)
+                        if mm:
+                            x, y = int(mm.group(1)), int(mm.group(2))
+                            kto = pierwszy(1 if x > y else 2); kl = f'{kto} {max(x, y)}:{min(x, y)}'
+                            k.setdefault(kl, c)
+                            if int(bo or 3) == 3 and min(x, y) == 0: k.setdefault(f'{kto} -1.5', c)
+                    elif sp == 'tenis' and mid == '479':
+                        ou, ln = _liczba_ou_linia(n, linia)
+                        if ou: k.setdefault(f"{'Ponad' if ou == 'Over' else 'Poniżej'} {ln} seta", c)
+    return k
+
+def _opis_rynkow(rynki, opis, ile=40):
+    """Skrót rynków meczu do diagnostyki: 'id nazwa': ['linia | wynik=kurs', ...]."""
+    wyn = {}
+    for mid, m in (rynki or {}).items():
+        if not isinstance(m, dict) or not m.get('l') or len(wyn) >= ile: continue
+        el = []
+        for lid, linia in list((m.get('l') or {}).items())[:3]:
+            for oid, o in list(((linia or {}).get('o') or {}).items())[:4]:
+                if isinstance(o, dict):
+                    el.append(f"{(linia or {}).get('n', '')} | {oid}:{o.get('n') or ((opis.get(mid) or {}).get('o') or {}).get(oid, {}).get('n', '')}={o.get('O')}")
+        wyn[f"{mid} {(opis.get(mid) or {}).get('n', '')}"] = el[:8]
+    return wyn
+
+def sts_kursy():
+    """Uruchamiane pythonem z przeglądarką (pw): migawka oferty STS + szczegóły naszych meczów → STS_WYNIK."""
+    from playwright.sync_api import sync_playwright
+    sys.path.insert(0, KATALOG)
+    import kursy_pl as KP
+    KP.OUT = KATALOG
+    diag = dict(bledy=[]); wynik = {}
+    try:
+        nasze = KP.nasze_mecze()
+        migawki = []
+        with sync_playwright() as pw:
+            br = pw.chromium.launch(headless=True, args=['--no-sandbox', '--disable-dev-shm-usage'])
+            pg = br.new_context(locale='pl-PL', user_agent=UA).new_page()
+            def na_ws(w):
+                if 'sbk/api/sbk' not in w.url: return
+                w.on('framereceived', lambda f: migawki.append(f) if str(f)[:40].startswith('{"s":"i_pl"') and '"f":1' in str(f)[:80] else None)
+            pg.on('websocket', na_ws)
+            pg.goto('https://www.sts.pl/pilka-nozna', wait_until='domcontentloaded', timeout=60000)
+            for _ in range(40):
+                if migawki: break
+                pg.wait_for_timeout(500)
+            if not migawki: raise RuntimeError('brak migawki oferty (i_pl) w 20 s')
+            _, snap = _sts_wiadomosc(migawki[-1])
+            mecze, opisy = sts_mecze(snap or {})
+            ceny = (snap or {}).get('P') or {}
+            diag['meczow_sts'] = len(mecze)
+            diag['sporty'] = {sid: sum(1 for m in mecze if m['sid'] == sid) for sid in STS_SPORTY}
+            dopas = []
+            for sp, eid, h, a, start, bo in nasze:
+                t0 = KP._utc_nasz(start); tol = {'pilka': 35, 'tenis': 360, 'walki': 720}[sp]
+                best = None
+                for f in mecze:
+                    if f['sp'] != sp or abs((f['t'] - t0).total_seconds()) / 60 > tol: continue
+                    s1 = min(KP.podobne_w(h, f['h']), KP.podobne_w(a, f['a']))
+                    s2 = min(KP.podobne_w(h, f['a']), KP.podobne_w(a, f['h'])) if sp != 'pilka' else 0
+                    sc, odwr = (s1, False) if s1 >= s2 else (s2, True)
+                    if sc >= 0.55 and (best is None or sc > best[1]): best = (f, sc, odwr)
+                if best: dopas.append((sp, eid, h, a, bo) + best)
+                else: diag.setdefault('niedopasowane', []).append(f'{sp}: {h} – {a}')
+            # szczegóły (pełna oferta meczu) – własne połączenie z tej samej strony
+            szczeg = {}
+            if dopas:
+                try:
+                    r = pg.evaluate(_JS_SZCZEGOLY, dict(ids=[d[5]['id'] for d in dopas], ms=14000))
+                    diag['szczegoly_ramek'] = len(r.get('out') or [])
+                    if r.get('blad') or r.get('limit'): diag['bledy'].append(f"szczegóły: {r.get('blad') or 'limit czasu'}")
+                    tematy = {}
+                    for t in r.get('out') or []:
+                        nag, tresc = _sts_wiadomosc(t)
+                        tematy[str(nag.get('s'))] = tematy.get(str(nag.get('s')), 0) + 1
+                        if isinstance(tresc, dict) and isinstance(tresc.get('P'), dict):
+                            for kl, v in tresc['P'].items():
+                                if isinstance(v, dict): _scal(szczeg.setdefault(kl, {}), v)
+                    diag['szczegoly_tematy'] = dict(list(tematy.items())[:20])
+                except Exception as e: diag['bledy'].append(f'szczegóły: {type(e).__name__}: {e}'[:160])
+            br.close()
+        przyklady = {}
+        for sp, eid, h, a, bo, f, sc, odwr in dopas:
+            rynki = {}
+            for kl in f['ceny']:
+                _scal(rynki, (ceny.get(kl) or {}).get('m') or {})
+                _scal(rynki, (szczeg.get(kl) or {}).get('m') or {})
+            for kl, v in szczeg.items():                      # szczegóły mogą przyjść pod innym kluczem – po id meczu
+                if isinstance(v, dict) and v.get('f') == f['id'] and kl not in f['ceny']: _scal(rynki, v.get('m') or {})
+            k = sts_klucze(rynki, opisy.get(f['sid']) or {}, sp, odwr, bo)
+            if len(przyklady) < 3 and sum(1 for m in rynki.values() if isinstance(m, dict) and m.get('l')) > 1:
+                przyklady[f"{f['h']} - {f['a']}"] = _opis_rynkow(rynki, opisy.get(f['sid']) or {})
+            if k: wynik[eid] = dict(id=f['id'], nazwa=f"{f['h']} - {f['a']}", zgodnosc=round(sc, 2), kursy=k)
+            else: diag.setdefault('bez_kursow', []).append(f"{sp}: {h} – {a} ({f['h']} - {f['a']})")
+        diag['rynki_przyklad'] = przyklady
+        diag['z_wieloma_rynkami'] = sum(1 for v in wynik.values() if len(v['kursy']) > 3)
+    except Exception as e:
+        diag['bledy'].append(f'{type(e).__name__}: {e}'[:200])
+    json.dump(dict(mecze=wynik, diag=diag), open(STS_WYNIK, 'w'), ensure_ascii=False)
+    print('STS: dopasowane', len(wynik), '| błędy:', diag['bledy'][:3])
+
+def sts_z_przegladarki():
+    """Wywołanie czytnika STS pythonem z Playwright (cron uruchamia zwykły python3)."""
+    import subprocess
+    try: os.remove(STS_WYNIK)
+    except Exception: pass
+    py = PW_PYTHON if os.path.exists(PW_PYTHON) else sys.executable
+    try:
+        r = subprocess.run([py, os.path.abspath(__file__), '--sts-kursy'], capture_output=True, text=True, timeout=300)
+        if r.returncode != 0 and not os.path.exists(STS_WYNIK):
+            return {}, dict(bledy=[f'proces STS: {(r.stderr or r.stdout)[-300:]}'])
+        d = json.load(open(STS_WYNIK))
+        return d.get('mecze') or {}, d.get('diag') or {}
+    except Exception as e:
+        return {}, dict(bledy=[f'STS: {type(e).__name__}: {e}'[:200]])
 
 def sts_zrzut():
     """Pełne wiadomości websocketu STS (lista + turniej + mecz) – do napisania czytnika STS."""
@@ -419,8 +647,10 @@ def sts_zrzut():
     except Exception as e: print('rynki STS:', e)
 
 def main():
-    if '--test' not in sys.argv and not any(a.startswith('--siec') or a in ('--zrzut', '--sts') for a in sys.argv[1:]):
+    if '--test' not in sys.argv and not any(a.startswith('--siec') or a in ('--zrzut', '--sts', '--sts-kursy') for a in sys.argv[1:]):
         czytnik(); return
+    if '--sts-kursy' in sys.argv:
+        sts_kursy(); return
     if '--sts' in sys.argv:
         sts_zrzut(); return
     if '--siec2' in sys.argv:
