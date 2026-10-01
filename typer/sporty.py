@@ -369,7 +369,11 @@ def _typ_ai(m):
     t = m.get('najpewniejszy') or m.get('lepszy_kurs')
     return (t['zaklad'], t['szansa']) if t else None
 
-def raport_ai(m, polski_=False):
+def raport_ai(m, polski_=False, wymus=False):
+    kp = ai_raport.klucz_pamieci(m['sport'], m['a'], m['b'], m.get('dzien') or str(m.get('start', ''))[:10], (_typ_ai(m) or ('',))[0])
+    if not wymus:
+        z = ai_raport.z_pamieci(kp)
+        if z: return z
     if not ai_raport.KLUCZ or ai_raport._licznik() >= ai_raport.MAKS_DZIENNIE or ai_raport.zostalo_analiz() <= 0: return None
     co, dziedzina, kogo, czym, tematy, powazne = TEMATY[m['sport']]
     ng = m.get('naglowki') or {}
@@ -408,7 +412,9 @@ def raport_ai(m, polski_=False):
         for k in ('bilans_a', 'bilans_b'):
             v = str(d.get(k) or '').strip()
             if re.fullmatch(r'\d{1,2}-\d{1,2}(-\d{1,2})?', v): out[k] = v
+    ai_raport.do_pamieci(kp, out)
     return out
+
 
 def dodaj_raporty(mecze, kolejnosc):
     """Nagłówki + analiza AI: najpierw kandydaci do Pewnych i Value, potem pozostałe mecze/walki z listy (limit kosztu)."""

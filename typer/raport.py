@@ -172,7 +172,7 @@ def odswiez_ai(r, m, polski=False):
     nowy = ai_raport.raport_ai(m['gospodarz'], m['gosc'], pl(m['gospodarz']), pl(m['gosc']), m.get('liga', ''), start, braki=b,
                                zapowiedz=zapowiedz, naglowki=[x['tytul'] for v in (r.get('naglowki') or {}).values() for x in v], polski=polski,
                                typ=(pl_txt(m['zaklad'], m['gospodarz'], m['gosc']), m['szansa']) if m.get('zaklad') and m.get('szansa') else None,
-                               szanse=m.get('szanse'))
+                               szanse=m.get('szanse'), wymus=True)
     if not nowy: return False
     istotna = ai_raport.zmiana_istotna(r.get('ai'), nowy)
     r['ai'], r['braki'], r['zrodla_brakow'] = nowy, b or r.get('braki'), zr or r.get('zrodla_brakow')

@@ -460,6 +460,80 @@ def sprawdz_przed_meczem(d):
         if len(V): V.to_csv(PLIK_DZIENNIKA, index=False)
     return zmiana
 
+# ---------------- AI przy każdym meczu z Pewnych i Value (cały dzień, wszystkie dyscypliny) ----------------
+def _ai_pilka(m, typ):
+    """Raport AI meczu piłkarskiego do karty (Pewne lub Value). Zwraca True, gdy karta dostała analizę."""
+    r = m.get('raport')
+    if r is None:   # karta bez raportu (np. tylko Value) – pełny raport: nieobecni, nagłówki i AI
+        polski = m.get('sport_key') == 'soccer_poland_ekstraklasa' or 'Poland' in (m['gospodarz'], m['gosc'])
+        m['raport'] = raport.raport(m['gospodarz'], m['gosc'], pd.Timestamp(m['start']), polski=polski, sport_key=m.get('sport_key'),
+                                    rozgrywki=m.get('liga', ''), ai=True, typ=typ, szanse=m.get('szanse'))
+        return bool(m['raport'].get('ai'))
+    polski = m.get('sport_key') == 'soccer_poland_ekstraklasa' or 'Poland' in (m['gospodarz'], m['gosc'])
+    ai = ai_raport.raport_ai(m['gospodarz'], m['gosc'], pl(m['gospodarz']), pl(m['gosc']), m.get('liga', ''), pd.Timestamp(m['start']),
+                             braki=r.get('braki'), zapowiedz=r.get('zapowiedz'), naglowki=[x['tytul'] for v in (r.get('naglowki') or {}).values() for x in v],
+                             polski=polski, typ=typ, szanse=m.get('szanse'))
+    if not ai: return False
+    r['ai'] = ai; r['werdykt'] = ai.get('werdykt')
+    try: raport._ostrzezenia_z_brakow(r, m['gospodarz'], m['gosc'])
+    except Exception: pass
+    return True
+
+def _ai_inne(m):
+    if not m.get('naglowki'):
+        try: m['naglowki'] = {'a': sporty.naglowki(m['a'], polskie=bool(m.get('rynek_pl'))), 'b': sporty.naglowki(m['b'], polskie=bool(m.get('rynek_pl')))}
+        except Exception: pass
+    ai = sporty.raport_ai(m, m.get('polski'))
+    if not ai: return False
+    r = m.setdefault('raport', {}); r['ai'] = ai; r['werdykt'] = ai.get('werdykt')
+    if ai.get('ostrzezenie'):
+        kto = {'a': m['a'], 'b': m['b'], 'oba': 'obu zawodników'}.get(ai.get('ostrzezenie_dla'), '')
+        r['ostrzezenie'] = f"Uwaga ({kto}): {ai['uzasadnienie']}" if kto else ai['uzasadnienie']
+    return True
+
+def uzupelnij_ai(d, inne, limit=12):
+    """Każdy mecz z zakładek Pewne i Value (główne i w każdej dyscyplinie), który się jeszcze nie zaczął, ma mieć analizę AI –
+    niezależnie od tego, kiedy i dlaczego trafił na listę. Ten sam mecz w kilku kartach dostaje tę samą analizę.
+    Zwraca (zrobione, brakuje)."""
+    teraz = pd.Timestamp.now(tz='Europe/Warsaw').tz_localize(None)
+    zrobione = brak = 0
+    grupy = {}   # klucz meczu -> lista kart
+    for m in (d or {}).get('pewne', []) + (d or {}).get('value', []):
+        grupy.setdefault(('pilka', str(m.get('event_id') or m['mecz'])), []).append(m)
+    for sp in ('tenis', 'walki'):
+        s = (inne or {}).get(sp) or {}
+        ids = set(s.get('pewne', [])) | {v['event_id'] for v in s.get('value', [])}
+        for m in s.get('mecze', []):
+            if m['event_id'] in ids: grupy.setdefault((sp, str(m['event_id'])), []).append(m)
+    for (sp, eid), karty in grupy.items():
+        try:
+            if pd.Timestamp(karty[0]['start']) <= teraz: continue          # mecz już trwa / zakończony
+        except Exception: continue
+        ma = next((k['raport']['ai'] for k in karty if (k.get('raport') or {}).get('ai')), None)
+        if ma:   # analiza jest w jednej karcie – kopiujemy do pozostałych
+            for k in karty:
+                if not (k.get('raport') or {}).get('ai'): k.setdefault('raport', {}); k['raport']['ai'] = ma; k['raport']['werdykt'] = ma.get('werdykt')
+            continue
+        if zrobione >= limit or ai_raport.zostalo_analiz() <= 0: brak += 1; continue
+        k0 = karty[0]
+        try:
+            if sp == 'pilka':
+                t = k0 if k0.get('zaklad') else None
+                typ = (pl_txt(t['zaklad'], k0['gospodarz'], k0['gosc']) + (f" ({pl_txt(t['opis'], k0['gospodarz'], k0['gosc'])})" if t.get('opis') and len(t['zaklad']) <= 3 else ''), t['szansa']) if t else None
+                ok = _ai_pilka(k0, typ)
+            else:
+                ok = _ai_inne(k0)
+        except Exception as e: print('AI uzupełnienie:', eid, e); ok = False
+        if ok:
+            zrobione += 1
+            for k in karty[1:]:
+                k['raport'] = dict(k.get('raport') or {}, ai=k0['raport']['ai'], werdykt=k0['raport']['ai'].get('werdykt'))
+        else: brak += 1
+    STAN_AI.update(zrobione=STAN_AI.get('zrobione', 0) + zrobione, brakuje=brak)
+    return zrobione, brak
+
+STAN_AI = {}
+
 # ---------------- zapowiedź ok. godzinę przed meczem (wszystkie dyscypliny, tylko mecze z głównych Pewnych i Value) ----------------
 OKNO_ZAPOWIEDZI = (35, 75)   # minut przed startem; sprawdzenia co 30 min – zawsze trafi jedno
 
@@ -492,7 +566,7 @@ def _odswiez_inne(sp, m):
                 for v in m.get('value', []): nowe[v['klucz']] = _szansa_klucza(sp, e, v['klucz'])
         except Exception as ex: print('zapowiedź – kursy:', m['mecz'], ex)
     try:
-        ai = sporty.raport_ai(m, m.get('polski'))
+        ai = sporty.raport_ai(m, m.get('polski'), wymus=True)
         if ai:
             r = m.setdefault('raport', {}); r['ai'] = ai; r['werdykt'] = ai.get('werdykt')
             if ai.get('ostrzezenie'):
@@ -877,8 +951,9 @@ def zapisz_status(tryb, bledy=None, st=None, tg_info=None):
     if tryb == 'pelne' or zrodla.STAN['bsd']['zapytania'] or zrodla.STAN['bigballs']['zapytania']:
         st['bsd'] = dict(zrodla.STAN['bsd'], bledy=zrodla.STAN['bsd']['bledy'][:4], czas=teraz)
         st['bigballs'] = dict(zrodla.STAN['bigballs'], bledy=zrodla.STAN['bigballs']['bledy'][:4], czas=teraz)
-    if ai_raport.STAN['zapytania'] or tryb == 'pelne':
-        st['gemini'] = dict(ai_raport.STAN, bledy=ai_raport.STAN['bledy'][:4], czas=teraz)
+    if ai_raport.STAN['zapytania'] or tryb == 'pelne' or STAN_AI:
+        ai_raport.koszt_miesiac(); ai_raport.analiz_dzis()
+        st['gemini'] = dict(ai_raport.STAN, bledy=ai_raport.STAN['bledy'][:4], uzupelnianie=STAN_AI or None, czas=teraz)
     if DIAG: st['przedmeczowe'] = dict(czas=teraz, mecze=DIAG[:12])
     if tg_info: st['telegram_typy'] = dict(wynik=tg_info, czas=teraz)
     if STRAZNIK: st['na_zywo'] = dict(straznik=STRAZNIK[-1], czas=teraz)
@@ -937,6 +1012,13 @@ if __name__ == '__main__':
     if not pelne:
         # ---- lekkie sprawdzenie: składy, kursy przed meczem, rozliczenie, podsumowanie wieczorne ----
         bledy = []
+        try:   # analiza AI przy każdym meczu z Pewnych i Value – także dobranych w ciągu dnia
+            inne_ = sporty.wczytaj_json(); z, b = uzupelnij_ai(stare, inne_)
+            if z:
+                with open(os.path.join(OUT, sporty.PLIK_JSON), 'w', encoding='utf-8') as f:
+                    json.dump(inne_, f, ensure_ascii=False, default=lambda o: float(o) if isinstance(o, (np.floating, np.integer)) else str(o))
+                zapisz('dzis.json', stare)
+        except Exception as e: bledy.append(f'AI uzupełnienie: {e}')
         if stare.get('pewne') or stare.get('value'):
             try: sprawdz_przed_meczem(stare)
             except Exception as e: bledy.append(f'sprawdzenie: {e}')
@@ -993,6 +1075,13 @@ if __name__ == '__main__':
     gl = {}
     try: gl = wspolne.wybierz(today, inne or sporty.wczytaj_json()); wspolne.zapisz(gl)   # 5 Pewnych i Value ze wszystkich dyscyplin
     except Exception as e: bledy.append(f'wspólne listy: {e}')
+    try:   # analiza AI przy każdym meczu z Pewnych i Value przed wiadomością
+        inne = inne or sporty.wczytaj_json(); z, b = uzupelnij_ai(today, inne, limit=25)
+        if z:
+            zapisz('dzis.json', today)
+            with open(os.path.join(OUT, sporty.PLIK_JSON), 'w', encoding='utf-8') as f:
+                json.dump(inne, f, ensure_ascii=False, default=lambda o: float(o) if isinstance(o, (np.floating, np.integer)) else str(o))
+    except Exception as e: bledy.append(f'AI uzupełnienie: {e}')
     try: tg_info = tg_typy_wszystkie(today, inne or sporty.wczytaj_json(), gl, st) if gl else tg_typy_dnia(today, st)
     except Exception as e: bledy.append(f'telegram: {e}')
     zapisz_status('pelne', bledy, st, tg_info)

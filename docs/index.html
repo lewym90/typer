@@ -67,7 +67,9 @@ h3{font:700 17px/1.3 var(--body);margin:0}
 .bk.best{border-color:var(--accent);background:var(--accent-bg)} .bk.best b{color:var(--accent)}
 .bk.low b{color:var(--muted);font-weight:600}
 .bk.none{opacity:.45} .bk.none b{color:var(--muted);font-weight:500}
-.bks.mini{grid-template-columns:repeat(4,1fr);margin:6px 0 2px} .bks.mini .bk{min-height:40px;border-radius:10px} .bks.mini .bk b{font-size:14px} .bks.mini .bk span{font-size:10px}
+.bks.kmini{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;width:100%;margin:2px 0 12px}
+.bks.kmini .bk{min-height:46px;border-radius:12px;padding:5px 2px;gap:2px}
+.bks.kmini .bk span{font-size:11px} .bks.kmini .bk b{font-size:15px}
 .chipv{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border-radius:999px;font-size:13px;font-weight:600;align-self:flex-start}
 .chipv.zgoda{color:var(--win);background:var(--win-bg)} .chipv.ryzyko{color:var(--warn);background:var(--warn-bg)} .chipv.odradza{color:var(--loss);background:var(--loss-bg)}
 .chipv.brak{color:var(--muted);background:var(--sunk)}
@@ -499,6 +501,8 @@ function licz(){
     if(kursyK[z]){ const ev = p*kursyK[z]-1; h += `<span class="ev ${ev>=0.03?'pos':(ev<0?'neg':'')}">Twój kurs ${num(kursyK[z])}: ${ev>=0.03?'opłaca się':'nie opłaca się'} (${sgn(ev)})</span>`; }
   }});
   h += `</div>`;
+  if(!(dz && dz.raport && dz.raport.ai) && window.__typAlg)
+    h += aiReczna('pilka', {a: HN, b: AN, rozgrywki: liga, typ: window.__typAlg, szanse: {'1': P('1'), 'X': P('X'), '2': P('2')}}, {gospodarz: HN, gosc: AN});
   out.innerHTML = h;
 }
 
@@ -530,6 +534,7 @@ function typAlgorytmu(R2, P, kursy, HN, AN, liga, M){
   const wyb = (lista, kmin, kmax, pmin, wyk) => lista.filter(z => R2[z] && !wyk.includes(z) && !wyk.some(w => razem(z, w) < 0.03)).map(z => ({z, p: P(z)}))
       .filter(t => t.p > pmin && 1/t.p >= kmin && 1/t.p <= kmax).sort((a,b) => b.p - a.p)[0];
   const glowny = wyb(NAJ, 1.25, 99, 0, []);
+  window.__typAlg = glowny ? {zaklad: R2[glowny.z][1] + (R2[glowny.z][2] && R2[glowny.z][1].length <= 3 ? ` (${R2[glowny.z][2]})` : ''), szansa: glowny.p} : null;
   if(!glowny) return '';
   const alt = wyb(LEPSZY, 1.55, 2.30, 0.40, [glowny.z]);
   const ryz = wyb(RYZYK, 2.50, 5.00, 0.18, [glowny.z].concat(alt ? [alt.z] : []));
@@ -670,7 +675,7 @@ function kafelkiBuk(t, mini){
   // Zawsze wszyscy bukmacherzy w stałej kolejności; „—” = brak tego zakładu w ofercie bukmachera
   const kk = Object.fromEntries(kursyLista(t)); const best = Math.max(0, ...Object.values(kk));
   const lista = BUKMACHERZY.concat(Object.keys(kk).filter(n => !BUKMACHERZY.includes(n)));
-  return `<div class="bks${mini ? ' mini' : ''}">` + lista.map(n => kk[n]
+  return `<div class="bks${mini ? ' kmini' : ''}">` + lista.map(n => kk[n]
     ? `<div class="bk${kk[n] === best && Object.keys(kk).length > 1 ? ' best' : ''}${kk[n] * t.szansa < 1 ? ' low' : ''}"><span>${esc(n)}</span><b>${num(kk[n])}</b></div>`
     : `<div class="bk none" title="Brak tego zakładu w ofercie"><span>${esc(n)}</span><b>—</b></div>`).join('') + `</div>`;
 }
@@ -984,6 +989,31 @@ function opisMma(n, a, b){ const kto = x => x === 'A' ? a : b;
   if(n === 'A' || n === 'B') return `wygra ${kto(n)}`; if(n === 'Przed czasem') return 'walka skończy się przed czasem (KO/TKO/poddanie)';
   if(n === 'Pełny dystans') return 'walka potrwa pełny dystans (decyzja sędziów)'; if(n === 'Remis') return 'remis';
   return `${kto(n[0])} wygra ${n.endsWith('przed czasem') ? 'przed czasem' : 'na punkty'}`; }
+/* ---------- analiza AI przy ręcznej analizie (serwer AI na polskim VPS) ---------- */
+const AI_URL = 'https://188-68-247-55.sslip.io';
+function aiReczna(sp, zap, karta){
+  // zap: {a, b, rozgrywki, typ:{zaklad,szansa}, szanse?, szansa_a?, szansa_b?}; karta: obiekt do aiPelny (gospodarz/gosc albo a/b)
+  const id = 'air' + Math.random().toString(36).slice(2, 8);
+  const klucz = 'ai_' + [sp, zap.a, zap.b, (zap.typ || {}).zaklad || ''].join('|').toLowerCase();
+  const pokaz = ai => { const el = document.getElementById(id); if(el) el.innerHTML = `<h2>Analiza AI</h2>` + aiPelny(Object.assign({}, karta, {raport: {ai}}), sp); };
+  const zap_ = store.get(klucz, null);
+  setTimeout(async () => {
+    if(zap_ && Date.now() - zap_.t < 6 * 3600e3) return pokaz(zap_.ai);
+    const el = document.getElementById(id); if(!el) return;
+    el.innerHTML = `<h2>Analiza AI</h2><div class="aiw"><p class="note">⏳ AI sprawdza najnowsze wiadomości o meczu (kontuzje, składy, forma) i ocenia typ – zwykle 20–60 sekund…</p></div>`;
+    try {
+      const r = await fetch(AI_URL + '/analiza', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(Object.assign({sport: sp}, zap))});
+      const j = await r.json().catch(() => ({}));
+      if(!r.ok || !j.ai) throw new Error(j.blad || ('błąd ' + r.status));
+      store.set(klucz, {t: Date.now(), ai: j.ai}); pokaz(j.ai);
+    } catch(e) {
+      const el2 = document.getElementById(id);
+      if(el2) el2.innerHTML = `<h2>Analiza AI</h2><div class="banner">Nie udało się pobrać analizy AI: ${esc(String(e.message || e))}. <a href="#" data-ponow="${id}">Spróbuj ponownie</a></div>`;
+      const a = el2 && el2.querySelector('[data-ponow]'); if(a) a.onclick = ev => { ev.preventDefault(); el2.outerHTML = aiReczna(sp, zap, karta); };
+    }
+  }, 30);
+  return `<div id="${id}" class="air"></div>`;
+}
 function analizujInne(sp){
   const g = id => (document.getElementById(id) || {}).value || '', kn = id => parseFloat(String(g(id)).replace(',', '.'));
   const A = g('ia').trim() || 'Zawodnik A', B = g('ib').trim() || 'Zawodnik B', ka = kn('ka'), kb = kn('kb'), kd = kn('kd');
@@ -1012,7 +1042,9 @@ function analizujInne(sp){
   const T = wybierzTypy(R, rk, listy);
   for(const [poz, [k, p]] of Object.entries(T)) m[poz] = {klucz: k, zaklad: op(k, A, B), szansa: p, kurs_uczciwy: 1/p, kurs_min: 0.95/p,
     kurs_betclic: null};
-  return kartaInne(m, 0, sp);
+  const t0 = m.najpewniejszy || m.lepszy_kurs;
+  return kartaInne(m, 0, sp) + aiReczna(sp, {a: A, b: B, rozgrywki: sp === 'tenis' ? 'tenis' : (g('idys') || 'MMA'), typ: t0 ? {zaklad: t0.zaklad, szansa: t0.szansa} : null,
+    szansa_a: m.szansa_a, szansa_b: m.szansa_b}, {a: A, b: B});
 }
 function widokAnalizaInne(sp){
   const dz = meczeSportu(sp), st = store.get('an_' + sp, {});
@@ -1027,7 +1059,10 @@ function widokAnalizaInne(sp){
     <label class="check"><input type="checkbox" id="ir5" ${st.r5 ? 'checked' : ''}> Walka 5-rundowa (walka wieczoru / o pas)</label>`;
   h += `<button class="btn" id="liczInne" data-sp="${sp}">Analizuj</button><div id="wynikInne">`;
   const wyb = st.dz && dz.find(m => m.event_id === st.dz);
-  if(wyb) h += kartaInne(wyb, 0, sp); else if(st.policz) h += analizujInne.__html || '';
+  if(wyb){ h += kartaInne(wyb, 0, sp); const t0 = wyb.najpewniejszy || wyb.lepszy_kurs;
+    if(!((wyb.raport || {}).ai)) h += aiReczna(sp, {a: wyb.a, b: wyb.b, rozgrywki: wyb.turniej, start: wyb.start, typ: t0 ? {zaklad: t0.zaklad, szansa: t0.szansa} : null,
+      szansa_a: wyb.szansa_a, szansa_b: wyb.szansa_b}, {a: wyb.a, b: wyb.b}); }
+  else if(st.policz) h += analizujInne.__html || '';
   return h + `</div>`;
 }
 function podepnijAnalize(){

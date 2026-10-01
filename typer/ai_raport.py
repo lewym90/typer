@@ -8,39 +8,90 @@ KLUCZ = os.environ.get('GEMINI_API_KEY', '')
 URL = 'https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent'
 MODELE = ['gemini-flash-latest', 'gemini-flash-lite-latest']   # zapas, gdy nie uda się pobrać listy modeli
 BEZ_SZUKANIA = 'Nie masz dostępu do internetu – opieraj się tylko na danych poniżej (a nazwy źródeł pomiń). '
-MAKS_DZIENNIE = 150     # wszystkie zapytania (także ponowienia)
-MAKS_ANALIZ = 40        # analiz meczów dziennie (wyszukiwanie Google: 5 000 zapytań/mies. w cenie, ~30–50 zł/mies. za tekst)
-AI_PILKA, AI_INNE = 20, 15   # podział przy pełnym liczeniu rano; reszta zostaje na odświeżenie przed meczem
-STAN = dict(klucz=bool(KLUCZ), zapytania=0, dzis=0, analiz_dzis=0, udane=0, model=None, wyszukiwanie=None, werdykty={}, bledy=[])
-PLIK_LICZNIKA = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data', 'ai_licznik.json')
+MAKS_DZIENNIE = 400     # wszystkie zapytania (także ponowienia) – bezpiecznik
+MAKS_ANALIZ = 120       # analiz meczów dziennie – bezpiecznik; właściwy limit to budżet miesięczny niżej
+BUDZET_ZL = float(os.environ.get('AI_BUDZET_ZL') or 85)   # miesięczny limit kosztu (zł): GitHub 85 + serwer (analiza ręczna) 15 = 100 zł
+# Cennik (USD za 1 mln tokenów, ostrożnie – z zapasem): Flash wejście 0,50 / wyjście (z „myśleniem”) 3,00; Flash-Lite 0,10 / 0,40.
+# Wyszukiwanie Google: w planie płatnym 1 500 zapytań dziennie bez opłat (używamy dużo mniej).
+CENY = {'lite': (0.10, 0.40), 'flash': (0.50, 3.00)}
+USD_PLN = 3.75
+AI_PILKA, AI_INNE = 20, 15   # podział przy pełnym liczeniu; resztę uzupełnia „uzupelnij_ai” przy każdym sprawdzeniu
+WAZNOSC_H = 8                # raport z pamięci podręcznej jest używany ponownie przez 8 h (ten sam mecz i ten sam typ)
+STAN = dict(klucz=bool(KLUCZ), zapytania=0, dzis=0, analiz_dzis=0, udane=0, z_pamieci=0, koszt_miesiac_zl=0.0, budzet_zl=BUDZET_ZL,
+            model=None, wyszukiwanie=None, werdykty={}, bledy=[])
+_KAT = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
+PLIK_LICZNIKA = os.path.join(_KAT, 'ai_licznik.json')
+PLIK_PAMIECI = os.path.join(_KAT, 'ai_pamiec.json')
 
 def _plik_licznika():
-    dzien = pd.Timestamp.now(tz='America/Los_Angeles').strftime('%Y-%m-%d')
+    teraz = pd.Timestamp.now(tz='America/Los_Angeles')
+    dzien, mies = teraz.strftime('%Y-%m-%d'), pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m')
     try: d = json.load(open(PLIK_LICZNIKA))
     except Exception: d = {}
-    if d.get('data') != dzien: d = {'data': dzien, 'n': 0, 'analizy': 0}
+    if d.get('data') != dzien: d.update({'data': dzien, 'n': 0, 'analizy': 0})
+    if d.get('miesiac') != mies: d.update({'miesiac': mies, 'koszt_zl': 0.0})
     return d
 
+def _zapisz_licznik(d):
+    try:
+        os.makedirs(os.path.dirname(PLIK_LICZNIKA), exist_ok=True); json.dump(d, open(PLIK_LICZNIKA, 'w'))
+    except Exception: pass
+
 def analiz_dzis(dodaj=0):
-    """Ile analiz meczów zrobiono dziś (limit MAKS_ANALIZ – pilnuje kosztu)."""
+    """Ile analiz meczów zrobiono dziś (bezpiecznik MAKS_ANALIZ)."""
     d = _plik_licznika(); d['analizy'] = d.get('analizy', 0) + dodaj
-    if dodaj:
-        try: json.dump(d, open(PLIK_LICZNIKA, 'w'))
-        except Exception: pass
-    STAN['analiz_dzis'] = d['analizy']
+    if dodaj: _zapisz_licznik(d)
+    STAN['analiz_dzis'] = d['analizy']; STAN['koszt_miesiac_zl'] = round(d.get('koszt_zl', 0.0), 2)
     return d['analizy']
 
-def zostalo_analiz(): return max(0, MAKS_ANALIZ - analiz_dzis())
+def koszt_miesiac(dodaj_zl=0.0):
+    d = _plik_licznika()
+    if dodaj_zl: d['koszt_zl'] = round(d.get('koszt_zl', 0.0) + dodaj_zl, 4); _zapisz_licznik(d)
+    STAN['koszt_miesiac_zl'] = round(d.get('koszt_zl', 0.0), 2)
+    return d.get('koszt_zl', 0.0)
 
 def _licznik(dodaj=0):
     """Liczba zapytań do Gemini dzisiaj (czas pacyficzny – wtedy Google zeruje limit), zapisywana między uruchomieniami."""
     d = _plik_licznika()
-    if dodaj:
-        d['n'] += dodaj
-        try: json.dump(d, open(PLIK_LICZNIKA, 'w'))
-        except Exception: pass
-    STAN['dzis'] = d['n']
-    return d['n']
+    if dodaj: d['n'] = d.get('n', 0) + dodaj; _zapisz_licznik(d)
+    STAN['dzis'] = d.get('n', 0)
+    return d.get('n', 0)
+
+def zostalo_analiz():
+    if koszt_miesiac() >= BUDZET_ZL: return 0
+    return max(0, MAKS_ANALIZ - analiz_dzis())
+
+def _koszt(model, usage):
+    """Koszt jednego zapytania w zł z liczby tokenów (usageMetadata)."""
+    c_we, c_wy = CENY['lite' if 'lite' in str(model) else 'flash']
+    we = usage.get('promptTokenCount', 0) + usage.get('toolUsePromptTokenCount', 0)
+    wy = usage.get('candidatesTokenCount', 0) + usage.get('thoughtsTokenCount', 0)
+    return (we * c_we + wy * c_wy) / 1e6 * USD_PLN
+
+# ---------------- pamięć raportów: ten sam mecz i typ nie jest analizowany ponownie przez WAZNOSC_H godzin ----------------
+def _pamiec():
+    try: return json.load(open(PLIK_PAMIECI))
+    except Exception: return {}
+
+def klucz_pamieci(*czesci): return '|'.join(str(c or '').strip().lower() for c in czesci)
+
+def z_pamieci(k, godzin=None):
+    x = _pamiec().get(k)
+    if not x: return None
+    try:
+        if pd.Timestamp.now(tz='UTC') - pd.Timestamp(x['czas']) > pd.Timedelta(hours=godzin or WAZNOSC_H): return None
+    except Exception: return None
+    STAN['z_pamieci'] += 1
+    return x.get('ai')
+
+def do_pamieci(k, ai):
+    if not ai: return
+    p = _pamiec(); teraz = pd.Timestamp.now(tz='UTC')
+    p = {kk: v for kk, v in p.items() if teraz - pd.Timestamp(v.get('czas', '2000-01-01T00:00:00+00:00')) < pd.Timedelta(days=2)}
+    p[k] = dict(czas=teraz.isoformat(), ai=ai)
+    try: os.makedirs(os.path.dirname(PLIK_PAMIECI), exist_ok=True); json.dump(p, open(PLIK_PAMIECI, 'w'), ensure_ascii=False)
+    except Exception: pass
+
 _zly = set()            # modele, które odpowiedziały błędem limitu / brakiem – pomijamy do końca uruchomienia
 _szukanie = {'ok': True}   # False, gdy Google odrzuca wyszukiwanie (400/403) – wtedy tylko streszczanie
 
@@ -159,6 +210,8 @@ def _zapytaj(tekst_szukaj, tekst_bez):
             except Exception as e: _blad(f'{m}: {e}'); continue
             if r.status_code == 200:
                 j = r.json(); c = (j.get('candidates') or [{}])[0]
+                try: koszt_miesiac(_koszt(m, j.get('usageMetadata') or {}))
+                except Exception: pass
                 txt = ''.join(p.get('text', '') for p in (c.get('content') or {}).get('parts', []))
                 zr = []
                 for ch in ((c.get('groundingMetadata') or {}).get('groundingChunks') or []):
@@ -180,10 +233,15 @@ def _zapytaj(tekst_szukaj, tekst_bez):
             break
     return None, [], False
 
-def raport_ai(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, braki=None, zapowiedz=None, naglowki=None, polski=False, typ=None, szanse=None):
-    """Zwraca słownik z analizą i werdyktem albo None (brak klucza, limit, błąd). typ = (zakład, szansa); szanse = {'1','X','2'}."""
+def raport_ai(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, braki=None, zapowiedz=None, naglowki=None, polski=False, typ=None, szanse=None, wymus=False):
+    """Zwraca słownik z analizą i werdyktem albo None (brak klucza, limit, błąd). typ = (zakład, szansa); szanse = {'1','X','2'}.
+    Ten sam mecz i typ z ostatnich WAZNOSC_H godzin bierzemy z pamięci (wymus=True – zawsze nowa analiza, np. przed meczem)."""
+    kp = klucz_pamieci('pilka', dom, gosc, str(start)[:10] if start is not None else '', typ[0] if typ else '')
+    if not wymus:
+        z = z_pamieci(kp)
+        if z: return z
     if not KLUCZ or _licznik() >= MAKS_DZIENNIE or zostalo_analiz() <= 0: return None
-    kiedy = pd.Timestamp(start).strftime('%d.%m.%Y, %H:%M')
+    kiedy = pd.Timestamp(start).strftime('%d.%m.%Y, %H:%M') if start is not None else 'najbliższy mecz tych drużyn (data nieznana)'
     szukaj_txt = ('Wyszukaj w Google najnowsze wiadomości o obu drużynach (konferencje trenerów, składy, kontuzje)'
                   + (' – koniecznie w polskich źródłach (Sport.pl, TVP Sport, Meczyki, WP SportoweFakty, Przegląd Sportowy, Interia)' if polski else
                      ' – w lokalnych mediach obu krajów i w mediach angielskojęzycznych') + '.')
@@ -201,13 +259,14 @@ def raport_ai(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, braki=None, zapowied
     lista = lambda k: [str(x)[:120] for x in (d.get(k) or []) if x][:10]
     w = pilnuj_werdyktu(werdykt_z(d) if typ else None, szukal, zr, d)
     if w: STAN['werdykty'][w] = STAN['werdykty'].get(w, 0) + 1
-    return dict(tekst=str(d['podsumowanie'])[:700], braki_gosp=lista('braki_gosp'), braki_gosc=lista('braki_gosc'),
+    out = dict(tekst=str(d['podsumowanie'])[:700], braki_gosp=lista('braki_gosp'), braki_gosc=lista('braki_gosc'),
                 niepewni=lista('niepewni'), powazne=bool(d.get('powazne')), powazne_dla=str(d.get('powazne_dla') or 'brak'),
                 uzasadnienie=str(d.get('uzasadnienie') or '')[:200], zrodla=zr[:6], szukal=bool(szukal), model=STAN['model'],
                 werdykt=w, powod=str(d.get('powod') or '')[:220], forma=str(d.get('forma') or '')[:260], styl=str(d.get('styl') or '')[:260],
                 lepszy_zaklad=str(d.get('lepszy_zaklad') or '')[:160], typ=typ[0] if typ else None,
                 czas=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%H:%M'))
-    return None
+    do_pamieci(kp, out)
+    return out
 
 def zmiana_istotna(stary, nowy):
     """Czy odświeżony raport przynosi coś nowego (nowy brak, zmiana oceny powagi)."""
