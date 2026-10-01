@@ -7,7 +7,7 @@ Działa jako osobny krok workflow (błąd tutaj nie dotyka reszty programu):
 3. dla dopasowanych meczów piłki pobiera wszystkie rynki meczu,
 4. dopisuje do każdego typu pole  kursy_pl = {"Superbet": kurs}  w dzis.json i inne.json,
 5. zapisuje szczegóły w docs/data/kursy_pl.json (także diagnostykę: nazwy rynków, niedopasowane mecze).
-Częstotliwość: po każdym pełnym liczeniu (12:00), przy push / ręcznym uruchomieniu i co ok. 2 godziny."""
+Częstotliwość: po każdym pełnym liczeniu (ok. 7:10), przy push / ręcznym uruchomieniu i co ok. 2 godziny."""
 import os, re, json, time, unicodedata, difflib, datetime as dt
 from zoneinfo import ZoneInfo
 
@@ -271,9 +271,15 @@ def _zapisz_przyklad(event, odds):
     DIAG['rynki_przyklad'][str(event.get('matchName'))[:60]] = rynki
 
 # ---------------------------------------------------------------- nasze mecze
-def nasze_mecze():
-    """[(sport, event_id, h, a, start)] z dzis.json (piłka) i inne.json (tenis, walki)."""
+def nasze_mecze(z_listy=False):
+    """[(sport, event_id, h, a, start, bo)] z dzis.json (piłka) i inne.json (tenis, walki);
+    z_listy=True (serwer) – także z lista_vps.json (lista wysłana na serwer w trakcie liczenia, zanim dzis/inne trafią do repozytorium)."""
     wyn = {}
+    if z_listy:
+        try:
+            for m in (json.load(open(os.path.join(OUT, 'lista_vps.json'))).get('mecze') or []):
+                if isinstance(m, list) and len(m) >= 6: wyn[m[1]] = tuple(m[:6])
+        except Exception: pass
     try:
         d = json.load(open(os.path.join(OUT, 'dzis.json')))
         for m in (d.get('pewne') or []) + (d.get('mecze') or []):
@@ -288,6 +294,56 @@ def nasze_mecze():
                     wyn[m['event_id']] = (sp, m['event_id'], m['a'], m['b'], m['start'], m.get('bo') or 3)
     except Exception as e: DIAG['bledy'].append(f'inne.json: {e}')
     return list(wyn.values())
+
+def lista_podpis(nasze):
+    """Podpis listy meczów (zmiana listy = nowy podpis) – serwer liczy kursy od razu, gdy się zmieni."""
+    import hashlib
+    return hashlib.md5(json.dumps(sorted([str(m[1]), str(m[4])] for m in nasze)).encode()).hexdigest()[:12]
+
+VPS_PLIK = None          # świeży kursy_vps.json pobrany w trakcie liczenia (czekaj_na_vps)
+
+def _gh(metoda, sciezka, **kw):
+    import requests
+    repo = os.environ.get('GITHUB_REPOSITORY', 'lewym90/typer'); token = os.environ.get('GH_TOKEN') or os.environ.get('GITHUB_TOKEN')
+    h = {'Accept': 'application/vnd.github+json', 'User-Agent': 'typer'}
+    if token: h['Authorization'] = f'Bearer {token}'
+    h.update(kw.pop('naglowki', {}))
+    return requests.request(metoda, f'https://api.github.com/repos/{repo}/contents/{sciezka}', headers=h, timeout=30, **kw)
+
+def czekaj_na_vps(maks_s=480):
+    """Pełne liczenie: wysyła listę meczów na serwer (docs/data/lista_vps.json przez API GitHuba) i czeka, aż serwer
+    policzy dla niej kursy Fortuny/STS (kursy_vps.json z polem lista = podpis). Dzięki temu kursy są już w wiadomości na Telegram."""
+    global VPS_PLIK
+    import base64
+    if not os.environ.get('GITHUB_ACTIONS') or not (os.environ.get('GH_TOKEN') or os.environ.get('GITHUB_TOKEN')): return 'pominięte (poza GitHub)'
+    nasze = nasze_mecze(z_listy=False)
+    if not nasze: return 'brak meczów'
+    try:   # serwer martwy (brak kursów od 6 h) – nie czekamy
+        c = json.load(open(os.path.join(OUT, 'kursy_vps.json'))).get('czas')
+        if not c or (dt.datetime.now(dt.timezone.utc) - dt.datetime.strptime(c, '%Y-%m-%d %H:%M UTC').replace(tzinfo=dt.timezone.utc)).total_seconds() > 6 * 3600:
+            return 'serwer nie odpowiada od 6 h – bez czekania'
+    except Exception: pass
+    podpis = lista_podpis(nasze); t0 = time.time()
+    tresc = json.dumps(dict(czas=dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d %H:%M UTC'), podpis=podpis, mecze=[list(m) for m in nasze]), ensure_ascii=False)
+    try:
+        for _ in range(3):
+            r = _gh('GET', 'docs/data/lista_vps.json'); sha = r.json().get('sha') if r.status_code == 200 else None
+            body = dict(message='Lista meczów dla serwera kursów', content=base64.b64encode(tresc.encode()).decode())
+            if sha: body['sha'] = sha
+            r = _gh('PUT', 'docs/data/lista_vps.json', json=body)
+            if r.status_code in (200, 201): break
+            time.sleep(3)
+        else: return f'nie wysłano listy (GitHub {r.status_code})'
+    except Exception as e: return f'nie wysłano listy: {e}'[:120]
+    while time.time() - t0 < maks_s:
+        time.sleep(20)
+        try:
+            r = _gh('GET', 'docs/data/kursy_vps.json', naglowki={'Accept': 'application/vnd.github.raw'})
+            if r.status_code == 200 and r.json().get('lista') == podpis:
+                VPS_PLIK = '/tmp/kursy_vps_swiezy.json'; open(VPS_PLIK, 'w').write(r.text)
+                return f'kursy z serwera po {round(time.time() - t0)} s'
+        except Exception: pass
+    return f'serwer nie zdążył w {maks_s // 60} min'
 
 def dopasuj_wszystko(ses, oferta):
     kursy = {}
@@ -327,7 +383,7 @@ NAZWY_BUK = {'fortuna': 'Fortuna', 'sts': 'STS', 'betclic': 'Betclic PL'}
 def _kursy_vps():
     """Kursy z polskiego serwera (Fortuna, później STS i Betclic) – docs/data/kursy_vps.json, jeśli świeże (do 6 h)."""
     try:
-        d = json.load(open(os.path.join(OUT, 'kursy_vps.json')))
+        d = json.load(open(VPS_PLIK or os.environ.get('KURSY_VPS_PLIK') or os.path.join(OUT, 'kursy_vps.json')))
         t = dt.datetime.strptime(d['czas'], '%Y-%m-%d %H:%M UTC').replace(tzinfo=dt.timezone.utc)
         if (dt.datetime.now(dt.timezone.utc) - t).total_seconds() > 6 * 3600: DIAG['vps'] = 'nieaktualne'; return {}
         DIAG['vps'] = dict(czas=d['czas'], mecze=len(d.get('mecze') or {}))
@@ -381,7 +437,7 @@ def czy_teraz(st):
     if not ost: return True
     try: ost_t = dt.datetime.fromisoformat(ost)
     except Exception: return True
-    try:   # nowe pełne liczenie (12:00) nadpisało dzis.json – dopisz kursy od razu
+    try:   # nowe pełne liczenie (rano) nadpisało dzis.json – dopisz kursy od razu
         wyg = json.load(open(os.path.join(OUT, 'dzis.json'))).get('wygenerowano')
         if wyg and dt.datetime.strptime(wyg, '%Y-%m-%d %H:%M').replace(tzinfo=TZ) > ost_t: return True
     except Exception: pass

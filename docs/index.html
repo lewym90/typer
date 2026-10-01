@@ -808,7 +808,7 @@ function widokPewne(){
   let lista;
   if(f === 'wszystkie'){ const gl = glowneListy(); lista = gl ? gl.pew : pewneSportu('pilka').map(m => ['pilka', m]); }
   else lista = pewneSportu(f).map(m => [f, m]);
-  if(!lista.length) h += `<div class="empty">Dziś brak typów${f === 'wszystkie' ? '' : ' w tej dyscyplinie'}. Lista pojawia się codziennie po 12:00.</div>`;
+  if(!lista.length) h += `<div class="empty">Dziś brak typów${f === 'wszystkie' ? '' : ' w tej dyscyplinie'}. Lista pojawia się codziennie ok. 8:00.</div>`;
   else h += lista.map(([sp, m], i) => kartaPewna(sp, m, i + 1)).join('');
   h += sekcjaOdradzane(odradzaneWszystkie().filter(([sp]) => f === 'wszystkie' || sp === f));
   return h + `<p class="note" style="margin:4px">Typ dnia to najpewniejszy zakład meczu (od 70%). Szanse z kursów Pinnacle i giełdy Betfair (KSW – z polskich bukmacherów); AI sprawdza każdy typ w aktualnych wiadomościach. Testy na 328 257 spotkaniach: typy od 70% wchodzą ok. 78 razy na 100.</p>`;
@@ -911,7 +911,7 @@ function widokPewnePilka(){
 }
 function widokPewneInne(sp){
   const d = S.inne;
-  if(!d) return `<div class="empty">Brak danych – pojawią się po najbliższym liczeniu typów (codziennie o 12:00).</div>`;
+  if(!d) return `<div class="empty">Brak danych – pojawią się po najbliższym liczeniu typów (codziennie ok. 8:00).</div>`;
   const s = d[sp] || {}, mecze = s.mecze || [], pewne = pewneSportu(sp);
   let h = `<p class="lead">${sp === 'tenis'
       ? 'Szanse z kursów Pinnacle i giełdy Betfair (bez marży). Rozkład setów z modelu sprawdzonego na 79 408 meczach ATP i WTA (kobiety mają osobne parametry – częściej wygrywają 2:0). Mecze bez tych kursów są pomijane.'

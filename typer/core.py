@@ -337,6 +337,7 @@ def dzisiejsze_mecze():
     w kolejności popularności lig, dopóki nie wyczerpie się dzienny budżet kredytów (darmowy plan: 500/mies.)."""
     import wspolne
     teraz = pd.Timestamp.now(tz='Europe/Warsaw'); koniec = wspolne.koniec_doby('pilka', teraz)
+    od = wspolne.poczatek_listy(teraz)   # najwcześniej mecze od 8:00
     f = lambda t: t.tz_convert('UTC').strftime('%Y-%m-%dT%H:%M:%SZ')
     aktywne = {s['key'] for s in api('sports')}
     budzet = budzet_dzienny(); KREDYTY['na_dzis'] = budzet; start_kr = KREDYTY['wydane_teraz']
@@ -344,14 +345,14 @@ def dzisiejsze_mecze():
     for key, model in LIGI_DO_SKANU.items():
         if key not in aktywne: continue
         # lista meczów jest DARMOWA – kursy pobieramy tylko, gdy liga gra dzisiaj
-        try: evs = api(f'sports/{key}/events', commenceTimeFrom=f(teraz), commenceTimeTo=f(koniec))
+        try: evs = api(f'sports/{key}/events', commenceTimeFrom=f(od), commenceTimeTo=f(koniec))
         except Exception: continue
         if not evs: continue
         if KREDYTY['wydane_teraz'] - start_kr + 2 > budzet:
             print(f"→ {key}: pominięto – dzienny budżet kredytów wyczerpany ({budzet})"); continue
         print(f"→ {key}: {len(evs)} mecz(e) dziś")
         try: odds = api(f'sports/{key}/odds', regions=REGIONY_ODDS_API, markets='h2h,totals', oddsFormat='decimal',
-                        commenceTimeFrom=f(teraz), commenceTimeTo=f(koniec))
+                        commenceTimeFrom=f(od), commenceTimeTo=f(koniec))
         except Exception as e: print("   błąd:", e); continue
         for ev in odds: wynik.append((key, model, ev))
     return wynik

@@ -266,9 +266,20 @@ KATALOG = '/opt/typer/dane'
 def _przygotuj(s):
     """Pobiera z repozytorium nasze listy meczów i moduł dopasowania (ten sam co dla Superbetu)."""
     os.makedirs(KATALOG, exist_ok=True)
-    for plik in ('typer/kursy_pl.py', 'typer/nazwy.py', 'docs/data/dzis.json', 'docs/data/inne.json'):
-        r = s.get(f'{RAW}/{plik}?t={int(time.time())}', timeout=20); r.raise_for_status()
-        open(os.path.join(KATALOG, os.path.basename(plik)), 'wb').write(r.content)
+    try: token = open(TOKEN_PLIK).read().strip()
+    except Exception: token = None
+    for plik in ('typer/kursy_pl.py', 'typer/nazwy.py', 'docs/data/dzis.json', 'docs/data/inne.json', 'docs/data/lista_vps.json'):
+        cel = os.path.join(KATALOG, os.path.basename(plik))
+        if token:   # API GitHuba – bez opóźnienia pamięci podręcznej (raw bywa nieaktualne do 5 min)
+            r = s.get(f'https://api.github.com/repos/{REPO}/contents/{plik}', timeout=20,
+                      headers={'Authorization': f'Bearer {token}', 'Accept': 'application/vnd.github.raw', 'User-Agent': 'typer-vps'})
+        else: r = s.get(f'{RAW}/{plik}?t={int(time.time())}', timeout=20)
+        if plik.endswith('lista_vps.json') and r.status_code == 404:
+            try: os.remove(cel)
+            except Exception: pass
+            continue
+        r.raise_for_status()
+        open(cel, 'wb').write(r.content)
     sys.path.insert(0, KATALOG)
     import kursy_pl as KP
     KP.OUT = KATALOG
@@ -395,11 +406,13 @@ def scal_ksw(fortuna, sts):
         else: out.append(w)
     return out
 
-def czytnik():
-    s = ses(); diag = dict(bledy=[]); wynik = {}
+def czytnik(KP=None):
+    s = ses(); diag = dict(bledy=[]); wynik = {}; lista = None
     try:
-        KP = _przygotuj(s)
-        nasze = KP.nasze_mecze()
+        KP = KP or _przygotuj(s)
+        try: lista = json.load(open(os.path.join(KATALOG, 'lista_vps.json'))).get('podpis')
+        except Exception: lista = None
+        nasze = KP.nasze_mecze(z_listy=True)
         diag['nasze_mecze'] = len(nasze)
         oferta = fortuna_mecze(s, diag)
         rynki_nazwy = {}
@@ -441,10 +454,45 @@ def czytnik():
     dane = dict(czas=dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d %H:%M UTC'), wersja='czytnik-2',
                 bukmacherzy=dict(fortuna=dict(ok=not diag['bledy'] or bool(ile_fortuna), dopasowane=ile_fortuna),
                                  sts=dict(ok=not diag_sts.get('bledy') or bool(sts), dopasowane=len(sts))),
-                mecze=wynik, ksw=ksw, diag=diag, sekund=round(time.time() - START))
+                mecze=wynik, ksw=ksw, diag=diag, lista=lista, sekund=round(time.time() - START))
     print('Fortuna: dopasowane', ile_fortuna, 'z', diag.get('nasze_mecze'), '| błędy:', diag['bledy'][:3])
     print('STS: dopasowane', len(sts), '| błędy:', (diag_sts.get('bledy') or [])[:3])
-    zapisz_github('docs/data/kursy_vps.json', dane)
+    return zapisz_github('docs/data/kursy_vps.json', dane)
+
+STAN_CRON = '/opt/typer/stan_cron.json'
+
+def tryb_cron():
+    """Cron co kilka minut: pełny odczyt kursów tylko gdy zmieniła się lista meczów (np. nowe typy rano – liczenie
+    na GitHubie czeka na serwer) albo minęło ~110 min od ostatniego. Inaczej kończy w kilka sekund."""
+    import fcntl
+    blokada = open('/opt/typer/cron.lock', 'w')
+    try: fcntl.flock(blokada, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError: return            # poprzedni odczyt jeszcze trwa
+    try: stan = json.load(open(STAN_CRON))
+    except Exception: stan = {}
+    try:
+        from zoneinfo import ZoneInfo; teraz = dt.datetime.now(ZoneInfo('Europe/Warsaw'))
+    except Exception: teraz = dt.datetime.now(dt.timezone(dt.timedelta(hours=2)))
+    s = ses()
+    try: KP = _przygotuj(s)
+    except Exception as e: print(teraz.strftime('%H:%M'), 'cron: brak danych z GitHuba:', e); return
+    nasze = KP.nasze_mecze(z_listy=True)
+    podpis = KP.lista_podpis(nasze)
+    try: lista = json.load(open(os.path.join(KATALOG, 'lista_vps.json'))).get('podpis')
+    except Exception: lista = None
+    minut = (time.time() - stan.get('czas', 0)) / 60
+    zmiana = podpis != stan.get('podpis') or lista != stan.get('lista')
+    if not zmiana and (minut < 110 or teraz.hour < 7): return
+    print(teraz.strftime('%Y-%m-%d %H:%M'), 'cron:', 'nowa lista meczów' if zmiana else f'{round(minut)} min od ostatniego odczytu')
+    if czytnik(KP):
+        stan.update(podpis=podpis, lista=lista, czas=time.time())
+        json.dump(stan, open(STAN_CRON, 'w'))
+    # raz dziennie (po 9:00) rozpoznanie pełnej oferty meczu Fortuny – do dalszej pracy nad golami
+    if teraz.hour >= 9 and stan.get('rozpoznanie') != teraz.strftime('%Y-%m-%d'):
+        stan['rozpoznanie'] = teraz.strftime('%Y-%m-%d'); json.dump(stan, open(STAN_CRON, 'w'))
+        import subprocess
+        try: subprocess.run([PW_PYTHON if os.path.exists(PW_PYTHON) else sys.executable, os.path.abspath(__file__), '--fortuna-mecz'], timeout=400)
+        except Exception as e: print('rozpoznanie Fortuny:', e)
 
 # ======================================================================= CZYTNIK STS (websocket, przez przeglądarkę)
 STS_WS = 'wss://www.sts.pl/sbk/api/sbk'
@@ -585,7 +633,7 @@ def sts_kursy():
     KP.OUT = KATALOG
     diag = dict(bledy=[]); wynik = {}
     try:
-        nasze = KP.nasze_mecze()
+        nasze = KP.nasze_mecze(z_listy=True)
         migawki = []
         with sync_playwright() as pw:
             br = pw.chromium.launch(headless=True, args=['--no-sandbox', '--disable-dev-shm-usage'])
@@ -772,6 +820,8 @@ def sts_zrzut():
     except Exception as e: print('rynki STS:', e)
 
 def main():
+    if '--cron' in sys.argv:
+        tryb_cron(); return
     if '--test' not in sys.argv and not any(a.startswith('--siec') or a in ('--zrzut', '--sts', '--sts-kursy', '--fortuna-mecz') for a in sys.argv[1:]):
         czytnik(); return
     if '--sts-kursy' in sys.argv:

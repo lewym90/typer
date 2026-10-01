@@ -90,7 +90,7 @@ def _okno(sport):
     """Od teraz do końca doby programu: 6:00 (tenis), 9:00 (walki – gale w USA kończą się rano)."""
     t = teraz(); do = wspolne.koniec_doby(sport, t)
     f = lambda x: x.tz_convert('UTC').strftime('%Y-%m-%dT%H:%M:%SZ')
-    return f(t), f(do)
+    return f(wspolne.poczatek_listy(t)), f(do)   # najwcześniej od 8:00
 
 def _ranga(key, tytul, evs):
     """Kolejność pobierania (gdy brakuje kredytów): mecze Polaków, Wielki Szlem, turnieje 1000, reszta."""
@@ -802,7 +802,7 @@ TESTY = {'tenis': dict(opis='79 408 meczów ATP i WTA 2010–2026 (tennis-data.c
 
 # ---------------- główne ----------------
 def licz():
-    """Pełne liczenie (o 12:00). Zwraca słownik do inne.json."""
+    """Pełne liczenie (ok. 7:10). Zwraca słownik do inne.json."""
     for s_ in ('tenis', 'walki'): STAN[s_] = {}
     STAN['rundy'] = {}
     dane = pobierz(); wynik = dict(wygenerowano=teraz().strftime('%Y-%m-%d %H:%M'), data=wspolne.dzien_str())
@@ -871,7 +871,7 @@ def _pewne(d, sp):
 def tg_typy(d, status):
     """Osobna wiadomość dla tenisa i walk – raz dziennie (ponownie tylko przy zmianie typów), nie w nocy."""
     wyniki = []
-    if teraz().hour < 8: return 'wstrzymane (noc)'
+    if teraz().hour < 7: return 'wstrzymane (noc)'
     for sp in ('tenis', 'walki'):
         P = _pewne(d, sp); V = (d.get(sp) or {}).get('value', [])
         if not P and not V: continue

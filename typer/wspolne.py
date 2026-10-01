@@ -10,8 +10,10 @@ IKONA = {k: i for k, i, _ in SPORTY}
 PEWNE_ILE = 5
 MIN_SZANSA = 0.70
 
-# ---------- doba programu: od 6:00 do 6:00 (nocne mecze należą do poprzedniego dnia) ----------
+# ---------- doba programu: mecze ZACZYNAJĄCE SIĘ od 8:00 do 6:00 następnego dnia (nocne mecze należą do poprzedniego dnia;
+# mecze 6:00–8:00 rano pomijane). Liczenie typów ok. 7:10, wiadomość na Telegram ok. 8:00. ----------
 GODZINA_DOBY = 6
+POCZATEK_LISTY = 8
 TZ = 'Europe/Warsaw'
 
 def teraz(): return pd.Timestamp.now(tz=TZ)
@@ -24,15 +26,21 @@ def dzien_programu(t=None):
 
 def dzien_str(t=None): return dzien_programu(t).strftime('%Y-%m-%d')
 
+def poczatek_listy(t=None):
+    """Od kiedy liczymy mecze dnia: najwcześniej od 8:00 (liczenie o 7:10 nie bierze meczów 7:10–8:00), później od teraz."""
+    t = teraz() if t is None else pd.Timestamp(t)
+    if t.tzinfo is None: t = t.tz_localize(TZ)
+    return max(t.tz_convert(TZ), dzien_programu(t) + pd.Timedelta(hours=POCZATEK_LISTY))
+
 def koniec_doby(sport='pilka', t=None):
     """Do kiedy liczymy mecze dnia: 6:00 następnego dnia; walki do 9:00 (gale w USA kończą się rano)."""
     return dzien_programu(t) + pd.Timedelta(days=1, hours=9 if sport == 'walki' else GODZINA_DOBY)
 
 def mozna_podmienic_typy(t=None):
     """Nierozliczony typ z dziennika wolno zastąpić nowym tylko tego samego dnia programu i gdy nowe typy pójdą na Telegram
-    (w nocy 0–8 wiadomości są wstrzymane – wtedy zostaje typ, który już dostałeś)."""
+    (w nocy 0–7 wiadomości są wstrzymane – wtedy zostaje typ, który już dostałeś)."""
     t = teraz() if t is None else pd.Timestamp(t)
-    return t.tz_convert(TZ).hour >= 8
+    return t.tz_convert(TZ).hour >= 7
 
 def _pewne_pilka(dzis):
     for m in dzis.get('pewne', []):

@@ -516,7 +516,7 @@ def tg_typy_dnia(d, status):
     """Typy dnia + raporty. Raz dziennie; ponownie tylko przy zmianie typów; nie w nocy (00–08)."""
     if not d.get('pewne') and not d.get('value'): return 'brak typów'
     teraz = pd.Timestamp.now(tz='Europe/Warsaw')
-    if teraz.hour < 8: return 'wstrzymane (noc) – wyślę po 12:00'
+    if teraz.hour < 7: return 'wstrzymane (noc) – wyślę rano (ok. 8:00)'
     wys = status.get('tg_typy') or {}
     podpis = _podpis_typow(d)
     n_ai = sum(1 for m in d.get('pewne', []) if (m.get('raport') or {}).get('ai'))
@@ -644,7 +644,7 @@ def tg_typy_wszystkie(d, inne, gl, status):
     pew, val = _rozwiaz(gl, d, inne)
     if not pew and not val: return 'brak typów'
     teraz = pd.Timestamp.now(tz='Europe/Warsaw')
-    if teraz.hour < 8: return 'wstrzymane (noc) – wyślę po 12:00'
+    if teraz.hour < 7: return 'wstrzymane (noc) – wyślę rano (ok. 8:00)'
     podpis = hashlib.md5(json.dumps([(sp, str(m.get('event_id')), [(m.get(p) or {}).get('klucz') for p in ('lepszy_kurs', 'ryzykowny')] + [m.get('klucz') or (m.get('najpewniejszy') or {}).get('klucz')]) for sp, m in pew]
                                     + [(sp, str(v.get('event_id')), v['zaklad']) for sp, v in val], ensure_ascii=False).encode()).hexdigest()[:12]
     n_ai = sum(1 for _, m in pew if (m.get('raport') or {}).get('ai'))
@@ -817,8 +817,8 @@ if __name__ == '__main__':
     except Exception: stare = {}
     try: core.KREDYTY['pozostalo'] = json.load(open(os.path.join(OUT, 'status.json')))['kredyty_odds']['pozostalo']
     except Exception: pass
-    dzis_gotowe = stare.get('data') == wspolne.dzien_str() and str(stare.get('wygenerowano', ''))[11:13] >= '12'
-    pelne = os.environ.get('GITHUB_EVENT_NAME') != 'schedule' or (teraz.hour >= 12 and not dzis_gotowe and teraz.hour < 23)
+    dzis_gotowe = stare.get('data') == wspolne.dzien_str() and str(stare.get('wygenerowano', ''))[11:13] >= '07'
+    pelne = os.environ.get('GITHUB_EVENT_NAME') != 'schedule' or (teraz.hour >= 7 and not dzis_gotowe and teraz.hour < 23)
     if not pelne:
         # ---- lekkie sprawdzenie: składy, kursy przed meczem, rozliczenie, podsumowanie wieczorne ----
         bledy = []
@@ -866,7 +866,10 @@ if __name__ == '__main__':
     try: STRAZNIK.append(pilnuj_straznika(today))
     except Exception as e: bledy.append(f'strażnik: {e}')
     try:   # kursy polskich bukmacherów (Superbet + Fortuna/STS z serwera) – przed wiadomością na Telegram
-        import kursy_pl; os.environ['KURSY_PL_TERAZ'] = '1'; kursy_pl.main()
+        import kursy_pl; os.environ['KURSY_PL_TERAZ'] = '1'
+        try: kursy_pl.DIAG['vps_czekanie'] = kursy_pl.czekaj_na_vps(); print('Serwer kursów:', kursy_pl.DIAG['vps_czekanie'])
+        except Exception as e: kursy_pl.DIAG['vps_czekanie'] = f'błąd: {e}'[:120]
+        kursy_pl.main()
         today = json.load(open(os.path.join(OUT, 'dzis.json'))); inne = sporty.wczytaj_json() or inne
     except Exception as e: bledy.append(f'kursy PL: {e}')
     st = wczytaj_status(); tg_info = None

@@ -10,7 +10,7 @@ MODELE = ['gemini-flash-latest', 'gemini-flash-lite-latest']   # zapas, gdy nie 
 BEZ_SZUKANIA = 'Nie masz dostępu do internetu – opieraj się tylko na danych poniżej (a nazwy źródeł pomiń). '
 MAKS_DZIENNIE = 150     # wszystkie zapytania (także ponowienia)
 MAKS_ANALIZ = 40        # analiz meczów dziennie (wyszukiwanie Google: 5 000 zapytań/mies. w cenie, ~30–50 zł/mies. za tekst)
-AI_PILKA, AI_INNE = 20, 15   # podział przy pełnym liczeniu o 12:00; reszta zostaje na odświeżenie przed meczem
+AI_PILKA, AI_INNE = 20, 15   # podział przy pełnym liczeniu rano; reszta zostaje na odświeżenie przed meczem
 STAN = dict(klucz=bool(KLUCZ), zapytania=0, dzis=0, analiz_dzis=0, udane=0, model=None, wyszukiwanie=None, werdykty={}, bledy=[])
 PLIK_LICZNIKA = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data', 'ai_licznik.json')
 

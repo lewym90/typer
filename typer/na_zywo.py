@@ -49,7 +49,7 @@ def zapisz_stan(s, commit=False, opis='stan na żywo'):
                 print('commit stanu:', e); time.sleep(5 * (proba + 1))
 
 def odswiez_repo():
-    """Pobiera najnowsze typy (dzis.json) z repozytorium – liczenie o 12:00 mogło je zmienić."""
+    """Pobiera najnowsze typy (dzis.json) z repozytorium – poranne liczenie mogło je zmienić."""
     if os.environ.get('GITHUB_ACTIONS'):
         try: subprocess.run(['git', 'pull', '-q', '--rebase', '--autostash'], check=True, timeout=60)
         except Exception as e: print('git pull:', e)
