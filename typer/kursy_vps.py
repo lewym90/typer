@@ -573,7 +573,7 @@ def sts_kursy():
             szczeg = {}
             if dopas:
                 try:
-                    r = pg.evaluate(_JS_SZCZEGOLY, dict(ids=[d[5]['id'] for d in dopas], ms=14000))
+                    r = pg.evaluate(_JS_SZCZEGOLY, dict(ids=[d[5]['id'] for d in dopas], ms=20000))
                     diag['szczegoly_ramek'] = len(r.get('out') or [])
                     if r.get('blad') or r.get('limit'): diag['bledy'].append(f"szczegóły: {r.get('blad') or 'limit czasu'}")
                     tematy = {}
@@ -589,11 +589,14 @@ def sts_kursy():
         przyklady = {}
         for sp, eid, h, a, bo, f, sc, odwr in dopas:
             rynki = {}
-            for kl in f['ceny']:
-                _scal(rynki, (ceny.get(kl) or {}).get('m') or {})
-                _scal(rynki, (szczeg.get(kl) or {}).get('m') or {})
-            for kl, v in szczeg.items():                      # szczegóły mogą przyjść pod innym kluczem – po id meczu
-                if isinstance(v, dict) and v.get('f') == f['id'] and kl not in f['ceny']: _scal(rynki, v.get('m') or {})
+            def dodaj_rynki(mm):                                # tylko rynki z kursami; puste/null nie kasują tego, co już jest
+                for mid, m in (mm or {}).items():
+                    if isinstance(m, dict) and m.get('l'): rynki[mid] = m
+            for kl in f['ceny']: dodaj_rynki((ceny.get(kl) or {}).get('m'))
+            klucze_sz = [kl for kl, v in szczeg.items() if kl in f['ceny'] or (isinstance(v, dict) and v.get('f') == f['id'])]
+            for kl in klucze_sz: dodaj_rynki((szczeg.get(kl) or {}).get('m'))
+            diag.setdefault('szczegoly_meczow', {})[f"{f['h']} - {f['a']}"[:50]] = \
+                {kl[:14]: sum(1 for m in ((szczeg[kl] or {}).get('m') or {}).values() if isinstance(m, dict) and m.get('l')) for kl in klucze_sz}
             k = sts_klucze(rynki, opisy.get(f['sid']) or {}, sp, odwr, bo)
             if len(przyklady) < 3 and sum(1 for m in rynki.values() if isinstance(m, dict) and m.get('l')) > 1:
                 przyklady[f"{f['h']} - {f['a']}"] = _opis_rynkow(rynki, opisy.get(f['sid']) or {})
@@ -621,6 +624,69 @@ def sts_z_przegladarki():
     except Exception as e:
         return {}, dict(bledy=[f'STS: {type(e).__name__}: {e}'[:200]])
 
+def fortuna_mecz_rozpoznanie():
+    """Rozpoznanie pełnej oferty meczu Fortuny (gole powyżej/poniżej): próby adresów API + strona meczu w przeglądarce.
+    Wynik: surowe/fortuna_mecz.json (do analizy)."""
+    s = ses(); wyn = dict(czas=dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d %H:%M UTC'), proby=[], strona={})
+    diag = {}
+    try:
+        oferta = [m for m in fortuna_mecze(s, diag) if m['sp'] == 'pilka']
+        oferta.sort(key=lambda m: m['t'])
+        mecz = next((m for m in oferta if m['t'] > dt.datetime.now(dt.timezone.utc) + dt.timedelta(hours=2)), oferta[0] if oferta else None)
+    except Exception as e:
+        wyn['blad'] = str(e)[:200]; mecz = None
+    if mecz:
+        fid = mecz['id']; wyn['mecz'] = dict(id=fid, nazwa=f"{mecz['h']} - {mecz['a']}", t=str(mecz['t']))
+        from urllib.parse import quote
+        q = quote(fid, safe='')
+        for url in [f'{FAPI}/markets/api/v1_0/fixtures/markets?fixtureIds={q}', f'{FAPI}/markets/api/v1_0/fixtures/{q}/markets',
+                    f'{FAPI}/markets/api/v1_0/fixture/{q}/markets', f'{FAPI}/markets/api/v1_0/fixtures/markets/detail?fixtureIds={q}',
+                    f'{FAPI}/markets/api/v1_0/fixtures/markets/all?fixtureIds={q}', f'{FAPI}/markets/api/v1_0/fixtures/{q}',
+                    f'{FAPI}/markets/api/v1_0/fixture/{q}', f'{FAPI}/structure/api/v1_0/fixture/{q}', f'{FAPI}/structure/api/v1_0/fixtures/{q}',
+                    f'{FAPI}/markets/api/v1_0/fixtures/markets/groups?fixtureIds={q}', f'{FAPI}/markets/api/v1_0/fixture/{q}/marketGroups',
+                    f'{FAPI}/markets/api/v1_0/fixtures/markets/overview?fixtureIds={q}']:
+            try:
+                r = s.get(url, timeout=20)
+                wyn['proby'].append(dict(url=url, kod=r.status_code, rozmiar=len(r.content), tresc=r.text[:20000]))
+            except Exception as e: wyn['proby'].append(dict(url=url, blad=str(e)[:120]))
+            time.sleep(0.3)
+    try:
+        from playwright.sync_api import sync_playwright
+        odp, linki = [], []
+        with sync_playwright() as pw:
+            br = pw.chromium.launch(headless=True, args=['--no-sandbox', '--disable-dev-shm-usage'])
+            pg = br.new_context(locale='pl-PL', user_agent=UA, viewport={'width': 1366, 'height': 900}).new_page()
+            def na_odp(r):
+                try:
+                    if 'api.efortuna.pl/offer' not in r.url or r.request.resource_type in ('image', 'font', 'stylesheet', 'script'): return
+                    b = r.body(); odp.append(dict(url=r.url, rozmiar=len(b), tresc=b[:60000].decode('utf-8', 'ignore')))
+                except Exception: pass
+            pg.on('response', na_odp)
+            for url in ('https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna/anglia-2?tab=matches',
+                        'https://www.efortuna.pl/zaklady-bukmacherskie/pilka-nozna/polska-6?tab=matches'):
+                pg.goto(url, wait_until='domcontentloaded', timeout=45000)
+                for _ in range(3): pg.wait_for_timeout(2500); pg.mouse.wheel(0, 1500)
+                linki += pg.evaluate("() => Array.from(document.querySelectorAll('a[href]')).map(a => a.href)")
+            wyn['strona']['linki_przyklad'] = [l for l in dict.fromkeys(linki) if '/pilka-nozna/' in l][:80]
+            kandydaci = [l for l in dict.fromkeys(linki) if re.search(r'/pilka-nozna/[^/?#]+/[^/?#]+/[^/?#]+', l) and 'tab=' not in l]
+            wyn['strona']['linki_meczow'] = kandydaci[:20]
+            przed = len(odp)
+            if kandydaci:
+                pg.goto(kandydaci[0], wait_until='domcontentloaded', timeout=45000)
+            else:                                   # bez linków – klik w pierwszy element z nazwą meczu
+                el = pg.query_selector('[class*="fixture"] a, [class*="event"] a, [data-test*="fixture"], [class*="match-name"], [class*="fixture-name"]')
+                wyn['strona']['klik'] = bool(el)
+                if el: el.click()
+            for _ in range(4): pg.wait_for_timeout(2500); pg.mouse.wheel(0, 1500)
+            wyn['strona']['adres_po'] = pg.url
+            wyn['strona']['tekst'] = pg.inner_text('body')[:4000]
+            br.close()
+        wyn['strona']['zapytania_lista'] = [dict(url=o['url'], rozmiar=o['rozmiar']) for o in odp[:przed]][:60]
+        wyn['strona']['zapytania_mecz'] = odp[przed:][:25]
+    except Exception as e: wyn['strona']['blad'] = f'{type(e).__name__}: {e}'[:300]
+    zapisz_github('surowe/fortuna_mecz.json', wyn)
+    print('Fortuna – rozpoznanie meczu zapisane:', [(p.get('kod'), p.get('rozmiar')) for p in wyn['proby']])
+
 def sts_zrzut():
     """Pełne wiadomości websocketu STS (lista + turniej + mecz) – do napisania czytnika STS."""
     from playwright.sync_api import sync_playwright
@@ -647,10 +713,12 @@ def sts_zrzut():
     except Exception as e: print('rynki STS:', e)
 
 def main():
-    if '--test' not in sys.argv and not any(a.startswith('--siec') or a in ('--zrzut', '--sts', '--sts-kursy') for a in sys.argv[1:]):
+    if '--test' not in sys.argv and not any(a.startswith('--siec') or a in ('--zrzut', '--sts', '--sts-kursy', '--fortuna-mecz') for a in sys.argv[1:]):
         czytnik(); return
     if '--sts-kursy' in sys.argv:
         sts_kursy(); return
+    if '--fortuna-mecz' in sys.argv:
+        fortuna_mecz_rozpoznanie(); return
     if '--sts' in sys.argv:
         sts_zrzut(); return
     if '--siec2' in sys.argv:
