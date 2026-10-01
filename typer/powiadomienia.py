@@ -116,7 +116,8 @@ def _mecze_espn(sport_key, start):
             c = (e.get('competitions') or [{}])[0]; t = c.get('competitors', [])
             H = next((x for x in t if x.get('homeAway') == 'home'), None); A = next((x for x in t if x.get('homeAway') == 'away'), None)
             if not H or not A: continue
-            st = ((e.get('status') or {}).get('type') or {}).get('state', 'pre')
+            ty = ((e.get('status') or {}).get('type') or {}); st = ty.get('state', 'pre')
+            if st == 'post' and not ty.get('completed'): st = 'nierozegrany'   # przełożony/odwołany – nie rozliczamy 0:0
             _cache[k].append(dict(id=e.get('id'), start=e.get('date'), dom=H['team'].get('displayName', ''), gosc=A['team'].get('displayName', ''),
                                   dom_id=H['team'].get('id'), gosc_id=A['team'].get('id'), hg=H.get('score'), ag=A.get('score'), stan=st))
     return slug, _cache[k]

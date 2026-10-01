@@ -40,7 +40,12 @@ def mozna_podmienic_typy(t=None):
     """Nierozliczony typ z dziennika wolno zastąpić nowym tylko tego samego dnia programu i gdy nowe typy pójdą na Telegram
     (w nocy 0–7 wiadomości są wstrzymane – wtedy zostaje typ, który już dostałeś)."""
     t = teraz() if t is None else pd.Timestamp(t)
-    return t.tz_convert(TZ).hour >= 7
+    if t.tz_convert(TZ).hour < 7: return False
+    try:   # po porannej wiadomości typy na Telegramie już się nie zmieniają – dziennik rozlicza te, które dostałeś
+        st = json.load(open(os.path.join(OUT, 'status.json')))
+        if (st.get('tg_typy') or {}).get('data') == dzien_str(): return False
+    except Exception: pass
+    return True
 
 def _pewne_pilka(dzis):
     for m in dzis.get('pewne', []):

@@ -598,6 +598,9 @@ def wynik_meczu(m, x, odwr):
     """(status, wynik_do_rozliczenia, opis). status: 'ok' | 'krecz' | 'walkower' | 'remis' | None (nieznane)."""
     wa, wb = (x['wygral'][1], x['wygral'][0]) if odwr else (x['wygral'][0], x['wygral'][1])
     o = x['opis']
+    if not (wa or wb):   # bez zwycięzcy: odwołany / przełożony (ESPN oznacza go jako „zakończony”)
+        if re.search(r'cancel', o): return 'odwolany', None, 'mecz odwołany'
+        if re.search(r'postpon|suspend|delay', o): return 'przelozony', None, 'mecz przełożony'
     if m['sport'] == 'tenis':
         if re.search(r'walkover|w/o|\bwo\b', o): return 'walkower', None, 'walkower'
         if re.search(r'retire|\bret\b|abandon|default', o):
@@ -724,6 +727,11 @@ def rozlicz(pelne=False):
                 continue
             st, w, op = wynik_meczu(m, x, odwr)
         for i, r in g.iterrows():
+            if st == 'przelozony': continue          # rozliczę, gdy zostanie rozegrany (albo po 7 dniach „brak wyniku”)
+            if st == 'odwolany':
+                d.loc[i, ['status', 'wynik']] = ['odwołany', op]
+                if r.rodzaj == 'value': d.loc[i, 'zysk_na_1zl'] = 0.0
+                continue
             if st in ('walkower', 'remis'):
                 d.loc[i, ['status', 'wynik']] = [st, op]
                 if r.rodzaj == 'value': d.loc[i, 'zysk_na_1zl'] = 0.0
@@ -958,14 +966,41 @@ def _stan_typu(m, klucz, w, koniec):
         return '⏳'
     if not koniec: return '⏳'
     o = ocen(klucz, 'walki', None, w)
-    return '↩️' if o is None else ('✅' if o else '❌')
+    return '❔' if o is None else ('✅' if o else '❌')
+
+ETYKIETA = {'✅': '✅ weszło', '❌': '❌ nie weszło', '❔': '❔ nie wiadomo, jak wygrał – rozliczę później', '↩️': '↩️ zwrot – nie liczy się', '⏳': '⏳ jeszcze w grze'}
+ETYKIETA_W_TRAKCIE = {'✅': '✅ już weszło', '❌': '❌ już przegrany', '⏳': '⏳ w grze'}
+
+def _linie_typow(m, oceny, w_trakcie=False):
+    """Każdy typ w osobnej linii: „🔒 Learner Tien wygra min. 1 seta – ✅ weszło”."""
+    et = ETYKIETA_W_TRAKCIE if w_trakcie else ETYKIETA
+    return [f"{t[0]} {tg.esc(t[2])} – {et.get(o, o)}" for t, o in zip(m['typy'], oceny)]
+
+def _naglowek_meczu(m):
+    ik = IKONA[m['sport']] + (' 🔔' if m.get('obserwowany') else '')
+    return f"{ik} <b>{tg.esc(m['mecz'])}</b>" + (f" · <i>{tg.esc(m['turniej'])}</i>" if m.get('turniej') else '')
+
+def _linia_wyniku(m, st, w, op, x, odwr):
+    e = tg.esc
+    if st == 'ok' and m['sport'] == 'tenis':
+        kto, sa, sb = w; _, _, wyn = sety(x, odwr)
+        return f"Wynik: <b>{sa}:{sb}</b> w setach ({' '.join(wyn)}) · zwycięzca: <b>{e(m['a'] if kto == 'A' else m['b'])}</b>"
+    if st == 'ok':
+        kto, met = w
+        return f"Wygrał(a) <b>{e(m['a'] if kto == 'A' else m['b'])}</b>" + (f" ({'przed czasem' if met == 'KO' else 'na punkty'})" if met else '')
+    if st == 'krecz': return f"Krecz – {e(op)}. Rozliczenie wg regulaminu bukmachera (u nas się nie liczy)."
+    if st == 'walkower': return 'Walkower – mecz się nie odbył. Zakłady zwykle zwracane (u nas się nie liczy).'
+    if st == 'remis': return 'Remis / no contest – zakłady na zwycięzcę zwykle zwracane.'
+    if st == 'odwolany': return 'Mecz odwołany – zakłady zwracane (u nas się nie liczy).'
+    if st == 'przelozony': return 'Mecz przełożony – rozliczę, gdy zostanie rozegrany.'
+    return 'Serwis wyników nie podał zwycięzcy – rozliczę, gdy wynik się pojawi.'
 
 def obieg_na_zywo(stan, d):
     """Start, koniec każdego seta (tenis) i wynik. Zwraca (czy coś trwa, starty meczów jeszcze przed rozpoczęciem)."""
     S = stan.setdefault('inne', {}); trwa, przyszle = False, []
     SL = _sledzone(d); SL.update(_obserwowane(stan))
     for k in [k for k in S if k not in SL]: S.pop(k)
-    teraz_ = teraz().tz_localize(None); starty, konce = [], []
+    teraz_ = teraz().tz_localize(None); starty, konce, sety_wiad = [], [], []
     for eid, m in SL.items():
         s = S.setdefault(eid, dict(stan='pre', sety=0))
         if s['stan'] == 'post': continue
@@ -985,17 +1020,25 @@ def obieg_na_zywo(stan, d):
                 sa, sb, wyn = sety(x, odwr)
                 if sa + sb > s['sety']:
                     s['sety'] = sa + sb; w = (None, sa, sb)
-                    typy = ' · '.join(f"{t[0]}{_stan_typu(m, t[1], w, False)} {e(t[2])}" for t in m['typy'])
-                    tg.wyslij(f"🎾 {e(m['mecz'])}: <b>{sa}:{sb}</b> w setach ({' '.join(wyn)})" + (f"\n   {typy}" if typy else ''))
+                    lin = [f"🎾 <b>{e(m['mecz'])}</b> · po {sa + sb}. secie", f"<b>{sa}:{sb}</b> w setach ({' '.join(wyn)})"]
+                    lin += _linie_typow(m, [_stan_typu(m, t[1], w, False) for t in m['typy']], w_trakcie=True)
+                    sety_wiad.append('\n'.join(lin))
             continue
         if x['koniec']:
-            st, w, op = wynik_meczu(m, x, odwr); s['stan'] = 'post'; s['wynik'] = op
-            if st == 'ok': typy = ' · '.join(f"{t[0]}{_stan_typu(m, t[1], w, True)} {e(t[2])}" for t in m['typy'])
-            else: typy = ' · '.join(f"{t[0]}↩️ {e(t[2])}" for t in m['typy']) + (' (krecz – wg regulaminu bukmachera)' if st == 'krecz' else '')
-            konce.append(f"{ik} {e(m['mecz'])} – <b>{e(op)}</b>" + (f"\n   {typy}" if typy else ''))
-            s['ocena'] = [(t[0], _stan_typu(m, t[1], w, True) if st == 'ok' else '↩️') for t in m['typy']]
+            st, w, op = wynik_meczu(m, x, odwr)
+            if st is None:   # ESPN: koniec, ale bez zwycięzcy – chwilę czekamy, aż poda wynik
+                od = s.setdefault('bez_wyniku', teraz_.strftime('%Y-%m-%d %H:%M'))
+                if teraz_ < pd.Timestamp(od) + pd.Timedelta(minutes=30): trwa = True; continue
+            s['stan'] = 'post'; s['wynik'] = op or {'przelozony': 'przełożony', 'odwolany': 'odwołany'}.get(st, 'brak wyniku')
+            oceny = [_stan_typu(m, t[1], w, True) if st == 'ok' else '↩️' for t in m['typy']]
+            if st in ('przelozony', None): oceny = ['⏳'] * len(m['typy'])
+            blok = [_naglowek_meczu(m), _linia_wyniku(m, st, w, op, x, odwr)]
+            if st in ('ok', 'krecz', 'walkower', 'remis', 'odwolany'): blok += _linie_typow(m, oceny)
+            konce.append('\n'.join(blok))
+            s['ocena'] = [(t[0], o) for t, o in zip(m['typy'], oceny) if o in ('✅', '❌', '↩️')]
     if starty: tg.wyslij('▶️ <b>Rozpoczęły się:</b>\n' + '\n'.join(starty))
-    if konce: tg.wyslij('🏁 <b>Koniec:</b>\n' + '\n'.join(konce))
+    for w_ in sety_wiad: tg.wyslij(w_)
+    if konce: tg.wyslij('🏁 <b>Koniec</b>\n\n' + '\n\n'.join(konce))
     # podsumowanie tenisa / walk – gdy wszystkie wytypowane się skończyły
     for sp in ('tenis', 'walki'):
         ids = [eid for eid, m in _sledzone(d).items() if m['sport'] == sp]
@@ -1004,7 +1047,7 @@ def obieg_na_zywo(stan, d):
             licz_ = {}
             for i in ids:
                 m = _sledzone(d)[i]; oc = S[i].get('ocena', [])
-                lin.append(f"{tg.esc(m['mecz'])} – {tg.esc(S[i].get('wynik', ''))} {' '.join(a + b for a, b in oc)}")
+                lin.append(f"<b>{tg.esc(m['mecz'])}</b> – {tg.esc(S[i].get('wynik', ''))}" + (f"\n   {'  '.join(a + b for a, b in oc)}" if oc else ''))
                 for a, b in oc:
                     if b in '✅❌': licz_.setdefault(a, [0, 0]); licz_[a][0] += b == '✅'; licz_[a][1] += 1
             lin.append('')

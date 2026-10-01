@@ -390,14 +390,13 @@ def sprawdz_przed_meczem(d):
     for m in _mecze_dnia(d):
         start = pd.Timestamp(m['start']).tz_localize('Europe/Warsaw'); minut = (start - teraz).total_seconds() / 60
         diag = dict(mecz=pl_mecz(m['mecz']), minut=round(minut))
-        # 0) raport AI odświeżany ok. 2 h przed meczem (tylko mecze z Pewnych) – wiadomość tylko, gdy wniósł coś nowego
+        # 0) raport AI odświeżany 35–150 min przed meczem (tylko mecze z Pewnych) – trafia do zapowiedzi ok. godzinę przed meczem
         r = m.get('raport')
-        if r is not None and 'klucz' in m and 90 <= minut <= 150 and not r.get('ai_odswiezony') and ai_raport.KLUCZ:
+        if r is not None and 'klucz' in m and 35 <= minut <= 150 and not r.get('ai_odswiezony') and ai_raport.KLUCZ:
             try:
                 polski = m.get('sport_key') == 'soccer_poland_ekstraklasa' or 'Poland' in (m['gospodarz'], m['gosc'])
                 istotna = raport.odswiez_ai(r, m, polski=polski); r['ai_odswiezony'] = True; zmiana = True
                 diag['ai'] = 'odświeżony' + (' – zmiana' if istotna else '')
-                if istotna and r.get('ai'): tg_aktualizacja_raportu(m, r)
             except Exception as e: diag['ai'] = f'błąd: {e}'
         if minut < 10 or minut > 100:
             if 'ai' in diag: DIAG.append(diag)
@@ -446,7 +445,6 @@ def sprawdz_przed_meczem(d):
             if n >= 5: ost.append(f"{pl(m['gospodarz']) if strona == 'gosp' else pl(m['gosc'])}: mocna rotacja – {n} zmian w pierwszym składzie względem poprzedniego meczu")
         pm['ostrzezenia'] = ost
         if pm != stare or pierwsze:
-            if pm.get('kursy') or pm.get('sklady'): tg_przed_meczem(m, pm)
             m['przedmeczowe'] = pm; zmiana = True
         diag['wyslano_tg'] = bool(pm.get('wyslano'))
         DIAG.append(diag)
@@ -461,6 +459,122 @@ def sprawdz_przed_meczem(d):
         if len(P_): P_.to_csv(PLIK_PEWNE, index=False)
         if len(V): V.to_csv(PLIK_DZIENNIKA, index=False)
     return zmiana
+
+# ---------------- zapowiedź ok. godzinę przed meczem (wszystkie dyscypliny, tylko mecze z głównych Pewnych i Value) ----------------
+OKNO_ZAPOWIEDZI = (35, 75)   # minut przed startem; sprawdzenia co 30 min – zawsze trafi jedno
+
+def _szansa_klucza(sp, e, k):
+    """Szansa typu o kluczu k z przeliczonego meczu tenisa / walki (nowe kursy)."""
+    try:
+        if sp == 'tenis':
+            R = {(w['a'], w['b']): w['szansa'] for w in e.get('wyniki', [])}
+            rk = sporty.tenis.rynki(R, int(e.get('bo') or 3))
+        elif e.get('metody'):
+            me = e['metody']; R = {('A', 'KO'): me['a_ko'], ('A', 'PKT'): me['a_pkt'], ('B', 'KO'): me['b_ko'], ('B', 'PKT'): me['b_pkt']}
+            rk = sporty.walki.rynki(R)
+        else:
+            return {'A': e.get('szansa_a'), 'B': e.get('szansa_b')}.get(k)
+        return round(float(sum(R[x] for x in rk[k])), 4) if k in rk else None
+    except Exception: return None
+
+def _odswiez_inne(sp, m):
+    """Tenis/walki: świeże kursy (1 kredyt) → nowe szanse typów; ponowna analiza AI. Zapis w karcie meczu (inne.json)."""
+    nowe = {}
+    if m.get('sport_key') != 'ksw' and ODDS_API_KEY and (core.KREDYTY['pozostalo'] or 99) > 25:
+        try:
+            ev = api(f"sports/{m['sport_key']}/events/{m['event_id']}/odds", regions='eu', markets='h2h', oddsFormat='decimal')
+            grupa = 'Tennis' if sp == 'tenis' else ('Mixed Martial Arts' if m.get('dyscyplina') == 'MMA' else 'Boxing')
+            e = sporty.przelicz(sp, m['sport_key'], m.get('turniej_oryg') or m.get('turniej', ''), grupa, ev)
+            if e:
+                for poz in ('najpewniejszy', 'lepszy_kurs', 'ryzykowny'):
+                    t = m.get(poz)
+                    if t: nowe[t['klucz']] = _szansa_klucza(sp, e, t['klucz'])
+                for v in m.get('value', []): nowe[v['klucz']] = _szansa_klucza(sp, e, v['klucz'])
+        except Exception as ex: print('zapowiedź – kursy:', m['mecz'], ex)
+    try:
+        ai = sporty.raport_ai(m, m.get('polski'))
+        if ai:
+            r = m.setdefault('raport', {}); r['ai'] = ai; r['werdykt'] = ai.get('werdykt')
+            if ai.get('ostrzezenie'):
+                kto = {'a': m['a'], 'b': m['b'], 'oba': 'obu zawodników'}.get(ai.get('ostrzezenie_dla'), '')
+                r['ostrzezenie'] = f"Uwaga ({kto}): {ai['uzasadnienie']}" if kto else ai['uzasadnienie']
+    except Exception as ex: print('zapowiedź – AI:', m['mecz'], ex)
+    m['przed'] = dict(czas=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%H:%M'), szanse={k: v for k, v in nowe.items() if v is not None})
+    return m['przed']['szanse']
+
+def _linia_szansy(ik, nazwa, stara, nowa, t=None):
+    txt = f"{ik} {esc_(nazwa)} · {tg.pct(stara)}"
+    if nowa is not None:
+        txt += f" → <b>{tg.pct(nowa)}</b>" if abs(nowa - stara) >= 0.005 else ' (bez zmian)'
+    return txt
+
+def tekst_zapowiedzi(sp, m, wartosci, minut):
+    """Jedna wiadomość: typy ze świeżą szansą, kursy, składy (piłka), werdykt i analiza AI, braki, ostrzeżenia."""
+    ik = wspolne.IKONA[sp]; gdzie = (m.get('liga') if sp == 'pilka' else m.get('turniej')) or ''
+    lin = [f"⏰ <b>Za ok. {int(round(minut / 5) * 5)} min</b> · {ik} <b>{esc_(_nazwa_meczu(sp, m))}</b> · {m['godzina']}"]
+    if gdzie: lin.append(f"<i>{esc_(gdzie)}</i>")
+    lin.append('')
+    if sp == 'pilka':
+        pm = m.get('przedmeczowe') or {}; ruch = (pm.get('kursy') or {}).get('ruch', {})
+        for poz, ikp, k, n, sz in _typy_meczu(m):
+            if 'klucz' not in m: break
+            t = m if poz == 'najpewniejszy' else (m.get(poz) or {})
+            z = pl_txt(n, m['gospodarz'], m['gosc'])
+            if len(z) <= 3 and t.get('opis'): z = f"{z} ({pl_txt(t['opis'], m['gospodarz'], m['gosc'])})"
+            lin.append(_linia_szansy(ikp, z, sz, (ruch.get(poz) or [None, None])[1]))
+            if poz == 'najpewniejszy': lin.append('   ' + _kursy_linia(m))
+    else:
+        nowe = (m.get('przed') or {}).get('szanse') or {}
+        for poz, ikp in (('najpewniejszy', '🔒'), ('lepszy_kurs', '⚖️'), ('ryzykowny', '🎯')):
+            t = m.get(poz)
+            if not t or not wartosci.get('pewne'): continue
+            lin.append(_linia_szansy(ikp, t['zaklad'], t['szansa'], nowe.get(t['klucz'])))
+            if poz == 'najpewniejszy': lin.append('   ' + _kursy_linia(t))
+    for v in wartosci.get('value', []):
+        zak = pl_txt(v['zaklad'], v.get('gospodarz'), v.get('gosc')) if sp == 'pilka' else v['zaklad']
+        kk = {'Betclic': v.get('kurs')} | {n: k for n, k in ((v.get('kursy_pl') or {}).items())}
+        best = max(((n, k) for n, k in kk.items() if k), key=lambda x: x[1], default=('Betclic', v['kurs']))
+        clv = (v.get('przedmeczowe') or {}).get('clv')
+        lin.append(f"💰 Value: {esc_(zak)} @ <b>{tg.kurs(best[1])}</b> {esc_(best[0])}" + (f" · CLV {clv * 100:+.1f}%" if clv is not None else ''))
+    if sp == 'pilka':
+        pm = m.get('przedmeczowe') or {}
+        sk = pm.get('sklady')
+        lin.append('')
+        lin.append(f"👥 Składy: potwierdzone ({esc_(sk.get('zrodlo', ''))})" if sk else '👥 Składy: jeszcze nie ogłoszone')
+        for o in pm.get('ostrzezenia', []): lin.append(f"⚠️ {esc_(o)}")
+    raport = _raport_tg(m, None, sp).split('\n')[1:]   # bez nagłówka – jest wyżej
+    if raport: lin += [''] + raport
+    return '\n'.join(lin)
+
+def zapowiedzi(d):
+    """Ok. godzinę przed meczem: jedna wiadomość na mecz z głównych list Pewne i Value (wszystkie dyscypliny). Zwraca liczbę wysłanych."""
+    gl = wspolne.wczytaj(); inne = sporty.wczytaj_json(); st = wczytaj_status()
+    dz = gl.get('data') or wspolne.dzien_str()
+    zap = st.get('zapowiedzi') or {}
+    if zap.get('data') != dz: zap = dict(data=dz, wyslane=[])
+    teraz = pd.Timestamp.now(tz='Europe/Warsaw')
+    pew, val = _rozwiaz(gl, d, inne)
+    mecze = {}
+    for sp, m in pew: mecze.setdefault((sp, str(m.get('event_id') or m['mecz'])), [m, dict(pewne=True, value=[])])
+    for sp, v in val:
+        k = (sp, str(v.get('event_id') or v['mecz']))
+        if k not in mecze:
+            karta = v if sp == 'pilka' else next((x for x in (inne.get(sp) or {}).get('mecze', []) if str(x['event_id']) == k[1]), None)
+            if not karta: continue
+            mecze[k] = [karta, dict(pewne=False, value=[])]
+        mecze[k][1]['value'].append(v)
+    wyslane, inne_zmiana = 0, False
+    for (sp, eid), (m, wart) in mecze.items():
+        if f'{sp}:{eid}' in zap['wyslane']: continue
+        minut = (pd.Timestamp(m['start']).tz_localize('Europe/Warsaw') - teraz).total_seconds() / 60
+        if not (OKNO_ZAPOWIEDZI[0] <= minut <= OKNO_ZAPOWIEDZI[1]): continue
+        if sp != 'pilka': _odswiez_inne(sp, m); inne_zmiana = True
+        if tg.wyslij_dlugi(tekst_zapowiedzi(sp, m, wart, minut)): zap['wyslane'].append(f'{sp}:{eid}'); wyslane += 1
+    if inne_zmiana:
+        with open(os.path.join(OUT, sporty.PLIK_JSON), 'w', encoding='utf-8') as f:
+            json.dump(inne, f, ensure_ascii=False, default=lambda o: float(o) if isinstance(o, (np.floating, np.integer)) else str(o))
+    st['zapowiedzi'] = zap; zapisz('status.json', st)
+    return wyslane
 
 def tg_przed_meczem(m, pm):
     if pm.get('wyslano'): return
@@ -520,10 +634,8 @@ def tg_typy_dnia(d, status):
     wys = status.get('tg_typy') or {}
     podpis = _podpis_typow(d)
     n_ai = sum(1 for m in d.get('pewne', []) if (m.get('raport') or {}).get('ai'))
-    if wys.get('data') == d['data'] and wys.get('podpis') == podpis:
-        if n_ai > wys.get('ai', 0):   # typy te same, ale raporty AI są pełniejsze niż wysłane wcześniej
-            tg_raporty(d); status['tg_typy']['ai'] = n_ai; return 'typy bez zmian – wysłane pełniejsze raporty AI'
-        return 'już wysłane dziś (typy bez zmian)'
+    if wys.get('data') == d['data']:   # raz dziennie – zmiany tylko w aplikacji, przed meczem przychodzi zapowiedź
+        return 'już wysłane dziś (zmiany tylko w aplikacji)'
     zmiana = wys.get('data') == d['data']
     lin = [f"⚽ <b>{'Zaktualizowane typy' if zmiana else 'Typy'} na {pd.Timestamp(d['data']).strftime('%d.%m')}</b>"]
     for i, m in enumerate(d.get('pewne', []), 1):
@@ -649,9 +761,8 @@ def tg_typy_wszystkie(d, inne, gl, status):
                                     + [(sp, str(v.get('event_id')), v['zaklad']) for sp, v in val], ensure_ascii=False).encode()).hexdigest()[:12]
     n_ai = sum(1 for _, m in pew if (m.get('raport') or {}).get('ai'))
     wys = status.get('tg_typy') or {}
-    if wys.get('data') == gl.get('data') and wys.get('podpis') == podpis:
-        if n_ai > wys.get('ai', 0): tg_raporty_wszystkie(gl, pew); status['tg_typy']['ai'] = n_ai; return 'typy bez zmian – wysłane pełniejsze raporty AI'
-        return 'już wysłane dziś (typy bez zmian)'
+    if wys.get('data') == gl.get('data'):   # raz dziennie – zmiany tylko w aplikacji, przed meczem przychodzi zapowiedź
+        return 'już wysłane dziś (zmiany tylko w aplikacji)'
     zmiana = wys.get('data') == gl.get('data')
     dzien = pd.Timestamp(gl.get('data') or wspolne.dzien_str())
     lin = [f"📋 <b>{'Zaktualizowane typy' if zmiana else 'Typy dnia'} · {DNI_PL[dzien.weekday()]} {dzien.strftime('%d.%m')}</b>"]
@@ -832,6 +943,8 @@ if __name__ == '__main__':
             try: podsumowanie_dnia(stare)
             except Exception as e: bledy.append(f'podsumowanie: {e}')
             zapisz('dzis.json', stare)
+        try: zapowiedzi(stare)   # ok. godzinę przed meczem – piłka, tenis, walki (główne Pewne i Value)
+        except Exception as e: bledy.append(f'zapowiedzi: {e}')
         try: STRAZNIK.append(pilnuj_straznika(stare))
         except Exception as e: bledy.append(f'strażnik: {e}')
         try: rozlicz_wszystko(); SAMOKOREKTA.update(policz_samokorekte(wczytaj_pewne())); zapisz('dziennik.json', eksport_calosci())

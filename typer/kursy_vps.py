@@ -392,6 +392,9 @@ def _fortuna_klucze(rynki, odwr, sport, bo=3, druzyny=None):
                         if h == '-1.5': k.setdefault(f'{kto} -1.5', c)
                         elif int(bo or 3) == 3: k.setdefault(f'{kto} min. 1 set', c)
                         else: k.setdefault(f'{kto} +1.5', c)
+                elif sport == 'tenis' and n.startswith('mecz: ') and n.endswith(' - wygra co najmniej jeden set'):
+                    st = _strona_fortuna(n_oryg[len('Mecz: '):-len(' - wygra co najmniej jeden set')], druzyny)
+                    if st and onl == 'tak': k.setdefault(f"{pierwszy('1' if st == 'H' else '2')} min. 1 set", c)
                 elif sport == 'tenis' and 'liczba setów' in n and not re.search(r'\d\.\s*set|gem', n) and n.count(' - ') == 0:
                     mm = re.fullmatch(r'([+-]|powyżej|poniżej|więcej niż|mniej niż)\s*(\d)[.,]5', onl)
                     if mm: k.setdefault(f"{'Ponad' if mm.group(1) in ('+', 'powyżej', 'więcej niż') else 'Poniżej'} {mm.group(2)}.5 seta", c)
@@ -550,19 +553,37 @@ STS_SPORTY = {'1': 'pilka', '3': 'tenis', '166': 'walki', '19': 'walki'}   # pi�
 PW_PYTHON = '/opt/typer/pw/bin/python'
 STS_WYNIK = '/opt/typer/sts_wynik.json'
 _JS_SZCZEGOLY = """async ({ids, ms}) => await new Promise(res => {
-  const out = []; let rozm = 0, ws, zamkn = false;
-  const koniec = (x) => { if (zamkn) return; zamkn = true; try { ws.close(); } catch (e) {} res(Object.assign({out}, x || {})); };
-  const dodaj = (t) => { if (typeof t !== 'string' || t.startsWith('{"s":"i_pl"') || t.startsWith('{"t":5')) return;
-                         if (rozm < 6e6) { out.push(t); rozm += t.length; } };
+  // Pełna oferta meczów: subskrypcje w małych paczkach (wszystkie naraz – serwer odpowiadał tylko na część),
+  // czekamy na odpowiedź każdego meczu, brakujące ponawiamy pojedynczo.
+  const out = [], dostal = new Set(); let rozm = 0, ws, zamkn = false;
+  const start = Date.now();
+  const koniec = (x) => { if (zamkn) return; zamkn = true; try { ws.close(); } catch (e) {} res(Object.assign({out, dostal: [...dostal]}, x || {})); };
+  const dodaj = (t) => {
+    if (typeof t !== 'string' || t.startsWith('{"s":"i_pl"') || t.startsWith('{"t":5')) return;
+    try { const s = JSON.parse(t.slice(0, t.indexOf('\\n'))).s; if (s) dostal.add(s); } catch (e) {}
+    if (rozm < 8e6) { out.push(t); rozm += t.length; }
+  };
+  const czekaj = (ms_) => new Promise(r => setTimeout(r, ms_));
+  const subskrybuj = async (paczka, ile_ms) => {
+    try { ws.send(JSON.stringify({t: 1, u: [{s: 'i_pl'}].concat(paczka.map(i => ({s: 'f_' + i + '_pl', n: 0})))})); } catch (e) { return; }
+    const t0 = Date.now();
+    while (Date.now() - t0 < ile_ms && paczka.some(i => !dostal.has('f_' + i + '_pl'))) await czekaj(250);
+    await czekaj(600);   // ewentualne kolejne ramki tego samego meczu
+  };
   try { ws = new WebSocket('""" + STS_WS + """'); } catch (e) { res({out, blad: String(e)}); return; }
-  ws.onopen = () => {
+  ws.onopen = async () => {
     ws.send(JSON.stringify({t: 1, u: [{s: 'i_pl', n: 0}]}));
-    setTimeout(() => ws.send(JSON.stringify({t: 1, u: [{s: 'i_pl'}].concat(ids.map(i => ({s: 'f_' + i + '_pl', n: 0})))})), 2500);
-    setTimeout(koniec, ms);
+    await czekaj(2500);
+    for (let i = 0; i < ids.length && Date.now() - start < ms; i += 3) await subskrybuj(ids.slice(i, i + 3), 7000);
+    for (const i of ids) {                       // ponowienie pojedynczo
+      if (Date.now() - start >= ms) break;
+      if (!dostal.has('f_' + i + '_pl')) await subskrybuj([i], 6000);
+    }
+    koniec();
   };
   ws.onmessage = (e) => { if (typeof e.data === 'string') dodaj(e.data); else if (e.data && e.data.text) e.data.text().then(dodaj); };
   ws.onerror = () => out.push('BLAD_WS');
-  setTimeout(() => koniec({limit: true}), ms + 10000);
+  setTimeout(() => koniec({limit: true}), ms + 15000);
 })"""
 
 def _sts_wiadomosc(tekst):
@@ -760,8 +781,9 @@ def sts_kursy():
             szczeg = {}
             if dopas:
                 try:
-                    r = pg.evaluate(_JS_SZCZEGOLY, dict(ids=[d[5]['id'] for d in dopas], ms=20000))
+                    r = pg.evaluate(_JS_SZCZEGOLY, dict(ids=[d[5]['id'] for d in dopas], ms=150000))
                     diag['szczegoly_ramek'] = len(r.get('out') or [])
+                    diag['szczegoly_odpowiedzi'] = f"{len(r.get('dostal') or [])} z {len(dopas)}"
                     if r.get('blad') or r.get('limit'): diag['bledy'].append(f"szczegóły: {r.get('blad') or 'limit czasu'}")
                     tematy = {}
                     for t in r.get('out') or []:

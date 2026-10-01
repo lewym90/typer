@@ -66,6 +66,8 @@ h3{font:700 17px/1.3 var(--body);margin:0}
 .bk b{font:700 17px var(--num)}
 .bk.best{border-color:var(--accent);background:var(--accent-bg)} .bk.best b{color:var(--accent)}
 .bk.low b{color:var(--muted);font-weight:600}
+.bk.none{opacity:.45} .bk.none b{color:var(--muted);font-weight:500}
+.bks.mini{grid-template-columns:repeat(4,1fr);margin:6px 0 2px} .bks.mini .bk{min-height:40px;border-radius:10px} .bks.mini .bk b{font-size:14px} .bks.mini .bk span{font-size:10px}
 .chipv{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border-radius:999px;font-size:13px;font-weight:600;align-self:flex-start}
 .chipv.zgoda{color:var(--win);background:var(--win-bg)} .chipv.ryzyko{color:var(--warn);background:var(--warn-bg)} .chipv.odradza{color:var(--loss);background:var(--loss-bg)}
 .chipv.brak{color:var(--muted);background:var(--sunk)}
@@ -663,11 +665,18 @@ function kursyLista(t){
   for(const [n, k] of Object.entries(t.kursy_pl || {})) if(k > 1) kk[n] = +k;
   return Object.entries(kk).sort((a, b) => b[1] - a[1]);
 }
+const BUKMACHERZY = ['STS', 'Fortuna', 'Superbet', 'Betclic'];   // Betclic = na razie francuski (The Odds API) – podmienimy na Betclic PL
+function kafelkiBuk(t, mini){
+  // Zawsze wszyscy bukmacherzy w stałej kolejności; „—” = brak tego zakładu w ofercie bukmachera
+  const kk = Object.fromEntries(kursyLista(t)); const best = Math.max(0, ...Object.values(kk));
+  const lista = BUKMACHERZY.concat(Object.keys(kk).filter(n => !BUKMACHERZY.includes(n)));
+  return `<div class="bks${mini ? ' mini' : ''}">` + lista.map(n => kk[n]
+    ? `<div class="bk${kk[n] === best && Object.keys(kk).length > 1 ? ' best' : ''}${kk[n] * t.szansa < 1 ? ' low' : ''}"><span>${esc(n)}</span><b>${num(kk[n])}</b></div>`
+    : `<div class="bk none" title="Brak tego zakładu w ofercie"><span>${esc(n)}</span><b>—</b></div>`).join('') + `</div>`;
+}
 function ksiazka(t){
-  const kk = kursyLista(t); if(!kk.length) return `<p class="note">Brak kursów polskich bukmacherów dla tego zakładu – graj od kursu ${num(t.kurs_uczciwy)}.</p>`;
-  const best = kk[0][1];
-  return `<div style="display:flex;flex-direction:column;gap:8px"><div class="lab">Kursy bukmacherów${t.kursy_czas ? ` <span style="text-transform:none;letter-spacing:0;font-weight:500">· ${esc(t.kursy_czas)}</span>` : ''}</div><div class="bks">`
-    + kk.map(([n, k]) => `<div class="bk${k === best && kk.length > 1 ? ' best' : ''}${k * t.szansa < 1 ? ' low' : ''}"><span>${esc(n)}</span><b>${num(k)}</b></div>`).join('') + `</div></div>`;
+  return `<div style="display:flex;flex-direction:column;gap:8px"><div class="lab">Kursy bukmacherów${t.kursy_czas ? ` <span style="text-transform:none;letter-spacing:0;font-weight:500">· ${esc(t.kursy_czas)}</span>` : ''}</div>`
+    + kafelkiBuk(t) + (kursyLista(t).length ? '' : `<p class="note">Kursy jeszcze nie pobrane – graj od kursu ${num(t.kurs_uczciwy)}.</p>`) + `</div>`;
 }
 function typBox(t, nr, mecz, etykieta){
   const P = x => mecz && mecz.gospodarz ? plTxt(x, mecz) : x;
@@ -681,7 +690,7 @@ function wierszPoziomu(t, nazwa, mecz){
   if(!t) return ''; const P = x => mecz && mecz.gospodarz ? plTxt(x, mecz) : x;
   const kk = kursyLista(t), best = kk.length ? kk[0] : null;
   return `<div class="poz2"><div class="l"><span>${nazwa}</span><b>${esc(P(t.zaklad))}${mecz ? kupBtn({event_id: mecz.event_id, mecz: mecz.mecz, zaklad: P(t.zaklad), szansa: t.szansa}) : ''}</b></div>
-    <div class="r"><span>${pct(t.szansa)}</span><b>${best ? num(best[1]) : num(t.kurs_uczciwy)}</b></div></div>`;
+    <div class="r"><span>${pct(t.szansa)}</span><b>${best ? num(best[1]) : num(t.kurs_uczciwy)}</b></div></div>${kafelkiBuk(t, true)}`;
 }
 function aiSkrot(m){
   const ai = aiKarty(m), w = werdyktKarty(m);
@@ -771,7 +780,7 @@ function kartaValueOgolna(sp, v, mecz){
       <div class="bk" style="min-height:62px"><span>uczciwy</span><b style="font-size:20px">${num(v.kurs_uczciwy)}</b></div>
       <div class="bk" style="min-height:62px"><span>przewaga</span><b style="font-size:20px;color:var(--win)">${sgn(ev)}</b></div></div>
     <div class="top"><span>szansa ${pct(v.szansa)} · stawka ${stawka} zł · szukaj ≥ ${num(v.kurs_szukaj || v.kurs_uczciwy*1.02)}</span>${v.rynek_pl ? '<span class="chipv brak" style="height:24px;font-size:12px">rynek PL – mniej pewne</span>' : ''}</div>`;
-  if(kk.length > 1) h += `<div class="bks">${kk.map(([n, k], i) => `<div class="bk${i === 0 ? ' best' : ''}${k * v.szansa < 1 ? ' low' : ''}"><span>${esc(n)}</span><b>${num(k)}</b></div>`).join('')}</div>`;
+  h += kafelkiBuk(Object.assign({}, v, {kurs_betclic: v.bukmacher ? null : v.kurs}, v.bukmacher ? {kursy_pl: Object.assign({[v.bukmacher]: v.kurs}, v.kursy_pl || {})} : {}));
   const src = mecz || v; if(src.raport) h += aiSkrot(src);
   if(pil) h += `<details class="rap"><summary>Pełna analiza i raport AI</summary><div style="display:flex;flex-direction:column;gap:14px;padding:10px 0 12px">${aiPelny(v, 'pilka')}${obrazMeczu(v)}${przedmeczoweHTML(v.przedmeczowe, v)}</div></details>`;
   else h += `<p class="note">Źródło kursu uczciwego: ${esc(v.zrodlo)}</p>`;

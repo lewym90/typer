@@ -1,7 +1,7 @@
 """Strażnik na żywo: co minutę sprawdza wyniki w ESPN i wysyła na Telegram start, gole, gole anulowane i koniec
 meczów z zakładek Pewne i Value oraz meczów obserwowanych dzwonkiem 🔔; po ostatnim wytypowanym meczu – podsumowanie dnia.
 Uruchamiany przez GitHub Actions (tryb na_zywo). Działa maks. ok. 5 h 40 min, potem sam uruchamia swojego następcę."""
-import os, sys, json, time, subprocess, requests
+import os, re, sys, json, time, subprocess, requests
 sys.path.insert(0, os.path.dirname(__file__))
 import pandas as pd
 import powiadomienia as tg
@@ -109,6 +109,7 @@ def tablica(slug, data_ny):
         try: hg, ag = int(H.get('score')), int(A.get('score'))
         except (TypeError, ValueError): hg = ag = None
         out[str(e.get('id'))] = dict(id=str(e.get('id')), slug=slug, stan=ty.get('state', 'pre'), opis=ty.get('shortDetail', ''),
+                                     zakonczony=bool(ty.get('completed')), status_txt=' '.join(str(ty.get(x) or '') for x in ('name', 'description', 'detail')).lower(),
                                      minuta=st.get('displayClock', ''), start=e.get('date'), dom=H['team'].get('displayName', ''),
                                      gosc=A['team'].get('displayName', ''), hg=hg, ag=ag, gole=gole, liga=j.get('leagues', [{}])[0].get('name', slug) if j.get('leagues') else slug)
     _tablice[k] = out
@@ -146,6 +147,17 @@ def blok_typow(m, e, koniec=False):
     return [f"{ik} {esc(n)} – {ocena_na_zywo(f, e['hg'], e['ag'], koniec)}" for ik, n, f, _ in m['typy']]
 
 def znak(m): return '' if m['wytypowany'] else '🔔 '
+
+def nie_rozegrany(e):
+    """ESPN: stan „post” bez zakończenia (przełożony, odwołany, przerwany) – nie wolno rozliczać wyniku 0:0."""
+    return e['stan'] == 'post' and not e.get('zakonczony') and (e.get('hg') is None or bool(re.search(r'postpon|cancel|suspend|abandon|delay', e.get('status_txt', '') + ' ' + str(e.get('opis', '')).lower())))
+
+def blok_konca(m, e):
+    """Koniec meczu: wynik i każdy typ w osobnej linii."""
+    if nie_rozegrany(e):
+        co = 'odwołany' if 'cancel' in e.get('status_txt', '') else 'przełożony lub przerwany'
+        return f"{znak(m)}⚽ <b>{esc(pl_mecz(m['mecz']))}</b>\nMecz {co} – typy bez rozliczenia."
+    return '\n'.join([f"{znak(m)}⚽ {linia_wyniku(m, e)}"] + blok_typow(m, e, koniec=True))
 
 # ---------------- Telegram: dzwonek 🔔 (obserwowanie meczów) ----------------
 def komendy(stan):
@@ -273,10 +285,10 @@ def obieg(stan, sl, pierwszy):
         if e['stan'] != 'post': aktywne.append(k)
         # mecz zakończył się, zanim strażnik go zobaczył – tylko wynik końcowy, bez odtwarzania goli
         if e['stan'] == 'post' and s['stan'] == 'pre':
-            s['stan'] = 'post'; s['hg'], s['ag'], s['gole'] = e['hg'], e['ag'], len(e['gole'])
-            if e['hg'] is not None:
-                typy = ' · '.join(f"{ik}{ocena_na_zywo(f, e['hg'], e['ag'], True)[0]} {esc(n)}" for ik, n, f, _ in m['typy'])
-                konce.append(f"{znak(m)}{linia_wyniku(m, e)}" + (f"\n   {typy}" if typy else ''))
+            s['stan'] = 'post'
+            if nie_rozegrany(e): s['hg'] = s['ag'] = None; konce.append(blok_konca(m, e)); continue
+            s['hg'], s['ag'], s['gole'] = e['hg'], e['ag'], len(e['gole'])
+            if e['hg'] is not None: konce.append(blok_konca(m, e))
             continue
         # start
         if e['stan'] == 'in' and s['stan'] == 'pre':
@@ -296,11 +308,12 @@ def obieg(stan, sl, pierwszy):
             s['hg'], s['ag'], s['gole'] = e['hg'], e['ag'], len(e['gole'])
         # koniec
         if e['stan'] == 'post' and s['stan'] != 'post':
-            s['stan'] = 'post'; s['hg'], s['ag'] = e['hg'], e['ag']
-            typy = ' · '.join(f"{ik}{ocena_na_zywo(f, e['hg'], e['ag'], True)[0]} {esc(n)}" for ik, n, f, _ in m['typy'])
-            konce.append(f"{znak(m)}{linia_wyniku(m, e)}" + (f"\n   {typy}" if typy else ''))
+            s['stan'] = 'post'
+            if nie_rozegrany(e): s['hg'] = s['ag'] = None
+            else: s['hg'], s['ag'] = e['hg'], e['ag']
+            if e['hg'] is not None or nie_rozegrany(e): konce.append(blok_konca(m, e))
     if starty: tg.wyslij('▶️ <b>Rozpoczęły się:</b>\n' + '\n'.join(starty))
-    if konce: tg.wyslij('🏁 <b>Koniec meczu:</b>\n' + '\n'.join(konce))
+    if konce: tg.wyslij('🏁 <b>Koniec meczu</b>\n\n' + '\n\n'.join(konce))
     return aktywne
 
 def main():
