@@ -1,0 +1,49 @@
+{
+ "czas": "2026-10-01 19:31 UTC",
+ "proby": [
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v4/sports?application=2&countrycode=pl&language=pl&sitecode=plpl",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v4/sports?application=2&country"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v2/sports?application=2&countrycode=pl&language=pl&sitecode=plpl",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v2/sports?application=2&country"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v4/events?application=2&countrycode=pl&language=pl&sitecode=plpl&fetchMultipleDefaultMarkets=true&limit=20&offset=0&sortBy=ByLiveRankingPreliveDate&sportIds=1",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v4/events?application=2&country"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v4/events?application=2&countrycode=pl&language=pl&sitecode=plpl&limit=20&offset=0&sportIds=1",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v4/events?application=2&country"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v3/events?application=2&countrycode=pl&language=pl&sitecode=plpl&limit=20&offset=0&sportIds=1",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v3/events?application=2&country"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v2/events?application=2&countrycode=pl&language=pl&sitecode=plpl&limit=20&offset=0&sportIds=1",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v2/events?application=2&country"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v2/sports/1?application=2&countrycode=pl&language=pl&sitecode=plpl",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v2/sports/1?application=2&count"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v4/events?application=1024&countrycode=pl&language=pl&sitecode=plpl&limit=20&offset=0&sportIds=2",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v4/events?application=1024&coun"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v4/events?application=2&countrycode=pl&language=pl&sitecode=pl&limit=20&offset=0&sportIds=1",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v4/events?application=2&country"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v4/competitions/22676?application=2&countrycode=pl&language=pl&sitecode=plpl",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v4/competitions/22676?applicati"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v2/competitions/22676?application=2&countrycode=pl&language=pl&sitecode=plpl",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v2/competitions/22676?applicati"
+  }
+ ]
+}
