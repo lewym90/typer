@@ -486,6 +486,8 @@ function licz(){
   h += rynek ? `<div class="banner" style="margin-top:12px">Ten mecz jest dziś w ofercie – szanse pochodzą z kursów Pinnacle/Betfair z ${esc(String(S.dzis.wygenerowano).slice(11))}, które uwzględniają składy i kontuzje znane rynkowi.</div>`
              : `<p class="note">Szanse z modelu statystycznego po kalibracji. Nie uwzględniają składów ani kontuzji.</p>`;
   h += typAlgorytmu(R2, P, kursy, HN, AN, liga, M);
+  const aiDz = dz && dz.raport && dz.raport.ai;
+  if(aiDz && aiDz.werdykt) h += `<div class="aiw" style="margin-top:12px">${werdyktChip(aiDz.werdykt)}${aiDz.powod ? `<p style="font-weight:600;color:var(--text)">${esc(aiDz.powod)}</p>` : ''}${aiDz.typ ? `<p class="note">Oceniany typ: ${esc(plTxt(aiDz.typ, dz))}</p>` : ''}</div>`;
   if(dz && dz.raport) h += raportHTML(dz.raport, dz);
   const dane = m.druzyny;
   if(!rynek && Math.min(dane[H][2], dane[A][2]) < 10) h += `<p class="note warn">Mało danych o jednej z drużyn – wynik mniej pewny.</p>`;
@@ -501,7 +503,7 @@ function licz(){
     if(kursyK[z]){ const ev = p*kursyK[z]-1; h += `<span class="ev ${ev>=0.03?'pos':(ev<0?'neg':'')}">Twój kurs ${num(kursyK[z])}: ${ev>=0.03?'opłaca się':'nie opłaca się'} (${sgn(ev)})</span>`; }
   }});
   h += `</div>`;
-  if(!(dz && dz.raport && dz.raport.ai) && window.__typAlg)
+  if(!(aiDz && aiDz.werdykt) && window.__typAlg)
     h += aiReczna('pilka', {a: HN, b: AN, rozgrywki: liga, typ: window.__typAlg, szanse: {'1': P('1'), 'X': P('X'), '2': P('2')}}, {gospodarz: HN, gosc: AN});
   out.innerHTML = h;
 }
@@ -707,6 +709,7 @@ function aiPelny(m, sp){
   let h = '';
   if(ai){
     h += `<div class="aiw"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px">${werdyktChip(ai.werdykt) || '<span class="chipv brak">Bez oceny typu</span>'}<span class="note">${esc(ai.czas || '')}${ai.szukal ? ' · z wyszukiwania' : ' · z nagłówków'}</span></div>
+      ${ai.powod && ai.werdykt ? `<p style="font-weight:600;color:var(--text)">${esc(ai.powod)}</p>` : ''}${ai.typ && ai.werdykt ? `<p class="note">Oceniany typ: ${esc(ai.typ)}</p>` : ''}
       <p style="color:var(--text);font-size:15.5px">${esc(ai.tekst)}</p></div>`;
     const kv = (lab, txt, mocno) => txt ? `<div class="kv"><span class="lab">${lab}</span><span${mocno ? ' style="color:var(--text);font-weight:600"' : ''}>${esc(txt)}</span></div>` : '';
     if(sp === 'pilka'){
@@ -994,7 +997,7 @@ const AI_URL = 'https://188-68-247-55.sslip.io';
 function aiReczna(sp, zap, karta){
   // zap: {a, b, rozgrywki, typ:{zaklad,szansa}, szanse?, szansa_a?, szansa_b?}; karta: obiekt do aiPelny (gospodarz/gosc albo a/b)
   const id = 'air' + Math.random().toString(36).slice(2, 8);
-  const klucz = 'ai_' + [sp, zap.a, zap.b, (zap.typ || {}).zaklad || ''].join('|').toLowerCase();
+  const klucz = 'ai2_' + [sp, zap.a, zap.b, (zap.typ || {}).zaklad || ''].join('|').toLowerCase();
   const pokaz = ai => { const el = document.getElementById(id); if(el) el.innerHTML = `<h2>Analiza AI</h2>` + aiPelny(Object.assign({}, karta, {raport: {ai}}), sp); };
   const zap_ = store.get(klucz, null);
   setTimeout(async () => {
@@ -1060,7 +1063,7 @@ function widokAnalizaInne(sp){
   h += `<button class="btn" id="liczInne" data-sp="${sp}">Analizuj</button><div id="wynikInne">`;
   const wyb = st.dz && dz.find(m => m.event_id === st.dz);
   if(wyb){ h += kartaInne(wyb, 0, sp); const t0 = wyb.najpewniejszy || wyb.lepszy_kurs;
-    if(!((wyb.raport || {}).ai)) h += aiReczna(sp, {a: wyb.a, b: wyb.b, rozgrywki: wyb.turniej, start: wyb.start, typ: t0 ? {zaklad: t0.zaklad, szansa: t0.szansa} : null,
+    if(!(((wyb.raport || {}).ai || {}).werdykt)) h += aiReczna(sp, {a: wyb.a, b: wyb.b, rozgrywki: wyb.turniej, start: wyb.start, typ: t0 ? {zaklad: t0.zaklad, szansa: t0.szansa} : null,
       szansa_a: wyb.szansa_a, szansa_b: wyb.szansa_b}, {a: wyb.a, b: wyb.b}); }
   else if(st.policz) h += analizujInne.__html || '';
   return h + `</div>`;

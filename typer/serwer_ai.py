@@ -14,7 +14,7 @@ import ai_raport, sporty
 PORT = int(os.environ.get('PORT_AI', '8787'))
 DOZWOLONE = ('https://lewym90.github.io',)
 RECZNE_DZIENNIE = int(os.environ.get('RECZNE_DZIENNIE', '40'))
-WERSJA = '1'
+WERSJA = '2'
 _blokada = threading.Lock()   # jedna analiza naraz (1 GB RAM, limit Gemini)
 _dzis = {'data': None, 'n': 0}
 
@@ -40,7 +40,7 @@ def analiza(z):
     else:
         kp = ai_raport.klucz_pamieci(sp, a, b, (start.strftime('%d.%m') if start is not None else ''), typ_t[0] if typ_t else '')
     z_p = ai_raport.z_pamieci(kp, 6)
-    if z_p: return 200, {'ai': z_p, 'z_pamieci': True}
+    if z_p and (z_p.get('werdykt') or not typ_t): return 200, {'ai': z_p, 'z_pamieci': True}
     if _licz_reczne() >= RECZNE_DZIENNIE: return 429, {'blad': f'Dzisiejszy limit analiz ręcznych ({RECZNE_DZIENNIE}) wyczerpany.'}
     if ai_raport.zostalo_analiz() <= 0: return 429, {'blad': 'Wyczerpany miesięczny budżet analiz AI.'}
     with _blokada:
@@ -57,6 +57,13 @@ def analiza(z):
             try: m['naglowki'] = {'a': sporty.naglowki(a), 'b': sporty.naglowki(b)}
             except Exception: m['naglowki'] = {}
             ai = sporty.raport_ai(m, m['polski'])
+        if ai and typ_t and not ai.get('werdykt'):   # brak oceny typu – jeszcze jedna próba z wyszukiwaniem
+            ai2 = (ai_raport.raport_ai(a, b, a, b, str(z.get('rozgrywki') or '')[:80], start, polski=sporty.polski(a, b) or 'Polska' in (a, b),
+                                       typ=typ_t, szanse=sz if sz and len(sz) == 3 else None, wymus=True) if sp == 'pilka'
+                   else sporty.raport_ai(m, m['polski'], wymus=True))
+            if ai2: ai = ai2
+        if ai and typ_t and not ai.get('werdykt'):   # nadal bez oceny: AI nie znalazło świeżych źródeł – uczciwie: ostrożnie
+            ai = dict(ai, werdykt='ryzyko', powod=ai.get('powod') or 'AI nie znalazło świeżych, pewnych źródeł o tym meczu – graj ostrożnie.')
     if not ai: return 502, {'blad': 'AI nie przygotowało analizy (limit, brak źródeł albo chwilowy błąd). Spróbuj za kilka minut.',
                              'szczegoly': ai_raport.STAN['bledy'][-2:]}
     _dzis['n'] += 1
