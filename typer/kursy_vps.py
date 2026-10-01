@@ -3,7 +3,8 @@ Serwer pobiera ten plik z repozytorium przy każdym uruchomieniu (cron co 2 h), 
 Wynik trafia do repozytorium przez GitHub API (token w /opt/typer/token).
 
 Czytniki: Fortuna (REST), STS (websocket wss://www.sts.pl/sbk/api/sbk przez przeglądarkę Playwright – python z /opt/typer/pw).
-Tryby rozpoznania (--test, --zrzut, --siec, --siec2, --sts) zostają do dalszej pracy nad Betclic PL."""
+Rozpoznanie Betclic PL (wersja 24): --betclic (pythonem z /opt/typer/pw) → surowe/betclic/*.json.
+Starsze tryby rozpoznania: --test, --zrzut, --siec, --siec2, --sts, --fortuna-mecz."""
 import os, re, sys, json, time, base64, datetime as dt
 
 REPO = 'lewym90/typer'
@@ -921,9 +922,345 @@ def sts_zrzut():
         zapisz_github('surowe/sts_rynki.json', r.text, surowy=True)
     except Exception as e: print('rynki STS:', e)
 
+
+# ======================================================================= ROZPOZNANIE BETCLIC PL (wersja 24)
+BC = 'https://www.betclic.pl'
+BC_CDN = 'https://offer.cdn.begmedia.com/api'
+BC_KATALOG = 'surowe/betclic'
+BC_LIMIT = 50 * 60                      # całe rozpoznanie najwyżej ok. 50 min
+BC_NASZE = ('football', 'tennis', 'mma', 'boxing', 'basketball', 'ice_hockey', 'volleyball', 'handball')
+BC_TABY_JS = """() => {
+  const wyn = [];
+  const el = Array.from(document.querySelectorAll('[role="tab"], .tab, [class*="tab"] a, [class*="tab"] button, [class*="Tab"], [class*="filter"] button, [class*="chip"]'));
+  for (const e of el) { const t = (e.innerText || '').trim(); if (t && t.length < 40 && !t.includes('\\n')) wyn.push(t); }
+  return Array.from(new Set(wyn)).slice(0, 40);
+}"""
+BC_KLIKNIJ_JS = """(tekst) => {
+  const el = Array.from(document.querySelectorAll('[role="tab"], .tab, [class*="tab"] a, [class*="tab"] button, [class*="Tab"], [class*="filter"] button, [class*="chip"], button, a'));
+  for (const e of el) { if ((e.innerText || '').trim() === tekst) { e.click(); return true; } }
+  return false;
+}"""
+BC_ROZWIN_JS = """() => {   // rozwija zwinięte rynki i 'pokaż więcej' (klik przez JS – baner cookies nie przeszkadza)
+  let n = 0;
+  const el = Array.from(document.querySelectorAll('button, a, [role="button"], [class*="expand"], [class*="more"], [class*="toggle"]'));
+  for (const e of el) {
+    const t = (e.innerText || '').trim().toLowerCase();
+    if (/^(pokaż|zobacz|wyświetl) (więcej|wszystkie|wszystko)|^więcej$|^\\+\\s*\\d+$/.test(t) && n < 60) { try { e.click(); n++; } catch (x) {} }
+  }
+  for (const e of document.querySelectorAll('[aria-expanded="false"]')) { if (n < 120) { try { e.click(); n++; } catch (x) {} } }
+  return n;
+}"""
+
+def _bc_ng(pg):
+    try: t = pg.evaluate("() => { const e = document.getElementById('ng-state'); return e ? e.textContent : '' }")
+    except Exception: return {}
+    try: return json.loads(t) if t else {}
+    except Exception: return {}
+
+def _bc_mecze_z_ng(ng):
+    """Mecze z ng-state (odpowiedzi gRPC zapisane przez serwer strony): id, nazwa, czas, na żywo, liga."""
+    wyn = {}
+    def chodz(o):
+        if isinstance(o, dict):
+            if o.get('matchId') and o.get('name'):
+                kom = o.get('competition') or {}
+                if str(o['matchId']) not in wyn or not wyn[str(o['matchId'])].get('t'): wyn[str(o['matchId'])] = dict(id=str(o['matchId']), nazwa=o['name'], t=o.get('matchDateUtc'), live=bool(o.get('isLive')),
+                                              liga=kom.get('name'), liga_id=kom.get('id'), sport=(kom.get('sport') or {}).get('code'))
+            for v in o.values(): chodz(v)
+        elif isinstance(o, list):
+            for v in o: chodz(v)
+    for k, v in ng.items():
+        if str(k).startswith('grpc:'): chodz(v)
+    return wyn
+
+def _bc_menu_z_ng(ng):
+    """Menu sportów (SportMenuService) z ng-state: [(kod, nazwa, [(id ligi, nazwa)])]."""
+    for k, v in ng.items():
+        if not str(k).startswith('grpc:'): continue
+        p = ((v or {}).get('response') or {}).get('payload') or {}
+        if isinstance(p, dict) and isinstance(p.get('sports'), list) and p['sports'] and 'sportCode' in p['sports'][0]:
+            menu = []
+            for sp in p['sports']:
+                ligi = []
+                def zbierz(o):
+                    if isinstance(o, dict):
+                        if o.get('competitionId') and o.get('competitionName') and str(o['competitionId']) != '0':
+                            ligi.append((str(o['competitionId']), o['competitionName']))
+                        for x in o.values(): zbierz(x)
+                    elif isinstance(o, list):
+                        for x in o: zbierz(x)
+                zbierz(sp)
+                menu.append((sp.get('sportCode'), sp.get('sportName'), list(dict.fromkeys(ligi))))
+            return menu
+    return []
+
+def _slug(t):
+    import unicodedata
+    t = (t or '').lower().replace('ł', 'l')
+    t = unicodedata.normalize('NFKD', t).encode('ascii', 'ignore').decode()
+    return re.sub(r'[^a-z0-9]+', '-', t).strip('-') or 'x'
+
+def _bc_link_sportu(href):
+    m = re.match(r'^https://www\.betclic\.pl/([a-z0-9\-]+)-s([a-z0-9_]+)/?$', href or '')
+    return (m.group(2), href.rstrip('/')) if m else None
+
+def _bc_odp(stan):
+    """Zapisywanie odpowiedzi strony (JSON tekstem, gRPC/binarne jako base64) razem z nagłówkami i treścią zapytania."""
+    def na_odp(r):
+        try:
+            if r.request.resource_type in ('image', 'font', 'stylesheet', 'media', 'script'): return
+            if not re.search(r'begmedia|betclic\.pl', r.url) or re.search(r'analytics|experience-requests|dam\.begmedia|/footer|metatags', r.url): return
+            typ = r.headers.get('content-type', '')
+            b = r.body()
+            wpis = dict(etap=stan['etap'], url=r.url, metoda=r.request.method, kod=r.status, typ=typ[:60], rozmiar=len(b),
+                        naglowki={k: v for k, v in (r.request.headers or {}).items() if k.lower() not in ('cookie', 'authorization')})
+            try:
+                pb = r.request.post_data_buffer
+                if pb: wpis['post_b64'] = base64.b64encode(pb[:20000]).decode()
+            except Exception: pass
+            if 'json' in typ or typ.startswith('text'): wpis['tresc'] = b[:300_000].decode('utf-8', 'ignore')
+            else: wpis['tresc_b64'] = base64.b64encode(b[:700_000]).decode()
+            if stan['rozmiar'] < 7_000_000:
+                stan['odp'].append(wpis); stan['rozmiar'] += len(wpis.get('tresc', '')) + len(wpis.get('tresc_b64', ''))
+        except Exception: pass
+    return na_odp
+
+def _bc_api(s):
+    """Próby publicznego API ofert w JSON (offer.cdn.begmedia.com – adres z konfiguracji strony)."""
+    wyn = []
+    par = 'application=2&countrycode=pl&language=pl&sitecode=plpl'
+    adresy = [f'{BC_CDN}/pub/v4/sports?{par}', f'{BC_CDN}/pub/v2/sports?{par}',
+              f'{BC_CDN}/pub/v4/events?{par}&fetchMultipleDefaultMarkets=true&limit=20&offset=0&sortBy=ByLiveRankingPreliveDate&sportIds=1',
+              f'{BC_CDN}/pub/v4/events?{par}&limit=20&offset=0&sportIds=1', f'{BC_CDN}/pub/v3/events?{par}&limit=20&offset=0&sportIds=1',
+              f'{BC_CDN}/pub/v2/events?{par}&limit=20&offset=0&sportIds=1', f'{BC_CDN}/pub/v2/sports/1?{par}',
+              f'{BC_CDN}/pub/v4/events?application=1024&countrycode=pl&language=pl&sitecode=plpl&limit=20&offset=0&sportIds=2',
+              f'{BC_CDN}/pub/v4/events?application=2&countrycode=pl&language=pl&sitecode=pl&limit=20&offset=0&sportIds=1',
+              f'{BC_CDN}/pub/v4/competitions/22676?{par}', f'{BC_CDN}/pub/v2/competitions/22676?{par}']
+    idy = []
+    for url in adresy:
+        try:
+            r = s.get(url, timeout=20, headers={'Accept': 'application/json', 'Origin': BC, 'Referer': BC + '/'})
+            wyn.append(dict(url=url, kod=r.status_code, typ=r.headers.get('content-type', '')[:50], rozmiar=len(r.content), tresc=r.text[:150_000]))
+            if r.status_code == 200: idy += re.findall(r'"(?:id|matchId|eventId)"\s*:\s*"?(\d{6,})', r.text)[:3]
+        except Exception as e: wyn.append(dict(url=url, blad=f'{type(e).__name__}: {e}'[:150]))
+        time.sleep(0.3)
+    for i in list(dict.fromkeys(idy))[:3]:
+        for w in ('v4', 'v3', 'v2'):
+            url = f'{BC_CDN}/pub/{w}/events/{i}?{par}'
+            try:
+                r = s.get(url, timeout=20, headers={'Accept': 'application/json', 'Origin': BC, 'Referer': BC + '/'})
+                wyn.append(dict(url=url, kod=r.status_code, typ=r.headers.get('content-type', '')[:50], rozmiar=len(r.content), tresc=r.text[:300_000]))
+            except Exception as e: wyn.append(dict(url=url, blad=f'{type(e).__name__}: {e}'[:150]))
+    return wyn
+
+def _bc_strona(pg, url, przewin=3, czekaj=3500):
+    pg.goto(url, wait_until='domcontentloaded', timeout=45000)
+    for _ in range(przewin): pg.wait_for_timeout(czekaj); pg.mouse.wheel(0, 2500)
+    return pg.evaluate("() => Array.from(document.querySelectorAll('a[href]')).map(a => a.href)")
+
+def _bc_mecz(pg, stan, url, wszystkie_taby):
+    """Strona meczu przedmeczowego: tekst każdej zakładki rynków (po rozwinięciu), ng-state, zapytania gRPC."""
+    w = dict(url=url, zakladki=[])
+    stan['etap'] = 'mecz ' + url
+    try:
+        _bc_strona(pg, url, przewin=2, czekaj=3000)
+        w['rozwinieto'] = pg.evaluate(BC_ROZWIN_JS); pg.wait_for_timeout(1500)
+        w['tekst'] = pg.inner_text('body')[:60000]
+        ng = _bc_ng(pg); w['ngstate'] = json.dumps(ng, ensure_ascii=False)[:600_000]
+        taby = pg.evaluate(BC_TABY_JS); w['taby'] = taby
+        for t in taby[:(14 if wszystkie_taby else 5)]:
+            if time.time() - START > BC_LIMIT: break
+            stan['etap'] = f'mecz {url} zakladka {t}'
+            try:
+                if not pg.evaluate(BC_KLIKNIJ_JS, t): continue
+                pg.wait_for_timeout(2500); pg.evaluate(BC_ROZWIN_JS); pg.wait_for_timeout(1200); pg.mouse.wheel(0, 3000); pg.wait_for_timeout(800)
+                w['zakladki'].append(dict(nazwa=t, tekst=pg.inner_text('body')[:40000]))
+            except Exception as e: w['zakladki'].append(dict(nazwa=t, blad=str(e)[:150]))
+    except Exception as e: w['blad'] = f'{type(e).__name__}: {e}'[:300]
+    return w
+
+BC_SPORT = {'pilka': ('football',), 'tenis': ('tennis',), 'walki': ('mma', 'boxing')}
+
+def _bc_nasze(pg, stan, KP, nasze, wszystkie, linki, spis, czas):
+    """Nasze dzisiejsze mecze u Betclic: dopasowanie (nazwy + czas) i pełna oferta kilku z nich."""
+    stan['odp'], stan['rozmiar'] = [], 0
+    wyn = dict(czas=czas, dopasowane=[], niedopasowane=[], mecze=[])
+    try:
+        for sp, eid, h, a, start, bo in nasze:
+            try: t0 = KP._utc_nasz(start)
+            except Exception: t0 = None
+            tol = {'pilka': 35, 'tenis': 360, 'walki': 720}.get(sp, 60)
+            best = None
+            for m in wszystkie.values():
+                if m.get('sport') and m['sport'] not in BC_SPORT.get(sp, ()): continue
+                cz = re.split(r'\s+-\s+', m.get('nazwa') or '', maxsplit=1)
+                if len(cz) != 2: continue
+                try: t = dt.datetime.fromisoformat(str(m['t'])[:19]).replace(tzinfo=dt.timezone.utc)
+                except Exception: t = None
+                dmin = abs((t - t0).total_seconds()) / 60 if (t and t0) else 0
+                if t and t0 and dmin > tol: continue
+                s1 = min(KP.podobne_w(h, cz[0]), KP.podobne_w(a, cz[1]))
+                s2 = min(KP.podobne_w(h, cz[1]), KP.podobne_w(a, cz[0])) if sp != 'pilka' else 0
+                sc = max(s1, s2)
+                if sc >= 0.55 and (best is None or sc > best[0]): best = (sc, m, s2 > s1, round(dmin))
+            if best:
+                wyn['dopasowane'].append(dict(sp=sp, nasz=f'{h} – {a}', start=str(start), betclic=best[1]['nazwa'], id=best[1]['id'],
+                                              zgodnosc=round(best[0], 2), odwrocone=best[2], roznica_min=best[3], link=linki.get(best[1]['id'])))
+            else: wyn['niedopasowane'].append(f'{sp}: {h} – {a} ({start})')
+        # pełna oferta: do 2 meczów z każdej naszej dyscypliny
+        ile = {}
+        for d in wyn['dopasowane']:
+            if not d['link'] or ile.get(d['sp'], 0) >= 2 or time.time() - START > BC_LIMIT: continue
+            ile[d['sp']] = ile.get(d['sp'], 0) + 1
+            w = _bc_mecz(pg, stan, d['link'], True); w['nasz'] = d
+            wyn['mecze'].append(w)
+    except Exception as e: wyn['blad'] = f'{type(e).__name__}: {e}'[:300]
+    wyn['odpowiedzi'] = stan['odp']
+    zapisz_github(f'{BC_KATALOG}/nasze.json', wyn)
+    spis['nasze'] = dict(dopasowane=len(wyn['dopasowane']), niedopasowane=wyn['niedopasowane'][:40],
+                         z_linkiem=sum(1 for d in wyn['dopasowane'] if d['link']), stron_meczu=len(wyn['mecze']), blad=wyn.get('blad'))
+    print('Nasze mecze u Betclic:', len(wyn['dopasowane']), 'dopasowanych,', len(wyn['niedopasowane']), 'niedopasowanych')
+    stan['odp'], stan['rozmiar'] = [], 0
+
+def betclic_rozpoznanie():
+    """Rozpoznanie całej oferty Betclic PL: wszystkie sporty z menu, w każdym 1–2 mecze przedmeczowe z pełną ofertą
+    (wszystkie zakładki rynków), zapytania gRPC strony (do odtworzenia bez przeglądarki) i próby publicznego API JSON.
+    Wynik: surowe/betclic/*.json (plik na każdy sport) + surowe/betclic/spis.json. Czas: do ok. 50 min."""
+    import fcntl
+    blokada = open('/opt/typer/cron.lock', 'w')
+    print('Czekam, aż skończy się bieżący odczyt kursów (jeśli trwa)...')
+    fcntl.flock(blokada, fcntl.LOCK_EX)     # cron w tym czasie pominie odczyty
+    s = ses()
+    czas = dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
+    spis = dict(czas=czas, wersja='betclic-rozpoznanie-1', sporty=[], bledy=[])
+    try:
+        api = _bc_api(s)
+        spis['api'] = [{k: v for k, v in a.items() if k != 'tresc'} for a in api]
+        zapisz_github(f'{BC_KATALOG}/api.json', dict(czas=czas, proby=api))
+        print('API JSON:', [(a.get('kod'), a.get('rozmiar')) for a in api])
+    except Exception as e: spis['bledy'].append(f'api: {e}'[:200])
+    KP, nasze = None, []
+    try:
+        KP = _przygotuj(s)
+        nasze = KP.nasze_mecze(z_listy=True)
+    except Exception as e: spis['bledy'].append(f'nasze mecze: {e}'[:200])
+    spis['nasze_mecze'] = len(nasze)
+    wszystkie, linki_wszystkie = {}, {}          # mecze Betclic ze wszystkich odwiedzonych stron + linki do nich
+    nasze_zrobione = [False]
+    from playwright.sync_api import sync_playwright
+    with sync_playwright() as pw:
+        br = pw.chromium.launch(headless=True, args=['--no-sandbox', '--disable-dev-shm-usage'])
+        ctx = br.new_context(locale='pl-PL', timezone_id='Europe/Warsaw', user_agent=UA, viewport={'width': 1366, 'height': 900})
+        pg = ctx.new_page()
+        stan = dict(etap='start', odp=[], rozmiar=0)
+        pg.on('response', _bc_odp(stan))
+        # 1. menu sportów i linki
+        linki_sportow, menu = {}, []
+        for url in (BC + '/', BC + '/pilka-nozna-sfootball'):
+            try:
+                stan['etap'] = 'menu ' + url
+                for h in _bc_strona(pg, url, przewin=2, czekaj=3000):
+                    x = _bc_link_sportu(h)
+                    if x: linki_sportow.setdefault(x[0], x[1])
+                menu = menu or _bc_menu_z_ng(_bc_ng(pg))
+            except Exception as e: spis['bledy'].append(f'menu {url}: {e}'[:200])
+        spis['menu'] = [dict(kod=k, nazwa=n, lig=len(l)) for k, n, l in menu]
+        spis['linki_sportow'] = linki_sportow
+        start_odp = list(stan['odp']); stan['odp'] = []; stan['rozmiar'] = 0
+        zapisz_github(f'{BC_KATALOG}/start.json', dict(czas=czas, menu=menu, linki_sportow=linki_sportow, odpowiedzi=start_odp))
+        kody = [k for k, _, _ in menu] or list(linki_sportow)
+        for k in linki_sportow:
+            if k not in kody: kody.append(k)
+        kody.sort(key=lambda k: (BC_NASZE.index(k) if k in BC_NASZE else 99))
+        ligi_sportu = {k: l for k, _, l in menu}
+        nazwy_sportu = {k: n for k, n, _ in menu}
+        # 2. każdy sport: lista meczów → 1–2 mecze przedmeczowe → pełna oferta
+        for kod in kody:
+            if kod not in ('football', 'tennis', 'mma', 'boxing') and not nasze_zrobione[0]:
+                nasze_zrobione[0] = True
+                _bc_nasze(pg, stan, KP, nasze, wszystkie, linki_wszystkie, spis, czas)
+            if time.time() - START > BC_LIMIT: spis['bledy'].append('limit czasu – pominięto: ' + ', '.join(kody[kody.index(kod):])); break
+            t0 = time.time()
+            stan['odp'], stan['rozmiar'] = [], 0
+            wpis = dict(kod=kod, nazwa=nazwy_sportu.get(kod), strony=[], mecze=[])
+            url_sportu = linki_sportow.get(kod) or f'{BC}/{_slug(nazwy_sportu.get(kod))}-s{kod}'
+            mecze, linki = {}, []
+            kandydaci_lig = []
+            try:
+                stan['etap'] = 'sport ' + url_sportu
+                linki = _bc_strona(pg, url_sportu)
+                wpis['strony'].append(dict(url=url_sportu, adres_po=pg.url, tekst=pg.inner_text('body')[:8000]))
+                mecze.update(_bc_mecze_z_ng(_bc_ng(pg)))
+            except Exception as e: wpis['strony'].append(dict(url=url_sportu, blad=str(e)[:200]))
+            teraz = dt.datetime.now(dt.timezone.utc)
+            def przedmeczowe():
+                wyn = []
+                for m in mecze.values():
+                    if m['live']: continue
+                    try: t = dt.datetime.fromisoformat(str(m['t'])[:19]).replace(tzinfo=dt.timezone.utc)
+                    except Exception: t = None
+                    if t and t < teraz + dt.timedelta(minutes=40): continue
+                    wyn.append(m)
+                wyn.sort(key=lambda m: str(m['t']))
+                return wyn
+            # za mało meczów przedmeczowych → strony lig (linki z menu sportu albo z listy lig w menu)
+            # nasze dyscypliny: najważniejsze ligi (tam są nasze mecze); inne: tylko gdy brak meczów przedmeczowych
+            nasza = kod in ('football', 'tennis', 'mma', 'boxing')
+            if nasza or len(przedmeczowe()) < 2:
+                z_menu = [f'{url_sportu}/{_slug(n)}-c{i}' for i, n in ligi_sportu.get(kod, [])]
+                z_linkow = [h for h in dict.fromkeys(linki) if re.search(r'-c\d+/?$', h) and url_sportu.split('/')[-1] in h]
+                kandydaci_lig = list(dict.fromkeys(z_linkow[:8] + z_menu)) if nasza else (z_linkow or z_menu)
+                for lu in kandydaci_lig[:(8 if nasza else 3)]:
+                    if (not nasza and len(przedmeczowe()) >= 2) or time.time() - START > BC_LIMIT: break
+                    try:
+                        stan['etap'] = 'liga ' + lu
+                        linki += _bc_strona(pg, lu, przewin=2, czekaj=3000)
+                        mecze.update(_bc_mecze_z_ng(_bc_ng(pg)))
+                        wpis['strony'].append(dict(url=lu, adres_po=pg.url, tekst=pg.inner_text('body')[:4000]))
+                    except Exception as e: wpis['strony'].append(dict(url=lu, blad=str(e)[:200]))
+            wpis['meczow'] = len(mecze); pm = przedmeczowe(); wpis['przedmeczowych'] = len(pm)
+            wpis['mecze_lista'] = list(mecze.values())[:60]
+            linki_m = {}
+            for h in dict.fromkeys(linki):
+                m = re.search(r'-m(\d{6,})(?:[/?#]|$)', h)
+                if m: linki_m.setdefault(m.group(1), h)
+            linki_wszystkie.update(linki_m)
+            for m in mecze.values():                          # link zapasowy, gdy na stronie nie było odnośnika
+                if m.get('liga_id') and m['id'] not in linki_m and m.get('sport') in (kod, None):
+                    linki_m[m['id']] = f"{url_sportu}/{_slug(m.get('liga'))}-c{m['liga_id']}/{_slug(m['nazwa'])}-m{m['id']}"
+                    linki_wszystkie.setdefault(m['id'], linki_m[m['id']])
+                wszystkie.setdefault(m['id'], m)
+            ile = 2 if kod in BC_NASZE else 1
+            wybrane = [m for m in pm if m['id'] in linki_m][:ile]
+            if not wybrane and linki_m:                        # brak danych o czasie – bierzemy linki, które nie są na żywo
+                wybrane = [dict(id=i) for i in linki_m if not (mecze.get(i) or {}).get('live')][:ile]
+            for m in wybrane:
+                if time.time() - START > BC_LIMIT: break
+                w = _bc_mecz(pg, stan, linki_m[m['id']], kod in BC_NASZE)
+                w['mecz'] = mecze.get(m['id'], m)
+                wpis['mecze'].append(w)
+            wpis['odpowiedzi'] = stan['odp']
+            wpis['sekund'] = round(time.time() - t0)
+            ok = zapisz_github(f'{BC_KATALOG}/{_slug(kod)}.json', wpis)
+            spis['sporty'].append(dict(kod=kod, nazwa=wpis['nazwa'], meczow=wpis['meczow'], przedmeczowych=wpis['przedmeczowych'],
+                                       stron_meczu=len(wpis['mecze']), zakladek=sum(len(x.get('zakladki', [])) for x in wpis['mecze']),
+                                       odpowiedzi=len(stan['odp']), grpc=sum(1 for o in stan['odp'] if 'grpc' in o['typ']),
+                                       sekund=wpis['sekund'], zapisano=ok))
+            print(f"{kod}: meczów {wpis['meczow']}, przedmeczowych {wpis['przedmeczowych']}, stron meczu {len(wpis['mecze'])}, "
+                  f"zapytań {len(stan['odp'])} – {round(time.time() - START)} s")
+            if len(spis['sporty']) % 6 == 0:
+                zapisz_github(f'{BC_KATALOG}/spis.json', dict(spis, sekund=round(time.time() - START), w_toku=True))
+        if not nasze_zrobione[0]: _bc_nasze(pg, stan, KP, nasze, wszystkie, linki_wszystkie, spis, czas)
+        br.close()
+    spis['sekund'] = round(time.time() - START)
+    zapisz_github(f'{BC_KATALOG}/spis.json', spis)
+    print('Betclic – rozpoznanie zakończone:', len(spis['sporty']), 'sportów,', spis['sekund'], 's')
+
 def main():
     if '--cron' in sys.argv:
         tryb_cron(); return
+    if '--betclic' in sys.argv:
+        betclic_rozpoznanie(); return
     if '--test' not in sys.argv and not any(a.startswith('--siec') or a in ('--zrzut', '--sts', '--sts-kursy', '--fortuna-mecz') for a in sys.argv[1:]):
         czytnik(); return
     if '--sts-kursy' in sys.argv:
