@@ -1,414 +1,225 @@
 {
- "czas": "2026-10-01 06:05 UTC",
+ "czas": "2026-10-01 08:05 UTC",
  "wersja": "czytnik-2",
  "bukmacherzy": {
   "fortuna": {
-   "ok": false,
+   "ok": true,
    "dopasowane": 0
   },
   "sts": {
    "ok": true,
-   "dopasowane": 2
+   "dopasowane": 0
   }
  },
- "mecze": {
-  "08940f5da7dc81ecbf2ab4828f6a4c0c": {
-   "sts": {
-    "id": "f3560036",
-    "nazwa": "Starodubtseva Yuliia - Charaeva Alina",
-    "zgodnosc": 0.96,
-    "kursy": {
-     "A": 6.0,
-     "B": 1.1,
-     "A 2:1": 6.4,
-     "B 2:1": 1.11
-    }
-   }
-  },
-  "150be9ac3e148ecdc824890bed898996": {
-   "sts": {
-    "id": "f3559570",
-    "nazwa": "Nishikori Kei - Tiafoe Frances",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "A": 10.0,
-     "B": 1.02,
-     "A min. 1 set": 3.9,
-     "A 2:0": 50.0,
-     "A -1.5": 50.0,
-     "A 2:1": 12.0,
-     "B 2:1": 5.6,
-     "B 2:0": 1.22,
-     "B -1.5": 1.22,
-     "Ponad 2.5 seta": 4.0,
-     "Poniżej 2.5 seta": 1.2
-    }
-   }
-  }
- },
+ "mecze": {},
  "diag": {
-  "bledy": [
-   "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
-  ],
+  "bledy": [],
   "nasze_mecze": 9,
+  "sporty": [
+   [
+    "ufo:sprt:01",
+    "Boks"
+   ],
+   [
+    "ufo:sprt:0q",
+    "Baseball"
+   ],
+   [
+    "ufo:sprt:23",
+    "Esport Valorant"
+   ],
+   [
+    "ufo:sprt:02",
+    "Esport Counter Strike"
+   ],
+   [
+    "ufo:sprt:0r",
+    "Badminton"
+   ],
+   [
+    "ufo:sprt:03",
+    "Esport LOL"
+   ],
+   [
+    "ufo:sprt:26",
+    "POJEDYNEK"
+   ],
+   [
+    "ufo:sprt:04",
+    "Esport DOTA2"
+   ],
+   [
+    "ufo:sprt:27",
+    "Szachy"
+   ],
+   [
+    "ufo:sprt:0v",
+    "Squash"
+   ],
+   [
+    "ufo:sprt:0w",
+    "Hokej"
+   ],
+   [
+    "ufo:sprt:29",
+    "Wyścigi konne"
+   ],
+   [
+    "ufo:sprt:07",
+    "Rugby"
+   ],
+   [
+    "ufo:sprt:0x",
+    "Tenis"
+   ],
+   [
+    "ufo:sprt:09",
+    "Esport Rainbow Six"
+   ],
+   [
+    "ufo:sprt:0y",
+    "Piłka ręczna"
+   ],
+   [
+    "ufo:sprt:1k",
+    "HIT DNIA"
+   ],
+   [
+    "ufo:sprt:1p",
+    "Polityka"
+   ],
+   [
+    "ufo:sprt:11",
+    "Florbal"
+   ],
+   [
+    "ufo:sprt:1r",
+    "Sporty motorowe"
+   ],
+   [
+    "ufo:sprt:13",
+    "Zakłady Specjalne"
+   ],
+   [
+    "ufo:sprt:35",
+    "eHokej"
+   ],
+   [
+    "ufo:sprt:1v",
+    "MISTRZOWSKI BOOST"
+   ],
+   [
+    "ufo:sprt:19",
+    "Sporty walki"
+   ],
+   [
+    "ufo:sprt:1y",
+    "Żużel"
+   ],
+   [
+    "ufo:sprt:2a",
+    "F1"
+   ],
+   [
+    "ufo:sprt:2c",
+    "Skoki narciarskie"
+   ],
+   [
+    "ufo:sprt:0c",
+    "ePiłka nożna"
+   ],
+   [
+    "ufo:sprt:0e",
+    "eKoszykówka"
+   ],
+   [
+    "ufo:sprt:2h",
+    "Golf"
+   ],
+   [
+    "ufo:sprt:0g",
+    "Futbol amerykański"
+   ],
+   [
+    "ufo:sprt:0h",
+    "Snooker"
+   ],
+   [
+    "ufo:sprt:0i",
+    "Koszykówka"
+   ],
+   [
+    "ufo:sprt:0j",
+    "Tenis stołowy"
+   ],
+   [
+    "ufo:sprt:0k",
+    "Krykiet"
+   ],
+   [
+    "ufo:sprt:0l",
+    "Dart"
+   ],
+   [
+    "ufo:sprt:0m",
+    "Siatkówka"
+   ],
+   [
+    "ufo:sprt:0n",
+    "Hokej na trawie"
+   ],
+   [
+    "ufo:sprt:00",
+    "Piłka nożna"
+   ],
+   [
+    "ufo:sprt:0p",
+    "Futsal"
+   ]
+  ],
+  "sporty_uzyte": {
+   "boks": "ufo:sprt:01",
+   "tenis": "ufo:sprt:0x",
+   "sporty walki": "ufo:sprt:19",
+   "pilka": "ufo:sprt:00"
+  },
+  "turniejow": 132,
+  "meczow_fortuny": 592,
+  "niedopasowane": [
+   "tenis: Alex Molcan – Arthur Rinderknech",
+   "tenis: Alex de Minaur – Mariano Navone",
+   "tenis: Yuliia Starodubtseva – Alina Charaeva",
+   "tenis: Sofia Kenin – Ashlyn Krueger",
+   "tenis: Katie Volynets – Robin Montgomery",
+   "tenis: Qinwen Zheng – Shi Han",
+   "tenis: Tomas Martin Etcheverry – Stefanos Tsitsipas",
+   "tenis: Kei Nishikori – Frances Tiafoe",
+   "tenis: Holger Rune – Kyrian Jacquet"
+  ],
+  "rynki_nazwy": {},
   "sts": {
    "bledy": [],
-   "meczow_sts": 1761,
+   "meczow_sts": 1773,
    "sporty": {
-    "1": 1298,
-    "3": 327,
+    "1": 1312,
+    "3": 325,
     "166": 80,
     "19": 56
    },
    "niedopasowane": [
     "tenis: Alex Molcan – Arthur Rinderknech",
     "tenis: Alex de Minaur – Mariano Navone",
+    "tenis: Yuliia Starodubtseva – Alina Charaeva",
     "tenis: Sofia Kenin – Ashlyn Krueger",
     "tenis: Katie Volynets – Robin Montgomery",
     "tenis: Qinwen Zheng – Shi Han",
     "tenis: Tomas Martin Etcheverry – Stefanos Tsitsipas",
+    "tenis: Kei Nishikori – Frances Tiafoe",
     "tenis: Holger Rune – Kyrian Jacquet"
    ],
-   "szczegoly_ramek": 7,
-   "szczegoly_tematy": {
-    "f_f3559570_pl": 4,
-    "f_f3560036_pl": 3
-   },
-   "szczegoly_meczow": {
-    "Starodubtseva Yuliia - Charaeva Alina": {
-     "18mea4c860b10e": 26
-    },
-    "Nishikori Kei - Tiafoe Frances": {
-     "18m082a5c7dff5": 33
-    }
-   },
-   "rynki_przyklad": {
-    "Starodubtseva Yuliia - Charaeva Alina": {
-     "259 Zwycięzca meczu": [
-      "Zwycięzca meczu | 4:1=6",
-      "Zwycięzca meczu | 5:2=1.1"
-     ],
-     "1016 1. zawodnik - wygra dokładnie 1 seta": [
-      "1. zawodnik - wygra dokładnie 1 seta | 26:tak=1.1",
-      "1. zawodnik - wygra dokładnie 1 seta | 27:nie=6"
-     ],
-     "1017 2. zawodnik - wygra dokładnie 1 seta": [
-      "2. zawodnik - wygra dokładnie 1 seta | 26:tak=6",
-      "2. zawodnik - wygra dokładnie 1 seta | 27:nie=1.1"
-     ],
-     "1018 ": [
-      "1. zawodnik - wygra dokładnie 2 sety | 26:=6",
-      "1. zawodnik - wygra dokładnie 2 sety | 27:=1.1"
-     ],
-     "1019 ": [
-      "2. zawodnik - wygra dokładnie 2 sety | 26:=1.1",
-      "2. zawodnik - wygra dokładnie 2 sety | 27:=6"
-     ],
-     "1186 Zwycięzca i liczba gemów": [
-      "Zwycięzca i liczba gemów | 314:1 i +30.5=6.2",
-      "Zwycięzca i liczba gemów | 315:2 i +30.5=1.11",
-      "Zwycięzca i liczba gemów | 314:1 i +32.5=6.2",
-      "Zwycięzca i liczba gemów | 315:2 i +32.5=2.12",
-      "Zwycięzca i liczba gemów | 317:2 i -32.5=2.12",
-      "Zwycięzca i liczba gemów | 314:1 i +33.5=6.2",
-      "Zwycięzca i liczba gemów | 315:2 i +33.5=4.6",
-      "Zwycięzca i liczba gemów | 317:2 i -33.5=1.39"
-     ],
-     "1967 Liczba tie-breaków": [
-      "Liczba tie-breaków | 12:+0.5=7.8",
-      "Liczba tie-breaków | 13:-0.5=1.05"
-     ],
-     "262 Gemy - handicap": [
-      "Gemy - handicap | 925:1 (+2.5)=2.8",
-      "Gemy - handicap | 926:2 (-2.5)=1.37",
-      "Gemy - handicap | 925:1 (+3.5)=1.65",
-      "Gemy - handicap | 926:2 (-3.5)=2.07",
-      "Gemy - handicap | 925:1 (+4.5)=1.17",
-      "Gemy - handicap | 926:2 (-4.5)=4.3"
-     ],
-     "268 Liczba gemów": [
-      "Liczba gemów | 12:+35.5=4.8",
-      "Liczba gemów | 13:-35.5=1.15",
-      "Liczba gemów | 12:+32.5=1.65",
-      "Liczba gemów | 13:-32.5=2.07",
-      "Liczba gemów | 12:+33.5=2.8",
-      "Liczba gemów | 13:-33.5=1.37"
-     ],
-     "271 1. zawodnik - liczba gemów": [
-      "1. zawodnik - liczba gemów | 12:+14.5=1.65",
-      "1. zawodnik - liczba gemów | 13:-14.5=2.07",
-      "1. zawodnik - liczba gemów | 12:+15.5=2.8",
-      "1. zawodnik - liczba gemów | 13:-15.5=1.37",
-      "1. zawodnik - liczba gemów | 12:+13.5=1.17",
-      "1. zawodnik - liczba gemów | 13:-13.5=4.3"
-     ],
-     "274 2. zawodnik - liczba gemów": [
-      "2. zawodnik - liczba gemów | 12:+18.5=8.4",
-      "2. zawodnik - liczba gemów | 13:-18.5=1.04",
-      "2. zawodnik - liczba gemów | 12:+17.5=1.04",
-      "2. zawodnik - liczba gemów | 13:-17.5=8.4"
-     ],
-     "282 Suma gemów": [
-      "Suma gemów | 24:nieparzysta=1.74",
-      "Suma gemów | 25:parzysta=1.94"
-     ],
-     "285 Dokładny wynik": [
-      "Dokładny wynik | 1158:2:1=6.4",
-      "Dokładny wynik | 1159:1:2=1.11"
-     ],
-     "293 Set ": [
-      "3. set  | 4:1=6",
-      "3. set  | 5:2=1.1"
-     ],
-     "296 Set - gemy - handicap": [
-      "3. set - gemy - handicap | 925:1 (+3.5)=1.65",
-      "3. set - gemy - handicap | 926:2 (-3.5)=2.07",
-      "3. set - gemy - handicap | 925:1 (+4.5)=1.17",
-      "3. set - gemy - handicap | 926:2 (-4.5)=4.3",
-      "3. set - gemy - handicap | 925:1 (+2.5)=2.8",
-      "3. set - gemy - handicap | 926:2 (-2.5)=1.37"
-     ],
-     "299 Set - liczba gemów": [
-      "3. set - liczba gemów | 12:+9.5=2.8",
-      "3. set - liczba gemów | 13:-9.5=1.37",
-      "3. set - liczba gemów | 12:+10.5=4.8",
-      "3. set - liczba gemów | 13:-10.5=1.15",
-      "3. set - liczba gemów | 12:+7.5=1.17",
-      "3. set - liczba gemów | 13:-7.5=4.3"
-     ],
-     "300 Set - suma gemów": [
-      "3. set - suma gemów | 24:nieparzysta=1.75",
-      "3. set - suma gemów | 25:parzysta=1.95"
-     ],
-     "301 Set - będzie tie-break": [
-      "3. set - będzie tie-break | 26:tak=7.8",
-      "3. set - będzie tie-break | 27:nie=1.05"
-     ],
-     "302 Set - dokładny wynik": [
-      "3. set - dokładny wynik | 260:6:4=21",
-      "3. set - dokładny wynik | 261:7:5=20",
-      "3. set - dokładny wynik | 262:7:6=18",
-      "3. set - dokładny wynik | 264:1:6=5"
-     ],
-     "305 ": [
-      "3. set - 7. gem | 4:=2.32",
-      "3. set - 7. gem | 5:=1.53",
-      "3. set - 6. gem | 4:=1.37",
-      "3. set - 6. gem | 5:=2.8"
-     ],
-     "306 ": [
-      "3. set - 7. gem - dokładna liczba punktów | 270:=6.4",
-      "3. set - 7. gem - dokładna liczba punktów | 271:=3.65",
-      "3. set - 7. gem - dokładna liczba punktów | 272:=3",
-      "3. set - 7. gem - dokładna liczba punktów | 273:=3.05"
-     ],
-     "307 ": [
-      "3. set - 7. gem - będzie równowaga | 26:=2.9",
-      "3. set - 7. gem - będzie równowaga | 27:=1.36"
-     ],
-     "308 ": [
-      "3. set - 7. gem - suma punktów | 24:=3.4",
-      "3. set - 7. gem - suma punktów | 25:=1.27"
-     ],
-     "309 ": [
-      "3. set - 7. gem - dokładny wynik | 274:=13",
-      "3. set - 7. gem - dokładny wynik | 275:=7.8",
-      "3. set - 7. gem - dokładny wynik | 276:=6.2",
-      "3. set - 7. gem - dokładny wynik | 277:=6.2"
-     ],
-     "312 ": [
-      "3. set - 7. gem - pierwsze 2 punkty | 1:=4.4",
-      "3. set - 7. gem - pierwsze 2 punkty | 2:=1.89",
-      "3. set - 7. gem - pierwsze 2 punkty | 3:=3"
-     ],
-     "313 ": [
-      "3. set - 6. gem - 3. punkt | 4:=1.8",
-      "3. set - 6. gem - 3. punkt | 5:=1.9"
-     ]
-    },
-    "Nishikori Kei - Tiafoe Frances": {
-     "259 Zwycięzca meczu": [
-      "Zwycięzca meczu | 4:1=10",
-      "Zwycięzca meczu | 5:2=1.02"
-     ],
-     "1016 1. zawodnik - wygra dokładnie 1 seta": [
-      "1. zawodnik - wygra dokładnie 1 seta | 26:tak=5",
-      "1. zawodnik - wygra dokładnie 1 seta | 27:nie=1.13"
-     ],
-     "1017 2. zawodnik - wygra dokładnie 1 seta": [
-      "2. zawodnik - wygra dokładnie 1 seta | 26:tak=10",
-      "2. zawodnik - wygra dokładnie 1 seta | 27:nie=1.02"
-     ],
-     "1018 ": [
-      "1. zawodnik - wygra dokładnie 2 sety | 26:=10",
-      "1. zawodnik - wygra dokładnie 2 sety | 27:=1.02"
-     ],
-     "1019 ": [
-      "2. zawodnik - wygra dokładnie 2 sety | 26:=1.02",
-      "2. zawodnik - wygra dokładnie 2 sety | 27:=10"
-     ],
-     "1186 Zwycięzca i liczba gemów": [
-      "Zwycięzca i liczba gemów | 314:1 i +19.5=11",
-      "Zwycięzca i liczba gemów | 315:2 i +19.5=1.45",
-      "Zwycięzca i liczba gemów | 316:1 i -19.5=50",
-      "Zwycięzca i liczba gemów | 317:2 i -19.5=3.15",
-      "Zwycięzca i liczba gemów | 314:1 i +21.5=11",
-      "Zwycięzca i liczba gemów | 315:2 i +21.5=2.55",
-      "Zwycięzca i liczba gemów | 316:1 i -21.5=50",
-      "Zwycięzca i liczba gemów | 317:2 i -21.5=1.61"
-     ],
-     "1967 Liczba tie-breaków": [
-      "Liczba tie-breaków | 12:+1.5=19",
-      "Liczba tie-breaków | 12:+0.5=3.45",
-      "Liczba tie-breaków | 13:-0.5=1.26"
-     ],
-     "262 Gemy - handicap": [
-      "Gemy - handicap | 925:1 (+2.5)=5.6",
-      "Gemy - handicap | 926:2 (-2.5)=1.11",
-      "Gemy - handicap | 925:1 (+3.5)=2.95",
-      "Gemy - handicap | 926:2 (-3.5)=1.35",
-      "Gemy - handicap | 925:1 (+4.5)=1.35",
-      "Gemy - handicap | 926:2 (-4.5)=2.9"
-     ],
-     "265 Sety - handicap": [
-      "Sety - handicap | 925:1 (+1.5)=3.9",
-      "Sety - handicap | 926:2 (-1.5)=1.21"
-     ],
-     "268 Liczba gemów": [
-      "Liczba gemów | 12:+19.5=1.32",
-      "Liczba gemów | 13:-19.5=3.05",
-      "Liczba gemów | 12:+21.5=2.2",
-      "Liczba gemów | 13:-21.5=1.59",
-      "Liczba gemów | 12:+20.5=2.2",
-      "Liczba gemów | 13:-20.5=1.59"
-     ],
-     "271 1. zawodnik - liczba gemów": [
-      "1. zawodnik - liczba gemów | 12:+9.5=2.55",
-      "1. zawodnik - liczba gemów | 13:-9.5=1.44",
-      "1. zawodnik - liczba gemów | 12:+8.5=2.2",
-      "1. zawodnik - liczba gemów | 13:-8.5=1.59",
-      "1. zawodnik - liczba gemów | 12:+7.5=1.32",
-      "1. zawodnik - liczba gemów | 13:-7.5=3.05"
-     ],
-     "274 2. zawodnik - liczba gemów": [
-      "2. zawodnik - liczba gemów | 12:+13.5=4.5",
-      "2. zawodnik - liczba gemów | 13:-13.5=1.17",
-      "2. zawodnik - liczba gemów | 13:-11.5=28",
-      "2. zawodnik - liczba gemów | 12:+12.5=2.25",
-      "2. zawodnik - liczba gemów | 13:-12.5=1.57"
-     ],
-     "275 1. zawodnik - wygra co najmniej seta": [
-      "1. zawodnik - wygra co najmniej seta | 26:tak=3.9",
-      "1. zawodnik - wygra co najmniej seta | 27:nie=1.21"
-     ],
-     "276 2. zawodnik - wygra co najmniej seta": [
-      "2. zawodnik - wygra co najmniej seta | 27:nie=42"
-     ],
-     "277 Będzie set do zera": [
-      "Będzie set do zera | 26:tak=20"
-     ],
-     "279 ": [
-      "Dokładna liczba setów | 1185:=1.2",
-      "Dokładna liczba setów | 1186:=4"
-     ],
-     "282 Suma gemów": [
-      "Suma gemów | 24:nieparzysta=2.6",
-      "Suma gemów | 25:parzysta=1.41"
-     ],
-     "285 Dokładny wynik": [
-      "Dokładny wynik | 1157:2:0=50",
-      "Dokładny wynik | 1158:2:1=12",
-      "Dokładny wynik | 1159:1:2=5.6",
-      "Dokładny wynik | 1160:0:2=1.22"
-     ],
-     "292 1. set / wynik końcowy": [
-      "1. set / wynik końcowy | 252:1 / 1=50",
-      "1. set / wynik końcowy | 253:2 / 1=13",
-      "1. set / wynik końcowy | 254:1 / 2=50",
-      "1. set / wynik końcowy | 255:2 / 2=1.04"
-     ],
-     "293 Set ": [
-      "2. set  | 4:1=4.1",
-      "2. set  | 5:2=1.19",
-      "1. set  | 4:1=34"
-     ],
-     "296 Set - gemy - handicap": [
-      "2. set - gemy - handicap | 925:1 (+0.5)=4",
-      "2. set - gemy - handicap | 926:2 (-0.5)=1.2",
-      "1. set - gemy - handicap | 925:1 (+0.5)=34",
-      "2. set - gemy - handicap | 925:1 (+2.5)=1.35",
-      "2. set - gemy - handicap | 926:2 (-2.5)=2.9"
-     ],
-     "299 Set - liczba gemów": [
-      "1. set - liczba gemów | 12:+12.5=28",
-      "2. set - liczba gemów | 12:+7.5=1.02",
-      "2. set - liczba gemów | 13:-7.5=10",
-      "2. set - liczba gemów | 12:+8.5=1.23",
-      "2. set - liczba gemów | 13:-8.5=3.75"
-     ],
-     "300 Set - suma gemów": [
-      "2. set - suma gemów | 24:nieparzysta=2.17",
-      "2. set - suma gemów | 25:parzysta=1.6",
-      "1. set - suma gemów | 24:nieparzysta=28"
-     ],
-     "301 Set - będzie tie-break": [
-      "2. set - będzie tie-break | 26:tak=3.9",
-      "2. set - będzie tie-break | 27:nie=1.21",
-      "1. set - będzie tie-break | 26:tak=28"
-     ],
-     "302 Set - dokładny wynik": [
-      "2. set - dokładny wynik | 256:6:0=50",
-      "2. set - dokładny wynik | 257:6:1=50",
-      "2. set - dokładny wynik | 258:6:2=50",
-      "2. set - dokładny wynik | 259:6:3=11",
-      "1. set - dokładny wynik | 261:7:5=50",
-      "1. set - dokładny wynik | 262:7:6=50",
-      "1. set - dokładny wynik | 268:5:7=50",
-      "1. set - dokładny wynik | 269:6:7=50"
-     ],
-     "305 ": [
-      "1. set - 10. gem | 4:=12",
-      "1. set - 10. gem | 5:=1.01",
-      "1. set - 11. gem | 4:=1.27",
-      "1. set - 11. gem | 5:=3.4"
-     ],
-     "306 ": [
-      "1. set - 11. gem - dokładna liczba punktów | 270:=5",
-      "1. set - 11. gem - dokładna liczba punktów | 271:=3.5",
-      "1. set - 11. gem - dokładna liczba punktów | 272:=3.1",
-      "1. set - 11. gem - dokładna liczba punktów | 273:=3.5"
-     ],
-     "307 ": [
-      "1. set - 11. gem - będzie równowaga | 26:=3.35",
-      "1. set - 11. gem - będzie równowaga | 27:=1.27"
-     ],
-     "308 ": [
-      "1. set - 11. gem - suma punktów | 24:=3.25",
-      "1. set - 11. gem - suma punktów | 25:=1.29"
-     ],
-     "309 ": [
-      "1. set - 11. gem - dokładny wynik | 274:=5.4",
-      "1. set - 11. gem - dokładny wynik | 275:=4.1",
-      "1. set - 11. gem - dokładny wynik | 276:=4.1",
-      "1. set - 11. gem - dokładny wynik | 277:=4.6"
-     ],
-     "312 ": [
-      "1. set - 11. gem - pierwsze 2 punkty | 1:=2.47",
-      "1. set - 11. gem - pierwsze 2 punkty | 2:=2",
-      "1. set - 11. gem - pierwsze 2 punkty | 3:=5.4"
-     ],
-     "479 Liczba setów": [
-      "Liczba setów | 12:+2.5=4",
-      "Liczba setów | 13:-2.5=1.2"
-     ],
-     "313 ": [
-      "1. set - 10. gem - 6. punkt | 4:=3.05",
-      "1. set - 10. gem - 6. punkt | 5:=1.32"
-     ]
-    }
-   },
-   "z_wieloma_rynkami": 2
+   "rynki_przyklad": {},
+   "z_wieloma_rynkami": 0
   }
  },
- "sekund": 49
+ "sekund": 53
 }
