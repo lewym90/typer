@@ -1,0 +1,343 @@
+{
+ "czas": "2026-10-01 19:31 UTC",
+ "wersja": "betclic-rozpoznanie-1",
+ "sporty": [
+  {
+   "kod": "football",
+   "nazwa": "Piłka nożna",
+   "meczow": 146,
+   "przedmeczowych": 123,
+   "stron_meczu": 2,
+   "zakladek": 8,
+   "odpowiedzi": 32,
+   "grpc": 11,
+   "sekund": 142,
+   "zapisano": true
+  },
+  {
+   "kod": "tennis",
+   "nazwa": "Tenis",
+   "meczow": 83,
+   "przedmeczowych": 63,
+   "stron_meczu": 2,
+   "zakladek": 8,
+   "odpowiedzi": 32,
+   "grpc": 11,
+   "sekund": 136,
+   "zapisano": true
+  },
+  {
+   "kod": "boxing",
+   "nazwa": "Boks",
+   "meczow": 27,
+   "przedmeczowych": 27,
+   "stron_meczu": 2,
+   "zakladek": 8,
+   "odpowiedzi": 20,
+   "grpc": 5,
+   "sekund": 91,
+   "zapisano": true
+  },
+  {
+   "kod": "basketball",
+   "nazwa": "Koszykówka",
+   "meczow": 22,
+   "przedmeczowych": 14,
+   "stron_meczu": 2,
+   "zakladek": 8,
+   "odpowiedzi": 15,
+   "grpc": 3,
+   "sekund": 74,
+   "zapisano": true
+  },
+  {
+   "kod": "ice_hockey",
+   "nazwa": "Hokej",
+   "meczow": 20,
+   "przedmeczowych": 15,
+   "stron_meczu": 2,
+   "zakladek": 8,
+   "odpowiedzi": 15,
+   "grpc": 3,
+   "sekund": 82,
+   "zapisano": true
+  },
+  {
+   "kod": "volleyball",
+   "nazwa": "Siatkówka",
+   "meczow": 19,
+   "przedmeczowych": 19,
+   "stron_meczu": 2,
+   "zakladek": 8,
+   "odpowiedzi": 15,
+   "grpc": 3,
+   "sekund": 73,
+   "zapisano": true
+  }
+ ],
+ "bledy": [],
+ "api": [
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v4/sports?application=2&countrycode=pl&language=pl&sitecode=plpl",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v4/sports?application=2&country"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v2/sports?application=2&countrycode=pl&language=pl&sitecode=plpl",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v2/sports?application=2&country"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v4/events?application=2&countrycode=pl&language=pl&sitecode=plpl&fetchMultipleDefaultMarkets=true&limit=20&offset=0&sortBy=ByLiveRankingPreliveDate&sportIds=1",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v4/events?application=2&country"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v4/events?application=2&countrycode=pl&language=pl&sitecode=plpl&limit=20&offset=0&sportIds=1",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v4/events?application=2&country"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v3/events?application=2&countrycode=pl&language=pl&sitecode=plpl&limit=20&offset=0&sportIds=1",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v3/events?application=2&country"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v2/events?application=2&countrycode=pl&language=pl&sitecode=plpl&limit=20&offset=0&sportIds=1",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v2/events?application=2&country"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v2/sports/1?application=2&countrycode=pl&language=pl&sitecode=plpl",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v2/sports/1?application=2&count"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v4/events?application=1024&countrycode=pl&language=pl&sitecode=plpl&limit=20&offset=0&sportIds=2",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v4/events?application=1024&coun"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v4/events?application=2&countrycode=pl&language=pl&sitecode=pl&limit=20&offset=0&sportIds=1",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v4/events?application=2&country"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v4/competitions/22676?application=2&countrycode=pl&language=pl&sitecode=plpl",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v4/competitions/22676?applicati"
+  },
+  {
+   "url": "https://offer.cdn.begmedia.com/api/pub/v2/competitions/22676?application=2&countrycode=pl&language=pl&sitecode=plpl",
+   "blad": "ConnectionError: HTTPSConnectionPool(host='offer.cdn.begmedia.com', port=443): Max retries exceeded with url: /api/pub/v2/competitions/22676?applicati"
+  }
+ ],
+ "nasze_mecze": 8,
+ "menu": [
+  {
+   "kod": "football",
+   "nazwa": "Piłka nożna",
+   "lig": 200
+  },
+  {
+   "kod": "ice_hockey",
+   "nazwa": "Hokej",
+   "lig": 35
+  },
+  {
+   "kod": "tennis",
+   "nazwa": "Tenis",
+   "lig": 69
+  },
+  {
+   "kod": "baseball",
+   "nazwa": "Baseball",
+   "lig": 5
+  },
+  {
+   "kod": "biathlon",
+   "nazwa": "Biathlon",
+   "lig": 7
+  },
+  {
+   "kod": "cross_country_skiing",
+   "nazwa": "Biegi narciarskie",
+   "lig": 3
+  },
+  {
+   "kod": "boxing",
+   "nazwa": "Boks",
+   "lig": 2
+  },
+  {
+   "kod": "cs2",
+   "nazwa": "Counter-Strike 2",
+   "lig": 9
+  },
+  {
+   "kod": "darts",
+   "nazwa": "Dart",
+   "lig": 3
+  },
+  {
+   "kod": "dota_2",
+   "nazwa": "Dota 2",
+   "lig": 1
+  },
+  {
+   "kod": "ea_sports_fc",
+   "nazwa": "EA Sports FC",
+   "lig": 3
+  },
+  {
+   "kod": "formula_1",
+   "nazwa": "F1",
+   "lig": 2
+  },
+  {
+   "kod": "formula_2",
+   "nazwa": "Formuła 2",
+   "lig": 1
+  },
+  {
+   "kod": "american_football",
+   "nazwa": "Futbol amerykański",
+   "lig": 3
+  },
+  {
+   "kod": "futsal",
+   "nazwa": "Futsal",
+   "lig": 2
+  },
+  {
+   "kod": "golf",
+   "nazwa": "Golf",
+   "lig": 8
+  },
+  {
+   "kod": "kog",
+   "nazwa": "KoG",
+   "lig": 1
+  },
+  {
+   "kod": "cycling",
+   "nazwa": "Kolarstwo",
+   "lig": 6
+  },
+  {
+   "kod": "basketball",
+   "nazwa": "Koszykówka",
+   "lig": 67
+  },
+  {
+   "kod": "lol",
+   "nazwa": "League of Legends",
+   "lig": 5
+  },
+  {
+   "kod": "alpine_skiing",
+   "nazwa": "Narciarstwo Alpejskie",
+   "lig": 2
+  },
+  {
+   "kod": "nascar",
+   "nazwa": "Nascar",
+   "lig": 2
+  },
+  {
+   "kod": "padel",
+   "nazwa": "Padel",
+   "lig": 1
+  },
+  {
+   "kod": "handball",
+   "nazwa": "Piłka ręczna",
+   "lig": 20
+  },
+  {
+   "kod": "waterpolo",
+   "nazwa": "Piłka wodna",
+   "lig": 1
+  },
+  {
+   "kod": "rainbow_six",
+   "nazwa": "Rainbow Six",
+   "lig": 5
+  },
+  {
+   "kod": "rugby_league",
+   "nazwa": "Rugby XIII",
+   "lig": 4
+  },
+  {
+   "kod": "rugby_union",
+   "nazwa": "Rugby XV",
+   "lig": 14
+  },
+  {
+   "kod": "volleyball",
+   "nazwa": "Siatkówka",
+   "lig": 10
+  },
+  {
+   "kod": "ski_jumping",
+   "nazwa": "Skoki narciarskie",
+   "lig": 3
+  },
+  {
+   "kod": "snooker",
+   "nazwa": "Snooker",
+   "lig": 5
+  },
+  {
+   "kod": "chess",
+   "nazwa": "Szachy",
+   "lig": 1
+  },
+  {
+   "kod": "martial_arts",
+   "nazwa": "Sztuki Walki",
+   "lig": 9
+  },
+  {
+   "kod": "table_tennis",
+   "nazwa": "Tenis stołowy",
+   "lig": 3
+  },
+  {
+   "kod": "floorball",
+   "nazwa": "Unihokej",
+   "lig": 4
+  },
+  {
+   "kod": "valorant",
+   "nazwa": "Valorant",
+   "lig": 2
+  },
+  {
+   "kod": "motorcycling",
+   "nazwa": "Wyścigi motocyklowe",
+   "lig": 7
+  },
+  {
+   "kod": "specials",
+   "nazwa": "Zakłady specjalne",
+   "lig": 5
+  },
+  {
+   "kod": "sailing",
+   "nazwa": "Żeglarstwo",
+   "lig": 1
+  },
+  {
+   "kod": "speedway",
+   "nazwa": "Żużel",
+   "lig": 2
+  }
+ ],
+ "linki_sportow": {
+  "ports": "https://www.betclic.pl/virtual-sports",
+  "football": "https://www.betclic.pl/pilka-nozna-sfootball"
+ },
+ "nasze": {
+  "dopasowane": 7,
+  "niedopasowane": [
+   "pilka: Seattle Sounders FC – Sporting Kansas City (2026-10-02 03:30)"
+  ],
+  "z_linkiem": 7,
+  "stron_meczu": 2,
+  "blad": null
+ },
+ "sekund": 723,
+ "w_toku": true
+}
