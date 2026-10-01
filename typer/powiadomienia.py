@@ -28,6 +28,10 @@ def wyslij(tekst):
     try:
         r = requests.post(f'https://api.telegram.org/bot{TOKEN}/sendMessage', timeout=20,
                           data=dict(chat_id=cid, text=tekst[:4000], parse_mode='HTML', disable_web_page_preview='true')).json()
+        if not r.get('ok') and 'parse' in str(r.get('description', '')).lower():   # zła składnia HTML – wyślij jako zwykły tekst
+            czysty = re.sub(r'<[^>]+>', '', tekst).replace('&lt;', '<').replace('&gt;', '>').replace('&amp;', '&')
+            r = requests.post(f'https://api.telegram.org/bot{TOKEN}/sendMessage', timeout=20,
+                              data=dict(chat_id=cid, text=czysty[:4000], disable_web_page_preview='true')).json()
         if not r.get('ok'): STAN_TG['ostatni_blad'] = str(r.get('description')); return False
         STAN_TG['wyslane'] += 1; return True
     except Exception as e:

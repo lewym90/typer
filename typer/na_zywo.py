@@ -206,13 +206,15 @@ def podsumowanie(sl, stan):
             else: dzien['value'][0] += z > 0; dzien['value'][1] += 1; dzien['value'][2] += z
             opis.append(f"{ik}{'✅' if z > 0 else ('↩️' if z == 0 else '❌')}")
         wiersze.append(f"{esc(pl(m['gospodarz']))} <b>{s['hg']}:{s['ag']}</b> {esc(pl(m['gosc']))} {' '.join(opis)}")
-    lin = [f"📊 <b>Podsumowanie dnia {wspolne.dzien_programu().strftime('%d.%m')}</b>", ''] + wiersze + ['', '<b>Dziś:</b>']
-    for ik, nazwa in (('🔒', 'najpewniejsze'), ('⚖️', 'lepszy kurs'), ('🎯', 'ryzykowne')):
+    lin = [f"📊 <b>Podsumowanie dnia {wspolne.dzien_programu().strftime('%d.%m')}</b>", ''] + wiersze + ['']
+    a, b = dzien['pewne']['🔒']
+    if b: lin.append(f"<b>Typy dnia 🔒: {a} z {b}</b> ({round(100 * a / b)}%)")
+    for ik, nazwa, cel in (('⚖️', 'wyższy kurs', 'cel ok. 60%'), ('🎯', 'ryzykowne', 'cel ok. 37%')):
         a, b = dzien['pewne'][ik]
-        if b: lin.append(f"{ik} {nazwa}: {a}/{b} ({round(100 * a / b)}%)")
+        if b: lin.append(f"{ik} {nazwa}: {a}/{b} ({round(100 * a / b)}%, {cel})")
     if dzien['value'][1]: lin.append(f"💰 Value: {dzien['value'][0]}/{dzien['value'][1]}, wynik {dzien['value'][2] * 10:+.2f} zł przy stawce 10 zł")
-    lin += ['', '<b>Łącznie (jak w Dzienniku):</b>'] + skutecznosc_laczna(sl, stan)
-    if tg.APLIKACJA: lin.append(f"\n📱 {tg.APLIKACJA}")
+    lin += ['', '<b>Łącznie (piłka, jak w Dzienniku):</b>'] + skutecznosc_laczna(sl, stan)
+    if tg.APLIKACJA: lin.append(f'\n<a href="{tg.APLIKACJA}">Otwórz aplikację →</a>')
     return '\n'.join(lin)
 
 def skutecznosc_laczna(sl, stan):
@@ -228,9 +230,13 @@ def skutecznosc_laczna(sl, stan):
             w = wyniki.get(str(r.event_id))
             if w and r.klucz in MASKI: P.loc[i, 'trafiony'] = float(MASKI[r.klucz][min(w[0], MAXG), min(w[1], MAXG)])
         R = P[P.trafiony.notna()]
-        for poz, ik, nazwa in (('najpewniejszy', '🔒', 'najpewniejsze'), ('lepszy_kurs', '⚖️', 'lepszy kurs'), ('ryzykowny', '🎯', 'ryzykowne')):
+        if 'lista' in R: R = R[R.lista.fillna('pewne') == 'pewne']   # bez typów odradzanych przez AI (nie grane)
+        niz = R.nizsza.fillna(False).astype(str).str.lower().isin(['true', '1', '1.0']) if 'nizsza' in R else pd.Series(False, index=R.index)
+        g = R[(R.poziom == 'najpewniejszy') & ~niz]
+        if len(g): out.append(f"<b>🔒 Typy dnia: {round(100 * g.trafiony.mean())}%</b> z {len(g)} (przewidywane {round(100 * g.szansa.mean())}%)")
+        for poz, ik, nazwa, cel in (('lepszy_kurs', '⚖️', 'wyższy kurs', 'cel ok. 60%'), ('ryzykowny', '🎯', 'ryzykowne', 'cel ok. 37%')):
             g = R[R.poziom == poz]
-            if len(g): out.append(f"{ik} {nazwa}: {round(100 * g.trafiony.mean())}% z {len(g)} (przew. {round(100 * g.szansa.mean())}%)")
+            if len(g): out.append(f"{ik} {nazwa}: {round(100 * g.trafiony.mean())}% z {len(g)} ({cel})")
     except Exception as e: print('dziennik Pewne:', e)
     try:
         V = pd.read_csv(os.path.join(KATALOG, 'dziennik.csv'), dtype={'event_id': str})

@@ -201,28 +201,127 @@ def przelicz(sp, key, tytul, grupa, ev):
                                    kurs_szukaj=round(1.02 / sz, 2), stawka_proc=round(core.kelly(sz, k), 4)))
     return e
 
+def werdykt(m): return ((m.get('raport') or {}).get('ai') or {}).get('werdykt')
+
+KSW_DO_GLOWNYCH = 100   # KSW wchodzi do 5 głównych Pewnych dopiero po tylu rozliczonych walkach w dzienniku
+
 def lista_pewnych(mecze):
-    """5 najpewniejszych typów z 15 najpopularniejszych meczów (Polacy, ważne turnieje, później na gali = ważniejsza walka)."""
+    """5 najpewniejszych typów z 15 najpopularniejszych meczów (Polacy, ważne turnieje, później na gali = ważniejsza walka).
+    Nigdy typy, które AI odradza; najpierw „zgoda” (lub brak oceny), potem „ryzyko”; dopełnienie poniżej 70% – oznaczone.
+    Zwraca (pewne, odradzane)."""
     def popularnosc(m):
         if m['sport'] == 'tenis': return (not m['polski'], _ranga(m['sport_key'], m.get('turniej_oryg') or m['turniej'], []), m['start'])
         return (not m['polski'], m['dyscyplina'] != 'MMA', tuple(-ord(c) for c in m['start']))   # później na gali = ważniejsza walka
     kol = sorted(mecze, key=popularnosc)
     for m in mecze: m.pop('nizsza_pewnosc', None)
     kand = [m for m in kol[:PEWNE_Z_ILU] if m.get('najpewniejszy')]
-    ost = lambda m: bool((m.get('raport') or {}).get('ostrzezenie'))
-    mocne = sorted([m for m in kand if m['najpewniejszy']['szansa'] >= core.PEWNE_MIN_SZANSA], key=lambda m: (ost(m), -m['najpewniejszy']['szansa']))
+    odradzane = [m for m in kand if werdykt(m) == 'odradza' and m['najpewniejszy']['szansa'] >= core.PEWNE_MIN_SZANSA]
+    kand = [m for m in kand if werdykt(m) != 'odradza']
+    mocne = sorted([m for m in kand if m['najpewniejszy']['szansa'] >= core.PEWNE_MIN_SZANSA],
+                   key=lambda m: (werdykt(m) == 'ryzyko', -m['najpewniejszy']['szansa']))
     wyb = mocne[:PEWNE_ILE]
     if len(wyb) < PEWNE_ILE:
         slabsze = sorted([m for m in kand if 0.55 <= m['najpewniejszy']['szansa'] < core.PEWNE_MIN_SZANSA], key=lambda m: -m['najpewniejszy']['szansa'])
         for m in slabsze[:PEWNE_ILE - len(wyb)]: m['nizsza_pewnosc'] = True; wyb.append(m)
-    return wyb
+    return wyb, odradzane[:3]
+
+# ---------------- KSW: kursy polskich bukmacherów (Pinnacle nie wystawia) ----------------
+def _ksw_z_serwera():
+    """Walki KSW z polskiego serwera (Fortuna + STS) – docs/data/kursy_vps.json, jeśli świeże (do 30 h)."""
+    try:
+        d = json.load(open(os.path.join(OUT, 'kursy_vps.json')))
+        t = pd.Timestamp(d['czas'].replace(' UTC', ''), tz='UTC')
+        if (pd.Timestamp.now(tz='UTC') - t).total_seconds() > 30 * 3600: STAN['ksw'] = 'kursy z serwera nieaktualne'; return []
+        return d.get('ksw') or []
+    except Exception as e: STAN['ksw'] = f'brak kursów z serwera: {str(e)[:60]}'; return []
+
+def _ksw_superbet(walki_):
+    """Dopisuje kursy Superbetu (zwycięzca) do walk KSW – dopasowanie po nazwiskach i czasie."""
+    try:
+        import kursy_pl as KP
+        oferta = KP.oferta_superbet(KP._sesja())
+    except Exception as e: _blad(f'KSW Superbet: {e}'); return
+    for w in walki_:
+        start = pd.Timestamp(w['t']).tz_convert('Europe/Warsaw').strftime('%Y-%m-%d %H:%M')
+        b = KP.dopasuj(dict(h=w['a'], a=w['b'], start=start), oferta, 720, True)
+        if not b: continue
+        k = KP.klucze_duel(b[0].get('odds') or [], b[1])
+        if k.get('A') and k.get('B'): w['kursy']['superbet'] = dict(A=k['A'], B=k['B'])
+
+NAZWY_BUK_PL = {'fortuna': 'Fortuna', 'sts': 'STS', 'superbet': 'Superbet', 'betclic': 'Betclic PL'}
+
+def przelicz_ksw(w):
+    """Walka KSW → karta jak z The Odds API. Szansa = średnia z kursów polskich bukmacherów bez marży (bez kalibracji UFC –
+    na 42 walkach KSW pogarszała wynik)."""
+    kursy = {NAZWY_BUK_PL.get(b, b): v for b, v in (w.get('kursy') or {}).items() if v.get('A', 0) > 1 and v.get('B', 0) > 1}
+    if not kursy: return None
+    pa = float(np.mean([(1 / v['A']) / (1 / v['A'] + 1 / v['B']) for v in kursy.values()]))
+    A, B = pl_osoba(w['a']), pl_osoba(w['b'])
+    start = pd.Timestamp(w['t']).tz_convert('Europe/Warsaw')
+    eid = 'ksw-' + hashlib.md5(f"{nrm(A)}|{nrm(B)}|{start.strftime('%Y-%m-%d')}".encode()).hexdigest()[:12]
+    r5 = bool(w.get('pas'))
+    R = walki.rozklad_mma(pa, None, r5)
+    e = dict(sport='walki', sport_key='ksw', turniej=w.get('gala') or 'KSW', turniej_oryg=w.get('gala') or 'KSW', event_id=eid, a=A, b=B, mecz=f'{A} – {B}',
+             start=start.strftime('%Y-%m-%d %H:%M'), godzina=start.strftime('%H:%M'), dzien=start.strftime('%d.%m'),
+             zrodlo='rynek PL (' + ', '.join(sorted(kursy)) + ')', rynek_pl=True, polski=True, betclic=None, dyscyplina='MMA',
+             kategoria=None, rundy=5 if r5 else 3, rundy_zrodlo='5 rund (walka o pas)' if r5 else '3 rundy (przyjęto)',
+             szansa_a=round(pa, 4), szansa_b=round(1 - pa, 4), kursy_walki=kursy)
+    _uzupelnij_mma(e, R, A, B)
+    return e
+
+def _uzupelnij_mma(e, R, A, B):
+    e.update(przed_czasem=round(float(R[('A', 'KO')] + R[('B', 'KO')]), 4),
+             metody=dict(a_ko=round(float(R[('A', 'KO')]), 4), a_pkt=round(float(R[('A', 'PKT')]), 4),
+                         b_ko=round(float(R[('B', 'KO')]), 4), b_pkt=round(float(R[('B', 'PKT')]), 4)))
+    T, rk = walki.typy(R)
+    for poz in ('najpewniejszy', 'lepszy_kurs', 'ryzykowny'): e.pop(poz, None)
+    for poz, (k, sz) in T.items():
+        e[poz] = _typ(k, sz, walki.opis, A, B, None)
+        if e.get('kursy_walki') and k in ('A', 'B'):
+            e[poz]['kursy_pl'] = {b: v[k] for b, v in e['kursy_walki'].items() if v.get(k)}
+    e['value'] = []
+    if e.get('kursy_walki'):   # value: najlepszy polski kurs vs uczciwy kurs ze średniej rynku PL
+        for strona, n in (('A', A), ('B', B)):
+            sz = e['szansa_a'] if strona == 'A' else e['szansa_b']
+            buk, k = max(((b, v[strona]) for b, v in e['kursy_walki'].items()), key=lambda x: x[1])
+            ev_ = sz * k - 1
+            if ev_ >= 0.03 and 1.30 <= k <= 4.00 and len(e['kursy_walki']) >= 2:
+                e['value'].append(dict(klucz=strona, zaklad=f'wygra {n}', kurs=k, bukmacher=buk, szansa=sz, ev=round(ev_, 4), kurs_uczciwy=round(1 / sz, 3),
+                                       kurs_szukaj=round(1.02 / sz, 2), stawka_proc=round(core.kelly(sz, k), 4), rynek_pl=True,
+                                       kursy_pl={b: v[strona] for b, v in e['kursy_walki'].items()}))
+
+def przelicz_rundy(m, r5, zrodlo):
+    kat = {v: k for k, v in walki.KATEGORIE_PL.items()}.get(m.get('kategoria'))
+    R = walki.rozklad_mma(m['szansa_a'], kat, r5)
+    m.update(rundy=5 if r5 else 3, rundy_zrodlo=f"{'5 rund' if r5 else '3 rundy'} ({zrodlo})")
+    _uzupelnij_mma(m, R, m['a'], m['b'])
+
+def ksw_mecze():
+    od, do = _okno('walki'); od, do = pd.Timestamp(od), pd.Timestamp(do)
+    lista = [w for w in _ksw_z_serwera() if od - pd.Timedelta(hours=3) <= pd.Timestamp(w['t']) <= do]
+    if not lista: return []
+    _ksw_superbet(lista)
+    out = []
+    for w in lista:
+        try:
+            e = przelicz_ksw(w)
+            if e: out.append(e)
+        except Exception as ex: _blad(f"KSW {w.get('a')} – {w.get('b')}: {ex}")
+    STAN['ksw'] = f'{len(out)} walk z kursami'
+    return out
+
+def ksw_rozliczonych():
+    d = wczytaj_typy()
+    if not len(d): return 0
+    return int(((d.sport_key == 'ksw') & (d.poziom == 'najpewniejszy') & d.trafiony.notna()).sum())
 
 # ---------------- raport (nagłówki + AI) ----------------
-def naglowki(osoba, ile=3):
+def naglowki(osoba, ile=3, polskie=False):
     n = nazwisko(osoba)
     if len(n) < 3: return []
+    jez = 'hl=pl&gl=PL&ceid=PL:pl' if polskie else 'hl=en-US&gl=US&ceid=US:en'
     try:
-        r = requests.get(f"https://news.google.com/rss/search?q={quote(chr(34) + osoba + chr(34))}+when:7d&hl=en-US&gl=US&ceid=US:en", timeout=15)
+        r = requests.get(f"https://news.google.com/rss/search?q={quote(chr(34) + osoba + chr(34))}+when:7d&{jez}", timeout=15)
         out = []
         for it in ET.fromstring(r.content).iter('item'):
             t = it.findtext('title') or ''
@@ -232,56 +331,103 @@ def naglowki(osoba, ile=3):
         return out
     except Exception as e: _blad(f'nagłówki {osoba}: {e}'); return []
 
-POLECENIE = """Jesteś dziennikarzem sportowym. Przygotuj po polsku krótki raport przed {co}: {a} – {b} ({turniej}), {kiedy} czasu polskiego.
+POLECENIE = """Jesteś profesjonalnym analitykiem {dziedzina} i typerem. Przygotuj po polsku analizę przed {co}: {a} – {b} ({turniej}),
+{kiedy} czasu polskiego.
 {szukaj}
-Interesuje mnie tylko to, co wpływa na wynik: {tematy}
-ZASADY: pisz wyłącznie to, co wynika ze źródeł z ostatnich 14 dni; nie zgaduj i nie dopisuj ogólników. Informacje niepotwierdzone oznacz
-słowem „podobno”. Jeśli nic istotnego nie ma – napisz to wprost. Nazwiska zostaw w oryginalnej pisowni.
+{rynek}
+Sprawdź wszystko, co wpływa na wynik: {tematy}
+{zasady}
+{ocena}
 {kontekst}
 Odpowiedz WYŁĄCZNIE obiektem JSON (bez ```), dokładnie w tej postaci:
-{{"podsumowanie": "2–4 zdania, maks. 450 znaków", "problemy_a": ["krótko", ...], "problemy_b": ["krótko", ...],
-  "ostrzezenie": true/false, "ostrzezenie_dla": "a" | "b" | "oba" | "brak", "uzasadnienie": "jedno zdanie"}}
+{{"werdykt": "zgoda" | "ryzyko" | "odradza",
+  "powod": "jedno zdanie – najważniejszy powód werdyktu",
+  "podsumowanie": "analiza 3–5 zdań, maks. 600 znaków",
+  "forma": "jedno zdanie o formie obu {kogo} (tylko fakty ze źródeł)",
+  "styl": "jedno zdanie – jak style do siebie pasują",
+  "lepszy_zaklad": "inny zakład w {czym}, który uważasz za rozsądniejszy, albo pusty tekst",
+  "problemy_a": ["krótko", ...], "problemy_b": ["krótko", ...],
+  "ostrzezenie": true/false, "ostrzezenie_dla": "a" | "b" | "oba" | "brak", "uzasadnienie": "jedno zdanie"{dodatki}}}
 "ostrzezenie" = true tylko przy poważnej sprawie: {powazne}."""
-TEMATY = {'tenis': ('meczem tenisowym', 'kontuzje i urazy, krecz lub wycofanie w ostatnich turniejach, zmęczenie (długi mecz dzień wcześniej, '
-                    'podróż, dużo meczów z rzędu), forma na tej nawierzchni, choroba.', 'uraz, niedawny krecz, choroba albo skrajne zmęczenie'),
-          'walki': ('walką', 'zastępstwo w ostatniej chwili (krótki termin przygotowań), problemy z wagą (nie zrobił limitu, ciężkie zbijanie), '
-                    'kontuzje, długa przerwa od ostatniej walki, zmiana obozu/trenera.', 'zastępstwo na krótki termin, nieudane ważenie, kontuzja')}
+DODATKI_WALKI = ''',
+  "oceny": {"a": {"stojka": 1-10, "zapasy": 1-10, "parter": 1-10, "kondycja": 1-10}, "b": {...tak samo}}  – tylko gdy źródła opisują styl obu
+           zawodników (inaczej null); 10 = światowa czołówka w tym elemencie,
+  "rundy": 3 | 5 | null  – 5 tylko, gdy źródło potwierdza walkę o pas lub walkę wieczoru na 5 rund,
+  "bilans_a": "np. 18-1-0 albo pusty", "bilans_b": "np. 12-3-0 albo pusty"'''
+TEMATY = {'tenis': ('meczem tenisowym', 'tenisa', 'zawodników', 'tym meczu',
+                    'kontuzje i urazy, krecz lub wycofanie w ostatnich turniejach, zmęczenie (długi mecz dzień wcześniej, podróż, dużo meczów '
+                    'z rzędu), forma i wyniki na tej nawierzchni, choroba, motywacja (ranking, obrona punktów), styl gry obu zawodników '
+                    '(serwis, return, gra z głębi kortu) i to, jak do siebie pasują, wcześniejsze mecze między nimi.',
+                    'uraz, niedawny krecz, choroba albo skrajne zmęczenie'),
+          'walki': ('walką', 'MMA i sportów walki', 'zawodników', 'tej walce',
+                    'zastępstwo w ostatniej chwili (krótki termin przygotowań), ważenie (nie zrobił limitu, ciężkie zbijanie), kontuzje, długa '
+                    'przerwa od ostatniej walki, zmiana obozu lub trenera, bilans i forma z ostatnich walk, styl obu zawodników (stójka, '
+                    'zapasy, parter, kondycja na dystansie) i to, jak do siebie pasują (np. zapaśnik przeciw zawodnikowi bez obrony obaleń).',
+                    'zastępstwo na krótki termin, nieudane ważenie, kontuzja')}
+
+def _typ_ai(m):
+    t = m.get('najpewniejszy') or m.get('lepszy_kurs')
+    return (t['zaklad'], t['szansa']) if t else None
 
 def raport_ai(m, polski_=False):
-    if not ai_raport.KLUCZ or ai_raport._licznik() >= ai_raport.MAKS_DZIENNIE: return None
-    co, tematy, powazne = TEMATY[m['sport']]
+    if not ai_raport.KLUCZ or ai_raport._licznik() >= ai_raport.MAKS_DZIENNIE or ai_raport.zostalo_analiz() <= 0: return None
+    co, dziedzina, kogo, czym, tematy, powazne = TEMATY[m['sport']]
     ng = m.get('naglowki') or {}
     kont = [f"Nagłówki o {x}: " + ' | '.join(h['tytul'] for h in ng.get(k, [])) for k, x in (('a', m['a']), ('b', m['b'])) if ng.get(k)]
     kontekst = ('DANE ZEBRANE PRZEZ PROGRAM (traktuj jako wskazówki):\n' + '\n'.join(kont)) if kont else ''
-    szukaj = 'Wyszukaj w Google najnowsze wiadomości o obu zawodnikach' + (' (także w polskich mediach)' if polski_ else '') + '.'
-    t = lambda sz: POLECENIE.format(co=co, a=m['a'], b=m['b'], turniej=m['turniej'], kiedy=f"{m['dzien']}, {m['godzina']}", szukaj=sz,
-                                    tematy=tematy, powazne=powazne, kontekst=kontekst)
+    szukaj = ('Wyszukaj w Google najnowsze wiadomości o obu zawodnikach' + (' (koniecznie także w polskich mediach: WP SportoweFakty, '
+              'Przegląd Sportowy, MMA Rocks, InTheCage, Lowking, Sport.pl)' if polski_ or m.get('rynek_pl') else '') + '.')
+    rynek = f"Szanse z kursów bukmacherów: wygra {m['a']} {m['szansa_a']*100:.0f}%, wygra {m['b']} {m['szansa_b']*100:.0f}%." if m.get('szansa_a') else ''
+    typ = _typ_ai(m)
+    t = lambda sz: POLECENIE.format(co=co, dziedzina=dziedzina, kogo=kogo, czym=czym, a=m['a'], b=m['b'], turniej=m['turniej'],
+                                    kiedy=f"{m['dzien']}, {m['godzina']}", szukaj=sz, rynek=rynek, tematy=tematy, powazne=powazne,
+                                    zasady=ai_raport.ZASADY, ocena=ai_raport.ocena_txt(typ), kontekst=kontekst,
+                                    dodatki=DODATKI_WALKI if m['sport'] == 'walki' else '')
     if not kont and not ai_raport._szukanie['ok']: return None   # bez wyszukiwania i bez nagłówków AI nie ma z czego pisać
     txt, zr, szukal = ai_raport._zapytaj(t(szukaj), t(ai_raport.BEZ_SZUKANIA))
     if not txt: return None
     try: d = ai_raport._wyciagnij_json(txt)
     except Exception: d = None
     if not d or not d.get('podsumowanie'): return None
-    ai_raport.STAN['udane'] += 1
+    ai_raport.STAN['udane'] += 1; ai_raport.analiz_dzis(1)
+    w = ai_raport.pilnuj_werdyktu(ai_raport.werdykt_z(d) if typ else None, szukal, zr, d)
+    if w: ai_raport.STAN['werdykty'][w] = ai_raport.STAN['werdykty'].get(w, 0) + 1
     L = lambda k: [str(x)[:120] for x in (d.get(k) or []) if x][:6]
-    return dict(tekst=str(d['podsumowanie'])[:600], problemy_a=L('problemy_a'), problemy_b=L('problemy_b'),
-                ostrzezenie=bool(d.get('ostrzezenie')), ostrzezenie_dla=str(d.get('ostrzezenie_dla') or 'brak'),
-                uzasadnienie=str(d.get('uzasadnienie') or '')[:200], zrodla=zr[:5], szukal=bool(szukal),
-                czas=teraz().strftime('%H:%M'))
+    out = dict(tekst=str(d['podsumowanie'])[:700], problemy_a=L('problemy_a'), problemy_b=L('problemy_b'),
+               ostrzezenie=bool(d.get('ostrzezenie')), ostrzezenie_dla=str(d.get('ostrzezenie_dla') or 'brak'),
+               uzasadnienie=str(d.get('uzasadnienie') or '')[:200], zrodla=zr[:5], szukal=bool(szukal), werdykt=w,
+               powod=str(d.get('powod') or '')[:220], forma=str(d.get('forma') or '')[:260], styl=str(d.get('styl') or '')[:260],
+               lepszy_zaklad=str(d.get('lepszy_zaklad') or '')[:160], typ=typ[0] if typ else None, czas=teraz().strftime('%H:%M'))
+    if m['sport'] == 'walki' and zr:   # oceny stylu i bilans tylko, gdy AI miało źródła
+        oc = d.get('oceny') or {}
+        def ok(x):
+            try: return {k: max(1, min(10, int(x[k]))) for k in ('stojka', 'zapasy', 'parter', 'kondycja')}
+            except Exception: return None
+        if isinstance(oc, dict) and ok(oc.get('a') or {}) and ok(oc.get('b') or {}): out['oceny'] = dict(a=ok(oc['a']), b=ok(oc['b']))
+        if d.get('rundy') in (3, 5, '3', '5'): out['rundy'] = int(d['rundy'])
+        for k in ('bilans_a', 'bilans_b'):
+            v = str(d.get(k) or '').strip()
+            if re.fullmatch(r'\d{1,2}-\d{1,2}(-\d{1,2})?', v): out[k] = v
+    return out
 
-def dodaj_raporty(pewne):
-    for m in pewne:
-        m['naglowki'] = {'a': naglowki(m['a']), 'b': naglowki(m['b'])}
-        ai = raport_ai(m, m['polski'])
+def dodaj_raporty(mecze, kolejnosc):
+    """Nagłówki + analiza AI: najpierw kandydaci do Pewnych i Value, potem pozostałe mecze/walki z listy (limit kosztu)."""
+    limit = min(ai_raport.AI_INNE, ai_raport.zostalo_analiz())
+    for i, m in enumerate(kolejnosc):
+        if i >= max(limit, 6): break
+        m['naglowki'] = {'a': naglowki(m['a'], polskie=bool(m.get('rynek_pl'))), 'b': naglowki(m['b'], polskie=bool(m.get('rynek_pl')))}
+        ai = raport_ai(m, m['polski']) if i < limit else None
         ost = None
         if ai and ai['ostrzezenie']:
             kto = {'a': m['a'], 'b': m['b'], 'oba': 'obu zawodników'}.get(ai['ostrzezenie_dla'], '')
             ost = f"Uwaga ({kto}): {ai['uzasadnienie']}" if kto else ai['uzasadnienie']
-        m['raport'] = dict(ai=ai, ostrzezenie=ost)
+        m['raport'] = dict(ai=ai, ostrzezenie=ost, werdykt=(ai or {}).get('werdykt'))
+        if ai and m['sport'] == 'walki' and m.get('rynek_pl') and ai.get('rundy') and ai['rundy'] != m.get('rundy'):
+            przelicz_rundy(m, ai['rundy'] == 5, 'wg analizy AI')
 
 # ---------------- dziennik ----------------
 KOLUMNY = ['data', 'sport', 'dyscyplina', 'sport_key', 'turniej', 'event_id', 'start', 'a', 'b', 'rodzaj', 'poziom', 'klucz', 'zaklad',
-           'szansa', 'kurs', 'bo', 'wynik', 'trafiony', 'zysk_na_1zl', 'status']
+           'szansa', 'kurs', 'bo', 'wynik', 'trafiony', 'zysk_na_1zl', 'status', 'ai', 'nizsza']
 
 def wczytaj_typy():
     try: return pd.read_csv(PLIK_TYPOW, dtype={'event_id': str, 'wynik': str, 'status': str, 'klucz': str}, keep_default_na=False, na_values=[''])
@@ -310,16 +456,20 @@ def zapisz_typy(nowe):
             d = d[[(str(a), b, str(c)) not in zastap for a, b, c in zip(d.event_id, d.rodzaj, d.poziom)]]
     if len(n): pd.concat([d, n], ignore_index=True).to_csv(PLIK_TYPOW, index=False)
 
-def wiersze_do_dziennika(sp, pewne, mecze):
+def wiersze_do_dziennika(sp, pewne, mecze, odradzane=()):
     out, dz = [], wspolne.dzien_str()
     base = lambda m: dict(data=dz, sport=sp, dyscyplina=m['dyscyplina'], sport_key=m['sport_key'], turniej=m['turniej'], event_id=m['event_id'],
-                          start=m['start'], a=m['a'], b=m['b'], bo=m.get('bo'))
+                          start=m['start'], a=m['a'], b=m['b'], bo=m.get('bo'), ai=werdykt(m) or '')
     for m in pewne:
         for poz in ('najpewniejszy', 'lepszy_kurs', 'ryzykowny'):
             t = m.get(poz)
-            if t: out.append(dict(base(m), rodzaj='pewne', poziom=poz, klucz=t['klucz'], zaklad=t['zaklad'], szansa=t['szansa']))
+            if t: out.append(dict(base(m), rodzaj='pewne', poziom=poz, klucz=t['klucz'], zaklad=t['zaklad'], szansa=t['szansa'],
+                                  nizsza=bool(m.get('nizsza_pewnosc')) and poz == 'najpewniejszy'))
+    for m in odradzane:   # nie gramy – zapis pokaże, czy AI miało rację
+        t = m.get('najpewniejszy')
+        if t: out.append(dict(base(m), rodzaj='odradzane', poziom='najpewniejszy', klucz=t['klucz'], zaklad=t['zaklad'], szansa=t['szansa'], nizsza=False))
     for m in mecze:
-        for v in m.get('value', []): out.append(dict(base(m), rodzaj='value', poziom='value', klucz=v['klucz'], zaklad=v['zaklad'], szansa=v['szansa'], kurs=v['kurs']))
+        for v in m.get('value', []): out.append(dict(base(m), rodzaj='value', poziom='value', klucz=v['klucz'], zaklad=v['zaklad'], szansa=v['szansa'], kurs=v['kurs'], nizsza=False))
     return out
 
 # ---------------- wyniki (ESPN, zapasowo The Odds API) ----------------
@@ -493,6 +643,69 @@ def _odds_api_wyniki(keys):
         except Exception as e: _blad(f'wyniki {k}: {e}')
     return out
 
+# ---------------- KSW: wyniki z Wikipedii (ESPN nie ma KSW) ----------------
+_wiki = {}
+def _wiki_ksw(rok):
+    """Walki z tabel wyników na stronie „<rok> in Konfrontacja Sztuk Walki” (szablon MMAevent bout)."""
+    if rok in _wiki: return _wiki[rok]
+    out = []
+    try:
+        r = requests.get('https://en.wikipedia.org/w/index.php', params={'title': f'{rok}_in_Konfrontacja_Sztuk_Walki', 'action': 'raw'},
+                         headers={'User-Agent': 'typer/1.0 (prywatny program; github.com/lewym90/typer)'}, timeout=30)
+        if r.status_code == 200: out = parsuj_wiki_ksw(r.text)
+    except Exception as e: _blad(f'Wikipedia KSW {rok}: {e}')
+    _wiki[rok] = out
+    return out
+
+def _czysc_wiki(t):
+    t = re.sub(r'<ref[^>]*/>|<ref[^>]*>.*?</ref>', '', t, flags=re.S)
+    t = re.sub(r'\[\[(?:[^|\]]*\|)?([^\]]*)\]\]', r'\1', t)
+    t = re.sub(r'\{\{[^{}]*\}\}', '', t)
+    t = re.sub(r"'{2,}|\((?:c|ic)\)", '', t)
+    return re.sub(r'\s+', ' ', t).strip()
+
+def parsuj_wiki_ksw(tekst):
+    """[dict(kat, zw, wynik ('def'|'vs'), prz, metoda)] z wierszy {{MMAevent bout|kategoria|A|def.|B|metoda|runda|czas|…}}."""
+    out = []
+    for m in re.finditer(r'\{\{\s*MMAevent bout\s*\|', tekst, flags=re.I):
+        i, gl, j = m.end(), 1, m.end()
+        while j < len(tekst) and gl:   # koniec szablonu (z zagnieżdżeniami)
+            if tekst.startswith('{{', j): gl += 1; j += 2; continue
+            if tekst.startswith('}}', j): gl -= 1; j += 2; continue
+            j += 1
+        cz, buf, g2 = [], '', 0
+        for ch in tekst[i:j - 2]:
+            if ch in '{[': g2 += 1
+            elif ch in '}]': g2 -= 1
+            if ch == '|' and g2 <= 0: cz.append(buf); buf = ''; continue
+            buf += ch
+        cz.append(buf)
+        cz = [_czysc_wiki(c) for c in cz]
+        if len(cz) >= 5 and cz[2].lower().rstrip('.') in ('def', 'vs'):
+            out.append(dict(kat=cz[0], zw=cz[1], wynik=cz[2].lower().rstrip('.'), prz=cz[3], metoda=cz[4]))
+    if not out:   # zapasowo: zwykła tabela wiki („| Waga || A || def. || B || Metoda || …”)
+        for linia in tekst.splitlines():
+            if '||' not in linia or not re.search(r'\|\|\s*(def|vs)\.?\s*\|\|', linia, re.I): continue
+            cz = [_czysc_wiki(c) for c in linia.lstrip('|').split('||')]
+            i = next((j for j, c in enumerate(cz) if c.lower().rstrip('.') in ('def', 'vs')), None)
+            if i and i >= 1 and len(cz) > i + 2:
+                out.append(dict(kat=cz[i - 2] if i >= 2 else '', zw=cz[i - 1], wynik=cz[i].lower().rstrip('.'), prz=cz[i + 1], metoda=cz[i + 2]))
+    return out
+
+def wynik_ksw(m):
+    """(status, wynik_do_rozliczenia, opis) jak wynik_meczu() – z Wikipedii. Na Wikipedii zwycięzca stoi przed „def.”."""
+    rok = pd.Timestamp(m['start']).year
+    for w in _wiki_ksw(rok) + (_wiki_ksw(rok - 1) if pd.Timestamp(m['start']).month == 1 else []):
+        for pierwszy, drugi, zwyc in ((w['zw'], w['prz'], 'A'), (w['prz'], w['zw'], 'B')):
+            if not (ta_sama_osoba(pierwszy, m['a']) and ta_sama_osoba(drugi, m['b'])): continue
+            met = w['metoda'].lower()
+            if w['wynik'] == 'vs' or re.search(r'draw|no contest|\bnc\b', met): return 'remis', None, 'remis / no contest'
+            if 'decision' in met: metoda = 'PKT'
+            elif re.search(r'\bko\b|tko|submission|disqualif|\bdq\b|stoppage|retire', met): metoda = 'KO'
+            else: metoda = None
+            return 'ok', (zwyc, metoda), f"wygrał {m['a'] if zwyc == 'A' else m['b']}" + (f" ({'przed czasem' if metoda == 'KO' else 'na punkty'})" if metoda else '')
+    return None, None, ''
+
 def rozlicz(pelne=False):
     d = wczytaj_typy()
     if not len(d): return d
@@ -501,11 +714,15 @@ def rozlicz(pelne=False):
     brak = []
     for eid, g in do.groupby('event_id'):
         r0 = g.iloc[0]; m = dict(sport=r0.sport, dyscyplina=r0.dyscyplina, start=r0.start, a=r0.a, b=r0.b)
-        x, odwr = znajdz_espn(m)
-        if not x or not x['koniec']:
-            if pd.Timestamp(r0.start) < now - pd.Timedelta(hours=10): brak.append((eid, r0.sport_key))
-            continue
-        st, w, op = wynik_meczu(m, x, odwr)
+        if r0.sport_key == 'ksw':
+            st, w, op = wynik_ksw(m)
+            if st is None: continue
+        else:
+            x, odwr = znajdz_espn(m)
+            if not x or not x['koniec']:
+                if pd.Timestamp(r0.start) < now - pd.Timedelta(hours=10): brak.append((eid, r0.sport_key))
+                continue
+            st, w, op = wynik_meczu(m, x, odwr)
         for i, r in g.iterrows():
             if st in ('walkower', 'remis'):
                 d.loc[i, ['status', 'wynik']] = [st, op]
@@ -534,8 +751,15 @@ def rozlicz(pelne=False):
     d.to_csv(PLIK_TYPOW, index=False)
     return d
 
+def _grupa(g):
+    return dict(n=int(len(g)), przewidywane=float(g.szansa.mean()), weszlo=float(g.trafiony.mean()), trafione=int(g.trafiony.sum())) if len(g) else None
+
 def statystyki():
     d = wczytaj_typy(); out = {}
+    if len(d):
+        d['ai'] = d['ai'].fillna('').astype(str) if 'ai' in d else ''
+        d['nizsza'] = d['nizsza'].fillna(False).astype(str).str.lower().isin(['true', '1', '1.0']) if 'nizsza' in d else False
+    t30 = teraz().tz_localize(None) - pd.Timedelta(days=30); t90 = t30 - pd.Timedelta(days=60)
     for sp in ('tenis', 'walki'):
         g = d[d.sport == sp] if len(d) else d
         s = {}
@@ -543,12 +767,23 @@ def statystyki():
         for poz in ('najpewniejszy', 'lepszy_kurs', 'ryzykowny'):
             x = P[P.poziom == poz] if len(P) else P
             if len(x): s[poz] = dict(n=len(x), traf=float(x.trafiony.mean()), przew=float(x.szansa.mean()))
+        if len(P):
+            G = P[(P.poziom == 'najpewniejszy') & ~P.nizsza]
+            s['glowne'] = dict(wszystko=_grupa(G), d30=_grupa(G[pd.to_datetime(G.start) >= t30]), d90=_grupa(G[pd.to_datetime(G.start) >= t90]),
+                               nizsza=_grupa(P[(P.poziom == 'najpewniejszy') & P.nizsza]))
+        N = g[(g.poziom == 'najpewniejszy') & g.trafiony.notna()] if len(g) else g
+        if len(N):
+            s['ai'] = dict(zgoda=_grupa(N[(N.ai == 'zgoda') & (N.rodzaj == 'pewne')]), ryzyko=_grupa(N[(N.ai == 'ryzyko') & (N.rodzaj == 'pewne')]),
+                           odradza=_grupa(N[N.rodzaj == 'odradzane']), bez_oceny=_grupa(N[(N.ai == '') & (N.rodzaj == 'pewne')]))
+            if sp == 'walki':
+                K = N[(N.sport_key == 'ksw') & (N.rodzaj == 'pewne')]
+                s['ksw'] = dict(_grupa(K) or {}, potrzeba=KSW_DO_GLOWNYCH)
         V = g[(g.rodzaj == 'value') & g.zysk_na_1zl.notna()] if len(g) else g
         if len(V):
             roi = V.zysk_na_1zl.mean(); se = V.zysk_na_1zl.std() / np.sqrt(len(V)) if len(V) > 1 else None
             s['value'] = dict(n=len(V), trafione=int((V.zysk_na_1zl > 0).sum()), roi=float(roi), roi_dol=float(roi - 2 * se) if se else None,
                               roi_gora=float(roi + 2 * se) if se else None, zysk_10zl=float(V.zysk_na_1zl.sum() * 10))
-        s['czeka'] = int((g.trafiony.isna() & g.zysk_na_1zl.isna() & g.status.isna()).sum()) if len(g) else 0
+        s['czeka'] = int((g.trafiony.isna() & g.zysk_na_1zl.isna() & g.status.isna() & (g.rodzaj != 'odradzane')).sum()) if len(g) else 0
         s['ostatnie'] = g.sort_values('start', ascending=False).head(60).replace({np.nan: None}).to_dict('records') if len(g) else []
         out[sp] = s
     return out
@@ -568,10 +803,10 @@ TESTY = {'tenis': dict(opis='79 408 meczów ATP i WTA 2010–2026 (tennis-data.c
 # ---------------- główne ----------------
 def licz():
     """Pełne liczenie (o 12:00). Zwraca słownik do inne.json."""
-    for s in ('tenis', 'walki'): STAN[s] = {}
+    for s_ in ('tenis', 'walki'): STAN[s_] = {}
     STAN['rundy'] = {}
     dane = pobierz(); wynik = dict(wygenerowano=teraz().strftime('%Y-%m-%d %H:%M'), data=wspolne.dzien_str())
-    nowe = []
+    nowe, wszystkie = [], {}
     for sp in ('tenis', 'walki'):
         mecze = []
         for key, tytul, grupa, ev in dane[sp]:
@@ -579,16 +814,31 @@ def licz():
                 e = przelicz(sp, key, tytul, grupa, ev)
                 if e: mecze.append(e)
             except Exception as ex: _blad(f"{ev.get('home_team')} – {ev.get('away_team')}: {ex}")
+        if sp == 'walki':
+            try:
+                ids = {(nrm(m['a']), nrm(m['b'])) for m in mecze}
+                mecze += [k for k in ksw_mecze() if (nrm(k['a']), nrm(k['b'])) not in ids and (nrm(k['b']), nrm(k['a'])) not in ids]
+            except Exception as ex: _blad(f'KSW: {ex}')
         mecze.sort(key=lambda m: m['start'])
-        pewne = lista_pewnych(mecze)
-        try: dodaj_raporty(pewne)
-        except Exception as ex: _blad(f'raporty: {ex}')
-        pewne = lista_pewnych(mecze)   # ponownie – mecze z ostrzeżeniem idą na koniec
+        wszystkie[sp] = mecze
+    # analiza AI: najpierw kandydaci do Pewnych obu dyscyplin, potem Value, potem reszta z listy
+    kolejnosc = []
+    for sp in ('tenis', 'walki'):
+        pew0, _ = lista_pewnych(wszystkie[sp]); kolejnosc += pew0
+    for sp in ('tenis', 'walki'): kolejnosc += [m for m in wszystkie[sp] if m['value'] and m not in kolejnosc]
+    for sp in ('walki', 'tenis'): kolejnosc += [m for m in wszystkie[sp] if m not in kolejnosc]
+    try: dodaj_raporty(wszystkie['tenis'] + wszystkie['walki'], kolejnosc)
+    except Exception as ex: _blad(f'raporty: {ex}')
+    for sp in ('tenis', 'walki'):
+        mecze = wszystkie[sp]
+        pewne, odradzane = lista_pewnych(mecze)   # ponownie – po ocenie AI
         value = [dict(v, **{k: m[k] for k in ('mecz', 'a', 'b', 'turniej', 'godzina', 'dzien', 'start', 'event_id', 'dyscyplina', 'sport', 'zrodlo')})
                  for m in mecze for v in m['value']]
-        wynik[sp] = dict(pewne=[m['event_id'] for m in pewne], mecze=mecze, value=value)
-        STAN[sp] = dict(turnieje=len({k for k, *_ in dane[sp]}), mecze=len(dane[sp]), z_kursami=len(mecze), pewne=len(pewne), value=len(value))
-        nowe += wiersze_do_dziennika(sp, pewne, mecze)
+        wynik[sp] = dict(pewne=[m['event_id'] for m in pewne], odradzane=odradzane, mecze=mecze, value=value)
+        STAN[sp] = dict(turnieje=len({k for k, *_ in dane[sp]}), mecze=len(dane[sp]), z_kursami=len(mecze), pewne=len(pewne), value=len(value),
+                        odradzane=len(odradzane), ksw=sum(1 for m in mecze if m.get('rynek_pl')))
+        nowe += wiersze_do_dziennika(sp, pewne, mecze, odradzane)
+    wynik['ksw_do_glownych'] = ksw_rozliczonych() >= KSW_DO_GLOWNYCH
     zapisz_typy(nowe)
     return wynik
 
@@ -599,6 +849,7 @@ def zapisz_json(wynik=None):
     d = wynik or stare
     d['dziennik'] = statystyki(); d['testy'] = TESTY
     d['stan'] = dict(tenis=STAN['tenis'] or (stare.get('stan') or {}).get('tenis'), walki=STAN['walki'] or (stare.get('stan') or {}).get('walki'),
+                     ksw=STAN.get('ksw'),
                      kredyty=STAN['kredyty'], pominiete=STAN['pominiete'][:6], bledy=STAN['bledy'][:6], czas=teraz().strftime('%Y-%m-%d %H:%M'))
     with open(os.path.join(OUT, PLIK_JSON), 'w', encoding='utf-8') as f:
         json.dump(d, f, ensure_ascii=False, default=lambda o: float(o) if isinstance(o, (np.floating, np.integer)) else str(o))

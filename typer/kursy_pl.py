@@ -343,9 +343,12 @@ def dopisz(kursy):
         zrodla = {'Superbet': ((kursy.get(eid) or {}).get('superbet') or {}).get('kursy') or {}}
         for buk, dane in ((vps.get(eid) or {}).items()):
             zrodla[NAZWY_BUK.get(buk, buk)] = (dane or {}).get('kursy') or {}
+        for b, k in (m.get('kursy_walki') or {}).items():   # KSW: kursy zebrane przy liczeniu (Fortuna/STS/Superbet) – baza
+            zrodla.setdefault(b, {}); zrodla[b] = dict(k, **zrodla[b])
         for t in _typy_w(m):
             kp = {b: k[t['klucz']] for b, k in zrodla.items() if k.get(t['klucz'])}
-            if kp: t['kursy_pl'] = kp; ile += 1
+            if t.get('rynek_pl'): kp = dict(t.get('kursy_pl') or {}, **kp)   # value KSW – nie kasuj kursów z liczenia
+            if kp: t['kursy_pl'] = kp; t['kursy_czas'] = dt.datetime.now(TZ).strftime('%H:%M'); ile += 1
             else: t.pop('kursy_pl', None)
     p = os.path.join(OUT, 'dzis.json')
     try:
@@ -373,7 +376,7 @@ def _zapisz_bezpiecznie(p, d):
 
 # ---------------------------------------------------------------- start
 def czy_teraz(st):
-    if os.environ.get('GITHUB_EVENT_NAME', 'push') != 'schedule': return True
+    if os.environ.get('GITHUB_EVENT_NAME', 'push') != 'schedule' or os.environ.get('KURSY_PL_TERAZ'): return True
     ost = (st.get('kursy_pl') or {}).get('utc')
     if not ost: return True
     try: ost_t = dt.datetime.fromisoformat(ost)

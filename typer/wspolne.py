@@ -8,7 +8,7 @@ OUT = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
 SPORTY = [('pilka', '⚽', 'Piłka nożna'), ('tenis', '🎾', 'Tenis'), ('walki', '🥊', 'Sporty walki')]
 IKONA = {k: i for k, i, _ in SPORTY}
 PEWNE_ILE = 5
-MIN_SZANSA = 0.68
+MIN_SZANSA = 0.70
 
 # ---------- doba programu: od 6:00 do 6:00 (nocne mecze należą do poprzedniego dnia) ----------
 GODZINA_DOBY = 6
@@ -37,7 +37,7 @@ def mozna_podmienic_typy(t=None):
 def _pewne_pilka(dzis):
     for m in dzis.get('pewne', []):
         yield dict(sport='pilka', event_id=str(m.get('event_id') or m['mecz']), szansa=float(m['szansa']), start=m['start'],
-                   ostrz=bool((m.get('raport') or {}).get('powazne')), niz=bool(m.get('nizsza_pewnosc')))
+                   werdykt=(m.get('raport') or {}).get('werdykt') or m.get('werdykt'), niz=bool(m.get('nizsza_pewnosc')), ksw=False)
 
 def _pewne_inne(inne, sp):
     s = inne.get(sp) or {}; byid = {m['event_id']: m for m in s.get('mecze', [])}
@@ -45,7 +45,7 @@ def _pewne_inne(inne, sp):
         m = byid.get(i)
         if not m or not m.get('najpewniejszy'): continue
         yield dict(sport=sp, event_id=str(i), szansa=float(m['najpewniejszy']['szansa']), start=m['start'],
-                   ostrz=bool((m.get('raport') or {}).get('ostrzezenie')), niz=bool(m.get('nizsza_pewnosc')))
+                   werdykt=((m.get('raport') or {}).get('ai') or {}).get('werdykt'), niz=bool(m.get('nizsza_pewnosc')), ksw=bool(m.get('rynek_pl')))
 
 def _value_pilka(dzis):
     for v in dzis.get('value', []):
@@ -56,13 +56,16 @@ def _value_inne(inne, sp):
         yield dict(sport=sp, event_id=str(v['event_id']), zaklad=v['zaklad'], ev=float(v['ev']), start=v['start'])
 
 def wybierz(dzis, inne):
-    """Najlepsze typy ze wszystkich dyscyplin: najpierw bez ostrzeżeń i z szansą ≥68%, potem najwyższa szansa."""
+    """Najlepsze typy ze wszystkich dyscyplin: nigdy typy odradzane przez AI; najpierw szansa ≥70% z oceną „zgoda” (lub bez oceny),
+    potem „ryzyko”, na końcu dopełnienie poniżej 70%. KSW (kursy tylko z rynku PL) dopiero po 100 rozliczonych walkach w dzienniku."""
     dzien = dzien_str()
     inne = inne if (inne or {}).get('data') == dzien else {}
     dzis = dzis if (dzis or {}).get('data') == dzien else {}
     kand = list(_pewne_pilka(dzis))
     for sp in ('tenis', 'walki'): kand += list(_pewne_inne(inne, sp))
-    kand.sort(key=lambda k: (k['ostrz'], k['niz'] or k['szansa'] < MIN_SZANSA, -k['szansa']))
+    ksw_ok = bool((inne or {}).get('ksw_do_glownych'))
+    kand = [k for k in kand if k['werdykt'] != 'odradza' and (ksw_ok or not k['ksw'])]
+    kand.sort(key=lambda k: (k['niz'] or k['szansa'] < MIN_SZANSA, k['werdykt'] == 'ryzyko', -k['szansa']))
     pewne = sorted(kand[:PEWNE_ILE], key=lambda k: k['start'])
     val = list(_value_pilka(dzis))
     for sp in ('tenis', 'walki'): val += list(_value_inne(inne, sp))

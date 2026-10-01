@@ -18,7 +18,7 @@ NAZWY_LIG = {'soccer_uefa_champs_league': 'Liga Mistrzów', 'soccer_fifa_world_c
  'soccer_usa_mls': 'MLS (USA)', 'soccer_brazil_campeonato': 'Brasileirão', 'soccer_argentina_primera_division': 'Liga Profesional (ARG)',
  'soccer_mexico_ligamx': 'Liga MX', 'soccer_japan_j_league': 'J1 League', 'soccer_china_superleague': 'Super League (CHN)'}
 
-RAPORT_ILE_MECZOW = 8   # ile meczów sprawdzać w API-Football (darmowy plan: 100 zapytań dziennie)
+RAPORT_ILE_MECZOW = 10   # ile meczów sprawdzać w API-Football (darmowy plan: 100 zapytań dziennie)
 
 OUT = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
 
@@ -70,6 +70,7 @@ LEPSZY_KURS = ['1', '2', '1X', 'X2', '12', 'Over 1.5', 'Over 2.5', 'Under 2.5', 
 RYZYKOWNE = ['1', 'X', '2', 'Over 2.5', 'Over 3.5', 'Under 1.5', 'BTTS Tak', 'H -1.5', 'A -1.5',
              'H -3.5', 'A -3.5', 'H -4.5', 'A -4.5', 'Over 4.5', 'Over 5.5', 'H o2.5', 'A o2.5', 'H o1.5', 'A o1.5', '1 & o1.5', '2 & o1.5', '1 & o2.5', '2 & o2.5', 'X & u2.5', 'BTTS & o2.5']
 
+ODRADZANE = []     # typy, które AI odradza (nie trafiają do Pewnych)
 SAMOKOREKTA = {}   # z dziennika typów "Pewne" (min. 100 rozliczonych typów danego rodzaju)
 
 def szansa(z, p, x):
@@ -163,48 +164,75 @@ def typy_na_dzis():
             if 1 / p < PEWNE_MIN_KURS: continue
             wszystkie.append(dict(p=p, z=z, x=x, key=key, liga=liga))
     wszystkie.sort(key=lambda t: -t['p'])
-    # raport przedmeczowy (kontuzje, rotacje, nagłówki) dla meczów-kandydatów i meczów z Value
+    naj_meczu = {}                      # najpewniejszy typ każdego meczu (AI ocenia właśnie jego)
+    for t in wszystkie: naj_meczu.setdefault(id(t['x']), t)
+    for _, key, x in analizy:           # mecze spoza 15 najpopularniejszych też dostają typ do oceny przez AI
+        if id(x) in naj_meczu: continue
+        r = rynki_rozszerzone(x['M'], x['home'], x['away'])
+        lst = [(szansa(z, r[z][0], x), z) for z in NAJPEWNIEJSZE]; lst = [v for v in lst if 1 / v[0] >= PEWNE_MIN_KURS]
+        if lst: p, z = max(lst); naj_meczu[id(x)] = dict(p=p, z=z, x=x, key=key, liga=LIGI_DO_SKANU.get(key))
+    # raport (nieobecni, nagłówki) + analiza AI: najpierw kandydaci do Pewnych, potem Value, potem pozostałe mecze z listy
     kandydaci = []
     for t in wszystkie:
         if not any(t['x'] is k for k in kandydaci): kandydaci.append(t['x'])
-        if len(kandydaci) >= RAPORT_ILE_MECZOW: break
-    n_pewnych = len(kandydaci)   # raport AI tylko dla kandydatów do Pewnych (limit darmowego Gemini)
     for v in value_x:
         if not any(v is k for k in kandydaci): kandydaci.append(v)
-    for i, x in enumerate(kandydaci):
+    for _, _, x in sorted(analizy, key=lambda t: (t[0], t[2]['start'])):
+        if not any(x is k for k in kandydaci): kandydaci.append(x)
+    limit_ai = min(ai_raport.AI_PILKA, ai_raport.zostalo_analiz())
+    for i, x in enumerate(kandydaci[:max(RAPORT_ILE_MECZOW, limit_ai)]):
         polski = x['sport_key'] == 'soccer_poland_ekstraklasa' or 'Poland' in (x['home'], x['away'])
+        t = naj_meczu.get(id(x)); rr = rynki_rozszerzone(x['M'], pl(x['home']), pl(x['away'])) if t else None
+        mk = markets(x['M'])
         try: x['raport'] = raport.raport(x['home'], x['away'], x['start'], polski=polski, sport_key=x['sport_key'],
-                                         rozgrywki=NAZWY_LIG.get(x['sport_key'], ''), ai=i < n_pewnych)
+                                         rozgrywki=NAZWY_LIG.get(x['sport_key'], ''), ai=i < limit_ai,
+                                         typ=((rr[t['z']][1] + (f" ({rr[t['z']][2]})" if rr[t['z']][2] else '')), t['p']) if t else None, szanse={k: float(mk[k]) for k in ('1', 'X', '2')})
         except Exception as e: print('raport:', x['home'], e)
     for v in value:  # dołącz raporty do kart Value
         for x in value_x:
             if v['mecz'] == f"{x['home']} – {x['away']}": v['raport'] = x.get('raport')
-    # najpierw mecze bez poważnych ostrzeżeń, po jednym typie na mecz
-    wybrane, uzyte = [], set()
-    for bez_ostrzezen in (True, False):
-        for t in wszystkie:
-            mid = (t['x']['home'], t['x']['away']); ost = bool((t['x'].get('raport') or {}).get('powazne'))
-            if bez_ostrzezen and ost: continue
-            if t['p'] >= PEWNE_MIN_SZANSA and mid not in uzyte and len(wybrane) < PEWNE_ILE_TYPOW: wybrane.append(t); uzyte.add(mid)
+    werd = lambda x: (x.get('raport') or {}).get('werdykt')
+    # Pewne: nigdy typy, które AI odradza; najpierw „zgoda” (lub brak oceny), potem „ryzyko”; po jednym typie na mecz
+    wybrane, uzyte, odradzane = [], set(), []
     for t in wszystkie:
+        mid = (t['x']['home'], t['x']['away'])
+        if werd(t['x']) == 'odradza':
+            if mid not in uzyte and t['p'] >= PEWNE_MIN_SZANSA and len(odradzane) < 5: odradzane.append(t); uzyte.add(mid)
+    for dopuszczalne in (('zgoda', None), ('ryzyko',)):
+        for t in wszystkie:
+            mid = (t['x']['home'], t['x']['away'])
+            if werd(t['x']) not in dopuszczalne: continue
+            if t['p'] >= PEWNE_MIN_SZANSA and mid not in uzyte and len(wybrane) < PEWNE_ILE_TYPOW: wybrane.append(t); uzyte.add(mid)
+    for t in wszystkie:   # dopełnienie do 5 typami poniżej progu (oznaczone, liczone w dzienniku osobno)
         if len(wybrane) >= PEWNE_ILE_TYPOW: break
         mid = (t['x']['home'], t['x']['away'])
-        if t['p'] >= 0.55 and mid not in uzyte: wybrane.append(t); uzyte.add(mid)
+        if t['p'] >= 0.55 and mid not in uzyte and werd(t['x']) != 'odradza': wybrane.append(t); uzyte.add(mid)
     pewne, do_dziennika = [], []
+    def wiersz(x, poziom, typ, lista, nizsza):
+        return dict(data_zapisu=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m-%d %H:%M'),
+                event_id=x['event_id'], liga=x['sport_key'], kraj=x.get('model_key') or '', start=x['start'].strftime('%Y-%m-%d %H:%M'),
+                mecz=f"{x['home']} – {x['away']}", gospodarz=x['home'], gosc=x['away'], poziom=poziom, klucz=typ['klucz'],
+                zaklad=typ['zaklad'], szansa=typ['szansa'], kurs_uczciwy=typ['kurs_uczciwy'], kurs_betclic=typ['kurs_betclic'],
+                zrodlo=x['tryb'], ostrzezenie=bool((x.get('raport') or {}).get('powazne')), wynik='', trafiony=np.nan, zysk_na_1zl=np.nan,
+                ai=werd(x) or '', lista=lista, nizsza=bool(nizsza))
     for t in sorted(wybrane, key=lambda t: t['x']['start']):
         x, liga = t['x'], t['liga']
         glowny = wybierz(x, liga, [t['z']], 1.0, 99)
         lepszy = wybierz(x, liga, LEPSZY_KURS, 1.55, 2.30, pmin=0.40, wyklucz=(t['z'],))
         ryzyk = wybierz(x, liga, RYZYKOWNE, 2.50, 5.00, pmin=0.18, wyklucz=(t['z'], lepszy['klucz'] if lepszy else None))
+        niz = bool(t['p'] < PEWNE_MIN_SZANSA)
         pewne.append(dict(opis_meczu(x, t['key']), klucz=glowny['klucz'], zaklad=glowny['zaklad'], opis=glowny['opis'], szansa=glowny['szansa'],
                           kurs_uczciwy=glowny['kurs_uczciwy'], kurs_min=glowny['kurs_min'], kurs_betclic=glowny['kurs_betclic'],
-                          nizsza_pewnosc=bool(t['p'] < PEWNE_MIN_SZANSA), lepszy_kurs=lepszy, ryzykowny=ryzyk))
+                          nizsza_pewnosc=niz, werdykt=werd(x), lepszy_kurs=lepszy, ryzykowny=ryzyk))
         for poziom, typ in (('najpewniejszy', glowny), ('lepszy_kurs', lepszy), ('ryzykowny', ryzyk)):
-            if typ: do_dziennika.append(dict(data_zapisu=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m-%d %H:%M'),
-                event_id=x['event_id'], liga=x['sport_key'], kraj=x.get('model_key') or '', start=x['start'].strftime('%Y-%m-%d %H:%M'),
-                mecz=f"{x['home']} – {x['away']}", gospodarz=x['home'], gosc=x['away'], poziom=poziom, klucz=typ['klucz'],
-                zaklad=typ['zaklad'], szansa=typ['szansa'], kurs_uczciwy=typ['kurs_uczciwy'], kurs_betclic=typ['kurs_betclic'],
-                zrodlo=x['tryb'], ostrzezenie=bool((x.get('raport') or {}).get('powazne')), wynik='', trafiony=np.nan, zysk_na_1zl=np.nan))
+            if typ: do_dziennika.append(wiersz(x, poziom, typ, 'pewne', niz and poziom == 'najpewniejszy'))
+    odr = []
+    for t in odradzane:   # nie gramy, ale zapisujemy – dziennik pokaże, czy AI miało rację
+        x = t['x']; glowny = wybierz(x, t['liga'], [t['z']], 1.0, 99)
+        odr.append(dict(opis_meczu(x, t['key']), klucz=glowny['klucz'], zaklad=glowny['zaklad'], opis=glowny['opis'], szansa=glowny['szansa'],
+                        kurs_uczciwy=glowny['kurs_uczciwy'], kurs_min=glowny['kurs_min'], kurs_betclic=glowny['kurs_betclic'], werdykt='odradza'))
+        do_dziennika.append(wiersz(x, 'najpewniejszy', glowny, 'odradzane', False))
+    ODRADZANE[:] = odr
     if do_dziennika: zapisz_pewne(do_dziennika)
     wszystkie_mecze = [opis_meczu(x, key) for _, key, x in sorted(analizy, key=lambda t: (t[0], t[2]['start']))]
     return value, pewne, wszystkie_mecze
@@ -300,23 +328,40 @@ def policz_samokorekte(d, minimum=100, maks=0.05):
             out[k] = round(float(np.clip(roz, -maks, maks)), 4)
     return out
 
+def _grupa(g):
+    return dict(n=int(len(g)), przewidywane=float(g.szansa.mean()), weszlo=float(g.trafiony.mean()), trafione=int(g.trafiony.sum())) if len(g) else None
+
 def stat_pewne(d):
     if not len(d) or 'trafiony' not in d: return None
-    R = d[d.trafiony.notna()]
-    if not len(R): return dict(rozliczonych=0, czeka=len(d))
+    d = d.copy()
+    d['lista'] = d['lista'].fillna('pewne') if 'lista' in d else 'pewne'
+    d['nizsza'] = d['nizsza'].fillna(False).astype(str).str.lower().isin(['true', '1', '1.0']) if 'nizsza' in d else False
+    d['ai'] = d['ai'].fillna('').astype(str) if 'ai' in d else ''
+    R_all = d[d.trafiony.notna()]
+    R = R_all[R_all.lista == 'pewne']
+    if not len(R): return dict(rozliczonych=0, czeka=int((d.trafiony.isna() & (d.lista == 'pewne')).sum()))
     poziomy = {p: dict(n=int(len(g)), przewidywane=float(g.szansa.mean()), weszlo=float(g.trafiony.mean()),
                        zysk_betclic_10zl=float(g.zysk_na_1zl.dropna().sum() * 10) if g.zysk_na_1zl.notna().any() else None,
                        z_kursem=int(g.zysk_na_1zl.notna().sum()))
                for p, g in R.groupby('poziom')}
+    # główna skuteczność = typ dnia (🔒) z listy Pewne, bez dopełnień poniżej progu
+    G = R[(R.poziom == 'najpewniejszy') & ~R.nizsza]
+    teraz = pd.Timestamp.now(tz='Europe/Warsaw').tz_localize(None)
+    glowne = dict(wszystko=_grupa(G), d30=_grupa(G[pd.to_datetime(G.start) >= teraz - pd.Timedelta(days=30)]),
+                  d90=_grupa(G[pd.to_datetime(G.start) >= teraz - pd.Timedelta(days=90)]),
+                  nizsza=_grupa(R[(R.poziom == 'najpewniejszy') & R.nizsza]))
+    N = R_all[R_all.poziom == 'najpewniejszy']
+    ai = dict(zgoda=_grupa(N[(N.ai == 'zgoda') & (N.lista == 'pewne')]), ryzyko=_grupa(N[(N.ai == 'ryzyko') & (N.lista == 'pewne')]),
+              odradza=_grupa(N[N.lista == 'odradzane']), bez_oceny=_grupa(N[(N.ai == '') & (N.lista == 'pewne')]))
     ligi = R.groupby('kraj').agg(n=('trafiony', 'size'), przewidywane=('szansa', 'mean'), weszlo=('trafiony', 'mean'))
     ligi = ligi[ligi.n >= 10].round(3).reset_index().to_dict('records')
     ostrz = R.groupby('ostrzezenie').agg(n=('trafiony', 'size'), przewidywane=('szansa', 'mean'), weszlo=('trafiony', 'mean')).round(3)
     ruch = float(R.ruch.dropna().mean()) if 'ruch' in R and R.ruch.notna().sum() >= 5 else None
-    return dict(rozliczonych=int(len(R)), czeka=int(len(d) - len(R)), poziomy=poziomy, ligi=ligi, ruch_rynku=ruch,
-                z_ostrzezeniem=ostrz.reset_index().to_dict('records'),
+    return dict(rozliczonych=int(len(R)), czeka=int(((d.trafiony.isna()) & (d.lista == 'pewne')).sum()), poziomy=poziomy, glowne=glowne, ai=ai,
+                ligi=ligi, ruch_rynku=ruch, z_ostrzezeniem=ostrz.reset_index().to_dict('records'),
                 ostatnie=[dict(r_, zaklad=pl_txt(r_['zaklad'], *str(r_['mecz']).split(' – '))) for r_ in
-                          R.sort_values('start', ascending=False).head(60).replace({np.nan: None})[
-                    ['start', 'mecz', 'poziom', 'zaklad', 'szansa', 'wynik', 'trafiony', 'kurs_betclic']].to_dict('records')])
+                          R_all.sort_values('start', ascending=False).head(60).replace({np.nan: None})[
+                    ['start', 'mecz', 'poziom', 'zaklad', 'szansa', 'wynik', 'trafiony', 'kurs_betclic', 'ai', 'lista', 'nizsza']].to_dict('records')])
 
 # ---------- SPRAWDZENIE PRZED MECZEM (co 30 min między 12:15 a 00:45) ----------
 POZIOMY = (('najpewniejszy', '🔒', None), ('lepszy_kurs', '⚖️', 'lepszy_kurs'), ('ryzykowny', '🎯', 'ryzykowny'))
@@ -454,8 +499,7 @@ def _raport_tg(m, nr=None):
 def tg_raporty(d):
     """Druga wiadomość: raporty przedmeczowe dla meczów z Pewnych (zmiana J)."""
     if not d.get('pewne'): return
-    czesci = [f"📰 <b>Raporty na {pd.Timestamp(d['data']).strftime('%d.%m')}</b>"]
-    czesci += [_raport_tg(m, i) for i, m in enumerate(d['pewne'], 1)]
+    czesci = [_raport_tg(m, i) for i, m in enumerate(d['pewne'], 1)]
     if not any((m.get('raport') or {}).get('ai') for m in d['pewne']):
         czesci.append('<i>Raport AI niedostępny – pokazuję nieobecnych z baz danych.</i>')
     tg.wyslij_dlugi('\n\n'.join(czesci))
@@ -509,39 +553,94 @@ def _rozwiaz(gl, d, inne):
         if v: val.append((r['sport'], v))
     return pew, val
 
+WERDYKT_TG = {'zgoda': ('✅', 'zgoda z faworytem'), 'ryzyko': ('⚠️', 'ryzyko niespodzianki'), 'odradza': ('⛔', 'AI odradza')}
+DNI_PL = ['poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek', 'sobota', 'niedziela']
+
+def _kursy_linia(t):
+    """„STS 1,30 ⭐ · Superbet 1,29 · Fortuna 1,28 · Betclic 1,27” – najlepszy pogrubiony."""
+    kk = [('Betclic', t.get('kurs_betclic'))] + list((t.get('kursy_pl') or {}).items())
+    kk = sorted({n: float(k) for n, k in kk if k and float(k) > 1}.items(), key=lambda x: -x[1])
+    if not kk: return f"kurs uczciwy {tg.kurs(1 / t['szansa'])} – graj od tego kursu"
+    return ' · '.join(f"{esc_(n)} <b>{tg.kurs(k)}</b>{' ⭐' if i == 0 and len(kk) > 1 else ''}" if i == 0 else f"{esc_(n)} {tg.kurs(k)}"
+                      for i, (n, k) in enumerate(kk))
+
+def _ai_karty(sp, m):
+    r = m.get('raport') or {}; ai = r.get('ai') or {}
+    return ai.get('werdykt') or r.get('werdykt') or m.get('werdykt'), ai
+
+def _nazwa_meczu(sp, m): return pl_mecz(m['mecz']) if sp == 'pilka' else m['mecz']
+
 def _linie_pewnego(sp, m, i):
     ik = wspolne.IKONA[sp]
-    if sp == 'pilka':
-        lin = [f"\n{ik} <b>{i}. {esc_(pl_mecz(m['mecz']))}</b> ({m['godzina']}, {esc_(m['liga'])})"]
-        for poz, ikp, k, n, sz in _typy_meczu(m): lin.append(f"{ikp} {esc_(pl_txt(n, m['gospodarz'], m['gosc']))} – {tg.pct(sz)} (kurs ≥ {tg.kurs(1/sz)})")
-        if (m.get('raport') or {}).get('ostrzezenia'): lin.append('⚠️ ' + esc_('; '.join(m['raport']['ostrzezenia'])))
-    else:
-        extra = (f", kat. {m['kategoria']}" if m.get('kategoria') else '') + (f", {m['rundy_zrodlo']}" if m.get('rundy') == 5 else '')
-        lin = [f"\n{ik} <b>{i}. {esc_(m['mecz'])}</b> ({m['dzien']} {m['godzina']}, {esc_(m['turniej'])}{extra})"]
-        for poz, ikp in sporty.POZ:
-            t = m.get(poz)
-            if t: lin.append(f"{ikp} {esc_(t['zaklad'])} – {tg.pct(t['szansa'])} (kurs ≥ {tg.kurs(1/t['szansa'])})")
-        if (m.get('raport') or {}).get('ostrzezenie'): lin.append('⚠️ ' + esc_(m['raport']['ostrzezenie']))
-    if m.get('nizsza_pewnosc'): lin.append('<i>niższa pewność – dobrany, żeby było 5 typów</i>')
+    glowny = m if sp == 'pilka' else (m.get('najpewniejszy') or {})
+    def zak(t, z=None):
+        z = t['zaklad'] if z is None else z
+        if sp != 'pilka': return z
+        z = pl_txt(z, m['gospodarz'], m['gosc'])
+        return f"{z} ({pl_txt(t['opis'], m['gospodarz'], m['gosc'])})" if len(z) <= 3 and t.get('opis') else z
+    gdzie = (m.get('liga') if sp == 'pilka' else m.get('turniej')) or ''
+    lin = [f"\n<b>{i}. {ik} {esc_(_nazwa_meczu(sp, m))}</b> · {m['godzina']}" + (f" · <i>{esc_(gdzie)}</i>" if gdzie else '')]
+    if glowny.get('zaklad'):
+        lin.append(f"{esc_(zak(glowny))} · <b>{tg.pct(glowny['szansa'])}</b>" + (' <i>(poniżej 70%)</i>' if m.get('nizsza_pewnosc') else ''))
+        lin.append(_kursy_linia(glowny))
+    w, ai = _ai_karty(sp, m)
+    if w: lin.append(f"{WERDYKT_TG[w][0]} AI: {WERDYKT_TG[w][1]}" + (f" – {esc_(ai['powod'])}" if ai.get('powod') else ''))
+    for pole, ikp, nazwa in (('lepszy_kurs', '⚖️', 'Wyższy kurs'), ('ryzykowny', '🎯', 'Ryzykowny')):
+        t = m.get(pole)
+        if t: lin.append(f"{ikp} {nazwa}: {esc_(zak(t))} · {tg.pct(t['szansa'])} · od {tg.kurs(1 / t['szansa'])}")
     return lin
 
-def _raport_inne_tg(m, nr):
+def _skutecznosc_30():
+    """Główna skuteczność (typy dnia 🔒) z 30 dni – piłka + tenis + walki."""
+    n = t = 0
+    try:
+        g = ((stat_pewne(wczytaj_pewne()) or {}).get('glowne') or {}).get('d30') or {}; n += g.get('n', 0); t += g.get('trafione', 0)
+    except Exception: pass
+    try:
+        for sp, s in sporty.statystyki().items():
+            g = ((s or {}).get('glowne') or {}).get('d30') or {}; n += g.get('n', 0); t += g.get('trafione', 0)
+    except Exception: pass
+    return (t, n) if n else None
+
+def _raport_tg(m, nr=None, sp='pilka'):
+    """Raport jednego meczu: werdykt AI, analiza w zwijanym cytacie, braki, forma, styl, lepszy zakład, źródła."""
     r = m.get('raport') or {}; ai = r.get('ai')
-    lin = [f"{wspolne.IKONA[m['sport']]} <b>{nr}. {esc_(m['mecz'])}</b> ({m['godzina']})"]
+    lin = [f"📰 <b>{str(nr) + '. ' if nr else ''}{wspolne.IKONA.get(sp, '')} {esc_(_nazwa_meczu(sp, m))}</b> · {m['godzina']}"]
     if ai:
-        lin.append(esc_(ai['tekst']))
-        for k, kto in (('problemy_a', m['a']), ('problemy_b', m['b'])):
-            if ai.get(k): lin.append(f"❗ {esc_(kto)}: {esc_(', '.join(ai[k][:5]))}")
+        w = ai.get('werdykt')
+        if w: lin.append(f"{WERDYKT_TG[w][0]} <b>{WERDYKT_TG[w][1].capitalize()}</b>" + (f" – {esc_(ai['powod'])}" if ai.get('powod') else ''))
+        lin.append(f"<blockquote expandable>{esc_(ai['tekst'])}</blockquote>")
+        if ai.get('forma'): lin.append(f"<b>Forma:</b> {esc_(ai['forma'])}")
+        if ai.get('styl'): lin.append(f"<b>Styl:</b> {esc_(ai['styl'])}")
+        if sp == 'pilka':
+            br = [f"{esc_(pl(k))}: {esc_(', '.join(ai[s][:5]))}" for s, k in (('braki_gosp', m['gospodarz']), ('braki_gosc', m['gosc'])) if ai.get(s)]
+            if br: lin.append('<b>Nie zagrają:</b> ' + ' · '.join(br))
+            if ai.get('niepewni'): lin.append(f"<b>Niepewni:</b> {esc_(', '.join(ai['niepewni'][:5]))}")
+        else:
+            pr = [f"{esc_(k)}: {esc_(', '.join(ai[s][:4]))}" for s, k in (('problemy_a', m['a']), ('problemy_b', m['b'])) if ai.get(s)]
+            if pr: lin.append('<b>Problemy:</b> ' + ' · '.join(pr))
+        if ai.get('lepszy_zaklad'): lin.append(f"<b>Lepszy zakład:</b> {esc_(ai['lepszy_zaklad'])}")
         zr = [z['tytul'] for z in ai.get('zrodla', [])][:3]
         if zr: lin.append(f"<i>Źródła: {esc_(', '.join(zr))}</i>")
+    elif sp == 'pilka':
+        br = r.get('braki') or {}
+        for s, kto in (('gosp', pl(m['gospodarz'])), ('gosc', pl(m['gosc']))):
+            if br.get(s): lin.append(f"<b>Nie zagrają – {esc_(kto)}:</b> {esc_(', '.join(p['zawodnik'] + (' (?)' if p.get('niepewny') else '') for p in br[s][:6]))}")
+        if len(lin) == 1: lin.append('<i>Brak analizy AI dla tego meczu; brak nieobecnych w bazach danych.</i>')
     else:
-        ng = [h['tytul'] for k in ('a', 'b') for h in (m.get('naglowki') or {}).get(k, [])][:4]
-        lin.append(('Nagłówki: ' + esc_(' | '.join(ng))) if ng else 'Brak raportu AI i świeżych wiadomości.')
-    if r.get('ostrzezenie'): lin.append('⚠️ ' + esc_(r['ostrzezenie']))
+        ng = [h['tytul'] for k in ('a', 'b') for h in (m.get('naglowki') or {}).get(k, [])][:3]
+        lin.append(('<i>Nagłówki:</i> ' + esc_(' | '.join(ng))) if ng else '<i>Brak analizy AI i świeżych wiadomości.</i>')
+    for o in (r.get('ostrzezenia') or ([r['ostrzezenie']] if r.get('ostrzezenie') else []))[:2]: lin.append(f"⚠️ {esc_(plTxt_bezp(o, m))}")
     return '\n'.join(lin)
 
+def plTxt_bezp(o, m):
+    try: return pl_txt(o, m.get('gospodarz'), m.get('gosc')) if m.get('gospodarz') else o
+    except Exception: return o
+
+def _raport_inne_tg(m, nr): return _raport_tg(m, nr, m['sport'])
+
 def tg_typy_wszystkie(d, inne, gl, status):
-    """Jedna wiadomość dziennie: 5 Pewnych i Value ze wszystkich dyscyplin, zaraz potem raporty. Ponownie tylko przy zmianie typów."""
+    """Jedna wiadomość dziennie: 5 Pewnych i Value ze wszystkich dyscyplin (kursy wszystkich bukmacherów, werdykt AI), zaraz potem raporty."""
     pew, val = _rozwiaz(gl, d, inne)
     if not pew and not val: return 'brak typów'
     teraz = pd.Timestamp.now(tz='Europe/Warsaw')
@@ -554,17 +653,28 @@ def tg_typy_wszystkie(d, inne, gl, status):
         if n_ai > wys.get('ai', 0): tg_raporty_wszystkie(gl, pew); status['tg_typy']['ai'] = n_ai; return 'typy bez zmian – wysłane pełniejsze raporty AI'
         return 'już wysłane dziś (typy bez zmian)'
     zmiana = wys.get('data') == gl.get('data')
-    sporty_dzis = ' '.join(wspolne.IKONA[s] for s, _, _ in wspolne.SPORTY if any(sp == s for sp, _ in pew + val))
-    lin = [f"📋 <b>{'Zaktualizowane typy' if zmiana else 'Typy'} na {pd.Timestamp(gl.get('data') or wspolne.dzien_str()).strftime('%d.%m')}</b> {sporty_dzis}"]
+    dzien = pd.Timestamp(gl.get('data') or wspolne.dzien_str())
+    lin = [f"📋 <b>{'Zaktualizowane typy' if zmiana else 'Typy dnia'} · {DNI_PL[dzien.weekday()]} {dzien.strftime('%d.%m')}</b>"]
+    sk = _skutecznosc_30()
+    lin.append(f"{len(pew)} najpewniejszych" + (f" · 30 dni: <b>{round(100 * sk[0] / sk[1])}%</b> ({sk[0]}/{sk[1]})" if sk and sk[1] >= 10 else ''))
     for i, (sp, m) in enumerate(pew, 1): lin += _linie_pewnego(sp, m, i)
+    odr = [('pilka', m) for m in (d.get('odradzane') or [])] + [(sp, m) for sp in ('tenis', 'walki') for m in ((inne or {}).get(sp) or {}).get('odradzane', [])]
+    if odr:
+        lin.append('')
+        for sp, m in odr[:3]:
+            w, ai = _ai_karty(sp, m); t = m if sp == 'pilka' else (m.get('najpewniejszy') or {})
+            zak = pl_txt(t.get('zaklad', ''), m['gospodarz'], m['gosc']) if sp == 'pilka' else t.get('zaklad', '')
+            lin.append(f"⛔ <b>AI odradza:</b> {esc_(_nazwa_meczu(sp, m))} ({esc_(zak)}, {tg.pct(t.get('szansa', 0))})" + (f" – {esc_(ai['powod'])}" if ai.get('powod') else ''))
     if val:
-        lin.append('\n💰 <b>Value (Betclic)</b>')
+        lin.append('\n<b>💰 Value</b>')
         for sp, v in val:
-            mecz = pl_mecz(v['mecz']) if sp == 'pilka' else v['mecz']
             zak = pl_txt(v['zaklad'], v.get('gospodarz'), v.get('gosc')) if sp == 'pilka' else v['zaklad']
-            lin.append(f"{wspolne.IKONA[sp]} {esc_(mecz)}: {esc_(zak)} @ {tg.kurs(v['kurs'])} (szansa {tg.pct(v['szansa'])}, szukaj ≥ {tg.kurs(v.get('kurs_szukaj', ''))})")
+            kk = {'Betclic': v.get('kurs')} | {n: k for n, k in ((v.get('kursy_pl') or {}).items())}
+            best = max(((n, k) for n, k in kk.items() if k), key=lambda x: x[1], default=('Betclic', v['kurs']))
+            lin.append(f"{wspolne.IKONA[sp]} {esc_(_nazwa_meczu(sp, v))} · {esc_(zak)} @ <b>{tg.kurs(best[1])}</b> {esc_(best[0])} · uczciwy {tg.kurs(v['kurs_uczciwy'])} · +{round(v['ev'] * 100)}%"
+                       + (' · <i>rynek PL</i>' if v.get('rynek_pl') else ''))
     if any(sp == 'tenis' for sp, _ in pew + val): lin.append('\n<i>Tenis – krecz: rozliczenie wg regulaminu bukmachera.</i>')
-    if tg.APLIKACJA: lin.append(f"\n📱 {tg.APLIKACJA}")
+    if tg.APLIKACJA: lin.append(f'\n<a href="{tg.APLIKACJA}">Otwórz aplikację →</a>')
     if tg.wyslij_dlugi('\n'.join(lin)):
         status['tg_typy'] = dict(data=gl.get('data'), podpis=podpis, czas=teraz.strftime('%H:%M'), ai=n_ai)
         tg_raporty_wszystkie(gl, pew)
@@ -573,9 +683,7 @@ def tg_typy_wszystkie(d, inne, gl, status):
 
 def tg_raporty_wszystkie(gl, pew):
     if not pew: return
-    czesci = [f"📰 <b>Raporty na {pd.Timestamp(gl['data']).strftime('%d.%m')}</b>"]
-    for i, (sp, m) in enumerate(pew, 1):
-        czesci.append(wspolne.IKONA['pilka'] + ' ' + _raport_tg(m, i) if sp == 'pilka' else _raport_inne_tg(dict(m, sport=sp), i))
+    czesci = [_raport_tg(m, i, sp) for i, (sp, m) in enumerate(pew, 1)]
     tg.wyslij_dlugi('\n\n'.join(czesci))
 
 def _stan_na_zywo():
@@ -664,7 +772,7 @@ def zapisz_status(tryb, bledy=None, st=None, tg_info=None):
     if tg_info: st['telegram_typy'] = dict(wynik=tg_info, czas=teraz)
     if STRAZNIK: st['na_zywo'] = dict(straznik=STRAZNIK[-1], czas=teraz)
     if tryb == 'pelne' or sporty.STAN['bledy']:
-        st['sporty'] = dict(tenis=sporty.STAN['tenis'], walki=sporty.STAN['walki'], kredyty=sporty.STAN['kredyty'], rundy_walk=sporty.STAN['rundy'],
+        st['sporty'] = dict(tenis=sporty.STAN['tenis'], walki=sporty.STAN['walki'], ksw=sporty.STAN.get('ksw'), kredyty=sporty.STAN['kredyty'], rundy_walk=sporty.STAN['rundy'],
                             pominiete=sporty.STAN['pominiete'][:6], bledy=sporty.STAN['bledy'][:6], czas=teraz)
     st['telegram'] = dict(tg.STAN_TG, bot=tg.nazwa_bota() or (st.get('telegram') or {}).get('bot'))
     st['bledy'] = (bledy or [])[:5]
@@ -744,7 +852,7 @@ if __name__ == '__main__':
     if not ODDS_API_KEY:
         today['blad'] = 'Brak klucza API (sekret ODDS_API_KEY w ustawieniach repozytorium).'
     else:
-        try: today['value'], today['pewne'], today['mecze'] = typy_na_dzis()
+        try: today['value'], today['pewne'], today['mecze'] = typy_na_dzis(); today['odradzane'] = ODRADZANE
         except Exception as e: today['blad'] = f'Nie udało się pobrać kursów: {e}'; bledy.append(today['blad'])
         try: rozlicz_wszystko()
         except Exception as e: print('Rozliczenie dziennika nie powiodło się:', e); bledy.append(f'rozliczenie: {e}')
@@ -757,6 +865,10 @@ if __name__ == '__main__':
     zapisz('dziennik.json', eksport_calosci())
     try: STRAZNIK.append(pilnuj_straznika(today))
     except Exception as e: bledy.append(f'strażnik: {e}')
+    try:   # kursy polskich bukmacherów (Superbet + Fortuna/STS z serwera) – przed wiadomością na Telegram
+        import kursy_pl; os.environ['KURSY_PL_TERAZ'] = '1'; kursy_pl.main()
+        today = json.load(open(os.path.join(OUT, 'dzis.json'))); inne = sporty.wczytaj_json() or inne
+    except Exception as e: bledy.append(f'kursy PL: {e}')
     st = wczytaj_status(); tg_info = None
     gl = {}
     try: gl = wspolne.wybierz(today, inne or sporty.wczytaj_json()); wspolne.zapisz(gl)   # 5 Pewnych i Value ze wszystkich dyscyplin

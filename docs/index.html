@@ -8,175 +8,228 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Typer">
-<meta name="theme-color" content="#0E2A20">
+<meta name="theme-color" content="#0D1014">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#EEF2EA; --surface:#FFFFFF; --sunk:#E3E9DF; --line:#D3DCCF; --text:#10291F; --muted:#56695E;
-  --accent:#9A6F00; --accent-bg:#FBEFC6; --win:#1E7B4A; --loss:#B8372B; --pitch:#1E5A40;
-  --num:"Barlow Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
-  --body:"Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bg:#0D1014; --surface:#151A20; --sunk:#1C222A; --line:#232A33; --line2:#262D37; --text:#ECEFF3; --text2:#C9CFD7; --muted:#A3ACB8; --faint:#8D97A4;
+  --accent:#F2B544; --accent-bg:rgba(242,181,68,.10); --win:#57D38C; --win-bg:rgba(87,211,140,.12); --warn:#F5A524; --warn-bg:rgba(245,165,36,.13);
+  --loss:#F07167; --loss-bg:rgba(240,113,103,.13); --info:#8AB4FF; --pitch:#ECEFF3;
+  --num:"Archivo", "Figtree", system-ui, sans-serif;
+  --body:"Figtree", -apple-system, "Segoe UI", system-ui, sans-serif;
   box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
-  color-scheme:light dark;
+  color-scheme:dark;
 }
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#0E2A20; --surface:#143427; --sunk:#0B231A; --line:rgba(238,243,236,.13); --text:#EEF3EC; --muted:#9DB5A8;
-    --accent:#F2C94C; --accent-bg:rgba(242,201,76,.13); --win:#7ED3A0; --loss:#EF7C70; --pitch:#2F6B4F;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0E2A20; --surface:#143427; --sunk:#0B231A; --line:rgba(238,243,236,.13); --text:#EEF3EC; --muted:#9DB5A8;
-  --accent:#F2C94C; --accent-bg:rgba(242,201,76,.13); --win:#7ED3A0; --loss:#EF7C70; --pitch:#2F6B4F;
-}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
 *,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.45 var(--body);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.5 var(--body);-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased}
 button,input,select{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+a{color:var(--accent)}
+.n,.num{font-family:var(--num);font-variant-numeric:tabular-nums;font-stretch:110%}
 .wrap{max-width:560px;margin:0 auto;padding:0 16px 150px}
-header{display:flex;align-items:flex-end;justify-content:space-between;padding:18px 0 10px}
-header h1{font:700 34px/1 var(--num);margin:0;letter-spacing:.2px}
-header .meta{font-size:13px;color:var(--muted);text-align:right}
-.gear{background:none;border:1px solid var(--line);border-radius:10px;padding:6px 10px;margin-left:10px;cursor:pointer}
-.banner{background:var(--accent-bg);border-left:3px solid var(--accent);padding:10px 12px;border-radius:6px;font-size:14px;margin:6px 0 14px}
-.lead{color:var(--muted);font-size:14px;margin:2px 0 14px}
-h2{font:600 24px/1.1 var(--num);margin:18px 0 4px}
-.bet{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 14px 12px;margin:0 0 12px}
-.bet .top{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted)}
-.bet .match{font:600 21px/1.15 var(--num);margin:4px 0 8px}
-.pick{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-top:1px dashed var(--line);padding-top:8px}
-.pick .name{font-weight:600;font-size:17px}
+header{display:flex;align-items:flex-end;justify-content:space-between;padding:22px 4px 12px}
+header h1{font:700 30px/1 var(--body);margin:0;letter-spacing:-.02em}
+header .meta{font-size:13px;color:var(--muted);text-align:right;line-height:1.35}
+.gear{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;background:var(--surface);border:1px solid var(--line2);border-radius:14px;margin-left:10px;cursor:pointer;color:var(--text)}
+.banner{background:var(--accent-bg);border:1px solid rgba(242,181,68,.35);padding:12px 14px;border-radius:14px;font-size:14px;margin:6px 0 14px;color:var(--text2)}
+.lead{color:var(--muted);font-size:14.5px;margin:2px 4px 14px;line-height:1.5}
+h2{font:700 22px/1.2 var(--body);margin:22px 4px 8px;letter-spacing:-.01em}
+h3{font:700 17px/1.3 var(--body);margin:0}
+.lab{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+/* karta */
+.bet{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 18px 6px;margin:0 0 14px;display:flex;flex-direction:column;gap:14px}
+.bet.odr{border-color:rgba(240,113,103,.35)}
+.bet .top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;color:var(--muted);font-weight:500}
+.bet .top b{color:var(--text);font:600 14px var(--num)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:1px}
+.dot.pilka{background:var(--info)} .dot.tenis{background:#C6E36B} .dot.walki{background:var(--warn)}
+.bet .match{font:700 19px/1.25 var(--body);margin:0;letter-spacing:-.005em}
+.bet .match span{display:block;color:var(--text2)}
+.typbox{display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:14px;background:var(--sunk)}
+.typbox .gl{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.typbox .zak{font:700 18px/1.25 var(--body)}
+.typbox .zak small{display:block;font:500 13px/1.35 var(--body);color:var(--muted);margin-top:2px}
+.typbox .pc{font:800 34px/1 var(--num);letter-spacing:-.01em;text-align:right;white-space:nowrap}
+.typbox .pc small{display:block;font:500 12px var(--body);color:var(--muted);text-align:right;margin-top:3px}
+.typbox .meta2{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted)}
+.typbox .meta2 b{color:var(--text);font:700 13.5px var(--num)}
+.pbar{height:6px;border-radius:99px;background:var(--line2);overflow:hidden}
+.pbar i{display:block;height:100%;border-radius:99px;background:var(--text)}
+.bks{display:grid;grid-template-columns:repeat(auto-fit,minmax(68px,1fr));gap:6px}
+.bk{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:52px;border-radius:12px;background:var(--sunk);border:1px solid var(--line2);padding:4px 2px}
+.bk span{font-size:11px;color:var(--muted);font-weight:500;white-space:nowrap}
+.bk b{font:700 17px var(--num)}
+.bk.best{border-color:var(--accent);background:var(--accent-bg)} .bk.best b{color:var(--accent)}
+.bk.low b{color:var(--muted);font-weight:600}
+.chipv{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border-radius:999px;font-size:13px;font-weight:600;align-self:flex-start}
+.chipv.zgoda{color:var(--win);background:var(--win-bg)} .chipv.ryzyko{color:var(--warn);background:var(--warn-bg)} .chipv.odradza{color:var(--loss);background:var(--loss-bg)}
+.chipv.brak{color:var(--muted);background:var(--sunk)}
+.aiw{display:flex;flex-direction:column;gap:8px}
+.aiw p{margin:0;font-size:14.5px;line-height:1.55;color:var(--text2);text-wrap:pretty}
+.poz2{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+.poz2 .l{display:flex;flex-direction:column;gap:2px;min-width:0}
+.poz2 .l span{font-size:12px;color:var(--muted);font-weight:500}
+.poz2 .l b{font-size:15px;font-weight:600}
+.poz2 .r{display:flex;align-items:baseline;gap:10px;flex-shrink:0}
+.poz2 .r span{font:600 15px var(--num);color:var(--muted)} .poz2 .r b{font:700 17px var(--num)}
+.kv{display:flex;gap:12px;font-size:14.5px;line-height:1.45;color:var(--text2)} .kv .lab{width:96px;flex-shrink:0;padding-top:3px}
+.flag{font-size:12.5px;font-weight:600;color:var(--warn)}
+/* stare klasy – nowy wygląd */
+.pick{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.pick .name{font-weight:700;font-size:17px}
 .pick .name small{display:block;font-weight:400;color:var(--muted);font-size:13px}
-.pick .odds{font:700 30px/1 var(--num);color:var(--accent);white-space:nowrap}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
-.cell{background:var(--sunk);border-radius:8px;padding:6px 8px}
-.cell b{display:block;font:600 19px/1.1 var(--num)}
+.pick .odds{font:800 30px/1 var(--num);color:var(--accent);white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.cell{background:var(--sunk);border:1px solid var(--line2);border-radius:12px;padding:8px 10px}
+.cell b{display:block;font:700 19px/1.2 var(--num)}
 .cell span{font-size:12px;color:var(--muted)}
-.bar{position:relative;height:6px;background:var(--sunk);border-radius:3px;margin-top:10px;overflow:hidden}
-.bar i{position:absolute;inset:0 auto 0 0;background:var(--pitch);border-radius:3px}
-.bar::after{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--muted);opacity:.5}
-.scores{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;align-items:center}
+.bar{position:relative;height:6px;background:var(--line2);border-radius:99px;overflow:hidden}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--text);border-radius:99px}
+.scores{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .scores .lbl{font-size:12px;color:var(--muted);margin-right:2px}
-.tile{display:inline-flex;align-items:baseline;gap:5px;background:var(--sunk);border-radius:6px;padding:3px 7px}
-.tile b{font:700 18px/1 var(--num);letter-spacing:1px}
-.tile span{font-size:12px;color:var(--muted)}
-.note{font-size:13px;color:var(--muted);margin-top:8px}
+.tile{display:inline-flex;align-items:baseline;gap:6px;background:var(--sunk);border:1px solid var(--line2);border-radius:10px;padding:5px 9px}
+.tile b{font:700 17px/1 var(--num)} .tile span{font-size:12px;color:var(--muted)}
+.note{font-size:13.5px;color:var(--muted);line-height:1.5;margin:0}
+.bet .note + .note{margin-top:-6px}
 .warn{color:var(--loss)}
-.empty{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:18px;color:var(--muted)}
+.empty{background:var(--surface);border:1px dashed var(--line2);border-radius:18px;padding:20px;color:var(--muted);font-size:14.5px}
 .rank{font:700 15px/1 var(--num);color:var(--muted);margin-right:6px}
-.big{font:700 44px/1 var(--num)}
-/* analiza */
+.big{font:800 44px/1 var(--num)}
 label{display:block;font-size:14px;color:var(--muted);margin:12px 0 4px}
-input[type=text],input[type=number],select{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:11px 12px;font-size:16px}
+input[type=text],input[type=number],select{width:100%;background:var(--surface);border:1px solid var(--line2);border-radius:12px;padding:12px 13px;font-size:16px;color:var(--text)}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .check{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:15px}
-.btn{display:block;width:100%;margin-top:16px;background:var(--pitch);color:#fff;border:0;border-radius:12px;padding:13px;font-weight:600;font-size:17px;cursor:pointer}
-details{margin-top:12px}
-summary{cursor:pointer;color:var(--muted);font-size:15px}
+.btn{display:block;width:100%;min-height:48px;margin-top:16px;background:var(--text);color:var(--bg);border:0;border-radius:14px;padding:13px;font-weight:700;font-size:16px;cursor:pointer}
+details{margin:0}
+summary{cursor:pointer;color:var(--accent);font-size:14.5px;font-weight:600;min-height:32px;display:flex;align-items:center;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"›";margin-left:6px;transition:transform .15s}
+details[open]>summary::after{transform:rotate(90deg)}
 .odds-in{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .odds-in label{margin-top:8px;font-size:13px}
-.board{background:var(--pitch);color:#fff;border-radius:16px;padding:16px;margin-top:18px;text-align:center}
-.board .teams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;font:600 18px/1.15 var(--num)}
+.board{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:18px;text-align:center}
+.board .teams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;font:700 17px/1.2 var(--body)}
 .board .digits{display:flex;gap:6px;justify-content:center}
-.board .digits span{background:#0B231A;color:#F2C94C;font:700 56px/1 var(--num);padding:6px 12px;border-radius:8px;min-width:52px}
-.board .cap{font-size:13px;opacity:.85;margin-top:10px}
-.mk{display:grid;grid-template-columns:1fr auto auto;gap:4px 12px;align-items:center;margin-top:6px}
+.board .digits span{background:var(--sunk);color:var(--accent);font:800 52px/1 var(--num);padding:6px 12px;border-radius:12px;min-width:52px}
+.board .cap{font-size:13px;color:var(--muted);margin-top:10px}
+.mk{display:grid;grid-template-columns:1fr auto auto;gap:6px 14px;align-items:center}
 .mk .n{font-size:15px}
-.mk .p{font:600 18px/1 var(--num);text-align:right}
-.mk .f{font-size:13px;color:var(--muted);text-align:right;min-width:52px}
-.mk .ev{grid-column:1/-1;font-size:13px;margin:-2px 0 4px}
+.mk .p{font:700 18px/1 var(--num);text-align:right}
+.mk .f{font-size:13px;color:var(--muted);text-align:right;min-width:56px}
+.mk .ev{grid-column:1/-1;font-size:13px;margin:-2px 0 6px;color:var(--muted)}
 .mk hr{grid-column:1/-1;border:0;border-top:1px solid var(--line);margin:4px 0}
-.typ{background:var(--surface);border:2px solid var(--accent);border-radius:14px;padding:14px;margin-top:14px}
-.typ h3{font:600 15px/1.2 var(--body);color:var(--muted);margin:0 0 6px}
+.typ{background:var(--surface);border:1px solid var(--accent);border-radius:18px;padding:16px;margin-top:14px}
+.typ h3{font:600 14px/1.2 var(--body);color:var(--muted);margin:0 0 6px}
 .typ .main{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
-.typ .main b{font:700 26px/1.1 var(--num)}
-.typ .main span{font:700 34px/1 var(--num);color:var(--accent)}
-.typ .alt{border-top:1px dashed var(--line);margin-top:10px;padding-top:8px;font-size:15px}
-.tier{border-top:1px dashed var(--line);padding-top:9px;margin-top:9px}
-.tier .lbl2{font-size:13px;color:var(--muted);display:flex;justify-content:space-between}
+.typ .main b{font:700 22px/1.2 var(--body)}
+.typ .main span{font:800 32px/1 var(--num);color:var(--accent)}
+.typ .alt{border-top:1px solid var(--line);margin-top:10px;padding-top:8px;font-size:15px}
+.tier{border-top:1px solid var(--line);padding-top:10px}
+.tier .lbl2{font-size:12px;color:var(--muted);display:flex;justify-content:space-between}
 .tier .row2{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:2px}
-.tier .row2 .name{font-weight:600;font-size:17px}
+.tier .row2 .name{font-weight:700;font-size:16px}
 .tier .row2 .name small{display:block;font-weight:400;color:var(--muted);font-size:13px}
-.tier .row2 .pp{font:700 30px/1 var(--num)}
-.tier.main .row2 .pp{font-size:40px}
-.tier .k{font-size:14px;color:var(--muted);margin-top:4px}
+.tier .row2 .pp{font:700 26px/1 var(--num)}
+.tier .k{font-size:13.5px;color:var(--muted);margin-top:4px}
 .tier .k b{color:var(--text)}
-.mini{display:flex;align-items:center;gap:10px;background:var(--pitch);color:#fff;border-radius:10px;padding:8px 10px;margin:2px 0 4px}
+.mini{display:flex;align-items:center;gap:10px;background:var(--sunk);border-radius:12px;padding:8px 10px}
 .mini .d{display:flex;gap:4px}
-.mini .d span{background:#0B231A;color:#F2C94C;font:700 26px/1 var(--num);padding:3px 7px;border-radius:5px;min-width:26px;text-align:center}
-.mini .t{font-size:13px;line-height:1.3;opacity:.92}
-.x12{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px;text-align:center}
-.x12 b{display:block;font:700 20px/1.1 var(--num)} .x12 span{font-size:12px;color:var(--muted)}
-.x12bar{display:flex;height:6px;border-radius:3px;overflow:hidden;margin-top:6px;background:var(--sunk)}
-.x12bar i{display:block;background:var(--pitch)} .x12bar i.x{background:var(--muted);opacity:.6} .x12bar i.a{background:var(--accent)}
+.mini .d span{background:var(--bg);color:var(--accent);font:800 24px/1 var(--num);padding:4px 8px;border-radius:8px;min-width:28px;text-align:center}
+.mini .t{font-size:13px;line-height:1.35;color:var(--muted)}
+.x12{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.x12 div:nth-child(2){text-align:center} .x12 div:last-child{text-align:right}
+.x12.dwa div:last-child{text-align:right}
+.x12 b{display:block;font:800 22px/1.1 var(--num)} .x12 span{font-size:12.5px;color:var(--muted)}
+.x12bar{display:flex;height:10px;border-radius:99px;overflow:hidden;gap:3px}
+.x12bar i{display:block;background:var(--text)} .x12bar i.x{background:#6B7480} .x12bar i.a{background:#3A424D}
 .muted{color:var(--muted)}
-details.rap{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px} details.rap summary{font-weight:600;font-size:15px}
-ul.news{margin:4px 0 0;padding-left:18px;font-size:13px} ul.news li{margin:3px 0} ul.news a{color:var(--text)}
-.lv{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 8px}
-.lv.moj{border:2px solid var(--accent)}
-.lv .hd{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+details.rap{border-top:1px solid var(--line);padding-top:10px}
+details.rap summary{font-size:15px}
+ul.news{margin:6px 0 0;padding-left:18px;font-size:13.5px;line-height:1.6;color:var(--muted)} ul.news li{margin:3px 0} ul.news a{color:var(--text2)}
+.lv{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin:0 0 10px}
+.lv.moj{border-color:var(--accent)}
+.lv .hd{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted)}
 .lv .st{font-weight:600} .lv .st.in{color:var(--loss)} .lv .st.in::before{content:"● ";animation:pul 1.4s infinite}
 @keyframes pul{50%{opacity:.25}}
-.lv .rw{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;margin-top:4px;font-size:16px}
-.lv .rw b{font:700 24px/1.1 var(--num);text-align:right}
-.lv .ev2{font-size:12px;color:var(--muted);margin-top:4px}
-.lv .ty{margin-top:6px;border-top:1px dashed var(--line);padding-top:6px;font-size:14px}
-.lv .ty div{margin:2px 0}
-.lgh{font:600 16px/1.2 var(--num);color:var(--muted);margin:14px 0 6px}
-.pm{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px;font-size:14px}
+.lv .rw{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center;margin-top:6px;font-size:16px;font-weight:600}
+.lv .rw b{font:800 24px/1.1 var(--num);text-align:right}
+.lv .ev2{font-size:12.5px;color:var(--muted);margin-top:6px}
+.lv .ty{margin-top:10px;border-top:1px solid var(--line);padding-top:8px;font-size:14px}
+.lv .ty div{margin:3px 0}
+.lgh{font:600 12px/1.2 var(--body);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:18px 4px 8px}
+.pm{border-top:1px solid var(--line);padding-top:10px;font-size:14px;color:var(--text2)}
 .pm .up{color:var(--win)} .pm .dn{color:var(--loss)}
-.kbtn{background:none;border:1px solid var(--line);border-radius:8px;padding:3px 8px;font-size:12px;color:var(--muted);cursor:pointer;margin-left:8px}
-.kbtn.on{background:var(--accent);color:#10291F;border-color:var(--accent)}
-.kbar{position:fixed;left:0;right:0;bottom:calc(58px + env(safe-area-inset-bottom,0px));z-index:6;display:none}
-.kbar.on{display:block} .kbar button{display:block;max-width:560px;width:calc(100% - 24px);margin:0 auto 6px;background:var(--accent);color:#10291F;border:0;border-radius:12px;padding:11px 14px;font-weight:600;font-size:15px;cursor:pointer;text-align:left}
-.klist{list-style:none;padding:0;margin:8px 0} .klist li{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
-.klist button{background:none;border:0;color:var(--loss);font-size:18px;cursor:pointer}
-.stan div{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:14px}
-/* dziennik */
+.kbtn{background:none;border:1px solid var(--line2);border-radius:999px;padding:4px 10px;font-size:12px;color:var(--muted);cursor:pointer;margin-left:8px;vertical-align:2px}
+.kbtn.on{background:var(--accent);color:#141413;border-color:var(--accent)}
+.kbar{position:fixed;left:0;right:0;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:6;display:none}
+.kbar.on{display:block} .kbar button{display:block;max-width:560px;width:calc(100% - 24px);margin:0 auto 6px;background:var(--accent);color:#141413;border:0;border-radius:14px;padding:13px 16px;font-weight:700;font-size:15px;cursor:pointer;text-align:left}
+.klist{list-style:none;padding:0;margin:8px 0} .klist li{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.klist button{background:none;border:0;color:var(--loss);font-size:18px;cursor:pointer;min-width:32px;min-height:32px}
+.stan div{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .stats .cell b{font-size:24px}
-svg.curve{width:100%;height:120px;display:block;margin-top:12px}
+svg.curve{width:100%;height:120px;display:block;margin-top:12px;color:var(--muted)}
 .log{list-style:none;padding:0;margin:10px 0 0}
-.log li{display:grid;grid-template-columns:22px 1fr auto;gap:8px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
-.log li b{font-weight:600}
-.log .r{text-align:right;font:600 16px/1.2 var(--num)}
+.log li{display:grid;grid-template-columns:22px 1fr auto;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px;color:var(--text2)}
+.log li b{font-weight:600;color:var(--text)}
+.log .r{text-align:right;font:700 15px/1.2 var(--num)}
 .pos{color:var(--win)} .neg{color:var(--loss)}
+/* dziennik – nowe */
+.hero{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px 18px;display:flex;flex-direction:column;gap:12px;margin-bottom:14px}
+.hero .wynik{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.hero .wynik b{font:800 56px/1 var(--num);letter-spacing:-.02em}
+.hero .wynik span{font-size:15px;color:var(--muted)}
+.prog{position:relative}
+.prog .pbar{height:10px} .prog .pbar i{background:var(--win)}
+.prog em{position:absolute;left:75%;top:-4px;width:2px;height:18px;background:var(--text)}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.sekcja{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
+.sekcja h2{margin:0 0 6px;font-size:17px}
+.wiersz{display:flex;flex-direction:column;gap:8px;padding:14px 0;border-top:1px solid var(--line)}
+.wiersz .g{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.wiersz .g span{font-size:15px;font-weight:600} .wiersz .g b{font:800 22px var(--num)}
+.wiersz .d{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--muted)}
+.skut{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px;display:flex;align-items:center;gap:14px;margin:0 0 14px}
+.skut b{font:800 28px var(--num)} .skut div{display:flex;flex-direction:column;gap:2px} .skut div span:first-child{font-size:14px;font-weight:600} .skut div span:last-child{font-size:13px;color:var(--muted)}
 /* nawigacja */
-nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+nav{position:fixed;left:0;right:0;bottom:0;background:rgba(13,16,20,.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
 nav .in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
-.chips{display:flex;gap:6px;overflow-x:auto;margin:2px 0 10px;padding-bottom:2px}
-.chips button{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:999px;padding:7px 13px;font-size:14px;cursor:pointer}
-.chips button.on{background:var(--pitch);color:#fff;border-color:var(--pitch);font-weight:600}
-.sportbtn{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:10px;width:100%;text-align:left;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:14px;padding:14px;margin:0 0 10px;font-size:16px;cursor:pointer}
-.sportbtn .ik{font-size:30px}
-.wstecz{background:none;border:0;color:var(--muted);font-size:15px;padding:4px 0;cursor:pointer}
+.chips{display:flex;gap:8px;overflow-x:auto;margin:2px 0 14px;padding:0 0 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex:0 0 auto;min-height:38px;border:1px solid var(--line2);background:transparent;color:var(--text2);border-radius:999px;padding:0 15px;font-size:14px;font-weight:600;cursor:pointer}
+.chips button.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.sportbtn{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:12px;width:100%;min-height:72px;text-align:left;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:18px;padding:14px 16px;margin:0 0 10px;font-size:16px;cursor:pointer}
+.sportbtn .ik{width:44px;height:44px;border-radius:12px;background:var(--sunk);display:flex;align-items:center;justify-content:center;font-size:22px}
+.wstecz{background:none;border:0;color:var(--muted);font-size:15px;padding:8px 0;min-height:44px;cursor:pointer}
 .lv .rw.ten{grid-template-columns:1fr auto}
-.lv .gm{display:flex;gap:4px;justify-content:flex-end} .lv .gm i{font-style:normal;font:700 16px/1 var(--num);min-width:14px;text-align:center}
-.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:4px 0 10px}
-.seg button{border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:10px;padding:9px 0;font-size:15px;cursor:pointer}
-.seg button.on{background:var(--pitch);color:#fff;border-color:var(--pitch);font-weight:600}
+.lv .gm{display:flex;gap:6px;justify-content:flex-end} .lv .gm i{font-style:normal;font:700 17px/1 var(--num);min-width:14px;text-align:center}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 12px}
+.seg button{min-height:42px;border:1px solid var(--line2);background:transparent;color:var(--text2);border-radius:12px;font-size:15px;font-weight:600;cursor:pointer}
+.seg button.on{background:var(--text);color:var(--bg);border-color:var(--text)}
 .x12.dwa{grid-template-columns:repeat(2,1fr)}
-.row3{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
-.row3 .r{text-align:right;white-space:nowrap}
-nav button{background:none;border:0;padding:9px 0 8px;font-size:11px;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
-nav button .ic{font-size:20px;line-height:1}
-nav button[aria-selected="true"]{color:var(--text);font-weight:600}
-nav button[aria-selected="true"] .ic{transform:translateY(-1px)}
-.sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;z-index:9}
+.row3{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.row3 .r{text-align:right;white-space:nowrap;font-family:var(--num)}
+nav button{background:none;border:0;min-height:56px;padding:8px 0 6px;font-size:11px;font-weight:600;color:var(--faint);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
+nav button svg{width:24px;height:24px}
+nav button[aria-selected="true"]{color:var(--accent)}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:flex-end;z-index:9}
 .sheet.open{display:flex}
-.sheet .card{background:var(--bg);width:100%;max-width:560px;margin:0 auto;border-radius:18px 18px 0 0;padding:18px 16px calc(24px + env(safe-area-inset-bottom,0px))}
-footer{font-size:12px;color:var(--muted);margin-top:26px;line-height:1.5}
-@media (prefers-reduced-motion:no-preference){ .board .digits span{animation:flip .5s ease-out both} .board .digits span:nth-child(3){animation-delay:.08s} }
-@keyframes flip{from{transform:rotateX(90deg);opacity:0}to{transform:none;opacity:1}}
-.note.ai{border-left:3px solid var(--accent);padding-left:10px;line-height:1.45}
-.bell{text-decoration:none;font-size:17px;padding:2px 6px;border-radius:6px;opacity:.55}
+.sheet .card{background:var(--bg);border-top:1px solid var(--line);width:100%;max-width:560px;margin:0 auto;border-radius:22px 22px 0 0;padding:20px 18px calc(24px + env(safe-area-inset-bottom,0px));max-height:88vh;overflow:auto}
+footer{font-size:12px;color:var(--faint);margin:28px 4px 0;line-height:1.55}
+.note.ai{color:var(--text2)}
+.bell{text-decoration:none;font-size:17px;padding:4px 8px;border-radius:10px;opacity:.55;min-width:36px;min-height:36px;display:inline-flex;align-items:center;justify-content:center}
 .bell.on{opacity:1;background:var(--accent-bg)}
 .bell:focus-visible{opacity:1}
+.oceny{display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:14px;background:var(--sunk)}
+.oc .g{display:flex;justify-content:space-between;font-size:13.5px} .oc .g b{font:700 14px var(--num)} .oc .g span{color:var(--muted)}
+.oc .p2{display:flex;gap:3px;height:6px;margin-top:6px} .oc .p2 div{flex:1;background:var(--line2);overflow:hidden;display:flex}
+.oc .p2 div:first-child{border-radius:99px 0 0 99px;justify-content:flex-end} .oc .p2 div:last-child{border-radius:0 99px 99px 0}
+.oc .p2 i{display:block;height:100%} .oc .p2 div:first-child i{background:var(--text)} .oc .p2 div:last-child i{background:var(--warn)}
 </style>
 </head>
 <body>
@@ -185,7 +238,7 @@ footer{font-size:12px;color:var(--muted);margin-top:26px;line-height:1.5}
     <h1>Typer</h1>
     <div style="display:flex;align-items:flex-end">
       <div class="meta" id="meta">…</div>
-      <button class="gear" id="openSettings" aria-label="Ustawienia">⚙︎</button>
+      <button class="gear" id="openSettings" aria-label="Ustawienia"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
     </div>
   </header>
   <div id="demo"></div>
@@ -194,11 +247,11 @@ footer{font-size:12px;color:var(--muted);margin-top:26px;line-height:1.5}
 </div>
 
 <nav><div class="in" role="tablist">
-  <button role="tab" data-tab="live"><span class="ic">⚡</span>Na żywo</button>
-  <button role="tab" data-tab="value"><span class="ic">💰</span>Value</button>
-  <button role="tab" data-tab="pewne"><span class="ic">🔒</span>Pewne</button>
-  <button role="tab" data-tab="sporty"><span class="ic">🏟️</span>Sporty</button>
-  <button role="tab" data-tab="dziennik"><span class="ic">📒</span>Dziennik</button>
+  <button role="tab" data-tab="live"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>Na żywo</button>
+  <button role="tab" data-tab="pewne"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>Pewne</button>
+  <button role="tab" data-tab="value"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16l5-5 4 4 7-7"/><path d="M15 8h5v5"/></svg>Value</button>
+  <button role="tab" data-tab="sporty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Sporty</button>
+  <button role="tab" data-tab="dziennik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg>Dziennik</button>
 </div></nav>
 
 <div class="kbar" id="kbar"><button id="kopen"></button></div>
@@ -543,36 +596,6 @@ function widokDziennikPilka(){
 /* ---------- TENIS i WALKI (inne.json) ---------- */
 const IK_SP = {tenis:'🎾', walki:'🥊'};
 function wynikInne(sp, eid){ const o = (((S.inne||{}).dziennik||{})[sp]||{}).ostatnie || []; return o.filter(t => t.event_id == eid && t.rodzaj === 'pewne'); }
-function kartaInne(m, nr, sp){
-  const pm = {event_id: m.event_id, mecz: m.mecz, gospodarz: m.a, gosc: m.b};
-  const tur = esc(m.turniej) + (m.kategoria ? ` · kat. ${esc(m.kategoria)}` : '') + (m.bo === 5 ? ' · do 3 wygranych setów' : '') + (m.rundy === 5 ? ` · ${esc(m.rundy_zrodlo || '5 rund')}` : '');
-  let h = `<article class="bet"><div class="top"><span>${IK_SP[sp]} ${tur}</span><span>${esc(m.dzien)} ${esc(m.godzina)}</span></div><div class="match">${esc(m.mecz)}</div>`;
-  const r3 = m.szansa_remis;
-  h += `<div class="x12 ${r3 ? '' : 'dwa'}"><div><b>${pct(m.szansa_a)}</b><span>wygra ${esc(m.a)}</span></div>${r3 ? `<div><b>${pct(r3)}</b><span>remis</span></div>` : ''}<div><b>${pct(m.szansa_b)}</b><span>wygra ${esc(m.b)}</span></div></div>
-    <div class="x12bar"><i style="width:${m.szansa_a*100}%"></i>${r3 ? `<i class="x" style="width:${r3*100}%"></i>` : ''}<i class="a" style="width:${m.szansa_b*100}%"></i></div>`;
-  if(m.wyniki) h += `<div class="scores"><span class="lbl">Wynik w setach:</span>${m.wyniki.map(w => `<span class="tile"><b>${w.a}:${w.b}</b><span>${pct(w.szansa)}</span></span>`).join('')}</div>`;
-  if(m.metody){ const x = m.metody;
-    h += `<div class="note">Jak skończy się walka: <b>${esc(m.a)}</b> przed czasem ${pct(x.a_ko)} · na punkty ${pct(x.a_pkt)}<br><b>${esc(m.b)}</b> przed czasem ${pct(x.b_ko)} · na punkty ${pct(x.b_pkt)}<br>Przed czasem łącznie: <b>${pct(m.przed_czasem)}</b>${m.kategoria ? '' : ' <span class="muted">(kategoria wagowa nieznana – średnia UFC)</span>'}</div>`; }
-  h += poziomTypu(m.najpewniejszy, '🔒', (nr ? nr + '. ' : '') + 'Najpewniejszy', 'main', pm);
-  if(m.nizsza_pewnosc) h += '<div class="note warn">Niższa pewność – dobrany, żeby było minimum 5 typów.</div>';
-  h += poziomTypu(m.lepszy_kurs, '⚖️', 'Lepszy kurs', '', pm) + poziomTypu(m.ryzykowny, '🎯', 'Ryzykowny', '', pm);
-  const r = m.raport || {}, ai = r.ai;
-  if(r.ostrzezenie) h += `<div class="note warn">⚠️ ${esc(r.ostrzezenie)}</div>`;
-  const ng = [...((m.naglowki||{}).a || []), ...((m.naglowki||{}).b || [])];
-  if(ai || ng.length){
-    h += `<details class="rap"${ai ? ' open' : ''}><summary>📰 Raport${r.ostrzezenie ? ' <span class="warn">⚠️</span>' : ''}</summary>`;
-    if(ai){ h += `<div class="note ai"><b>🤖 Raport AI</b> <span class="muted">(${esc(ai.czas || '')}${ai.szukal ? ', na podstawie wyszukiwania' : ', z nagłówków'})</span><br>${esc(ai.tekst)}</div>`;
-      if((ai.problemy_a||[]).length) h += `<div class="note"><b>${esc(m.a)}:</b> ${esc(ai.problemy_a.join(', '))}</div>`;
-      if((ai.problemy_b||[]).length) h += `<div class="note"><b>${esc(m.b)}:</b> ${esc(ai.problemy_b.join(', '))}</div>`;
-      if((ai.zrodla||[]).length) h += `<div class="note muted">Źródła: ` + ai.zrodla.map(z => `<a href="${esc(z.link)}" target="_blank" rel="noopener">${esc(z.tytul)}</a>`).join(' · ') + `</div>`; }
-    if(ng.length) h += `<ul class="news">` + ng.map(x => `<li><a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.tytul)}</a> <span class="muted">${esc(x.data)}</span></li>`).join('') + `</ul>`;
-    h += `</details>`;
-  }
-  const w = wynikInne(sp, m.event_id).filter(t => t.wynik || t.status);
-  if(w.length) h += `<div class="note"><b>Wynik:</b> ${esc(w[0].wynik || w[0].status)} · ` + w.map(t => ({najpewniejszy:'🔒', lepszy_kurs:'⚖️', ryzykowny:'🎯'}[t.poziom] || '') + (t.trafiony == null ? (t.status ? '↩️' : '⏳') : (t.trafiony ? '✅' : '❌'))).join(' ') + `</div>`;
-  h += `<div class="note">Źródło szans: ${esc(m.zrodlo)}</div>`;
-  return h + `</article>`;
-}
 function statInne(sp){
   const s = (((S.inne||{}).dziennik)||{})[sp] || {}, T = ((S.inne||{}).testy||{})[sp] || {};
   const nazwy = {najpewniejszy:'🔒 Najpewniejsze', lepszy_kurs:'⚖️ Lepszy kurs', ryzykowny:'🎯 Ryzykowne'};
@@ -580,6 +603,7 @@ function statInne(sp){
   const poz = ['najpewniejszy','lepszy_kurs','ryzykowny'].filter(k => s[k]);
   if(poz.length) h += `<div class="mk">` + poz.map(k => `<span class="n">${nazwy[k]} <span class="muted">(${s[k].n})</span></span><span class="p">${pct(s[k].traf)}</span><span class="f">przew. ${pct(s[k].przew)}</span>`).join('') + `</div>`;
   else h += `<div class="empty">Brak rozliczonych typów – pojawią się po pierwszych ${sp === 'tenis' ? 'meczach' : 'walkach'}.${s.czeka ? ` Czeka na wynik: ${s.czeka}.` : ''}</div>`;
+  if(sp === 'walki' && s.ksw) h += `<p class="note">KSW: ${s.ksw.n ? `${s.ksw.trafione} z ${s.ksw.n} typów dnia weszło (${pct(s.ksw.weszlo)})` : 'brak rozliczonych walk'} · do 5 głównych Pewnych od ${s.ksw.potrzeba} rozliczonych walk.</p>`;
   if(s.value) h += `<p class="note">💰 Value: ${s.value.n} zakładów, trafione ${s.value.trafione}, ROI ${sgn(s.value.roi)}, przy 10 zł na typ ${s.value.zysk_10zl >= 0 ? '+' : ''}${num(s.value.zysk_10zl)} zł.</p>`;
   if(poz.length) h += `<p class="note">Czeka na wynik: ${s.czeka || 0}. Przy mniej niż ok. 100 typach różnice to głównie przypadek.${sp === 'tenis' ? ' Kreczów i walkowerów nie liczymy do skuteczności.' : ''}</p>`;
   if(T.opis){
@@ -611,7 +635,7 @@ const dzisData = () => { const d = new Date(Date.now() - 6*36e5); return `${d.ge
 function chipy(klucz, zWszystkimi){
   const v = store.get(klucz, zWszystkimi ? 'wszystkie' : 'pilka');
   const opc = (zWszystkimi ? [['wszystkie','','Wszystkie']] : []).concat(SPORTY);
-  return `<div class="chips">${opc.map(([k, ik, n]) => `<button data-set="${klucz}:${k}" class="${v === k ? 'on' : ''}">${ik ? ik + ' ' : ''}${esc(zWszystkimi && k !== 'wszystkie' ? ({pilka:'Piłka', tenis:'Tenis', walki:'Walki'}[k] || n) : n)}</button>`).join('')}</div>`;
+  return `<div class="chips">${opc.map(([k, ik, n]) => `<button data-set="${klucz}:${k}" class="${v === k ? 'on' : ''}">${ik ? DOT(k) : ''}${esc(zWszystkimi && k !== 'wszystkie' ? ({pilka:'Piłka', tenis:'Tenis', walki:'Walki'}[k] || n) : n)}</button>`).join('')}</div>`;
 }
 function meczeSportu(sp){ return sp === 'pilka' ? ((S.dzis||{}).mecze || []) : (((S.inne||{})[sp]||{}).mecze || []); }
 function pewneSportu(sp){
@@ -622,44 +646,212 @@ function pewneSportu(sp){
 function valueSportu(sp){ return sp === 'pilka' ? ((S.dzis||{}).value || []) : (((S.inne||{})[sp]||{}).value || []); }
 
 /* ---------- PIŁKA: karty ---------- */
-function kartaValuePilka(t){
-  const stawka = Math.round(BANK * kelly(t.szansa, t.kurs));
-  return `<article class="bet">${glowa(t)}
-      <div class="pick"><div class="name">${esc(plTxt(t.zaklad, t))}${kupBtn({event_id: t.event_id, mecz: t.mecz, zaklad: plTxt(t.zaklad, t) + ' @ ' + num(t.kurs), szansa: t.szansa})}${t.opis?`<small>${esc(plTxt(t.opis, t))}</small>`:''}</div><div class="odds">${num(t.kurs)}</div></div>
-      <div class="grid">
-        <div class="cell"><b>${num(t.kurs_uczciwy)}</b><span>kurs uczciwy</span></div>
-        <div class="cell"><b>${pct(t.szansa)}</b><span>szansa</span></div>
-        <div class="cell"><b class="pos">${sgn(t.ev)}</b><span>przewaga</span></div>
-      </div>
-      <div class="bar"><i style="width:${(t.szansa*100).toFixed(1)}%"></i></div>
-      <div class="note">🔎 <b>Szukaj kursu ≥ ${num(t.kurs_szukaj || t.kurs_uczciwy*1.02)}</b> w Betclic, Fortunie, STS, Superbecie – graj tam, gdzie najwyższy.</div>
-      <div class="note">Sugerowana stawka: <b>${stawka} zł</b> · źródło kursu uczciwego: ${esc(t.zrodlo)}</div>
-      ${obrazMeczu(t)}${przedmeczoweHTML(t.przedmeczowe, t)}${raportHTML(t.raport, t)}
-    </article>`;
-}
-function kartaPewnaPilka(t, nr){
-  return `<article class="bet">${glowa(t)}${obrazMeczu(t)}
-      ${poziomTypu(t, '🔒', (nr ? nr + '. ' : '') + 'Najpewniejszy', 'main', t)}
-      ${t.nizsza_pewnosc?'<div class="note warn">Niższa pewność – dobrany, żeby było minimum 5 typów.</div>':''}
-      ${poziomTypu(t.lepszy_kurs, '⚖️', 'Lepszy kurs', '', t)}
-      ${poziomTypu(t.ryzykowny, '🎯', 'Ryzykowny', '', t)}
-      ${t.uwaga?`<div class="note warn">${esc(t.uwaga)}</div>`:''}
-      ${przedmeczoweHTML(t.przedmeczowe, t)}
-      ${raportHTML(t.raport, t)}
-      ${kafelkiWynikow(t.wyniki)}
-    </article>`;
-}
-function kartaValueInne(v, sp){
-  const stawka = Math.round(BANK * kelly(v.szansa, v.kurs));
-  return `<article class="bet"><div class="top"><span>${IK[sp]} ${esc(v.turniej)}</span><span>${esc(v.dzien)} ${esc(v.godzina)}</span></div><div class="match">${esc(v.mecz)}</div>
-      <div class="pick"><div class="name">${esc(v.zaklad)}${kupBtn({event_id: v.event_id, mecz: v.mecz, zaklad: v.zaklad + ' @ ' + num(v.kurs), szansa: v.szansa})}</div><div class="odds">${num(v.kurs)}</div></div>
-      <div class="grid"><div class="cell"><b>${num(v.kurs_uczciwy)}</b><span>kurs uczciwy</span></div><div class="cell"><b>${pct(v.szansa)}</b><span>szansa</span></div><div class="cell"><b class="pos">${sgn(v.ev)}</b><span>przewaga</span></div></div>
-      <div class="bar"><i style="width:${(v.szansa*100).toFixed(1)}%"></i></div>
-      <div class="note">🔎 <b>Szukaj kursu ≥ ${num(v.kurs_szukaj)}</b> · sugerowana stawka ${stawka} zł · źródło: ${esc(v.zrodlo)}</div></article>`;
-}
 const kartaPewna = (sp, m, nr) => sp === 'pilka' ? kartaPewnaPilka(m, nr) : kartaInne(m, nr, sp);
 const kartaValue = (sp, v) => sp === 'pilka' ? kartaValuePilka(v) : kartaValueInne(v, sp);
-const OPIS_VALUE = `<p class="note">Kursy pochodzą z Betclic FR – sprawdź je w polskiej aplikacji. Testy: przewagę dawało szukanie <b>najlepszego kursu u wielu bukmacherów</b> (piłka +5,6% na 3 188 zakładach, tenis +5,9% na 4 343), a nie gra u jednego. ⚠️ Podatek 12% zjada taką przewagę – value ma sens głównie przy grze bez podatku.</p>`;
+const OPIS_VALUE = `<p class="note" style="margin:4px">Testy: przewagę dawało granie po <b style="color:var(--text)">najlepszym kursie</b> spośród wielu bukmacherów (piłka +5,6% na 3 188 zakładach, tenis +5,9% na 4 343). Podatek 12% zjada taką przewagę – value ma sens głównie przy grze bez podatku.</p>`;
+
+/* ---------- NOWY WYGLĄD: wspólne klocki kart ---------- */
+const NAZWA_KR = {pilka:'Piłka', tenis:'Tenis', walki:'Walki'};
+const WERD = {zgoda:['Zgoda z faworytem','<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.6 2.5L16 9.5"/>'],
+  ryzyko:['Ryzyko niespodzianki','<path d="M12 4l9 16H3l9-16z"/><path d="M12 10v4"/><path d="M12 17.2v.1"/>'],
+  odradza:['AI odradza','<path d="M8.5 3h7L21 8.5v7L15.5 21h-7L3 15.5v-7L8.5 3z"/><path d="M9 9l6 6M15 9l-6 6"/>']};
+function werdyktChip(w){ if(!WERD[w]) return ''; return `<span class="chipv ${w}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${WERD[w][1]}</svg>${WERD[w][0]}</span>`; }
+const aiKarty = m => ((m.raport || {}).ai) || null;
+const werdyktKarty = m => (aiKarty(m) || {}).werdykt || (m.raport || {}).werdykt || m.werdykt || null;
+function kursyLista(t){
+  const kk = {}; if(t.kurs_betclic > 1) kk['Betclic'] = +t.kurs_betclic;
+  for(const [n, k] of Object.entries(t.kursy_pl || {})) if(k > 1) kk[n] = +k;
+  return Object.entries(kk).sort((a, b) => b[1] - a[1]);
+}
+function ksiazka(t){
+  const kk = kursyLista(t); if(!kk.length) return `<p class="note">Brak kursów polskich bukmacherów dla tego zakładu – graj od kursu ${num(t.kurs_uczciwy)}.</p>`;
+  const best = kk[0][1];
+  return `<div style="display:flex;flex-direction:column;gap:8px"><div class="lab">Kursy bukmacherów${t.kursy_czas ? ` <span style="text-transform:none;letter-spacing:0;font-weight:500">· ${esc(t.kursy_czas)}</span>` : ''}</div><div class="bks">`
+    + kk.map(([n, k]) => `<div class="bk${k === best && kk.length > 1 ? ' best' : ''}${k * t.szansa < 1 ? ' low' : ''}"><span>${esc(n)}</span><b>${num(k)}</b></div>`).join('') + `</div></div>`;
+}
+function typBox(t, nr, mecz, etykieta){
+  const P = x => mecz && mecz.gospodarz ? plTxt(x, mecz) : x;
+  return `<div class="typbox"><div class="gl"><div style="display:flex;flex-direction:column;gap:4px;min-width:0"><span class="lab">${etykieta || (nr ? 'Typ dnia #' + nr : 'Najpewniejszy')}</span>
+      <div class="zak">${esc(P(t.zaklad))}${mecz ? kupBtn({event_id: mecz.event_id, mecz: mecz.mecz, zaklad: P(t.zaklad), szansa: t.szansa}) : ''}${t.opis ? `<small>${esc(P(t.opis))}</small>` : ''}</div></div>
+      <div class="pc">${Math.round(t.szansa*100)}<span style="font-size:20px">%</span><small>szansa</small></div></div>
+    <div class="pbar"><i style="width:${(t.szansa*100).toFixed(1)}%"></i></div>
+    <div class="meta2"><span>Kurs uczciwy <b>${num(t.kurs_uczciwy)}</b></span><span>Graj od <b>${num(t.kurs_uczciwy)}</b></span></div></div>`;
+}
+function wierszPoziomu(t, nazwa, mecz){
+  if(!t) return ''; const P = x => mecz && mecz.gospodarz ? plTxt(x, mecz) : x;
+  const kk = kursyLista(t), best = kk.length ? kk[0] : null;
+  return `<div class="poz2"><div class="l"><span>${nazwa}</span><b>${esc(P(t.zaklad))}${mecz ? kupBtn({event_id: mecz.event_id, mecz: mecz.mecz, zaklad: P(t.zaklad), szansa: t.szansa}) : ''}</b></div>
+    <div class="r"><span>${pct(t.szansa)}</span><b>${best ? num(best[1]) : num(t.kurs_uczciwy)}</b></div></div>`;
+}
+function aiSkrot(m){
+  const ai = aiKarty(m), w = werdyktKarty(m);
+  if(!ai && !w) return '';
+  return `<div class="aiw">${werdyktChip(w)}${ai && (ai.powod || ai.tekst) ? `<p>${esc(ai.powod || ai.tekst)}</p>` : ''}</div>`;
+}
+function aiPelny(m, sp){
+  const r = m.raport || {}, ai = r.ai;
+  let h = '';
+  if(ai){
+    h += `<div class="aiw"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px">${werdyktChip(ai.werdykt) || '<span class="chipv brak">Bez oceny typu</span>'}<span class="note">${esc(ai.czas || '')}${ai.szukal ? ' · z wyszukiwania' : ' · z nagłówków'}</span></div>
+      <p style="color:var(--text);font-size:15.5px">${esc(ai.tekst)}</p></div>`;
+    const kv = (lab, txt, mocno) => txt ? `<div class="kv"><span class="lab">${lab}</span><span${mocno ? ' style="color:var(--text);font-weight:600"' : ''}>${esc(txt)}</span></div>` : '';
+    if(sp === 'pilka'){
+      const H = plN(m.gospodarz), A = plN(m.gosc);
+      h += kv('Nie zagrają', [(ai.braki_gosp||[]).length ? `${H}: ${ai.braki_gosp.join(', ')}` : '', (ai.braki_gosc||[]).length ? `${A}: ${ai.braki_gosc.join(', ')}` : ''].filter(Boolean).join(' · '));
+      h += kv('Niepewni', (ai.niepewni || []).join(', '));
+    } else {
+      h += kv('Problemy', [(ai.problemy_a||[]).length ? `${m.a}: ${ai.problemy_a.join(', ')}` : '', (ai.problemy_b||[]).length ? `${m.b}: ${ai.problemy_b.join(', ')}` : ''].filter(Boolean).join(' · '));
+      if(ai.bilans_a || ai.bilans_b) h += kv('Bilans', `${m.a} ${ai.bilans_a || '–'} · ${m.b} ${ai.bilans_b || '–'}`);
+    }
+    h += kv('Forma', ai.forma) + kv('Styl', ai.styl) + kv('Lepszy zakład', ai.lepszy_zaklad, true);
+    if(ai.oceny){ const o = ai.oceny, nz = {stojka:'Stójka', zapasy:'Zapasy', parter:'Parter', kondycja:'Kondycja'};
+      h += `<div class="oceny"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--muted)"><span>${esc(m.a)}</span><span>OCENA AI 1–10</span><span>${esc(m.b)}</span></div>`
+        + Object.keys(nz).map(k => `<div class="oc"><div class="g"><b>${o.a[k]}</b><span>${nz[k]}</span><b>${o.b[k]}</b></div><div class="p2"><div><i style="width:${o.a[k]*10}%"></i></div><div><i style="width:${o.b[k]*10}%"></i></div></div></div>`).join('') + `</div>`; }
+    if((ai.zrodla || []).length) h += `<details><summary>Źródła (${ai.zrodla.length})</summary><ul class="news">${ai.zrodla.map(z => `<li><a href="${esc(z.link)}" target="_blank" rel="noopener">${esc(z.tytul)}</a></li>`).join('')}</ul></details>`;
+  }
+  if(sp === 'pilka'){
+    const br = r.braki || {}, H = plN(m.gospodarz), A = plN(m.gosc);
+    const lista = b => b.map(p => `${esc(p.zawodnik)} <span class="muted">(${esc(p.powod || p.typ || 'nieobecny')}${p.niepewny ? ', niepewny' : ''})</span>`).join(', ');
+    if(!ai && ((br.gosp||[]).length || (br.gosc||[]).length)) h += `<p class="note"><b style="color:var(--text)">Nieobecni wg baz danych</b>${(r.zrodla_brakow||[]).length ? ` (${esc(r.zrodla_brakow.join(', '))})` : ''}: ${(br.gosp||[]).length ? H + ': ' + lista(br.gosp) : ''}${(br.gosc||[]).length ? ' · ' + A + ': ' + lista(br.gosc) : ''}</p>`;
+    for(const u of (r.uwagi || [])) h += `<p class="note">• ${esc(plTxt(u, m))}</p>`;
+  }
+  for(const o of (r.ostrzezenia || (r.ostrzezenie ? [r.ostrzezenie] : []))) h += `<p class="note" style="color:var(--warn)">⚠ ${esc(sp === 'pilka' ? plTxt(o, m) : o)}</p>`;
+  const ng = sp === 'pilka' ? [...((r.naglowki||{}).gosp || []), ...((r.naglowki||{}).gosc || [])] : [...((m.naglowki||{}).a || []), ...((m.naglowki||{}).b || [])];
+  if(ng.length) h += `<details><summary>Nagłówki (${ng.length})</summary><ul class="news">${ng.map(x => `<li><a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.tytul)}</a> <span class="muted">${esc(x.data)}</span></li>`).join('')}</ul></details>`;
+  if(!h) h = `<p class="note">${ai === null && (S.dzis||{}).raport_ai ? 'Brak analizy AI dla tego meczu (limit analiz lub brak źródeł).' : 'Brak analizy AI.'}</p>`;
+  return h;
+}
+function naglowekKarty(sp, gdzie, kiedy, A, B){
+  return `<div class="top"><span>${DOT(sp)}${esc(NAZWA_KR[sp])} · ${gdzie}</span><b>${esc(kiedy)}</b></div><h3 class="match">${esc(A)}<span>${esc(B)}</span></h3>`;
+}
+const DOT = sp => `<span class="dot ${sp}"></span>`;
+function szczegolyInne(m, sp){
+  const r3 = m.szansa_remis; let h = '';
+  h += `<div class="x12bar"><i style="width:${m.szansa_a*100}%"></i>${r3 ? `<i class="x" style="width:${r3*100}%"></i>` : ''}<i class="a" style="width:${m.szansa_b*100}%"></i></div>
+    <div class="x12 ${r3 ? '' : 'dwa'}"><div><b>${pct(m.szansa_a)}</b><span>${esc(m.a)}</span></div>${r3 ? `<div><b>${pct(r3)}</b><span>remis</span></div>` : ''}<div><b>${pct(m.szansa_b)}</b><span>${esc(m.b)}</span></div></div>`;
+  if(m.wyniki) h += `<div class="scores"><span class="lbl">Wynik w setach</span>${m.wyniki.map(w => `<span class="tile"><b>${w.a}:${w.b}</b><span>${pct(w.szansa)}</span></span>`).join('')}</div>`;
+  if(m.metody){ const x = m.metody;
+    h += `<div class="lab">Jak się skończy</div><div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div class="cell"><b>${pct(x.a_ko)}</b><span>${esc(m.a)} przed czasem</span></div><div class="cell"><b>${pct(x.a_pkt)}</b><span>${esc(m.a)} na punkty</span></div><div class="cell"><b>${pct(x.b_ko)}</b><span>${esc(m.b)} przed czasem</span></div><div class="cell"><b>${pct(x.b_pkt)}</b><span>${esc(m.b)} na punkty</span></div></div>`; }
+  h += `<p class="note">Źródło szans: ${esc(m.zrodlo)}${m.rynek_pl ? ' · Pinnacle nie wystawia kursów na tę galę' : ''}</p>`;
+  return h;
+}
+function wynikKarty(sp, m){
+  if(sp === 'pilka') return '';
+  const w = wynikInne(sp, m.event_id).filter(t => t.wynik || t.status);
+  return w.length ? `<p class="note"><b style="color:var(--text)">Wynik:</b> ${esc(w[0].wynik || w[0].status)} · ` + w.map(t => ({najpewniejszy:'🔒', lepszy_kurs:'⚖️', ryzykowny:'🎯'}[t.poziom] || '') + (t.trafiony == null ? (t.status ? '↩️' : '⏳') : (t.trafiony ? '✅' : '❌'))).join(' ') + `</p>` : '';
+}
+function kartaTypu(sp, m, nr){
+  const pil = sp === 'pilka', t = pil ? m : m.najpewniejszy, pm = pil ? m : {event_id: m.event_id, mecz: m.mecz, gospodarz: m.a, gosc: m.b};
+  if(!t) return '';
+  const gdzie = pil ? esc(m.liga) : esc(m.turniej) + (m.kategoria ? ` · ${esc(m.kategoria)}` : '') + (m.rundy === 5 ? ' · 5 rund' : '') + (m.bo === 5 ? ' · do 3 setów' : '');
+  const kiedy = (pil ? '' : (m.dzien + ' ')) + m.godzina;
+  const A = pil ? plN(m.gospodarz) : m.a, B = pil ? plN(m.gosc) : m.b;
+  const tt = pil ? t : Object.assign({}, t);
+  let h = `<article class="bet${werdyktKarty(m) === 'odradza' ? ' odr' : ''}">${naglowekKarty(sp, gdzie, kiedy, A, B)}${typBox(tt, nr, pm)}`;
+  if(m.nizsza_pewnosc) h += `<span class="flag">Poniżej 70% – dobrany, żeby było 5 typów; liczony w dzienniku osobno</span>`;
+  if(m.rynek_pl) h += `<span class="flag" style="color:var(--muted)">KSW: szanse z kursów polskich bukmacherów (mniej pewne niż Pinnacle)</span>`;
+  h += ksiazka(t) + aiSkrot(m);
+  h += `<div>${wierszPoziomu(m.lepszy_kurs, 'Wyższy kurs', pil ? m : pm)}${wierszPoziomu(m.ryzykowny, 'Ryzykowny', pil ? m : pm)}</div>`;
+  const szcz = (pil ? obrazMeczu(m) + przedmeczoweHTML(m.przedmeczowe, m) + kafelkiWynikow(m.wyniki) : szczegolyInne(m, sp)) + wynikKarty(sp, m);
+  h += `<details class="rap"${nr ? '' : ' open'}><summary>Pełna analiza i raport AI</summary><div style="display:flex;flex-direction:column;gap:14px;padding:10px 0 12px">${aiPelny(m, sp)}${szcz}</div></details>`;
+  return h + `</article>`;
+}
+function kartaPewnaPilka(t, nr){ return kartaTypu('pilka', t, nr); }
+function kartaInne(m, nr, sp){ return kartaTypu(sp, m, nr); }
+function kartaValueOgolna(sp, v, mecz){
+  const pil = sp === 'pilka';
+  const kk = kursyLista(Object.assign({}, v, {kurs_betclic: v.bukmacher ? null : v.kurs}));
+  if(v.bukmacher && !kk.find(x => x[0] === v.bukmacher)) kk.unshift([v.bukmacher, v.kurs]);
+  kk.sort((a, b) => b[1] - a[1]);
+  const best = kk.length ? kk[0] : ['Betclic', v.kurs], stawka = Math.round(BANK * kelly(v.szansa, best[1])), ev = v.szansa * best[1] - 1;
+  const zak = pil ? plTxt(v.zaklad, v) : v.zaklad;
+  let h = `<article class="bet">${naglowekKarty(sp, esc(pil ? v.liga : v.turniej), (pil ? '' : v.dzien + ' ') + v.godzina, pil ? plN(v.gospodarz) : v.a, pil ? plN(v.gosc) : v.b)}
+    <div style="font:700 17px/1.3 var(--body)">${esc(zak)}${kupBtn({event_id: v.event_id, mecz: v.mecz, zaklad: zak + ' @ ' + num(best[1]), szansa: v.szansa})}${v.opis ? `<small style="display:block;font-weight:500;font-size:13px;color:var(--muted)">${esc(pil ? plTxt(v.opis, v) : v.opis)}</small>` : ''}</div>
+    <div class="grid3"><div class="bk best" style="min-height:62px"><span>${esc(best[0])}</span><b style="font-size:20px">${num(best[1])}</b></div>
+      <div class="bk" style="min-height:62px"><span>uczciwy</span><b style="font-size:20px">${num(v.kurs_uczciwy)}</b></div>
+      <div class="bk" style="min-height:62px"><span>przewaga</span><b style="font-size:20px;color:var(--win)">${sgn(ev)}</b></div></div>
+    <div class="top"><span>szansa ${pct(v.szansa)} · stawka ${stawka} zł · szukaj ≥ ${num(v.kurs_szukaj || v.kurs_uczciwy*1.02)}</span>${v.rynek_pl ? '<span class="chipv brak" style="height:24px;font-size:12px">rynek PL – mniej pewne</span>' : ''}</div>`;
+  if(kk.length > 1) h += `<div class="bks">${kk.map(([n, k], i) => `<div class="bk${i === 0 ? ' best' : ''}${k * v.szansa < 1 ? ' low' : ''}"><span>${esc(n)}</span><b>${num(k)}</b></div>`).join('')}</div>`;
+  const src = mecz || v; if(src.raport) h += aiSkrot(src);
+  if(pil) h += `<details class="rap"><summary>Pełna analiza i raport AI</summary><div style="display:flex;flex-direction:column;gap:14px;padding:10px 0 12px">${aiPelny(v, 'pilka')}${obrazMeczu(v)}${przedmeczoweHTML(v.przedmeczowe, v)}</div></details>`;
+  else h += `<p class="note">Źródło kursu uczciwego: ${esc(v.zrodlo)}</p>`;
+  return h + `<div style="height:8px"></div></article>`;
+}
+function kartaValuePilka(t){ return kartaValueOgolna('pilka', t); }
+function kartaValueInne(v, sp){ const m = meczeSportu(sp).find(x => x.event_id === v.event_id); return kartaValueOgolna(sp, v, m); }
+function sumaGlownych(okres){
+  const k = okres === '90' ? 'd90' : (okres === 'all' ? 'wszystko' : 'd30');
+  const czesci = [['pilka', (((S.dziennik || {}).pewne || {}).glowne || {})[k]]];
+  for(const sp of ['tenis', 'walki']) czesci.push([sp, ((((S.inne || {}).dziennik || {})[sp] || {}).glowne || {})[k]]);
+  const ok = czesci.filter(([, g]) => g && g.n);
+  const n = ok.reduce((s, [, g]) => s + g.n, 0), t = ok.reduce((s, [, g]) => s + g.trafione, 0), pr = n ? ok.reduce((s, [, g]) => s + g.przewidywane * g.n, 0) / n : 0;
+  return {n, t, pr, czesci: Object.fromEntries(czesci)};
+}
+function odradzaneWszystkie(){
+  const out = ((S.dzis || {}).odradzane || []).map(m => ['pilka', m]);
+  for(const sp of ['tenis', 'walki']) for(const m of (((S.inne || {})[sp] || {}).odradzane || [])) out.push([sp, m]);
+  return out;
+}
+function sekcjaOdradzane(lista){
+  if(!lista.length) return '';
+  return `<section class="bet odr" style="padding-bottom:14px"><div class="top"><span style="font:700 15px var(--body);color:var(--text)">AI odradza (${lista.length})</span>${werdyktChip('odradza')}</div>`
+    + lista.map(([sp, m]) => { const t = sp === 'pilka' ? m : (m.najpewniejszy || {}), ai = aiKarty(m) || {};
+        return `<div style="display:flex;flex-direction:column;gap:4px;border-top:1px solid var(--line);padding-top:10px"><b style="font-size:15px">${esc(sp === 'pilka' ? plMecz(m.mecz) : m.mecz)}</b>
+          <span class="note">${esc(sp === 'pilka' ? plTxt(t.zaklad || '', m) : (t.zaklad || ''))} · ${pct(t.szansa || 0)} · ${esc(m.godzina)}</span>${ai.powod ? `<p class="note" style="color:var(--text2)">${esc(ai.powod)}</p>` : ''}</div>`; }).join('')
+    + `<p class="note">Nie gramy – dziennik zapisuje, jak by poszło, żeby sprawdzić, czy AI ma rację.</p></section>`;
+}
+function widokPewne(){
+  const f = store.get('flt', 'wszystkie');
+  let h = chipy('flt', true);
+  const g = sumaGlownych('30');
+  if(g.n) h += `<div class="skut"><b>${pct(g.t / g.n)}</b><div><span>Skuteczność typów dnia</span><span>ostatnie 30 dni · ${g.t} z ${g.n} weszło · przewidywane ${pct(g.pr)}</span></div></div>`;
+  let lista;
+  if(f === 'wszystkie'){ const gl = glowneListy(); lista = gl ? gl.pew : pewneSportu('pilka').map(m => ['pilka', m]); }
+  else lista = pewneSportu(f).map(m => [f, m]);
+  if(!lista.length) h += `<div class="empty">Dziś brak typów${f === 'wszystkie' ? '' : ' w tej dyscyplinie'}. Lista pojawia się codziennie po 12:00.</div>`;
+  else h += lista.map(([sp, m], i) => kartaPewna(sp, m, i + 1)).join('');
+  h += sekcjaOdradzane(odradzaneWszystkie().filter(([sp]) => f === 'wszystkie' || sp === f));
+  return h + `<p class="note" style="margin:4px">Typ dnia to najpewniejszy zakład meczu (od 70%). Szanse z kursów Pinnacle i giełdy Betfair (KSW – z polskich bukmacherów); AI sprawdza każdy typ w aktualnych wiadomościach. Testy na 328 257 spotkaniach: typy od 70% wchodzą ok. 78 razy na 100.</p>`;
+}
+function widokDziennik(){
+  const f = store.get('dflt', 'wszystkie');
+  let h = chipy('dflt', true);
+  if(f === 'pilka') return h + widokDziennikPilka();
+  if(f !== 'wszystkie') return h + statInne(f);
+  const okres = store.get('dokres', '30');
+  h += `<div class="chips">${[['30','30 dni'],['90','90 dni'],['all','Od początku']].map(([k, n]) => `<button data-set="dokres:${k}" class="${okres === k ? 'on' : ''}">${n}</button>`).join('')}</div>`;
+  const g = sumaGlownych(okres);
+  h += `<section class="hero"><span class="lab">Typy dnia (Pewne)</span>`;
+  if(g.n){
+    h += `<div class="wynik"><b>${Math.round(100 * g.t / g.n)}%</b><span>${g.t} z ${g.n} weszło</span></div>
+      <div class="prog"><div class="pbar"><i style="width:${(100 * g.t / g.n).toFixed(1)}%"></i></div><em></em></div>
+      <div class="top"><span>przewidywane ${pct(g.pr, 1)}</span><span>próg 75%</span></div>
+      <div class="grid3">${['pilka','tenis','walki'].map(sp => { const x = g.czesci[sp]; return `<div class="bk" style="min-height:62px"><span>${NAZWA_KR[sp]}</span><b style="font-size:19px">${x && x.n ? pct(x.weszlo) : '–'}</b></div>`; }).join('')}</div>`;
+    if(g.n < 100) h += `<p class="note">Przy mniej niż ok. 100 typach wynik to w dużej mierze przypadek – nawet przy 79% zdarza się kilka słabszych dni z rzędu.</p>`;
+  } else h += `<p class="note">Brak rozliczonych typów dnia w tym okresie.</p>`;
+  h += `</section>`;
+  // czy AI pomaga
+  const grupy = {zgoda:[0,0,0], ryzyko:[0,0,0], odradza:[0,0,0]};
+  const dodaj = a => { for(const k of Object.keys(grupy)) if(a && a[k]){ grupy[k][0] += a[k].n; grupy[k][1] += a[k].trafione; grupy[k][2] += a[k].przewidywane * a[k].n; } };
+  dodaj(((S.dziennik || {}).pewne || {}).ai); for(const sp of ['tenis','walki']) dodaj(((((S.inne || {}).dziennik || {})[sp]) || {}).ai);
+  const wierszG = (nazwa, x, kolor, opis) => x[0] ? `<div class="wiersz"><div class="g"><span>${nazwa}</span><b>${Math.round(100*x[1]/x[0])}%</b></div><div class="pbar"><i style="width:${(100*x[1]/x[0]).toFixed(1)}%;background:${kolor}"></i></div><div class="d"><span>${x[1]} z ${x[0]} · ${opis}</span><span>przew. ${pct(x[2]/x[0])}</span></div></div>` : '';
+  const ai = wierszG('AI: zgoda z faworytem', grupy.zgoda, 'var(--win)', 'typy poparte') + wierszG('AI: ryzyko niespodzianki', grupy.ryzyko, 'var(--warn)', 'typy z ostrzeżeniem') + wierszG('AI odradza (nie grane)', grupy.odradza, 'var(--loss)', 'tak by poszło');
+  h += `<section class="sekcja"><h2>Czy AI pomaga?</h2>${ai || '<p class="note">Pierwsze wyniki pojawią się po rozliczeniu typów z oceną AI.</p>'}<p class="note" style="margin-top:8px">Jeśli odradzane wchodzą wyraźnie rzadziej niż poparte, AI faktycznie odsiewa złe typy. Ocena po ok. 100 typach.</p></section>`;
+  // dodatkowe poziomy
+  const p = (S.dziennik || {}).pewne || {}, pp = p.poziomy || {}, di = (S.inne || {}).dziennik || {};
+  const poz = (k) => { const cz = []; if(pp[k]) cz.push([pp[k].n, pp[k].weszlo, pp[k].przewidywane]); for(const sp of ['tenis','walki']) if((di[sp] || {})[k]) cz.push([di[sp][k].n, di[sp][k].traf, di[sp][k].przew]);
+    const n = cz.reduce((s, x) => s + x[0], 0); return n ? [n, cz.reduce((s, x) => s + x[0]*x[1], 0) / n, cz.reduce((s, x) => s + x[0]*x[2], 0) / n] : null; };
+  const lk = poz('lepszy_kurs'), rz = poz('ryzykowny');
+  const wp = (nazwa, x, cel, opis) => x ? `<div class="wiersz"><div class="g"><span>${nazwa}</span><b>${pct(x[1])}</b></div><div class="pbar"><i style="width:${(x[1]*100).toFixed(1)}%;background:var(--info)"></i></div><div class="d"><span>${Math.round(x[0]*x[1])} z ${x[0]} · ${opis}</span><span>cel ${cel}</span></div></div>` : '';
+  if(lk || rz) h += `<section class="sekcja"><h2>Dodatkowe poziomy</h2>${wp('Wyższy kurs', lk, 'ok. 60%', 'kurs 1,55–2,30')}${wp('Ryzykowny', rz, 'ok. 37%', 'kurs 2,50–5,00')}<p class="note" style="margin-top:8px">Nie liczą się do skuteczności – ocenia się je względem ich własnego celu.</p></section>`;
+  // value
+  const vs = [], st = (S.dziennik || {}).statystyki;
+  if(st && st.rozliczonych) vs.push([st.rozliczonych, st.zysk_10zl]);
+  for(const sp of ['tenis','walki']){ const v = (di[sp] || {}).value; if(v) vs.push([v.n, v.zysk_10zl]); }
+  if(vs.length){ const n = vs.reduce((s, x) => s + x[0], 0), z = vs.reduce((s, x) => s + x[1], 0);
+    h += `<section class="sekcja"><h2>Value</h2><div class="wiersz" style="border-top:0;padding-top:0"><div class="g"><span>Wynik przy 10 zł na typ</span><b class="${z >= 0 ? 'pos' : 'neg'}">${z >= 0 ? '+' : ''}${num(z)} zł</b></div><div class="d"><span>${n} rozliczonych zakładów</span><span>${n < 300 ? 'za mało na wnioski' : ''}</span></div></div></section>`; }
+  return h + `<p class="note" style="margin:4px">Szczegóły i lista typów – wybierz dyscyplinę powyżej.</p>`;
+}
 
 /* ---------- 💰 VALUE i 🔒 PEWNE – wszystkie dyscypliny ---------- */
 function glowneListy(){
@@ -672,7 +864,7 @@ function glowneListy(){
 }
 function widokValue(){
   const f = store.get('flt', 'wszystkie');
-  let h = chipy('flt', true) + `<h2>Value w Betclic</h2><p class="lead">Betclic płaci więcej, niż wynika z uczciwych kursów Pinnacle i giełdy Betfair – ze wszystkich dyscyplin. Na dłuższą metę to jedyne zakłady z potencjalną przewagą, ale każdy pojedynczy może przegrać.</p>`;
+  let h = chipy('flt', true) + `<p class="lead">Kurs bukmachera wyższy od uczciwego (wyliczonego z Pinnacle i giełdy Betfair, w KSW – ze średniej polskich bukmacherów). Na dłuższą metę tylko takie zakłady mogą zarabiać, ale każdy pojedynczy może przegrać.</p>`;
   if(S.dzis && S.dzis.blad) h += `<div class="banner">${esc(S.dzis.blad)}</div>`;
   let lista;
   if(f === 'wszystkie'){ const g = glowneListy(); lista = g ? g.val : SPORTY.flatMap(([sp]) => valueSportu(sp).map(v => [sp, v])).sort((a,b) => b[1].ev - a[1].ev); }
@@ -680,17 +872,6 @@ function widokValue(){
   if(!lista.length) return h + `<div class="empty">Dziś brak zakładów value${f === 'wszystkie' ? '' : ' w tej dyscyplinie'}. To normalne – w większości dni bukmacher wycenia mecze poprawnie.</div>`;
   return h + lista.map(([sp, v]) => kartaValue(sp, v)).join('') + OPIS_VALUE;
 }
-function widokPewne(){
-  const f = store.get('flt', 'wszystkie');
-  let h = chipy('flt', true) + `<h2>Najpewniejsze na dziś</h2><p class="lead">${f === 'wszystkie' ? '5 najpewniejszych typów ze wszystkich dyscyplin (szanse we wszystkich sportach są skalibrowane, więc można je porównywać). ' : ''}Przy każdym meczu trzy typy: najpewniejszy, z lepszym kursem i ryzykowny. Im wyższy kurs, tym mniejsza szansa. Nie łącz wszystkiego w jeden kupon.</p>`;
-  let lista;
-  if(f === 'wszystkie'){ const g = glowneListy(); lista = g ? g.pew : pewneSportu('pilka').map(m => ['pilka', m]); }
-  else lista = pewneSportu(f).map(m => [f, m]);
-  if(!lista.length) return h + `<div class="empty">Dziś brak typów${f === 'wszystkie' ? '' : ' w tej dyscyplinie'}.</div>`;
-  h += lista.map(([sp, m], i) => kartaPewna(sp, m, i + 1)).join('');
-  return h + `<p class="note">Szanse z kursów Pinnacle i giełdy Betfair (dokładniejsze niż modele), w MMA i tenisie po kalibracji z testów. Mecze z ostrzeżeniem w raporcie trafiają na koniec listy. Testy: najpewniejsze wchodzą ok. 3 na 4 razy, „lepszy kurs” ok. 6 na 10, „ryzykowne” ok. 3–4 na 10.</p>`;
-}
-
 /* ---------- 🏟️ SPORTY ---------- */
 function widokSporty(){
   const sp = store.get('sport', null);
@@ -734,7 +915,7 @@ function widokPewneInne(sp){
   const s = d[sp] || {}, mecze = s.mecze || [], pewne = pewneSportu(sp);
   let h = `<p class="lead">${sp === 'tenis'
       ? 'Szanse z kursów Pinnacle i giełdy Betfair (bez marży). Rozkład setów z modelu sprawdzonego na 79 408 meczach ATP i WTA (kobiety mają osobne parametry – częściej wygrywają 2:0). Mecze bez tych kursów są pomijane.'
-      : 'Szanse z kursów Pinnacle i giełdy Betfair, w MMA poprawione o to, że rynek nie docenia wyraźnych faworytów (test na 6 916 walkach UFC). Walki 5-rundowe (walka wieczoru, o pas) program rozpoznaje z ESPN. Boks – tylko kto wygra.'}</p>`;
+      : 'Szanse z kursów Pinnacle i giełdy Betfair, w MMA poprawione o to, że rynek nie docenia wyraźnych faworytów (test na 6 743 walkach UFC). KSW: Pinnacle nie wystawia kursów, więc szanse liczone są ze średniej Fortuny, STS i Superbetu (bez marży). Walki 5-rundowe program rozpoznaje z ESPN, w KSW – z analizy AI. Boks – tylko kto wygra.'}</p>`;
   if(d.data && d.data !== dzisData()) h += `<div class="banner">Typy z dnia ${esc(String(d.data).split('-').reverse().join('.'))}.</div>`;
   if(!pewne.length) h += `<div class="empty">${mecze.length ? 'Brak typów spełniających warunki.' : (sp === 'tenis' ? 'Dziś brak meczów z kursami Pinnacle/Betfair.' : 'Brak gal w najbliższej dobie (walki są głównie w weekendy).')}</div>`;
   pewne.forEach((m, i) => h += kartaInne(m, i + 1, sp));
@@ -849,34 +1030,6 @@ function podepnijAnalize(){
 }
 
 /* ---------- 📒 DZIENNIK – wszystkie dyscypliny ---------- */
-function widokDziennik(){
-  const f = store.get('dflt', 'wszystkie');
-  let h = chipy('dflt', true);
-  if(f === 'pilka') return h + widokDziennikPilka();
-  if(f !== 'wszystkie') return h + statInne(f);
-  h += `<h2>Dziennik – wszystkie dyscypliny</h2><p class="lead">Każdy typ z Pewnych i Value (z każdej dyscypliny) zapisuje się sam i rozlicza po meczu. Szczegóły – wybierz dyscyplinę powyżej.</p>`;
-  const p = (S.dziennik || {}).pewne || {}, pp = p.poziomy || {}, di = (S.inne || {}).dziennik || {};
-  const nazwy = {najpewniejszy:'🔒 Najpewniejsze', lepszy_kurs:'⚖️ Lepszy kurs', ryzykowny:'🎯 Ryzykowne'};
-  let wiersze = '';
-  for(const k of ['najpewniejszy','lepszy_kurs','ryzykowny']){
-    const cz = [];
-    if(pp[k]) cz.push(['pilka', pp[k].n, pp[k].weszlo, pp[k].przewidywane]);
-    for(const sp of ['tenis','walki']) if((di[sp] || {})[k]) cz.push([sp, di[sp][k].n, di[sp][k].traf, di[sp][k].przew]);
-    if(!cz.length) continue;
-    const n = cz.reduce((s, x) => s + x[1], 0), w = cz.reduce((s, x) => s + x[1]*x[2], 0) / n, pr = cz.reduce((s, x) => s + x[1]*x[3], 0) / n;
-    wiersze += `<span class="n">${nazwy[k]} <span class="muted">(${n})</span></span><span class="p">${pct(w)}</span><span class="f">przew. ${pct(pr)}</span>`
-      + `<span class="ev">${cz.map(x => `${IK[x[0]]} ${pct(x[2])} z ${x[1]}`).join(' · ')}</span>`;
-  }
-  h += wiersze ? `<div class="mk">${wiersze}</div>` : `<div class="empty">Brak rozliczonych typów.</div>`;
-  const vs = [], st = (S.dziennik || {}).statystyki;
-  if(st && st.rozliczonych) vs.push(['pilka', st.rozliczonych, st.trafione, st.zysk_10zl]);
-  for(const sp of ['tenis','walki']){ const v = (di[sp] || {}).value; if(v) vs.push([sp, v.n, v.trafione, v.zysk_10zl]); }
-  if(vs.length){ const n = vs.reduce((s, x) => s + x[1], 0), z = vs.reduce((s, x) => s + x[3], 0);
-    h += `<h2>💰 Value łącznie</h2><div class="stats"><div class="cell"><b>${n}</b><span>rozliczonych</span></div><div class="cell"><b class="${z >= 0 ? 'pos' : 'neg'}">${z >= 0 ? '+' : ''}${num(z)} zł</b><span>przy 10 zł na typ</span></div></div>
-      <p class="note">${vs.map(x => `${IK[x[0]]} ${x[1]} typów, ${x[3] >= 0 ? '+' : ''}${num(x[3])} zł`).join(' · ')}. ${n < 300 ? 'Za mało typów na wnioski – przy tej liczbie wynik to głównie szczęście lub pech.' : ''}</p>`; }
-  return h + `<p class="note">Przy mniej niż ok. 100 typach danego poziomu różnice między „weszło” a „przewidywane” to głównie przypadek.</p>`;
-}
-
 /* ---------- ⚡ NA ŻYWO: tenis i walki (ESPN) ---------- */
 const LIVE2 = {sp: null, mecze: [], czas: null, blad: null};
 const ESPN_INNE = {tenis: [['tennis/atp','t.atp'], ['tennis/wta','t.wta']], walki: [['mma/ufc','m.ufc'], ['mma/pfl','m.pfl']]};
@@ -1167,6 +1320,11 @@ function widokStanu(){
   h += wiersz('Kredyty API kursów (zostało)', k.pozostalo != null ? `${k.pozostalo}${k.pozostalo < 60 ? ' ⚠️' : ''}` : '–', k.pozostalo != null && k.pozostalo < 60 ? 'neg' : '');
   if(k.budzet_dzis) h += wiersz('Dzienny budżet kredytów', k.budzet_dzis);
   h += wiersz('API-Football', af.klucz ? `${af.zapytania_ostatnio || 0} zapytań${(af.bledy||[]).length ? ' ⚠️' : ' ✅'}` : 'brak klucza');
+  const g = s.gemini || {};
+  if(g.klucz !== undefined){ const wd = g.werdykty || {};
+    h += wiersz('Analizy AI dziś', g.klucz ? `${g.analiz_dzis || 0} z 40${g.wyszukiwanie === false ? ' · bez wyszukiwania ⚠️' : ''}` : 'brak klucza', g.wyszukiwanie === false ? 'neg' : '');
+    if(Object.keys(wd).length) h += wiersz('Werdykty AI (ostatnie liczenie)', `✅ ${wd.zgoda || 0} · ⚠️ ${wd.ryzyko || 0} · ⛔ ${wd.odradza || 0}`); }
+  if(s.sporty && s.sporty.ksw) h += wiersz('KSW', esc(s.sporty.ksw));
   h += wiersz('Telegram', !t.wlaczony ? 'wyłączony' : (t.ostatni_blad ? '⚠️ problem' : '✅ działa'), t.ostatni_blad ? 'neg' : '');
   const sp = s.sporty; if(sp){ const f = x => x ? `${x.z_kursami || 0} z kursami (z ${x.mecze || 0}), pewnych ${x.pewne || 0}` : '–';
     h += wiersz('🎾 Tenis', f(sp.tenis)) + wiersz('🥊 Walki', f(sp.walki)) + wiersz('Kredyty na tenis i walki', sp.kredyty != null ? sp.kredyty : '–');
@@ -1203,7 +1361,7 @@ $('#saveSettings').onclick = () => { const v = parseFloat($('#bankroll').value);
 
 (async () => {
   try{ await laduj(); }catch(e){}
-  S.tab = store.get('tab', 'value');
+  S.tab = store.get('tab', 'pewne');
   const dz = S.dzis;
   $('#meta').innerHTML = dz ? `${esc(String(dz.data).split('-').reverse().join('.'))}<br>odświeżono ${esc(String(dz.wygenerowano).slice(11))}` : 'brak danych';
   if(S.demo) $('#demo').innerHTML = `<div class="banner">Wersja pokazowa: prawdziwy model i analiza meczu, ale kursy i dziennik są przykładowe. Po uruchomieniu na GitHubie pojawią się prawdziwe typy na dziś.</div>`;

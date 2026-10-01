@@ -294,12 +294,12 @@ def fortuna_mecze(s, diag):
         if n in ('mma', 'boks', 'sporty walki'): ids.setdefault(n, sid)
     ids.setdefault('pilka', 'ufo:sprt:00')
     diag['sporty_uzyte'] = ids
-    mecze, turnieje = {}, set()
+    mecze, turnieje, nazwy_tur = {}, set(), {}
     for sp, sid in ids.items():
         for filtr in ('today', 'tomorrow'):
             try:
                 j = s.get(f'{FAPI}/structure/api/v1_0/sport/{sid}/tournaments?categories=true&timeFilter={filtr}', timeout=20).json()
-                turnieje |= {(sp, tid) for tid, _ in _id_w(j, 'ufo:tour:', [])}
+                for tid, tn in _id_w(j, 'ufo:tour:', []): turnieje.add((sp, tid)); nazwy_tur[tid] = tn or ''
             except Exception as e: diag.setdefault('bledy', []).append(f'turnieje {sid} {filtr}: {e}'[:120])
     diag['turniejow'] = len(turnieje)
     for sp, tid in sorted(turnieje):
@@ -316,7 +316,8 @@ def fortuna_mecze(s, diag):
                 cz = re.split(r'\s+-\s+', f.get('name') or '')
                 if len(cz) == 2: h, a = cz
             if h and a and f.get('startDatetime'):
-                mecze[f['id']] = dict(id=f['id'], sp=sp, h=h, a=a, t=dt.datetime.fromtimestamp(f['startDatetime'] / 1000, dt.timezone.utc))
+                mecze[f['id']] = dict(id=f['id'], sp=sp, h=h, a=a, t=dt.datetime.fromtimestamp(f['startDatetime'] / 1000, dt.timezone.utc),
+                                      tur=nazwy_tur.get(tid, ''))
         time.sleep(0.15)
     diag['meczow_fortuny'] = len(mecze)
     return list(mecze.values())
@@ -352,6 +353,48 @@ def _fortuna_klucze(rynki, odwr, sport, bo=3):
                         else: k.setdefault(f'{kto} +1.5', c)
     return k
 
+# ---------------------------------------------------------------- KSW (Pinnacle nie wystawia – kursy tylko w Polsce)
+def _czy_ksw(nazwa): return bool(re.search(r'\bksw\b|konfrontacja sztuk walki', str(nazwa or ''), re.I))
+
+def ksw_fortuna(s, oferta, diag):
+    """Wszystkie walki KSW z oferty Fortuny (dziś i jutro): zawodnicy, start, zwycięzca 1/2."""
+    out = []
+    for f in oferta:
+        if f['sp'] in ('pilka', 'tenis') or not _czy_ksw(f.get('tur')): continue
+        try:
+            j = s.get(f'{FAPI}/markets/api/v1_0/fixtures/markets/overview', params={'fixtureIds': f['id']}, timeout=20).json()
+            k = _fortuna_klucze(j.get(f['id']) or [], False, 'duel')
+        except Exception as e:
+            diag['bledy'].append(f'KSW Fortuna {f["id"]}: {e}'[:120]); continue
+        if k.get('A') and k.get('B'):
+            out.append(dict(a=f['h'], b=f['a'], t=f['t'].isoformat(), gala=_gala(f.get('tur')), kursy=dict(fortuna=dict(A=k['A'], B=k['B']))))
+        time.sleep(0.2)
+    return out
+
+def _gala(nazwa):
+    m = re.search(r'ksw\s*(\d+)', str(nazwa or ''), re.I)
+    return f'KSW {m.group(1)}' if m else 'KSW'
+
+def scal_ksw(fortuna, sts):
+    """Łączy walki KSW z Fortuny i STS (te same nazwiska, start do 12 h różnicy). Zwraca listę walk z kursami obu bukmacherów."""
+    import kursy_pl as KP
+    out = [dict(w, kursy=dict(w['kursy'])) for w in fortuna]
+    for w in sts:
+        t = dt.datetime.fromisoformat(w['t'])
+        best = None
+        for x in out:
+            if abs((dt.datetime.fromisoformat(x['t']) - t).total_seconds()) > 12 * 3600: continue
+            s1 = min(KP.podobne_w(x['a'], w['a']), KP.podobne_w(x['b'], w['b'])); s2 = min(KP.podobne_w(x['a'], w['b']), KP.podobne_w(x['b'], w['a']))
+            sc, odwr = (s1, False) if s1 >= s2 else (s2, True)
+            if sc >= 0.55 and (best is None or sc > best[1]): best = (x, sc, odwr)
+        k = w['kursy']['sts']
+        if best:
+            x, _, odwr = best
+            x['kursy']['sts'] = dict(A=k['B'], B=k['A']) if odwr else dict(k)
+            if w.get('gala') != 'KSW' and x.get('gala') == 'KSW': x['gala'] = w['gala']
+        else: out.append(w)
+    return out
+
 def czytnik():
     s = ses(); diag = dict(bledy=[]); wynik = {}
     try:
@@ -385,16 +428,20 @@ def czytnik():
             if k: wynik[eid] = dict(fortuna=dict(id=f['id'], nazwa=f'{f["h"]} - {f["a"]}', zgodnosc=round(sc, 2), kursy=k))
             time.sleep(0.2)
         diag['rynki_nazwy'] = rynki_nazwy
+        ksw_f = ksw_fortuna(s, oferta, diag)
     except Exception as e:
-        diag['bledy'].append(f'{type(e).__name__}: {e}'[:200])
+        diag['bledy'].append(f'{type(e).__name__}: {e}'[:200]); ksw_f = []
     ile_fortuna = len(wynik)
     sts, diag_sts = sts_z_przegladarki() if os.path.isdir(KATALOG) else ({}, dict(bledy=['brak danych']))
     for eid, v in sts.items(): wynik.setdefault(eid, {})['sts'] = v
     diag['sts'] = diag_sts
+    try: ksw = scal_ksw(ksw_f, diag_sts.pop('ksw', []) if isinstance(diag_sts, dict) else [])
+    except Exception as e: diag['bledy'].append(f'KSW: {e}'[:160]); ksw = []
+    diag['ksw'] = dict(fortuna=len(ksw_f), razem=len(ksw))
     dane = dict(czas=dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d %H:%M UTC'), wersja='czytnik-2',
                 bukmacherzy=dict(fortuna=dict(ok=not diag['bledy'] or bool(ile_fortuna), dopasowane=ile_fortuna),
                                  sts=dict(ok=not diag_sts.get('bledy') or bool(sts), dopasowane=len(sts))),
-                mecze=wynik, diag=diag, sekund=round(time.time() - START))
+                mecze=wynik, ksw=ksw, diag=diag, sekund=round(time.time() - START))
     print('Fortuna: dopasowane', ile_fortuna, 'z', diag.get('nasze_mecze'), '| błędy:', diag['bledy'][:3])
     print('STS: dopasowane', len(sts), '| błędy:', (diag_sts.get('bledy') or [])[:3])
     zapisz_github('docs/data/kursy_vps.json', dane)
@@ -557,6 +604,18 @@ def sts_kursy():
             ceny = (snap or {}).get('P') or {}
             diag['meczow_sts'] = len(mecze)
             diag['sporty'] = {sid: sum(1 for m in mecze if m['sid'] == sid) for sid in STS_SPORTY}
+            ksw = []   # walki KSW: zwycięzca z migawki oferty
+            for f in mecze:
+                if f['sp'] != 'walki' or not _czy_ksw(f.get('turniej')): continue
+                rynki = {}
+                for kl in f['ceny']:
+                    for mid, mm in (((ceny.get(kl) or {}).get('m')) or {}).items():
+                        if isinstance(mm, dict) and mm.get('l'): rynki[mid] = mm
+                try: k = sts_klucze(rynki, opisy.get(f['sid']) or {}, 'walki', False)
+                except Exception: k = {}
+                if k.get('A') and k.get('B'):
+                    ksw.append(dict(a=f['h'], b=f['a'], t=f['t'].isoformat(), gala=_gala(f.get('turniej')), kursy=dict(sts=dict(A=k['A'], B=k['B']))))
+            diag['ksw'] = ksw
             dopas = []
             for sp, eid, h, a, start, bo in nasze:
                 t0 = KP._utc_nasz(start); tol = {'pilka': 35, 'tenis': 360, 'walki': 720}[sp]

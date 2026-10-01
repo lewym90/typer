@@ -4,7 +4,7 @@ import os, re, difflib, unicodedata, requests, xml.etree.ElementTree as ET
 import pandas as pd
 from urllib.parse import quote
 import zrodla, ai_raport
-from nazwy import pl, pl_powod
+from nazwy import pl, pl_powod, pl_txt
 
 # Darmowy plan API-Football nie obejmuje bieżącego sezonu – używamy go tylko, gdy ustawisz zmienną API_FOOTBALL_PRO=1 (plan płatny)
 KLUCZ = os.environ.get('API_FOOTBALL_KEY', '') if os.environ.get('API_FOOTBALL_PRO') == '1' else ''
@@ -118,8 +118,9 @@ def _ostrzezenia_z_brakow(r, dom, gosc):
         kto = {'gosp': pl(dom), 'gosc': pl(gosc), 'oba': 'obie drużyny'}.get(ai.get('powazne_dla'), '')
         r['ostrzezenia'].append(f"poważne braki{(' – ' + kto) if kto else ''}: {ai.get('uzasadnienie') or 'wg raportu AI'}")
     r['powazne'] = bool(r['ostrzezenia'])
+    r['werdykt'] = (ai or {}).get('werdykt')   # ✅ zgoda / ⚠️ ryzyko / ⛔ odradza (ocena typu przez AI)
 
-def raport(dom, gosc, start, polski=False, sport_key=None, rozgrywki='', ai=False):
+def raport(dom, gosc, start, polski=False, sport_key=None, rozgrywki='', ai=False, typ=None, szanse=None):
     """start: pd.Timestamp (Europe/Warsaw). Zwraca słownik: braki, uwagi, ostrzeżenia, nagłówki i (opcjonalnie) raport AI."""
     r = dict(braki={'gosp': [], 'gosc': []}, uwagi=[], ostrzezenia=[], naglowki={}, dostepne=bool(KLUCZ) or zrodla.dostepne(), zrodla_brakow=[])
     # 1) nieobecni: BSD + Big Balls (darmowe)
@@ -158,7 +159,7 @@ def raport(dom, gosc, start, polski=False, sport_key=None, rozgrywki='', ai=Fals
     if ai:
         try:
             r['ai'] = ai_raport.raport_ai(dom, gosc, pl(dom), pl(gosc), rozgrywki, start, braki=r['braki'], zapowiedz=zapowiedz,
-                                          naglowki=[x['tytul'] for v in r['naglowki'].values() for x in v], polski=polski)
+                                          naglowki=[x['tytul'] for v in r['naglowki'].values() for x in v], polski=polski, typ=typ, szanse=szanse)
         except Exception as e: print('raport AI:', e)
     _ostrzezenia_z_brakow(r, dom, gosc)
     return r
@@ -169,7 +170,9 @@ def odswiez_ai(r, m, polski=False):
     try: b, zapowiedz, bid, zr = zrodla.braki(m.get('sport_key'), m['gospodarz'], m['gosc'], m['start'])
     except Exception: b, zapowiedz, zr = r.get('braki'), r.get('zapowiedz'), r.get('zrodla_brakow')
     nowy = ai_raport.raport_ai(m['gospodarz'], m['gosc'], pl(m['gospodarz']), pl(m['gosc']), m.get('liga', ''), start, braki=b,
-                               zapowiedz=zapowiedz, naglowki=[x['tytul'] for v in (r.get('naglowki') or {}).values() for x in v], polski=polski)
+                               zapowiedz=zapowiedz, naglowki=[x['tytul'] for v in (r.get('naglowki') or {}).values() for x in v], polski=polski,
+                               typ=(pl_txt(m['zaklad'], m['gospodarz'], m['gosc']), m['szansa']) if m.get('zaklad') and m.get('szansa') else None,
+                               szanse=m.get('szanse'))
     if not nowy: return False
     istotna = ai_raport.zmiana_istotna(r.get('ai'), nowy)
     r['ai'], r['braki'], r['zrodla_brakow'] = nowy, b or r.get('braki'), zr or r.get('zrodla_brakow')

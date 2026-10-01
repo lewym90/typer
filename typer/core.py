@@ -208,7 +208,7 @@ LIGI_DO_SKANU = {  # klucz The Odds API -> model; kolejność = popularność (n
  'soccer_mexico_ligamx':'Meksyk', 'soccer_japan_j_league':'Japonia', 'soccer_china_superleague':'Chiny',
 }
 MIN_EV_VALUE = 0.03       # Betclic musi dawać min. 3% więcej niż uczciwy kurs Pinnacle/Betfair
-PEWNE_MIN_SZANSA = 0.68   # "bezpieczne" typy: minimalna szansa wejścia
+PEWNE_MIN_SZANSA = 0.70   # typ dnia: minimalna szansa wejścia (test: piłka 78,7%, tenis 77,3%, MMA 75,3% przy tym progu)
 PEWNE_MIN_KURS = 1.25     # niższe kursy nie mają sensu (za mały zysk)
 PEWNE_ILE_MECZOW = 15     # z ilu najpopularniejszych meczów wybierać
 PEWNE_ILE_TYPOW = 5       # ile najpewniejszych typów pokazać
