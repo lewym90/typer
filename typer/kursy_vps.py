@@ -3,7 +3,7 @@ Serwer pobiera ten plik z repozytorium przy każdym uruchomieniu (cron co 2 h), 
 Wynik trafia do repozytorium przez GitHub API (token w /opt/typer/token).
 
 Czytniki: Fortuna (REST), STS (websocket wss://www.sts.pl/sbk/api/sbk przez przeglądarkę Playwright – python z /opt/typer/pw).
-Rozpoznanie Betclic PL (wersja 24): --betclic (pythonem z /opt/typer/pw) → surowe/betclic/*.json.
+Rozpoznanie Betclic PL: --betclic (wersja 26, cała oferta), --betclic2 (wersja 27, zakładki rynków) (pythonem z /opt/typer/pw) → surowe/betclic/*.json.
 Starsze tryby rozpoznania: --test, --zrzut, --siec, --siec2, --sts, --fortuna-mecz."""
 import os, re, sys, json, time, base64, datetime as dt
 
@@ -1256,9 +1256,165 @@ def betclic_rozpoznanie():
     zapisz_github(f'{BC_KATALOG}/spis.json', spis)
     print('Betclic – rozpoznanie zakończone:', len(spis['sporty']), 'sportów,', spis['sekund'], 's')
 
+
+# ----------------------------------------------------------------------- ROZPOZNANIE 2: zakładki rynków meczu (wersja 27)
+BC_ZAKL_JS = """() => {   // zakładki rynków meczu: kontener z 'Top' i 'MyCombi'
+  const liscie = Array.from(document.querySelectorAll('body *')).filter(e => e.children.length === 0 && (e.innerText || '').trim() === 'Top');
+  for (const top of liscie) {
+    let c = top;
+    for (let i = 0; i < 7 && c; i++) {
+      c = c.parentElement;
+      const tx = c ? (c.innerText || '') : '';
+      if (tx.includes('MyCombi') && tx.length < 600) {
+        const el = Array.from(c.querySelectorAll('a, button, [role="tab"], li, span, div')).filter(e => e.children.length === 0);
+        const wyn = [];
+        for (const e of el) {
+          const t = (e.innerText || '').trim(); if (!t || t.length > 40) continue;
+          const kl = e.closest('a, button, [role="tab"], li') || e;
+          wyn.push({t, href: kl.href || (kl.closest('a') ? kl.closest('a').href : null), tag: kl.tagName});
+        }
+        return wyn;
+      }
+    }
+  }
+  return [];
+}"""
+BC_KLIK_ZAKL_JS = """(tekst) => {
+  const liscie = Array.from(document.querySelectorAll('body *')).filter(e => e.children.length === 0 && (e.innerText || '').trim() === tekst);
+  for (const e of liscie) {
+    let c = e, ok = false;
+    for (let i = 0; i < 7 && c; i++) { c = c.parentElement; if (c && (c.innerText || '').includes('MyCombi') && (c.innerText || '').length < 600) { ok = true; break; } }
+    if (!ok) continue;
+    (e.closest('a, button, [role="tab"], li') || e).click(); return true;
+  }
+  return false;
+}"""
+
+def _bc_rynki_ng(ng):
+    """Rynki meczu z ng-state: [(nazwa rynku, ['zakład=kurs', ...])]."""
+    out = []
+    def chodz(o):
+        if isinstance(o, dict):
+            if 'name' in o and any(x in o for x in ('selections', 'mainSelections', 'selectionMatrix')):
+                sel = []
+                def ws(x):
+                    if isinstance(x, dict):
+                        if 'odds' in x and 'name' in x: sel.append(f"{x['name']}={x['odds']}")
+                        for v in x.values(): ws(v)
+                    elif isinstance(x, list):
+                        for v in x: ws(v)
+                ws(o); out.append((o['name'], sel)); return
+            for v in o.values(): chodz(v)
+        elif isinstance(o, list):
+            for v in o: chodz(v)
+    for k, g in ng.items():
+        if not str(k).startswith('grpc:'): continue
+        p = ((g or {}).get('response') or {}).get('payload') or {}
+        if isinstance(p, dict) and 'match' in p: chodz(p['match'])
+    return out
+
+def _bc_requests(s, url):
+    """Czy zwykłe zapytanie (bez przeglądarki) dostaje stronę z kursami w ng-state."""
+    w = dict(url=url)
+    try:
+        r = s.get(url, timeout=25, headers={'Accept': 'text/html,application/xhtml+xml', 'Accept-Language': 'pl-PL,pl;q=0.9'})
+        w.update(kod=r.status_code, rozmiar=len(r.content), adres_po=r.url)
+        m = re.search(r'<script[^>]*id="ng-state"[^>]*>(.*?)</script>', r.text, re.S)
+        if m:
+            ng = json.loads(m.group(1)); ry = _bc_rynki_ng(ng)
+            w.update(ngstate=len(m.group(1)), rynkow=len(ry), rynki=[n for n, _ in ry], mecze=len(_bc_mecze_z_ng(ng)))
+        else: w['poczatek'] = r.text[:1500]
+    except Exception as e: w['blad'] = f'{type(e).__name__}: {e}'[:200]
+    return w
+
+BC_ZAKL_SPORTY = [('football', 'pilka-nozna-sfootball', None), ('tennis', 'tenis-stennis', None), ('ice_hockey', 'hokej-sice_hockey', None),
+                  ('basketball', 'koszykowka-sbasketball', None), ('volleyball', 'siatkowka-svolleyball', None),
+                  ('handball', 'pilka-reczna-shandball', None), ('martial_arts', 'sztuki-walki-smartial_arts', 'ufc-c15946'),
+                  ('martial_arts', 'sztuki-walki-smartial_arts', 'ksw-c4509'), ('boxing', 'boks-sboxing', None),
+                  ('darts', 'dart-sdarts', None), ('cs2', 'counter-strike-2-scs2', None)]
+
+def betclic_zakladki():
+    """Rozpoznanie 2: wszystkie zakładki rynków meczu (adres po kliknięciu, tekst, zapytania strony) dla kilku sportów,
+    UFC i KSW + test, czy zwykłe zapytanie bez przeglądarki dostaje stronę z kursami. Wynik: surowe/betclic/zakladki.json."""
+    import fcntl
+    blokada = open('/opt/typer/cron.lock', 'w')
+    print('Czekam, aż skończy się bieżący odczyt kursów (jeśli trwa)...')
+    fcntl.flock(blokada, fcntl.LOCK_EX)
+    s = ses()
+    wyn = dict(czas=dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d %H:%M UTC'), wersja='betclic-zakladki-1', sporty=[], requests=[])
+    for sciezka in ('pilka-nozna-sfootball', 'tenis-stennis/pekin-atp-c36052', 'sztuki-walki-smartial_arts/ufc-c15946'):
+        wyn['requests'].append(_bc_requests(s, f'{BC}/{sciezka}'))
+    from playwright.sync_api import sync_playwright
+    with sync_playwright() as pw:
+        br = pw.chromium.launch(headless=True, args=['--no-sandbox', '--disable-dev-shm-usage'])
+        ctx = br.new_context(locale='pl-PL', timezone_id='Europe/Warsaw', user_agent=UA, viewport={'width': 1366, 'height': 900})
+        pg = ctx.new_page()
+        stan = dict(etap='start', odp=[], rozmiar=0)
+        pg.on('response', _bc_odp(stan))
+        for kod, slug, liga in BC_ZAKL_SPORTY:
+            if time.time() - START > 25 * 60: break
+            stan['odp'], stan['rozmiar'] = [], 0
+            url = f'{BC}/{slug}' + (f'/{liga}' if liga else '')
+            w = dict(kod=kod, strona=url, zakladki=[])
+            try:
+                stan['etap'] = 'lista'
+                linki = _bc_strona(pg, url, przewin=2, czekaj=3000)
+                mecze = _bc_mecze_z_ng(_bc_ng(pg))
+                w['adres_po'] = pg.url; w['meczow'] = len(mecze)
+                if liga: w['tekst_ligi'] = pg.inner_text('body')[:5000]
+                teraz = dt.datetime.now(dt.timezone.utc)
+                linki_m = {}
+                for h in dict.fromkeys(linki):
+                    m = re.search(r'-m(\d{6,})(?:[/?#]|$)', h)
+                    if m: linki_m.setdefault(m.group(1), h)
+                kand = []
+                for m in mecze.values():
+                    try: t = dt.datetime.fromisoformat(str(m['t'])[:19]).replace(tzinfo=dt.timezone.utc)
+                    except Exception: continue
+                    if m['live'] or t < teraz + dt.timedelta(minutes=40): continue
+                    link = linki_m.get(m['id']) or (f"{BC}/{slug}/{_slug(m.get('liga'))}-c{m['liga_id']}/{_slug(m['nazwa'])}-m{m['id']}" if m.get('liga_id') else None)
+                    if link: kand.append((t, m, link))
+                kand.sort(key=lambda x: x[0])
+                if not kand: w['blad'] = 'brak meczu przedmeczowego'
+                else:
+                    _, mecz, link = kand[min(1, len(kand) - 1)] if kod == 'football' else kand[0]
+                    w['mecz'] = mecz; w['link'] = link
+                    w['requests_mecz'] = _bc_requests(s, link)
+                    stan['etap'] = 'mecz'
+                    _bc_strona(pg, link, przewin=1, czekaj=3500)
+                    w['adres_meczu'] = pg.url
+                    w['rynki_ng'] = [n for n, _ in _bc_rynki_ng(_bc_ng(pg))]
+                    zak = pg.evaluate(BC_ZAKL_JS); w['lista_zakladek'] = zak
+                    nazwy = [z['t'] for z in zak if z['t'] not in ('MyCombi',)]
+                    for nz in list(dict.fromkeys(nazwy))[:10]:
+                        przed = len(stan['odp'])
+                        stan['etap'] = 'zakladka ' + nz
+                        z = dict(nazwa=nz)
+                        try:
+                            z['klik'] = pg.evaluate(BC_KLIK_ZAKL_JS, nz)
+                            pg.wait_for_timeout(3000); z['rozwinieto'] = pg.evaluate(BC_ROZWIN_JS); pg.wait_for_timeout(1200)
+                            z['adres'] = pg.url
+                            tx = pg.inner_text('body'); i = tx.find('MyCombi')
+                            z['tekst'] = tx[i:i + 25000] if i >= 0 else tx[:25000]
+                            z['nowe_zapytania'] = [dict(url=o['url'], typ=o['typ'], rozmiar=o['rozmiar']) for o in stan['odp'][przed:]]
+                            if z['adres'] != link and z['adres'] not in (x.get('adres') for x in w['zakladki']):
+                                z['requests'] = _bc_requests(s, z['adres'])
+                        except Exception as e: z['blad'] = str(e)[:200]
+                        w['zakladki'].append(z)
+            except Exception as e: w['blad'] = f'{type(e).__name__}: {e}'[:300]
+            w['odpowiedzi'] = [o for o in stan['odp'] if not re.search(r'rive-canvas|casino|tvbet|content-pages|/games/', o['url'])][:40]
+            wyn['sporty'].append(w)
+            print(f"{kod} {liga or ''}: zakładek {len(w['zakladki'])}, rynków Top {len(w.get('rynki_ng', []))} – {round(time.time() - START)} s")
+        br.close()
+    wyn['sekund'] = round(time.time() - START)
+    zapisz_github(f'{BC_KATALOG}/zakladki.json', wyn)
+    print('Betclic – rozpoznanie zakładek zakończone,', wyn['sekund'], 's')
+
 def main():
     if '--cron' in sys.argv:
         tryb_cron(); return
+    if '--betclic2' in sys.argv:
+        betclic_zakladki(); return
     if '--betclic' in sys.argv:
         betclic_rozpoznanie(); return
     if '--test' not in sys.argv and not any(a.startswith('--siec') or a in ('--zrzut', '--sts', '--sts-kursy', '--fortuna-mecz') for a in sys.argv[1:]):
