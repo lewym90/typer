@@ -333,36 +333,85 @@ def fortuna_mecze(s, diag):
     diag['meczow_fortuny'] = len(mecze)
     return list(mecze.values())
 
-def _fortuna_klucze(rynki, odwr, sport, bo=3):
+def _strona_fortuna(nazwa, druzyny):
+    """Nazwa drużyny z rynku Fortuny ('Mecz: Al Gharafa - liczba goli') → 'H' / 'A' wg uczestników meczu."""
+    if not druzyny: return None
+    n = re.sub(r'\s+', ' ', str(nazwa or '')).strip().lower()
+    h, a = (re.sub(r'\s+', ' ', str(x or '')).strip().lower() for x in druzyny)
+    if n == h: return 'H'
+    if n == a: return 'A'
+    if h and (n.startswith(h) or h.startswith(n)): return 'H'
+    if a and (n.startswith(a) or a.startswith(n)): return 'A'
+    return None
+
+def _fortuna_klucze(rynki, odwr, sport, bo=3, druzyny=None):
+    """Rynki Fortuny jednego meczu → nasze klucze. Nazwy rynków pełnej oferty sprawdzone na prawdziwym meczu 01.10
+    (adres /offer/markets/api/v1_0/fixture/<id>/markets): „Mecz: liczba goli” („+ 2.5”), „Mecz: <Drużyna> - liczba goli”,
+    „Mecz: handicap” („1 (-1.5)”), „Mecz: wynik/liczba goli” („1/+ 1.5”). Linie całkowite (z możliwym zwrotem) pomijamy."""
     k = {}
     for m in rynki or []:
-        n = (m.get('marketTypeName') or m.get('name') or '').lower()
+        if m.get('kind') not in (None, 'PREMATCH'): continue
+        n_oryg = re.sub(r'\s+', ' ', str(m.get('marketTypeName') or m.get('name') or '')).strip()
+        n = n_oryg.lower()
         for o in m.get('outcomes') or []:
             try: c = float(o.get('odds') or 0)
             except Exception: continue
             if c <= 1.0 or o.get('displayType', 'OPEN') != 'OPEN': continue
-            on = str(o.get('name') or '').strip()
+            on = re.sub(r'\s+', ' ', str(o.get('name') or '').replace('\xa0', ' ')).strip()
+            onl = on.lower()
             if sport == 'pilka':
+                if 'połow' in n or 'polow' in n: continue
                 if n == 'wynik meczu' and on in ('1', '0', '2'): k.setdefault({'1': '1', '0': 'X', '2': '2'}[on], c)
                 elif n == 'mecz: dwójtyp' and on in ('10', '02', '12'): k.setdefault({'10': '1X', '02': 'X2', '12': '12'}[on], c)
-                elif 'obie drużyny strzelą' in n and 'połow' not in n and ';' not in n:
-                    if on.lower() == 'tak': k.setdefault('BTTS Tak', c)
-                    elif on.lower() == 'nie': k.setdefault('BTTS Nie', c)
+                elif 'obie drużyny strzelą' in n and 'liczba goli' in n:          # obie strzelą i powyżej 2.5
+                    if re.fullmatch(r'tak\s*/\s*\+\s*2[.,]5', onl): k.setdefault('BTTS & o2.5', c)
+                elif n in ('mecz: obie drużyny strzelą gola', 'obie drużyny strzelą gola', 'mecz: obie drużyny strzelą'):
+                    if onl == 'tak': k.setdefault('BTTS Tak', c)
+                    elif onl == 'nie': k.setdefault('BTTS Nie', c)
                 elif re.fullmatch(r'(mecz: )?(liczba goli|gole|suma goli)( w meczu)?', n):
-                    mm = re.search(r'([+-]|powyżej|poniżej)\s*(\d+[.,]5)', on.lower())
+                    mm = re.fullmatch(r'([+-]|powyżej|poniżej)\s*(\d+[.,]5)', onl)
                     if mm: k.setdefault(('Over ' if mm.group(1) in ('+', 'powyżej') else 'Under ') + mm.group(2).replace(',', '.'), c)
+                elif n.startswith('mecz: ') and n.endswith(' - liczba goli'):     # gole jednej drużyny
+                    st = _strona_fortuna(n_oryg[len('Mecz: '):-len(' - liczba goli')], druzyny)
+                    mm = re.fullmatch(r'\+\s*(\d+[.,]5)', onl)
+                    if st and mm: k.setdefault(f"{st} o{mm.group(1).replace(',', '.')}", c)
+                elif n == 'mecz: handicap':                                      # „1 (-1.5)” / „2 (+1.5)”
+                    mm = re.fullmatch(r'([12])\s*\(\s*(-[1-9]\d*[.,]5)\s*\)', on)
+                    if mm: k.setdefault(f"{'H' if mm.group(1) == '1' else 'A'} {mm.group(2).replace(',', '.')}", c)
+                elif n == 'mecz: wynik/liczba goli':                             # „1/+ 1.5”, „0/- 2.5”
+                    mm = re.fullmatch(r'([102])\s*/\s*([+-])\s*(\d)[.,]5', on)
+                    if mm: k.setdefault(f"{ {'1': '1', '0': 'X', '2': '2'}[mm.group(1)]} & {'o' if mm.group(2) == '+' else 'u'}{mm.group(3)}.5", c)
             else:
                 pierwszy = lambda nr: ('A' if (nr == '1') != odwr else 'B')
                 if (n.startswith('zwycięzca meczu') or n in ('wynik meczu', 'zwycięzca', 'mecz')) and 'zwrot jeżeli' not in n and on in ('1', '2'):
                     k.setdefault(pierwszy(on), c)
-                elif n.startswith('mecz: handicap setowy'):
+                elif sport == 'tenis' and ('set' in n) and 'handicap' in n and 'gem' not in n and not re.search(r'\d\.\s*set', n):
                     mm = re.fullmatch(r'([12])\s*\(([+-]1[.,]5)\)', on)
                     if mm:
                         kto, h = pierwszy(mm.group(1)), mm.group(2).replace(',', '.')
                         if h == '-1.5': k.setdefault(f'{kto} -1.5', c)
                         elif int(bo or 3) == 3: k.setdefault(f'{kto} min. 1 set', c)
                         else: k.setdefault(f'{kto} +1.5', c)
+                elif sport == 'tenis' and 'liczba setów' in n and not re.search(r'\d\.\s*set|gem', n) and n.count(' - ') == 0:
+                    mm = re.fullmatch(r'([+-]|powyżej|poniżej|więcej niż|mniej niż)\s*(\d)[.,]5', onl)
+                    if mm: k.setdefault(f"{'Ponad' if mm.group(1) in ('+', 'powyżej', 'więcej niż') else 'Poniżej'} {mm.group(2)}.5 seta", c)
+                elif sport == 'tenis' and ('dokładny wynik' in n or 'wynik w setach' in n or 'wynik setowy' in n) and not re.search(r'\d\.\s*set|gem', n):
+                    mm = re.fullmatch(r'(\d)\s*:\s*(\d)', on)
+                    if mm:
+                        x, y = int(mm.group(1)), int(mm.group(2))
+                        if x == y: continue
+                        kto = pierwszy('1' if x > y else '2')
+                        k.setdefault(f'{kto} {max(x, y)}:{min(x, y)}', c)
+                        if int(bo or 3) == 3 and min(x, y) == 0: k.setdefault(f'{kto} -1.5', c)
     return k
+
+def fortuna_pelna_oferta(s, fid):
+    """Pełna oferta meczu Fortuny (wszystkie rynki) – adres potwierdzony rozpoznaniem 01.10."""
+    from urllib.parse import quote
+    r = s.get(f'{FAPI}/markets/api/v1_0/fixture/{quote(fid, safe="")}/markets', timeout=25)
+    r.raise_for_status()
+    j = r.json()
+    return j if isinstance(j, list) else (j.get(fid) or j.get('markets') or [])
 
 # ---------------------------------------------------------------- KSW (Pinnacle nie wystawia – kursy tylko w Polsce)
 def _czy_ksw(nazwa): return bool(re.search(r'\bksw\b|konfrontacja sztuk walki', str(nazwa or ''), re.I))
@@ -432,11 +481,18 @@ def czytnik(KP=None):
                 j = s.get(f'{FAPI}/markets/api/v1_0/fixtures/markets/overview', params={'fixtureIds': f['id']}, timeout=20).json()
                 rynki = j.get(f['id']) or []
             except Exception as e:
-                diag['bledy'].append(f'kursy {f["id"]}: {e}'[:120]); continue
+                diag['bledy'].append(f'kursy {f["id"]}: {e}'[:120]); rynki = []
+            try:                                     # pełna oferta: gole, gole drużyn, handicap, wynik i gole; w tenisie sety
+                pelne = fortuna_pelna_oferta(s, f['id']); rynki = list(rynki) + list(pelne)
+                diag['pelna_oferta'] = diag.get('pelna_oferta', 0) + 1
+            except Exception as e:
+                diag.setdefault('pelna_oferta_bledy', []).append(f'{f["id"]}: {type(e).__name__}: {e}'[:120])
+            if not rynki: continue
+            spis = rynki_nazwy.setdefault(sp, {})
             for m in rynki:
                 rn = m.get('marketTypeName') or m.get('name')
-                if rn and len(rynki_nazwy) < 60: rynki_nazwy.setdefault(rn, [o.get('name') for o in (m.get('outcomes') or [])][:4])
-            k = _fortuna_klucze(rynki, odwr, 'pilka' if sp == 'pilka' else 'duel', bo)
+                if rn and len(spis) < 120: spis.setdefault(rn, [str(o.get('name') or '').replace('\xa0', ' ') for o in (m.get('outcomes') or [])][:4])
+            k = _fortuna_klucze(rynki, odwr, sp if sp in ('pilka', 'tenis') else 'duel', bo, (f['h'], f['a']))
             if not k: diag.setdefault('bez_kursow', []).append(f'{sp}: {h} – {a} ({f["h"]} - {f["a"]})')
             if k: wynik[eid] = dict(fortuna=dict(id=f['id'], nazwa=f'{f["h"]} - {f["a"]}', zgodnosc=round(sc, 2), kursy=k))
             time.sleep(0.2)
@@ -487,12 +543,6 @@ def tryb_cron():
     if czytnik(KP):
         stan.update(podpis=podpis, lista=lista, czas=time.time())
         json.dump(stan, open(STAN_CRON, 'w'))
-    # raz dziennie (po 9:00) rozpoznanie pełnej oferty meczu Fortuny – do dalszej pracy nad golami
-    if teraz.hour >= 9 and stan.get('rozpoznanie') != teraz.strftime('%Y-%m-%d'):
-        stan['rozpoznanie'] = teraz.strftime('%Y-%m-%d'); json.dump(stan, open(STAN_CRON, 'w'))
-        import subprocess
-        try: subprocess.run([PW_PYTHON if os.path.exists(PW_PYTHON) else sys.executable, os.path.abspath(__file__), '--fortuna-mecz'], timeout=400)
-        except Exception as e: print('rozpoznanie Fortuny:', e)
 
 # ======================================================================= CZYTNIK STS (websocket, przez przeglądarkę)
 STS_WS = 'wss://www.sts.pl/sbk/api/sbk'
@@ -584,7 +634,9 @@ def sts_klucze(rynki, opis, sp, odwr, bo=3):
                 except Exception: continue
                 if c <= 1.0: continue
                 n = nazwa_wyn(mid, oid, o); nl = n.lower()
+                rn = str((opis.get(mid) or {}).get('n') or '').strip().lower()
                 if sp == 'pilka':
+                    if any(x in rn for x in ('połow', 'kart', 'rożn', 'faul', 'strzał', 'zawodnik', 'superoferta', 'wysokie')): continue
                     if mid == '1' and n in ('1', 'X', '2'): k.setdefault(n, c)
                     elif mid == '10' and n.replace(' ', '') in ('1X', 'X2', '12'): k.setdefault(n.replace(' ', ''), c)
                     elif mid == '43':
@@ -596,6 +648,22 @@ def sts_klucze(rynki, opis, sp, odwr, bo=3):
                     elif mid in ('28', '31'):
                         ou, ln = _liczba_ou_linia(n, linia)
                         if ou == 'Over': k.setdefault(f"{'H' if mid == '28' else 'A'} o{ln}", c)
+                    elif mid in ('1229', '1224'):                                 # drużyna strzeli gola = gole drużyny powyżej 0.5
+                        if nl == 'tak': k.setdefault(f"{'H' if mid == '1229' else 'A'} o0.5", c)
+                    elif mid == '22' or rn == 'handicap':                         # „1 (-1.5)” / „2 (+1.5)” (jak „2. połowa - handicap”)
+                        mm = re.fullmatch(r'([12])\s*\(\s*(-[1-9]\d*[.,]5)\s*\)', n)
+                        if mm: k.setdefault(f"{'H' if mm.group(1) == '1' else 'A'} {mm.group(2).replace(',', '.')}", c)
+                    elif mid == '51' or ('liczba goli' in rn and ('wynik' in rn or rn.startswith('mecz')) and 'obie' not in rn and 'dokładn' not in rn):
+                        # „1 i +2.5” / „X i -2.5” (jak „1. połowa / wynik końcowy i liczba goli”: „1 / 1 i -2.5”)
+                        mm = re.fullmatch(r'([1x2])\s*(?:i|&|/)\s*([+-]|powyżej|poniżej)?\s*(\d)?(?:[.,]5)?', nl)
+                        if mm:
+                            znak = mm.group(2); liczba = mm.group(3)
+                            if not liczba:
+                                _, ln = _liczba_ou((linia or {}).get('n')); liczba = ln[0] if ln else None
+                            if znak and liczba:
+                                k.setdefault(f"{mm.group(1).upper()} & {'o' if znak in ('+', 'powyżej') else 'u'}{liczba}.5", c)
+                    elif 'obie' in rn and 'liczba goli' in rn:                     # obie strzelą i powyżej 2.5
+                        if re.fullmatch(r'tak\s*(?:i|&|/)\s*(?:\+|powyżej)\s*2[.,]5', nl): k.setdefault('BTTS & o2.5', c)
                 else:
                     pierwszy = lambda nr: ('A' if (nr == 1) != odwr else 'B')
                     if mid == '259' and oid in ('4', '5'): k.setdefault(pierwszy(1 if oid == '4' else 2), c)
@@ -607,6 +675,13 @@ def sts_klucze(rynki, opis, sp, odwr, bo=3):
                             kto = pierwszy(1 if x > y else 2); kl = f'{kto} {max(x, y)}:{min(x, y)}'
                             k.setdefault(kl, c)
                             if int(bo or 3) == 3 and min(x, y) == 0: k.setdefault(f'{kto} -1.5', c)
+                    elif sp == 'tenis' and mid == '265':                            # „1 (-1.5)” / „2 (+1.5)”
+                        mm = re.fullmatch(r'([12])\s*\(\s*([+-])1[.,]5\s*\)', n)
+                        if mm:
+                            kto = pierwszy(int(mm.group(1)))
+                            if mm.group(2) == '-': k.setdefault(f'{kto} -1.5', c)
+                            elif int(bo or 3) == 3: k.setdefault(f'{kto} min. 1 set', c)
+                            else: k.setdefault(f'{kto} +1.5', c)
                     elif sp == 'tenis' and mid == '479':
                         ou, ln = _liczba_ou_linia(n, linia)
                         if ou: k.setdefault(f"{'Ponad' if ou == 'Over' else 'Poniżej'} {ln} seta", c)
@@ -615,7 +690,12 @@ def sts_klucze(rynki, opis, sp, odwr, bo=3):
 def _opis_rynkow(rynki, opis, ile=40):
     """Skrót rynków meczu do diagnostyki: 'id nazwa': ['linia | wynik=kurs', ...]."""
     wyn = {}
-    for mid, m in (rynki or {}).items():
+    pomin = ('połow', 'kart', 'rożn', 'faul', 'strzał', 'zawodnik', 'superoferta', 'wysokie', 'gem', 'asów', 'samobój', 'karny')
+    def waga(mid):   # najpierw rynki, które czytamy lub możemy czytać (gole, handicap, sety)
+        n = str((opis.get(mid) or {}).get('n') or '').lower()
+        return (any(x in n for x in pomin), int(mid) if str(mid).isdigit() else 99999)
+    for mid in sorted(rynki or {}, key=waga):
+        m = rynki[mid]
         if not isinstance(m, dict) or not m.get('l') or len(wyn) >= ile: continue
         el = []
         for lid, linia in list((m.get('l') or {}).items())[:3]:

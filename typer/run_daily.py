@@ -812,6 +812,10 @@ def zapisz(nazwa, obj):
 
 if __name__ == '__main__':
     os.makedirs(OUT, exist_ok=True)
+    if os.environ.get('TYPER_TRYB') == 'kursy':
+        # polski serwer zapisał nowe kursy (Fortuna, STS) – tylko dopisanie kursów do typów w następnym kroku,
+        # bez liczenia, bez sprawdzeń i bez wiadomości na Telegram
+        print('Nowe kursy z polskiego serwera – dopisuję je do typów (krok „Kursy polskich bukmacherów”).'); sys.exit(0)
     teraz = pd.Timestamp.now(tz='Europe/Warsaw')
     try: stare = json.load(open(os.path.join(OUT, 'dzis.json')))
     except Exception: stare = {}
