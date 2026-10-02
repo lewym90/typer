@@ -365,7 +365,8 @@ def dopasuj_wszystko(ses, oferta):
             except Exception as ex: DIAG['bledy'].append(f'rynki {e.get("eventId")}: {str(ex)[:80]}')
         k = klucze_pilka(odds, glowne, str(e.get('matchName') or '').split('·')) if sp == 'pilka' else (klucze_tenis(odds, glowne, odwr, bo, (h, a)) if sp == 'tenis' else klucze_duel(glowne, odwr))
         if k:
-            kursy[eid] = dict(superbet=dict(id=e.get('eventId'), nazwa=e.get('matchName'), zgodnosc=round(s, 2), kursy=k))
+            kursy[eid] = dict(superbet=dict(id=e.get('eventId'), nazwa=e.get('matchName'), zgodnosc=round(s, 2), kursy=k,
+                                            pelna=bool(odds) and sp in ('pilka', 'tenis')))
         else:
             DIAG['niedopasowane'].append(f'{sp}: {h} – {a}: dopasowany ({e.get("matchName")}), ale bez kursów')
     return kursy
@@ -381,7 +382,7 @@ def _typy_w(obj):
 NAZWY_BUK = {'fortuna': 'Fortuna', 'sts': 'STS', 'betclic': 'Betclic PL'}
 
 def _kursy_vps():
-    """Kursy z polskiego serwera (Fortuna, później STS i Betclic) – docs/data/kursy_vps.json, jeśli świeże (do 6 h)."""
+    """Kursy z polskiego serwera (Fortuna, STS, Betclic PL) – docs/data/kursy_vps.json, jeśli świeże (do 6 h)."""
     try:
         d = json.load(open(VPS_PLIK or os.environ.get('KURSY_VPS_PLIK') or os.path.join(OUT, 'kursy_vps.json')))
         t = dt.datetime.strptime(d['czas'], '%Y-%m-%d %H:%M UTC').replace(tzinfo=dt.timezone.utc)
@@ -391,26 +392,43 @@ def _kursy_vps():
     except Exception as e:
         DIAG['vps'] = f'brak: {str(e)[:60]}'; return {}
 
+GLOWNE_KLUCZE = {'1', 'X', '2', 'A', 'B', 'D'}
+
+def czytany(buk, sp, klucz, dane):
+    """Czy odczytaliśmy u bukmachera pełną ofertę meczu obejmującą ten rodzaj zakładu. Gdy tak, a kursu nie ma,
+    to bukmacher faktycznie nie ma tego zakładu („—”). Gdy nie – „?” (mecz nieznaleziony, błąd odczytu albo rynek jeszcze nieczytany)."""
+    if not dane: return False
+    if klucz in GLOWNE_KLUCZE: return True
+    if not dane.get('pelna'): return False
+    if sp == 'walki' and buk in ('Superbet', 'Fortuna', 'STS'): return False          # u nich czytamy tylko zwycięzcę walki
+    if buk == 'Betclic PL' and sp == 'pilka' and '&' in klucz: return False           # „wynik i gole” – dodatkowe zakładki Betclic
+    return True
+
 def dopisz(kursy):
     ile = 0
     vps = _kursy_vps()
-    def nadaj(m, eid):
+    def nadaj(m, eid, sp):
         nonlocal ile
-        zrodla = {'Superbet': ((kursy.get(eid) or {}).get('superbet') or {}).get('kursy') or {}}
+        sb = (kursy.get(eid) or {}).get('superbet') or {}
+        zrodla = {'Superbet': sb.get('kursy') or {}}
+        stan = {'Superbet': sb if sb else None}
         for buk, dane in ((vps.get(eid) or {}).items()):
             zrodla[NAZWY_BUK.get(buk, buk)] = (dane or {}).get('kursy') or {}
+            stan[NAZWY_BUK.get(buk, buk)] = dane or None
         for b, k in (m.get('kursy_walki') or {}).items():   # KSW: kursy zebrane przy liczeniu (Fortuna/STS/Superbet) – baza
             zrodla.setdefault(b, {}); zrodla[b] = dict(k, **zrodla[b])
+            stan.setdefault(b, dict(pelna=False))
         for t in _typy_w(m):
             kp = {b: k[t['klucz']] for b, k in zrodla.items() if k.get(t['klucz'])}
             if t.get('rynek_pl'): kp = dict(t.get('kursy_pl') or {}, **kp)   # value KSW – nie kasuj kursów z liczenia
+            t['kursy_odczyt'] = sorted(b for b, d in stan.items() if czytany(b, sp, t['klucz'], d))
             if kp: t['kursy_pl'] = kp; t['kursy_czas'] = dt.datetime.now(TZ).strftime('%H:%M'); ile += 1
             else: t.pop('kursy_pl', None)
     p = os.path.join(OUT, 'dzis.json')
     try:
         d = json.load(open(p))
         for m in (d.get('pewne') or []) + (d.get('mecze') or []) + (d.get('value') or []):
-            if isinstance(m, dict) and m.get('event_id'): nadaj(m, m['event_id'])
+            if isinstance(m, dict) and m.get('event_id'): nadaj(m, m['event_id'], 'pilka')
         _zapisz_bezpiecznie(p, d)
     except Exception as e: DIAG['bledy'].append(f'zapis dzis.json: {e}')
     p = os.path.join(OUT, 'inne.json')
@@ -419,7 +437,7 @@ def dopisz(kursy):
         for sp in ('tenis', 'walki'):
             s = d.get(sp) or {}
             for m in (s.get('mecze') or []) + (s.get('value') or []):
-                if isinstance(m, dict) and m.get('event_id'): nadaj(m, m['event_id'])
+                if isinstance(m, dict) and m.get('event_id'): nadaj(m, m['event_id'], sp)
         _zapisz_bezpiecznie(p, d)
     except Exception as e: DIAG['bledy'].append(f'zapis inne.json: {e}')
     return ile
@@ -461,7 +479,7 @@ def main():
     teraz = dt.datetime.now(TZ).strftime('%Y-%m-%d %H:%M')
     nasze = len(nasze_mecze())
     pelny = dict(czas=teraz, wersja=3, bukmacherzy=dict(superbet=stan), mecze=kursy,
-                 niedostepni=dict(betclic='blokada 403 dla serwerów spoza Polski', sts='Cloudflare – blokada', fortuna='Geoblock – tylko Polska'),
+                 przez_serwer=dict(betclic='Betclic PL – polski serwer', sts='STS – polski serwer', fortuna='Fortuna – polski serwer'),
                  diag=dict(DIAG, nasze_mecze=nasze, sekund=round(time.time() - START)))
     try: _zapisz_bezpiecznie(os.path.join(OUT, 'kursy_pl.json'), pelny)
     except Exception as e: print('kursy_pl.json:', e)

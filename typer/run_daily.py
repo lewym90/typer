@@ -606,8 +606,8 @@ def tekst_zapowiedzi(sp, m, wartosci, minut):
             if poz == 'najpewniejszy': lin.append('   ' + _kursy_linia(t))
     for v in wartosci.get('value', []):
         zak = pl_txt(v['zaklad'], v.get('gospodarz'), v.get('gosc')) if sp == 'pilka' else v['zaklad']
-        kk = {'Betclic': v.get('kurs')} | {n: k for n, k in ((v.get('kursy_pl') or {}).items())}
-        best = max(((n, k) for n, k in kk.items() if k), key=lambda x: x[1], default=('Betclic', v['kurs']))
+        kk = {'Betclic FR': v.get('kurs')} | {_nazwa_buk(n): k for n, k in ((v.get('kursy_pl') or {}).items())}
+        best = max(((n, k) for n, k in kk.items() if k), key=lambda x: x[1], default=('Betclic FR', v['kurs']))
         clv = (v.get('przedmeczowe') or {}).get('clv')
         lin.append(f"💰 Value: {esc_(zak)} @ <b>{tg.kurs(best[1])}</b> {esc_(best[0])}" + (f" · CLV {clv * 100:+.1f}%" if clv is not None else ''))
     if sp == 'pilka':
@@ -717,7 +717,7 @@ def tg_typy_dnia(d, status):
         for poz, ik, k, n, sz in _typy_meczu(m): lin.append(f"{ik} {esc_(pl_txt(n, m['gospodarz'], m['gosc']))} – {tg.pct(sz)} (kurs ≥ {tg.kurs(1/sz)})")
         if (m.get('raport') or {}).get('ostrzezenia'): lin.append('⚠️ ' + esc_('; '.join(m['raport']['ostrzezenia'])))
     if d.get('value'):
-        lin.append('\n💰 <b>Value (Betclic)</b>')
+        lin.append('\n💰 <b>Value</b> <i>(przewaga liczona od Betclic FR)</i>')
         for v in d['value']: lin.append(f"{esc_(pl_mecz(v['mecz']))}: {esc_(pl_txt(v['zaklad'], v.get('gospodarz'), v.get('gosc')))} @ {tg.kurs(v['kurs'])} (szansa {tg.pct(v['szansa'])}, szukaj ≥ {tg.kurs(v.get('kurs_szukaj', ''))})")
     if tg.APLIKACJA: lin.append(f"\n📱 {tg.APLIKACJA}")
     if tg.wyslij_dlugi('\n'.join(lin)):
@@ -742,13 +742,21 @@ def _rozwiaz(gl, d, inne):
 WERDYKT_TG = {'zgoda': ('✅', 'zgoda z faworytem'), 'ryzyko': ('⚠️', 'ryzyko niespodzianki'), 'odradza': ('⛔', 'AI odradza')}
 DNI_PL = ['poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek', 'sobota', 'niedziela']
 
+BUKMACHERZY_TG = ['STS', 'Fortuna', 'Superbet', 'Betclic']
+
+def _nazwa_buk(n): return 'Betclic' if n == 'Betclic PL' else n
+
 def _kursy_linia(t):
-    """„STS 1,30 ⭐ · Superbet 1,29 · Fortuna 1,28 · Betclic 1,27” – najlepszy pogrubiony."""
-    kk = [('Betclic', t.get('kurs_betclic'))] + list((t.get('kursy_pl') or {}).items())
-    kk = sorted({n: float(k) for n, k in kk if k and float(k) > 1}.items(), key=lambda x: -x[1])
+    """„STS 1,30 ⭐ · Superbet 1,29 · Fortuna 1,28 · Betclic —” – najlepszy pogrubiony; „—” = bukmacher nie ma zakładu,
+    „?” = nie odczytano kursu (problem programu). Tylko polscy bukmacherzy (Betclic = Betclic PL)."""
+    kk = sorted({_nazwa_buk(n): float(k) for n, k in (t.get('kursy_pl') or {}).items() if k and float(k) > 1}.items(), key=lambda x: -x[1])
     if not kk: return f"kurs uczciwy {tg.kurs(1 / t['szansa'])} – graj od tego kursu"
-    return ' · '.join(f"{esc_(n)} <b>{tg.kurs(k)}</b>{' ⭐' if i == 0 and len(kk) > 1 else ''}" if i == 0 else f"{esc_(n)} {tg.kurs(k)}"
-                      for i, (n, k) in enumerate(kk))
+    odczyt = {_nazwa_buk(n) for n in (t.get('kursy_odczyt') or [])}
+    czesci = [f"{esc_(n)} <b>{tg.kurs(k)}</b>{' ⭐' if len(kk) > 1 else ''}" if i == 0 else f"{esc_(n)} {tg.kurs(k)}"
+              for i, (n, k) in enumerate(kk)]
+    obecni = {n for n, _ in kk}
+    czesci += [f"{n} {'—' if n in odczyt else '?'}" for n in BUKMACHERZY_TG if n not in obecni]
+    return ' · '.join(czesci)
 
 def _ai_karty(sp, m):
     r = m.get('raport') or {}; ai = r.get('ai') or {}
@@ -854,8 +862,8 @@ def tg_typy_wszystkie(d, inne, gl, status):
         lin.append('\n<b>💰 Value</b>')
         for sp, v in val:
             zak = pl_txt(v['zaklad'], v.get('gospodarz'), v.get('gosc')) if sp == 'pilka' else v['zaklad']
-            kk = {'Betclic': v.get('kurs')} | {n: k for n, k in ((v.get('kursy_pl') or {}).items())}
-            best = max(((n, k) for n, k in kk.items() if k), key=lambda x: x[1], default=('Betclic', v['kurs']))
+            kk = {'Betclic FR': v.get('kurs')} | {_nazwa_buk(n): k for n, k in ((v.get('kursy_pl') or {}).items())}
+            best = max(((n, k) for n, k in kk.items() if k), key=lambda x: x[1], default=('Betclic FR', v['kurs']))
             lin.append(f"{wspolne.IKONA[sp]} {esc_(_nazwa_meczu(sp, v))} · {esc_(zak)} @ <b>{tg.kurs(best[1])}</b> {esc_(best[0])} · uczciwy {tg.kurs(v['kurs_uczciwy'])} · +{round(v['ev'] * 100)}%"
                        + (' · <i>rynek PL</i>' if v.get('rynek_pl') else ''))
     if any(sp == 'tenis' for sp, _ in pew + val): lin.append('\n<i>Tenis – krecz: rozliczenie wg regulaminu bukmachera.</i>')

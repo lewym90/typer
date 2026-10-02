@@ -905,7 +905,7 @@ def tg_typy(d, status):
             if r.get('ostrzezenie'): lin.append('⚠️ ' + e(r['ostrzezenie']))
             if (r.get('ai') or {}).get('tekst'): lin.append('📰 ' + e(r['ai']['tekst'][:300]))
         if V:
-            lin.append('\n💰 <b>Value (Betclic)</b>')
+            lin.append('\n💰 <b>Value</b> <i>(przewaga liczona od Betclic FR)</i>')
             for v in V: lin.append(f"{e(v['mecz'])}: {e(v['zaklad'])} @ {tg.kurs(v['kurs'])} (szansa {tg.pct(v['szansa'])}, szukaj ≥ {tg.kurs(v['kurs_szukaj'])})")
         if sp == 'tenis': lin.append('\n<i>Krecz: rozliczenie zależy od regulaminu bukmachera.</i>')
         if tg.APLIKACJA: lin.append(f"📱 {tg.APLIKACJA}")

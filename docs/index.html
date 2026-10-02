@@ -67,6 +67,7 @@ h3{font:700 17px/1.3 var(--body);margin:0}
 .bk.best{border-color:var(--accent);background:var(--accent-bg)} .bk.best b{color:var(--accent)}
 .bk.low b{color:var(--muted);font-weight:600}
 .bk.none{opacity:.45} .bk.none b{color:var(--muted);font-weight:500}
+.bk.unk{border-style:dashed}
 .bks.kmini{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;width:100%;margin:2px 0 12px}
 .bks.kmini .bk{min-height:46px;border-radius:12px;padding:5px 2px;gap:2px}
 .bks.kmini .bk span{font-size:11px} .bks.kmini .bk b{font-size:15px}
@@ -395,7 +396,7 @@ function glowa(t){
 }
 function poziomTypu(t, ikona, tytul, klasa, mecz){
   if(!t) return ''; const P = x => mecz ? plTxt(x, mecz) : x;
-  const kk = [['Betclic', t.kurs_betclic], ...Object.entries(t.kursy_pl || {})].filter(([n, k]) => k > 1);
+  const kk = kursyLista(t);
   const naj = kk.length ? Math.max(...kk.map(([n, k]) => k)) : 0;
   const bk = kk.length ? ' · ' + kk.map(([n, k]) => `${esc(n)}: ${k === naj && kk.length > 1 ? `<b>${num(k)}</b> ⭐` : `<b>${num(k)}</b>`}`).join(' · ')
     + ` ${naj*t.szansa >= 1 ? '✅' : '(poniżej uczciwego)'}` : '';
@@ -569,7 +570,7 @@ function widokPewneStat(){
   const nazwy = {najpewniejszy:'🔒 Najpewniejsze', lepszy_kurs:'⚖️ Lepszy kurs', ryzykowny:'🎯 Ryzykowne'};
   h += `<div class="mk">` + ['najpewniejszy','lepszy_kurs','ryzykowny'].filter(k => p.poziomy[k]).map(k => { const v = p.poziomy[k];
     return `<span class="n">${nazwy[k]} <span class="muted">(${v.n})</span></span><span class="p">${pct(v.weszlo)}</span><span class="f">przew. ${pct(v.przewidywane)}</span>` +
-      (v.zysk_betclic_10zl != null ? `<span class="ev ${v.zysk_betclic_10zl>=0?'pos':'neg'}">Przy 10 zł na typ po kursach Betclic (${v.z_kursem} typów): ${v.zysk_betclic_10zl>=0?'+':''}${num(v.zysk_betclic_10zl)} zł</span>` : ''); }).join('') + `</div>`;
+      (v.zysk_betclic_10zl != null ? `<span class="ev ${v.zysk_betclic_10zl>=0?'pos':'neg'}">Przy 10 zł na typ po kursach Betclic FR (${v.z_kursem} typów): ${v.zysk_betclic_10zl>=0?'+':''}${num(v.zysk_betclic_10zl)} zł</span>` : ''); }).join('') + `</div>`;
   h += `<p class="note">Rozliczonych: ${p.rozliczonych}, czeka: ${p.czeka}. ${p.rozliczonych < 100 ? 'Przy mniej niż ok. 100 typach różnice to głównie przypadek.' : ''}</p>`;
   if(p.z_ostrzezeniem && p.z_ostrzezeniem.length > 1) h += `<p class="note">Z ostrzeżeniem w raporcie: ` + p.z_ostrzezeniem.map(x => `${x.ostrzezenie ? '⚠️ tak' : 'nie'} – weszło ${pct(x.weszlo)} (przew. ${pct(x.przewidywane)}, ${x.n})`).join(' · ') + `</p>`;
   const sk = S.dziennik.samokorekta || {}; const ks = Object.keys(sk);
@@ -667,23 +668,37 @@ const WERD = {zgoda:['Zgoda z faworytem','<circle cx="12" cy="12" r="9"/><path d
 function werdyktChip(w){ if(!WERD[w]) return ''; return `<span class="chipv ${w}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${WERD[w][1]}</svg>${WERD[w][0]}</span>`; }
 const aiKarty = m => ((m.raport || {}).ai) || null;
 const werdyktKarty = m => (aiKarty(m) || {}).werdykt || (m.raport || {}).werdykt || m.werdykt || null;
+const NAZWA_BUK = n => n === 'Betclic PL' ? 'Betclic' : n;     // Betclic = Betclic Polska (polski serwer)
 function kursyLista(t){
-  const kk = {}; if(t.kurs_betclic > 1) kk['Betclic'] = +t.kurs_betclic;
-  for(const [n, k] of Object.entries(t.kursy_pl || {})) if(k > 1) kk[n] = +k;
+  // Tylko polscy bukmacherzy (Betclic Francja z The Odds API nie jest już pokazywany przy typach)
+  const kk = {};
+  for(const [n, k] of Object.entries(t.kursy_pl || {})) if(k > 1) kk[NAZWA_BUK(n)] = +k;
   return Object.entries(kk).sort((a, b) => b[1] - a[1]);
 }
-const BUKMACHERZY = ['STS', 'Fortuna', 'Superbet', 'Betclic'];   // Betclic = na razie francuski (The Odds API) – podmienimy na Betclic PL
+const BUKMACHERZY = ['STS', 'Fortuna', 'Superbet', 'Betclic'];
 function kafelkiBuk(t, mini){
-  // Zawsze wszyscy bukmacherzy w stałej kolejności; „—” = brak tego zakładu w ofercie bukmachera
+  // Zawsze wszyscy bukmacherzy w stałej kolejności.
+  // „—” = odczytaliśmy ofertę meczu u bukmachera i tego zakładu w niej nie ma (faktyczny brak);
+  // „?” = nie odczytano (mecz nieznaleziony, błąd odczytu, kursy nieświeże albo rynek jeszcze nieczytany) – problem po stronie programu.
   const kk = Object.fromEntries(kursyLista(t)); const best = Math.max(0, ...Object.values(kk));
+  const odczyt = new Set((t.kursy_odczyt || []).map(NAZWA_BUK));
   const lista = BUKMACHERZY.concat(Object.keys(kk).filter(n => !BUKMACHERZY.includes(n)));
   return `<div class="bks${mini ? ' kmini' : ''}">` + lista.map(n => kk[n]
     ? `<div class="bk${kk[n] === best && Object.keys(kk).length > 1 ? ' best' : ''}${kk[n] * t.szansa < 1 ? ' low' : ''}"><span>${esc(n)}</span><b>${num(kk[n])}</b></div>`
-    : `<div class="bk none" title="Brak tego zakładu w ofercie"><span>${esc(n)}</span><b>—</b></div>`).join('') + `</div>`;
+    : (odczyt.has(n)
+      ? `<div class="bk none" title="Bukmacher nie ma tego zakładu w ofercie"><span>${esc(n)}</span><b>—</b></div>`
+      : `<div class="bk none unk" title="Nie odczytano kursu"><span>${esc(n)}</span><b>?</b></div>`)).join('') + `</div>`;
+}
+function legendaBuk(t){
+  const kk = Object.fromEntries(kursyLista(t)), odczyt = new Set((t.kursy_odczyt || []).map(NAZWA_BUK));
+  const brak = BUKMACHERZY.filter(n => !kk[n]);
+  if(!brak.length) return '';
+  const kreski = brak.filter(n => odczyt.has(n)), pytajniki = brak.filter(n => !odczyt.has(n));
+  return `<p class="note">${kreski.length ? '— = bukmacher nie ma tego zakładu' : ''}${kreski.length && pytajniki.length ? ' · ' : ''}${pytajniki.length ? '? = nie odczytano kursu (problem programu, nie brak w ofercie)' : ''}</p>`;
 }
 function ksiazka(t){
   return `<div style="display:flex;flex-direction:column;gap:8px"><div class="lab">Kursy bukmacherów${t.kursy_czas ? ` <span style="text-transform:none;letter-spacing:0;font-weight:500">· ${esc(t.kursy_czas)}</span>` : ''}</div>`
-    + kafelkiBuk(t) + (kursyLista(t).length ? '' : `<p class="note">Kursy jeszcze nie pobrane – graj od kursu ${num(t.kurs_uczciwy)}.</p>`) + `</div>`;
+    + kafelkiBuk(t) + (kursyLista(t).length ? legendaBuk(t) : `<p class="note">Kursy jeszcze nie pobrane – graj od kursu ${num(t.kurs_uczciwy)}.</p>`) + `</div>`;
 }
 function typBox(t, nr, mecz, etykieta){
   const P = x => mecz && mecz.gospodarz ? plTxt(x, mecz) : x;
@@ -777,10 +792,11 @@ function kartaPewnaPilka(t, nr){ return kartaTypu('pilka', t, nr); }
 function kartaInne(m, nr, sp){ return kartaTypu(sp, m, nr); }
 function kartaValueOgolna(sp, v, mecz){
   const pil = sp === 'pilka';
-  const kk = kursyLista(Object.assign({}, v, {kurs_betclic: v.bukmacher ? null : v.kurs}));
-  if(v.bukmacher && !kk.find(x => x[0] === v.bukmacher)) kk.unshift([v.bukmacher, v.kurs]);
+  const kk = kursyLista(v);
+  const zrodlo = v.bukmacher ? NAZWA_BUK(v.bukmacher) : 'Betclic FR';     // kurs, od którego wyliczono przewagę Value
+  if(!kk.find(x => x[0] === zrodlo)) kk.push([zrodlo, +v.kurs]);
   kk.sort((a, b) => b[1] - a[1]);
-  const best = kk.length ? kk[0] : ['Betclic', v.kurs], stawka = Math.round(BANK * kelly(v.szansa, best[1])), ev = v.szansa * best[1] - 1;
+  const best = kk.length ? kk[0] : [zrodlo, v.kurs], stawka = Math.round(BANK * kelly(v.szansa, best[1])), ev = v.szansa * best[1] - 1;
   const zak = pil ? plTxt(v.zaklad, v) : v.zaklad;
   let h = `<article class="bet">${naglowekKarty(sp, esc(pil ? v.liga : v.turniej), (pil ? '' : v.dzien + ' ') + v.godzina, pil ? plN(v.gospodarz) : v.a, pil ? plN(v.gosc) : v.b)}
     <div style="font:700 17px/1.3 var(--body)">${esc(zak)}${kupBtn({event_id: v.event_id, mecz: v.mecz, zaklad: zak + ' @ ' + num(best[1]), szansa: v.szansa})}${v.opis ? `<small style="display:block;font-weight:500;font-size:13px;color:var(--muted)">${esc(pil ? plTxt(v.opis, v) : v.opis)}</small>` : ''}</div>
@@ -788,7 +804,7 @@ function kartaValueOgolna(sp, v, mecz){
       <div class="bk" style="min-height:62px"><span>uczciwy</span><b style="font-size:20px">${num(v.kurs_uczciwy)}</b></div>
       <div class="bk" style="min-height:62px"><span>przewaga</span><b style="font-size:20px;color:var(--win)">${sgn(ev)}</b></div></div>
     <div class="top"><span>szansa ${pct(v.szansa)} · stawka ${stawka} zł · szukaj ≥ ${num(v.kurs_szukaj || v.kurs_uczciwy*1.02)}</span>${v.rynek_pl ? '<span class="chipv brak" style="height:24px;font-size:12px">rynek PL – mniej pewne</span>' : ''}</div>`;
-  h += kafelkiBuk(Object.assign({}, v, {kurs_betclic: v.bukmacher ? null : v.kurs}, v.bukmacher ? {kursy_pl: Object.assign({[v.bukmacher]: v.kurs}, v.kursy_pl || {})} : {}));
+  h += kafelkiBuk(Object.assign({}, v, {kursy_pl: Object.assign({[v.bukmacher || 'Betclic FR']: v.kurs}, v.kursy_pl || {})}));
   const src = mecz || v; if(src.raport) h += aiSkrot(src);
   if(pil) h += `<details class="rap"><summary>Pełna analiza i raport AI</summary><div style="display:flex;flex-direction:column;gap:14px;padding:10px 0 12px">${aiPelny(v, 'pilka')}${obrazMeczu(v)}${przedmeczoweHTML(v.przedmeczowe, v)}</div></details>`;
   else h += `<p class="note">Źródło kursu uczciwego: ${esc(v.zrodlo)}</p>`;
