@@ -6,6 +6,8 @@ import xml.etree.ElementTree as ET
 from urllib.parse import quote
 import numpy as np, pandas as pd
 import core, tenis, walki, ai_raport, powiadomienia as tg, wspolne
+try: import analityk                       # korekty (wersja 34); na serwerze AI może go nie być
+except Exception: analityk = None
 
 OUT = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
 PLIK_TYPOW = os.path.join(OUT, 'typy_inne.csv')
@@ -170,6 +172,10 @@ def przelicz(sp, key, tytul, grupa, ev):
              polski=polski(A, B), betclic=bc)
     if sp == 'tenis':
         bo = tenis.do_ilu_setow(key); pa = tenis.kalibruj(p[A] / (p[A] + p[B])); wta = tenis.kobiety(key)
+        try:                                     # wersja 34 – Analityk: przerwa ≥30 dni (ESPN)
+            dl, inf = analityk.tenis(A, B, start.tz_localize(None)); pa = analityk.zastosuj(pa, dl, inf)
+            if inf and inf.get('powody'): e['analityk'] = inf
+        except Exception as ex: _blad(f'Analityk tenis: {ex}')
         R = tenis.rozklad(pa, bo, wta); T, rk = tenis.typy(R, bo); op = lambda n, a, b: tenis.opis(n, a, b, bo)
         e.update(dyscyplina='Tenis', bo=bo, wta=wta, szansa_a=round(pa, 4), szansa_b=round(1 - pa, 4),
                  wyniki=[dict(a=w[0], b=w[1], szansa=round(float(v), 4)) for w, v in sorted(R.items(), key=lambda x: -x[1])])
@@ -177,6 +183,10 @@ def przelicz(sp, key, tytul, grupa, ev):
         mma = grupa == 'Mixed Martial Arts'
         if mma:
             pa = walki.kalibruj_mma(p[A] / (p[A] + p[B])); kat = walki.kategoria(A, B)
+            try:                                 # wersja 34 – Analityk: wiek i przerwa (ufc-master)
+                dl, inf = analityk.mma(A, B, start.tz_localize(None)); pa = analityk.zastosuj(pa, dl, inf)
+                if inf and inf.get('powody'): e['analityk'] = inf
+            except Exception as ex: _blad(f'Analityk MMA: {ex}')
             r5, rundy_zr, kat_espn = rundy_walki(dict(sport='walki', dyscyplina='MMA', start=e['start'], a=A, b=B))
             kat = kat or kat_espn
             R = walki.rozklad_mma(pa, kat, r5)
@@ -190,11 +200,18 @@ def przelicz(sp, key, tytul, grupa, ev):
             e.update(dyscyplina='Boks', szansa_a=round(p[A], 4), szansa_b=round(p[B], 4), szansa_remis=round(pd_, 4) if pd_ else None)
         T, rk = walki.typy(R); op = walki.opis
     for poz, (k, sz) in T.items(): e[poz] = _typ(k, sz, op, A, B, _betclic_dla(k, bc, A, B))
+    try:                                         # wersja 36: wszystkie rynki meczu (dla Analityka AI: klucz → opis, szansa)
+        e['rynki'] = {k: [op(k, A, B), round(float(sum(R[w] for w in W)), 4)] for k, W in rk.items() if 0.03 <= sum(R[w] for w in W) <= 0.97}
+    except Exception: pass
     e['value'] = []   # Value z polskich kursów – value_pl.py (po pobraniu kursów), KSW poniżej z rynku PL
     return e
 
-def werdykt(m): return ((m.get('raport') or {}).get('ai') or {}).get('werdykt')
+def werdykt(m):
+    p = (m.get('raport') or {}).get('pro')            # wersja 35/36: werdykt Analityka Pro ma pierwszeństwo
+    if p and p.get('werdykt'): return 'zgoda' if p['werdykt'] == 'mocna_zgoda' else p['werdykt']
+    return ((m.get('raport') or {}).get('ai') or {}).get('werdykt')
 
+ANALITYK_INNE = 2       # wersja 36: ile meczów tenisa/walk dziennie analizuje Gemini Pro (w ramach budżetu)
 KSW_DO_GLOWNYCH = 100   # KSW wchodzi do 5 głównych Pewnych dopiero po tylu rozliczonych walkach w dzienniku
 
 def lista_pewnych(mecze):
@@ -339,7 +356,8 @@ Odpowiedz WYŁĄCZNIE obiektem JSON (bez ```), dokładnie w tej postaci:
   "styl": "jedno zdanie – jak style do siebie pasują",
   "lepszy_zaklad": "inny zakład w {czym}, który uważasz za rozsądniejszy, albo pusty tekst",
   "problemy_a": ["krótko", ...], "problemy_b": ["krótko", ...],
-  "ostrzezenie": true/false, "ostrzezenie_dla": "a" | "b" | "oba" | "brak", "uzasadnienie": "jedno zdanie"{dodatki}}}
+  "ostrzezenie": true/false, "ostrzezenie_dla": "a" | "b" | "oba" | "brak", "uzasadnienie": "jedno zdanie",
+  "za": ["argument z faktem", ...], "przeciw": ["argument z faktem", ...], "szansa_wlasna": 0.0{dodatki}}}
 "ostrzezenie" = true tylko przy poważnej sprawie: {powazne}."""
 DODATKI_WALKI = ''',
   "oceny": {"a": {"stojka": 1-10, "zapasy": 1-10, "parter": 1-10, "kondycja": 1-10}, "b": {...tak samo}}  – tylko gdy źródła opisują styl obu
@@ -389,9 +407,10 @@ def raport_ai(m, polski_=False, wymus=False, typ=None):
     if not d or not d.get('podsumowanie'): return None
     ai_raport.STAN['udane'] += 1; ai_raport.analiz_dzis(1)
     w = ai_raport.pilnuj_werdyktu(ai_raport.werdykt_z(d) if typ else None, szukal, zr, d)
+    w = ai_raport.wymagaj_przeciw(w, d)
     if w: ai_raport.STAN['werdykty'][w] = ai_raport.STAN['werdykty'].get(w, 0) + 1
     L = lambda k: [str(x)[:120] for x in (d.get(k) or []) if x][:6]
-    out = dict(tekst=str(d['podsumowanie'])[:700], problemy_a=L('problemy_a'), problemy_b=L('problemy_b'),
+    out = dict(ai_raport.za_przeciw(d), tekst=str(d['podsumowanie'])[:700], problemy_a=L('problemy_a'), problemy_b=L('problemy_b'),
                ostrzezenie=bool(d.get('ostrzezenie')), ostrzezenie_dla=str(d.get('ostrzezenie_dla') or 'brak'),
                uzasadnienie=str(d.get('uzasadnienie') or '')[:200], zrodla=zr[:5], szukal=bool(szukal), werdykt=w,
                powod=str(d.get('powod') or '')[:220], forma=str(d.get('forma') or '')[:260], styl=str(d.get('styl') or '')[:260],
@@ -837,6 +856,16 @@ def licz():
     for sp in ('walki', 'tenis'): kolejnosc += [m for m in wszystkie[sp] if m not in kolejnosc]
     try: dodaj_raporty(wszystkie['tenis'] + wszystkie['walki'], kolejnosc)
     except Exception as ex: _blad(f'raporty: {ex}')
+    try:                                         # wersja 36 – Analityk Pro (3 kroki) dla najmocniejszych kandydatów tenisa i walk
+        import analityk_ai
+        kand = sorted([m for m in kolejnosc if m.get('najpewniejszy') and werdykt(m) != 'odradza'], key=lambda m: -m['najpewniejszy']['szansa'])
+        for m in kand[:ANALITYK_INNE]:
+            if not analityk_ai.mozna(): break
+            a = analityk_ai.analiza_inne(m)
+            if a:
+                m['raport'] = dict(m.get('raport') or {}, pro=a)
+                analityk_ai.zapisz_inne(m, a)
+    except Exception as ex: _blad(f'Analityk Pro: {ex}')
     for sp in ('tenis', 'walki'):
         mecze = wszystkie[sp]
         pewne, odradzane = lista_pewnych(mecze)   # ponownie – po ocenie AI

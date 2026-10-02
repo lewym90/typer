@@ -3,7 +3,7 @@ import json, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from core import *
 import copy, hashlib, requests, re
-import core, raport, powiadomienia as tg, zrodla, ai_raport, sporty, wspolne
+import core, raport, powiadomienia as tg, zrodla, ai_raport, sporty, wspolne, analityk, analityk_ai
 from nazwy import pl, pl_txt, pl_mecz
 
 NAZWY_LIG = {'soccer_uefa_champs_league': 'Liga Mistrzów', 'soccer_fifa_world_cup': 'Mistrzostwa świata',
@@ -71,6 +71,7 @@ RYZYKOWNE = ['1', 'X', '2', 'Over 2.5', 'Over 3.5', 'Under 1.5', 'BTTS Tak', 'H 
              'H -3.5', 'A -3.5', 'H -4.5', 'A -4.5', 'Over 4.5', 'Over 5.5', 'H o2.5', 'A o2.5', 'H o1.5', 'A o1.5', '1 & o1.5', '2 & o1.5', '1 & o2.5', '2 & o2.5', 'X & u2.5', 'BTTS & o2.5']
 
 ODRADZANE = []     # typy, które AI odradza (nie trafiają do Pewnych)
+ANALITYK_PILKA = 3  # wersja 36 (wariant A): 3 mecze piłki + 2 tenisa/walk dziennie Gemini Pro; wersja 35: ile meczów piłki dziennie analizuje Gemini Pro (w ramach budżetu 150 zł/mies.)
 SAMOKOREKTA = {}   # z dziennika typów "Pewne" (min. 100 rozliczonych typów danego rodzaju)
 
 def szansa(z, p, x):
@@ -129,7 +130,7 @@ def opis_meczu(x, liga):
                 wyniki=wyniki_top(x['M']), uwaga=x['uwaga'], najczestsze=najczestsze(x['M']),
                 analiza=dict(model=x.get('model_key'), h=x.get('model_h'), a=x.get('model_a'),
                              lam=[round(float(v), 4) for v in x['lam_mkt']] if x.get('lam_mkt') is not None else None),
-                raport=x.get('raport'), **tablica(x['M']))
+                raport=x.get('raport'), analityk=x.get('analityk'), **tablica(x['M']))
 
 def typy_na_dzis():
     mecze = dzisiejsze_mecze()
@@ -137,6 +138,9 @@ def typy_na_dzis():
     for key, model, ev in mecze:
         try: x = macierz_meczu(ev, model)
         except Exception as e: print("pominięto", ev.get('home_team'), e); x = None
+        if x:                                  # wersja 34 – Analityk: braki w kadrze (FotMob) → korekta szans
+            try: analityk.pilka(x, score_matrix, pl)
+            except Exception as e: analityk._blad(f"piłka {x.get('home')}: {e}")
         if x: analizy.append((list(LIGI_DO_SKANU).index(key), key, x))
     # --- VALUE: liczona po pobraniu polskich kursów (value_pl.py, z kursy_pl.main – przed Telegramem i przy każdym odświeżeniu) ---
     value, value_x = [], []
@@ -174,6 +178,21 @@ def typy_na_dzis():
                                          rozgrywki=NAZWY_LIG.get(x['sport_key'], ''), ai=i < limit_ai,
                                          typ=((rr[t['z']][1] + (f" ({rr[t['z']][2]})" if rr[t['z']][2] else '')), t['p']) if t else None, szanse={k: float(mk[k]) for k in ('1', 'X', '2')})
         except Exception as e: print('raport:', x['home'], e)
+    # wersja 35 – Analityk AI (Gemini Pro: na ślepo → adwokat diabła → sędzia) dla najważniejszych kandydatów; jego werdykt decyduje
+    for x in kandydaci[:8]:
+        if analityk_ai.STAN['analiz'] >= ANALITYK_PILKA or not analityk_ai.mozna(): break
+        try:
+            t = naj_meczu.get(id(x)); rr = rynki_rozszerzone(x['M'], pl(x['home']), pl(x['away'])); mk = markets(x['M'])
+            lista = {k: (v[1] + (f' ({v[2]})' if v[2] else ''), round(float(v[0]), 4)) for k, v in rr.items() if k in MASKI and 0.04 <= v[0] <= 0.96}
+            typ = ((rr[t['z']][1] + (f" ({rr[t['z']][2]})" if rr[t['z']][2] else '')), t['p']) if t else None
+            fm = analityk._fm_mecz.get((x.get('analityk') or {}).get('fotmob_id'))
+            rynek = {k: float(mk[k]) for k in ('1', 'X', '2')}
+            a = analityk_ai.analiza_pilka(x['home'], x['away'], pl(x['home']), pl(x['away']), NAZWY_LIG.get(x['sport_key'], ''), x['start'], fm, rynek, typ, lista)
+            if not a: continue
+            r_ = x.setdefault('raport', {}) or {}; x['raport'] = r_
+            r_['pro'] = a; r_['werdykt'] = 'zgoda' if a['werdykt'] == 'mocna_zgoda' else a['werdykt']
+            analityk_ai.zapisz('pilka', x['event_id'], f"{x['home']} – {x['away']}", x['start'], typ[0] if typ else '', rynek, a, x['sport_key'])
+        except Exception as e: analityk_ai._blad(f"{x.get('home')}: {type(e).__name__}: {e}")
     for v in value:  # dołącz raporty do kart Value
         for x in value_x:
             if v['mecz'] == f"{x['home']} – {x['away']}": v['raport'] = x.get('raport')
@@ -302,6 +321,17 @@ def rozlicz_wszystko():
             V.loc[i, 'wynik'] = f"{w[0]}:{w[1]}"; V.loc[i, 'zysk_na_1zl'] = round(zysk_zakladu(r.rynek, r.strona, r.linia, r.kurs_betclic, *w), 4)
     if len(V): V.to_csv(PLIK_DZIENNIKA, index=False)
     rozlicz_pewne(wyniki)
+    def _wynik_ai(eid, g, a, s, liga):
+        if eid in wyniki: return wyniki[eid]
+        try:
+            w = tg.wynik(liga, g, a, s) if liga else None
+            if w and w[2] == 'post': return (w[0], w[1])
+        except Exception: pass
+        return wynik_z_danych(g, a, s) if DANE else None
+    try: analityk_ai.rozlicz_inne(sporty.PLIK_TYPOW)
+    except Exception as e: print('Analityk AI – rozliczenie tenis/walki:', e)
+    try: analityk_ai.rozlicz(_wynik_ai, MASKI, MAXG)
+    except Exception as e: print('Analityk AI – rozliczenie:', e)
     return wyniki
 
 def policz_samokorekte(d, minimum=100, maks=0.05):
@@ -397,7 +427,7 @@ def sprawdz_przed_meczem(d):
                 bm = {b['key']: {mk['key']: mk['outcomes'] for mk in b['markets']} for b in ev.get('bookmakers', [])}
                 p1, pov, zr = ostre_prawdopodobienstwa(bm, ev['home_team'], ev['away_team'])
                 if p1 is not None:
-                    M = score_matrix(*market_lambdas(*p1, p_over=pov), -0.05)
+                    M = score_matrix(*analityk.lambdy_przed_meczem(market_lambdas(*p1, p_over=pov), m), -0.05)
                     ruch = {poz: [sz, round(float((M * MASKI[k]).sum()), 4)] for poz, ik, k, n, sz in _typy_meczu(m) if k in MASKI}
                     pm['kursy'] = dict(czas=teraz.strftime('%H:%M'), zrodlo=zr, ruch=ruch, szanse={z: round(float((M * MASKI[z]).sum()), 4) for z in '1X2'})
                     for poz, (a, b) in ruch.items():   # zapis do dziennika: szansa tuż przed meczem
@@ -1088,6 +1118,7 @@ def zapisz_status(tryb, bledy=None, st=None, tg_info=None):
     if DIAG: st['przedmeczowe'] = dict(czas=teraz, mecze=DIAG[:12])
     if tg_info: st['telegram_typy'] = dict(wynik=tg_info, czas=teraz)
     if STRAZNIK: st['na_zywo'] = dict(straznik=STRAZNIK[-1], czas=teraz)
+    if tryb == 'pelne': st['analityk'] = dict(analityk.stan(), czas=teraz); st['analityk_ai'] = dict(analityk_ai.STAN, czas=teraz)
     if tryb == 'pelne' or sporty.STAN['bledy']:
         st['sporty'] = dict(tenis=sporty.STAN['tenis'], walki=sporty.STAN['walki'], ksw=sporty.STAN.get('ksw'), kredyty=sporty.STAN['kredyty'], rundy_walk=sporty.STAN['rundy'],
                             pominiete=sporty.STAN['pominiete'][:6], bledy=sporty.STAN['bledy'][:6], czas=teraz)
@@ -1121,6 +1152,8 @@ def eksport_dziennika():
 def eksport_calosci():
     dz = eksport_dziennika() if len(wczytaj_dziennik()) else dict(statystyki=None, typy=[])
     dz['pewne'] = stat_pewne(wczytaj_pewne()); dz['samokorekta'] = SAMOKOREKTA
+    try: dz['analityk_ai'] = analityk_ai.statystyki()
+    except Exception as e: print('statystyki Analityka AI:', e)
     try:
         import dziennik_kursy; dz['kursy_pl'] = dziennik_kursy.statystyki()
     except Exception as e: print('statystyki kursów PL:', e)

@@ -421,15 +421,29 @@ def _ufc_zawodnik(html):
 
 def ufcstats(s, B, N, KP):
     wyn = dict(zrodlo='UFCStats', proby=[], gale=[], dopasowane=[], niedopasowane=[])
-    info, r = req(s, f'{UFC}/statistics/events/upcoming'); wyn['proby'].append(info)
-    if r is None or info.get('kod') != 200: return wyn
-    gale = re.findall(r'href="(http://ufcstats\.com/event-details/[0-9a-f]+)"[^>]*>\s*([^<]+?)\s*</a>', r.text)[:2]
+    gale, html = [], ''
+    for u in (f'{UFC}/statistics/events/upcoming', 'https://ufcstats.com/statistics/events/upcoming', f'{UFC}/statistics/events/upcoming?page=all'):
+        info, r = req(s, u, headers={'Accept': 'text/html,application/xhtml+xml', 'Accept-Language': 'en-US,en;q=0.9'})
+        if r is not None:
+            html = r.text; info['poczatek'] = re.sub(r'\s+', ' ', html[:1200])
+            gale = re.findall(r'href="(https?://(?:www\.)?ufcstats\.com/event-details/[0-9a-f]+)"[^>]*>\s*([^<]+?)\s*</a>', html)[:2]
+        wyn['proby'].append(info)
+        if gale: break
+    if not gale and getattr(B, 'ctx', None):          # strona z ochroną – przeglądarka
+        pg, inf, _ = B.strona(f'{UFC}/statistics/events/upcoming', 5000)
+        try: html = pg.content() if pg else ''
+        except Exception: html = ''
+        inf['poczatek'] = re.sub(r'\s+', ' ', html[:1200]); wyn['przegladarka'] = inf
+        gale = re.findall(r'href="(https?://(?:www\.)?ufcstats\.com/event-details/[0-9a-f]+)"[^>]*>\s*([^<]+?)\s*</a>', html)[:2]
+        try: pg and pg.close()
+        except Exception: pass
+    if not gale: return wyn
     walki = []
     for url, nazwa in gale:
         info, r = req(s, url); g = dict(nazwa=nazwa, url=url, kod=info.get('kod'))
         if r is not None and info.get('kod') == 200:
             for wiersz in re.findall(r'<tr class="b-fight-details__table-row[^"]*"[^>]*>(.*?)</tr>', r.text, re.S):
-                z = re.findall(r'href="(http://ufcstats\.com/fighter-details/[0-9a-f]+)"[^>]*>\s*([^<]+?)\s*</a>', wiersz)
+                z = re.findall(r'href="(https?://(?:www\.)?ufcstats\.com/fighter-details/[0-9a-f]+)"[^>]*>\s*([^<]+?)\s*</a>', wiersz)
                 if len(z) >= 2: walki.append(dict(gala=nazwa, a=z[0][1], b=z[1][1], a_url=z[0][0], b_url=z[1][0]))
             g['walk'] = sum(1 for w in walki if w['gala'] == nazwa)
         wyn['gale'].append(g)

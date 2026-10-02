@@ -119,16 +119,19 @@ Odpowiedz WYŁĄCZNIE obiektem JSON (bez ```), dokładnie w tej postaci:
   "braki_gosp": ["Nazwisko (powód)", ...], "braki_gosc": ["Nazwisko (powód)", ...],
   "niepewni": ["Nazwisko (drużyna, powód)", ...],
   "powazne": true/false, "powazne_dla": "gosp" | "gosc" | "oba" | "brak",
-  "uzasadnienie": "jedno zdanie – dlaczego braki są / nie są poważne"}}
+  "uzasadnienie": "jedno zdanie – dlaczego braki są / nie są poważne",
+  "za": ["argument z faktem", ...], "przeciw": ["argument z faktem", ...], "szansa_wlasna": 0.0}}
 "powazne" = true tylko, gdy brakuje co najmniej jednego kluczowego zawodnika (najlepszy strzelec, kapitan, podstawowy bramkarz)
 albo zapowiedziano dużą rotację (4+ zmiany w składzie)."""
 
-OCENA = """OCENA TYPU: program typuje „{typ}” – szansa z kursów bukmacherów {szansa}. Kurs już zawiera to, co powszechnie wiadomo.
-Oceń jak zawodowy typer, czy coś przemawia przeciw temu typowi:
- "zgoda" – nic istotnego przeciw (najczęstszy werdykt);
- "ryzyko" – konkretny powód do ostrożności (niepewny ważny zawodnik, zmęczenie, rotacja, zła forma, niekorzystne zestawienie stylów);
- "odradza" – poważny, potwierdzony w źródłach powód, którego kurs prawdopodobnie jeszcze nie uwzględnia (kluczowy zawodnik na pewno nie gra,
-   duża zapowiedziana rotacja, zastępstwo w ostatniej chwili, choroba/kontuzja, nieudane ważenie). Używaj rzadko i tylko z konkretnym źródłem."""
+OCENA = """OCENA TYPU (wersja 36 – bez przytakiwania): program proponuje „{typ}” – szansa z kursów bukmacherów {szansa}.
+Najpierw – zanim spojrzysz na tę liczbę – oceń SAM, na podstawie faktów, jaka jest szansa tego typu („szansa_wlasna”). Potem porównaj.
+Podaj uczciwie argumenty ZA i PRZECIW (każdy oparty na fakcie ze źródła; co najmniej 2 przeciw – jeśli naprawdę ich nie ma, napisz dlaczego).
+Nie zgadzasz się domyślnie z nikim. Werdykt:
+ "zgoda" – fakty wspierają typ, a argumenty przeciw są słabsze (musisz je wymienić);
+ "ryzyko" – istotny argument przeciw (niepewny ważny zawodnik, zmęczenie, rotacja, forma, zestawienie stylów, stawka meczu);
+ "odradza" – mocny, potwierdzony w źródle powód przeciw, którego kurs prawdopodobnie nie uwzględnia.
+Kurs zawiera to, co powszechnie wiadomo – Twoja wartość to fakty, których rynek może jeszcze nie wycenić."""
 
 ZASADY = """ZASADY RZETELNOŚCI (najważniejsze):
 - Podawaj WYŁĄCZNIE fakty, które znalazłeś w źródłach z ostatnich 7 dni albo w danych poniżej. Niczego nie wymyślaj: żadnych nazwisk,
@@ -140,6 +143,17 @@ ZASADY = """ZASADY RZETELNOŚCI (najważniejsze):
 - Nazwiska zawodników zostaw w oryginalnej pisowni. Pisz rzeczowo, jak doświadczony analityk, bez ozdobników."""
 
 WERDYKTY = ('zgoda', 'ryzyko', 'odradza')
+def wymagaj_przeciw(w, d):
+    """Wersja 36: „zgoda” bez co najmniej 2 rzetelnych argumentów przeciw = „ryzyko” (AI musi rozważyć obie strony)."""
+    if w == 'zgoda' and len([x for x in (d or {}).get('przeciw') or [] if str(x).strip()]) < 2: return 'ryzyko'
+    return w
+
+def za_przeciw(d):
+    L = lambda k: [str(x)[:220] for x in ((d or {}).get(k) or []) if str(x).strip()][:4]
+    try: sw = float((d or {}).get('szansa_wlasna'))
+    except Exception: sw = None
+    return dict(za=L('za'), przeciw=L('przeciw'), szansa_wlasna=sw if sw is not None and 0 < sw < 1 else None)
+
 def werdykt_z(d):
     w = str((d or {}).get('werdykt') or '').strip().lower()
     w = {'zgoda z faworytem': 'zgoda', 'ryzyko niespodzianki': 'ryzyko', 'odradzam': 'odradza'}.get(w, w)
@@ -258,8 +272,9 @@ def raport_ai(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, braki=None, zapowied
     STAN['udane'] += 1; analiz_dzis(1)
     lista = lambda k: [str(x)[:120] for x in (d.get(k) or []) if x][:10]
     w = pilnuj_werdyktu(werdykt_z(d) if typ else None, szukal, zr, d)
+    w = wymagaj_przeciw(w, d)
     if w: STAN['werdykty'][w] = STAN['werdykty'].get(w, 0) + 1
-    out = dict(tekst=str(d['podsumowanie'])[:700], braki_gosp=lista('braki_gosp'), braki_gosc=lista('braki_gosc'),
+    out = dict(za_przeciw(d), tekst=str(d['podsumowanie'])[:700], braki_gosp=lista('braki_gosp'), braki_gosc=lista('braki_gosc'),
                 niepewni=lista('niepewni'), powazne=bool(d.get('powazne')), powazne_dla=str(d.get('powazne_dla') or 'brak'),
                 uzasadnienie=str(d.get('uzasadnienie') or '')[:200], zrodla=zr[:6], szukal=bool(szukal), model=STAN['model'],
                 werdykt=w, powod=str(d.get('powod') or '')[:220], forma=str(d.get('forma') or '')[:260], styl=str(d.get('styl') or '')[:260],

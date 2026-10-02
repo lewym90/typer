@@ -8,13 +8,67 @@ from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 os.environ.setdefault('AI_BUDZET_ZL', '15')
+os.environ.setdefault('AI_PRO_BUDZET_ZL', '30'); os.environ.setdefault('AI_PRO_RECZNE', '1')     # wersja 36: analiza ręczna Pro – 30 zł z łącznych 200 zł na Gemini Pro
+
+
+def _dociagnij(nazwy=('analityk', 'analityk_ai', 'kursy_pl')):
+    """start.sh pobiera stałą listę plików – nowsze moduły (wersja 34+) dociągamy tutaj, przy każdym starcie (restart codziennie 5:30)."""
+    import urllib.request
+    kat = os.path.dirname(os.path.abspath(__file__))
+    for n in nazwy:
+        try:
+            with urllib.request.urlopen(f'https://raw.githubusercontent.com/lewym90/typer/main/typer/{n}.py?t={int(time.time())}', timeout=20) as r:
+                tresc = r.read()
+            if len(tresc) > 500: open(os.path.join(kat, n + '.py'), 'wb').write(tresc)
+        except Exception as e: print('dociągnięcie', n, e, flush=True)
+
+
+_dociagnij()
 import pandas as pd
 import ai_raport, sporty
+try: import analityk_ai, analityk
+except Exception as e: analityk_ai = analityk = None; print('Analityk Pro niedostępny:', e, flush=True)
+RECZNE_PRO_DZIENNIE = int(os.environ.get('RECZNE_PRO_DZIENNIE', '2'))
+_dzis_pro = {'data': None, 'n': 0}
+
+
+def analiza_pro(z, sp, a, b, typ_t, start):
+    """Ręczna analiza Pro (3 kroki): piłka – z teczką FotMob (jeśli mecz się znajdzie), tenis/walki – szanse A/B z kursów."""
+    if not analityk_ai: return 503, {'blad': 'Analityk Pro jeszcze niedostępny na serwerze.'}
+    d = time.strftime('%Y-%m-%d')
+    if _dzis_pro['data'] != d: _dzis_pro.update(data=d, n=0)
+    if _dzis_pro['n'] >= RECZNE_PRO_DZIENNIE: return 429, {'blad': f'Dzisiejszy limit analiz Pro ({RECZNE_PRO_DZIENNIE}) wyczerpany.'}
+    if not analityk_ai.mozna(): return 429, {'blad': 'Wyczerpany budżet analiz Pro na dziś albo w tym miesiącu.'}
+    with _blokada:
+        if sp == 'pilka':
+            sz = z.get('szanse') or {}
+            try: rynek = {k: float(sz[k]) for k in ('1', 'X', '2')}
+            except Exception: return 400, {'blad': 'Do analizy Pro potrzebne są kursy 1X2 (szanse).'}
+            fm = None
+            if analityk and start is not None:
+                try:
+                    mid, _ = analityk.fotmob_szukaj(a, b, start)
+                    fm = analityk.fotmob_szczegoly(mid) if mid else None
+                except Exception: fm = None
+            lista = {'1': (f'wygra {a}', rynek['1']), 'X': ('remis', rynek['X']), '2': (f'wygra {b}', rynek['2']),
+                     '1X': (f'{a} lub remis', rynek['1'] + rynek['X']), 'X2': (f'{b} lub remis', rynek['X'] + rynek['2']), '12': ('bez remisu', rynek['1'] + rynek['2'])}
+            pro = analityk_ai.analiza_pilka(a, b, a, b, str(z.get('rozgrywki') or '')[:80], start if start is not None else pd.Timestamp.now(),
+                                            fm, rynek, typ_t, lista)
+        else:
+            try: sa = float(z.get('szansa_a'))
+            except Exception: return 400, {'blad': 'Do analizy Pro potrzebne są kursy (szansa A/B).'}
+            m = dict(sport=sp, a=a, b=b, mecz=f'{a} – {b}', turniej=str(z.get('rozgrywki') or 'analiza ręczna')[:80], szansa_a=sa,
+                     dzien=start.strftime('%d.%m') if start is not None else '', godzina=start.strftime('%H:%M') if start is not None else '')
+            if typ_t: m['najpewniejszy'] = dict(zaklad=typ_t[0], szansa=typ_t[1])
+            pro = analityk_ai.analiza_inne(m)
+    if not pro: return 502, {'blad': 'Analityk Pro nie przygotował analizy (limit albo chwilowy błąd).', 'szczegoly': analityk_ai.STAN['bledy'][-2:]}
+    _dzis_pro['n'] += 1
+    return 200, {'pro': pro}
 
 PORT = int(os.environ.get('PORT_AI', '8787'))
 DOZWOLONE = ('https://lewym90.github.io',)
 RECZNE_DZIENNIE = int(os.environ.get('RECZNE_DZIENNIE', '40'))
-WERSJA = '2'
+WERSJA = '3'
 _blokada = threading.Lock()   # jedna analiza naraz (1 GB RAM, limit Gemini)
 _dzis = {'data': None, 'n': 0}
 
@@ -39,6 +93,7 @@ def analiza(z):
         kp = ai_raport.klucz_pamieci('pilka', a, b, str(start)[:10] if start is not None else '', typ_t[0] if typ_t else '')
     else:
         kp = ai_raport.klucz_pamieci(sp, a, b, (start.strftime('%d.%m') if start is not None else ''), typ_t[0] if typ_t else '')
+    if z.get('pro'): return analiza_pro(z, sp, a, b, typ_t, start)
     z_p = ai_raport.z_pamieci(kp, 6)
     if z_p and (z_p.get('werdykt') or not typ_t): return 200, {'ai': z_p, 'z_pamieci': True}
     if _licz_reczne() >= RECZNE_DZIENNIE: return 429, {'blad': f'Dzisiejszy limit analiz ręcznych ({RECZNE_DZIENNIE}) wyczerpany.'}
@@ -91,7 +146,8 @@ class H(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path.startswith('/zdrowie'):
             return self._json(200, dict(ok=True, wersja=WERSJA, klucz=bool(ai_raport.KLUCZ), reczne_dzis=_licz_reczne(), limit_dzienny=RECZNE_DZIENNIE,
-                                        koszt_miesiac_zl=round(ai_raport.koszt_miesiac(), 2), budzet_zl=ai_raport.BUDZET_ZL))
+                                        koszt_miesiac_zl=round(ai_raport.koszt_miesiac(), 2), budzet_zl=ai_raport.BUDZET_ZL,
+                                        pro=dict(analityk_ai.STAN, reczne_dzis=_dzis_pro['n'], limit_dzienny=RECZNE_PRO_DZIENNIE) if analityk_ai else None))
         self._json(404, {'blad': 'nie ma'})
 
     def do_POST(self):

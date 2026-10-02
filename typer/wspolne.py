@@ -58,7 +58,12 @@ def _pewne_inne(inne, sp):
         m = byid.get(i)
         if not m or not m.get('najpewniejszy'): continue
         yield dict(sport=sp, event_id=str(i), szansa=float(m['najpewniejszy']['szansa']), start=m['start'],
-                   werdykt=((m.get('raport') or {}).get('ai') or {}).get('werdykt'), niz=bool(m.get('nizsza_pewnosc')), ksw=bool(m.get('rynek_pl')))
+                   werdykt=_werdykt_inne(m), niz=bool(m.get('nizsza_pewnosc')), ksw=bool(m.get('rynek_pl')))
+
+def _werdykt_inne(m):
+    p = (m.get('raport') or {}).get('pro')
+    if p and p.get('werdykt'): return 'zgoda' if p['werdykt'] == 'mocna_zgoda' else p['werdykt']
+    return ((m.get('raport') or {}).get('ai') or {}).get('werdykt')
 
 def _value_pilka(dzis):
     for v in dzis.get('value', []):

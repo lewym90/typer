@@ -667,7 +667,37 @@ const WERD = {zgoda:['Zgoda z faworytem','<circle cx="12" cy="12" r="9"/><path d
   odradza:['AI odradza','<path d="M8.5 3h7L21 8.5v7L15.5 21h-7L3 15.5v-7L8.5 3z"/><path d="M9 9l6 6M15 9l-6 6"/>']};
 function werdyktChip(w){ if(!WERD[w]) return ''; return `<span class="chipv ${w}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${WERD[w][1]}</svg>${WERD[w][0]}</span>`; }
 const aiKarty = m => ((m.raport || {}).ai) || null;
-const werdyktKarty = m => (aiKarty(m) || {}).werdykt || (m.raport || {}).werdykt || m.werdykt || null;
+const proKarty = m => ((m.raport || {}).pro) || null;
+const werdyktKarty = m => { const p = proKarty(m); if(p && p.werdykt) return p.werdykt === 'mocna_zgoda' ? 'zgoda' : p.werdykt;
+  return (aiKarty(m) || {}).werdykt || (m.raport || {}).werdykt || m.werdykt || null; };
+function proSkrot(m){
+  // wersja 35: Analityk AI (Gemini Pro, 3 kroki) – skrót na karcie
+  const p = proKarty(m); if(!p) return '';
+  const ta = p.typ_analityka || {}, s = p.szanse || {};
+  let h = `<div class="aiw"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px">${werdyktChip(werdyktKarty(m))}<span class="note">🧠 Analityk Pro${p.werdykt === 'mocna_zgoda' ? ' · mocna zgoda' : ''}</span></div>`;
+  if(p.powod) h += `<p style="font-weight:600;color:var(--text)">${esc(p.powod)}</p>`;
+  if(s['1'] != null) h += `<p class="note">Szanse Analityka: ${pct(s['1'])} · ${pct(s['X'])} · ${pct(s['2'])}</p>`;
+  const ab = p.szanse_ab; if(ab && ab.A != null) h += `<p class="note">Szanse Analityka: ${esc(m.a || 'A')} ${pct(ab.A)} · ${esc(m.b || 'B')} ${pct(ab.B)}</p>`;
+  if(ta.klucz && ta.klucz !== 'brak') h += `<p style="color:var(--text)">🎯 <b>Typ Analityka:</b> ${esc(ta.opis || ta.klucz)} – Analityk ${ta.szansa != null ? pct(ta.szansa) : '?'}, rynek ${ta.szansa_rynku != null ? pct(ta.szansa_rynku) : '?'}${ta.szansa_rynku ? ` (kurs rynku ok. ${num(1 / ta.szansa_rynku)})` : ''}</p>`;
+  if(p.wynik_dokladny && p.wynik_dokladny.wynik) h += `<p class="note">Wynik według Analityka: <b>${esc(p.wynik_dokladny.wynik)}</b>${p.wynik_dokladny.szansa ? ` (${pct(p.wynik_dokladny.szansa)})` : ''}</p>`;
+  return h + `</div>`;
+}
+function proPelny(m){
+  const p = proKarty(m); if(!p) return '';
+  const lst = (tyt, a) => a && a.length ? `<p class="note" style="margin-top:8px"><b>${tyt}</b></p><ul style="margin:4px 0 0 18px;padding:0">${a.map(x => `<li style="margin:3px 0">${esc(x)}</li>`).join('')}</ul>` : '';
+  let h = `<div class="aiw">${proSkrot(m).replace(/^<div class="aiw">|<\/div>$/g, '')}`;
+  if(p.podsumowanie) h += `<p style="color:var(--text);font-size:15.5px">${esc(p.podsumowanie)}</p>`;
+  h += lst('Za', p.za) + lst('Przeciw', p.przeciw);
+  if(p.scenariusze && p.scenariusze.length) h += lst('Scenariusze', p.scenariusze.map(x => `${x.wynik} (${x.szansa != null ? pct(x.szansa) : '?'}) – ${x.opis}`));
+  if(p.scenariusz_przeciw && p.scenariusz_przeciw.opis) h += lst('Adwokat diabła – scenariusz przeciw', [`${p.scenariusz_przeciw.wynik || ''} ${p.scenariusz_przeciw.opis}`]);
+  h += lst('Błędy wykryte w analizie', p.bledy_analizy) + lst('Niewiadome', p.niewiadome);
+  if(p.fakty && p.fakty.length) h += lst('Fakty (ze źródłem)', p.fakty.map(f => f.tekst + (f.niezweryfikowane ? ' [nazwisko niepotwierdzone w kadrze]' : '')));
+  const sba = p.szanse_na_slepo_ab; if(sba) h += `<p class="note" style="margin-top:8px">Na ślepo: ${pct(sba.A)} · ${pct(sba.B)}${p.szanse_adwokat_ab ? ` · po recenzji: ${pct(p.szanse_adwokat_ab.A)} · ${pct(p.szanse_adwokat_ab.B)}` : ''}</p>`;
+  const sb = p.szanse_na_slepo, sa = p.szanse_adwokat;
+  if(sb) h += `<p class="note" style="margin-top:8px">Na ślepo: ${pct(sb['1'])} · ${pct(sb['X'])} · ${pct(sb['2'])}${sa ? ` · po recenzji: ${pct(sa['1'])} · ${pct(sa['X'])} · ${pct(sa['2'])}` : ''}</p>`;
+  if(p.zrodla && p.zrodla.length) h += `<p class="note">Źródła: ${p.zrodla.slice(0, 6).map(z => `<a href="${esc(z.link)}" target="_blank" rel="noopener">${esc((z.tytul || 'link').slice(0, 30))}</a>`).join(' · ')}</p>`;
+  return h + `<p class="note">${esc(p.model || '')} · ${esc(p.czas || '')}</p></div>`;
+}
 const NAZWA_BUK = n => n === 'Betclic PL' ? 'Betclic' : n;     // Betclic = Betclic Polska (polski serwer)
 function kursyLista(t){
   // Tylko polscy bukmacherzy (Betclic Francja z The Odds API nie jest już pokazywany przy typach)
@@ -714,14 +744,21 @@ function wierszPoziomu(t, nazwa, mecz){
   return `<div class="poz2"><div class="l"><span>${nazwa}</span><b>${esc(P(t.zaklad))}${mecz ? kupBtn({event_id: mecz.event_id, mecz: mecz.mecz, zaklad: P(t.zaklad), szansa: t.szansa}) : ''}</b></div>
     <div class="r"><span>${pct(t.szansa)}</span><b>${best ? num(best[1]) : num(t.kurs_uczciwy)}</b></div></div>${kafelkiBuk(t, true)}`;
 }
+function korektaHtml(m){
+  // wersja 34: korekta szans z czynników, których rynek nie wycenia w pełni (braki w kadrze, przerwa, wiek)
+  const a = m && m.analityk; if(!a || !(a.powody || []).length) return '';
+  const zm = a.zmiana_a != null && m.a ? ` (szansa: ${esc(m.a)} ${a.zmiana_a >= 0 ? '+' : ''}${num(a.zmiana_a * 100, 1)} pkt)` : '';
+  return `<p class="note" style="color:var(--text)">🧠 <b>Korekta:</b> ${a.powody.map(esc).join(' · ')}${zm}</p>`;
+}
 function aiSkrot(m){
-  const ai = aiKarty(m), w = werdyktKarty(m);
-  if(!ai && !w) return '';
-  return `<div class="aiw">${werdyktChip(w)}${ai && (ai.powod || ai.tekst) ? `<p>${esc(ai.powod || ai.tekst)}</p>` : ''}</div>`;
+  const ai = aiKarty(m), w = werdyktKarty(m), k = korektaHtml(m);
+  if(proKarty(m)) return k + proSkrot(m);
+  if(!ai && !w) return k;
+  return k + `<div class="aiw">${werdyktChip(w)}${ai && (ai.powod || ai.tekst) ? `<p>${esc(ai.powod || ai.tekst)}</p>` : ''}</div>`;
 }
 function aiPelny(m, sp){
   const r = m.raport || {}, ai = r.ai;
-  let h = '';
+  let h = proPelny(m);
   if(ai){
     h += `<div class="aiw"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px">${werdyktChip(ai.werdykt) || '<span class="chipv brak">Bez oceny typu</span>'}<span class="note">${esc(ai.czas || '')}${ai.szukal ? ' · z wyszukiwania' : ' · z nagłówków'}</span></div>
       ${ai.powod && ai.werdykt ? `<p style="font-weight:600;color:var(--text)">${esc(ai.powod)}</p>` : ''}${ai.typ && ai.werdykt ? `<p class="note">Oceniany typ: ${esc(ai.typ)}</p>` : ''}
@@ -849,6 +886,18 @@ function widokPewne(){
   h += sekcjaOdradzane(odradzaneWszystkie().filter(([sp]) => f === 'wszystkie' || sp === f));
   return h + `<p class="note" style="margin:4px">Typ dnia to najpewniejszy zakład meczu (od 70%). Szanse z kursów Pinnacle i giełdy Betfair (KSW – z polskich bukmacherów); AI sprawdza każdy typ w aktualnych wiadomościach. Testy na 328 257 spotkaniach: typy od 70% wchodzą ok. 78 razy na 100.</p>`;
 }
+function sekcjaAnalityka(){
+  const a = (S.dziennik || {}).analityk_ai; if(!a || !a.wszystkich) return '';
+  let h = `<section class="sekcja"><h2>Czy Analityk bije rynek?</h2>`;
+  if(!a.n) return h + `<p class="note">Przeanalizowanych meczów: ${a.wszystkich}. Wyniki pojawią się po rozliczeniu pierwszych meczów.</p></section>`;
+  const lepszy = a.logloss_ai != null && a.logloss_rynek != null && a.logloss_ai < a.logloss_rynek;
+  h += `<div class="wiersz" style="border-top:0;padding-top:0"><div class="g"><span>Trafność szans 1X2 (${a.n} meczów)</span><b class="${lepszy ? 'pos' : 'neg'}">${lepszy ? 'Analityk lepszy' : 'Rynek lepszy'}</b></div><div class="d"><span>błąd Analityka ${num(a.logloss_ai, 3)} · rynku ${num(a.logloss_rynek, 3)}</span><span>mniej = lepiej</span></div></div>`;
+  const t = a.typy || {};
+  if(t.n) h += `<div class="wiersz"><div class="g"><span>Typy Analityka</span><b class="${t.roi >= 0 ? 'pos' : 'neg'}">${sgn(t.roi)}</b></div><div class="d"><span>${t.trafione} z ${t.n} weszło · średni kurs ${num(t.sredni_kurs)}</span><span>po kursie rynku bez marży</span></div></div>`;
+  const w = a.wyniki_dokladne || {};
+  if(w.n) h += `<div class="wiersz"><div class="g"><span>Dokładny wynik</span><b>${w.trafione} z ${w.n}</b></div><div class="d"><span>trafione wyniki Analityka</span><span></span></div></div>`;
+  return h + `<p class="note" style="margin-top:8px">Typ Analityka liczony po uczciwym kursie rynku – plus oznacza, że Analityk widział więcej niż rynek.</p></section>`;
+}
 function sekcjaKursowPL(){
   // wersja 33: najlepszy polski kurs przy typie – z chwili wysłania (rano) i ostatni przed meczem
   const k = (S.dziennik || {}).kursy_pl; if(!k) return '';
@@ -877,7 +926,7 @@ function widokDziennik(){
     if(g.n < 100) h += `<p class="note">Przy mniej niż ok. 100 typach wynik to w dużej mierze przypadek – nawet przy 79% zdarza się kilka słabszych dni z rzędu.</p>`;
   } else h += `<p class="note">Brak rozliczonych typów dnia w tym okresie.</p>`;
   h += `</section>`;
-  h += sekcjaKursowPL();
+  h += sekcjaKursowPL() + sekcjaAnalityka();
   // czy AI pomaga
   const grupy = {zgoda:[0,0,0], ryzyko:[0,0,0], odradza:[0,0,0]};
   const dodaj = a => { for(const k of Object.keys(grupy)) if(a && a[k]){ grupy[k][0] += a[k].n; grupy[k][1] += a[k].trafione; grupy[k][2] += a[k].przewidywane * a[k].n; } };
@@ -1029,7 +1078,25 @@ function aiReczna(sp, zap, karta){
   // zap: {a, b, rozgrywki, typ:{zaklad,szansa}, szanse?, szansa_a?, szansa_b?}; karta: obiekt do aiPelny (gospodarz/gosc albo a/b)
   const id = 'air' + Math.random().toString(36).slice(2, 8);
   const klucz = 'ai2_' + [sp, zap.a, zap.b, (zap.typ || {}).zaklad || ''].join('|').toLowerCase();
-  const pokaz = ai => { const el = document.getElementById(id); if(el) el.innerHTML = `<h2>Analiza AI</h2>` + aiPelny(Object.assign({}, karta, {raport: {ai}}), sp); };
+  const kluczPro = 'pro_' + klucz;
+  const pokazPro = (el, pro) => { const box = el.querySelector('.pro-box'); if(box) box.innerHTML = `<h2>Analityk Pro</h2>` + proPelny(Object.assign({}, karta, {raport: {pro}})); };
+  const pokaz = ai => { const el = document.getElementById(id); if(!el) return;
+    el.innerHTML = `<h2>Analiza AI</h2>` + aiPelny(Object.assign({}, karta, {raport: {ai}}), sp) +
+      `<div class="pro-box"><button class="btn" data-pro="1" style="margin-top:10px">🧠 Analiza Pro – 3 kroki (ok. 2 min, maks. 2 dziennie)</button></div>`;
+    const zp = store.get(kluczPro, null);
+    if(zp && Date.now() - zp.t < 6 * 3600e3) return pokazPro(el, zp.pro);
+    const b = el.querySelector('[data-pro]'); if(!b) return;
+    b.onclick = async () => {
+      const box = el.querySelector('.pro-box');
+      box.innerHTML = `<div class="aiw"><p class="note">⏳ Analityk Pro: analiza na ślepo → adwokat diabła → sędzia. Zwykle 1–3 minuty…</p></div>`;
+      try {
+        const r = await fetch(AI_URL + '/analiza', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(Object.assign({sport: sp, pro: true}, zap))});
+        const j = await r.json().catch(() => ({}));
+        if(!r.ok || !j.pro) throw new Error(j.blad || ('błąd ' + r.status));
+        store.set(kluczPro, {t: Date.now(), pro: j.pro}); pokazPro(el, j.pro);
+      } catch(e) { box.innerHTML = `<div class="banner">Analiza Pro się nie udała: ${esc(String(e.message || e))}</div>`; }
+    };
+  };
   const zap_ = store.get(klucz, null);
   setTimeout(async () => {
     if(zap_ && Date.now() - zap_.t < 6 * 3600e3) return pokaz(zap_.ai);
