@@ -964,7 +964,7 @@ def tryb_cron():
     analityk = stan.get('analityk') != dzis and 9 <= teraz.hour < 22
     if not zmiana and not przed and (minut < 110 or teraz.hour < 7):
         if analityk: _analityk_raz_dziennie(stan, dzis)
-        else: _zbieracz_cron(stan, teraz)
+        elif not _radar_cron(stan, teraz): _zbieracz_cron(stan, teraz)
         return
     print(teraz.strftime('%Y-%m-%d %H:%M'), 'cron:', 'nowa lista meczów' if zmiana else ('mecz za chwilę – kursy przed startem' if przed else f'{round(minut)} min od ostatniego odczytu'))
     if czytnik(KP):
@@ -974,7 +974,58 @@ def tryb_cron():
         stan['bc_strumien'] = dzis; json.dump(stan, open(STAN_CRON, 'w'))
         betclic_strumien_z_przegladarki()
     elif analityk: _analityk_raz_dziennie(stan, dzis)
-    else: _zbieracz_cron(stan, teraz)
+    elif not _radar_cron(stan, teraz): _zbieracz_cron(stan, teraz)
+
+def _radar_cron(stan, teraz):
+    """Wersja 40 – Radar typerów: rozpoznanie serwisów z typami raz dziennie (10–22) i migawki stron 3× dziennie
+    (10:30–13, 14:30–17, 18:30–21). Zwraca True, gdy coś uruchomiono (wtedy Zbieracz czeka na następne wywołanie).
+    Nie rusza w oknie, gdy Zbieracz ma mecz 45–75 min przed startem (pierwszeństwo kursów przed meczem)."""
+    dzis = teraz.strftime('%Y-%m-%d'); h, mi = teraz.hour, teraz.minute
+    if _zbieracz_przed_czeka(dzis): return False
+    if stan.get('radar') != dzis and 10 <= h < 22: tryb, kl = 'rozpoznanie', 'radar'
+    else:
+        tryb = kl = None
+        for k, (h0, h1) in (('radar_m1', (10, 13)), ('radar_m2', (14, 17)), ('radar_m3', (18, 21))):
+            if stan.get(k) != dzis and (h > h0 or (h == h0 and mi >= 30)) and h < h1 and os.path.exists('/opt/typer/radar_strony.json'):
+                tryb, kl = 'migawka', k; break
+        if not tryb: return False
+    stan[kl] = dzis; json.dump(stan, open(STAN_CRON, 'w'))
+    import subprocess
+    py = PW_PYTHON if os.path.exists(PW_PYTHON) else sys.executable
+    try:
+        r = subprocess.run([py, os.path.abspath(__file__), '--radar', tryb], capture_output=True, text=True, timeout=1500)
+        print(teraz.strftime('%H:%M'), 'Radar', tryb, (r.stdout or '')[-500:], (r.stderr or '')[-300:])
+    except Exception as e: print('Radar:', e)
+    return True
+
+def _zbieracz_przed_czeka(dzis):
+    try:
+        lista = json.load(open(f'/opt/typer/zbieracz/{dzis}/lista.json'))
+        try: juz = {m['id'] for m in json.load(open(f'/opt/typer/zbieracz/{dzis}/przed.json'))}
+        except Exception: juz = set()
+        u = dt.datetime.now(dt.timezone.utc)
+        return any(40 <= (dt.datetime.strptime(m['t'], '%Y-%m-%d %H:%M').replace(tzinfo=dt.timezone.utc) - u).total_seconds() / 60 <= 80
+                   for m in lista if m['id'] not in juz)
+    except Exception: return False
+
+def radar(tryb):
+    """Tryb --radar <rozpoznanie|migawka>: pobiera typer/radar_vps.py i typer/analityk_vps.py z repozytorium i uruchamia krok."""
+    s = ses(); KP = _przygotuj(s)
+    try: token = open(TOKEN_PLIK).read().strip()
+    except Exception: token = None
+    for mod in ('analityk_vps', 'radar_vps'):
+        cel = os.path.join(KATALOG, f'{mod}.py')
+        try:
+            if token:
+                r = s.get(f'https://api.github.com/repos/{REPO}/contents/typer/{mod}.py', timeout=20,
+                          headers={'Authorization': f'Bearer {token}', 'Accept': 'application/vnd.github.raw', 'User-Agent': 'typer-vps'})
+            else: r = s.get(f'{RAW}/typer/{mod}.py?t={int(time.time())}', timeout=20)
+            r.raise_for_status(); open(cel, 'wb').write(r.content)
+        except Exception as e:
+            if not os.path.exists(cel): print('Radar – brak modułu', mod, e); return
+    if KATALOG not in sys.path: sys.path.insert(0, KATALOG)
+    import radar_vps
+    radar_vps.krok(sys.modules[__name__], KP, s, tryb)
 
 def _zbieracz_cron(stan, teraz):
     """Wersja 37 – Zbieracz kursów: cała oferta Fortuny rano (8:15) i po południu (15:00), mecze 45–75 min przed startem,
@@ -1923,6 +1974,8 @@ def main():
         analityk(); return
     if '--zbieracz' in sys.argv:
         i = sys.argv.index('--zbieracz'); zbieracz(sys.argv[i + 1] if len(sys.argv) > i + 1 else 'rano'); return
+    if '--radar' in sys.argv:
+        i = sys.argv.index('--radar'); radar(sys.argv[i + 1] if len(sys.argv) > i + 1 else 'rozpoznanie'); return
     if '--betclic2' in sys.argv:
         betclic_zakladki(); return
     if '--betclic' in sys.argv:

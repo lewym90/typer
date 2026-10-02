@@ -493,8 +493,8 @@ def rozpoznanie(V, KP, s):
     except Exception: pass
     B = Przegladarka(); spis['przegladarka'] = B.blad or 'ok'
     for nazwa, fn in (('ufcstats', lambda: ufcstats(s, B, N, KP)), ('sofascore', lambda: sofascore(s, B, N, KP, dzien)),
-                      ('fotmob', lambda: fotmob(s, B, N, KP, dzien)), ('transfermarkt', lambda: transfermarkt(s, B, N, KP)),
-                      ('typersi', lambda: typersi(s, B, N, KP))):
+                      ('fotmob', lambda: fotmob(s, B, N, KP, dzien)), ('transfermarkt', lambda: transfermarkt(s, B, N, KP))):
+        # Typersi od wersji 40 w Radarze typerów (radar_vps.py)
         t0 = time.time()
         if zostalo() < 45: spis['zrodla'][nazwa] = dict(pominiete='brak czasu'); continue
         try: w = fn()
