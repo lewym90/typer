@@ -468,7 +468,18 @@ def czy_teraz(st):
         c = json.load(open(os.path.join(OUT, 'kursy_vps.json'))).get('czas')
         if c and dt.datetime.strptime(c, '%Y-%m-%d %H:%M UTC').replace(tzinfo=dt.timezone.utc) > ost_t: return True
     except Exception: pass
-    return (dt.datetime.now(dt.timezone.utc) - ost_t).total_seconds() >= CO_ILE_MIN * 60
+    minut_od = (dt.datetime.now(dt.timezone.utc) - ost_t).total_seconds() / 60
+    if minut_od >= 25 and mecz_wkrotce(): return True   # kurs „zamknięcia” do dziennika – odczyt tuż przed meczem z typem
+    return minut_od >= CO_ILE_MIN
+
+def mecz_wkrotce(od=15, do=75):
+    """Czy któryś mecz z typami (dzis/inne) zaczyna się za od–do minut."""
+    teraz = dt.datetime.now(TZ)
+    for m in nasze_mecze():
+        try: start = dt.datetime.strptime(str(m[4])[:16], '%Y-%m-%d %H:%M').replace(tzinfo=TZ)
+        except Exception: continue
+        if od <= (start - teraz).total_seconds() / 60 <= do: return True
+    return False
 
 def main():
     try: st = json.load(open(os.path.join(OUT, 'status.json')))
@@ -485,6 +496,10 @@ def main():
         import value_pl
         DIAG['value'] = value_pl.licz(kursy, _kursy_vps())
     except Exception as e: DIAG['bledy'].append(f'Value: {type(e).__name__}: {str(e)[:150]}')
+    try:                            # dzienniki: najlepszy polski kurs z rana i ostatni przed meczem (CLV) – wersja 33
+        import dziennik_kursy
+        DIAG['dziennik_kursy'] = dziennik_kursy.aktualizuj(OUT)
+    except Exception as e: DIAG['bledy'].append(f'Dziennik kursów: {type(e).__name__}: {str(e)[:150]}')
     teraz = dt.datetime.now(TZ).strftime('%Y-%m-%d %H:%M')
     nasze = len(nasze_mecze())
     pelny = dict(czas=teraz, wersja=3, bukmacherzy=dict(superbet=stan), mecze=kursy,
@@ -495,7 +510,8 @@ def main():
     try: st = json.load(open(os.path.join(OUT, 'status.json')))
     except Exception: st = {}
     st['kursy_pl'] = dict(czas=teraz, utc=dt.datetime.now(dt.timezone.utc).isoformat(), superbet=stan, nasze_mecze=nasze,
-                          niedopasowane=len(DIAG['niedopasowane']), vps=DIAG.get('vps'), value=DIAG.get('value'), bledy=DIAG['bledy'][:4], sekund=round(time.time() - START))
+                          niedopasowane=len(DIAG['niedopasowane']), vps=DIAG.get('vps'), value=DIAG.get('value'), dziennik=DIAG.get('dziennik_kursy'),
+                          bledy=DIAG['bledy'][:4], sekund=round(time.time() - START))
     try: _zapisz_bezpiecznie(os.path.join(OUT, 'status.json'), st)
     except Exception as e: print('status.json:', e)
     print('Kursy PL:', json.dumps(st['kursy_pl'], ensure_ascii=False))

@@ -959,15 +959,52 @@ def tryb_cron():
     except Exception: lista = None
     minut = (time.time() - stan.get('czas', 0)) / 60
     zmiana = podpis != stan.get('podpis') or lista != stan.get('lista')
-    if not zmiana and (minut < 110 or teraz.hour < 7): return
-    print(teraz.strftime('%Y-%m-%d %H:%M'), 'cron:', 'nowa lista meczów' if zmiana else f'{round(minut)} min od ostatniego odczytu')
+    przed = minut >= 40 and _mecz_wkrotce(nasze, teraz)    # wersja 33: kurs „zamknięcia” do dziennika (CLV) i do alarmu przed meczem
+    dzis = teraz.strftime('%Y-%m-%d')
+    analityk = stan.get('analityk') != dzis and 9 <= teraz.hour < 22
+    if not zmiana and not przed and (minut < 110 or teraz.hour < 7):
+        if analityk: _analityk_raz_dziennie(stan, dzis)
+        return
+    print(teraz.strftime('%Y-%m-%d %H:%M'), 'cron:', 'nowa lista meczów' if zmiana else ('mecz za chwilę – kursy przed startem' if przed else f'{round(minut)} min od ostatniego odczytu'))
     if czytnik(KP):
         stan.update(podpis=podpis, lista=lista, czas=time.time())
         json.dump(stan, open(STAN_CRON, 'w'))
-    dzis = teraz.strftime('%Y-%m-%d')
     if stan.get('bc_strumien') != dzis and 9 <= teraz.hour < 22:      # raz dziennie: format zakładek Betclic (Wynik & gole…)
         stan['bc_strumien'] = dzis; json.dump(stan, open(STAN_CRON, 'w'))
         betclic_strumien_z_przegladarki()
+    elif analityk: _analityk_raz_dziennie(stan, dzis)
+
+def analityk():
+    """Tryb --analityk: pobiera z repozytorium moduł typer/analityk_vps.py (rozpoznanie źródeł Analityka) i go uruchamia."""
+    s = ses(); KP = _przygotuj(s)
+    try: token = open(TOKEN_PLIK).read().strip()
+    except Exception: token = None
+    cel = os.path.join(KATALOG, 'analityk_vps.py')
+    if token:
+        r = s.get(f'https://api.github.com/repos/{REPO}/contents/typer/analityk_vps.py', timeout=20,
+                  headers={'Authorization': f'Bearer {token}', 'Accept': 'application/vnd.github.raw', 'User-Agent': 'typer-vps'})
+    else: r = s.get(f'{RAW}/typer/analityk_vps.py?t={int(time.time())}', timeout=20)
+    r.raise_for_status(); open(cel, 'wb').write(r.content)
+    if KATALOG not in sys.path: sys.path.insert(0, KATALOG)
+    import analityk_vps
+    analityk_vps.rozpoznanie(sys.modules[__name__], KP, s)
+
+def _mecz_wkrotce(nasze, teraz, od=25, do=80):
+    for m in nasze:
+        try: start = dt.datetime.strptime(str(m[4])[:16], '%Y-%m-%d %H:%M').replace(tzinfo=teraz.tzinfo)
+        except Exception: continue
+        if od <= (start - teraz).total_seconds() / 60 <= do: return True
+    return False
+
+def _analityk_raz_dziennie(stan, dzis):
+    """Raz dziennie (9–22): rozpoznanie źródeł Analityka (FotMob, Sofascore, Transfermarkt, UFCStats) – osobny proces z przeglądarką."""
+    stan['analityk'] = dzis; json.dump(stan, open(STAN_CRON, 'w'))
+    import subprocess
+    py = PW_PYTHON if os.path.exists(PW_PYTHON) else sys.executable
+    try:
+        r = subprocess.run([py, os.path.abspath(__file__), '--analityk'], capture_output=True, text=True, timeout=1500)
+        print((r.stdout or '')[-600:], (r.stderr or '')[-400:])
+    except Exception as e: print('Analityk – rozpoznanie:', e)
 
 # ======================================================================= CZYTNIK STS (websocket, przez przeglądarkę)
 STS_WS = 'wss://www.sts.pl/sbk/api/sbk'
@@ -1836,6 +1873,8 @@ def main():
         tryb_cron(); return
     if '--betclic-strumien' in sys.argv:
         betclic_strumien(); return
+    if '--analityk' in sys.argv:
+        analityk(); return
     if '--betclic2' in sys.argv:
         betclic_zakladki(); return
     if '--betclic' in sys.argv:

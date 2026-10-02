@@ -8,7 +8,7 @@ Boks: brak danych historycznych – tylko zwycięzca (i remis, gdy jest w kursac
 import re, unicodedata, io
 import numpy as np, pandas as pd, requests
 
-PLATT_MMA = 1.1151
+PLATT_MMA = 1.0405   # wersja 33: kursy bez marży metodą potęgową (było 1,1151 przy proporcjonalnej); 6 924 walki UFC – faworyci 75%+: przew. 81,5%, weszło 83,1%
 KONCZENIE = {"a0": -0.1313, "b": 0.1469, "r5": 0.3389, "wc": {
     "Bantamweight": -0.1078, "Catch Weight": 0.1707, "Featherweight": -0.097, "Flyweight": -0.1924, "Heavyweight": 0.6592,
     "Light Heavyweight": 0.5495, "Lightweight": 0.0923, "Middleweight": 0.3367, "Welterweight": 0.0546,

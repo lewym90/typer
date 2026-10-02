@@ -5,8 +5,10 @@ Prosty model „każdy set niezależnie” mylił się o 7–10 pkt (za rzadko 2
 z regresji: P(wygra bez straty seta | wygra) zależy od szansy zwycięzcy."""
 import numpy as np
 
-# Platt: rynek lekko nie docenia faworytów (90–95% → wchodzi 95%); p' = sigmoid(PLATT * logit(p))
-PLATT = 1.0551
+# Platt: p' = sigmoid(PLATT * logit(p)). Od wersji 33 szanse z kursów bez marży metodą potęgową (ona już przesuwa marżę
+# na outsidera), więc korekta jest mniejsza: dopasowane na 80 034 meczach ATP+WTA 2010–2026 (było 1,0551 przy metodzie proporcjonalnej).
+# Test 2021–2026: log-loss 0,58288 → 0,58271; szansa 80%+: przewidywane 87,7%, weszło 87,9%.
+PLATT = 1.0114
 # P(wynik bez straty seta | wygrał) = sigmoid(a + b*logit(p_zwycięzcy)); dla 5 setów także P(3:1 | wygrał i stracił seta)
 SETY = {3: {'g': (0.4244, 0.3665)}, 5: {'g': (-0.5918, 0.4521), 'h': (0.3065, 0.3307)}}
 SETY_WTA = {'g': (0.5106, 0.396)}   # dopasowane na 38 390 meczach WTA 2010–2026 (więcej 2:0 niż u mężczyzn)
