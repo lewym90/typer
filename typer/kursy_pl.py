@@ -404,20 +404,25 @@ def czytany(buk, sp, klucz, dane):
     if buk == 'Betclic PL' and sp == 'pilka' and '&' in klucz: return False           # „wynik i gole” – dodatkowe zakładki Betclic
     return True
 
+def zrodla_meczu(kursy, vps, m, eid):
+    """({bukmacher: {klucz: kurs}}, {bukmacher: dane odczytu}) dla meczu: Superbet + serwer (Fortuna, STS, Betclic PL) + KSW."""
+    sb = (kursy.get(eid) or {}).get('superbet') or {}
+    zrodla = {'Superbet': sb.get('kursy') or {}}
+    stan = {'Superbet': sb if sb else None}
+    for buk, dane in ((vps.get(eid) or {}).items()):
+        zrodla[NAZWY_BUK.get(buk, buk)] = (dane or {}).get('kursy') or {}
+        stan[NAZWY_BUK.get(buk, buk)] = dane or None
+    for b, k in (m.get('kursy_walki') or {}).items():   # KSW: kursy zebrane przy liczeniu (Fortuna/STS/Superbet) – baza
+        zrodla.setdefault(b, {}); zrodla[b] = dict(k, **zrodla[b])
+        stan.setdefault(b, dict(pelna=False))
+    return zrodla, stan
+
 def dopisz(kursy):
     ile = 0
     vps = _kursy_vps()
     def nadaj(m, eid, sp):
         nonlocal ile
-        sb = (kursy.get(eid) or {}).get('superbet') or {}
-        zrodla = {'Superbet': sb.get('kursy') or {}}
-        stan = {'Superbet': sb if sb else None}
-        for buk, dane in ((vps.get(eid) or {}).items()):
-            zrodla[NAZWY_BUK.get(buk, buk)] = (dane or {}).get('kursy') or {}
-            stan[NAZWY_BUK.get(buk, buk)] = dane or None
-        for b, k in (m.get('kursy_walki') or {}).items():   # KSW: kursy zebrane przy liczeniu (Fortuna/STS/Superbet) – baza
-            zrodla.setdefault(b, {}); zrodla[b] = dict(k, **zrodla[b])
-            stan.setdefault(b, dict(pelna=False))
+        zrodla, stan = zrodla_meczu(kursy, vps, m, eid)
         for t in _typy_w(m):
             kp = {b: k[t['klucz']] for b, k in zrodla.items() if k.get(t['klucz'])}
             if t.get('rynek_pl'): kp = dict(t.get('kursy_pl') or {}, **kp)   # value KSW – nie kasuj kursów z liczenia
@@ -476,6 +481,10 @@ def main():
         kursy = dopasuj_wszystko(ses, oferta); stan['dopasowane'] = len(kursy); stan['ok'] = True
     except Exception as e: DIAG['bledy'].append(f'Superbet: {type(e).__name__}: {str(e)[:150]}')
     stan['typow'] = dopisz(kursy)   # także gdy Superbet nie odpowie – wtedy tylko kursy z serwera
+    try:                            # Value z polskich kursów – liczona zaraz po pobraniu kursów (rano przed Telegramem i przy każdym odświeżeniu)
+        import value_pl
+        DIAG['value'] = value_pl.licz(kursy, _kursy_vps())
+    except Exception as e: DIAG['bledy'].append(f'Value: {type(e).__name__}: {str(e)[:150]}')
     teraz = dt.datetime.now(TZ).strftime('%Y-%m-%d %H:%M')
     nasze = len(nasze_mecze())
     pelny = dict(czas=teraz, wersja=3, bukmacherzy=dict(superbet=stan), mecze=kursy,
@@ -486,7 +495,7 @@ def main():
     try: st = json.load(open(os.path.join(OUT, 'status.json')))
     except Exception: st = {}
     st['kursy_pl'] = dict(czas=teraz, utc=dt.datetime.now(dt.timezone.utc).isoformat(), superbet=stan, nasze_mecze=nasze,
-                          niedopasowane=len(DIAG['niedopasowane']), vps=DIAG.get('vps'), bledy=DIAG['bledy'][:4], sekund=round(time.time() - START))
+                          niedopasowane=len(DIAG['niedopasowane']), vps=DIAG.get('vps'), value=DIAG.get('value'), bledy=DIAG['bledy'][:4], sekund=round(time.time() - START))
     try: _zapisz_bezpiecznie(os.path.join(OUT, 'status.json'), st)
     except Exception as e: print('status.json:', e)
     print('Kursy PL:', json.dumps(st['kursy_pl'], ensure_ascii=False))

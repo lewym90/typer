@@ -207,7 +207,7 @@ LIGI_DO_SKANU = {  # klucz The Odds API -> model; kolejność = popularność (n
  'soccer_usa_mls':'USA', 'soccer_brazil_campeonato':'Brazylia', 'soccer_argentina_primera_division':'Argentyna',
  'soccer_mexico_ligamx':'Meksyk', 'soccer_japan_j_league':'Japonia', 'soccer_china_superleague':'Chiny',
 }
-MIN_EV_VALUE = 0.03       # Betclic musi dawać min. 3% więcej niż uczciwy kurs Pinnacle/Betfair
+MIN_EV_VALUE = 0.03       # najlepszy polski kurs musi dawać min. 3% więcej niż uczciwy kurs Pinnacle/Betfair
 PEWNE_MIN_SZANSA = 0.70   # typ dnia: minimalna szansa wejścia (test: piłka 78,7%, tenis 77,3%, MMA 75,3% przy tym progu)
 PEWNE_MIN_KURS = 1.25     # niższe kursy nie mają sensu (za mały zysk)
 PEWNE_ILE_MECZOW = 15     # z ilu najpopularniejszych meczów wybierać
@@ -378,6 +378,8 @@ def zapisz_value(nowe):
 # ===== DZIENNIK =====
 def zysk_zakladu(rynek, strona, linia, kurs, hg, ag):
     """Zysk na 1 zł stawki (obsługuje linie ćwiartkowe i zwroty)."""
+    if rynek == 'klucz':                       # Value z polskich kursów: zakład zapisany naszym kluczem
+        return kurs - 1 if bool(maska_klucza(strona)[min(int(hg), MAXG), min(int(ag), MAXG)]) else -1.0
     if rynek == '1X2':
         w = {'1': hg > ag, 'X': hg == ag, '2': hg < ag}[strona]; return kurs - 1 if w else -1.0
     if rynek == 'btts':
@@ -391,8 +393,27 @@ def zysk_zakladu(rynek, strona, linia, kurs, hg, ag):
         wynik += (kurs - 1 if r > 1e-9 else (0 if abs(r) < 1e-9 else -1)) / len(linie)
     return wynik
 
+def maska_klucza(z):
+    """Maska wyników (gole gospodarza × gole gościa), przy których wchodzi zakład o naszym kluczu (Value z polskich kursów)."""
+    g = np.arange(MAXG + 1); I, J = np.meshgrid(g, g, indexing='ij'); T = I + J; D = I - J
+    stale = {'1': D > 0, 'X': D == 0, '2': D < 0, '1X': D >= 0, 'X2': D <= 0, '12': D != 0,
+             'BTTS Tak': (I > 0) & (J > 0), 'BTTS Nie': (I == 0) | (J == 0), 'BTTS & o2.5': (I > 0) & (J > 0) & (T >= 3)}
+    if z in stale: return stale[z]
+    m = re.fullmatch(r'(Over|Under) (\d+)\.5', z)
+    if m: n = int(m.group(2)); return T > n if m.group(1) == 'Over' else T <= n
+    m = re.fullmatch(r'([HA]) -(\d+)\.5', z)
+    if m: n = int(m.group(2)) + 1; return D >= n if m.group(1) == 'H' else D <= -n
+    m = re.fullmatch(r'([HA]) o(\d+)\.5', z)
+    if m: n = int(m.group(2)); return I > n if m.group(1) == 'H' else J > n
+    m = re.fullmatch(r'([12X]) & ([ou])(\d+)\.5', z)
+    if m:
+        w = {'1': D > 0, 'X': D == 0, '2': D < 0}[m.group(1)]; n = int(m.group(3))
+        return w & (T > n if m.group(2) == 'o' else T <= n)
+    raise ValueError(f'nieznany klucz zakładu: {z}')
+
 def ev_zakladu(M, rynek, strona, linia, kurs):
     """Wartość oczekiwana zakładu wg macierzy wyników M."""
+    if rynek == 'klucz': return float(M[maska_klucza(strona)].sum()) * kurs - 1
     mk = markets(M)
     if rynek == '1X2': return mk[strona] * kurs - 1
     if rynek == 'btts': return mk[strona] * kurs - 1

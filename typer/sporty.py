@@ -190,15 +190,7 @@ def przelicz(sp, key, tytul, grupa, ev):
             e.update(dyscyplina='Boks', szansa_a=round(p[A], 4), szansa_b=round(p[B], 4), szansa_remis=round(pd_, 4) if pd_ else None)
         T, rk = walki.typy(R); op = walki.opis
     for poz, (k, sz) in T.items(): e[poz] = _typ(k, sz, op, A, B, _betclic_dla(k, bc, A, B))
-    # value: Betclic vs uczciwy kurs (tylko zwycięzca – inne rynki nie są w darmowym planie)
-    e['value'] = []
-    for strona, n in (('A', A), ('B', B)):
-        k = (bc or {}).get(n); sz = e['szansa_a'] if strona == 'A' else e['szansa_b']
-        if not k or not sz: continue
-        ev_ = sz * k - 1
-        if ev_ >= core.MIN_EV_VALUE and 1.30 <= k <= 4.00:
-            e['value'].append(dict(klucz=strona, zaklad=f'wygra {n}', kurs=k, szansa=sz, ev=round(ev_, 4), kurs_uczciwy=round(1 / sz, 3),
-                                   kurs_szukaj=round(1.02 / sz, 2), stawka_proc=round(core.kelly(sz, k), 4)))
+    e['value'] = []   # Value z polskich kursów – value_pl.py (po pobraniu kursów), KSW poniżej z rynku PL
     return e
 
 def werdykt(m): return ((m.get('raport') or {}).get('ai') or {}).get('werdykt')
@@ -905,8 +897,8 @@ def tg_typy(d, status):
             if r.get('ostrzezenie'): lin.append('⚠️ ' + e(r['ostrzezenie']))
             if (r.get('ai') or {}).get('tekst'): lin.append('📰 ' + e(r['ai']['tekst'][:300]))
         if V:
-            lin.append('\n💰 <b>Value</b> <i>(przewaga liczona od Betclic FR)</i>')
-            for v in V: lin.append(f"{e(v['mecz'])}: {e(v['zaklad'])} @ {tg.kurs(v['kurs'])} (szansa {tg.pct(v['szansa'])}, szukaj ≥ {tg.kurs(v['kurs_szukaj'])})")
+            lin.append('\n💰 <b>Value</b> <i>(polskie kursy)</i>')
+            for v in V: lin.append(f"{e(v['mecz'])}: {e(v['zaklad'])} @ {tg.kurs(v['kurs'])} {e('Betclic' if v.get('bukmacher') == 'Betclic PL' else (v.get('bukmacher') or ''))} (szansa {tg.pct(v['szansa'])}, szukaj ≥ {tg.kurs(v['kurs_szukaj'])})")
         if sp == 'tenis': lin.append('\n<i>Krecz: rozliczenie zależy od regulaminu bukmachera.</i>')
         if tg.APLIKACJA: lin.append(f"📱 {tg.APLIKACJA}")
         if tg.wyslij_dlugi('\n'.join(lin)):
