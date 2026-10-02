@@ -477,28 +477,53 @@ def _ai_inne(m):
         r['ostrzezenie'] = f"Uwaga ({kto}): {ai['uzasadnienie']}" if kto else ai['uzasadnienie']
     return True
 
+def _ai_inne_value(m, v):
+    """Ocena AI pozycji Value tenisa / walki – oceniany jest zakład Value (np. „wygra X”), kontekst z meczu."""
+    if not m.get('naglowki'):
+        try: m['naglowki'] = {'a': sporty.naglowki(m['a'], polskie=bool(m.get('rynek_pl'))), 'b': sporty.naglowki(m['b'], polskie=bool(m.get('rynek_pl')))}
+        except Exception: pass
+    ai = sporty.raport_ai(m, m.get('polski'), typ=(v['zaklad'], v['szansa']))
+    if not ai: return False
+    v['raport'] = dict(v.get('raport') or {}, ai=ai, werdykt=ai.get('werdykt'))
+    return True
+
 def uzupelnij_ai(d, inne, limit=12):
-    """Każdy mecz z zakładek Pewne i Value (główne i w każdej dyscyplinie), który się jeszcze nie zaczął, ma mieć analizę AI –
-    niezależnie od tego, kiedy i dlaczego trafił na listę. Ten sam mecz w kilku kartach dostaje tę samą analizę.
-    Zwraca (zrobione, brakuje)."""
+    """Każda karta z zakładek Pewne i Value (główne i w każdej dyscyplinie), której mecz się jeszcze nie zaczął, ma mieć analizę AI.
+    Pewne: jedna analiza na mecz (ocena typu z Pewnych). Value: każda pozycja ma WŁASNĄ ocenę swojego zakładu (inny typ niż w Pewnych),
+    ta sama pozycja w kilku kartach (np. lista dyscypliny i zagnieżdżona w meczu) dostaje tę samą analizę. Zwraca (zrobione, brakuje)."""
     teraz = pd.Timestamp.now(tz='Europe/Warsaw').tz_localize(None)
     zrobione = brak = 0
-    grupy = {}   # klucz meczu -> lista kart
-    for m in (d or {}).get('pewne', []) + (d or {}).get('value', []):
-        grupy.setdefault(('pilka', str(m.get('event_id') or m['mecz'])), []).append(m)
+    grupy = {}   # klucz -> (sport, mecz-kontekst, lista kart)
+    def dodaj(k, sp, ctx, karta):
+        g = grupy.setdefault(k, (sp, ctx, [])); g[2].append(karta)
+    for m in (d or {}).get('pewne', []):
+        dodaj(('pilka', str(m.get('event_id') or m['mecz']), 'pewne'), 'pilka', m, m)
+    for v in (d or {}).get('value', []):
+        dodaj(('pilka', str(v.get('event_id') or v['mecz']), 'value', v.get('zaklad')), 'pilka', v, v)
     for sp in ('tenis', 'walki'):
         s = (inne or {}).get(sp) or {}
-        ids = set(s.get('pewne', [])) | {v['event_id'] for v in s.get('value', [])}
-        for m in s.get('mecze', []):
-            if m['event_id'] in ids: grupy.setdefault((sp, str(m['event_id'])), []).append(m)
-    for (sp, eid), karty in grupy.items():
+        pew = set(str(x) for x in s.get('pewne', []))
+        mm = {str(m['event_id']): m for m in s.get('mecze', [])}
+        for eid, m in mm.items():
+            if eid in pew: dodaj((sp, eid, 'pewne'), sp, m, m)
+            for v in m.get('value') or []: dodaj((sp, eid, 'value', v.get('klucz') or v.get('zaklad')), sp, m, v)
+        for v in s.get('value', []):
+            eid = str(v.get('event_id'))
+            if eid in mm: dodaj((sp, eid, 'value', v.get('klucz') or v.get('zaklad')), sp, mm[eid], v)
+    for k, (sp, ctx, karty) in grupy.items():
+        rodzaj = k[2]
         try:
-            if pd.Timestamp(karty[0]['start']) <= teraz: continue          # mecz już trwa / zakończony
+            if pd.Timestamp(karty[0]['start'] if karty[0].get('start') else ctx['start']) <= teraz: continue   # mecz już trwa / zakończony
         except Exception: continue
-        ma = next((k['raport']['ai'] for k in karty if (k.get('raport') or {}).get('ai')), None)
-        if ma:   # analiza jest w jednej karcie – kopiujemy do pozostałych
-            for k in karty:
-                if not (k.get('raport') or {}).get('ai'): k.setdefault('raport', {}); k['raport']['ai'] = ma; k['raport']['werdykt'] = ma.get('werdykt')
+        if rodzaj == 'value':   # stara ocena skopiowana z Pewnych (przed v32) nie liczy się – Value ma mieć ocenę swojego zakładu
+            for x in karty:
+                if (x.get('raport') or {}).get('ai') and not x['raport'].get('dla_value'):
+                    x['raport'] = {kk: vv for kk, vv in x['raport'].items() if kk not in ('ai', 'werdykt')}
+        ma = next((x['raport']['ai'] for x in karty if (x.get('raport') or {}).get('ai')), None)
+        if ma:   # analiza jest w jednej karcie – kopiujemy do pozostałych z tej samej grupy
+            for x in karty:
+                if not (x.get('raport') or {}).get('ai'):
+                    x['raport'] = dict(x.get('raport') or {}, ai=ma, werdykt=ma.get('werdykt'), **({'dla_value': True} if rodzaj == 'value' else {}))
             continue
         if zrobione >= limit or ai_raport.zostalo_analiz() <= 0: brak += 1; continue
         k0 = karty[0]
@@ -507,13 +532,17 @@ def uzupelnij_ai(d, inne, limit=12):
                 t = k0 if k0.get('zaklad') else None
                 typ = (pl_txt(t['zaklad'], k0['gospodarz'], k0['gosc']) + (f" ({pl_txt(t['opis'], k0['gospodarz'], k0['gosc'])})" if t.get('opis') and len(t['zaklad']) <= 3 else ''), t['szansa']) if t else None
                 ok = _ai_pilka(k0, typ)
+            elif rodzaj == 'value':
+                ok = _ai_inne_value(ctx, k0)
             else:
                 ok = _ai_inne(k0)
-        except Exception as e: print('AI uzupełnienie:', eid, e); ok = False
+        except Exception as e: print('AI uzupełnienie:', k, e); ok = False
         if ok:
             zrobione += 1
-            for k in karty[1:]:
-                k['raport'] = dict(k.get('raport') or {}, ai=k0['raport']['ai'], werdykt=k0['raport']['ai'].get('werdykt'))
+            if rodzaj == 'value': k0['raport']['dla_value'] = True
+            for x in karty[1:]:
+                x['raport'] = dict(x.get('raport') or {}, ai=k0['raport']['ai'], werdykt=k0['raport']['ai'].get('werdykt'),
+                                   **({'dla_value': True} if rodzaj == 'value' else {}))
         else: brak += 1
     STAN_AI.update(zrobione=STAN_AI.get('zrobione', 0) + zrobione, brakuje=brak)
     return zrobione, brak

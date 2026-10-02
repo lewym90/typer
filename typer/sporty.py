@@ -361,8 +361,10 @@ def _typ_ai(m):
     t = m.get('najpewniejszy') or m.get('lepszy_kurs')
     return (t['zaklad'], t['szansa']) if t else None
 
-def raport_ai(m, polski_=False, wymus=False):
-    kp = ai_raport.klucz_pamieci(m['sport'], m['a'], m['b'], m.get('dzien') or str(m.get('start', ''))[:10], (_typ_ai(m) or ('',))[0])
+def raport_ai(m, polski_=False, wymus=False, typ=None):
+    """typ = (zakład, szansa) – oceniany zakład; domyślnie najpewniejszy typ meczu (Pewne). Value podaje własny zakład."""
+    typ_oceny = typ or _typ_ai(m)
+    kp = ai_raport.klucz_pamieci(m['sport'], m['a'], m['b'], m.get('dzien') or str(m.get('start', ''))[:10], (typ_oceny or ('',))[0])
     if not wymus:
         z = ai_raport.z_pamieci(kp)
         if z: return z
@@ -374,7 +376,7 @@ def raport_ai(m, polski_=False, wymus=False):
     szukaj = ('Wyszukaj w Google najnowsze wiadomości o obu zawodnikach' + (' (koniecznie także w polskich mediach: WP SportoweFakty, '
               'Przegląd Sportowy, MMA Rocks, InTheCage, Lowking, Sport.pl)' if polski_ or m.get('rynek_pl') else '') + '.')
     rynek = f"Szanse z kursów bukmacherów: wygra {m['a']} {m['szansa_a']*100:.0f}%, wygra {m['b']} {m['szansa_b']*100:.0f}%." if m.get('szansa_a') else ''
-    typ = _typ_ai(m)
+    typ = typ_oceny
     t = lambda sz: POLECENIE.format(co=co, dziedzina=dziedzina, kogo=kogo, czym=czym, a=m['a'], b=m['b'], turniej=m['turniej'],
                                     kiedy=f"{m['dzien']}, {m['godzina']}", szukaj=sz, rynek=rynek, tematy=tematy, powazne=powazne,
                                     zasady=ai_raport.ZASADY, ocena=ai_raport.ocena_txt(typ), kontekst=kontekst,

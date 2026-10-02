@@ -53,7 +53,10 @@ def value_pilka(dzis, kursy, vps, KP):
             if e > MAX_EV: odrzucone += 1; continue
             kand.append((e, z, p, nazwa, opis, b, kurs, kk))
         for e, z, p, nazwa, opis, b, kurs, kk in sorted(kand, key=lambda x: -x[0])[:NA_MECZ]:
-            pola = {k: v for k, v in m.items() if k not in ('klucz', 'zaklad', 'opis', 'kursy_pl', 'kursy_odczyt', 'kursy_czas', 'szansa', 'kurs_uczciwy', 'kurs_min', 'kurs_betclic', 'ev')}
+            pola = {k: v for k, v in m.items() if k not in ('klucz', 'zaklad', 'opis', 'kursy_pl', 'kursy_odczyt', 'kursy_czas', 'szansa', 'kurs_uczciwy',
+                                                          'kurs_min', 'kurs_betclic', 'ev', 'werdykt', 'raport', 'lepszy_kurs', 'ryzykowny', 'nizsza_pewnosc')}
+            # raport meczu (nieobecni, zapowiedź, nagłówki) BEZ oceny AI – ta dotyczy typu z Pewnych; Value dostaje własną ocenę swojego zakładu
+            pola['raport'] = {k: v for k, v in (m.get('raport') or {}).items() if k not in ('ai', 'werdykt')}
             wyn.append(dict(pola, klucz=z, zaklad=nazwa, opis=opis, kurs=round(kurs, 2), bukmacher=b, kursy_pl=kk,
                             kursy_odczyt=sorted(x for x, d in stan.items() if KP.czytany(x, 'pilka', z, d)),
                             kursy_czas=dt.datetime.now(KP.TZ).strftime('%H:%M'),
@@ -71,12 +74,22 @@ def value_duel(m, kursy, vps, KP, sp):
         if not b: continue
         e = sz * kurs - 1
         if not (KURS_MIN <= kurs <= KURS_MAX) or not (MIN_EV <= e <= MAX_EV): continue
-        out.append(dict(klucz=strona, zaklad=f'wygra {kto}' if kto else 'remis', kurs=round(kurs, 2), bukmacher=b, kursy_pl=kk,
+        out.append(dict(event_id=m['event_id'], klucz=strona, zaklad=f'wygra {kto}' if kto else 'remis', kurs=round(kurs, 2), bukmacher=b, kursy_pl=kk,
                         kursy_odczyt=sorted(x for x, d in stan.items() if KP.czytany(x, sp, strona, d)),
                         kursy_czas=dt.datetime.now(KP.TZ).strftime('%H:%M'),
                         szansa=sz, ev=round(e, 4), kurs_uczciwy=round(1 / sz, 3), kurs_szukaj=round(1.02 / sz, 2),
                         stawka_proc=round(core.kelly(sz, kurs), 4)))
     return out
+
+def _przenies_ai(stare, nowe):
+    """Własna ocena AI pozycji Value (tego samego zakładu w tym samym meczu) zostaje po przeliczeniu kursów."""
+    oceny = {}
+    for v in stare:
+        ai = (v.get('raport') or {}).get('ai')
+        if ai and (v.get('raport') or {}).get('dla_value'): oceny[(str(v.get('event_id')), v.get('klucz') or v.get('zaklad'))] = ai
+    for v in nowe:
+        ai = oceny.get((str(v.get('event_id')), v.get('klucz') or v.get('zaklad')))
+        if ai: v['raport'] = dict(v.get('raport') or {}, ai=ai, werdykt=ai.get('werdykt'), dla_value=True)
 
 def licz(kursy, vps):
     import kursy_pl as KP, core, sporty, wspolne
@@ -89,6 +102,7 @@ def licz(kursy, vps):
         if dzis.get('data') == dzien:
             stare = [v for v in dzis.get('value') or [] if v.get('bukmacher') and _rozpoczety(v)]   # po starcie – bez zmian
             nowe, odrz = value_pilka(dzis, kursy, vps, KP)
+            _przenies_ai(dzis.get('value') or [], nowe)
             ids = {str(v['event_id']) for v in stare}
             dzis['value'] = stare + [v for v in nowe if str(v['event_id']) not in ids]
             diag['pilka'] = len(dzis['value']); diag['odrzucone_podejrzane'] += odrz
@@ -111,7 +125,9 @@ def licz(kursy, vps):
                 for m in s.get('mecze') or []:
                     if m.get('rynek_pl'): continue                       # KSW – Value z rynku PL liczona w sporty.py
                     if _rozpoczety(m): m['value'] = [v for v in m.get('value') or [] if v.get('bukmacher')]; continue
+                    poprzednie = m.get('value') or []
                     m['value'] = value_duel(m, kursy, vps, KP, sp) if _ostry(m.get('zrodlo')) else []
+                    _przenies_ai(poprzednie, m['value'])
                     for v in m['value']:
                         wiersze.append(dict(data=dzien, sport=sp, dyscyplina=m.get('dyscyplina'), sport_key=m.get('sport_key'), turniej=m.get('turniej'),
                                             event_id=m['event_id'], start=m['start'], a=m['a'], b=m['b'], bo=m.get('bo'), ai=sporty.werdykt(m) or '',

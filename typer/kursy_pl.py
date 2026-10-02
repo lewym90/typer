@@ -310,7 +310,7 @@ def _gh(metoda, sciezka, **kw):
     h.update(kw.pop('naglowki', {}))
     return requests.request(metoda, f'https://api.github.com/repos/{repo}/contents/{sciezka}', headers=h, timeout=30, **kw)
 
-def czekaj_na_vps(maks_s=480):
+def czekaj_na_vps(maks_s=840):   # 14 min: cron co 3 min + odczyt Fortuna/STS/Betclic ok. 3 min
     """Pełne liczenie: wysyła listę meczów na serwer (docs/data/lista_vps.json przez API GitHuba) i czeka, aż serwer
     policzy dla niej kursy Fortuny/STS (kursy_vps.json z polem lista = podpis). Dzięki temu kursy są już w wiadomości na Telegram."""
     global VPS_PLIK

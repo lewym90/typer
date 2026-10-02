@@ -805,8 +805,11 @@ function kartaValueOgolna(sp, v, mecz){
       <div class="bk" style="min-height:62px"><span>przewaga</span><b style="font-size:20px;color:var(--win)">${sgn(ev)}</b></div></div>
     <div class="top"><span>szansa ${pct(v.szansa)} · stawka ${stawka} zł · szukaj ≥ ${num(v.kurs_szukaj || v.kurs_uczciwy*1.02)}</span>${v.rynek_pl ? '<span class="chipv brak" style="height:24px;font-size:12px">rynek PL – mniej pewne</span>' : ''}</div>`;
   h += kafelkiBuk(Object.assign({}, v, {kursy_pl: Object.assign({[v.bukmacher || 'Betclic FR']: v.kurs}, v.kursy_pl || {})}));
-  const src = mecz || v; if(src.raport) h += aiSkrot(src);
-  if(pil) h += `<details class="rap"><summary>Pełna analiza i raport AI</summary><div style="display:flex;flex-direction:column;gap:14px;padding:10px 0 12px">${aiPelny(v, 'pilka')}${obrazMeczu(v)}${przedmeczoweHTML(v.przedmeczowe, v)}</div></details>`;
+  // Ocena AI karty Value dotyczy WŁASNEGO zakładu Value (nie typu z Pewnych tego meczu); dopóki jej nie ma – informacja
+  const wlasna = (v.raport || {}).dla_value ? v : Object.assign({}, v, {werdykt: null, raport: Object.assign({}, v.raport || {}, {ai: null, werdykt: null})});
+  if(aiKarty(wlasna)) h += aiSkrot(wlasna);
+  else h += `<p class="note">Ocena AI tego zakładu – w przygotowaniu (uzupełniana co 30 min).</p>`;
+  if(pil) h += `<details class="rap"><summary>Pełna analiza i raport AI</summary><div style="display:flex;flex-direction:column;gap:14px;padding:10px 0 12px">${aiPelny(wlasna, 'pilka')}${obrazMeczu(v)}${przedmeczoweHTML(v.przedmeczowe, v)}</div></details>`;
   else h += `<p class="note">Źródło kursu uczciwego: ${esc(v.zrodlo)}</p>`;
   return h + `<div style="height:8px"></div></article>`;
 }

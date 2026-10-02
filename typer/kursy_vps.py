@@ -629,8 +629,23 @@ def betclic_klucze(rynki, sp, KP, nasze_nazwy, betclic_nazwy, bo=3, sport_bc=Non
                     if nb(nz) == 'decyzja': k.setdefault(g + ' na punkty', c)
     return k
 
-BC_OGOLNE = {'open', 'liga', 'league', 'cup', 'puchar', 'k', 'm', 'kobiety', 'mezczyzni', 'soccer', 'tennis', 'mma', 'boxing',
+BC_OGOLNE = {'open', 'liga', 'league', 'cup', 'puchar', 'campeonato', 'k', 'm', 'kobiety', 'mezczyzni', 'soccer', 'tennis', 'mma', 'boxing',
              'mixed', 'martial', 'arts', 'football', 'pilka', 'nozna', 'division', 'grupa', 'runda', 'atp', 'wta'}
+
+BC_ALIASY = {'brasileirao': 'brazylia serie a', 'brazil': 'brazylia', 'argentina': 'argentyna', 'england': 'anglia', 'epl': 'anglia premier league',
+             'spain': 'hiszpania', 'la liga': 'hiszpania laliga', 'germany': 'niemcy', 'bundesliga': 'niemcy bundesliga', 'italy': 'wlochy',
+             'france': 'francja', 'mexico': 'meksyk', 'netherlands': 'holandia', 'eredivisie': 'holandia eredivisie', 'portugal': 'portugalia',
+             'poland': 'polska', 'scotland': 'szkocja', 'turkey': 'turcja', 'belgium': 'belgia', 'japan': 'japonia', 'china': 'chiny',
+             'colombia': 'kolumbia', 'chile': 'chile', 'sweden': 'szwecja', 'norway': 'norwegia', 'denmark': 'dania', 'austria': 'austria',
+             'switzerland': 'szwajcaria', 'greece': 'grecja', 'czech': 'czechy', 'saudi': 'arabia saudyjska', 'australia': 'australia',
+             'ireland': 'irlandia', 'finland': 'finlandia', 'russia': 'rosja', 'ukraine': 'ukraina', 'croatia': 'chorwacja', 'romania': 'rumunia',
+             'south korea': 'korea poludniowa', 'uruguay': 'urugwaj', 'peru': 'peru', 'paraguay': 'paragwaj', 'ecuador': 'ekwador'}
+
+def _bc_aliasy(t):
+    """Nasze nazwy rozgrywek (często angielskie, z sport_key) → słowa używane w nazwach lig Betclic (polskie nazwy krajów)."""
+    t = ' ' + re.sub(r'[_]', ' ', str(t or '')).lower() + ' '
+    dod = [v for k, v in BC_ALIASY.items() if f' {k} ' in t or (k == 'brasileirao' and 'brasileir' in t)]
+    return t + ' ' + ' '.join(dod)
 
 def _bc_liga_wynik(nazwy, nazwa_bc, KP):
     """0..1 – jak dobrze nazwa ligi Betclic pasuje do naszych nazw rozgrywek (liga / turniej / sport_key).
@@ -639,7 +654,7 @@ def _bc_liga_wynik(nazwy, nazwa_bc, KP):
     if not tb: return 0.0
     najl = 0.0
     for n in nazwy:
-        tn_pelne = set(KP.tokeny(re.sub(r'[_]', ' ', str(n or '')))); tn = tn_pelne - BC_OGOLNE
+        tn_pelne = set(KP.tokeny(_bc_aliasy(n))); tn = tn_pelne - BC_OGOLNE
         if not tn: continue
         wsp = sum(1 for x in tb if x in tn or any(len(x) >= 4 and len(y) >= 4 and (x.startswith(y) or y.startswith(x)) for y in tn))
         sc = 0.8 * wsp / len(tb) + 0.2 * wsp / len(tn)
