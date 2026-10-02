@@ -886,6 +886,16 @@ function widokPewne(){
   h += sekcjaOdradzane(odradzaneWszystkie().filter(([sp]) => f === 'wszystkie' || sp === f));
   return h + `<p class="note" style="margin:4px">Typ dnia to najpewniejszy zakład meczu (od 70%). Szanse z kursów Pinnacle i giełdy Betfair (KSW – z polskich bukmacherów); AI sprawdza każdy typ w aktualnych wiadomościach. Testy na 328 257 spotkaniach: typy od 70% wchodzą ok. 78 razy na 100.</p>`;
 }
+function sekcjaWpadek(){
+  // wersja 39: sekcja zwłok – czego program nie zauważył przy wpadkach typów dnia
+  const z = (S.dziennik || {}).sekcje; if(!z || !z.ostatnie || !z.ostatnie.length) return '';
+  const p = z.podsumowanie || {};
+  let h = `<section class="sekcja"><h2>Sekcja zwłok – wpadki typów dnia</h2><p class="note">${p.n} przeanalizowanych wpadek · dało się przewidzieć (choćby częściowo): ${p.dalo_sie} · przypadek w trakcie meczu: ${p.przypadek}</p>`;
+  const cz = Object.entries(z.czynniki || {});
+  if(cz.length) h += `<p class="note">Najczęstsze sygnały widoczne przed meczem: ${cz.map(([k, v]) => `${esc(k)} (${v})`).join(' · ')}</p>`;
+  h += z.ostatnie.map(a => `<div class="wiersz"><div class="g"><span>${esc(a.mecz || '')} · ${esc(a.wynik || '')}</span><b>${a.przypadek ? 'przypadek' : esc(a.czynnik_glowny || '')}</b></div><div class="d"><span>${esc(a.zaklad || '')}: ${esc(a.wniosek || '')}</span><span>${esc(a.dalo_sie || '')}</span></div></div>`).join('');
+  return h + `</section>`;
+}
 function sekcjaArchiwum(){
   // wersja 37: archiwum kursów (Zbieracz) – gdzie polski bukmacher się myli
   const a = (S.dziennik || {}).archiwum; if(!a || !a.kursow) return '';
@@ -937,7 +947,7 @@ function widokDziennik(){
     if(g.n < 100) h += `<p class="note">Przy mniej niż ok. 100 typach wynik to w dużej mierze przypadek – nawet przy 79% zdarza się kilka słabszych dni z rzędu.</p>`;
   } else h += `<p class="note">Brak rozliczonych typów dnia w tym okresie.</p>`;
   h += `</section>`;
-  h += sekcjaKursowPL() + sekcjaAnalityka() + sekcjaArchiwum();
+  h += sekcjaKursowPL() + sekcjaAnalityka() + sekcjaWpadek() + sekcjaArchiwum();
   // czy AI pomaga
   const grupy = {zgoda:[0,0,0], ryzyko:[0,0,0], odradza:[0,0,0]};
   const dodaj = a => { for(const k of Object.keys(grupy)) if(a && a[k]){ grupy[k][0] += a[k].n; grupy[k][1] += a[k].trafione; grupy[k][2] += a[k].przewidywane * a[k].n; } };

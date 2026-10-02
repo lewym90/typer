@@ -858,13 +858,19 @@ def licz():
     except Exception as ex: _blad(f'raporty: {ex}')
     try:                                         # wersja 36 – Analityk Pro (3 kroki) dla najmocniejszych kandydatów tenisa i walk
         import analityk_ai
+        for m in wszystkie['tenis'] + wszystkie['walki']:          # z pamięci (wcześniejsze uruchomienie) – bez kosztu
+            a = analityk_ai.z_pamieci(m.get('sport'), m.get('event_id'))
+            if a: m['raport'] = dict(m.get('raport') or {}, pro=a)
         kand = sorted([m for m in kolejnosc if m.get('najpewniejszy') and werdykt(m) != 'odradza'], key=lambda m: -m['najpewniejszy']['szansa'])
-        for m in kand[:ANALITYK_INNE]:
+        nowe_pro = 0
+        for m in kand:
+            if nowe_pro >= ANALITYK_INNE: break
+            if (m.get('raport') or {}).get('pro'): continue
             if not analityk_ai.mozna(): break
-            a = analityk_ai.analiza_inne(m)
+            a = analityk_ai.analiza_inne(m); nowe_pro += 1
             if a:
                 m['raport'] = dict(m.get('raport') or {}, pro=a)
-                analityk_ai.zapisz_inne(m, a)
+                analityk_ai.zapisz_inne(m, a); analityk_ai.do_pamieci(m.get('sport'), m.get('event_id'), a)
     except Exception as ex: _blad(f'Analityk Pro: {ex}')
     for sp in ('tenis', 'walki'):
         mecze = wszystkie[sp]

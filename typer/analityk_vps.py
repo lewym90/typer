@@ -466,6 +466,19 @@ def ufcstats(s, B, N, KP):
     return wyn
 
 
+# ------------------------------------------------------------------ typerzy (wersja 39) – zrzut stron do zbudowania czytnika typów
+def typersi(s, B, N, KP):
+    wyn = dict(zrodlo='Typersi.pl', strony=[])
+    for u in ('https://typersi.pl/', 'https://typersi.pl/jutro/tomorrow', 'https://typersi.pl/wczoraj/yesterday'):
+        info, r = req(s, u, headers={'Accept-Language': 'pl-PL,pl;q=0.9'})
+        if r is not None and info.get('kod') == 200:
+            t = r.text; i = t.find('<table')
+            info['tabel'] = t.count('<table'); info['wierszy'] = t.count('<tr')
+            info['html'] = t[i:i + 60000] if i >= 0 else t[:20000]
+        wyn['strony'].append(info)
+    return wyn
+
+
 # ------------------------------------------------------------------ start
 def rozpoznanie(V, KP, s):
     """V = moduł kursy_vps (zapis do repozytorium), KP = kursy_pl (nasze mecze, dopasowanie), s = sesja requests."""
@@ -480,14 +493,15 @@ def rozpoznanie(V, KP, s):
     except Exception: pass
     B = Przegladarka(); spis['przegladarka'] = B.blad or 'ok'
     for nazwa, fn in (('ufcstats', lambda: ufcstats(s, B, N, KP)), ('sofascore', lambda: sofascore(s, B, N, KP, dzien)),
-                      ('fotmob', lambda: fotmob(s, B, N, KP, dzien)), ('transfermarkt', lambda: transfermarkt(s, B, N, KP))):
+                      ('fotmob', lambda: fotmob(s, B, N, KP, dzien)), ('transfermarkt', lambda: transfermarkt(s, B, N, KP)),
+                      ('typersi', lambda: typersi(s, B, N, KP))):
         t0 = time.time()
         if zostalo() < 45: spis['zrodla'][nazwa] = dict(pominiete='brak czasu'); continue
         try: w = fn()
         except Exception as e: w = dict(blad=_blad(e))
         w['sekund'] = round(time.time() - t0)
         spis['zrodla'][nazwa] = _streszczenie(nazwa, w)
-        try: V.zapisz_github(f'{KAT}/{nazwa}.json', przytnij(w, 40, 3000, gmax=14))
+        try: V.zapisz_github(f'{KAT}/{nazwa}.json', przytnij(w, 40, 70000 if nazwa == 'typersi' else 3000, gmax=14))
         except Exception as e: spis['zrodla'][nazwa]['zapis'] = _blad(e)
         print(nazwa, 'gotowe', round(time.time() - START), 's', json.dumps(spis['zrodla'][nazwa], ensure_ascii=False, default=str)[:300])
     B.zamknij()

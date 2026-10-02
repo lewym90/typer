@@ -65,6 +65,38 @@ def mozna():
     return d.get('koszt_dzis_zl', 0) + 1.0 <= limit_dzis()     # ~1 zł = zapas na jeden mecz (3 kroki Pro z wyszukiwaniem)
 
 
+# ------------------------------------------------------------------ pamięć analiz Pro (wersja 38)
+# Pełne liczenie budowało karty od nowa i gubiło analizy Pro z wcześniejszego uruchomienia (budżet dnia już wydany).
+# Każda analiza jest zapamiętywana na 20 h (ten sam mecz) i używana ponownie bez kosztu.
+PLIK_PAMIECI = os.path.join(OUT, 'analityk_ai_pamiec.json')
+WAZNOSC_H = 20
+
+
+def _pamiec():
+    try: return json.load(open(PLIK_PAMIECI))
+    except Exception: return {}
+
+
+def z_pamieci(sport, event_id):
+    x = _pamiec().get(f'{sport}|{event_id}')
+    if not x: return None
+    try:
+        if pd.Timestamp.now(tz='UTC') - pd.Timestamp(x['czas']) > pd.Timedelta(hours=WAZNOSC_H): return None
+    except Exception: return None
+    return x.get('a')
+
+
+def do_pamieci(sport, event_id, a):
+    if not a: return
+    p = _pamiec(); teraz = pd.Timestamp.now(tz='UTC')
+    p = {k: v for k, v in p.items() if teraz - pd.Timestamp(v.get('czas', '2000-01-01T00:00:00+00:00')) < pd.Timedelta(hours=WAZNOSC_H)}
+    p[f'{sport}|{event_id}'] = dict(czas=teraz.isoformat(), a=a)
+    try:
+        os.makedirs(os.path.dirname(PLIK_PAMIECI), exist_ok=True)
+        with open(PLIK_PAMIECI, 'w', encoding='utf-8') as f: json.dump(p, f, ensure_ascii=False)
+    except Exception: pass
+
+
 # ------------------------------------------------------------------ model Pro
 def model_pro():
     if 'm' in _modele: return _modele['m']

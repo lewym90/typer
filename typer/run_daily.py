@@ -3,7 +3,7 @@ import json, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from core import *
 import copy, hashlib, requests, re
-import core, raport, powiadomienia as tg, zrodla, ai_raport, sporty, wspolne, analityk, analityk_ai, archiwum
+import core, raport, powiadomienia as tg, zrodla, ai_raport, sporty, wspolne, analityk, analityk_ai, archiwum, sekcja_zwlok
 from nazwy import pl, pl_txt, pl_mecz
 
 NAZWY_LIG = {'soccer_uefa_champs_league': 'Liga Mistrzów', 'soccer_fifa_world_cup': 'Mistrzostwa świata',
@@ -179,7 +179,13 @@ def typy_na_dzis():
                                          typ=((rr[t['z']][1] + (f" ({rr[t['z']][2]})" if rr[t['z']][2] else '')), t['p']) if t else None, szanse={k: float(mk[k]) for k in ('1', 'X', '2')})
         except Exception as e: print('raport:', x['home'], e)
     # wersja 35 – Analityk AI (Gemini Pro: na ślepo → adwokat diabła → sędzia) dla najważniejszych kandydatów; jego werdykt decyduje
+    for x in kandydaci:                              # analizy z pamięci (wcześniejsze uruchomienie tego dnia) – bez kosztu
+        a = analityk_ai.z_pamieci('pilka', x['event_id'])
+        if a:
+            r_ = x.get('raport') or {}; x['raport'] = r_
+            r_['pro'] = a; r_['werdykt'] = 'zgoda' if a['werdykt'] == 'mocna_zgoda' else a['werdykt']
     for x in kandydaci[:8]:
+        if (x.get('raport') or {}).get('pro'): continue
         if analityk_ai.STAN['analiz'] >= ANALITYK_PILKA or not analityk_ai.mozna(): break
         try:
             t = naj_meczu.get(id(x)); rr = rynki_rozszerzone(x['M'], pl(x['home']), pl(x['away'])); mk = markets(x['M'])
@@ -192,6 +198,7 @@ def typy_na_dzis():
             r_ = x.setdefault('raport', {}) or {}; x['raport'] = r_
             r_['pro'] = a; r_['werdykt'] = 'zgoda' if a['werdykt'] == 'mocna_zgoda' else a['werdykt']
             analityk_ai.zapisz('pilka', x['event_id'], f"{x['home']} – {x['away']}", x['start'], typ[0] if typ else '', rynek, a, x['sport_key'])
+            analityk_ai.do_pamieci('pilka', x['event_id'], a)
         except Exception as e: analityk_ai._blad(f"{x.get('home')}: {type(e).__name__}: {e}")
     for v in value:  # dołącz raporty do kart Value
         for x in value_x:
@@ -1123,6 +1130,9 @@ def zapisz_status(tryb, bledy=None, st=None, tg_info=None):
         try: archiwum.dzienny()                       # wersja 37: rozliczenie archiwum kursów z wczoraj + statystyki
         except Exception as e: archiwum._blad(f'{type(e).__name__}: {e}')
         st['archiwum'] = dict(archiwum.STAN, czas=teraz)
+        try: sekcja_zwlok.przeprowadz(PLIK_PEWNE, sporty.PLIK_TYPOW)     # wersja 39: sekcja zwłok wpadek typów dnia
+        except Exception as e: sekcja_zwlok.STAN['bledy'].append(f'{type(e).__name__}: {e}')
+        st['sekcje'] = dict(sekcja_zwlok.STAN, czas=teraz)
     if tryb == 'pelne' or sporty.STAN['bledy']:
         st['sporty'] = dict(tenis=sporty.STAN['tenis'], walki=sporty.STAN['walki'], ksw=sporty.STAN.get('ksw'), kredyty=sporty.STAN['kredyty'], rundy_walk=sporty.STAN['rundy'],
                             pominiete=sporty.STAN['pominiete'][:6], bledy=sporty.STAN['bledy'][:6], czas=teraz)
@@ -1156,6 +1166,8 @@ def eksport_dziennika():
 def eksport_calosci():
     dz = eksport_dziennika() if len(wczytaj_dziennik()) else dict(statystyki=None, typy=[])
     dz['pewne'] = stat_pewne(wczytaj_pewne()); dz['samokorekta'] = SAMOKOREKTA
+    try: dz['sekcje'] = sekcja_zwlok.skrot()
+    except Exception as e: print('sekcje:', e)
     try: dz['archiwum'] = archiwum.skrot()
     except Exception as e: print('archiwum:', e)
     try: dz['analityk_ai'] = analityk_ai.statystyki()
