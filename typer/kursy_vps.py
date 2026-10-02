@@ -964,6 +964,7 @@ def tryb_cron():
     analityk = stan.get('analityk') != dzis and 9 <= teraz.hour < 22
     if not zmiana and not przed and (minut < 110 or teraz.hour < 7):
         if analityk: _analityk_raz_dziennie(stan, dzis)
+        else: _zbieracz_cron(stan, teraz)
         return
     print(teraz.strftime('%Y-%m-%d %H:%M'), 'cron:', 'nowa lista meczów' if zmiana else ('mecz za chwilę – kursy przed startem' if przed else f'{round(minut)} min od ostatniego odczytu'))
     if czytnik(KP):
@@ -973,6 +974,51 @@ def tryb_cron():
         stan['bc_strumien'] = dzis; json.dump(stan, open(STAN_CRON, 'w'))
         betclic_strumien_z_przegladarki()
     elif analityk: _analityk_raz_dziennie(stan, dzis)
+    else: _zbieracz_cron(stan, teraz)
+
+def _zbieracz_cron(stan, teraz):
+    """Wersja 37 – Zbieracz kursów: cała oferta Fortuny rano (8:15) i po południu (15:00), mecze 45–75 min przed startem,
+    wysyłka odczytów „przed meczem” o 23:30. Jeden krok na wywołanie crona (osobny proces)."""
+    dzis = teraz.strftime('%Y-%m-%d'); h, mi = teraz.hour, teraz.minute
+    if stan.get('zb_rano') != dzis and (h > 8 or (h == 8 and mi >= 15)) and h < 15: tryb, kl = 'rano', 'zb_rano'
+    elif stan.get('zb_pop') != dzis and 15 <= h < 22: tryb, kl = 'popoludnie', 'zb_pop'
+    elif stan.get('zb_wyslij') != dzis and h == 23 and mi >= 30: tryb, kl = 'wyslij', 'zb_wyslij'
+    elif h >= 8 or h < 2:
+        tryb, kl = 'przed', None
+        try:                                   # proces tylko wtedy, gdy jakiś mecz z listy jest w oknie 45–75 min przed startem
+            lista = json.load(open(f'/opt/typer/zbieracz/{dzis}/lista.json'))
+            try: juz = {m['id'] for m in json.load(open(f'/opt/typer/zbieracz/{dzis}/przed.json'))}
+            except Exception: juz = set()
+            lista = [m for m in lista if m['id'] not in juz]
+            u = dt.datetime.now(dt.timezone.utc)
+            if not any(45 <= (dt.datetime.strptime(m['t'], '%Y-%m-%d %H:%M').replace(tzinfo=dt.timezone.utc) - u).total_seconds() / 60 <= 75
+                       for m in lista): return
+        except Exception: return
+    else: return
+    if kl: stan[kl] = dzis; json.dump(stan, open(STAN_CRON, 'w'))
+    import subprocess
+    try:
+        r = subprocess.run([sys.executable, os.path.abspath(__file__), '--zbieracz', tryb], capture_output=True, text=True, timeout=1500)
+        if tryb != 'przed' or 'przed meczem:' in (r.stdout or ''): print(teraz.strftime('%H:%M'), (r.stdout or '')[-400:], (r.stderr or '')[-300:])
+    except Exception as e: print('Zbieracz:', e)
+
+def zbieracz(tryb):
+    """Tryb --zbieracz <tryb>: pobiera typer/zbieracz.py z repozytorium i uruchamia krok."""
+    s = ses(); KP = _przygotuj(s)
+    try: token = open(TOKEN_PLIK).read().strip()
+    except Exception: token = None
+    cel = os.path.join(KATALOG, 'zbieracz.py')
+    try:
+        if token:
+            r = s.get(f'https://api.github.com/repos/{REPO}/contents/typer/zbieracz.py', timeout=20,
+                      headers={'Authorization': f'Bearer {token}', 'Accept': 'application/vnd.github.raw', 'User-Agent': 'typer-vps'})
+        else: r = s.get(f'{RAW}/typer/zbieracz.py?t={int(time.time())}', timeout=20)
+        r.raise_for_status(); open(cel, 'wb').write(r.content)
+    except Exception as e:
+        if not os.path.exists(cel): print('Zbieracz – brak modułu:', e); return
+    if KATALOG not in sys.path: sys.path.insert(0, KATALOG)
+    import zbieracz as Z
+    Z.krok(sys.modules[__name__], KP, s, tryb)
 
 def analityk():
     """Tryb --analityk: pobiera z repozytorium moduł typer/analityk_vps.py (rozpoznanie źródeł Analityka) i go uruchamia."""
@@ -1875,6 +1921,8 @@ def main():
         betclic_strumien(); return
     if '--analityk' in sys.argv:
         analityk(); return
+    if '--zbieracz' in sys.argv:
+        i = sys.argv.index('--zbieracz'); zbieracz(sys.argv[i + 1] if len(sys.argv) > i + 1 else 'rano'); return
     if '--betclic2' in sys.argv:
         betclic_zakladki(); return
     if '--betclic' in sys.argv:

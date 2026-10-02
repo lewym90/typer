@@ -886,6 +886,17 @@ function widokPewne(){
   h += sekcjaOdradzane(odradzaneWszystkie().filter(([sp]) => f === 'wszystkie' || sp === f));
   return h + `<p class="note" style="margin:4px">Typ dnia to najpewniejszy zakład meczu (od 70%). Szanse z kursów Pinnacle i giełdy Betfair (KSW – z polskich bukmacherów); AI sprawdza każdy typ w aktualnych wiadomościach. Testy na 328 257 spotkaniach: typy od 70% wchodzą ok. 78 razy na 100.</p>`;
 }
+function sekcjaArchiwum(){
+  // wersja 37: archiwum kursów (Zbieracz) – gdzie polski bukmacher się myli
+  const a = (S.dziennik || {}).archiwum; if(!a || !a.kursow) return '';
+  const w = a.wszystko || {};
+  let h = `<section class="sekcja"><h2>Archiwum kursów (${esc(a.bukmacher || 'Fortuna')})</h2>`;
+  h += `<p class="note">${a.meczow} meczów · ${a.kursow} rozliczonych kursów · ${a.dni} dni. Stawiając wszystko po kursie z rana: ${sgn(w.roi || 0)} (trafione ${pct(w.trafione || 0)}, kurs zakładał ${pct(w.z_kursu || 0)}).</p>`;
+  const ok = (a.okazje || []).slice(0, 6);
+  if(ok.length) h += ok.map(x => `<div class="wiersz"><div class="g"><span>${esc(x.kategoria)} · kursy ${esc(x.przedzial)}</span><b class="${x.roi >= 0 ? 'pos' : 'neg'}">${sgn(x.roi)}</b></div><div class="d"><span>${x.n} kursów · weszło ${pct(x.trafione)}, kurs zakładał ${pct(x.z_kursu)}</span><span>${x.ruch_kursu != null ? 'ruch ' + sgn(x.ruch_kursu) : ''}</span></div></div>`).join('');
+  else h += `<p class="note">Za mało danych na wnioski – pierwsze po ok. 2 tygodniach zbierania.</p>`;
+  return h + `</section>`;
+}
 function sekcjaAnalityka(){
   const a = (S.dziennik || {}).analityk_ai; if(!a || !a.wszystkich) return '';
   let h = `<section class="sekcja"><h2>Czy Analityk bije rynek?</h2>`;
@@ -926,7 +937,7 @@ function widokDziennik(){
     if(g.n < 100) h += `<p class="note">Przy mniej niż ok. 100 typach wynik to w dużej mierze przypadek – nawet przy 79% zdarza się kilka słabszych dni z rzędu.</p>`;
   } else h += `<p class="note">Brak rozliczonych typów dnia w tym okresie.</p>`;
   h += `</section>`;
-  h += sekcjaKursowPL() + sekcjaAnalityka();
+  h += sekcjaKursowPL() + sekcjaAnalityka() + sekcjaArchiwum();
   // czy AI pomaga
   const grupy = {zgoda:[0,0,0], ryzyko:[0,0,0], odradza:[0,0,0]};
   const dodaj = a => { for(const k of Object.keys(grupy)) if(a && a[k]){ grupy[k][0] += a[k].n; grupy[k][1] += a[k].trafione; grupy[k][2] += a[k].przewidywane * a[k].n; } };

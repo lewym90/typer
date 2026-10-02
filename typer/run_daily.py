@@ -3,7 +3,7 @@ import json, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from core import *
 import copy, hashlib, requests, re
-import core, raport, powiadomienia as tg, zrodla, ai_raport, sporty, wspolne, analityk, analityk_ai
+import core, raport, powiadomienia as tg, zrodla, ai_raport, sporty, wspolne, analityk, analityk_ai, archiwum
 from nazwy import pl, pl_txt, pl_mecz
 
 NAZWY_LIG = {'soccer_uefa_champs_league': 'Liga Mistrzów', 'soccer_fifa_world_cup': 'Mistrzostwa świata',
@@ -1118,7 +1118,11 @@ def zapisz_status(tryb, bledy=None, st=None, tg_info=None):
     if DIAG: st['przedmeczowe'] = dict(czas=teraz, mecze=DIAG[:12])
     if tg_info: st['telegram_typy'] = dict(wynik=tg_info, czas=teraz)
     if STRAZNIK: st['na_zywo'] = dict(straznik=STRAZNIK[-1], czas=teraz)
-    if tryb == 'pelne': st['analityk'] = dict(analityk.stan(), czas=teraz); st['analityk_ai'] = dict(analityk_ai.STAN, czas=teraz)
+    if tryb == 'pelne':
+        st['analityk'] = dict(analityk.stan(), czas=teraz); st['analityk_ai'] = dict(analityk_ai.STAN, czas=teraz)
+        try: archiwum.dzienny()                       # wersja 37: rozliczenie archiwum kursów z wczoraj + statystyki
+        except Exception as e: archiwum._blad(f'{type(e).__name__}: {e}')
+        st['archiwum'] = dict(archiwum.STAN, czas=teraz)
     if tryb == 'pelne' or sporty.STAN['bledy']:
         st['sporty'] = dict(tenis=sporty.STAN['tenis'], walki=sporty.STAN['walki'], ksw=sporty.STAN.get('ksw'), kredyty=sporty.STAN['kredyty'], rundy_walk=sporty.STAN['rundy'],
                             pominiete=sporty.STAN['pominiete'][:6], bledy=sporty.STAN['bledy'][:6], czas=teraz)
@@ -1152,6 +1156,8 @@ def eksport_dziennika():
 def eksport_calosci():
     dz = eksport_dziennika() if len(wczytaj_dziennik()) else dict(statystyki=None, typy=[])
     dz['pewne'] = stat_pewne(wczytaj_pewne()); dz['samokorekta'] = SAMOKOREKTA
+    try: dz['archiwum'] = archiwum.skrot()
+    except Exception as e: print('archiwum:', e)
     try: dz['analityk_ai'] = analityk_ai.statystyki()
     except Exception as e: print('statystyki Analityka AI:', e)
     try:
