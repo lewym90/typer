@@ -734,12 +734,12 @@ BUKMACHERZY_TG = ['STS', 'Fortuna', 'Superbet', 'Betclic']
 def _nazwa_buk(n): return 'Betclic' if n == 'Betclic PL' else n
 
 def _kursy_linia(t):
-    """„STS 1,30 ⭐ · Superbet 1,29 · Fortuna 1,28 · Betclic —” – najlepszy pogrubiony; „—” = bukmacher nie ma zakładu,
+    """„STS 1,30 · Superbet 1,29 · Fortuna 1,28 · Betclic —” – najlepszy pierwszy i pogrubiony (bez gwiazdki); „—” = bukmacher nie ma zakładu,
     „?” = nie odczytano kursu (problem programu). Tylko polscy bukmacherzy (Betclic = Betclic PL)."""
     kk = sorted({_nazwa_buk(n): float(k) for n, k in (t.get('kursy_pl') or {}).items() if k and float(k) > 1}.items(), key=lambda x: -x[1])
     if not kk: return f"kurs uczciwy {tg.kurs(1 / t['szansa'])} – graj od tego kursu"
     odczyt = {_nazwa_buk(n) for n in (t.get('kursy_odczyt') or [])}
-    czesci = [f"{esc_(n)} <b>{tg.kurs(k)}</b>{' ⭐' if len(kk) > 1 else ''}" if i == 0 else f"{esc_(n)} {tg.kurs(k)}"
+    czesci = [f"{esc_(n)} <b>{tg.kurs(k)}</b>" if i == 0 else f"{esc_(n)} {tg.kurs(k)}"
               for i, (n, k) in enumerate(kk)]
     obecni = {n for n, _ in kk}
     czesci += [f"{n} {'—' if n in odczyt else '?'}" for n in BUKMACHERZY_TG if n not in obecni]
@@ -821,7 +821,8 @@ def plTxt_bezp(o, m):
 def _raport_inne_tg(m, nr): return _raport_tg(m, nr, m['sport'])
 
 def tg_typy_wszystkie(d, inne, gl, status):
-    """Jedna wiadomość dziennie: 5 Pewnych i Value ze wszystkich dyscyplin (kursy wszystkich bukmacherów, werdykt AI), zaraz potem raporty."""
+    """Jedna wiadomość dziennie: 5 Pewnych i Value ze wszystkich dyscyplin (kursy wszystkich bukmacherów, werdykt AI),
+    potem zwięźle pozostałe najpewniejsze typy z zakładek każdej dyscypliny (bez powtórzeń); zaraz potem raporty."""
     pew, val = _rozwiaz(gl, d, inne)
     if not pew and not val: return 'brak typów'
     teraz = pd.Timestamp.now(tz='Europe/Warsaw')
@@ -854,13 +855,50 @@ def tg_typy_wszystkie(d, inne, gl, status):
             best = max(((n, k) for n, k in kk.items() if k), key=lambda x: x[1], default=(_nazwa_buk(v.get('bukmacher') or 'Betclic FR'), v['kurs']))
             lin.append(f"{wspolne.IKONA[sp]} {esc_(_nazwa_meczu(sp, v))} · {esc_(zak)} @ <b>{tg.kurs(best[1])}</b> {esc_(best[0])} · uczciwy {tg.kurs(v['kurs_uczciwy'])} · +{round(v['ev'] * 100)}%"
                        + (' · <i>rynek PL</i>' if v.get('rynek_pl') else ''))
-    if any(sp == 'tenis' for sp, _ in pew + val): lin.append('\n<i>Tenis – krecz: rozliczenie wg regulaminu bukmachera.</i>')
+    reszta = _czesc_dyscyplin(d, inne, pew, val)
+    lin += reszta
+    if any(sp == 'tenis' for sp, _ in pew + val) or any('Tenis' in x for x in reszta):
+        lin.append('\n<i>Tenis – krecz: rozliczenie wg regulaminu bukmachera.</i>')
     if tg.APLIKACJA: lin.append(f'\n<a href="{tg.APLIKACJA}">Otwórz aplikację →</a>')
     if tg.wyslij_dlugi('\n'.join(lin)):
         status['tg_typy'] = dict(data=gl.get('data'), podpis=podpis, czas=teraz.strftime('%H:%M'), ai=n_ai)
         tg_raporty_wszystkie(gl, pew)
         return 'wysłane'
     return 'błąd wysyłki'
+
+NAZWA_DYSC_TG = {'pilka': '⚽ Piłka', 'tenis': '🎾 Tenis', 'walki': '🥊 Walki'}
+
+def _kurs_krotko(t):
+    """Najlepszy kurs polskiego bukmachera (bez gwiazdki) albo „od <kurs uczciwy>”, gdy kursów jeszcze nie ma."""
+    kk = {_nazwa_buk(n): float(k) for n, k in (t.get('kursy_pl') or {}).items() if k and float(k) > 1}
+    if not kk: return f"od {tg.kurs(1 / t['szansa'])}"
+    n = max(kk, key=kk.get)
+    return f"{esc_(n)} {tg.kurs(kk[n])}"
+
+def _czesc_dyscyplin(d, inne, pew, val):
+    """Druga część porannej wiadomości: najpewniejsze typy (🔒) z zakładek Pewne każdej dyscypliny, bez meczów z części głównej.
+    Jedna linia na mecz: godzina, mecz, ikona AI, 🔒 zakład, szansa, najlepszy kurs (bez ⚖️/🎯 i bez Value – są w aplikacji)."""
+    juz_p = {(sp, str(m.get('event_id') or m.get('mecz'))) for sp, m in pew}
+    lin = []
+    for sp in ('pilka', 'tenis', 'walki'):
+        if sp == 'pilka': mecze = list(d.get('pewne') or [])
+        else:
+            s = (inne or {}).get(sp) or {}
+            mm = {str(m['event_id']): m for m in s.get('mecze') or []}
+            mecze = [mm[str(i)] for i in s.get('pewne') or [] if str(i) in mm]
+        mecze = [m for m in mecze if (sp, str(m.get('event_id') or m.get('mecz'))) not in juz_p]
+        wiersze = []
+        for m in sorted(mecze, key=lambda x: str(x.get('start'))):
+            t = m if sp == 'pilka' else (m.get('najpewniejszy') or {})
+            if not t.get('zaklad') or not t.get('szansa'): continue
+            zak = pl_txt(t['zaklad'], m['gospodarz'], m['gosc']) if sp == 'pilka' else t['zaklad']
+            if sp == 'pilka' and len(zak) <= 3 and t.get('opis'): zak = f"{zak} ({pl_txt(t['opis'], m['gospodarz'], m['gosc'])})"
+            w, _ = _ai_karty(sp, m); ik = WERDYKT_TG.get(w, ('',))[0]
+            wiersze.append(f"{m.get('godzina', '')} <b>{esc_(_nazwa_meczu(sp, m))}</b>" + (f" {ik}" if ik else '')
+                           + f"\n   🔒 {esc_(zak)} · {tg.pct(t['szansa'])} · {_kurs_krotko(t)}")
+        if wiersze: lin += [f"\n<b>{NAZWA_DYSC_TG[sp]}</b>"] + wiersze
+    if lin: lin.insert(0, '\n━━━━━━━━━━━━\n<b>Pozostałe najpewniejsze wg dyscyplin</b>')
+    return lin
 
 def tg_raporty_wszystkie(gl, pew):
     if not pew: return
