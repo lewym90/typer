@@ -303,7 +303,7 @@ async function laduj(){
   S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null; S.status = st.value || null; S.inne = inn.value || null; S.glowne = gl.value || null;
 }
 
-const WERSJA_APLIKACJI = 49;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
+const WERSJA_APLIKACJI = 50;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
 /* ---------- model (ten sam co w Pythonie) ---------- */
 const MAXG = 10;
 function pois(l){ const out = [Math.exp(-l)]; for(let k=1;k<=MAXG;k++) out.push(out[k-1]*l/k); return out; }
@@ -926,6 +926,12 @@ function sekcjaArchiwum(){
   const ok = (a.okazje || []).slice(0, 6);
   if(ok.length) h += ok.map(x => `<div class="wiersz"><div class="g"><span>${esc(x.kategoria)} · kursy ${esc(x.przedzial)}</span><b class="${x.roi >= 0 ? 'pos' : 'neg'}">${sgn(x.roi)}</b></div><div class="d"><span>${x.n} kursów · weszło ${pct(x.trafione)}, kurs zakładał ${pct(x.z_kursu)}</span><span>${x.ruch_kursu != null ? 'ruch ' + sgn(x.ruch_kursu) : ''}</span></div></div>`).join('');
   else h += `<p class="note">Za mało danych na wnioski – pierwsze po ok. 2 tygodniach zbierania.</p>`;
+  const sb = a.superbet;   // wersja 50: drugi bukmacher
+  if(sb && sb.kursow){ const ws = sb.wszystko || {};
+    h += `<div class="wiersz"><div class="g"><span>Superbet – ${sb.meczow} meczów, ${sb.kursow} kursów</span><b class="${(ws.roi || 0) >= 0 ? 'pos' : 'neg'}">${sgn(ws.roi || 0)}</b></div><div class="d"><span>weszło ${pct(ws.trafione || 0)}, kurs zakładał ${pct(ws.z_kursu || 0)}</span><span></span></div></div>`; }
+  const NZ = {tenis: '🎾 Tenis', hokej: '🏒 Hokej', koszykowka: '🏀 Koszykówka', siatkowka: '🏐 Siatkówka', pilka_reczna: '🤾 Piłka ręczna', baseball: '⚾ Baseball', zuzel: '🏍️ Żużel', 'sporty walki': '🥊 MMA', boks: '🥊 Boks'};
+  for(const [sp, x] of Object.entries(a.inne || {})) if(x && x.kursow)
+    h += `<div class="wiersz"><div class="g"><span>${NZ[sp] || esc(sp)} – ${x.meczow} meczów, ${x.kursow} kursów</span><b class="${x.roi >= 0 ? 'pos' : 'neg'}">${sgn(x.roi)}</b></div><div class="d"><span>weszło ${pct(x.trafione)}, kurs zakładał ${pct(x.z_kursu)}</span><span>Fortuna</span></div></div>`;
   return h + `</section>`;
 }
 function sekcjaAnalityka(){
@@ -1529,6 +1535,7 @@ function widokStanu(){
   let h = wiersz('Ostatnie pełne liczenie typów', esc(s.ostatnie_pelne || '–')) + wiersz('Ostatnie sprawdzenie', esc(s.ostatnie_sprawdzenie || '–'));
   h += wiersz('Kredyty API kursów (zostało)', k.pozostalo != null ? `${k.pozostalo}${k.pozostalo < 60 ? ' ⚠️' : ''}` : '–', k.pozostalo != null && k.pozostalo < 60 ? 'neg' : '');
   if(k.budzet_dzis) h += wiersz('Dzienny budżet kredytów', k.budzet_dzis);
+  if(k.limit_dnia) h += wiersz('Wspólny limit kredytów dziś', `${Math.max(0, (k.start_dnia || 0) - (k.pozostalo || 0))} z ${k.limit_dnia}${k.zablokowane ? ` · wstrzymane ${k.zablokowane}` : ''}`);   // wersja 50
   h += wiersz('API-Football', af.klucz ? `${af.zapytania_ostatnio || 0} zapytań${(af.bledy||[]).length ? ' ⚠️' : ' ✅'}` : 'brak klucza');
   const g = s.gemini || {};
   if(g.klucz !== undefined){ const wd = g.werdykty || {};
@@ -1548,6 +1555,11 @@ function widokStanu(){
   const ai_ = ar.inne;   // wersja 49: rozliczone kursy pozostałych sportów
   if(ai_ && ai_.sporty && Object.keys(ai_.sporty).length) h += wiersz('Archiwum – inne sporty rozliczone', esc(Object.entries(ai_.sporty).map(([k, v]) => `${k}: ${v.meczow} meczów, ${v.kursow} kursów`).join(' · ')));
   const wy = ar.wyniki; if(wy && wy.dni) h += wiersz('Baza wyników (wszystkie sporty)', esc(wy.dni.join(' · ')) + ((wy.bledy || []).length ? ' ⚠️' : ''));
+  // wersja 50: Flashscore (wyniki wszystkich lig), Superbet w archiwum, Pinnacle za darmo
+  const fl = wy && wy.flash; if(fl){ const n = Object.entries(fl.liczby || {}).map(([k, v]) => `${k} ${v}`).join(', '); const zg = fl.zgodnosc_z_espn;
+    h += wiersz('Wyniki Flashscore', n ? `${esc(n)}${zg && zg.wspolne ? ` · zgodność z ESPN ${zg.zgodne}/${zg.wspolne}` : ''} ✅` : `brak ⚠️ ${esc((fl.bledy || [])[0] || '')}`, n ? '' : 'neg'); }
+  if(ar.superbet && ar.superbet.meczow) h += wiersz('Archiwum – piłka Superbet', `${ar.superbet.dopasowanych || 0} z ${ar.superbet.meczow} meczów · ${ar.superbet.kursow || 0} kursów`);
+  const pn = s.pinnacle; if(pn) h += wiersz('Pinnacle (za darmo)', pn.mecze ? `${esc(pn.czas)} · ${pn.mecze} meczów, ${pn.rynki} rynków ✅` : `brak danych ⚠️ ${esc((pn.bledy || [])[0] || ('HTTP ' + (pn.http || '?')))}`, pn.mecze ? '' : 'neg');
   h += wiersz('Telegram', !t.wlaczony ? 'wyłączony' : (t.ostatni_blad ? '⚠️ problem' : '✅ działa'), t.ostatni_blad ? 'neg' : '');
   const sp = s.sporty; if(sp){ const f = x => x ? `${x.z_kursami || 0} z kursami (z ${x.mecze || 0}), pewnych ${x.pewne || 0}` : '–';
     h += wiersz('🎾 Tenis', f(sp.tenis)) + wiersz('🥊 Walki', f(sp.walki)) + wiersz('Kredyty na tenis i walki', sp.kredyty != null ? sp.kredyty : '–');

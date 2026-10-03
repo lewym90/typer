@@ -332,8 +332,11 @@ def rozlicz_wszystko():
         for r in d.itertuples():
             if str(r.event_id) in wyniki: continue
             w = tg.wynik(r.liga, r.gospodarz, r.gosc, r.start)
-            if w and w[2] == 'post': wyniki[str(r.event_id)] = (w[0], w[1])
-            else: braki.add(r.liga)
+            if w and w[2] == 'post': wyniki[str(r.event_id)] = (w[0], w[1]); continue
+            try: wf = archiwum.wynik_meczu(r.gospodarz, r.gosc, r.start)      # wersja 50: FotMob/Flashscore za darmo, zanim zapłacimy kredytami
+            except Exception: wf = None
+            if wf: wyniki[str(r.event_id)] = wf
+            elif pd.to_datetime(r.start) < teraz - pd.Timedelta(hours=4): braki.add(r.liga)     # Odds API dopiero dla starszych meczów
     if braki and ODDS_API_KEY:
         try: wyniki.update({k: v for k, v in pobierz_wyniki(list(braki)).items() if k not in wyniki})
         except Exception as e: print('wyniki API:', e)
@@ -1154,8 +1157,14 @@ def zapisz_status(tryb, bledy=None, st=None, tg_info=None):
         zs = json.load(open(os.path.join(os.path.dirname(__file__), '..', 'surowe', 'zbieracz_superbet.json')))
         st['zbieracz_superbet'] = {k: zs.get(k) for k in ('czas', 'sb_odczytane', 'sb_sporty', 'przerwane_po', 'sekund')}
     except Exception: pass
+    try:                                         # wersja 50: Pinnacle za darmo (zbieranie, test dostępu)
+        import pinnacle
+        if pinnacle.STAN.get('czas'): st['pinnacle'] = {k: pinnacle.STAN.get(k) for k in ('czas', 'tryb', 'http', 'sporty', 'mecze', 'rynki', 'bledy', 'sekund', 'plik')}
+    except Exception: pass
     if core.KREDYTY['pozostalo'] is not None:
-        st['kredyty_odds'] = dict(pozostalo=core.KREDYTY['pozostalo'], zuzyto=core.KREDYTY['zuzyto'], budzet_dzis=core.KREDYTY['na_dzis'] or st.get('kredyty_odds', {}).get('budzet_dzis'))
+        st['kredyty_odds'] = dict(pozostalo=core.KREDYTY['pozostalo'], zuzyto=core.KREDYTY['zuzyto'], budzet_dzis=core.KREDYTY['na_dzis'] or st.get('kredyty_odds', {}).get('budzet_dzis'),
+                                  dzien=core.KREDYTY.get('dzien'), start_dnia=core.KREDYTY.get('start_dnia'), limit_dnia=core._limit_dnia(),
+                                  zablokowane=core.KREDYTY.get('zablokowane', 0) + (st.get('kredyty_odds', {}).get('zablokowane', 0) if st.get('kredyty_odds', {}).get('dzien') == core.KREDYTY.get('dzien') else 0))
     st['api_football'] = dict(klucz=bool(os.environ.get('API_FOOTBALL_KEY')), uzywany=bool(raport.KLUCZ),
                               uwaga=None if raport.KLUCZ else 'wyłączony – darmowy plan nie obejmuje bieżącego sezonu (włączysz zmienną API_FOOTBALL_PRO=1)',
                               zapytania_ostatnio=raport.licznik['zapytania'], bledy=raport.bledy[:5])
@@ -1233,7 +1242,13 @@ if __name__ == '__main__':
     teraz = pd.Timestamp.now(tz='Europe/Warsaw')
     try: stare = json.load(open(os.path.join(OUT, 'dzis.json')))
     except Exception: stare = {}
-    try: core.KREDYTY['pozostalo'] = json.load(open(os.path.join(OUT, 'status.json')))['kredyty_odds']['pozostalo']
+    try:
+        _ko = json.load(open(os.path.join(OUT, 'status.json')))['kredyty_odds']
+        core.KREDYTY['pozostalo'] = _ko['pozostalo']
+        # wersja 50: pula na początek doby programu → wspólny dzienny limit kredytów (core._limit_dnia)
+        _d = wspolne.dzien_str()
+        core.KREDYTY['dzien'] = _d
+        core.KREDYTY['start_dnia'] = _ko.get('start_dnia') if _ko.get('dzien') == _d and _ko.get('start_dnia') is not None else _ko['pozostalo']
     except Exception: pass
     dzis_gotowe = stare.get('data') == wspolne.dzien_str() and str(stare.get('wygenerowano', ''))[11:13] >= '07'
     pelne = os.environ.get('GITHUB_EVENT_NAME') != 'schedule' or (teraz.hour >= 7 and not dzis_gotowe and teraz.hour < 23)
@@ -1261,6 +1276,9 @@ if __name__ == '__main__':
         except Exception as e: bledy.append(f'rozliczenie: {e}')
         try: sporty.rozlicz(); sporty.zapisz_json()
         except Exception as e: bledy.append(f'tenis/walki rozliczenie: {e}')
+        try:                                     # wersja 50: Pinnacle – kursy zamknięcia (mecze 5–50 min przed startem), za darmo
+            import pinnacle; pinnacle.zbierz('zamk')
+        except Exception as e: print('Pinnacle:', e)
         zapisz_status('sprawdzenie', bledy); print('Sprawdzenie zakończone', bledy); sys.exit(0)
     bledy = []
     pobierz_dane(); trenuj()
@@ -1299,6 +1317,9 @@ if __name__ == '__main__':
         kursy_pl.main()
         today = json.load(open(os.path.join(OUT, 'dzis.json'))); inne = sporty.wczytaj_json() or inne
     except Exception as e: bledy.append(f'kursy PL: {e}')
+    try:                                         # wersja 50: Pinnacle – cała oferta na 30 h, za darmo (do archiwum; test dostępu)
+        import pinnacle; pinnacle.zbierz('pelne')
+    except Exception as e: print('Pinnacle:', e)
     st = wczytaj_status(); tg_info = None
     gl = {}
     try: gl = wspolne.wybierz(today, inne or sporty.wczytaj_json()); wspolne.zapisz(gl)   # 5 Pewnych i Value ze wszystkich dyscyplin

@@ -84,7 +84,7 @@ def expected_goals(m, home, away, neutral=False):
 # „faworyt powyżej 3,5” 31,3 → 27,3, „outsider strzeli” 47,4 → 51,4, BTTS 44,7 → 49,0). Gole łącznie były trafne.
 # Z karą 0,025: średni błąd kalibracji 13 rynków × 5 przedziałów siły faworyta 1,63 → 1,00 pkt, log-loss lepszy.
 KAPPA_RYNEK = 0.025
-WERSJA = 49          # numer wersji programu (Ustawienia w aplikacji); zmieniać przy każdej nowej wersji
+WERSJA = 50          # numer wersji programu (Ustawienia w aplikacji); zmieniać przy każdej nowej wersji
 
 def score_matrix(lh, la, rho, kappa=0.0):
     M = np.outer(poisson.pmf(np.arange(MAXG + 1), lh), poisson.pmf(np.arange(MAXG + 1), la))
@@ -242,14 +242,30 @@ PEWNE_ILE_TYPOW = 5       # ile najpewniejszych typów pokazać
 # 'Austria','Dania','Norwegia','Szwecja','Szwajcaria','Rumunia','Finlandia','Irlandia','Rosja','Szkocja'.
 
 API = "https://api.the-odds-api.com/v4"
-KREDYTY = {'pozostalo': None, 'zuzyto': None, 'na_dzis': None, 'wydane_teraz': 0}
+KREDYTY = {'pozostalo': None, 'zuzyto': None, 'na_dzis': None, 'wydane_teraz': 0, 'start_dnia': None, 'dzien': None, 'zablokowane': 0}
+def _limit_dnia():
+    """Wersja 50: ile kredytów wolno wydać dziś łącznie (piłka, tenis/walki, kursy przed meczem, wyniki), żeby pula
+    starczyła do końca miesiąca (darmowy plan zerował się po 3 dniach). Pula na początek dnia: KREDYTY['start_dnia']."""
+    st = KREDYTY.get('start_dnia')
+    if st is None: return None
+    t = pd.Timestamp.now(tz='Europe/Warsaw'); dni = (t + pd.offsets.MonthEnd(0)).day - t.day + 1
+    return max(4, int(st / dni))
+
+def _platne(sciezka):
+    return '/odds' in sciezka or '/scores' in sciezka or sciezka.startswith('historical')
+
 def api(sciezka, **p):
+    lim = _limit_dnia()
+    if lim is not None and _platne(sciezka) and KREDYTY['pozostalo'] is not None and KREDYTY['start_dnia'] - KREDYTY['pozostalo'] >= lim:
+        KREDYTY['zablokowane'] = KREDYTY.get('zablokowane', 0) + 1
+        raise RuntimeError(f'dzienny limit kredytów ({lim}) wyczerpany – reszta jutro')
     r = requests.get(f"{API}/{sciezka}", params={'apiKey': ODDS_API_KEY, **p}, timeout=30)
     if r.status_code != 200: raise RuntimeError(f"{r.status_code}: {r.text[:200]}")
     try:
         poz = int(float(r.headers.get('x-requests-remaining')))
         if KREDYTY['pozostalo'] is not None: KREDYTY['wydane_teraz'] += max(0, KREDYTY['pozostalo'] - poz)
         KREDYTY['pozostalo'] = poz; KREDYTY['zuzyto'] = int(float(r.headers.get('x-requests-used', 0)))
+        if KREDYTY.get('start_dnia') is None or poz > KREDYTY['start_dnia']: KREDYTY['start_dnia'] = poz   # nowy miesiąc / doładowanie
     except Exception: pass
     print(f"   (kredyty pozostałe: {r.headers.get('x-requests-remaining')})"); return r.json()
 
@@ -257,7 +273,9 @@ def budzet_dzienny(rezerwa=0.2):
     """Ile kredytów można dziś wydać, żeby starczyło do końca miesiąca (część zostaje na sprawdzenia przed meczami)."""
     if KREDYTY['pozostalo'] is None: return 999
     t = pd.Timestamp.now(tz='Europe/Warsaw'); dni = (t + pd.offsets.MonthEnd(0)).day - t.day + 1
-    return max(4, int(KREDYTY['pozostalo'] / dni * (1 - rezerwa)))
+    b = max(4, int(KREDYTY['pozostalo'] / dni * (1 - rezerwa)))
+    lim = _limit_dnia()          # wersja 50: piłka rano dostaje większość dziennego limitu, reszta na tenis/walki i przed meczem
+    return min(b, max(4, int(lim * 0.6))) if lim else b
 
 def pokaz_ligi():
     s = pd.DataFrame(api('sports')); print(s[s.group == 'Soccer'][['key','title']].to_string())

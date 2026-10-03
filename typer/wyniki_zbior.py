@@ -1,4 +1,4 @@
-"""Wersja 46 – ZBIORNIK WYNIKÓW (GitHub, przy pełnym liczeniu): wyniki wszystkich dyscyplin z internetu, zapisywane jako
+"""Wersja 46 – ZBIORNIK WYNIKÓW (wersja 50: + Flashscore – wszystkie sporty i ligi, flash.py) (GitHub, przy pełnym liczeniu): wyniki wszystkich dyscyplin z internetu, zapisywane jako
 własna baza do późniejszego rozliczenia kursów z Archiwum (Zbieracz na polskim serwerze zapisuje kursy Fortuny wszystkich
 11 sportów programu). Zasada: kursów z przeszłości nie da się odtworzyć – dlatego zbieramy je od razu; wyniki zapisujemy
 równolegle w prostej, jednolitej postaci, żeby dopasowanie mecz ↔ wynik dało się zrobić (i poprawić) w dowolnym momencie.
@@ -123,7 +123,13 @@ def zbierz(dni=3):
     dzis = pd.Timestamp.now(tz='Europe/Warsaw').normalize()
     for i in range(1, dni + 1):
         d = (dzis - pd.Timedelta(days=i)).strftime('%Y-%m-%d')
-        w = espn_dzien(d) + fotmob_dzien(d)
+        e_ = espn_dzien(d)
+        fl = flash_dzien(d)                      # wersja 50: Flashscore – wszystkie ligi świata, 11 sportów
+        if fl and i == 1:
+            try:
+                import flash; STAN['flash_zgodnosc'] = flash.zgodnosc(fl, e_)
+            except Exception as ex: _blad(f'zgodność flash: {ex}')
+        w = e_ + fotmob_dzien(d) + fl
         if not w: continue
         p = os.path.join(OUT, f'{d}.json.gz')
         try:
@@ -134,4 +140,21 @@ def zbierz(dni=3):
         with gzip.open(p, 'wt', encoding='utf-8') as f:
             json.dump(dict(czas=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m-%d %H:%M'), wyniki=w), f, ensure_ascii=False, separators=(',', ':'))
         STAN['dni'].append(f'{d}: {len(w)}')
-    return dict(dni=STAN['dni'], zrodla=STAN['zrodla'], bledy=STAN['bledy'][:10])
+    wyn = dict(dni=STAN['dni'], zrodla=STAN['zrodla'], bledy=STAN['bledy'][:10])
+    try:
+        import flash
+        wyn['flash'] = {k: flash.STAN.get(k) for k in ('host', 'jezyk', 'sporty', 'liczby', 'zapytan', 'sekund', 'bledy', 'probka')}
+        wyn['flash']['zgodnosc_z_espn'] = STAN.get('flash_zgodnosc')
+    except Exception: pass
+    return wyn
+
+
+def flash_dzien(dzien):
+    """Wersja 50: wyniki z Flashscore (flash.py) – błąd źródła nie zatrzymuje reszty zbiornika."""
+    try:
+        import flash
+        out = flash.dzien(dzien)
+        for x in out: STAN['zrodla'][f"flash/{x['sp']}"] = STAN['zrodla'].get(f"flash/{x['sp']}", 0) + 1
+        return out
+    except Exception as e:
+        _blad(f'Flashscore {dzien}: {type(e).__name__}: {e}'); return []

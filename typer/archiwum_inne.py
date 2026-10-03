@@ -1,4 +1,4 @@
-"""Wersja 49 – ROZLICZANIE KURSÓW POZOSTAŁYCH SPORTÓW (tenis, walki, hokej, koszykówka, baseball, siatkówka…).
+"""Wersja 49 (wersja 50: + wyniki Flashscore, surowe rynki wszystkich dyscyplin – rynki_surowe.py) – ROZLICZANIE KURSÓW POZOSTAŁYCH SPORTÓW (tenis, walki, hokej, koszykówka, baseball, siatkówka…).
 Kursy: odczyty Zbieracza (Fortuna – klucze A/B, sety w tenisie). Wyniki: własna baza archiwum/wyniki (ESPN).
 Dopasowanie: tenis po nazwiskach (Fortuna „Rakhimova K.” ↔ ESPN „Kamilla Rakhimova”), drużyny po nazwach; czas ±3 dni
 dla tenisa (ESPN podaje czasem dzień turnieju), ±4 h dla pozostałych; kolejność stron może być odwrócona.
@@ -9,7 +9,10 @@ import numpy as np, pandas as pd
 
 BAZA = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data', 'archiwum')
 SP_WYNIKI = {'tenis': 'tenis', 'sporty walki': 'mma', 'mma': 'mma', 'hokej': 'hokej', 'koszykowka': 'koszykowka',
-             'baseball': 'baseball', 'siatkowka': 'siatkowka'}
+             'baseball': 'baseball', 'siatkowka': 'siatkowka', 'pilka_reczna': 'pilka_reczna', 'zuzel': 'zuzel', 'boks': 'boks'}
+# wersja 50: klucze A/B (zwycięzca) tylko tam, gdzie znaczą „zwycięzca meczu”; w hokeju/ręcznej A/B pochodziły z rynku
+# 3-drogowego w czasie regulaminowym – tam liczymy surowe rynki (rynki_surowe.py) z poprawnym czasem gry
+SP_KLUCZE = ('tenis', 'mma', 'boks')
 STAN = dict(meczow=0, dopasowanych=0, kursow=0, sporty={}, bledy=[])
 
 
@@ -40,7 +43,7 @@ def _wyniki(dni=12):
         try:
             with gzip.open(p, 'rt', encoding='utf-8') as f:
                 for w in json.load(f).get('wyniki') or []:
-                    if w.get('koniec') and w.get('zr') == 'espn': out[(w['sp'], w['id'])] = w
+                    if w.get('koniec') and w.get('zr') in ('espn', 'flash'): out[(w['zr'], w['sp'], w['id'])] = w
         except Exception as e: STAN['bledy'].append(f'{os.path.basename(p)}: {e}'[:120])
     return list(out.values())
 
@@ -56,9 +59,12 @@ def _odczyty(dni=10):
             except Exception: continue
             tryb = z.get('tryb') or os.path.basename(p).split('_', 1)[1].split('.')[0]
             for m in z.get('mecze') or []:
-                if m.get('sp') == 'pilka' or not m.get('k') or '/' in str(m.get('h')): continue      # debel – później
-                o = od.setdefault(m['id'], dict(sp=m['sp'], h=m['h'], a=m['a'], t=m['t'], tur=m.get('tur', ''), rano={}, popoludnie={}, przed={}, zamk={}))
-                o.setdefault(tryb, {}).update(m['k'])
+                if m.get('sp') == 'pilka' or not (m.get('k') or m.get('r')) or '/' in str(m.get('h')): continue      # debel – później
+                o = od.setdefault(m['id'], dict(sp=m['sp'], h=m['h'], a=m['a'], t=m['t'], tur=m.get('tur', ''), rano={}, popoludnie={}, przed={}, zamk={}, r={}))
+                o.setdefault(tryb, {}).update(m.get('k') or {})
+                for rn, wy in (m.get('r') or []):                 # wersja 50: surowe rynki (nowe dyscypliny)
+                    for nz, c in wy:
+                        o['r'].setdefault(tryb, {}).setdefault(f'{rn}|{nz}', c)
     return od
 
 
@@ -73,10 +79,10 @@ def _sety(w, odwr):
     return (sa, sh) if odwr else (sh, sa)
 
 
-def rozlicz():
+def rozlicz(teraz=None):
     import tenis
     wyn = _wyniki(); od = _odczyty()
-    teraz = pd.Timestamp.now(tz='UTC')
+    teraz = teraz or pd.Timestamp.now(tz='UTC')
     po_sp = {}
     for w in wyn: po_sp.setdefault(w['sp'], []).append(w)
     gotowe = set()
@@ -93,6 +99,7 @@ def rozlicz():
         if t > teraz - pd.Timedelta(hours=3): continue
         STAN['meczow'] += 1
         okno = pd.Timedelta(days=3) if sp == 'tenis' else pd.Timedelta(hours=4)
+        if sp == 'tenis' and any(w.get('zr') == 'flash' for w in po_sp[sp][:50]): okno = pd.Timedelta(days=3)
         best = None
         for w in po_sp[sp]:
             try: tw = pd.Timestamp(w['t']); tw = tw.tz_convert('UTC') if tw.tzinfo else tw.tz_localize('UTC')
@@ -105,6 +112,9 @@ def rozlicz():
         if not best: continue
         _, w, odwr = best
         zw = w.get('zw')
+        if sp not in SP_KLUCZE:                 # wersja 50: surowe rynki z poprawnym czasem gry
+            STAN['dopasowanych'] += 1; STAN['sporty'][o['sp']] = STAN['sporty'].get(o['sp'], 0) + 1
+            _surowe(o, w, odwr, mecz, t, nowe); continue
         if zw not in ('h', 'a'): continue
         a_wygral = (zw == 'h') != odwr
         STAN['dopasowanych'] += 1; STAN['sporty'][o['sp']] = STAN['sporty'].get(o['sp'], 0) + 1
@@ -134,6 +144,35 @@ def rozlicz():
     return STAN
 
 
+def _odwroc(x, odwr):
+    return None if x is None else ([x[1], x[0]] if odwr else [x[0], x[1]])
+
+
+def _surowe(o, w, odwr, mecz, t, nowe):
+    """Rozliczenie surowych rynków Fortuny (rynki_surowe) jednego meczu; wynik w kolejności stron Fortuny."""
+    import rynki_surowe as RS
+    fin = _odwroc([w.get('gh'), w.get('ga')], odwr)
+    if None in fin: return
+    punkty = None
+    cz = w.get('czesci')
+    if cz and len(cz) == 2 and all(x is not None for x in cz[0] + cz[1]): punkty = _odwroc([sum(cz[0]), sum(cz[1])], odwr)
+    wyn = dict(final=fin, reg=_odwroc(w.get('reg'), odwr), punkty=punkty)
+    r = o.get('r') or {}
+    kr = r.get('rano') or r.get('popoludnie') or {}
+    kp = {**(r.get('popoludnie') or {}), **(r.get('przed') or {})}
+    kz = r.get('zamk') or {}
+    dzien = t.tz_convert('Europe/Warsaw').strftime('%Y-%m-%d')
+    for k in set(kr) | set(kp) | set(kz):
+        rn, _, nz = k.partition('|')
+        x = RS.rozlicz(o['sp'], rn, nz, wyn, o['h'], o['a'])
+        if x is None: continue
+        traf, kat = x
+        nowe.setdefault(dzien, []).append(dict(data=dzien, sp=o['sp'], liga=o['tur'], mecz=mecz, start=o['t'], rynek=k[:120], kategoria=kat,
+                                               kurs_rano=kr.get(k), kurs_przed=kp.get(k), kurs_zamk=kz.get(k),
+                                               wynik=f"{fin[0]}:{fin[1]}" + (f" (reg. {wyn['reg'][0]}:{wyn['reg'][1]})" if wyn['reg'] and wyn['reg'] != fin else ''),
+                                               trafiony=traf, zr=w.get('zr')))
+
+
 def statystyki():
     """Per sport: rozliczone kursy, trafność vs szansa z kursu (1/kurs bez marży ~ /1,06), zysk na wszystkich kursach."""
     ps = glob.glob(os.path.join(BAZA, 'rozliczone_inne', '*.csv.gz'))
@@ -142,7 +181,11 @@ def statystyki():
     d['kurs'] = pd.to_numeric(d.kurs_rano, errors='coerce').fillna(pd.to_numeric(d.kurs_przed, errors='coerce'))
     d = d[d.kurs > 1]
     out = {}
+    agr = lambda g: dict(meczow=int(g[['mecz', 'start']].drop_duplicates().shape[0]), kursow=int(len(g)), trafione=round(float(g.trafiony.mean()), 4),
+                         z_kursu=round(float((1 / g.kurs).mean() / 1.06), 4), roi=round(float(np.where(g.trafiony > 0, g.kurs - 1, -1).mean()), 4))
+    if 'kategoria' not in d: d['kategoria'] = None
     for sp, g in d.groupby('sp'):
-        out[sp] = dict(meczow=int(g[['mecz', 'start']].drop_duplicates().shape[0]), kursow=int(len(g)), trafione=round(float(g.trafiony.mean()), 4),
-                       z_kursu=round(float((1 / g.kurs).mean() / 1.06), 4), roi=round(float(np.where(g.trafiony > 0, g.kurs - 1, -1).mean()), 4))
+        out[sp] = agr(g)
+        rk = {str(k): agr(x) for k, x in g.groupby(g.kategoria.fillna('zwycięzca/sety')) if len(x) >= 20}   # wersja 50: rodzaje zakładów
+        if rk: out[sp]['rynki'] = rk
     return out

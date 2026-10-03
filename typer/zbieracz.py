@@ -350,14 +350,16 @@ SB_SPORTY = {5: 'pilka', 190: 'pilka', 2: 'tenis', 4: 'koszykowka', 3: 'hokej', 
 
 
 def _sb_rynki(odds):
-    """[[rynek, [[wynik, linia, kurs], ...]], ...] – do 60 rynków."""
+    """[[rynek, [[wynik, linia, kurs], ...]], ...] – do 80 rynków. Wersja 50: bez kombinacji „bet builder” (nazwa z „;”) –
+    zajmowały limit (13,6 tys. z 03.10), wypychając zwykłe rynki (handicap, gole drużyn, rożne)."""
     r = {}
     for o in odds or []:
         try: c = round(float(o.get('price') or 0), 2)
         except Exception: continue
         if c <= 1: continue
         mn = str(o.get('marketName') or '')[:90]
-        if mn not in r and len(r) >= 60: continue
+        if ';' in mn: continue
+        if mn not in r and len(r) >= 80: continue
         r.setdefault(mn, []).append([str(o.get('name') or '')[:60], str(o.get('specialBetValue') or ''), c])
     return [[k, v] for k, v in r.items()]
 
