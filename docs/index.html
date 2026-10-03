@@ -32,6 +32,14 @@ button,input,select{font:inherit;color:inherit}
 a{color:var(--accent)}
 .n,.num{font-family:var(--num);font-variant-numeric:tabular-nums;font-stretch:110%}
 .wrap{max-width:560px;margin:0 auto;padding:0 16px 150px}
+/* wersja 49: laptop / szeroki ekran (≥1100 px) – karty w 2–3 kolumnach; telefon (węższy ekran) bez żadnych zmian */
+@media (min-width:1100px){
+  .wrap{max-width:1500px;padding:0 28px 150px}
+  #view{display:grid;grid-template-columns:repeat(auto-fill,minmax(460px,1fr));column-gap:18px;align-items:start}
+  #view > *{grid-column:1/-1}
+  #view > .bet, #view > .lv, #view > .sekcja, #view > .sportbtn{grid-column:auto}
+  #view > .lead, #view > .note{max-width:900px}
+}
 header{display:flex;align-items:flex-end;justify-content:space-between;padding:22px 4px 12px}
 header h1{font:700 30px/1 var(--body);margin:0;letter-spacing:-.02em}
 header .meta{font-size:13px;color:var(--muted);text-align:right;line-height:1.35}
@@ -295,7 +303,7 @@ async function laduj(){
   S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null; S.status = st.value || null; S.inne = inn.value || null; S.glowne = gl.value || null;
 }
 
-const WERSJA_APLIKACJI = 48;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
+const WERSJA_APLIKACJI = 49;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
 /* ---------- model (ten sam co w Pythonie) ---------- */
 const MAXG = 10;
 function pois(l){ const out = [Math.exp(-l)]; for(let k=1;k<=MAXG;k++) out.push(out[k-1]*l/k); return out; }
@@ -1537,6 +1545,8 @@ function widokStanu(){
   if(sb){ const sp = Object.entries(sb.sb_sporty || {}).map(([k, v]) => `${k} ${v}`).join(', ');
     h += wiersz('Zbieracz kursów (Superbet)', `${esc(sb.czas || '–')} · ${sb.sb_odczytane || 0} meczów${sp ? ' · ' + esc(sp) : ''}`); }
   if(ar.czas) h += wiersz('Archiwum – piłka rozliczona', `${ar.dopasowanych || 0} z ${ar.meczow || 0} meczów · czeka ${ar.czeka || 0}`);
+  const ai_ = ar.inne;   // wersja 49: rozliczone kursy pozostałych sportów
+  if(ai_ && ai_.sporty && Object.keys(ai_.sporty).length) h += wiersz('Archiwum – inne sporty rozliczone', esc(Object.entries(ai_.sporty).map(([k, v]) => `${k}: ${v.meczow} meczów, ${v.kursow} kursów`).join(' · ')));
   const wy = ar.wyniki; if(wy && wy.dni) h += wiersz('Baza wyników (wszystkie sporty)', esc(wy.dni.join(' · ')) + ((wy.bledy || []).length ? ' ⚠️' : ''));
   h += wiersz('Telegram', !t.wlaczony ? 'wyłączony' : (t.ostatni_blad ? '⚠️ problem' : '✅ działa'), t.ostatni_blad ? 'neg' : '');
   const sp = s.sporty; if(sp){ const f = x => x ? `${x.z_kursami || 0} z kursami (z ${x.mecze || 0}), pewnych ${x.pewne || 0}` : '–';

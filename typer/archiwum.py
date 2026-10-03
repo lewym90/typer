@@ -141,7 +141,8 @@ def rozlicz(teraz=None, wyniki=None):
             s1, s2 = _podobne(o['h'], h), _podobne(o['a'], a); sc = min(s1, s2)
             # wersja 48: ±20 min i obie nazwy ≥0,5; do ±150 min przy nazwach ≥0,75 (różne godziny w źródłach);
             # albo jedna nazwa pewna (≥0,9) i druga ≥0,55 (np. „AD Cali” = „Deportivo Cali”)
-            ok = (dmin <= 20 and sc >= 0.5) or (sc >= 0.75) or (max(s1, s2) >= 0.9 and sc >= 0.55)
+            ok = (dmin <= 20 and sc >= 0.5) or (sc >= 0.75) or (max(s1, s2) >= 0.9 and sc >= 0.55) \
+                or (dmin <= 15 and max(s1, s2) >= 0.98)      # v49: ta sama drużyna o tej samej porze („Boca Juniors – U.Santa Fe” = „Boca Juniors – Unión”)
             if ok and (best is None or sc > best[0]): best = (sc, gh, ga)
         if not best:                       # wersja 46: diagnostyka – co FotMob ma o tej porze (do poprawy dopasowania)
             if len(STAN.setdefault('niedopasowane', [])) < 15:
@@ -205,6 +206,10 @@ def dzienny():
     try:                                   # wersja 46: zbiornik wyników wszystkich dyscyplin (ESPN + FotMob)
         import wyniki_zbior; STAN['wyniki'] = wyniki_zbior.zbierz()
     except Exception as e: _blad(f'zbiornik wyników: {type(e).__name__}: {e}')
+    try:                                   # wersja 49: rozliczanie kursów pozostałych sportów (tenis, walki, hokej, kosz…)
+        import archiwum_inne; r = archiwum_inne.rozlicz()
+        STAN['inne'] = dict(dopasowanych=r['dopasowanych'], meczow=r['meczow'], kursow=r['kursow'], sporty=archiwum_inne.statystyki(), bledy=r['bledy'][:5])
+    except Exception as e: _blad(f'archiwum inne sporty: {type(e).__name__}: {e}')
     try:                                   # wersja 43: skaner składów – braki vs kurs i wynik
         import sklady_lab; STAN['sklady'] = sklady_lab.licz()
     except Exception as e: _blad(f'skaner składów: {type(e).__name__}: {e}')
