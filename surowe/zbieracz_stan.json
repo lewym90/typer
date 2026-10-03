@@ -1,6 +1,6 @@
 {
- "czas": "2026-10-03 06:15 UTC",
- "tryb": "rano",
+ "czas": "2026-10-03 17:20 UTC",
+ "tryb": "popoludnie",
  "sporty": [
   [
    "ufo:sprt:01",
@@ -39,10 +39,6 @@
    "Szachy"
   ],
   [
-   "ufo:sprt:0v",
-   "Squash"
-  ],
-  [
    "ufo:sprt:0w",
    "Hokej"
   ],
@@ -79,6 +75,10 @@
    "Florbal"
   ],
   [
+   "ufo:sprt:1r",
+   "Sporty motorowe"
+  ],
+  [
    "ufo:sprt:13",
    "Zakłady Specjalne"
   ],
@@ -93,6 +93,14 @@
   [
    "ufo:sprt:19",
    "Sporty walki"
+  ],
+  [
+   "ufo:sprt:1y",
+   "Żużel"
+  ],
+  [
+   "ufo:sprt:2a",
+   "F1"
   ],
   [
    "ufo:sprt:2c",
@@ -115,10 +123,6 @@
    "Futbol amerykański"
   ],
   [
-   "ufo:sprt:0h",
-   "Snooker"
-  ],
-  [
    "ufo:sprt:0i",
    "Koszykówka"
   ],
@@ -139,14 +143,6 @@
    "Siatkówka"
   ],
   [
-   "ufo:sprt:0n",
-   "Hokej na trawie"
-  ],
-  [
-   "ufo:sprt:0o",
-   "Piłka wodna"
-  ],
-  [
    "ufo:sprt:00",
    "Piłka nożna"
   ],
@@ -161,14 +157,33 @@
  ],
  "sporty_uzyte": {
   "boks": "ufo:sprt:01",
+  "baseball": "ufo:sprt:0q",
+  "hokej": "ufo:sprt:0w",
   "tenis": "ufo:sprt:0x",
+  "pilka_reczna": "ufo:sprt:0y",
+  "f1": "ufo:sprt:1r",
   "sporty walki": "ufo:sprt:19",
+  "zuzel": "ufo:sprt:1y",
+  "koszykowka": "ufo:sprt:0i",
+  "siatkowka": "ufo:sprt:0m",
   "pilka": "ufo:sprt:00"
  },
- "turniejow": 231,
- "meczow_fortuny": 1021,
- "w_ofercie_24h": 833,
- "odczytane": 782,
- "rynkow": 34568,
- "sekund": 209
+ "bledy": [
+  "turnieje ufo:sprt:1y tomorrow: Expecting value: line 1 column 1 (char 0)",
+  "mecze ufo:tour:35-003: Expecting value: line 1 column 1 (char 0)"
+ ],
+ "turniejow": 324,
+ "meczow_fortuny": 1052,
+ "inne_sporty": {
+  "hokej": 112,
+  "koszykowka": 110,
+  "pilka_reczna": 44,
+  "siatkowka": 36,
+  "zuzel": 11,
+  "baseball": 11
+ },
+ "w_ofercie_24h": 878,
+ "odczytane": 874,
+ "rynkow": 37452,
+ "sekund": 243
 }
