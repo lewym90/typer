@@ -70,7 +70,7 @@ def _podobne(a, b):
         return difflib.SequenceMatcher(None, str(a).lower(), str(b).lower()).ratio()
 
 
-def _wczytaj_odczyty(dni_wstecz=5):
+def _wczytaj_odczyty(dni_wstecz=9):
     """Wszystkie odczyty piłki z ostatnich dni: id meczu Fortuny → dict(h, a, t, tur, rano, popoludnie, przed)."""
     dzis = pd.Timestamp.now(tz='Europe/Warsaw').normalize()
     odczyty = {}
@@ -114,7 +114,7 @@ def rozlicz(teraz=None, wyniki=None):
         if (mecz, str(o['t'])) in gotowe: continue
         t = pd.Timestamp(o['t']).tz_localize('UTC')
         if t > teraz - pd.Timedelta(hours=2.5): STAN['czeka'] = STAN.get('czeka', 0) + 1; continue
-        if t < teraz - pd.Timedelta(hours=48): STAN['bez_wyniku'] = STAN.get('bez_wyniku', 0) + 1; continue
+        if t < teraz - pd.Timedelta(days=7): STAN['bez_wyniku'] = STAN.get('bez_wyniku', 0) + 1; continue     # v46: 7 dni prób (było 48 h)
         dzien = t.tz_convert('Europe/Warsaw').strftime('%Y-%m-%d')
         if dzien not in cache: cache[dzien] = wyniki(dzien)
         STAN['meczow'] += 1
@@ -123,7 +123,13 @@ def rozlicz(teraz=None, wyniki=None):
             if abs((tt - t).total_seconds()) > 20 * 60: continue
             sc = min(_podobne(o['h'], h), _podobne(o['a'], a))
             if sc >= 0.5 and (best is None or sc > best[0]): best = (sc, gh, ga)
-        if not best: continue
+        if not best:                       # wersja 46: diagnostyka – co FotMob ma o tej porze (do poprawy dopasowania)
+            if len(STAN.setdefault('niedopasowane', [])) < 15:
+                bl = sorted(((min(_podobne(o['h'], h), _podobne(o['a'], a)), h, a, round((tt - t).total_seconds() / 60))
+                             for h, a, tt, gh, ga in cache[dzien] if abs((tt - t).total_seconds()) <= 6 * 3600), reverse=True)[:1]
+                STAN['niedopasowane'].append(f"{o['tur']}: {o['h']} – {o['a']} {o['t']}" + (f" | FotMob: {bl[0][1]} – {bl[0][2]} ({bl[0][0]:.2f}, {bl[0][3]:+d} min)" if bl else ' | FotMob: brak w ±6 h')
+                                             + f" | lista dnia: {len(cache[dzien])}")
+            continue
         STAN['dopasowanych'] += 1
         _, gh, ga = best
         kursy_rano = o['rano'] or o['popoludnie']
@@ -176,6 +182,9 @@ def dzienny():
     """Wołane przy pełnym liczeniu: rozlicza wszystkie mecze z odczytów, które już się skończyły (wersja 41), przelicza statystyki."""
     try: rozlicz()
     except Exception as e: _blad(f'rozliczenie: {type(e).__name__}: {e}')
+    try:                                   # wersja 46: zbiornik wyników wszystkich dyscyplin (ESPN + FotMob)
+        import wyniki_zbior; STAN['wyniki'] = wyniki_zbior.zbierz()
+    except Exception as e: _blad(f'zbiornik wyników: {type(e).__name__}: {e}')
     try:                                   # wersja 43: skaner składów – braki vs kurs i wynik
         import sklady_lab; STAN['sklady'] = sklady_lab.licz()
     except Exception as e: _blad(f'skaner składów: {type(e).__name__}: {e}')

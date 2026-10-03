@@ -149,7 +149,9 @@ ZASADY = """ZASADY RZETELNOŚCI (najważniejsze):
 WERDYKTY = ('zgoda', 'ryzyko', 'odradza')
 def wymagaj_przeciw(w, d):
     """Wersja 36: „zgoda” bez co najmniej 2 rzetelnych argumentów przeciw = „ryzyko” (AI musi rozważyć obie strony)."""
-    if w == 'zgoda' and len([x for x in (d or {}).get('przeciw') or [] if str(x).strip()]) < 2: return 'ryzyko'
+    # wersja 45: zgoda bez kontrargumentów to „ocena niepełna” (szara), a nie „ryzyko niespodzianki” – ryzyko tylko wtedy,
+    # gdy AI samo tak oceniło (03.10 Chorwacja–Anglia: AI popierało „12”, ale bez listy przeciw → fałszywe ostrzeżenie)
+    if w == 'zgoda' and len([x for x in (d or {}).get('przeciw') or [] if len(str(x).strip()) > 3]) < 2: return 'niepelna'
     return w
 
 def za_przeciw(d):

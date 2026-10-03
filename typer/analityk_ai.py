@@ -58,6 +58,12 @@ def limit_dzis():
     return reszta / max(dni, 1)
 
 
+def mozna_sedzia():
+    """Wersja 45: ponowny werdykt (sam krok 3, bez wyszukiwania – ułamek kosztu pełnej analizy) – tylko limit miesięczny."""
+    d = _licznik()
+    return bool(KLUCZ) and d.get('koszt_zl', 0) + 0.3 <= BUDZET_ZL
+
+
 def mozna():
     d = _licznik()
     STAN['koszt_dzis_zl'], STAN['koszt_miesiac_zl'] = d.get('koszt_dzis_zl', 0), d.get('koszt_zl', 0)
@@ -281,7 +287,11 @@ def _sprawdz_fakty(fakty, nazwiska, druzyny):
             for kand in _NAZW.findall(str(f.get('tekst') or '')):
                 k = kand.lower()
                 if k in znane or k.split()[-1] in znane or any(k in d or d in k for d in druz): continue
-                if re.search(r'(liga|league|cup|puchar|stadion|stadium|arena|fc|uefa|fifa|nations|world|euro)', k): continue
+                if re.search(r'(liga|league|cup|puchar|stadion|stadium|arena|fc|uefa|fifa|nations|world|euro|mistrzost|świat|swiat|europ|narod|'
+                             r'reprezentac|turniej|kolejk|grup|finał|final|igrzysk|olimp|copa|serie|bundes|premier|primera|ekstraklas|'
+                             r'konferencj|federacj|związ|zwiaz|klub|trener|selekcjoner|sędzi|sedzi|var\b)', k): continue
+                # wersja 45: nazwy własne niebędące nazwiskami (kraje, miasta, drużyny w odmianie – „Chorwacją”, „Rijece”)
+                if any(len(w) >= 4 and any(w[:5] in d for d in druz) for w in k.split()): continue
                 obce.append(kand)
             if obce and zr == 'teczka': STAN['odrzucone_fakty'] += 1; continue   # „z teczki”, a teczka tego nie zawiera
             if obce: f = dict(f, niezweryfikowane=obce)
@@ -392,17 +402,25 @@ def analiza_pilka(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, fm, rynek, typ, 
     a['fakty'] = _sprawdz_fakty(a.get('fakty'), nazwiska, (dom, gosc, dom_pl, gosc_pl))
     r, zr2 = zapytaj(KROK2.format(analiza=json.dumps(a, ensure_ascii=False)[:9000], **wsp))
     if r: r['przeoczone'] = _sprawdz_fakty(r.get('przeoczone'), nazwiska, (dom, gosc, dom_pl, gosc_pl))
+    _dodaj_koszt(0, mecz=1); STAN['analiz'] += 1
+    return sedzia(dict(a=a, r=r, zr=[x for x in zr1 + zr2], nazwiska=sorted(nazwiska)[:400], wsp=wsp, dom_pl=dom_pl, gosc_pl=gosc_pl), rynek, typ, lista)
+
+
+def sedzia(kroki, rynek, typ, lista):
+    """Wersja 45: krok 3 (sędzia, bez wyszukiwania) na zapamiętanych krokach 1–2 – wołany po pełnej analizie i ponownie,
+    gdy zmieni się typ główny meczu (nowy werdykt dla aktualnego typu, tanio – bez powtarzania wyszukiwania)."""
+    a, r, wsp, dom_pl, gosc_pl = kroki['a'], kroki.get('r'), kroki['wsp'], kroki['dom_pl'], kroki['gosc_pl']
+    zr1, zr2 = kroki.get('zr') or [], []
     rk = f"wygra {dom_pl} {rynek['1']:.1%}, remis {rynek['X']:.1%}, wygra {gosc_pl} {rynek['2']:.1%}"
     lst = '; '.join(f'{k}: {o} – {p:.1%}' for k, (o, p) in lista.items())
     s, _ = zapytaj(KROK3.format(rynek=rk, typ=(f'{typ[0]} (szansa rynku {typ[1]:.1%})' if typ else 'brak'), lista=lst,
                                 analiza=json.dumps(a, ensure_ascii=False)[:9000], recenzja=json.dumps(r or {}, ensure_ascii=False)[:6000], **wsp),
                    szukaj=False)
-    _dodaj_koszt(0, mecz=1); STAN['analiz'] += 1
     if not s: return None
     w = str(s.get('werdykt') or '').lower().strip()
     if w not in ('mocna_zgoda', 'zgoda', 'ryzyko', 'odradza'): w = 'ryzyko'
     za, przeciw = [str(x)[:260] for x in (s.get('za') or [])][:4], [str(x)[:260] for x in (s.get('przeciw') or [])][:4]
-    if w in ('mocna_zgoda', 'zgoda') and len(przeciw) < 2: w = 'ryzyko'          # bez rzetelnych „przeciw” nie ma zgody
+    if w in ('mocna_zgoda', 'zgoda') and len(przeciw) < 2: w = 'niepelna'        # wersja 45: bez rzetelnych „przeciw” – ocena niepełna (nie „ryzyko”)
     ta = s.get('typ_analityka') or {}
     kl_ai = str(ta.get('klucz') or 'brak')
     if kl_ai not in lista: kl_ai = 'brak'
@@ -430,7 +448,7 @@ def analiza_pilka(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, fm, rynek, typ, 
                                    klucz_ai=kl_ai, szansa_ai=ta.get('szansa'), po_korekcie=True),
                 _rynek_typu_ai=lista[kl_ai][1] if kl_ai in lista else None, ai_u25=ai_u, ai_btts=ai_b, rynek_u25=(lista.get('Under 2.5') or (None, None))[1],
                 rynek_btts=(lista.get('BTTS Tak') or (None, None))[1], skrzywienie=sk,
-                wynik_dokladny=s.get('wynik_dokladny'), zrodla=list(zr)[:10],
+                wynik_dokladny=s.get('wynik_dokladny'), zrodla=list(zr)[:10], typ=typ[0] if typ else None, kroki=kroki,
                 czas=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m-%d %H:%M'))
 
 
@@ -629,10 +647,22 @@ def analiza_inne(m, lista=None):
     w = str(s.get('werdykt') or '').lower().strip()
     if w not in ('mocna_zgoda', 'zgoda', 'ryzyko', 'odradza'): w = 'ryzyko'
     za, przeciw = [str(x)[:260] for x in (s.get('za') or [])][:4], [str(x)[:260] for x in (s.get('przeciw') or [])][:4]
-    if w in ('mocna_zgoda', 'zgoda') and len(przeciw) < 2: w = 'ryzyko'
-    ta = s.get('typ_analityka') or {}; kl = str(ta.get('klucz') or 'brak')
-    if kl not in lista: kl = 'brak'
+    if w in ('mocna_zgoda', 'zgoda') and len(przeciw) < 2: w = 'niepelna'        # wersja 45
+    ta = s.get('typ_analityka') or {}; kl_ai = str(ta.get('klucz') or 'brak')
+    if kl_ai not in lista: kl_ai = 'brak'
     sz = _szanse_ab(s.get('szanse'))
+    # wersja 47: korekta jak w piłce – wyostrzenie szans AI (AI spłaszcza faworytów), ściągnięcie do rynku, typ wybiera program
+    kor = {}
+    if sz and 'A' in lista and 'B' in lista:
+        g = SKRZYWIENIE_START['gamma']; pa, pb = max(sz['A'], 1e-4) ** g, max(sz['B'], 1e-4) ** g; pa = pa / (pa + pb)
+        ca = lista['A'][1] + WAGA_AI * (pa - lista['A'][1])
+        kor = {'A': (ca, lista['A'][1]), 'B': (1 - ca, lista['B'][1])}
+    try:
+        if kl_ai not in ('brak', 'A', 'B') and _p01(ta.get('szansa')):
+            r0 = lista[kl_ai][1]; kor[kl_ai] = (r0 + WAGA_AI * (float(ta['szansa']) - r0), r0)
+    except Exception: pass
+    kl = typ_po_korekcie(kor) or 'brak'
+    uz = str(ta.get('uzasadnienie') or '')[:260] if kl == kl_ai else ''
     return dict(model=STAN['model'], werdykt=w, powod=str(s.get('powod') or '')[:260], podsumowanie=str(s.get('podsumowanie') or '')[:900],
                 za=za, przeciw=przeciw, szanse_ab=sz, szanse_na_slepo_ab=_szanse_ab(a.get('szanse')), szanse_adwokat_ab=_szanse_ab((r or {}).get('szanse')),
                 scenariusze=[dict(opis=str(x.get('opis'))[:220], wynik=str(x.get('wynik'))[:60], szansa=x.get('szansa'))
@@ -645,8 +675,7 @@ def analiza_inne(m, lista=None):
                                    szansa=round(kor[kl][0], 4) if kl in kor else None,
                                    szansa_rynku=lista[kl][1] if kl in lista else None, uzasadnienie=uz,
                                    klucz_ai=kl_ai, szansa_ai=ta.get('szansa'), po_korekcie=True),
-                _rynek_typu_ai=lista[kl_ai][1] if kl_ai in lista else None, ai_u25=ai_u, ai_btts=ai_b, rynek_u25=(lista.get('Under 2.5') or (None, None))[1],
-                rynek_btts=(lista.get('BTTS Tak') or (None, None))[1], skrzywienie=sk,
+                _rynek_typu_ai=lista[kl_ai][1] if kl_ai in lista else None,
                 wynik_dokladny=s.get('wynik_dokladny'), zrodla=list({x['link']: x for x in zr1 + zr2}.values())[:10],
                 czas=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m-%d %H:%M'))
 

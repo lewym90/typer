@@ -295,6 +295,11 @@ def _id_w(o, prefiks, wyn):
         for v in o: _id_w(v, prefiks, wyn)
     return wyn
 
+# wersja 46: docelowe dyscypliny programu (decyzja użytkownika 03.10) – reszta oferty Fortuny pomijana
+SPORTY_PROGRAMU = {'siatkówka': 'siatkowka', 'koszykówka': 'koszykowka', 'baseball': 'baseball', 'hokej': 'hokej', 'hokej na lodzie': 'hokej',
+                   'piłka ręczna': 'pilka_reczna', 'żużel': 'zuzel', 'speedway': 'zuzel', 'formuła 1': 'f1', 'formula 1': 'f1', 'f1': 'f1',
+                   'sporty motorowe': 'f1', 'wyścigi samochodowe': 'f1', 'motorsport': 'f1', 'mma': 'mma'}
+
 def _slug_sportu(n):
     t = str(n or '').lower().translate(str.maketrans('ąćęłńóśźż', 'acelnoszz'))
     return re.sub(r'[^a-z0-9]+', '_', t).strip('_')[:30] or 'inne'
@@ -303,14 +308,14 @@ def fortuna_mecze(s, diag, wszystkie=False):
     """Mecze z oferty Fortuny. wszystkie=True (wersja 44, Zbieracz rano): także pozostałe sporty (koszykówka, hokej, siatkówka,
     piłka ręczna, dart, e-sport…) – klucz sportu = nazwa Fortuny (np. 'koszykowka'); pod przyszłe dyscypliny."""
     sporty = _id_w(s.get(f'{FAPI}/structure/api/v1_0/sports?timeFilter=all', timeout=20).json(), 'ufo:sprt:', [])
-    diag['sporty'] = sporty[:40]
+    diag['sporty'] = sporty[:80]
     ids = {}
     for sid, nazwa in sporty:
         n = (nazwa or '').lower()
         if 'piłka nożna' == n or n.startswith('piłka nożna'): ids.setdefault('pilka', sid)
         elif n == 'tenis': ids.setdefault('tenis', sid)
         elif n in ('mma', 'boks', 'sporty walki'): ids.setdefault(n, sid)
-        elif wszystkie and 'specjal' not in n and 'zakłady' not in n and 'na żywo' not in n: ids.setdefault(_slug_sportu(n), sid)
+        elif wszystkie and n in SPORTY_PROGRAMU: ids.setdefault(SPORTY_PROGRAMU[n], sid)
     ids.setdefault('pilka', 'ufo:sprt:00')
     diag['sporty_uzyte'] = ids
     mecze, turnieje, nazwy_tur = {}, set(), {}

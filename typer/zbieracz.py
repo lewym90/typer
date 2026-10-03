@@ -14,6 +14,7 @@ GitHub następnego dnia rozlicza każdy kurs wynikiem (archiwum.py) i liczy, gdz
 import os, io, re, json, gzip, time, base64, shutil, datetime as dt
 
 KAT = '/opt/typer/zbieracz'
+GLOWNE = ('pilka', 'tenis', 'mma', 'boks', 'sporty walki')
 LIMIT_S = {'rano': 1080, 'popoludnie': 1080, 'przed': 240, 'wyslij': 180}
 START = time.time()
 
@@ -78,7 +79,10 @@ def _czytaj(V, s, mecze, limit_s, diag):
         except Exception: k = {}
         teraz = dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d %H:%M')
         wsp = dict(id=f['id'], sp=sp, tur=f.get('tur', ''), h=f['h'], a=f['a'], t=f['t'].strftime('%Y-%m-%d %H:%M'), czas=teraz)
-        if k: norm.append(dict(wsp, k=k))
+        if sp not in ('pilka', 'tenis'):    # wersja 46: walki i nowe dyscypliny – do repozytorium także surowe rynki (najważniejsze 40)
+            r40 = _surowe(rynki)[:40]
+            if r40: norm.append(dict(wsp, k=k or {}, r=r40))
+        elif k: norm.append(dict(wsp, k=k))
         sur.append(dict(wsp, r=_surowe(rynki)))
         time.sleep(0.12)
     return norm, sur
@@ -108,12 +112,12 @@ def krok(V, KP, s, tryb):
     if tryb == 'przed':
         skaner(V, KP, s, diag); return
     # pełny odczyt oferty: rano / po południu
+    lista_p = os.path.join(_katalog(), 'lista.json')        # wersja 46: przywrócone (w v43–v45 brakowało → błąd trybu rano/po południu)
     if tryb == 'rano':                     # wersja 43: dosyłka wczorajszych odczytów przed meczem (mecze po 23:30)
         try: _wyslij_dzien(V, (dt.datetime.now(_tz()) - dt.timedelta(days=1)).strftime('%Y-%m-%d'))
         except Exception as e: print('dosyłka wczoraj:', e)
-    try: oferta = V.fortuna_mecze(s, diag, wszystkie=(tryb == 'rano'))     # wersja 44: rano wszystkie sporty Fortuny
+    try: oferta = V.fortuna_mecze(s, diag, wszystkie=True)     # wersja 46: rano i po południu wszystkie 11 sportów programu
     except TypeError: oferta = V.fortuna_mecze(s, diag)
-    GLOWNE = ('pilka', 'tenis', 'mma', 'boks', 'sporty walki')
     w24 = [f for f in oferta if 0 <= (f['t'] - teraz).total_seconds() / 3600 <= 24]
     mecze = sorted([f for f in w24 if f['sp'] in GLOWNE], key=lambda f: f['t'])[:1500]
     inne = sorted([f for f in w24 if f['sp'] not in GLOWNE], key=lambda f: f['t'])[:900]
@@ -317,7 +321,7 @@ def _wyslij_dzien(V, d):
     k = os.path.join(KAT, d); n = {}
     czas = dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
     for etap in ('przed', 'zamk'):
-        lst = [m for m in _wczytaj_json(os.path.join(k, PLIKI[etap]), []) if m.get('k')]
+        lst = [m for m in _wczytaj_json(os.path.join(k, PLIKI[etap]), []) if m.get('k') or m.get('r')]
         if lst:
             _wyslij_gz(V, f'docs/data/archiwum/kursy/{d}_{etap}.json.gz',
                        dict(czas=czas, buk='fortuna', tryb=etap, mecze=[{x: v for x, v in m.items() if x != 'sk'} for m in lst]))

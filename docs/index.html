@@ -73,7 +73,7 @@ h3{font:700 17px/1.3 var(--body);margin:0}
 .bks.kmini .bk span{font-size:11px} .bks.kmini .bk b{font-size:15px}
 .chipv{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border-radius:999px;font-size:13px;font-weight:600;align-self:flex-start}
 .chipv.zgoda{color:var(--win);background:var(--win-bg)} .chipv.ryzyko{color:var(--warn);background:var(--warn-bg)} .chipv.odradza{color:var(--loss);background:var(--loss-bg)}
-.chipv.brak{color:var(--muted);background:var(--sunk)}
+.chipv.brak,.chipv.niepelna{color:var(--muted);background:var(--sunk)}
 .aiw{display:flex;flex-direction:column;gap:8px}
 .aiw p{margin:0;font-size:14.5px;line-height:1.55;color:var(--text2);text-wrap:pretty}
 .poz2{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
@@ -295,7 +295,7 @@ async function laduj(){
   S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null; S.status = st.value || null; S.inne = inn.value || null; S.glowne = gl.value || null;
 }
 
-const WERSJA_APLIKACJI = 44;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
+const WERSJA_APLIKACJI = 47;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
 /* ---------- model (ten sam co w Pythonie) ---------- */
 const MAXG = 10;
 function pois(l){ const out = [Math.exp(-l)]; for(let k=1;k<=MAXG;k++) out.push(out[k-1]*l/k); return out; }
@@ -668,7 +668,8 @@ const OPIS_VALUE = `<p class="note" style="margin:4px">Value = najlepszy kurs po
 const NAZWA_KR = {pilka:'Piłka', tenis:'Tenis', walki:'Walki'};
 const WERD = {zgoda:['Zgoda z faworytem','<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.6 2.5L16 9.5"/>'],
   ryzyko:['Ryzyko niespodzianki','<path d="M12 4l9 16H3l9-16z"/><path d="M12 10v4"/><path d="M12 17.2v.1"/>'],
-  odradza:['AI odradza','<path d="M8.5 3h7L21 8.5v7L15.5 21h-7L3 15.5v-7L8.5 3z"/><path d="M9 9l6 6M15 9l-6 6"/>']};
+  odradza:['AI odradza','<path d="M8.5 3h7L21 8.5v7L15.5 21h-7L3 15.5v-7L8.5 3z"/><path d="M9 9l6 6M15 9l-6 6"/>'],
+  niepelna:['Ocena niepełna','<circle cx="12" cy="12" r="9"/><path d="M8 12h8"/>']};   // wersja 45: zgoda AI bez argumentów przeciw
 function werdyktChip(w){ if(!WERD[w]) return ''; return `<span class="chipv ${w}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${WERD[w][1]}</svg>${WERD[w][0]}</span>`; }
 const aiKarty = m => ((m.raport || {}).ai) || null;
 const proKarty = m => ((m.raport || {}).pro) || null;
@@ -680,6 +681,7 @@ function proSkrot(m){
   const ta = p.typ_analityka || {}, s = p.szanse || {};
   let h = `<div class="aiw"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px">${werdyktChip(werdyktKarty(m))}<span class="note">🧠 Analityk Pro${p.werdykt === 'mocna_zgoda' ? ' · mocna zgoda' : ''}</span></div>`;
   if(p.powod) h += `<p style="font-weight:600;color:var(--text)">${esc(p.powod)}</p>`;
+  if(p.typ) h += `<p class="note">Oceniany typ: ${esc(p.typ)}${p.ponowne ? ' · nowa ocena po zmianie typu' : ''}</p>`;
   if(s['1'] != null) h += `<p class="note">Szanse Analityka: ${pct(s['1'])} · ${pct(s['X'])} · ${pct(s['2'])}</p>`;
   const ab = p.szanse_ab; if(ab && ab.A != null) h += `<p class="note">Szanse Analityka: ${esc(m.a || 'A')} ${pct(ab.A)} · ${esc(m.b || 'B')} ${pct(ab.B)}</p>`;
   if(ta.klucz && ta.klucz !== 'brak') h += `<p style="color:var(--text)">🎯 <b>Typ Analityka:</b> ${esc(ta.opis || ta.klucz)} – Analityk ${ta.szansa != null ? pct(ta.szansa) : '?'}, rynek ${ta.szansa_rynku != null ? pct(ta.szansa_rynku) : '?'}${ta.szansa_rynku ? ` (kurs rynku ok. ${num(1 / ta.szansa_rynku)})` : ''}</p>`;
@@ -746,7 +748,14 @@ function wierszPoziomu(t, nazwa, mecz){
   if(!t) return ''; const P = x => mecz && mecz.gospodarz ? plTxt(x, mecz) : x;
   const kk = kursyLista(t), best = kk.length ? kk[0] : null;
   return `<div class="poz2"><div class="l"><span>${nazwa}</span><b>${esc(P(t.zaklad))}${mecz ? kupBtn({event_id: mecz.event_id, mecz: mecz.mecz, zaklad: P(t.zaklad), szansa: t.szansa}) : ''}</b></div>
-    <div class="r"><span>${pct(t.szansa)}</span><b>${best ? num(best[1]) : num(t.kurs_uczciwy)}</b></div></div>${kafelkiBuk(t, true)}`;
+    <div class="r"><span>${pct(t.szansa)}</span><b>${best ? num(best[1]) : num(t.kurs_uczciwy)}</b></div></div>${kafelkiBuk(t, true)}${proPoprzedni(mecz, P(t.zaklad))}`;
+}
+function proPoprzedni(mecz, zaklad){
+  // wersja 45: gdy typ główny się zmienił, Analityk Pro ocenił nowy typ; stara ocena zostaje tylko przy zakładzie, którego dotyczyła
+  const p = mecz && proKarty(mecz), q = p && p.poprzedni; if(!q || !q.typ || !zaklad) return '';
+  const n = x => String(x || '').toLowerCase().replace(/\s*\(.*\)\s*$/, '').trim();
+  if(n(q.typ) !== n(zaklad)) return '';
+  return `<div class="aiw" style="margin-top:6px"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px">${werdyktChip(q.werdykt === 'mocna_zgoda' ? 'zgoda' : q.werdykt)}<span class="note">🧠 Analityk Pro – ocena tego zakładu</span></div>${q.powod ? `<p class="note">${esc(q.powod)}</p>` : ''}</div>`;
 }
 function korektaHtml(m){
   // wersja 34: korekta szans z czynników, których rynek nie wycenia w pełni (braki w kadrze, przerwa, wiek)
@@ -1516,8 +1525,16 @@ function widokStanu(){
   const g = s.gemini || {};
   if(g.klucz !== undefined){ const wd = g.werdykty || {};
     h += wiersz('Analizy AI dziś', g.klucz ? `${g.analiz_dzis || 0} z 120${g.wyszukiwanie === false ? ' · bez wyszukiwania ⚠️' : ''}` : 'brak klucza', g.wyszukiwanie === false ? 'neg' : '');
-    if(Object.keys(wd).length) h += wiersz('Werdykty AI (ostatnie liczenie)', `✅ ${wd.zgoda || 0} · ⚠️ ${wd.ryzyko || 0} · ⛔ ${wd.odradza || 0}`); }
+    if(Object.keys(wd).length) h += wiersz('Werdykty AI (ostatnie liczenie)', `✅ ${wd.zgoda || 0} · ⚠️ ${wd.ryzyko || 0} · ⛔ ${wd.odradza || 0}${wd.niepelna ? ` · ▫️ ${wd.niepelna}` : ''}`); }
   if(s.sporty && s.sporty.ksw) h += wiersz('KSW', esc(s.sporty.ksw));
+  // wersja 46: zbieranie danych (baza kursów i wyników)
+  const zb = s.zbieracz, ar = s.archiwum || {};
+  if(zb){ const inne = Object.entries(zb.inne_sporty || {}).map(([k, v]) => `${k} ${v}`).join(', ');
+    const stary = zb.czas && (Date.now() - Date.parse(zb.czas.replace(' UTC', 'Z').replace(' ', 'T')) > 30 * 3600e3);
+    h += wiersz('Zbieracz kursów (Fortuna)', `${esc(zb.czas || '–')} · ${zb.tryb || ''} · ${zb.odczytane || 0} meczów, ${zb.rynkow || 0} rynków${stary ? ' ⚠️' : ' ✅'}`, stary ? 'neg' : '');
+    if(inne) h += wiersz('Nowe dyscypliny w bazie', esc(inne)); }
+  if(ar.czas) h += wiersz('Archiwum – piłka rozliczona', `${ar.dopasowanych || 0} z ${ar.meczow || 0} meczów · czeka ${ar.czeka || 0}`);
+  const wy = ar.wyniki; if(wy && wy.dni) h += wiersz('Baza wyników (wszystkie sporty)', esc(wy.dni.join(' · ')) + ((wy.bledy || []).length ? ' ⚠️' : ''));
   h += wiersz('Telegram', !t.wlaczony ? 'wyłączony' : (t.ostatni_blad ? '⚠️ problem' : '✅ działa'), t.ostatni_blad ? 'neg' : '');
   const sp = s.sporty; if(sp){ const f = x => x ? `${x.z_kursami || 0} z kursami (z ${x.mecze || 0}), pewnych ${x.pewne || 0}` : '–';
     h += wiersz('🎾 Tenis', f(sp.tenis)) + wiersz('🥊 Walki', f(sp.walki)) + wiersz('Kredyty na tenis i walki', sp.kredyty != null ? sp.kredyty : '–');

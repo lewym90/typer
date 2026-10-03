@@ -179,11 +179,30 @@ def typy_na_dzis():
                                          typ=((rr[t['z']][1] + (f" ({rr[t['z']][2]})" if rr[t['z']][2] else '')), t['p']) if t else None, szanse={k: float(mk[k]) for k in ('1', 'X', '2')})
         except Exception as e: print('raport:', x['home'], e)
     # wersja 35 – Analityk AI (Gemini Pro: na ślepo → adwokat diabła → sędzia) dla najważniejszych kandydatów; jego werdykt decyduje
+    teraz_ = pd.Timestamp.now(tz='Europe/Warsaw').tz_localize(None)
+    def _typ_i_lista(x):
+        t = naj_meczu.get(id(x)); rr = rynki_rozszerzone(x['M'], pl(x['home']), pl(x['away'])); mk = markets(x['M'])
+        lista = {k: (v[1] + (f' ({v[2]})' if v[2] else ''), round(float(v[0]), 4)) for k, v in rr.items() if k in MASKI and 0.04 <= v[0] <= 0.96}
+        typ = ((rr[t['z']][1] + (f" ({rr[t['z']][2]})" if rr[t['z']][2] else '')), t['p']) if t else None
+        return typ, lista, {k: float(mk[k]) for k in ('1', 'X', '2')}
     for x in kandydaci:                              # analizy z pamięci (wcześniejsze uruchomienie tego dnia) – bez kosztu
         a = analityk_ai.z_pamieci('pilka', x['event_id'])
         if a:
+            # wersja 45: typ główny się zmienił → nowy werdykt dla aktualnego typu (krok 3 na zapamiętanych krokach 1–2, bez wyszukiwania)
+            try:
+                typ, lista, rynek = _typ_i_lista(x)
+                if (typ and a.get('typ') and a['typ'] != typ[0] and a.get('kroki') and a.get('ponowne', 0) < 2
+                        and pd.Timestamp(x['start']) > teraz_ and analityk_ai.mozna_sedzia()):
+                    nowy = analityk_ai.sedzia(a['kroki'], rynek, typ, lista)
+                    if nowy:
+                        nowy['ponowne'] = a.get('ponowne', 0) + 1
+                        nowy['poprzedni'] = dict(typ=a.get('typ'), werdykt=a.get('werdykt'), powod=a.get('powod'), czas=a.get('czas'))
+                        analityk_ai.STAN['ponowne'] = analityk_ai.STAN.get('ponowne', 0) + 1
+                        analityk_ai.zapisz('pilka', x['event_id'], f"{x['home']} – {x['away']}", x['start'], typ[0], rynek, nowy, x['sport_key'])
+                        analityk_ai.do_pamieci('pilka', x['event_id'], nowy); a = nowy
+            except Exception as e: analityk_ai._blad(f"ponowny werdykt {x.get('home')}: {type(e).__name__}: {e}")
             r_ = x.get('raport') or {}; x['raport'] = r_
-            r_['pro'] = a; r_['werdykt'] = 'zgoda' if a['werdykt'] == 'mocna_zgoda' else a['werdykt']
+            r_['pro'] = {k: v for k, v in a.items() if k != 'kroki'}; r_['werdykt'] = 'zgoda' if a['werdykt'] == 'mocna_zgoda' else a['werdykt']
     for x in kandydaci[:8]:
         if (x.get('raport') or {}).get('pro'): continue
         if analityk_ai.STAN['analiz'] >= ANALITYK_PILKA or not analityk_ai.mozna(): break
@@ -196,14 +215,14 @@ def typy_na_dzis():
             a = analityk_ai.analiza_pilka(x['home'], x['away'], pl(x['home']), pl(x['away']), NAZWY_LIG.get(x['sport_key'], ''), x['start'], fm, rynek, typ, lista)
             if not a: continue
             r_ = x.setdefault('raport', {}) or {}; x['raport'] = r_
-            r_['pro'] = a; r_['werdykt'] = 'zgoda' if a['werdykt'] == 'mocna_zgoda' else a['werdykt']
+            r_['pro'] = {k: v for k, v in a.items() if k != 'kroki'}; r_['werdykt'] = 'zgoda' if a['werdykt'] == 'mocna_zgoda' else a['werdykt']
             analityk_ai.zapisz('pilka', x['event_id'], f"{x['home']} – {x['away']}", x['start'], typ[0] if typ else '', rynek, a, x['sport_key'])
             analityk_ai.do_pamieci('pilka', x['event_id'], a)
         except Exception as e: analityk_ai._blad(f"{x.get('home')}: {type(e).__name__}: {e}")
     for v in value:  # dołącz raporty do kart Value
         for x in value_x:
             if v['mecz'] == f"{x['home']} – {x['away']}": v['raport'] = x.get('raport')
-    werd = lambda x: (x.get('raport') or {}).get('werdykt')
+    werd = lambda x: (lambda w: None if w == 'niepelna' else w)((x.get('raport') or {}).get('werdykt'))   # wersja 45: niepełna = bez oceny
     # Pewne: nigdy typy, które AI odradza; najpierw „zgoda” (lub brak oceny), potem „ryzyko”; po jednym typie na mecz
     wybrane, uzyte, odradzane = [], set(), []
     for t in wszystkie:
@@ -874,7 +893,8 @@ def _rozwiaz(gl, d, inne):
         if v: val.append((r['sport'], v))
     return pew, val
 
-WERDYKT_TG = {'zgoda': ('✅', 'zgoda z faworytem'), 'ryzyko': ('⚠️', 'ryzyko niespodzianki'), 'odradza': ('⛔', 'AI odradza')}
+WERDYKT_TG = {'zgoda': ('✅', 'zgoda z faworytem'), 'ryzyko': ('⚠️', 'ryzyko niespodzianki'), 'odradza': ('⛔', 'AI odradza'),
+              'niepelna': ('▫️', 'ocena AI niepełna')}
 DNI_PL = ['poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek', 'sobota', 'niedziela']
 
 BUKMACHERZY_TG = ['STS', 'Fortuna', 'Superbet', 'Betclic']
@@ -1126,6 +1146,10 @@ def zapisz_status(tryb, bledy=None, st=None, tg_info=None):
     teraz = pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m-%d %H:%M')
     st['ostatnie_uruchomienie'] = teraz; st[f'ostatnie_{tryb}'] = teraz
     st['wersja'] = core.WERSJA                  # wersja 42: numer wersji widoczny w Ustawieniach aplikacji
+    try:                                         # wersja 46: stan Zbieracza (polski serwer) w Ustawieniach – kontrola zbierania danych
+        zs = json.load(open(os.path.join(os.path.dirname(__file__), '..', 'surowe', 'zbieracz_stan.json')))
+        st['zbieracz'] = {k: zs.get(k) for k in ('czas', 'tryb', 'w_ofercie_24h', 'odczytane', 'rynkow', 'sekund', 'inne_sporty', 'przerwane_po', 'bledy')}
+    except Exception: pass
     if core.KREDYTY['pozostalo'] is not None:
         st['kredyty_odds'] = dict(pozostalo=core.KREDYTY['pozostalo'], zuzyto=core.KREDYTY['zuzyto'], budzet_dzis=core.KREDYTY['na_dzis'] or st.get('kredyty_odds', {}).get('budzet_dzis'))
     st['api_football'] = dict(klucz=bool(os.environ.get('API_FOOTBALL_KEY')), uzywany=bool(raport.KLUCZ),
