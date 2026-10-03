@@ -24,8 +24,10 @@ PLIK_LICZNIKA = os.path.join(_KAT, 'ai_licznik.json')
 PLIK_PAMIECI = os.path.join(_KAT, 'ai_pamiec.json')
 
 def _plik_licznika():
-    teraz = pd.Timestamp.now(tz='America/Los_Angeles')
-    dzien, mies = teraz.strftime('%Y-%m-%d'), pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m')
+    # wersja 41: doba programu (od 6:00 czasu polskiego) – wcześniej doba pacyficzna, przez co poranne liczenie (7:10)
+    # dzieliło limit z poprzednim popołudniem i wieczorem; plan płatny nie ma już dziennego limitu Google
+    teraz = pd.Timestamp.now(tz='Europe/Warsaw')
+    dzien, mies = (teraz - pd.Timedelta(hours=6)).strftime('%Y-%m-%d'), teraz.strftime('%Y-%m')
     try: d = json.load(open(PLIK_LICZNIKA))
     except Exception: d = {}
     if d.get('data') != dzien: d.update({'data': dzien, 'n': 0, 'analizy': 0})
@@ -51,7 +53,7 @@ def koszt_miesiac(dodaj_zl=0.0):
     return d.get('koszt_zl', 0.0)
 
 def _licznik(dodaj=0):
-    """Liczba zapytań do Gemini dzisiaj (czas pacyficzny – wtedy Google zeruje limit), zapisywana między uruchomieniami."""
+    """Liczba zapytań do Gemini w dobie programu (od 6:00), zapisywana między uruchomieniami."""
     d = _plik_licznika()
     if dodaj: d['n'] = d.get('n', 0) + dodaj; _zapisz_licznik(d)
     STAN['dzis'] = d.get('n', 0)
@@ -181,10 +183,78 @@ def _kontekst(braki, zapowiedz, naglowki):
     if naglowki: lin.append('Nagłówki z ostatnich dni: ' + ' | '.join(naglowki[:10]))
     return ('DANE ZEBRANE PRZEZ PROGRAM (traktuj jako wskazówki):\n' + '\n'.join(lin)) if lin else ''
 
-def _wyciagnij_json(t):
+def _domknij(s):
+    """Domyka urwany JSON (odpowiedź ucięta limitem): zamyka otwarty tekst, usuwa niedokończone pole, dopisuje nawiasy."""
+    stos, w_tekscie, esc = [], False, False
+    for ch in s:
+        if w_tekscie:
+            if esc: esc = False
+            elif ch == '\\': esc = True
+            elif ch == '"': w_tekscie = False
+        elif ch == '"': w_tekscie = True
+        elif ch in '{[': stos.append('}' if ch == '{' else ']')
+        elif ch in '}]' and stos: stos.pop()
+    if w_tekscie: s += '"'
+    s = re.sub(r'[,:]\s*$', '', s.rstrip())
+    s = re.sub(r',\s*"[^"]*"\s*$', '', s)             # klucz bez wartości
+    return s + ''.join(reversed(stos))
+
+def _pelne(d, s):
+    """Naprawa nie zgubiła treści (co najmniej 70% długości tekstu) – inaczej lepiej poprosić model o poprawienie."""
+    return len(json.dumps(d, ensure_ascii=False)) >= 0.7 * len(s.strip())
+
+def _parsuj(t):
+    """Próby odczytu JSON bez pomocy modelu (wersja 41): całość, json_repair (jeśli zainstalowany), domknięcie urwanego tekstu."""
+    if not t: return None
     t = re.sub(r'^```(?:json)?|```$', '', t.strip(), flags=re.M).strip()
-    a, b = t.find('{'), t.rfind('}')
-    return json.loads(t[a:b + 1]) if a >= 0 and b > a else None
+    a = t.find('{')
+    if a < 0: return None
+    s, b = t[a:], t.rfind('}')
+    proby = [t[a:b + 1]] if b > a else []
+    proby += [re.sub(r',\s*([}\]])', r'\1', x) for x in proby]
+    for x in proby:
+        try:
+            d = json.loads(x)
+            if isinstance(d, dict): return d
+        except Exception: pass
+    try:
+        import json_repair
+        d = json_repair.loads(s)
+        if isinstance(d, dict) and d and _pelne(d, s): STAN['naprawione_json'] = STAN.get('naprawione_json', 0) + 1; return d
+    except Exception: pass
+    try:
+        d = json.loads(_domknij(s))
+        if isinstance(d, dict) and d and _pelne(d, s): STAN['naprawione_json'] = STAN.get('naprawione_json', 0) + 1; return d
+    except Exception: pass
+    return None
+
+NAPRAW = ('Poniższy tekst miał być jednym obiektem JSON, ale ma błędy składni (cudzysłowy, przecinki, nawiasy) albo jest urwany. '
+          'Zwróć ten sam obiekt jako poprawny JSON: zachowaj wszystkie pola i ich treść bez zmian merytorycznych, popraw tylko składnię, '
+          'urwane pole na końcu utnij. Nic nie dodawaj.\n\n')
+
+def _napraw_modelem(t):
+    """Ostatnia próba: najtańszy model (Flash-Lite, tryb JSON, bez wyszukiwania) poprawia składnię. Koszt ułamka grosza."""
+    if not KLUCZ or not t or _licznik() >= MAKS_DZIENNIE: return None
+    lista = modele(); lite = [m for m in lista if 'lite' in m] or lista
+    for m in lite[:2]:
+        body = {'contents': [{'parts': [{'text': NAPRAW + t[:30000]}]}],
+                'generationConfig': {'temperature': 0, 'maxOutputTokens': 12000, 'responseMimeType': 'application/json'}}
+        try:
+            _licznik(1); r = requests.post(URL.format(m=m), json=body, timeout=120, headers={'x-goog-api-key': KLUCZ})
+            if r.status_code != 200: _blad(f'naprawa JSON {m}: HTTP {r.status_code}'); continue
+            j = r.json(); c = (j.get('candidates') or [{}])[0]
+            try: koszt_miesiac(_koszt(m, j.get('usageMetadata') or {}))
+            except Exception: pass
+            d = _parsuj(''.join(p.get('text', '') for p in (c.get('content') or {}).get('parts', [])))
+            if d: STAN['naprawione_modelem'] = STAN.get('naprawione_modelem', 0) + 1; return d
+        except Exception as e: _blad(f'naprawa JSON {m}: {e}')
+    return None
+
+def _wyciagnij_json(t, napraw=True):
+    """Obiekt JSON z odpowiedzi modelu; przy błędach składni naprawa lokalna, potem modelem (wersja 41 – nie tracimy opłaconych analiz)."""
+    d = _parsuj(t)
+    if d is None and napraw: d = _napraw_modelem(t)
+    return d
 
 _modele = {}
 _bez_szukania = set()   # modele, którym skończył się limit wyszukiwania Google
@@ -216,7 +286,7 @@ def _zapytaj(tekst_szukaj, tekst_bez):
         if m in _zly: continue
         for z_szukaniem in ((True, False) if _szukanie['ok'] and m not in _bez_szukania else (False,)):
             body = {'contents': [{'parts': [{'text': tekst_szukaj if z_szukaniem else tekst_bez}]}],
-                    'generationConfig': {'temperature': 0.2, 'maxOutputTokens': 6000}}
+                    'generationConfig': {'temperature': 0.2, 'maxOutputTokens': 12000}}
             if z_szukaniem: body['tools'] = [{'google_search': {}}]
             try:
                 STAN['zapytania'] += 1; _licznik(1)
@@ -268,7 +338,7 @@ def raport_ai(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, braki=None, zapowied
     try: d = _wyciagnij_json(txt)
     except Exception: d = None
     if not d or not d.get('podsumowanie'):
-        _blad('nieczytelna odpowiedź modelu: ' + txt[:120]); return None
+        _blad(f'nieczytelna odpowiedź modelu ({len(txt)} znaków): ' + txt[:100]); return None
     STAN['udane'] += 1; analiz_dzis(1)
     lista = lambda k: [str(x)[:120] for x in (d.get(k) or []) if x][:10]
     w = pilnuj_werdyktu(werdykt_z(d) if typ else None, szukal, zr, d)

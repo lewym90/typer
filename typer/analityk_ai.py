@@ -118,16 +118,18 @@ def model_pro():
 
 
 def _json(txt):
-    txt = re.sub(r'^```(?:json)?|```$', '', (txt or '').strip(), flags=re.M).strip()
-    i, j = txt.find('{'), txt.rfind('}')
-    return json.loads(txt[i:j + 1])
+    """Wersja 41: naprawa składni (lokalnie, potem tanim modelem) – opłacony krok Pro nie przepada przez przecinek."""
+    import ai_raport
+    d = ai_raport._wyciagnij_json(txt)
+    if d is None: raise ValueError('nieczytelny JSON')
+    return d
 
 
 def zapytaj(tekst, szukaj=True):
     """(dane JSON, źródła z wyszukiwania) albo (None, [])."""
     for m in model_pro():
         body = {'contents': [{'parts': [{'text': tekst}]}],
-                'generationConfig': {'temperature': 0.3, 'maxOutputTokens': 12000}}
+                'generationConfig': {'temperature': 0.3, 'maxOutputTokens': 20000}}
         if szukaj: body['tools'] = [{'google_search': {}}]
         else: body['generationConfig']['responseMimeType'] = 'application/json'
         try: r = requests.post(URL.format(m=m), json=body, timeout=240, headers={'x-goog-api-key': KLUCZ})
@@ -144,7 +146,9 @@ def zapytaj(tekst, szukaj=True):
         zr = [dict(tytul=(ch.get('web') or {}).get('title', ''), link=(ch.get('web') or {}).get('uri', ''))
               for ch in ((c.get('groundingMetadata') or {}).get('groundingChunks') or []) if (ch.get('web') or {}).get('uri')]
         try: return _json(txt), zr
-        except Exception: _blad(f'{m}: nieczytelny JSON: {txt[:120]}'); continue
+        except Exception:
+            _blad(f"{m}: nieczytelny JSON mimo naprawy ({len(txt)} znaków, {c.get('finishReason')}): {txt[:100]}")
+            return None, []          # bez powtarzania kroku innym modelem (podwójny koszt)
     return None, []
 
 

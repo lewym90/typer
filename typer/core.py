@@ -78,11 +78,24 @@ def expected_goals(m, home, away, neutral=False):
     tot = lh + la; f = (m['T'] + KALIBRACJA_GOLI * (tot - m['T'])) / tot
     return lh * f, la * f
 
-def score_matrix(lh, la, rho):
+# Wersja 42 – kara za dużą różnicę bramek w macierzy z RYNKU: M(i,j) · exp(-KAPPA_RYNEK·(i-j)²).
+# Test 03.10 (Matches.csv, 156 549 meczów z kursami 1X2 i 2,5; ocena 2020–2026): zwykły Poisson z kursów zawyżał gole
+# i handicapy faworyta, a zaniżał gole outsidera i „obie strzelą” (faworyt ≥75%: „-2,5” 40,2% → weszło 35,3%,
+# „faworyt powyżej 3,5” 31,3 → 27,3, „outsider strzeli” 47,4 → 51,4, BTTS 44,7 → 49,0). Gole łącznie były trafne.
+# Z karą 0,025: średni błąd kalibracji 13 rynków × 5 przedziałów siły faworyta 1,63 → 1,00 pkt, log-loss lepszy.
+KAPPA_RYNEK = 0.025
+WERSJA = 43          # numer wersji programu (Ustawienia w aplikacji); zmieniać przy każdej nowej wersji
+
+def score_matrix(lh, la, rho, kappa=0.0):
     M = np.outer(poisson.pmf(np.arange(MAXG + 1), lh), poisson.pmf(np.arange(MAXG + 1), la))
     M[0, 0] *= 1 - lh * la * rho; M[0, 1] *= 1 + lh * rho
     M[1, 0] *= 1 + la * rho; M[1, 1] *= 1 - rho
+    if kappa: M = M * np.exp(-kappa * np.subtract.outer(np.arange(MAXG + 1), np.arange(MAXG + 1)) ** 2)
     return M / M.sum()
+
+def score_matrix_rynek(lh, la, rho=-0.05):
+    """Macierz wyników z rynku (λ z market_lambdas) – z karą za dużą różnicę bramek (wersja 42)."""
+    return score_matrix(lh, la, rho, KAPPA_RYNEK)
 
 def _ah_outcome(M, line):
     """Handicap azjatycki dla gospodarzy (line np. -0.5, -1, -0.75). Zwraca (p_wygranej, p_zwrotu, p_przegranej) dla pół/całych linii."""
@@ -149,7 +162,7 @@ def market_lambdas(p1, px, p2, p_over=None, line=2.5, rho=-0.05):
     """Odtwarza oczekiwane gole z uczciwych kursów rynku (np. Pinnacle) -> pozwala liczyć BTTS/handicapy/gole."""
     tot = np.add.outer(np.arange(MAXG + 1), np.arange(MAXG + 1))
     def loss(x):
-        M = score_matrix(np.exp(x[0]), np.exp(x[1]), rho)
+        M = score_matrix(np.exp(x[0]), np.exp(x[1]), rho, KAPPA_RYNEK)
         e = (np.tril(M, -1).sum() - p1) ** 2 + (np.trace(M) - px) ** 2 + (np.triu(M, 1).sum() - p2) ** 2
         if p_over is not None:
             e += (M[tot > line].sum() - p_over) ** 2
@@ -318,7 +331,7 @@ def macierz_meczu(ev, preferowany):
     neutral = preferowany == 'Reprezentacje' and (ev['sport_key'].endswith('world_cup') or 'championship' in ev['sport_key'])
     M_mod = score_matrix(*expected_goals(MODELE[k], h, a, neutral), MODELE[k]['rho']) if k else None
     lam_mkt = market_lambdas(*p_mkt, p_over=p_ov) if p_mkt is not None else None
-    M_mkt = score_matrix(*lam_mkt, -0.05) if lam_mkt is not None else None
+    M_mkt = score_matrix_rynek(*lam_mkt) if lam_mkt is not None else None
     if M_mkt is not None: M, tryb, prog = M_mkt, f'rynek ({zrodlo})', MIN_EV_Z_RYNKIEM
     elif M_mod is not None: M, tryb, prog = M_mod, 'tylko model', MIN_EV_SAM_MODEL
     else: return None
@@ -442,7 +455,7 @@ def clv_zakladu(r):
     bm = {b['key']: {mk['key']: mk['outcomes'] for mk in b['markets']} for b in ev.get('bookmakers', [])}
     p1, pov, zr = ostre_prawdopodobienstwa(bm, ev.get('home_team'), ev.get('away_team'))
     if p1 is None: return None
-    M = score_matrix(*market_lambdas(*p1, p_over=pov), -0.05)
+    M = score_matrix_rynek(*market_lambdas(*p1, p_over=pov))
     return ev_zakladu(M, r.rynek, r.strona, r.linia, r.kurs_betclic)
 
 def wynik_z_danych(gosp, gosc, start):

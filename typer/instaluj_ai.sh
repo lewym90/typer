@@ -20,7 +20,7 @@ echo "== 2/6 Biblioteki Pythona"
 mkdir -p /opt/typer/ai/typer /opt/typer/ai/docs/data
 [ -x /opt/typer/ai/venv/bin/python ] || python3 -m venv /opt/typer/ai/venv
 /opt/typer/ai/venv/bin/pip install -q --upgrade pip
-/opt/typer/ai/venv/bin/pip install -q numpy pandas scipy requests
+/opt/typer/ai/venv/bin/pip install -q numpy pandas scipy requests json-repair
 
 echo "== 3/6 Klucz Gemini"
 if [ ! -s /opt/typer/gemini_key ]; then

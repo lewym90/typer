@@ -263,6 +263,7 @@ footer{font-size:12px;color:var(--faint);margin:28px 4px 0;line-height:1.55}
 <div class="sheet" id="kupon"><div class="card" id="kcard"></div></div>
 <div class="sheet" id="settings"><div class="card">
   <h2 style="margin-top:0">Ustawienia</h2>
+  <div class="stan" id="wersjaApp"></div>
   <label for="bankroll">Twój budżet na zakłady (zł)</label>
   <input type="number" id="bankroll" inputmode="numeric" min="0" step="50">
   <p class="note">Z budżetu liczone są sugerowane stawki (ostrożne 1/4 Kelly'ego, maks. 2% budżetu na typ). Zapisuje się tylko na tym telefonie.</p>
@@ -294,13 +295,16 @@ async function laduj(){
   S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null; S.status = st.value || null; S.inne = inn.value || null; S.glowne = gl.value || null;
 }
 
+const WERSJA_APLIKACJI = 43;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
 /* ---------- model (ten sam co w Pythonie) ---------- */
 const MAXG = 10;
 function pois(l){ const out = [Math.exp(-l)]; for(let k=1;k<=MAXG;k++) out.push(out[k-1]*l/k); return out; }
-function macierz(lh, la, rho){
+const KAPPA_RYNEK = 0.025;    // wersja 42: jak core.KAPPA_RYNEK – kara za dużą różnicę bramek w macierzy z rynku
+function macierz(lh, la, rho, kappa){
   const a = pois(lh), b = pois(la); let s = 0; const M = [];
   for(let i=0;i<=MAXG;i++){ M.push([]); for(let j=0;j<=MAXG;j++){ let v = a[i]*b[j];
     if(i===0&&j===0) v*=1-lh*la*rho; else if(i===0&&j===1) v*=1+lh*rho; else if(i===1&&j===0) v*=1+la*rho; else if(i===1&&j===1) v*=1-rho;
+    if(kappa) v *= Math.exp(-kappa*(i-j)*(i-j));
     M[i].push(v); s+=v; } }
   return M.map(r => r.map(v => v/s));
 }
@@ -470,7 +474,7 @@ function licz(){
   const m = S.modele.modele[liga]; const dz = meczDzis(liga, H, A);
   const rynek = !!(dz && dz.analiza.lam);
   const [lh, la] = rynek ? dz.analiza.lam : oczekiwaneGole(m, H, A, neu, S.modele.kalibracja);
-  const M = macierz(lh, la, rynek ? -0.05 : m.rho), top = topWyniki(M, 5);
+  const M = macierz(lh, la, rynek ? -0.05 : m.rho, rynek ? KAPPA_RYNEK : 0), top = topWyniki(M, 5);
   const R2 = rozszerzone(M, pokaz(liga,H), pokaz(liga,A));
   const P = z => rynek ? R2[z][0] : kal(z, R2[z][0], liga);          // szansa po kalibracji (model) albo rynkowa
   const kursy = {}; document.querySelectorAll('.odds-in input').forEach(i => { const v = parseFloat(String(i.value).replace(',','.')); if(v>1) kursy[i.dataset.z]=v; });
@@ -1487,6 +1491,12 @@ function podepnijKupon(){
   const c = $('#kclear'); if(c) c.onclick = () => { KUP.wybrane = []; store.set('kupon', []); $('#kupon').classList.remove('open'); odswiezKupon(); renderuj(); };
 }
 /* ---------- stan programu ---------- */
+function widokWersji(){   // wersja 42: czy wgrana jest najnowsza wersja (strona i obliczenia)
+  const w = S.status && S.status.wersja;
+  const zgodne = w == null || +w === WERSJA_APLIKACJI;
+  return `<div><span>Wersja programu</span><b style="font-size:20px">v${WERSJA_APLIKACJI}</b></div>`
+    + `<div><span>Obliczenia na serwerze GitHub</span><b class="${zgodne ? '' : 'neg'}">${w == null ? 'po najbliższym liczeniu' : 'v' + esc(String(w)) + (zgodne ? ' ✅' : ' ⚠️ inna niż aplikacja')}</b></div>`;
+}
 function widokStanu(){
   const s = S.status; if(!s) return `<p class="note">Brak danych o stanie (pojawią się po najbliższym uruchomieniu).</p>`;
   const k = s.kredyty_odds || {}, af = s.api_football || {}, t = s.telegram || {};
@@ -1497,7 +1507,7 @@ function widokStanu(){
   h += wiersz('API-Football', af.klucz ? `${af.zapytania_ostatnio || 0} zapytań${(af.bledy||[]).length ? ' ⚠️' : ' ✅'}` : 'brak klucza');
   const g = s.gemini || {};
   if(g.klucz !== undefined){ const wd = g.werdykty || {};
-    h += wiersz('Analizy AI dziś', g.klucz ? `${g.analiz_dzis || 0} z 40${g.wyszukiwanie === false ? ' · bez wyszukiwania ⚠️' : ''}` : 'brak klucza', g.wyszukiwanie === false ? 'neg' : '');
+    h += wiersz('Analizy AI dziś', g.klucz ? `${g.analiz_dzis || 0} z 120${g.wyszukiwanie === false ? ' · bez wyszukiwania ⚠️' : ''}` : 'brak klucza', g.wyszukiwanie === false ? 'neg' : '');
     if(Object.keys(wd).length) h += wiersz('Werdykty AI (ostatnie liczenie)', `✅ ${wd.zgoda || 0} · ⚠️ ${wd.ryzyko || 0} · ⛔ ${wd.odradza || 0}`); }
   if(s.sporty && s.sporty.ksw) h += wiersz('KSW', esc(s.sporty.ksw));
   h += wiersz('Telegram', !t.wlaczony ? 'wyłączony' : (t.ostatni_blad ? '⚠️ problem' : '✅ działa'), t.ostatni_blad ? 'neg' : '');
@@ -1528,7 +1538,7 @@ document.querySelectorAll('nav button').forEach(b => b.onclick = () => { if(b.da
 document.addEventListener('click', e => { const b = e.target.closest('[data-set]'); if(!b) return;
   const i = b.dataset.set.indexOf(':'), k = b.dataset.set.slice(0, i), v = b.dataset.set.slice(i + 1);
   store.set(k, v || null); if(k === 'liveSp'){ stopLive(); LIVE2.czas = null; } renderuj(); });
-$('#openSettings').onclick = () => { $('#bankroll').value = BANK; $('#stan').innerHTML = widokStanu(); $('#settings').classList.add('open'); };
+$('#openSettings').onclick = () => { $('#bankroll').value = BANK; $('#wersjaApp').innerHTML = widokWersji(); $('#stan').innerHTML = widokStanu(); $('#settings').classList.add('open'); };
 $('#kopen').onclick = () => { $('#kcard').innerHTML = widokKuponu(); podepnijKupon(); $('#kupon').classList.add('open'); };
 $('#kupon').onclick = e => { if(e.target.id === 'kupon') $('#kupon').classList.remove('open'); };
 $('#settings').onclick = e => { if(e.target.id === 'settings') $('#settings').classList.remove('open'); };

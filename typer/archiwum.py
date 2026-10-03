@@ -1,4 +1,4 @@
-"""Archiwum kursów (wersja 37) – rozliczanie odczytów Zbieracza i nauka „gdzie bukmacher się myli”.
+"""Archiwum kursów (wersja 37; wersja 41 – rozliczanie mecz po meczu, z ponawianiem) – rozliczanie odczytów Zbieracza i nauka „gdzie bukmacher się myli”.
 Wejście: docs/data/archiwum/kursy/<data>_{rano,popoludnie,przed}.json.gz (z polskiego serwera, Fortuna, wszystkie rynki).
 Piłka: wynik z FotMob (lista meczów dnia ze stanem i wynikiem), dopasowanie po czasie (±20 min) i nazwach (polskie ↔ angielskie),
 każdy kurs rozliczany maską wyniku (te same klucze co w programie). Wynik: docs/data/archiwum/rozliczone/<data>.csv.gz
@@ -11,7 +11,7 @@ OUT = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
 KAT_K = os.path.join(OUT, 'archiwum', 'kursy')
 KAT_R = os.path.join(OUT, 'archiwum', 'rozliczone')
 PLIK_STAT = os.path.join(OUT, 'archiwum', 'statystyki.json')
-STAN = dict(rozliczone_dni=[], meczow=0, dopasowanych=0, kursow=0, bledy=[])
+STAN = dict(rozliczone_dni=[], meczow=0, dopasowanych=0, kursow=0, czeka=0, bez_wyniku=0, bledy=[])
 PRZEDZIALY = [(1.0, 1.5), (1.5, 2.0), (2.0, 3.0), (3.0, 5.0), (5.0, 10.0), (10.0, 1000.0)]
 
 
@@ -70,28 +70,56 @@ def _podobne(a, b):
         return difflib.SequenceMatcher(None, str(a).lower(), str(b).lower()).ratio()
 
 
-def rozlicz_dzien(dzien):
-    """Rozlicza wszystkie odczyty z danego dnia (piłka). Zwraca liczbę wierszy albo None (brak danych)."""
+def _wczytaj_odczyty(dni_wstecz=5):
+    """Wszystkie odczyty piłki z ostatnich dni: id meczu Fortuny → dict(h, a, t, tur, rano, popoludnie, przed)."""
+    dzis = pd.Timestamp.now(tz='Europe/Warsaw').normalize()
+    odczyty = {}
+    for i in range(dni_wstecz, -1, -1):
+        d = (dzis - pd.Timedelta(days=i)).strftime('%Y-%m-%d')
+        for p in sorted(glob.glob(os.path.join(KAT_K, f'{d}_*.json.gz'))):
+            z = _wczytaj(p)
+            if not z: continue
+            tryb = z.get('tryb') or os.path.basename(p).split('_', 1)[1].split('.')[0]
+            for m in z.get('mecze') or []:
+                if m.get('sp') != 'pilka' or not m.get('id') or not m.get('t'): continue
+                o = odczyty.setdefault(m['id'], dict(h=m['h'], a=m['a'], t=m['t'], tur=m.get('tur', ''), rano={}, przed={}, popoludnie={}, zamk={}))
+                o.setdefault(tryb, {}).update(m.get('k') or {})
+    return odczyty
+
+
+def _juz_rozliczone():
+    """(mecz, start) wszystkich meczów zapisanych już w archiwum/rozliczone (żeby nie liczyć dwa razy)."""
+    zb = set()
+    for p in glob.glob(os.path.join(KAT_R, '*.csv.gz')):
+        try:
+            d = pd.read_csv(p, usecols=['mecz', 'start'])
+            zb |= set(zip(d.mecz.astype(str), d.start.astype(str)))
+        except Exception as e: _blad(f'{os.path.basename(p)}: {e}')
+    return zb
+
+
+def rozlicz(teraz=None, wyniki=None):
+    """Wersja 41: rozliczanie meczu po meczu, a nie pliku dnia. Każdy mecz z odczytów (ostatnie 5 dni), który zaczął się
+    ponad 2,5 h temu i nie ma go jeszcze w archiwum, dostaje wynik z FotMob (lista dnia startu, czas ±20 min i nazwy).
+    Bez wyniku – próba przy kolejnym liczeniu, po 48 h od startu pominięty. Wiersze trafiają do pliku dnia startu
+    (czas polski): docs/data/archiwum/rozliczone/<data>.csv.gz. wyniki = funkcja dzień → lista (do testów)."""
     from core import MASKI, MAXG
-    pliki = sorted(glob.glob(os.path.join(KAT_K, f'{dzien}_*.json.gz')))
-    if not pliki: return None
-    odczyty = {}                                   # id → dict(meta, rano={k:kurs}, przed={k:kurs})
-    for p in pliki:
-        d = _wczytaj(p)
-        if not d: continue
-        tryb = d.get('tryb') or os.path.basename(p).split('_', 1)[1].split('.')[0]
-        for m in d.get('mecze') or []:
-            if m.get('sp') != 'pilka': continue
-            o = odczyty.setdefault(m['id'], dict(h=m['h'], a=m['a'], t=m['t'], tur=m.get('tur', ''), rano={}, przed={}, popoludnie={}))
-            o.setdefault(tryb, {}).update(m.get('k') or {})
-    if not odczyty: return 0
-    wyn = fotmob_wyniki(dzien)
-    STAN['meczow'] += len(odczyty)
-    wiersze = []
+    teraz = teraz or pd.Timestamp.now(tz='UTC')
+    wyniki = wyniki or fotmob_wyniki
+    odczyty = _wczytaj_odczyty()
+    gotowe = _juz_rozliczone()
+    cache, nowe = {}, {}
     for fid, o in odczyty.items():
+        mecz = f"{o['h']} – {o['a']}"
+        if (mecz, str(o['t'])) in gotowe: continue
         t = pd.Timestamp(o['t']).tz_localize('UTC')
+        if t > teraz - pd.Timedelta(hours=2.5): STAN['czeka'] = STAN.get('czeka', 0) + 1; continue
+        if t < teraz - pd.Timedelta(hours=48): STAN['bez_wyniku'] = STAN.get('bez_wyniku', 0) + 1; continue
+        dzien = t.tz_convert('Europe/Warsaw').strftime('%Y-%m-%d')
+        if dzien not in cache: cache[dzien] = wyniki(dzien)
+        STAN['meczow'] += 1
         best = None
-        for h, a, tt, gh, ga in wyn:
+        for h, a, tt, gh, ga in cache[dzien]:
             if abs((tt - t).total_seconds()) > 20 * 60: continue
             sc = min(_podobne(o['h'], h), _podobne(o['a'], a))
             if sc >= 0.5 and (best is None or sc > best[0]): best = (sc, gh, ga)
@@ -99,16 +127,23 @@ def rozlicz_dzien(dzien):
         STAN['dopasowanych'] += 1
         _, gh, ga = best
         kursy_rano = o['rano'] or o['popoludnie']
-        for k in set(kursy_rano) | set(o['przed']):
+        for k in set(kursy_rano) | set(o['przed']) | set(o['popoludnie']) | set(o['zamk']):
             if k not in MASKI: continue
             kr, kp_ = kursy_rano.get(k), o['przed'].get(k) or o['popoludnie'].get(k)
-            wiersze.append(dict(data=dzien, liga=o['tur'], mecz=f"{o['h']} – {o['a']}", start=o['t'], rynek=k, kategoria=kategoria(k),
-                                kurs_rano=kr, kurs_przed=kp_, wynik=f'{gh}:{ga}', trafiony=int(bool(MASKI[k][min(gh, MAXG), min(ga, MAXG)]))))
+            nowe.setdefault(dzien, []).append(dict(data=dzien, liga=o['tur'], mecz=mecz, start=o['t'], rynek=k, kategoria=kategoria(k),
+                                                   kurs_rano=kr, kurs_przed=kp_, kurs_zamk=o['zamk'].get(k), wynik=f'{gh}:{ga}',
+                                                   trafiony=int(bool(MASKI[k][min(gh, MAXG), min(ga, MAXG)]))))
     os.makedirs(KAT_R, exist_ok=True)
-    if wiersze:
-        pd.DataFrame(wiersze).to_csv(os.path.join(KAT_R, f'{dzien}.csv.gz'), index=False, compression='gzip')
-        STAN['kursow'] += len(wiersze); STAN['rozliczone_dni'].append(dzien)
-    return len(wiersze)
+    for dzien, w in sorted(nowe.items()):
+        p = os.path.join(KAT_R, f'{dzien}.csv.gz')
+        d = pd.DataFrame(w)
+        if os.path.exists(p):
+            try: d = pd.concat([pd.read_csv(p), d], ignore_index=True)
+            except Exception as e: _blad(f'{dzien}: {e}')
+        d = d.drop_duplicates(['mecz', 'start', 'rynek'], keep='first')
+        d.to_csv(p, index=False, compression='gzip')
+        STAN['kursow'] += len(w); STAN['rozliczone_dni'].append(dzien)
+    return sum(len(w) for w in nowe.values())
 
 
 def statystyki():
@@ -138,13 +173,12 @@ def statystyki():
 
 
 def dzienny():
-    """Wołane przy pełnym liczeniu: rozlicza wczoraj i przedwczoraj (jeśli jeszcze nie), przelicza statystyki."""
-    dzis = pd.Timestamp.now(tz='Europe/Warsaw').normalize()
-    for i in (1, 2, 3):
-        d = (dzis - pd.Timedelta(days=i)).strftime('%Y-%m-%d')
-        if os.path.exists(os.path.join(KAT_R, f'{d}.csv.gz')): continue
-        try: rozlicz_dzien(d)
-        except Exception as e: _blad(f'rozliczenie {d}: {type(e).__name__}: {e}')
+    """Wołane przy pełnym liczeniu: rozlicza wszystkie mecze z odczytów, które już się skończyły (wersja 41), przelicza statystyki."""
+    try: rozlicz()
+    except Exception as e: _blad(f'rozliczenie: {type(e).__name__}: {e}')
+    try:                                   # wersja 43: skaner składów – braki vs kurs i wynik
+        import sklady_lab; STAN['sklady'] = sklady_lab.licz()
+    except Exception as e: _blad(f'skaner składów: {type(e).__name__}: {e}')
     try: st = statystyki()
     except Exception as e: _blad(f'statystyki: {e}'); st = None
     if st:

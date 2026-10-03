@@ -139,7 +139,7 @@ def typy_na_dzis():
         try: x = macierz_meczu(ev, model)
         except Exception as e: print("pominięto", ev.get('home_team'), e); x = None
         if x:                                  # wersja 34 – Analityk: braki w kadrze (FotMob) → korekta szans
-            try: analityk.pilka(x, score_matrix, pl)
+            try: analityk.pilka(x, core.score_matrix_rynek, pl)
             except Exception as e: analityk._blad(f"piłka {x.get('home')}: {e}")
         if x: analizy.append((list(LIGI_DO_SKANU).index(key), key, x))
     # --- VALUE: liczona po pobraniu polskich kursów (value_pl.py, z kursy_pl.main – przed Telegramem i przy każdym odświeżeniu) ---
@@ -434,7 +434,7 @@ def sprawdz_przed_meczem(d):
                 bm = {b['key']: {mk['key']: mk['outcomes'] for mk in b['markets']} for b in ev.get('bookmakers', [])}
                 p1, pov, zr = ostre_prawdopodobienstwa(bm, ev['home_team'], ev['away_team'])
                 if p1 is not None:
-                    M = score_matrix(*analityk.lambdy_przed_meczem(market_lambdas(*p1, p_over=pov), m), -0.05)
+                    M = core.score_matrix_rynek(*analityk.lambdy_przed_meczem(market_lambdas(*p1, p_over=pov), m))
                     ruch = {poz: [sz, round(float((M * MASKI[k]).sum()), 4)] for poz, ik, k, n, sz in _typy_meczu(m) if k in MASKI}
                     pm['kursy'] = dict(czas=teraz.strftime('%H:%M'), zrodlo=zr, ruch=ruch, szanse={z: round(float((M * MASKI[z]).sum()), 4) for z in '1X2'})
                     for poz, (a, b) in ruch.items():   # zapis do dziennika: szansa tuż przed meczem
@@ -1111,6 +1111,7 @@ def zapisz_status(tryb, bledy=None, st=None, tg_info=None):
     st = st if st is not None else wczytaj_status()
     teraz = pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m-%d %H:%M')
     st['ostatnie_uruchomienie'] = teraz; st[f'ostatnie_{tryb}'] = teraz
+    st['wersja'] = core.WERSJA                  # wersja 42: numer wersji widoczny w Ustawieniach aplikacji
     if core.KREDYTY['pozostalo'] is not None:
         st['kredyty_odds'] = dict(pozostalo=core.KREDYTY['pozostalo'], zuzyto=core.KREDYTY['zuzyto'], budzet_dzis=core.KREDYTY['na_dzis'] or st.get('kredyty_odds', {}).get('budzet_dzis'))
     st['api_football'] = dict(klucz=bool(os.environ.get('API_FOOTBALL_KEY')), uzywany=bool(raport.KLUCZ),

@@ -979,7 +979,8 @@ def tryb_cron():
 def _radar_cron(stan, teraz):
     """Wersja 40 – Radar typerów: rozpoznanie serwisów z typami raz dziennie (10–22) i migawki stron 3× dziennie
     (10:30–13, 14:30–17, 18:30–21). Zwraca True, gdy coś uruchomiono (wtedy Zbieracz czeka na następne wywołanie).
-    Nie rusza w oknie, gdy Zbieracz ma mecz 45–75 min przed startem (pierwszeństwo kursów przed meczem)."""
+    Nie rusza w oknie, gdy Zbieracz ma mecz 45–75 min przed startem (pierwszeństwo kursów przed meczem).
+    Wersja 43: migawki Radaru tylko z kursami „przed” – okna składów (s0, zamk) nie blokują Radaru."""
     dzis = teraz.strftime('%Y-%m-%d'); h, mi = teraz.hour, teraz.minute
     if _zbieracz_przed_czeka(dzis): return False
     if stan.get('radar') != dzis and 10 <= h < 22: tryb, kl = 'rozpoznanie', 'radar'
@@ -997,6 +998,30 @@ def _radar_cron(stan, teraz):
         print(teraz.strftime('%H:%M'), 'Radar', tryb, (r.stdout or '')[-500:], (r.stderr or '')[-300:])
     except Exception as e: print('Radar:', e)
     return True
+
+def _zbieracz_okno():
+    """Wersja 43: czy jakiś mecz z listy Zbieracza (dziś i wczoraj) jest w oknie skanera i nie ma jeszcze migawki:
+    piłka 120–240 min przed startem (skład przewidywany), wszystkie 45–75 min (kursy + skład) i 3–20 min (zamknięcie)."""
+    try:
+        from zoneinfo import ZoneInfo; tz = ZoneInfo('Europe/Warsaw')
+    except Exception: tz = dt.timezone(dt.timedelta(hours=2))
+    u = dt.datetime.now(dt.timezone.utc); dz = u.astimezone(tz)
+    dni = [dz.strftime('%Y-%m-%d'), (dz - dt.timedelta(days=1)).strftime('%Y-%m-%d')]
+    def wczyt(nazwa):
+        out = []
+        for d in dni:
+            try: out += json.load(open(f'/opt/typer/zbieracz/{d}/{nazwa}'))
+            except Exception: pass
+        return out
+    lista = wczyt('lista.json')
+    for plik, (a, b), tylko_pilka in (('sklady0.json', (120, 240), True), ('przed.json', (45, 75), False), ('zamk.json', (3, 20), False)):
+        juz = {m['id'] for m in wczyt(plik)}
+        for m in lista:
+            if m['id'] in juz or (tylko_pilka and m.get('sp') != 'pilka'): continue
+            try: t = dt.datetime.strptime(m['t'], '%Y-%m-%d %H:%M').replace(tzinfo=dt.timezone.utc)
+            except Exception: continue
+            if a <= (t - u).total_seconds() / 60 <= b: return True
+    return False
 
 def _zbieracz_przed_czeka(dzis):
     try:
@@ -1034,18 +1059,9 @@ def _zbieracz_cron(stan, teraz):
     if stan.get('zb_rano') != dzis and (h > 8 or (h == 8 and mi >= 15)) and h < 15: tryb, kl = 'rano', 'zb_rano'
     elif stan.get('zb_pop') != dzis and 15 <= h < 22: tryb, kl = 'popoludnie', 'zb_pop'
     elif stan.get('zb_wyslij') != dzis and h == 23 and mi >= 30: tryb, kl = 'wyslij', 'zb_wyslij'
-    elif h >= 8 or h < 2:
-        tryb, kl = 'przed', None
-        try:                                   # proces tylko wtedy, gdy jakiś mecz z listy jest w oknie 45–75 min przed startem
-            lista = json.load(open(f'/opt/typer/zbieracz/{dzis}/lista.json'))
-            try: juz = {m['id'] for m in json.load(open(f'/opt/typer/zbieracz/{dzis}/przed.json'))}
-            except Exception: juz = set()
-            lista = [m for m in lista if m['id'] not in juz]
-            u = dt.datetime.now(dt.timezone.utc)
-            if not any(45 <= (dt.datetime.strptime(m['t'], '%Y-%m-%d %H:%M').replace(tzinfo=dt.timezone.utc) - u).total_seconds() / 60 <= 75
-                       for m in lista): return
-        except Exception: return
-    else: return
+    else:
+        tryb, kl = 'przed', None             # wersja 43: skaner składów (całą dobę) – proces tylko, gdy jakiś mecz jest w oknie
+        if not _zbieracz_okno(): return
     if kl: stan[kl] = dzis; json.dump(stan, open(STAN_CRON, 'w'))
     import subprocess
     try:

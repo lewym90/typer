@@ -15,8 +15,16 @@ MIN_EV = 0.03
 MAX_EV = 0.25
 KURS_MIN, KURS_MAX = 1.30, 4.00
 NA_MECZ = 2
+# Wersja 41 – bezpiecznik rozbieżności: gdy nasza szansa jest o ponad 15% (względnie) wyższa niż szansa z mediany kursów
+# 4 polskich bukmacherów (z odjętą typową marżą ~5%), to prawie zawsze błąd przeliczenia, a nie okazja – np. przy wielkim
+# faworycie (Hiszpania – Czechy 03.10: „Hiszpania powyżej 2,5 gola” 82% z modelu goli vs ok. 67% u wszystkich bukmacherów).
+# Rozkład goli liczony z 1X2 i linii 2,5 przy skrajnych meczach zawyża wysokie linie, handicapy i gole drużyny.
+MAX_ROZBIEZNOSC = 1.15
+MARZA_PL = 1.05
 
 def _ostry(zr): return any(x in str(zr or '') for x in ('Pinnacle', 'Betfair'))
+
+ROZB = dict(n=0, przyklady=[])
 
 def _teraz(): return pd.Timestamp.now(tz='Europe/Warsaw')
 
@@ -30,6 +38,12 @@ def _najlepszy(zrodla, klucz):
     b = max(kk, key=kk.get)
     return b, kk[b], kk
 
+def rozbiezne(p, kk):
+    """True, gdy szansa p jest nie do pogodzenia z kursami polskich bukmacherów (mediana) – patrz MAX_ROZBIEZNOSC."""
+    if not kk: return False
+    med = float(np.median(list(kk.values())))
+    return med > 1 and p * med * MARZA_PL > MAX_ROZBIEZNOSC
+
 def _zapisz(p, d):
     tmp = p + '.tmp'
     with open(tmp, 'w', encoding='utf-8') as f: json.dump(d, f, ensure_ascii=False, default=lambda o: float(o) if isinstance(o, (np.floating, np.integer)) else str(o))
@@ -41,7 +55,7 @@ def value_pilka(dzis, kursy, vps, KP):
     for m in dzis.get('mecze') or []:
         eid = m.get('event_id'); lam = (m.get('analiza') or {}).get('lam')
         if not eid or not lam or not _ostry(m.get('zrodlo')) or _rozpoczety(m): continue
-        M = core.score_matrix(float(lam[0]), float(lam[1]), -0.05)
+        M = core.score_matrix_rynek(float(lam[0]), float(lam[1]))
         r = RD.rynki_rozszerzone(M, m['gospodarz'], m['gosc'])
         zrodla, stan = KP.zrodla_meczu(kursy, vps, m, eid)
         kand = []
@@ -51,6 +65,7 @@ def value_pilka(dzis, kursy, vps, KP):
             e = p * kurs - 1
             if not (KURS_MIN <= kurs <= KURS_MAX) or e < MIN_EV: continue
             if e > MAX_EV: odrzucone += 1; continue
+            if rozbiezne(p, kk): ROZB['n'] += 1; ROZB['przyklady'].append(f"{m['gospodarz']} – {m['gosc']}: {z} {p:.0%} vs kurs {np.median(list(kk.values())):.2f}"); continue
             kand.append((e, z, p, nazwa, opis, b, kurs, kk))
         for e, z, p, nazwa, opis, b, kurs, kk in sorted(kand, key=lambda x: -x[0])[:NA_MECZ]:
             pola = {k: v for k, v in m.items() if k not in ('klucz', 'zaklad', 'opis', 'kursy_pl', 'kursy_odczyt', 'kursy_czas', 'szansa', 'kurs_uczciwy',
@@ -74,6 +89,7 @@ def value_duel(m, kursy, vps, KP, sp):
         if not b: continue
         e = sz * kurs - 1
         if not (KURS_MIN <= kurs <= KURS_MAX) or not (MIN_EV <= e <= MAX_EV): continue
+        if rozbiezne(sz, kk): ROZB['n'] += 1; ROZB['przyklady'].append(f"{m.get('a')} – {m.get('b')}: {strona} {sz:.0%} vs kurs {np.median(list(kk.values())):.2f}"); continue
         out.append(dict(event_id=m['event_id'], klucz=strona, zaklad=f'wygra {kto}' if kto else 'remis', kurs=round(kurs, 2), bukmacher=b, kursy_pl=kk,
                         kursy_odczyt=sorted(x for x, d in stan.items() if KP.czytany(x, sp, strona, d)),
                         kursy_czas=dt.datetime.now(KP.TZ).strftime('%H:%M'),
@@ -94,6 +110,7 @@ def _przenies_ai(stare, nowe):
 def licz(kursy, vps):
     import kursy_pl as KP, core, sporty, wspolne
     diag = dict(pilka=0, tenis=0, walki=0, odrzucone_podejrzane=0)
+    ROZB.update(n=0, przyklady=[])
     dzien = wspolne.dzien_str()
     # ⚽ piłka
     p = os.path.join(OUT, 'dzis.json')
@@ -147,5 +164,6 @@ def licz(kursy, vps):
             for sp, v in (nowe.get('liczby') or {}).items(): gl.setdefault('liczby', {}).setdefault(sp, {})['value'] = v.get('value', 0)
             wspolne.zapisz(gl)
     except Exception as e: diag['blad_glowne'] = str(e)[:120]
+    diag['odrzucone_rozbiezne'] = ROZB['n']; diag['rozbiezne_przyklady'] = ROZB['przyklady'][:6]
     print('Value z polskich kursów:', diag)
     return diag
