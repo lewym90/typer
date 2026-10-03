@@ -1150,6 +1150,10 @@ def zapisz_status(tryb, bledy=None, st=None, tg_info=None):
         zs = json.load(open(os.path.join(os.path.dirname(__file__), '..', 'surowe', 'zbieracz_stan.json')))
         st['zbieracz'] = {k: zs.get(k) for k in ('czas', 'tryb', 'w_ofercie_24h', 'odczytane', 'rynkow', 'sekund', 'inne_sporty', 'przerwane_po', 'bledy')}
     except Exception: pass
+    try:                                         # wersja 48: Superbet – cała oferta
+        zs = json.load(open(os.path.join(os.path.dirname(__file__), '..', 'surowe', 'zbieracz_superbet.json')))
+        st['zbieracz_superbet'] = {k: zs.get(k) for k in ('czas', 'sb_odczytane', 'sb_sporty', 'przerwane_po', 'sekund')}
+    except Exception: pass
     if core.KREDYTY['pozostalo'] is not None:
         st['kredyty_odds'] = dict(pozostalo=core.KREDYTY['pozostalo'], zuzyto=core.KREDYTY['zuzyto'], budzet_dzis=core.KREDYTY['na_dzis'] or st.get('kredyty_odds', {}).get('budzet_dzis'))
     st['api_football'] = dict(klucz=bool(os.environ.get('API_FOOTBALL_KEY')), uzywany=bool(raport.KLUCZ),

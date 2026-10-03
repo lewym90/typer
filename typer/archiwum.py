@@ -40,7 +40,8 @@ def fotmob_wyniki(dzien):
     """[(h, a, czas UTC, gole gosp., gole gości)] zakończonych meczów dnia (Warszawa) z FotMob."""
     import analityk
     out = []
-    for d in (dzien, (pd.Timestamp(dzien) + pd.Timedelta(days=1)).strftime('%Y-%m-%d')):
+    # wersja 48: także dzień wcześniej – FotMob grupuje mecze z Ameryk wg daty lokalnej (Boca 02.10 21:30 = 03.10 02:30 PL)
+    for d in ((pd.Timestamp(dzien) - pd.Timedelta(days=1)).strftime('%Y-%m-%d'), dzien, (pd.Timestamp(dzien) + pd.Timedelta(days=1)).strftime('%Y-%m-%d')):
         try: j = analityk._fm_get(f"{analityk.FM}/matches?date={d.replace('-', '')}&timezone=Europe%2FWarsaw&ccode3=POL")
         except Exception as e: _blad(f'FotMob {d}: {e}'); continue
         def chodz(o):
@@ -60,7 +61,22 @@ def fotmob_wyniki(dzien):
     return out
 
 
+_ZNACZNIKI = re.compile(r'\b(u\s?1[5-9]|u\s?2[0-3]|ii|iii|b|reserves?|rezerwy|\(k\)|\(w\)|women|kobiety|youth|juniors?)\b|\((k|w)\)', re.I)
+
+
+def _znaczniki(n):
+    return {re.sub(r'\s', '', x.group(0).lower()).replace('(w)', 'k').replace('(k)', 'k').replace('women', 'k').replace('kobiety', 'k')
+            .replace('reserves', 'ii').replace('reserve', 'ii').replace('rezerwy', 'ii').replace('b', 'ii') for x in _ZNACZNIKI.finditer(str(n))}
+
+
 def _podobne(a, b):
+    """Wersja 48: drużyny młodzieżowe/rezerwy/kobiece tylko z takimi samymi (U19 ≠ seniorzy), porównanie bez tych dopisków."""
+    if _znaczniki(a) != _znaczniki(b): return 0.0
+    a2, b2 = _ZNACZNIKI.sub(' ', str(a)).strip() or a, _ZNACZNIKI.sub(' ', str(b)).strip() or b
+    return _podobne_(a2, b2)
+
+
+def _podobne_(a, b):
     try:
         import kursy_pl as KP
         from nazwy import pl
@@ -120,9 +136,13 @@ def rozlicz(teraz=None, wyniki=None):
         STAN['meczow'] += 1
         best = None
         for h, a, tt, gh, ga in cache[dzien]:
-            if abs((tt - t).total_seconds()) > 20 * 60: continue
-            sc = min(_podobne(o['h'], h), _podobne(o['a'], a))
-            if sc >= 0.5 and (best is None or sc > best[0]): best = (sc, gh, ga)
+            dmin = abs((tt - t).total_seconds()) / 60
+            if dmin > 150: continue
+            s1, s2 = _podobne(o['h'], h), _podobne(o['a'], a); sc = min(s1, s2)
+            # wersja 48: ±20 min i obie nazwy ≥0,5; do ±150 min przy nazwach ≥0,75 (różne godziny w źródłach);
+            # albo jedna nazwa pewna (≥0,9) i druga ≥0,55 (np. „AD Cali” = „Deportivo Cali”)
+            ok = (dmin <= 20 and sc >= 0.5) or (sc >= 0.75) or (max(s1, s2) >= 0.9 and sc >= 0.55)
+            if ok and (best is None or sc > best[0]): best = (sc, gh, ga)
         if not best:                       # wersja 46: diagnostyka – co FotMob ma o tej porze (do poprawy dopasowania)
             if len(STAN.setdefault('niedopasowane', [])) < 15:
                 bl = sorted(((min(_podobne(o['h'], h), _podobne(o['a'], a)), h, a, round((tt - t).total_seconds() / 60))

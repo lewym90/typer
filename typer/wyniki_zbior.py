@@ -3,8 +3,8 @@ własna baza do późniejszego rozliczenia kursów z Archiwum (Zbieracz na polsk
 11 sportów programu). Zasada: kursów z przeszłości nie da się odtworzyć – dlatego zbieramy je od razu; wyniki zapisujemy
 równolegle w prostej, jednolitej postaci, żeby dopasowanie mecz ↔ wynik dało się zrobić (i poprawić) w dowolnym momencie.
 
-Źródła: ESPN (koszykówka, hokej, baseball, F1, MMA, boks, tenis, siatkówka akademicka) i FotMob (piłka nożna – wszystkie ligi).
-Siatkówka zawodowa, piłka ręczna i żużel nie mają darmowego źródła w tej formie – ich wyniki uzupełnimy później
+Źródła: ESPN (koszykówka, hokej, baseball, F1, MMA, tenis, siatkówka akademicka) i FotMob (piłka nożna – wszystkie ligi).
+Boks (ESPN 404 – wersja 48), siatkówka zawodowa, piłka ręczna i żużel nie mają darmowego źródła w tej formie – ich wyniki uzupełnimy później
 (kursy i tak są zbierane). Plik dnia: docs/data/archiwum/wyniki/<data>.json.gz
   {czas, zrodla: {źródło: liczba}, bledy: [...], wyniki: [{sp, liga, zr, id, t (UTC), h, a, gh, ga, zw ('h'|'a'|'r'|None), stan, wynik}]}
 Plik dnia jest uzupełniany przez 3 kolejne dni (mecze późne, dogrywki, opóźnione wyniki)."""
@@ -20,7 +20,6 @@ LIGI_ESPN = {
     'baseball': ['baseball/mlb', 'baseball/college-baseball'],
     'f1': ['racing/f1'],
     'mma': ['mma/ufc', 'mma/pfl', 'mma/bellator'],
-    'boks': ['boxing'],
     'tenis': ['tennis/atp', 'tennis/wta'],
     'siatkowka': ['volleyball/womens-college-volleyball', 'volleyball/mens-college-volleyball'],
 }

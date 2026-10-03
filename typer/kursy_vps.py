@@ -1069,8 +1069,15 @@ def _zbieracz_cron(stan, teraz):
     """Wersja 37 – Zbieracz kursów: cała oferta Fortuny rano (8:15) i po południu (15:00), mecze 45–75 min przed startem,
     wysyłka odczytów „przed meczem” o 23:30. Jeden krok na wywołanie crona (osobny proces)."""
     dzis = teraz.strftime('%Y-%m-%d'); h, mi = teraz.hour, teraz.minute
+    zrobione = lambda t: os.path.exists(f'/opt/typer/zbieracz/{dzis}/fortuna_{t}.json.gz')
     if stan.get('zb_rano') != dzis and (h > 8 or (h == 8 and mi >= 15)) and h < 15: tryb, kl = 'rano', 'zb_rano'
     elif stan.get('zb_pop') != dzis and 15 <= h < 22: tryb, kl = 'popoludnie', 'zb_pop'
+    # wersja 48: samonaprawa – odczyt oznaczony, ale bez pliku (błąd) → jedna powtórka (rano do 15:00, po południu do 23:00)
+    elif stan.get('zb_rano') == dzis and not zrobione('rano') and stan.get('zb_rano2') != dzis and 9 <= h < 15: tryb, kl = 'rano', 'zb_rano2'
+    elif stan.get('zb_pop') == dzis and not zrobione('popoludnie') and stan.get('zb_pop2') != dzis and 15 <= h < 23: tryb, kl = 'popoludnie', 'zb_pop2'
+    # wersja 48: Superbet – cała oferta 11 sportów (10:00 i 17:00)
+    elif stan.get('zb_sb1') != dzis and 10 <= h < 15 and zrobione('rano'): tryb, kl = 'superbet', 'zb_sb1'
+    elif stan.get('zb_sb2') != dzis and 17 <= h < 23: tryb, kl = 'superbet', 'zb_sb2'
     elif stan.get('zb_wyslij') != dzis and h == 23 and mi >= 30: tryb, kl = 'wyslij', 'zb_wyslij'
     else:
         tryb, kl = 'przed', None             # wersja 43: skaner składów (całą dobę) – proces tylko, gdy jakiś mecz jest w oknie

@@ -295,7 +295,7 @@ async function laduj(){
   S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null; S.status = st.value || null; S.inne = inn.value || null; S.glowne = gl.value || null;
 }
 
-const WERSJA_APLIKACJI = 47;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
+const WERSJA_APLIKACJI = 48;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
 /* ---------- model (ten sam co w Pythonie) ---------- */
 const MAXG = 10;
 function pois(l){ const out = [Math.exp(-l)]; for(let k=1;k<=MAXG;k++) out.push(out[k-1]*l/k); return out; }
@@ -1533,6 +1533,9 @@ function widokStanu(){
     const stary = zb.czas && (Date.now() - Date.parse(zb.czas.replace(' UTC', 'Z').replace(' ', 'T')) > 30 * 3600e3);
     h += wiersz('Zbieracz kursów (Fortuna)', `${esc(zb.czas || '–')} · ${zb.tryb || ''} · ${zb.odczytane || 0} meczów, ${zb.rynkow || 0} rynków${stary ? ' ⚠️' : ' ✅'}`, stary ? 'neg' : '');
     if(inne) h += wiersz('Nowe dyscypliny w bazie', esc(inne)); }
+  const sb = s.zbieracz_superbet;   // wersja 48
+  if(sb){ const sp = Object.entries(sb.sb_sporty || {}).map(([k, v]) => `${k} ${v}`).join(', ');
+    h += wiersz('Zbieracz kursów (Superbet)', `${esc(sb.czas || '–')} · ${sb.sb_odczytane || 0} meczów${sp ? ' · ' + esc(sp) : ''}`); }
   if(ar.czas) h += wiersz('Archiwum – piłka rozliczona', `${ar.dopasowanych || 0} z ${ar.meczow || 0} meczów · czeka ${ar.czeka || 0}`);
   const wy = ar.wyniki; if(wy && wy.dni) h += wiersz('Baza wyników (wszystkie sporty)', esc(wy.dni.join(' · ')) + ((wy.bledy || []).length ? ' ⚠️' : ''));
   h += wiersz('Telegram', !t.wlaczony ? 'wyłączony' : (t.ostatni_blad ? '⚠️ problem' : '✅ działa'), t.ostatni_blad ? 'neg' : '');

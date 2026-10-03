@@ -15,7 +15,7 @@ import os, io, re, json, gzip, time, base64, shutil, datetime as dt
 
 KAT = '/opt/typer/zbieracz'
 GLOWNE = ('pilka', 'tenis', 'mma', 'boks', 'sporty walki')
-LIMIT_S = {'rano': 1080, 'popoludnie': 1080, 'przed': 240, 'wyslij': 180}
+LIMIT_S = {'rano': 1080, 'popoludnie': 1080, 'przed': 240, 'wyslij': 180, 'superbet': 1080}
 START = time.time()
 
 
@@ -111,6 +111,8 @@ def krok(V, KP, s, tryb):
         n = _wyslij_dzien(V, dzis); _sprzataj(); print('Zbieracz – wysłano:', n); return
     if tryb == 'przed':
         skaner(V, KP, s, diag); return
+    if tryb == 'superbet':
+        superbet(V, KP, diag); return
     # pełny odczyt oferty: rano / po południu
     lista_p = os.path.join(_katalog(), 'lista.json')        # wersja 46: przywrócone (w v43–v45 brakowało → błąd trybu rano/po południu)
     if tryb == 'rano':                     # wersja 43: dosyłka wczorajszych odczytów przed meczem (mecze po 23:30)
@@ -334,3 +336,76 @@ def _wyslij_dzien(V, d):
     if sk: _wyslij_gz(V, f'docs/data/archiwum/sklady/{d}.json.gz', dict(czas=czas, mecze=sk))
     n['sklady'] = len(sk)
     return n
+
+
+# =============================================================== wersja 48 – SUPERBET: cała oferta 11 sportów
+# Fortuna to jeden bukmacher – baza „rynek polski” potrzebuje kilku. Superbet ma publiczne API (bez przeglądarki):
+# lista zdarzeń dnia + pełna oferta zdarzenia. Odczyt 2× dziennie (ok. 10:00 i 17:00), mecze startujące w 26 h,
+# wszystkie rynki (do 60 na zdarzenie) → serwer (pełne) i repozytorium docs/data/archiwum/kursy/<d>_superbet_<n>.json.gz.
+# sportId Superbetu (rozpoznane 03.10 z listy zdarzeń): 5 piłka, 190 piłka kobiet, 2 tenis, 4 koszykówka, 3 hokej,
+# 20 baseball, 11 piłka ręczna, 1 siatkówka (prawdopodobnie), 94 żużel, 34 boks, 91/93 wyścigi (F1 / inne), 40 i 13 – do
+# rozpoznania (mogą być MMA/inne) – zapisujemy z kluczem 'sb<id>', mapowanie po przejrzeniu danych.
+SB_SPORTY = {5: 'pilka', 190: 'pilka', 2: 'tenis', 4: 'koszykowka', 3: 'hokej', 20: 'baseball', 11: 'pilka_reczna',
+             1: 'siatkowka', 94: 'zuzel', 34: 'boks', 91: 'f1', 93: 'wyscigi', 40: 'sb40', 13: 'sb13', 28: 'mma', 50: 'mma'}
+
+
+def _sb_rynki(odds):
+    """[[rynek, [[wynik, linia, kurs], ...]], ...] – do 60 rynków."""
+    r = {}
+    for o in odds or []:
+        try: c = round(float(o.get('price') or 0), 2)
+        except Exception: continue
+        if c <= 1: continue
+        mn = str(o.get('marketName') or '')[:90]
+        if mn not in r and len(r) >= 60: continue
+        r.setdefault(mn, []).append([str(o.get('name') or '')[:60], str(o.get('specialBetValue') or ''), c])
+    return [[k, v] for k, v in r.items()]
+
+
+def superbet(V, KP, diag):
+    ses = KP._sesja(); teraz = dt.datetime.now(dt.timezone.utc)
+    ev = []
+    for i in (0, 1):          # dziś i jutro (lista „by-date” od podanego dnia)
+        d = (teraz + dt.timedelta(days=i)).strftime('%Y-%m-%d')
+        try:
+            j = KP._json(ses, f"{KP.SB}/events/by-date?currentStatus=active&offerState=prematch&startDate={d}%2000:00:00")
+            ev += j.get('data') or []
+        except Exception as e: diag.setdefault('bledy', []).append(f'lista {d}: {e}'[:120])
+    widziane, wyb, sporty_wszystkie = set(), [], {}
+    for e in ev:
+        sid = e.get('sportId'); sporty_wszystkie[str(sid)] = sporty_wszystkie.get(str(sid), 0) + 1
+        try: sid = int(sid)
+        except Exception: continue
+        if sid not in SB_SPORTY or e.get('eventId') in widziane: continue
+        try: t = dt.datetime.fromtimestamp(int(e.get('unixDateMillis')) / 1000, dt.timezone.utc)
+        except Exception:
+            try: t = dt.datetime.fromisoformat(str(e.get('utcDate')).replace('Z', '+00:00'))
+            except Exception: continue
+        if not (0 <= (t - teraz).total_seconds() / 3600 <= 26): continue
+        widziane.add(e.get('eventId')); wyb.append((t, sid, e))
+    wyb.sort(key=lambda x: (x[1] != 5, x[0]))
+    diag.update(sb_sporty_wszystkie=sporty_wszystkie, sb_wybrane=len(wyb))
+    norm, n_sp = [], {}
+    for t, sid, e in wyb[:2500]:
+        if time.time() - START > LIMIT_S['superbet']: diag['przerwane_po'] = len(norm); break
+        try:
+            j = KP._json(ses, f"{KP.SB}/events/{e['eventId']}"); d = j.get('data'); d = d[0] if isinstance(d, list) and d else d
+            r = _sb_rynki((d or {}).get('odds'))
+        except Exception:
+            diag['bledy_n'] = diag.get('bledy_n', 0) + 1
+            if diag['bledy_n'] > 60: break
+            continue
+        if not r: continue
+        h, a = KP._strony(e)
+        sp = SB_SPORTY[sid]; n_sp[sp] = n_sp.get(sp, 0) + 1
+        norm.append(dict(id=str(e.get('eventId')), sp=sp, sid=sid, tur=str(e.get('tournamentId') or ''), kat=str(e.get('categoryId') or ''),
+                         br=e.get('betradarId'), h=h, a=a, t=t.strftime('%Y-%m-%d %H:%M'), czas=dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d %H:%M'), r=r))
+        time.sleep(0.08)
+    diag.update(sb_odczytane=len(norm), sb_sporty=n_sp, sekund=round(time.time() - START))
+    nr = 1 if dt.datetime.now(_tz()).hour < 14 else 2
+    _zapisz_lokalnie(f'superbet_{nr}.json.gz', norm)
+    if norm: _wyslij_gz(V, f'docs/data/archiwum/kursy/{_dzien()}_superbet_{nr}.json.gz',
+                        dict(czas=teraz.strftime('%Y-%m-%d %H:%M UTC'), buk='superbet', tryb=f'superbet_{nr}', mecze=norm))
+    try: V.zapisz_github('surowe/zbieracz_superbet.json', dict(czas=teraz.strftime('%Y-%m-%d %H:%M UTC'), **diag))
+    except Exception: pass
+    print('Zbieracz – Superbet', json.dumps(diag, ensure_ascii=False, default=str)[:300])

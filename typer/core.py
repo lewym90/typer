@@ -84,7 +84,7 @@ def expected_goals(m, home, away, neutral=False):
 # „faworyt powyżej 3,5” 31,3 → 27,3, „outsider strzeli” 47,4 → 51,4, BTTS 44,7 → 49,0). Gole łącznie były trafne.
 # Z karą 0,025: średni błąd kalibracji 13 rynków × 5 przedziałów siły faworyta 1,63 → 1,00 pkt, log-loss lepszy.
 KAPPA_RYNEK = 0.025
-WERSJA = 47          # numer wersji programu (Ustawienia w aplikacji); zmieniać przy każdej nowej wersji
+WERSJA = 48          # numer wersji programu (Ustawienia w aplikacji); zmieniać przy każdej nowej wersji
 
 def score_matrix(lh, la, rho, kappa=0.0):
     M = np.outer(poisson.pmf(np.arange(MAXG + 1), lh), poisson.pmf(np.arange(MAXG + 1), la))
