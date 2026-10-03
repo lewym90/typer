@@ -295,7 +295,7 @@ async function laduj(){
   S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null; S.status = st.value || null; S.inne = inn.value || null; S.glowne = gl.value || null;
 }
 
-const WERSJA_APLIKACJI = 43;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
+const WERSJA_APLIKACJI = 44;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
 /* ---------- model (ten sam co w Pythonie) ---------- */
 const MAXG = 10;
 function pois(l){ const out = [Math.exp(-l)]; for(let k=1;k<=MAXG;k++) out.push(out[k-1]*l/k); return out; }
@@ -914,11 +914,19 @@ function sekcjaArchiwum(){
 function sekcjaAnalityka(){
   const a = (S.dziennik || {}).analityk_ai; if(!a || !a.wszystkich) return '';
   let h = `<section class="sekcja"><h2>Czy Analityk bije rynek?</h2>`;
-  if(!a.n) return h + `<p class="note">Przeanalizowanych meczów: ${a.wszystkich}. Wyniki pojawią się po rozliczeniu pierwszych meczów.</p></section>`;
+  const fl = a.flash || {};   // wersja 44: szybki Analityk (Flash) przy każdym meczu – większa próba
+  const wFlash = fl.n ? `<div class="wiersz"><div class="g"><span>Szybki Analityk – szanse 1X2 (${fl.n} meczów)</span><b class="${fl.logloss_ai < fl.logloss_rynek ? 'pos' : 'neg'}">${fl.logloss_ai < fl.logloss_rynek ? 'AI lepsze' : 'Rynek lepszy'}</b></div><div class="d"><span>błąd AI ${num(fl.logloss_ai, 3)} · rynku ${num(fl.logloss_rynek, 3)}</span><span>mniej = lepiej</span></div></div>` : '';
+  if(!a.n) return h + wFlash + `<p class="note">Przeanalizowanych meczów: ${a.wszystkich}. Wyniki pojawią się po rozliczeniu pierwszych meczów.</p></section>`;
   const lepszy = a.logloss_ai != null && a.logloss_rynek != null && a.logloss_ai < a.logloss_rynek;
   h += `<div class="wiersz" style="border-top:0;padding-top:0"><div class="g"><span>Trafność szans 1X2 (${a.n} meczów)</span><b class="${lepszy ? 'pos' : 'neg'}">${lepszy ? 'Analityk lepszy' : 'Rynek lepszy'}</b></div><div class="d"><span>błąd Analityka ${num(a.logloss_ai, 3)} · rynku ${num(a.logloss_rynek, 3)}</span><span>mniej = lepiej</span></div></div>`;
-  const t = a.typy || {};
-  if(t.n) h += `<div class="wiersz"><div class="g"><span>Typy Analityka</span><b class="${t.roi >= 0 ? 'pos' : 'neg'}">${sgn(t.roi)}</b></div><div class="d"><span>${t.trafione} z ${t.n} weszło · średni kurs ${num(t.sredni_kurs)}</span><span>po kursie rynku bez marży</span></div></div>`;
+  const t = a.typy || {}, ta = a.typy_ai || {};   // wersja 44: typ po korekcie (wybór programu) i własny wybór AI
+  const wiersz2 = (nazwa, x) => `<div class="wiersz"><div class="g"><span>${nazwa}</span><b class="${x.roi >= 0 ? 'pos' : 'neg'}">${sgn(x.roi)}</b></div><div class="d"><span>${x.trafione} z ${x.n} weszło · średni kurs ${num(x.sredni_kurs)}</span><span>po kursie rynku bez marży</span></div></div>`;
+  if(t.n) h += wiersz2('Typy Analityka (po korekcie)', t);
+  if(ta.n) h += wiersz2('Typy wybrane przez samo AI', ta);
+  const sk = a.skrzywienie;
+  if(sk) h += `<div class="wiersz"><div class="g"><span>Skrzywienie AI (odejmowane)</span><b>${num(sk.x*100, 1)} / ${num(sk.u25*100, 1)} pkt</b></div><div class="d"><span>zawyża remis / „poniżej 2,5 gola” względem rynku</span><span></span></div></div>`;
+  h += wFlash;
+  if((a.n || 0) < 60) h += `<p class="note" style="margin-top:8px">⚠️ Dopiero ${a.n} rozliczonych meczów – przy takiej próbie wynik to w dużej mierze przypadek. Ocena miarodajna od ok. 100 meczów.</p>`;
   const w = a.wyniki_dokladne || {};
   if(w.n) h += `<div class="wiersz"><div class="g"><span>Dokładny wynik</span><b>${w.trafione} z ${w.n}</b></div><div class="d"><span>trafione wyniki Analityka</span><span></span></div></div>`;
   return h + `<p class="note" style="margin-top:8px">Typ Analityka liczony po uczciwym kursie rynku – plus oznacza, że Analityk widział więcej niż rynek.</p></section>`;

@@ -111,8 +111,15 @@ def krok(V, KP, s, tryb):
     if tryb == 'rano':                     # wersja 43: dosyłka wczorajszych odczytów przed meczem (mecze po 23:30)
         try: _wyslij_dzien(V, (dt.datetime.now(_tz()) - dt.timedelta(days=1)).strftime('%Y-%m-%d'))
         except Exception as e: print('dosyłka wczoraj:', e)
-    oferta = V.fortuna_mecze(s, diag)
-    mecze = sorted([f for f in oferta if 0 <= (f['t'] - teraz).total_seconds() / 3600 <= 24], key=lambda f: f['t'])[:1500]
+    try: oferta = V.fortuna_mecze(s, diag, wszystkie=(tryb == 'rano'))     # wersja 44: rano wszystkie sporty Fortuny
+    except TypeError: oferta = V.fortuna_mecze(s, diag)
+    GLOWNE = ('pilka', 'tenis', 'mma', 'boks', 'sporty walki')
+    w24 = [f for f in oferta if 0 <= (f['t'] - teraz).total_seconds() / 3600 <= 24]
+    mecze = sorted([f for f in w24 if f['sp'] in GLOWNE], key=lambda f: f['t'])[:1500]
+    inne = sorted([f for f in w24 if f['sp'] not in GLOWNE], key=lambda f: f['t'])[:900]
+    diag['inne_sporty'] = {}
+    for f in inne: diag['inne_sporty'][f['sp']] = diag['inne_sporty'].get(f['sp'], 0) + 1
+    mecze += inne
     diag['w_ofercie_24h'] = len(mecze)
     json.dump([dict(id=f['id'], sp=f['sp'], tur=f.get('tur', ''), h=f['h'], a=f['a'], t=f['t'].strftime('%Y-%m-%d %H:%M')) for f in mecze],
               open(lista_p, 'w'), ensure_ascii=False)

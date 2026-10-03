@@ -295,15 +295,22 @@ def _id_w(o, prefiks, wyn):
         for v in o: _id_w(v, prefiks, wyn)
     return wyn
 
-def fortuna_mecze(s, diag):
+def _slug_sportu(n):
+    t = str(n or '').lower().translate(str.maketrans('ąćęłńóśźż', 'acelnoszz'))
+    return re.sub(r'[^a-z0-9]+', '_', t).strip('_')[:30] or 'inne'
+
+def fortuna_mecze(s, diag, wszystkie=False):
+    """Mecze z oferty Fortuny. wszystkie=True (wersja 44, Zbieracz rano): także pozostałe sporty (koszykówka, hokej, siatkówka,
+    piłka ręczna, dart, e-sport…) – klucz sportu = nazwa Fortuny (np. 'koszykowka'); pod przyszłe dyscypliny."""
     sporty = _id_w(s.get(f'{FAPI}/structure/api/v1_0/sports?timeFilter=all', timeout=20).json(), 'ufo:sprt:', [])
     diag['sporty'] = sporty[:40]
     ids = {}
     for sid, nazwa in sporty:
         n = (nazwa or '').lower()
         if 'piłka nożna' == n or n.startswith('piłka nożna'): ids.setdefault('pilka', sid)
-        if n == 'tenis': ids.setdefault('tenis', sid)
-        if n in ('mma', 'boks', 'sporty walki'): ids.setdefault(n, sid)
+        elif n == 'tenis': ids.setdefault('tenis', sid)
+        elif n in ('mma', 'boks', 'sporty walki'): ids.setdefault(n, sid)
+        elif wszystkie and 'specjal' not in n and 'zakłady' not in n and 'na żywo' not in n: ids.setdefault(_slug_sportu(n), sid)
     ids.setdefault('pilka', 'ufo:sprt:00')
     diag['sporty_uzyte'] = ids
     mecze, turnieje, nazwy_tur = {}, set(), {}
@@ -314,8 +321,9 @@ def fortuna_mecze(s, diag):
                 for tid, tn in _id_w(j, 'ufo:tour:', []): turnieje.add((sp, tid)); nazwy_tur[tid] = tn or ''
             except Exception as e: diag.setdefault('bledy', []).append(f'turnieje {sid} {filtr}: {e}'[:120])
     diag['turniejow'] = len(turnieje)
-    for sp, tid in sorted(turnieje):
-        if time.time() - START > 420: diag.setdefault('bledy', []).append('limit czasu (turnieje)'); break
+    GL = ('pilka', 'tenis', 'mma', 'boks', 'sporty walki')     # najpierw nasze sporty (limit czasu), potem pozostałe
+    for sp, tid in sorted(turnieje, key=lambda x: (x[0] not in GL, x[0], x[1])):
+        if time.time() - START > (420 if not wszystkie else 540): diag.setdefault('bledy', []).append('limit czasu (turnieje)'); break
         try:
             j = s.get(f'{FAPI}/structure/api/v1_0/tournament/{tid}/matches?timeFilter=all', timeout=20).json()
         except Exception as e:

@@ -339,6 +339,8 @@ def rozlicz_wszystko():
     except Exception as e: print('Analityk AI – rozliczenie tenis/walki:', e)
     try: analityk_ai.rozlicz(_wynik_ai, MASKI, MAXG)
     except Exception as e: print('Analityk AI – rozliczenie:', e)
+    try: analityk_ai.rozlicz(_wynik_ai, MASKI, MAXG, plik=analityk_ai.PLIK_FLASH)      # wersja 44: dziennik Flash
+    except Exception as e: print('Flash – rozliczenie:', e)
     return wyniki
 
 def policz_samokorekte(d, minimum=100, maks=0.05):
@@ -485,7 +487,19 @@ def sprawdz_przed_meczem(d):
     return zmiana
 
 # ---------------- AI przy każdym meczu z Pewnych i Value (cały dzień, wszystkie dyscypliny) ----------------
+def _flash_dziennik(m):
+    """Wersja 44: szanse Flash z karty do dziennika typy_flash.csv (ocena AI na dużej próbie)."""
+    try:
+        ai = (m.get('raport') or {}).get('ai')
+        if ai: analityk_ai.zapisz_flash(m.get('event_id') or '', f"{m['gospodarz']} – {m['gosc']}", m['start'], m.get('sport_key', ''), m.get('szanse') or {}, ai)
+    except Exception as e: print('Flash – dziennik:', e)
+
 def _ai_pilka(m, typ):
+    ok = _ai_pilka_(m, typ)
+    if ok: _flash_dziennik(m)
+    return ok
+
+def _ai_pilka_(m, typ):
     """Raport AI meczu piłkarskiego do karty (Pewne lub Value). Zwraca True, gdy karta dostała analizę."""
     r = m.get('raport')
     if r is None:   # karta bez raportu (np. tylko Value) – pełny raport: nieobecni, nagłówki i AI

@@ -122,7 +122,9 @@ Odpowiedz WYŁĄCZNIE obiektem JSON (bez ```), dokładnie w tej postaci:
   "niepewni": ["Nazwisko (drużyna, powód)", ...],
   "powazne": true/false, "powazne_dla": "gosp" | "gosc" | "oba" | "brak",
   "uzasadnienie": "jedno zdanie – dlaczego braki są / nie są poważne",
-  "za": ["argument z faktem", ...], "przeciw": ["argument z faktem", ...], "szansa_wlasna": 0.0}}
+  "za": ["argument z faktem", ...], "przeciw": ["argument z faktem", ...], "szansa_wlasna": 0.0,
+  "szanse_wlasne": {{"1": 0.0, "X": 0.0, "2": 0.0}}, "ponizej_2_5": 0.0}}
+(szanse_wlasne i ponizej_2_5 – Twoja własna ocena po analizie, ułamki 0–1; nie przepisuj szans z kursów, ale odchodź od nich tylko z powodu konkretnych faktów)
 "powazne" = true tylko, gdy brakuje co najmniej jednego kluczowego zawodnika (najlepszy strzelec, kapitan, podstawowy bramkarz)
 albo zapowiedziano dużą rotację (4+ zmiany w składzie)."""
 
@@ -317,6 +319,18 @@ def _zapytaj(tekst_szukaj, tekst_bez):
             break
     return None, [], False
 
+def _trzy(x):
+    """{'1','X','2'} znormalizowane albo None (wersja 44 – dziennik szans Flash)."""
+    try:
+        v = {k: float(x[k]) for k in ('1', 'X', '2')}; t = sum(v.values())
+        return {k: round(v[k] / t, 4) for k in v} if t > 0 and all(q >= 0 for q in v.values()) else None
+    except Exception: return None
+
+def _ulamek(x):
+    try:
+        x = float(x); return round(x, 4) if 0 < x < 1 else None
+    except Exception: return None
+
 def raport_ai(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, braki=None, zapowiedz=None, naglowki=None, polski=False, typ=None, szanse=None, wymus=False):
     """Zwraca słownik z analizą i werdyktem albo None (brak klucza, limit, błąd). typ = (zakład, szansa); szanse = {'1','X','2'}.
     Ten sam mecz i typ z ostatnich WAZNOSC_H godzin bierzemy z pamięci (wymus=True – zawsze nowa analiza, np. przed meczem)."""
@@ -349,6 +363,7 @@ def raport_ai(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, braki=None, zapowied
                 uzasadnienie=str(d.get('uzasadnienie') or '')[:200], zrodla=zr[:6], szukal=bool(szukal), model=STAN['model'],
                 werdykt=w, powod=str(d.get('powod') or '')[:220], forma=str(d.get('forma') or '')[:260], styl=str(d.get('styl') or '')[:260],
                 lepszy_zaklad=str(d.get('lepszy_zaklad') or '')[:160], typ=typ[0] if typ else None,
+                szanse_wlasne=_trzy(d.get('szanse_wlasne')), ponizej_2_5=_ulamek(d.get('ponizej_2_5')),
                 czas=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%H:%M'))
     do_pamieci(kp, out)
     return out

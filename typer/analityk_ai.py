@@ -21,6 +21,7 @@ MAKS_MECZOW_DZIENNIE = 12
 OUT = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
 PLIK_LICZNIKA = os.path.join(OUT, 'analityk_ai_licznik.json')
 PLIK_DZIENNIKA = os.path.join(OUT, 'typy_analityk.csv')
+PLIK_FLASH = os.path.join(OUT, 'typy_flash.csv')     # wersja 44: szanse Flash przy każdym analizowanym meczu (większa próba)
 STAN = dict(klucz=bool(KLUCZ), model=None, analiz=0, kroki=0, koszt_dzis_zl=0.0, koszt_miesiac_zl=0.0, budzet_zl=BUDZET_ZL,
             odrzucone_fakty=0, bledy=[])
 _modele = {}
@@ -245,6 +246,8 @@ Zważ wszystko uczciwie: podaj CO NAJMNIEJ 2 argumenty ZA typem programu i CO NA
 dokładny wynik) – powiedz to wprost i wybierz zakład.
 Werdykt dla typu programu: "mocna_zgoda" (fakty wyraźnie za), "zgoda", "ryzyko" (konkretny powód do ostrożności),
 "odradza" (poważny, potwierdzony powód przeciw, którego rynek prawdopodobnie nie uwzględnia).
+UWAGA KALIBRACYJNA: analitycy AI systematycznie zawyżają remisy i mecze z małą liczbą goli (scenariusze 1:0, 1:1). Odejście od rynku
+w stronę remisu albo „poniżej” wymaga konkretnego faktu (braki ofensywne, pogoda, styl obu drużyn, stawka), nie ogólnej ostrożności.
 Typ Analityka: wybierz JEDEN zakład z listy (klucz) – ten, w którym Twoja szansa najbardziej przewyższa szansę rynku – albo "brak",
 jeśli nigdzie nie masz przewagi. Lista zakładów (klucz: opis – szansa rynku): {lista}
 ANALIZA (krok 1): {analiza}
@@ -255,6 +258,7 @@ Postać odpowiedzi:
   "szanse": {{"1": 0.0, "X": 0.0, "2": 0.0}}, "werdykt": "mocna_zgoda" | "zgoda" | "ryzyko" | "odradza",
   "powod": "jedno zdanie – rozstrzygający argument",
   "typ_analityka": {{"klucz": "klucz z listy albo brak", "szansa": 0.0, "uzasadnienie": "dlaczego rynek się tu myli"}},
+  "gole": {{"ponizej_2_5": 0.0, "obie_strzela": 0.0}},
   "wynik_dokladny": {{"wynik": "2:1", "szansa": 0.0}},
   "podsumowanie": "4-6 zdań: jak widzisz ten mecz i dlaczego"}}"""
 
@@ -293,6 +297,89 @@ def _szanse(d):
     except Exception: return None
 
 
+# ------------------------------------------------------------------ wersja 44: korekta Analityka
+# Diagnoza 03.10 (9 analiz): AI zawyża remis (+7,6 pkt vs rynek), „poniżej 2,5” (+10–12 pkt) – a typ wybierał tam, gdzie najbardziej
+# różnił się od rynku, czyli właśnie w swoim błędzie (5 z 6 typów piłki „Poniżej 2,5”). Teraz: 1) odjęcie stałego skrzywienia AI
+# (średnia różnica AI − rynek z dziennika, mieszana z wartością startową), 2) ściągnięcie w stronę rynku (WAGA_AI – ile różnicy
+# wierzymy; do ustalenia na rozliczonych meczach), 3) typ wybiera program: największa przewaga po korekcie ≥ MIN_PRZEWAGA, inaczej „brak”.
+# Własny wybór AI zostaje w dzienniku (typ_klucz_ai) – porównanie obu metod.
+SKRZYWIENIE_START = {'x': 0.06, 'u25': 0.10, 'btts': 0.0, 'gamma': 1.25}   # punkt startowy (03.10), z czasem przeważa dziennik
+WAGA_STARTU = 10
+WAGA_AI = 0.5
+MIN_PRZEWAGA = 0.04          # względna przewaga po korekcie (szansa / szansa rynku − 1)
+MIN_ROZNICA = 0.025          # i bezwzględna (pkt) – żeby nie wybierać outsiderów tylko dlatego, że mały mianownik
+
+
+def _wyostrz(p, g):
+    """AI spłaszcza szanse (faworyt za nisko, remis i outsider za wysoko) – potęga g > 1 przywraca ostrość rynku."""
+    v = {k: max(float(p[k]), 1e-4) ** g for k in ('1', 'X', '2')}; t = sum(v.values())
+    return {k: v[k] / t for k in v}
+
+
+def skrzywienie():
+    """Skrzywienie AI z dziennika (mieszane z wartością startową): gamma = ostrość szans 1X2 (minimum rozbieżności KL z rynkiem),
+    potem średnie (AI − rynek) dla remisu (po wyostrzeniu), „poniżej 2,5” i „obie strzelą”. Nie potrzebuje wyników meczów."""
+    out = dict(SKRZYWIENIE_START)
+    try: d = pd.read_csv(PLIK_DZIENNIKA)
+    except Exception: return out
+    d = d[d.sport.fillna('pilka') == 'pilka'].tail(200) if 'sport' in d else d.tail(200)
+    try:
+        A = d[['ai_1', 'ai_x', 'ai_2']].apply(pd.to_numeric, errors='coerce'); M = d[['rynek_1', 'rynek_x', 'rynek_2']].apply(pd.to_numeric, errors='coerce')
+        ok = A.notna().all(1) & M.notna().all(1) & (M > 0).all(1); A, M = A[ok].values.clip(1e-4, 1), M[ok].values
+        n = len(A)
+        if n:
+            def kl(g):
+                P = A ** g; P = P / P.sum(1, keepdims=True); return float((M * np.log(M / P)).sum(1).mean())
+            siatka = np.arange(0.8, 3.01, 0.05); g = float(siatka[int(np.argmin([kl(x) for x in siatka]))])
+            out['gamma'] = round((n * g + WAGA_STARTU * SKRZYWIENIE_START['gamma']) / (n + WAGA_STARTU), 3)
+            P = A ** out['gamma']; P = P / P.sum(1, keepdims=True)
+            out['x'] = round(float(((P[:, 1] - M[:, 1]).sum() + WAGA_STARTU * SKRZYWIENIE_START['x']) / (n + WAGA_STARTU)), 4)
+    except Exception: pass
+    for k, (ca, cr) in {'u25': ('ai_u25', 'rynek_u25'), 'btts': ('ai_btts', 'rynek_btts')}.items():
+        if ca not in d or cr not in d: continue
+        r = (pd.to_numeric(d[ca], errors='coerce') - pd.to_numeric(d[cr], errors='coerce')).dropna()
+        out[k] = round(float((r.sum() + WAGA_STARTU * SKRZYWIENIE_START[k]) / (len(r) + WAGA_STARTU)), 4)
+    return out
+
+
+def _p01(x):
+    try:
+        x = float(x); return x if 0 < x < 1 else None
+    except Exception: return None
+
+
+def korekta(ai1x2, ai_u, ai_b, lista, sk=None):
+    """Szanse AI po korekcie skrzywienia i ściągnięciu do rynku → {klucz: (szansa po korekcie, szansa rynku)}."""
+    sk = sk or skrzywienie(); r = {k: v[1] for k, v in lista.items()}; out = {}
+    if ai1x2 and all(k in r for k in ('1', 'X', '2')):
+        ai1x2 = _wyostrz(ai1x2, sk.get('gamma', 1.0))
+        x = max(0.02, ai1x2['X'] - sk['x']); reszta = ai1x2['1'] + ai1x2['2']
+        a = {'1': ai1x2['1'] / reszta * (1 - x), 'X': x, '2': ai1x2['2'] / reszta * (1 - x)}
+        c = {k: r[k] + WAGA_AI * (a[k] - r[k]) for k in a}
+        for k, v in {'1': c['1'], 'X': c['X'], '2': c['2'], '1X': c['1'] + c['X'], 'X2': c['X'] + c['2'], '12': c['1'] + c['2']}.items():
+            if k in r: out[k] = (v, r[k])
+    if ai_u is not None and 'Under 2.5' in r:
+        u = r['Under 2.5'] + WAGA_AI * (ai_u - sk['u25'] - r['Under 2.5'])
+        out['Under 2.5'] = (u, r['Under 2.5'])
+        if 'Over 2.5' in r: out['Over 2.5'] = (1 - u, r['Over 2.5'])
+    if ai_b is not None and 'BTTS Tak' in r:
+        b = r['BTTS Tak'] + WAGA_AI * (ai_b - sk['btts'] - r['BTTS Tak'])
+        out['BTTS Tak'] = (b, r['BTTS Tak'])
+        if 'BTTS Nie' in r: out['BTTS Nie'] = (1 - b, r['BTTS Nie'])
+    return out
+
+
+def typ_po_korekcie(kor):
+    """Klucz z największą przewagą (szansa po korekcie / szansa rynku − 1) ≥ MIN_PRZEWAGA albo None."""
+    best = max(((p / r - 1, k) for k, (p, r) in kor.items() if r and 0.05 <= r <= 0.95 and p - r >= MIN_ROZNICA), default=None)
+    return best[1] if best and best[0] >= MIN_PRZEWAGA else None
+
+
+def _u25_z_kubelkow(g):
+    try: return float(g.get('0-1', 0)) + float(g.get('2', 0)) if isinstance(g, dict) and g else None
+    except Exception: return None
+
+
 # ------------------------------------------------------------------ analiza meczu piłki
 def analiza_pilka(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, fm, rynek, typ, lista):
     """rynek: {'1','X','2'} szanse z kursów; typ: (opis, szansa) albo None; lista: {klucz: (opis, szansa rynku)}."""
@@ -317,8 +404,15 @@ def analiza_pilka(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, fm, rynek, typ, 
     za, przeciw = [str(x)[:260] for x in (s.get('za') or [])][:4], [str(x)[:260] for x in (s.get('przeciw') or [])][:4]
     if w in ('mocna_zgoda', 'zgoda') and len(przeciw) < 2: w = 'ryzyko'          # bez rzetelnych „przeciw” nie ma zgody
     ta = s.get('typ_analityka') or {}
-    kl = str(ta.get('klucz') or 'brak')
-    if kl not in lista: kl = 'brak'
+    kl_ai = str(ta.get('klucz') or 'brak')
+    if kl_ai not in lista: kl_ai = 'brak'
+    g3 = s.get('gole') if isinstance(s.get('gole'), dict) else {}
+    ai_u = _p01(g3.get('ponizej_2_5')) or _u25_z_kubelkow(a.get('gole'))
+    ai_b = _p01(g3.get('obie_strzela')) or _p01(a.get('obie_strzela'))
+    sk = skrzywienie()
+    kor = korekta(_szanse(s.get('szanse')) or _szanse(a.get('szanse')), ai_u, ai_b, lista, sk)
+    kl = typ_po_korekcie(kor) or 'brak'
+    uz = str(ta.get('uzasadnienie') or '')[:260] if kl == kl_ai else ''
     zr = {x['link']: x for x in zr1 + zr2}.values()
     return dict(model=STAN['model'], werdykt=w, powod=str(s.get('powod') or '')[:260], podsumowanie=str(s.get('podsumowanie') or '')[:900],
                 za=za, przeciw=przeciw, szanse=_szanse(s.get('szanse')), szanse_na_slepo=_szanse(a.get('szanse')),
@@ -330,15 +424,20 @@ def analiza_pilka(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, fm, rynek, typ, 
                 fakty=[dict(tekst=str(f.get('tekst'))[:240], zrodlo=str(f.get('zrodlo'))[:200], niezweryfikowane=f.get('niezweryfikowane'))
                        for f in (a.get('fakty') or [])][:12],
                 niewiadome=[str(x)[:160] for x in (a.get('niewiadome') or [])][:5], pewnosc=a.get('pewnosc_analizy'),
-                typ_analityka=dict(klucz=kl, opis=lista[kl][0] if kl in lista else None, szansa=ta.get('szansa'),
-                                   szansa_rynku=lista[kl][1] if kl in lista else None, uzasadnienie=str(ta.get('uzasadnienie') or '')[:260]),
+                typ_analityka=dict(klucz=kl, opis=lista[kl][0] if kl in lista else None,
+                                   szansa=round(kor[kl][0], 4) if kl in kor else None,
+                                   szansa_rynku=lista[kl][1] if kl in lista else None, uzasadnienie=uz,
+                                   klucz_ai=kl_ai, szansa_ai=ta.get('szansa'), po_korekcie=True),
+                _rynek_typu_ai=lista[kl_ai][1] if kl_ai in lista else None, ai_u25=ai_u, ai_btts=ai_b, rynek_u25=(lista.get('Under 2.5') or (None, None))[1],
+                rynek_btts=(lista.get('BTTS Tak') or (None, None))[1], skrzywienie=sk,
                 wynik_dokladny=s.get('wynik_dokladny'), zrodla=list(zr)[:10],
                 czas=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m-%d %H:%M'))
 
 
 # ------------------------------------------------------------------ dziennik Analityka
 KOL = ['data_zapisu', 'sport', 'liga', 'event_id', 'mecz', 'start', 'werdykt', 'typ_programu', 'ai_1', 'ai_x', 'ai_2', 'rynek_1', 'rynek_x', 'rynek_2',
-       'typ_klucz', 'typ_opis', 'typ_szansa_ai', 'typ_szansa_rynku', 'wynik_ai', 'wynik', 'typ_trafiony', 'wynik_trafiony', 'model']
+       'typ_klucz', 'typ_opis', 'typ_szansa_ai', 'typ_szansa_rynku', 'wynik_ai', 'wynik', 'typ_trafiony', 'wynik_trafiony', 'model',
+       'ai_u25', 'rynek_u25', 'ai_btts', 'rynek_btts', 'typ_klucz_ai', 'typ_szansa_ai_wlasna', 'typ_szansa_rynku_ai', 'typ_ai_trafiony']
 
 
 def zapisz(sport, event_id, mecz, start, typ_prog, rynek, a, liga=''):
@@ -348,7 +447,10 @@ def zapisz(sport, event_id, mecz, start, typ_prog, rynek, a, liga=''):
              rynek_1=rynek.get('1'), rynek_x=rynek.get('X'), rynek_2=rynek.get('2'),
              typ_klucz=a['typ_analityka']['klucz'], typ_opis=a['typ_analityka']['opis'] or '', typ_szansa_ai=a['typ_analityka']['szansa'],
              typ_szansa_rynku=a['typ_analityka']['szansa_rynku'], wynik_ai=str((a.get('wynik_dokladny') or {}).get('wynik') or ''),
-             wynik='', typ_trafiony=np.nan, wynik_trafiony=np.nan, model=a.get('model'))
+             wynik='', typ_trafiony=np.nan, wynik_trafiony=np.nan, model=a.get('model'),
+             ai_u25=a.get('ai_u25'), rynek_u25=a.get('rynek_u25'), ai_btts=a.get('ai_btts'), rynek_btts=a.get('rynek_btts'),
+             typ_klucz_ai=a['typ_analityka'].get('klucz_ai'), typ_szansa_ai_wlasna=a['typ_analityka'].get('szansa_ai'),
+             typ_szansa_rynku_ai=a.get('_rynek_typu_ai'), typ_ai_trafiony=np.nan)
     try: d = pd.read_csv(PLIK_DZIENNIKA, dtype={'event_id': str})
     except Exception: d = pd.DataFrame(columns=KOL)
     d = d[~((d.event_id.astype(str) == str(event_id)) & (d.wynik.isna() | (d.wynik.astype(str) == '')))]
@@ -356,9 +458,10 @@ def zapisz(sport, event_id, mecz, start, typ_prog, rynek, a, liga=''):
     d.to_csv(PLIK_DZIENNIKA, index=False)
 
 
-def rozlicz(wynik_meczu, maski, maxg):
-    """wynik_meczu(event_id, gosp, gosc, start, liga) -> (gh, ga) albo None."""
-    try: d = pd.read_csv(PLIK_DZIENNIKA, dtype={'event_id': str, 'wynik': str})
+def rozlicz(wynik_meczu, maski, maxg, plik=None):
+    """wynik_meczu(event_id, gosp, gosc, start, liga) -> (gh, ga) albo None. plik – inny dziennik o tych samych kolumnach (Flash)."""
+    plik = plik or PLIK_DZIENNIKA
+    try: d = pd.read_csv(plik, dtype={'event_id': str, 'wynik': str})
     except Exception: return
     teraz = pd.Timestamp.now(tz='Europe/Warsaw').tz_localize(None); zm = False
     pil = d.sport.fillna('pilka').astype(str) == 'pilka' if 'sport' in d else True
@@ -369,16 +472,60 @@ def rozlicz(wynik_meczu, maski, maxg):
         if not w or None in w: continue
         hg, ag = int(w[0]), int(w[1]); d.loc[i, 'wynik'] = f'{hg}:{ag}'; zm = True
         if r.typ_klucz in maski: d.loc[i, 'typ_trafiony'] = float(bool(maski[r.typ_klucz][min(hg, maxg), min(ag, maxg)]))
+        kai = r.get('typ_klucz_ai')
+        if isinstance(kai, str) and kai in maski: d.loc[i, 'typ_ai_trafiony'] = float(bool(maski[kai][min(hg, maxg), min(ag, maxg)]))
         d.loc[i, 'wynik_trafiony'] = float(str(r.wynik_ai).replace('-', ':').strip() == f'{hg}:{ag}')
-    if zm: d.to_csv(PLIK_DZIENNIKA, index=False)
+    if zm: d.to_csv(plik, index=False)
+
+
+KOL_FLASH = ['data_zapisu', 'sport', 'liga', 'event_id', 'mecz', 'start', 'ai_1', 'ai_x', 'ai_2', 'rynek_1', 'rynek_x', 'rynek_2',
+             'ai_u25', 'rynek_u25', 'typ_klucz', 'wynik_ai', 'wynik', 'typ_trafiony', 'wynik_trafiony', 'model']
+
+
+def zapisz_flash(event_id, mecz, start, liga, rynek, ai):
+    """Wersja 44: szanse Flash (1X2, poniżej 2,5) przy każdym meczu z analizą – ocena „czy AI bije rynek” na dużej próbie."""
+    sw = (ai or {}).get('szanse_wlasne')
+    if not sw or not rynek or not all(k in rynek for k in ('1', 'X', '2')): return
+    u = rynek.get('Under 2.5') if rynek.get('Under 2.5') is not None else (1 - rynek['Over 2.5'] if rynek.get('Over 2.5') is not None else None)
+    w = dict(data_zapisu=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m-%d %H:%M'), sport='pilka', liga=liga, event_id=str(event_id), mecz=mecz,
+             start=pd.Timestamp(start).strftime('%Y-%m-%d %H:%M'), ai_1=sw['1'], ai_x=sw['X'], ai_2=sw['2'],
+             rynek_1=rynek['1'], rynek_x=rynek['X'], rynek_2=rynek['2'], ai_u25=ai.get('ponizej_2_5'), rynek_u25=u,
+             typ_klucz='', wynik_ai='', wynik='', typ_trafiony=np.nan, wynik_trafiony=np.nan, model=ai.get('model'))
+    try: d = pd.read_csv(PLIK_FLASH, dtype={'event_id': str, 'wynik': str})
+    except Exception: d = pd.DataFrame(columns=KOL_FLASH)
+    d = d[~((d.event_id.astype(str) == str(event_id)) & (d.wynik.isna() | (d.wynik.astype(str) == '')))]
+    pd.concat([d, pd.DataFrame([w])], ignore_index=True).to_csv(PLIK_FLASH, index=False)
+
+
+def statystyki_flash():
+    """Trafność szans 1X2 Flash vs rynek (log-loss) i jego skrzywienie (remis, poniżej 2,5)."""
+    try: d = pd.read_csv(PLIK_FLASH, dtype={'wynik': str})
+    except Exception: return None
+    out = dict(wszystkich=len(d))
+    num = lambda c: pd.to_numeric(d[c], errors='coerce')
+    out['skrzywienie_x'] = round(float((num('ai_x') - num('rynek_x')).mean()), 4) if len(d) else None
+    out['skrzywienie_u25'] = round(float((num('ai_u25') - num('rynek_u25')).mean()), 4) if num('ai_u25').notna().any() else None
+    r = d[d.wynik.fillna('').str.contains(':')]
+    out['n'] = len(r)
+    if len(r):
+        gh = r.wynik.str.split(':').str[0].astype(int); ga = r.wynik.str.split(':').str[1].astype(int)
+        y = np.where(gh > ga, 0, np.where(gh == ga, 1, 2))
+        A = r[['ai_1', 'ai_x', 'ai_2']].apply(pd.to_numeric, errors='coerce').values; M = r[['rynek_1', 'rynek_x', 'rynek_2']].apply(pd.to_numeric, errors='coerce').values
+        ok = np.isfinite(A).all(1) & np.isfinite(M).all(1)
+        if ok.any():
+            out['logloss_ai'] = round(float(-np.log(np.clip(A[ok][np.arange(ok.sum()), y[ok]], 1e-6, 1)).mean()), 4)
+            out['logloss_rynek'] = round(float(-np.log(np.clip(M[ok][np.arange(ok.sum()), y[ok]], 1e-6, 1)).mean()), 4)
+    return out
 
 
 def statystyki():
     """Czy Analityk bije rynek: log-loss 1X2 AI vs rynek, typy Analityka po kursie rynku (bez marży), dokładne wyniki."""
     try: d = pd.read_csv(PLIK_DZIENNIKA)
     except Exception: return None
+    for c in KOL:                      # starsze dzienniki bez kolumn wersji 44
+        if c not in d: d[c] = np.nan
     r_all = d[d.wynik.notna() & (d.wynik.astype(str) != '')].copy()
-    if not len(r_all): return dict(n=0, wszystkich=len(d))
+    if not len(r_all): return dict(n=0, wszystkich=len(d), flash=statystyki_flash())
     r = r_all[r_all.wynik.astype(str).str.contains(':')].copy()
     if not len(r): r = r_all.iloc[0:0]
     gh = r.wynik.str.split(':').str[0].astype(int); ga = r.wynik.str.split(':').str[1].astype(int)
@@ -386,13 +533,20 @@ def statystyki():
     A = r[['ai_1', 'ai_x', 'ai_2']].astype(float).values; M = r[['rynek_1', 'rynek_x', 'rynek_2']].astype(float).values
     ok = np.isfinite(A).all(1) & np.isfinite(M).all(1)
     ll = lambda X: float(-np.log(np.clip(X[ok][np.arange(ok.sum()), y[ok]], 1e-6, 1)).mean()) if ok.any() else None
-    t = r_all[r_all.typ_trafiony.notna()]
-    zysk = [(1 / float(p) - 1) if tr >= 0.5 else -1.0 for p, tr in zip(t.typ_szansa_rynku, t.typ_trafiony) if p and float(p) > 0]
-    return dict(n=len(r_all), n_pilka=len(r), wszystkich=len(d), logloss_ai=ll(A), logloss_rynek=ll(M),
-                typy=dict(n=len(zysk), trafione=int((t.typ_trafiony >= 0.5).sum()), sredni_kurs=round(float(np.mean([1 / float(p) for p in t.typ_szansa_rynku if p])), 2) if len(t) else None,
-                          roi=round(float(np.mean(zysk)), 4) if zysk else None),
+    def _typy(t, ps, tr):
+        z = [(1 / float(p) - 1) if x >= 0.5 else -1.0 for p, x in zip(t[ps], t[tr]) if pd.notna(p) and float(p) > 0 and pd.notna(x)]
+        kursy = [1 / float(p) for p in t[ps] if pd.notna(p) and float(p) > 0]
+        return dict(n=len(z), trafione=int(sum(1 for p, x in zip(t[ps], t[tr]) if pd.notna(p) and pd.notna(x) and x >= 0.5)),
+                    sredni_kurs=round(float(np.mean(kursy)), 2) if kursy else None, roi=round(float(np.mean(z)), 4) if z else None)
+    nowe = r_all['typ_klucz_ai'].notna() if 'typ_klucz_ai' in r_all else pd.Series(False, index=r_all.index)
+    t_kor = r_all[nowe & r_all.typ_trafiony.notna()]                                  # wersja 44: typ po korekcie (wybór programu)
+    t_ai = pd.concat([r_all[nowe & r_all.get('typ_ai_trafiony', pd.Series(index=r_all.index, dtype=float)).notna()]
+                      .assign(_p=lambda x: x.typ_szansa_rynku_ai, _t=lambda x: x.typ_ai_trafiony),
+                      r_all[~nowe & r_all.typ_trafiony.notna()].assign(_p=lambda x: x.typ_szansa_rynku, _t=lambda x: x.typ_trafiony)])
+    return dict(n=len(r_all), n_pilka=len(r), wszystkich=len(d), logloss_ai=ll(A), logloss_rynek=ll(M), skrzywienie=skrzywienie(),
+                typy=_typy(t_kor, 'typ_szansa_rynku', 'typ_trafiony'), typy_ai=_typy(t_ai, '_p', '_t') if len(t_ai) else dict(n=0),
                 wyniki_dokladne=dict(n=int(r.wynik_trafiony.notna().sum()), trafione=int((r.wynik_trafiony >= 0.5).sum())),
-                werdykty={k: int(len(g)) for k, g in r_all.groupby('werdykt')})
+                werdykty={k: int(len(g)) for k, g in r_all.groupby('werdykt')}, flash=statystyki_flash())
 
 
 # ------------------------------------------------------------------ tenis i sporty walki (wersja 36)
@@ -487,8 +641,12 @@ def analiza_inne(m, lista=None):
                 bledy_analizy=[str((x or {}).get('problem'))[:200] for x in ((r or {}).get('bledy') or [])][:4],
                 fakty=[dict(tekst=str(f.get('tekst'))[:240], zrodlo=str(f.get('zrodlo'))[:200]) for f in (a.get('fakty') or [])][:12],
                 niewiadome=[str(x)[:160] for x in (a.get('niewiadome') or [])][:5], pewnosc=a.get('pewnosc_analizy'),
-                typ_analityka=dict(klucz=kl, opis=lista[kl][0] if kl in lista else None, szansa=ta.get('szansa'),
-                                   szansa_rynku=lista[kl][1] if kl in lista else None, uzasadnienie=str(ta.get('uzasadnienie') or '')[:260]),
+                typ_analityka=dict(klucz=kl, opis=lista[kl][0] if kl in lista else None,
+                                   szansa=round(kor[kl][0], 4) if kl in kor else None,
+                                   szansa_rynku=lista[kl][1] if kl in lista else None, uzasadnienie=uz,
+                                   klucz_ai=kl_ai, szansa_ai=ta.get('szansa'), po_korekcie=True),
+                _rynek_typu_ai=lista[kl_ai][1] if kl_ai in lista else None, ai_u25=ai_u, ai_btts=ai_b, rynek_u25=(lista.get('Under 2.5') or (None, None))[1],
+                rynek_btts=(lista.get('BTTS Tak') or (None, None))[1], skrzywienie=sk,
                 wynik_dokladny=s.get('wynik_dokladny'), zrodla=list({x['link']: x for x in zr1 + zr2}.values())[:10],
                 czas=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m-%d %H:%M'))
 
