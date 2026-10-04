@@ -1,14 +1,14 @@
 {
- "czas": "2026-10-04 16:28 UTC",
+ "czas": "2026-10-04 16:37 UTC",
  "wersja": "czytnik-3",
  "bukmacherzy": {
   "fortuna": {
    "ok": true,
-   "dopasowane": 9
+   "dopasowane": 10
   },
   "sts": {
    "ok": true,
-   "dopasowane": 11
+   "dopasowane": 10
   },
   "betclic": {
    "ok": true,
@@ -16,19 +16,139 @@
   }
  },
  "mecze": {
+  "aa690fd7e46982c83048052821dc9cc6": {
+   "fortuna": {
+    "id": "ufo:mtch:1wk-00t",
+    "nazwa": "Huracan - Aldosivi",
+    "zgodnosc": 0.95,
+    "kursy": {
+     "2": 4.9,
+     "1": 1.69,
+     "X": 3.2,
+     "12": 1.25,
+     "X2": 1.77,
+     "1X": 1.14,
+     "H o0.5": 1.23,
+     "Over 2.5": 2.32,
+     "Under 2.5": 1.49,
+     "Over 0.5": 1.08,
+     "Under 0.5": 5.7,
+     "A o0.5": 1.78,
+     "X & o2.5": 20.0,
+     "X & u2.5": 3.35,
+     "2 & o2.5": 11.0,
+     "2 & u2.5": 7.4,
+     "1 & o2.5": 3.0,
+     "1 & u2.5": 2.95,
+     "BTTS & o2.5": 2.8,
+     "A o2.5": 9.8,
+     "H o2.5": 4.2,
+     "Over 1.5": 1.43,
+     "Under 1.5": 2.47,
+     "Over 3.5": 4.1,
+     "Under 3.5": 1.16,
+     "2 & o3.5": 30.0,
+     "X & o3.5": 19.0,
+     "2 & u3.5": 5.0,
+     "1 & o3.5": 6.2,
+     "X & u3.5": 3.3,
+     "1 & u3.5": 1.99,
+     "A o1.5": 4.7,
+     "H o1.5": 2.07,
+     "BTTS Tak": 2.22,
+     "BTTS Nie": 1.59,
+     "X & o1.5": 4.8,
+     "X & u1.5": 6.6,
+     "2 & o1.5": 7.8,
+     "2 & u1.5": 10.0,
+     "1 & o1.5": 2.17,
+     "1 & u1.5": 5.0,
+     "2 & o4.5": 60.0,
+     "2 & u4.5": 4.6,
+     "X & o4.5": 100.0,
+     "X & u4.5": 2.85,
+     "1 & o4.5": 12.0,
+     "1 & u4.5": 1.73,
+     "H -1.5": 3.05,
+     "Under 4.5": 1.04,
+     "Over 4.5": 7.2
+    },
+    "pelna": true
+   },
+   "sts": {
+    "id": "f3115681",
+    "nazwa": "CA Huracan - CA Aldosivi",
+    "zgodnosc": 0.95,
+    "kursy": {
+     "1": 1.72,
+     "X": 3.1,
+     "2": 4.9,
+     "12": 1.3,
+     "X2": 2.0,
+     "1X": 1.16,
+     "A o0.5": 1.8,
+     "H o0.5": 1.24,
+     "H -1.5": 3.1,
+     "H -2.5": 6.75,
+     "Over 1.5": 1.45,
+     "Under 1.5": 2.55,
+     "Over 0.5": 1.09,
+     "Under 0.5": 6.75,
+     "Over 4.5": 8.1,
+     "Under 4.5": 1.05,
+     "Over 3.5": 4.4,
+     "Under 3.5": 1.17,
+     "Over 2.5": 2.4,
+     "Under 2.5": 1.52,
+     "Over 5.5": 21.0,
+     "Under 5.5": 1.01,
+     "H o1.5": 2.1,
+     "H o2.5": 4.4,
+     "A o1.5": 4.8,
+     "A o2.5": 16.0,
+     "BTTS Tak": 2.25,
+     "BTTS Nie": 1.57,
+     "1 & u1.5": 5.25,
+     "1 & o1.5": 2.25,
+     "X & u1.5": 6.75,
+     "X & o1.5": 5.1,
+     "2 & u1.5": 10.5,
+     "2 & o1.5": 8.1,
+     "1 & u4.5": 1.78,
+     "1 & o4.5": 13.0,
+     "X & u4.5": 3.0,
+     "X & o4.5": 50.0,
+     "2 & u4.5": 4.8,
+     "2 & o4.5": 50.0,
+     "1 & u3.5": 2.05,
+     "1 & o3.5": 6.5,
+     "X & u3.5": 3.5,
+     "X & o3.5": 21.0,
+     "2 & u3.5": 5.25,
+     "2 & o3.5": 33.0,
+     "1 & u2.5": 3.1,
+     "1 & o2.5": 3.1,
+     "X & u2.5": 3.5,
+     "X & o2.5": 21.0,
+     "2 & u2.5": 7.75,
+     "2 & o2.5": 11.0
+    },
+    "pelna": true
+   }
+  },
   "4a0c0e7aa93708ae03af18db691f750f": {
    "fortuna": {
     "id": "ufo:mtch:1wk-02l",
     "nazwa": "Grecja - Niemcy",
     "zgodnosc": 1.0,
     "kursy": {
-     "X": 4.05,
+     "X": 4.1,
      "2": 1.76,
-     "1": 4.15,
-     "1X": 2.0,
+     "1": 4.25,
+     "1X": 2.01,
      "X2": 1.24,
      "12": 1.25,
-     "BTTS Nie": 2.23,
+     "BTTS Nie": 2.22,
      "BTTS Tak": 1.61,
      "A o0.5": 1.13,
      "Over 4.5": 4.5,
@@ -40,34 +160,34 @@
      "H o0.5": 1.38,
      "1 & o3.5": 11.0,
      "1 & u3.5": 5.4,
-     "2 & o3.5": 3.75,
+     "2 & o3.5": 3.7,
      "2 & u3.5": 2.65,
      "X & o3.5": 11.0,
      "X & u3.5": 5.2,
      "Over 0.5": 1.03,
-     "Under 0.5": 13.0,
-     "BTTS & o2.5": 1.86,
+     "Under 0.5": 12.0,
+     "BTTS & o2.5": 1.87,
      "H o1.5": 2.75,
      "1 & o2.5": 5.8,
      "1 & u2.5": 9.8,
-     "2 & o2.5": 2.32,
+     "2 & o2.5": 2.3,
      "2 & u2.5": 4.8,
      "X & o2.5": 11.0,
      "X & u2.5": 5.2,
      "Under 1.5": 4.6,
      "Over 1.5": 1.2,
      "1 & u1.5": 15.0,
-     "2 & o1.5": 1.91,
+     "2 & o1.5": 1.9,
      "X & o1.5": 4.5,
-     "2 & u1.5": 9.2,
-     "1 & o1.5": 4.7,
+     "2 & u1.5": 9.0,
+     "1 & o1.5": 4.8,
      "X & u1.5": 16.0,
-     "A o2.5": 2.95,
+     "A o2.5": 2.9,
      "Under 3.5": 1.53,
      "Over 3.5": 2.52,
-     "A -1.5": 2.9,
+     "A -1.5": 2.85,
      "Over 2.5": 1.62,
-     "Under 2.5": 2.3,
+     "Under 2.5": 2.31,
      "A -2.5": 5.4,
      "A o4.5": 10.0,
      "A o3.5": 5.8
@@ -1756,49 +1876,49 @@
     "nazwa": "Walia - Dania",
     "zgodnosc": 1.0,
     "kursy": {
-     "2": 1.96,
-     "X": 3.6,
-     "1": 3.75,
+     "2": 1.93,
+     "X": 3.65,
+     "1": 3.8,
      "X2": 1.28,
      "12": 1.3,
-     "1X": 1.8,
-     "BTTS Nie": 2.05,
-     "BTTS Tak": 1.71,
+     "1X": 1.84,
+     "BTTS Nie": 2.04,
+     "BTTS Tak": 1.72,
      "Over 1.5": 1.27,
-     "Under 1.5": 3.8,
+     "Under 1.5": 3.75,
      "Under 5.5": 1.05,
      "Over 5.5": 11.0,
-     "A o0.5": 1.19,
+     "A o0.5": 1.18,
      "H o1.5": 2.9,
-     "H o0.5": 1.41,
+     "H o0.5": 1.42,
      "Over 0.5": 1.05,
      "Under 0.5": 9.9,
-     "A o1.5": 1.89,
-     "2 & o3.5": 5.0,
-     "2 & u3.5": 2.65,
+     "A o1.5": 1.88,
+     "2 & o3.5": 4.9,
+     "2 & u3.5": 2.6,
      "1 & o3.5": 12.0,
-     "1 & u3.5": 4.5,
-     "X & o3.5": 11.0,
-     "X & u3.5": 4.3,
+     "1 & u3.5": 4.6,
+     "X & o3.5": 12.0,
+     "X & u3.5": 4.4,
      "Over 2.5": 1.84,
      "Under 2.5": 1.97,
-     "BTTS & o2.5": 2.09,
+     "BTTS & o2.5": 2.1,
      "H o2.5": 6.8,
      "X & o1.5": 4.3,
-     "2 & u1.5": 8.0,
-     "2 & o1.5": 2.24,
+     "2 & u1.5": 7.8,
+     "2 & o1.5": 2.2,
      "1 & u1.5": 12.0,
-     "1 & o1.5": 4.5,
+     "1 & o1.5": 4.6,
      "X & u1.5": 12.0,
      "Under 4.5": 1.14,
      "Over 4.5": 5.8,
-     "A o2.5": 3.7,
-     "A -1.5": 3.45,
-     "2 & u2.5": 4.5,
-     "X & o2.5": 11.0,
+     "A o2.5": 3.65,
+     "A -1.5": 3.35,
+     "2 & u2.5": 4.4,
+     "X & o2.5": 12.0,
      "2 & o2.5": 2.8,
      "1 & u2.5": 7.8,
-     "X & u2.5": 4.3,
+     "X & u2.5": 4.4,
      "1 & o2.5": 5.8,
      "Over 3.5": 3.05,
      "Under 3.5": 1.38,
@@ -2553,54 +2673,53 @@
     "nazwa": "Holandia - Serbia",
     "zgodnosc": 1.0,
     "kursy": {
-     "2": 13.0,
-     "1": 1.18,
-     "X": 7.8,
-     "1X": 1.03,
-     "X2": 4.55,
+     "2": 17.0,
+     "1": 1.16,
+     "X": 7.5,
+     "1X": 1.02,
+     "X2": 4.7,
      "12": 1.1,
-     "BTTS Nie": 1.87,
-     "BTTS Tak": 1.86,
-     "A o2.5": 10.0,
-     "H -3.5": 3.7,
-     "H o5.5": 7.6,
-     "H o4.5": 4.4,
-     "H -2.5": 2.22,
-     "BTTS & o2.5": 1.98,
+     "BTTS Nie": 1.76,
+     "BTTS Tak": 1.98,
+     "H -3.5": 3.35,
+     "H o5.5": 7.2,
+     "H o4.5": 4.2,
+     "H -2.5": 2.08,
+     "BTTS & o2.5": 2.14,
      "Under 5.5": 1.18,
-     "Over 5.5": 4.95,
-     "2 & o1.5": 14.0,
-     "2 & u1.5": 35.0,
+     "Over 5.5": 4.9,
+     "2 & o1.5": 19.0,
+     "2 & u1.5": 40.0,
      "X & o1.5": 7.6,
-     "X & u1.5": 26.0,
-     "1 & o1.5": 1.21,
-     "1 & u1.5": 9.4,
-     "H o2.5": 1.63,
+     "X & u1.5": 22.0,
+     "1 & o1.5": 1.2,
+     "1 & u1.5": 9.2,
+     "H o2.5": 1.59,
      "Over 0.5": 1.01,
-     "Under 0.5": 15.5,
+     "Under 0.5": 14.5,
      "Under 3.5": 1.96,
      "Over 3.5": 1.85,
      "Under 4.5": 1.42,
-     "Over 4.5": 2.89,
-     "H o1.5": 1.2,
-     "H o3.5": 2.55,
-     "1 & o3.5": 1.88,
-     "X & u3.5": 10.0,
-     "X & o3.5": 20.0,
-     "2 & u3.5": 16.0,
-     "2 & o3.5": 40.0,
-     "1 & u3.5": 2.31,
-     "2 & o2.5": 18.0,
-     "2 & u2.5": 29.0,
-     "X & o2.5": 19.0,
-     "X & u2.5": 9.6,
-     "1 & o2.5": 1.39,
-     "1 & u2.5": 4.3,
-     "Under 2.5": 3.3,
-     "Over 2.5": 1.34,
-     "A o1.5": 4.6,
-     "H -1.5": 1.51,
-     "A o0.5": 1.76,
+     "Over 4.5": 2.9,
+     "H o1.5": 1.19,
+     "H o3.5": 2.45,
+     "1 & o3.5": 1.85,
+     "X & u3.5": 9.4,
+     "X & o3.5": 22.0,
+     "2 & u3.5": 20.0,
+     "2 & o3.5": 60.0,
+     "1 & u3.5": 2.28,
+     "2 & o2.5": 24.0,
+     "2 & u2.5": 35.0,
+     "X & o2.5": 21.0,
+     "X & u2.5": 9.0,
+     "1 & o2.5": 1.37,
+     "1 & u2.5": 4.2,
+     "Under 2.5": 3.25,
+     "Over 2.5": 1.35,
+     "A o1.5": 5.2,
+     "H -1.5": 1.45,
+     "A o0.5": 1.89,
      "Under 1.5": 7.1,
      "Over 1.5": 1.1
     },
@@ -2958,12 +3077,12 @@
        1.12
       ],
       [
-       "J. Zirkzee / C. Summerville",
+       "N. Lang / M. Meerdink",
        1.12
       ],
       [
-       "N. Lang / M. Meerdink",
-       1.12
+       "J. Zirkzee / C. Summerville",
+       1.13
       ],
       [
        "D. Dumfries / M. Meerdink",
@@ -2971,10 +3090,6 @@
       ],
       [
        "M. Meerdink / J. Frimpong",
-       1.15
-      ],
-      [
-       "N. Lang / C. Summerville",
        1.15
       ],
       [
@@ -2986,6 +3101,10 @@
        1.16
       ],
       [
+       "N. Lang / C. Summerville",
+       1.16
+      ],
+      [
        "T. Reijnders / J. Zirkzee",
        1.18
       ],
@@ -2994,20 +3113,20 @@
        1.18
       ],
       [
-       "C. Summerville / J. Frimpong",
-       1.19
-      ],
-      [
        "D. Dumfries / C. Summerville",
        1.2
       ],
       [
-       "J. Veerman / C. Summerville",
-       1.21
+       "C. Summerville / J. Frimpong",
+       1.2
       ],
       [
        "M. Meerdink / V. van Dijk",
        1.21
+      ],
+      [
+       "J. Veerman / C. Summerville",
+       1.22
       ],
       [
        "J. Zirkzee / J. Frimpong",
@@ -3050,10 +3169,6 @@
        1.27
       ],
       [
-       "C. Summerville / V. van Dijk",
-       1.27
-      ],
-      [
        "D. Dumfries / N. Lang",
        1.28
       ],
@@ -3064,6 +3179,10 @@
       [
        "L. Samardzic / M. Meerdink",
        1.28
+      ],
+      [
+       "C. Summerville / V. van Dijk",
+       1.29
       ]
      ],
      "Liczba goli - Holandia": [
@@ -3327,126 +3446,6 @@
       ]
      ]
     }
-   }
-  },
-  "aa690fd7e46982c83048052821dc9cc6": {
-   "fortuna": {
-    "id": "ufo:mtch:1wk-00t",
-    "nazwa": "Huracan - Aldosivi",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "2": 4.9,
-     "1": 1.69,
-     "X": 3.2,
-     "12": 1.25,
-     "X2": 1.77,
-     "1X": 1.14,
-     "H o0.5": 1.23,
-     "Over 2.5": 2.32,
-     "Under 2.5": 1.49,
-     "Over 0.5": 1.08,
-     "Under 0.5": 5.7,
-     "A o0.5": 1.78,
-     "X & o2.5": 20.0,
-     "X & u2.5": 3.35,
-     "2 & o2.5": 11.0,
-     "2 & u2.5": 7.4,
-     "1 & o2.5": 3.0,
-     "1 & u2.5": 2.95,
-     "BTTS & o2.5": 2.8,
-     "A o2.5": 9.8,
-     "H o2.5": 4.2,
-     "Over 1.5": 1.43,
-     "Under 1.5": 2.47,
-     "Over 3.5": 4.1,
-     "Under 3.5": 1.16,
-     "2 & o3.5": 30.0,
-     "X & o3.5": 19.0,
-     "2 & u3.5": 5.0,
-     "1 & o3.5": 6.2,
-     "X & u3.5": 3.3,
-     "1 & u3.5": 1.99,
-     "A o1.5": 4.7,
-     "H o1.5": 2.07,
-     "BTTS Tak": 2.22,
-     "BTTS Nie": 1.59,
-     "X & o1.5": 4.8,
-     "X & u1.5": 6.6,
-     "2 & o1.5": 7.8,
-     "2 & u1.5": 10.0,
-     "1 & o1.5": 2.17,
-     "1 & u1.5": 5.0,
-     "2 & o4.5": 60.0,
-     "2 & u4.5": 4.6,
-     "X & o4.5": 100.0,
-     "X & u4.5": 2.85,
-     "1 & o4.5": 12.0,
-     "1 & u4.5": 1.73,
-     "H -1.5": 3.05,
-     "Under 4.5": 1.04,
-     "Over 4.5": 7.2
-    },
-    "pelna": true
-   },
-   "sts": {
-    "id": "f3115681",
-    "nazwa": "CA Huracan - CA Aldosivi",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "1": 1.72,
-     "X": 3.1,
-     "2": 4.9,
-     "12": 1.3,
-     "X2": 2.0,
-     "1X": 1.16,
-     "A o0.5": 1.8,
-     "H o0.5": 1.24,
-     "H -1.5": 3.1,
-     "H -2.5": 6.75,
-     "Over 1.5": 1.45,
-     "Under 1.5": 2.55,
-     "Over 0.5": 1.09,
-     "Under 0.5": 6.75,
-     "Over 4.5": 8.1,
-     "Under 4.5": 1.05,
-     "Over 3.5": 4.4,
-     "Under 3.5": 1.17,
-     "Over 2.5": 2.4,
-     "Under 2.5": 1.52,
-     "Over 5.5": 21.0,
-     "Under 5.5": 1.01,
-     "H o1.5": 2.1,
-     "H o2.5": 4.4,
-     "A o1.5": 4.8,
-     "A o2.5": 16.0,
-     "BTTS Tak": 2.25,
-     "BTTS Nie": 1.57,
-     "1 & u1.5": 5.25,
-     "1 & o1.5": 2.25,
-     "X & u1.5": 6.75,
-     "X & o1.5": 5.1,
-     "2 & u1.5": 10.5,
-     "2 & o1.5": 8.1,
-     "1 & u4.5": 1.78,
-     "1 & o4.5": 13.0,
-     "X & u4.5": 3.0,
-     "X & o4.5": 50.0,
-     "2 & u4.5": 4.8,
-     "2 & o4.5": 50.0,
-     "1 & u3.5": 2.05,
-     "1 & o3.5": 6.5,
-     "X & u3.5": 3.5,
-     "X & o3.5": 21.0,
-     "2 & u3.5": 5.25,
-     "2 & o3.5": 33.0,
-     "1 & u2.5": 3.1,
-     "1 & o2.5": 3.1,
-     "X & u2.5": 3.5,
-     "X & o2.5": 21.0,
-     "2 & u2.5": 7.75,
-     "2 & o2.5": 11.0
-    },
-    "pelna": true
    }
   },
   "b572ad6feac72764dd496ddd90f019ce": {
@@ -3809,94 +3808,44 @@
     "pelna": true
    }
   },
-  "76c94aa8dba79a4f021b4eecbf422753": {
-   "sts": {
-    "id": "f2413825",
-    "nazwa": "Kosowo - Austria",
-    "zgodnosc": 1.0,
+  "7148ceef90fc0bed3564c4d4289389a8": {
+   "fortuna": {
+    "id": "ufo:mtch:1wk-1aa",
+    "nazwa": "Vekic D. - Świątek I.",
+    "zgodnosc": 0.96,
     "kursy": {
-     "1": 4.2,
-     "X": 3.0,
-     "2": 2.05,
-     "12": 1.42,
-     "X2": 1.24,
-     "1X": 1.82,
-     "A o0.5": 1.37,
-     "H o0.5": 1.83,
-     "A -2.5": 10.0,
-     "A -1.5": 4.2,
-     "Over 1.5": 1.64,
-     "Under 1.5": 2.25,
-     "Over 0.5": 1.14,
-     "Under 0.5": 5.6,
-     "Over 4.5": 14.0,
-     "Under 4.5": 1.02,
-     "Over 3.5": 6.2,
-     "Under 3.5": 1.12,
-     "Over 2.5": 2.95,
-     "Under 2.5": 1.39,
-     "H o1.5": 5.2,
-     "H o4.5": 60.0,
-     "H o3.5": 38.0,
-     "H o2.5": 16.0,
-     "A o1.5": 2.7,
-     "A o4.5": 36.0,
-     "A o3.5": 17.0,
-     "A o2.5": 6.6,
-     "BTTS Tak": 2.5,
-     "BTTS Nie": 1.52,
-     "1 & u2.5": 6.0,
-     "1 & o2.5": 10.0,
-     "X & u2.5": 3.0,
-     "X & o2.5": 24.0,
-     "2 & u2.5": 3.1,
-     "2 & o2.5": 4.2
+     "A": 7.3,
+     "B": 1.08,
+     "B -1.5": 1.33,
+     "A min. 1 set": 3.05,
+     "A 2:1": 14.0,
+     "A 2:0": 14.0,
+     "A -1.5": 14.0,
+     "B 2:0": 1.29,
+     "B 2:1": 4.2,
+     "B min. 1 set": 1.03,
+     "Poniżej 2.5 seta": 1.24,
+     "Ponad 2.5 seta": 3.55
     },
     "pelna": true
-   }
-  },
-  "048b8e582376b00f3acbaaf879ec05ec": {
+   },
    "sts": {
-    "id": "f2413828",
-    "nazwa": "Malta - Andora",
-    "zgodnosc": 1.0,
+    "id": "f3550055",
+    "nazwa": "Vekic Donna - Świątek Iga",
+    "zgodnosc": 0.95,
     "kursy": {
-     "1": 1.89,
-     "X": 3.0,
-     "2": 5.0,
-     "12": 1.42,
-     "X2": 1.96,
-     "1X": 1.18,
-     "A o0.5": 2.12,
-     "H o0.5": 1.37,
-     "H -1.5": 3.85,
-     "H -2.5": 9.4,
-     "Over 1.5": 1.76,
-     "Under 1.5": 2.05,
-     "Over 0.5": 1.16,
-     "Under 0.5": 5.0,
-     "Over 4.5": 17.0,
-     "Under 4.5": 1.01,
-     "Over 3.5": 7.4,
-     "Under 3.5": 1.09,
-     "Over 2.5": 3.35,
-     "Under 2.5": 1.32,
-     "H o1.5": 2.7,
-     "H o4.5": 36.0,
-     "H o3.5": 17.0,
-     "H o2.5": 6.6,
-     "A o1.5": 7.0,
-     "A o4.5": 70.0,
-     "A o3.5": 48.0,
-     "A o2.5": 23.0,
-     "BTTS Tak": 2.9,
-     "BTTS Nie": 1.41,
-     "1 & u2.5": 2.7,
-     "1 & o2.5": 4.25,
-     "X & u2.5": 2.9,
-     "X & o2.5": 33.0,
-     "2 & u2.5": 6.5,
-     "2 & o2.5": 15.0
+     "A": 8.2,
+     "B": 1.07,
+     "A -1.5": 15.0,
+     "B min. 1 set": 1.01,
+     "A min. 1 set": 3.3,
+     "B -1.5": 1.3,
+     "A 2:0": 14.0,
+     "A 2:1": 12.0,
+     "B 2:1": 5.0,
+     "B 2:0": 1.3,
+     "Ponad 2.5 seta": 3.9,
+     "Poniżej 2.5 seta": 1.24
     },
     "pelna": true
    }
@@ -4079,7 +4028,7 @@
    "turnieje ufo:sprt:19 today: Expecting value: line 1 column 1 (char 0)",
    "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)"
   ],
-  "nasze_mecze": 12,
+  "nasze_mecze": 10,
   "sporty": [
    [
     "ufo:sprt:01",
@@ -4212,52 +4161,290 @@
    "sporty walki": "ufo:sprt:19",
    "pilka": "ufo:sprt:00"
   },
-  "turniejow": 113,
+  "turniejow": 112,
   "meczow_fortuny": 395,
-  "niedopasowane": [
-   "pilka: Kosovo – Austria",
-   "pilka: Azerbaijan – Lithuania",
-   "pilka: Malta – Andorra"
-  ],
-  "pelna_oferta": 9,
+  "pelna_oferta": 10,
   "rynki_nazwy": {
    "pilka": {
     "Wynik meczu": [
-     "0",
+     "2",
+     "1",
+     "0"
+    ],
+    "Mecz: dwójtyp": [
+     "12",
+     "02",
+     "10"
+    ],
+    "Mecz: bez remisu (remis = zwrot)": [
      "2",
      "1"
     ],
-    "Mecz: dwójtyp": [
-     "10",
-     "02",
-     "12"
+    "Mecz: pozostałe zakłady łączone": [
+     "Aldosivi wygra, obie drużyny strzelą gola , każda drużyna powyżej 4.5 rzuty rożne"
     ],
-    "Mecz: obie drużyny strzelą gola": [
+    "Mecz: liczba rzutów rożnych": [
+     "- 10.5",
+     "+ 10.5"
+    ],
+    "Mecz + strzelec gola": [
+     "Aldosivi wygra , Andres Chavez strzeli gola"
+    ],
+    "Zawodnik - otrzyma Czerwoną Kartkę (Nie liczy się: CK dla ławki, po meczu, dla sztabu)": [
+     "Nicolás Linares wyrzucony z boiska"
+    ],
+    "Mecz: więcej rzutów rożnych ": [
+     "2",
+     "Rowno",
+     "1"
+    ],
+    "Mecz: Aldosivi - liczba rzutów rożnych": [
+     "+1.5",
+     "-1.5"
+    ],
+    "Mecz: Huracan - liczba rzutów rożnych": [
+     "-7.5",
+     "+7.5"
+    ],
+    "Mecz: liczba strzałów (OPTA)": [
+     "+ 27.5",
+     "- 27.5"
+    ],
+    "Mecz: liczba strzałów w światło bramki (OPTA)": [
+     "+ 7.5",
+     "- 7.5"
+    ],
+    "Mecz: Huracan - liczba goli": [
+     "+ 0.5",
+     "- 0.5"
+    ],
+    "Mecz: liczba goli": [
+     "+ 2.5",
+     "- 2.5"
+    ],
+    "Mecz: Aldosivi - liczba goli": [
+     "+ 0.5",
+     "- 0.5"
+    ],
+    "Mecz: wynik/liczba goli": [
+     "0/+ 2.5 ",
+     "0/- 2.5 ",
+     "2/+ 2.5 ",
+     "2/- 2.5 "
+    ],
+    "Mecz: wynik/obie drużyny strzelą gola": [
+     "1/Nie",
+     "0/Tak",
+     "0/Nie",
+     "2/Tak"
+    ],
+    "1.połowa: liczba goli": [
+     "- 2.5",
+     "+ 2.5"
+    ],
+    "Mecz: obie drużyny strzelą gola/liczba goli": [
+     "Tak/- 2.5 ",
+     "Tak/+ 2.5 ",
+     "Nie/- 2.5 ",
+     "Nie/+ 2.5 "
+    ],
+    "Mecz: Huracan - wygra co najmniej jedną połowę": [
      "Nie",
      "Tak"
     ],
-    "SuperSub: Zawodnik lub jego zmiennik strzeli gola (reg.czas)(OPTA)": [
+    "Mecz: multigole": [
+     "2-5",
+     "2-4",
+     "2-3",
+     "7+"
+    ],
+    "Mecz: Aldosivi - wygra co najmniej jedną połowę": [
+     "Tak",
+     "Nie"
+    ],
+    "Zawodnik - liczba goli (OPTA)": [
+     "1+",
+     "3+",
+     "2+"
+    ],
+    "Zawodnik - strzeli pierwszego gola w meczu (OPTA)": [
      "Tak"
+    ],
+    "1.połowa: dwójtyp": [
+     "12",
+     "02",
+     "10"
+    ],
+    "Zawodnik - strzeli ostatniego gola w meczu (OPTA)": [
+     "Tak"
+    ],
+    "Mecz: obie drużyny strzelą gola": [
+     "Tak",
+     "Nie"
+    ],
+    "1.połowa lub wynik meczu (podwójna szansa)": [
+     "1",
+     "remis",
+     "2"
+    ],
+    "1.połowa: obie drużyny strzelą gola": [
+     "Tak",
+     "Nie"
+    ],
+    "1.połowa": [
+     "2",
+     "0",
+     "1"
+    ],
+    "1.połowa/wynik meczu": [
+     "2/0",
+     "1/2",
+     "2/2",
+     "0/1"
     ],
     "Zawodnik - liczba goli w 1.połowie (OPTA)": [
      "1+"
     ],
-    "Niemcy - Zawodnik strzeli ostatniego gola w meczu (OPTA)": [
+    "Zawodnik - strzeli pierwszego lub ostatniego gola w meczu (OPTA)": [
      "Tak"
     ],
     "Zawodnik - asystuje (OPTA)": [
      "1+"
     ],
-    "SuperSub: Zawodnik lub jego zmiennik strzeli pierwszego gola w meczu (OPTA)": [
-     "Tak"
-    ],
-    "Zawodnik - strzeli pierwszego gola w meczu (OPTA)": [
-     "Tak"
-    ],
-    "SuperSub: Zawodnik lub jego zmiennik strzeli pierwszego gola dla Niemcy (OPTA)": [
+    "SuperSub: Zawodnik lub jego zmiennik strzeli gola (reg.czas)(OPTA)": [
      "Tak"
     ],
     "SuperSub: Zawodnik lub jego zmiennik zanotuje asystę (reg.czas)(OPTA)": [
+     "Tak"
+    ],
+    "Mecz: Huracan - liczba strzałów (OPTA)": [
+     "- 16.5",
+     "+ 16.5"
+    ],
+    "Zawodnik - strzeli gola lub zanotuje asystę (OPTA)": [
+     "Tak"
+    ],
+    "Mecz: Aldosivi - liczba strzałów w światło bramki (OPTA)": [
+     "+ 1.5",
+     "- 1.5"
+    ],
+    "Mecz: Aldosivi - liczba strzałów (OPTA)": [
+     "- 8.5",
+     "+ 8.5"
+    ],
+    "Mecz: Huracan - liczba strzałów w światło bramki (OPTA)": [
+     "+ 2.5",
+     "- 2.5"
+    ],
+    "Zawodnik - liczba strzałów w światło bramki (OPTA)": [
+     "1+",
+     "2+"
+    ],
+    "Zawodnik - liczba strzałów (OPTA)": [
+     "1+",
+     "2+"
+    ],
+    "Mecz: więcej strzałów (OPTA)": [
+     "Równo",
+     "2",
+     "1"
+    ],
+    "Mecz: liczba spalonych (OPTA)": [
+     "- 1.5",
+     "+ 1.5"
+    ],
+    "Mecz: liczba Żółtych Kartek (Nie liczy się: druga ŻK dla zawodnika, ŻK dla ławki, po meczu, dla sztabu) (OPTA)": [
+     "- 3.5",
+     "+ 3.5"
+    ],
+    "Mecz: liczba fauli (OPTA)": [
+     "+ 27.5",
+     "- 27.5"
+    ],
+    "Mecz: więcej spalonych (OPTA)": [
+     "2",
+     "1",
+     "Rowno"
+    ],
+    "Mecz: Huracan - liczba fauli (OPTA)": [
+     "- 11.5",
+     "+ 11.5"
+    ],
+    "Mecz: Aldosivi - liczba fauli (OPTA)": [
+     "- 12.5",
+     "+ 12.5"
+    ],
+    "Mecz: więcej fauli (OPTA)": [
+     "Rowno",
+     "2",
+     "1"
+    ],
+    "Mecz: Aldosivi - liczba spalonych (OPTA)": [
+     "- 1.5",
+     "+ 1.5"
+    ],
+    "Mecz: Huracan - liczba spalonych (OPTA)": [
+     "+ 1.5",
+     "- 1.5"
+    ],
+    "Mecz: handicap": [
+     "2 (+1.5)",
+     "1 (-1.5)"
+    ],
+    "1.połowa: wynik/obie drużyny strzelą gola w 1.połowie": [
+     "1/Tak",
+     "2/Nie",
+     "0/Tak",
+     "1/Nie"
+    ],
+    "1.połowa: Huracan - liczba goli ": [
+     "+ 1.5",
+     "- 1.5"
+    ],
+    "2.połowa": [
+     "2",
+     "1",
+     "0"
+    ],
+    "Mecz: dokładny wynik": [
+     "2:4",
+     "3:1",
+     "4:1",
+     "0:2"
+    ],
+    "Mecz: 1.rzut rożny": [
+     "1",
+     "2",
+     "Nikt"
+    ],
+    "2.połowa: liczba goli": [
+     "- 0.5",
+     "+ 0.5"
+    ],
+    "1.połowa: Aldosivi - liczba goli ": [
+     "+ 0.5",
+     "- 0.5"
+    ],
+    "Mecz: Aldosivi - strzeli gola w obu połowach": [
+     "Tak",
+     "Nie"
+    ],
+    "Połowa z większą liczbą goli": [
+     "1.",
+     "2.",
+     "="
+    ],
+    "Mecz: Huracan - strzeli gola w obu połowach": [
+     "Nie",
+     "Tak"
+    ],
+    "Niemcy - Zawodnik strzeli ostatniego gola w meczu (OPTA)": [
+     "Tak"
+    ],
+    "SuperSub: Zawodnik lub jego zmiennik strzeli pierwszego gola w meczu (OPTA)": [
+     "Tak"
+    ],
+    "SuperSub: Zawodnik lub jego zmiennik strzeli pierwszego gola dla Niemcy (OPTA)": [
      "Tak"
     ],
     "Zawodnik - liczba strzałów w światło bramki nogą (OPTA)": [
@@ -4278,9 +4465,6 @@
     "Niemcy - Zawodnik strzeli pierwszego gola w meczu (OPTA)": [
      "Tak"
     ],
-    "Zawodnik - strzeli gola lub zanotuje asystę (OPTA)": [
-     "Tak"
-    ],
     "Zawodnik - liczba spalonych w 1.połowie (OPTA)": [
      "1+"
     ],
@@ -4288,9 +4472,6 @@
      "1+",
      "2+",
      "3+"
-    ],
-    "Zawodnik - strzeli ostatniego gola w meczu (OPTA)": [
-     "Tak"
     ],
     "SuperSub: Zawodnik i jego zmiennik - liczba fauli (reg.czas)(OPTA)": [
      "1+",
@@ -4305,16 +4486,7 @@
      "2+",
      "3+"
     ],
-    "Zawodnik - liczba goli (OPTA)": [
-     "3+",
-     "1+",
-     "2+"
-    ],
     "Zawodnik - strzeli gola głową (OPTA)": [
-     "1+"
-    ],
-    "Zawodnik - liczba strzałów w światło bramki (OPTA)": [
-     "2+",
      "1+"
     ],
     "Zawodnik - liczba strzałów spoza pola karnego (OPTA)": [
@@ -4333,14 +4505,6 @@
     ],
     "Zawodnik - liczba strzałów w światło bramki głową (OPTA)": [
      "1+"
-    ],
-    "Zawodnik - strzeli pierwszego lub ostatniego gola w meczu (OPTA)": [
-     "Tak"
-    ],
-    "Zawodnik - liczba strzałów (OPTA)": [
-     "2+",
-     "4+",
-     "3+"
     ],
     "SuperSub: Zawodnik i jego zmiennik - liczba strzałów w światło bramki (reg.czas)(OPTA)": [
      "2+",
@@ -4361,10 +4525,6 @@
     "Grecja - Zawodnik strzeli ostatniego gola w meczu (OPTA)": [
      "Tak"
     ],
-    "Mecz: handicap": [
-     "1 (+0.5)",
-     "2 (-0.5)"
-    ],
     "Mecz: Grecja - wygra do zera": [
      "Tak",
      "Nie"
@@ -4379,48 +4539,15 @@
      "0:2",
      "1:1"
     ],
-    "Mecz: dokładny wynik": [
-     "3:1",
-     "2:3",
-     "2:1",
-     "4:4"
-    ],
-    "1.połowa: liczba goli": [
-     "- 2",
-     "+ 2"
-    ],
     "Mecz: multiwynik": [
      "1:0 2:0 3:0",
      "4:0 5:0 6:0",
      "0:1 0:2 0:3",
      "2:1 3:1 4:1"
     ],
-    "Mecz: bez remisu (remis = zwrot)": [
-     "1",
-     "2"
-    ],
-    "1.połowa: obie drużyny strzelą gola": [
-     "Nie",
-     "Tak"
-    ],
-    "Mecz: multigole": [
-     "4-6",
-     "1-4",
-     "4-5",
-     "1-3"
-    ],
-    "1.połowa: dwójtyp": [
-     "02",
-     "12",
-     "10"
-    ],
     "2.połowa: Grecja - liczba goli": [
      "- 0.5",
      "+ 0.5"
-    ],
-    "Mecz: liczba goli": [
-     "+ 4.5",
-     "- 4.5"
     ],
     "Mecz: wynik/różnica zwycięstwa": [
      "1/o 3+ gole",
@@ -4432,23 +4559,11 @@
      "+ 2.5",
      "- 2.5"
     ],
-    "1.połowa/wynik meczu": [
-     "0/0",
-     "0/2",
-     "1/1",
-     "1/2"
-    ],
     "1.połowa: multigole": [
      "1-2",
      "4+",
      "Brak goli",
      "1-3"
-    ],
-    "Mecz: wynik/obie drużyny strzelą gola": [
-     "2/Tak",
-     "0/Nie",
-     "0/Tak",
-     "1/Nie"
     ],
     "Mecz: Niemcy - wygra do zera": [
      "Tak",
@@ -4462,24 +4577,10 @@
      "- 2.5",
      "+ 2.5"
     ],
-    "1.połowa lub wynik meczu (podwójna szansa)": [
-     "1",
-     "remis",
-     "2"
-    ],
-    "2.połowa": [
-     "1",
-     "2",
-     "0"
-    ],
     "Mecz: handicap 1:0": [
      "1",
      "2",
      "0"
-    ],
-    "2.połowa: liczba goli": [
-     "+ 1.5",
-     "- 1.5"
     ],
     "2.połowa: obie drużyny strzelą gola": [
      "Nie",
@@ -4493,21 +4594,9 @@
      "Tak",
      "Nie"
     ],
-    "Mecz: wynik/liczba goli": [
-     "1/+ 3.5 ",
-     "1/- 3.5 ",
-     "2/+ 3.5 ",
-     "2/- 3.5 "
-    ],
     "1.połowa: bez remisu (remis = zwrot)": [
      "2",
      "1"
-    ],
-    "Mecz: obie drużyny strzelą gola/liczba goli": [
-     "Tak/+ 2.5 ",
-     "Nie/+ 2.5 ",
-     "Tak/- 2.5 ",
-     "Nie/- 2.5 "
     ],
     "1.połowa: handicap 2:0": [
      "2",
@@ -4523,11 +4612,6 @@
      "2",
      "0",
      "1"
-    ],
-    "1.połowa": [
-     "1",
-     "0",
-     "2"
     ],
     "Mecz: Niemcy - multigole": [
      "4+",
@@ -4582,196 +4666,138 @@
      "1-3",
      "Brak goli",
      "4+"
-    ],
-    "Mecz: suma goli": [
-     "Niep.",
-     "Parz."
-    ],
-    "1.połowa: handicap": [
-     "1 (+1)",
-     "2 (-1)"
-    ],
-    "2.połowa: wynik/obie drużyny strzelą gola w 2.połowie": [
-     "1/Nie",
-     "0/Tak",
-     "2/Nie",
-     "1/Tak"
-    ],
-    "Mecz: dwójtyp/liczba goli": [
-     "02 / +2.5",
-     "12 / -2.5",
-     "02 / -2.5",
-     "10 / +2.5"
-    ],
-    "Mecz: która drużyna strzeli gola": [
-     "Tylko 1.drużyna",
-     "Żadna",
-     "Tylko 2.drużyna",
-     "Obie"
-    ],
-    "2.połowa: dokładny wynik": [
-     "0:0",
-     "1:2",
-     "1:1",
-     "0:1"
-    ],
-    "1.połowa: wynik/obie drużyny strzelą gola w 1.połowie": [
-     "0/Nie",
-     "2/Tak",
-     "2/Nie",
-     "1/Tak"
-    ],
-    "Wynik meczu lub 1 gol(e) PRZEWAGI": [
-     "Niemcy",
-     "Remis",
-     "Grecja"
-    ],
-    "Mecz: Niemcy - strzeli gola w obu połowach": [
-     "Tak",
-     "Nie"
-    ],
-    "1.połowa: handicap 0:1": [
+    ]
+   },
+   "tenis": {
+    "Zwycięzca meczu (krecz=zwrot)": [
      "1",
-     "0",
      "2"
     ],
-    "Połowa z większą liczbą goli": [
-     "=",
-     "2.",
-     "1."
-    ],
-    "1.połowa: handicap 1:0": [
-     "0",
+    "Zwycięzca meczu (zwrot jeżeli przegra 1:2 w setach)": [
      "2",
      "1"
     ],
-    "1.połowa/2.połowa - Obie drużyny strzelą gola": [
-     "Tak/Tak",
-     "Nie/Tak",
-     "Tak/Nie",
-     "Nie/Nie"
+    "Mecz: handicap setowy (krecz=zwrot)": [
+     "2 (-1.5)",
+     "1 (+1.5)"
     ],
-    "Mecz: Grecja - strzeli gola w obu połowach": [
+    "1.set": [
+     "1",
+     "2"
+    ],
+    "Mecz: dokładny wynik": [
+     "2:1",
+     "2:0",
+     "0:2 ",
+     "1:2"
+    ],
+    "Mecz: Vekic D. - wygra dokładnie jeden set": [
      "Tak",
      "Nie"
     ],
-    "Wynik meczu lub 2 gol(e) PRZEWAGI": [
-     "Grecja",
-     "Remis",
-     "Niemcy"
+    "1.set / zwycięzca meczu": [
+     "2/2",
+     "1/2",
+     "2/1",
+     "1/1"
     ],
-    "Mecz: Grecja - liczba rzutów rożnych": [
-     "-5.5",
-     "+5.5"
+    "Mecz: Vekic D. - wygra co najmniej jeden set": [
+     "Tak",
+     "Nie"
     ],
-    "Mecz: Grecja - liczba strzałów w światło bramki (OPTA)": [
-     "+ 5.5",
-     "- 5.5"
+    "Mecz: Świątek I. - wygra co najmniej jeden set": [
+     "Tak",
+     "Nie"
     ],
-    "Mecz: liczba strzałów (OPTA)": [
-     "+ 25.5",
-     "- 25.5"
+    "Mecz: liczba setów (krecz=zwrot)": [
+     "- 2.5",
+     "+ 2.5"
     ],
-    "Niemcy liczba czerwonych kartek (Nie liczy się: CK dla ławki, po meczu, dla sztabu)": [
-     "+ 0.5"
-    ],
-    "Mecz: więcej strzałów (OPTA)": [
-     "1",
-     "Równo",
+    "Mecz: dokładna liczba setów (krecz=zwrot)": [
+     "3",
      "2"
     ],
-    "Mecz: liczba strzałów w światło bramki (OPTA)": [
+    "Mecz: Vekic D. - liczba gemów": [
      "+ 7.5",
      "- 7.5"
     ],
-    "Mecz: Niemcy - liczba strzałów w światło bramki (OPTA)": [
-     "+ 7.5",
-     "- 7.5"
+    "1.set: handicap (gemy)": [
+     "1 (+2.5)",
+     "2 (-2.5)"
     ],
-    "Mecz: więcej strzałów w światło bramki (OPTA)": [
-     "1",
-     "Równo",
-     "2"
+    "1.set: liczba gemów": [
+     "- 7.5",
+     "+ 7.5"
     ],
-    "Mecz: Grecja - liczba strzałów (OPTA)": [
-     "- 10.5",
-     "+ 10.5"
+    "Mecz: Świątek I. - wygra dokładnie jeden set": [
+     "Nie",
+     "Tak"
     ],
-    " Grecja liczba czerwonych kartek (Nie liczy się: CK dla ławki, po meczu, dla sztabu)": [
-     "+ 0.5"
+    "Mecz: liczba gemów": [
+     "+ 14.5",
+     "- 14.5"
     ],
-    "Zawodnik strzeli ostatniego gola": [
-     "Zafeiris, Christos",
-     "Burkardt, Jonathan",
-     "Engelhardt, Yannick",
-     "Michailidis, Giannis"
+    "Mecz: handicap gemowy": [
+     "1 (+5.5)",
+     "2 (-5.5)"
     ],
-    "Zawodnik strzeli gola": [
-     "Burkardt, Jonathan",
-     "Karetsas, Konstantinos",
-     "Zafeiris, Christos",
-     "Treu, Philipp"
+    "Najpopularniejsze zakłady łączone": [
+     "Vekic wygra  mecz , Vekic wygra set 1"
     ],
-    "Mecz + strzelec gola": [
-     "Niemcy wygra , Jonathan Burkardt strzeli gola"
+    "Mecz: będzie set do zera": [
+     "Nie",
+     "Tak"
     ],
-    "Zawodnik strzeli 1.gola w meczu": [
-     "Karetsas, Konstantinos",
-     "Saliakas, Manolis",
-     "Mittelstadt, Maximilian",
-     "Karl, Lennart"
+    "Mecz: będzie tiebreak": [
+     "Tak",
+     "Nie"
     ],
-    "Mecz + liczba strzałów zawodnika w światło bramki": [
-     "Grecja wygra , Fotis Ioannidis 1+ strzały w światło bramki"
+    "1.set: dokładny wynik": [
+     "2:6",
+     "1:6",
+     "4:6",
+     "6:0"
     ],
-    "Zawodnik - otrzyma Czerwoną Kartkę (Nie liczy się: CK dla ławki, po meczu, dla sztabu)": [
-     "Aleksandar Pavlovic wyrzucony z boiska"
+    "Mecz: Vekic D. - wygra swój pierwszy gem serwisowy": [
+     "Tak",
+     "Nie"
     ],
-    "Mecz: pozostałe zakłady łączone": [
-     "Grecja wygra , Dimitris Kourbelis 1+ odbiory"
+    "Mecz: Świątek I. - wygra swój pierwszy gem serwisowy": [
+     "Tak",
+     "Nie"
     ],
-    "Mecz: Niemcy - liczba rzutów rożnych": [
-     "+5.5",
-     "-5.5"
-    ],
-    "Mecz: więcej rzutów rożnych ": [
-     "2",
-     "1",
-     "Rowno"
+    "Mecz: Świątek I. - liczba gemów": [
+     "- 13.5",
+     "+ 13.5"
     ]
    }
   },
   "sts": {
    "bledy": [],
-   "meczow_sts": 1527,
+   "meczow_sts": 1524,
    "sporty": {
-    "1": 1254,
-    "3": 206,
+    "1": 1252,
+    "3": 205,
     "166": 41,
     "19": 26
    },
-   "niedopasowane": [
-    "pilka: Azerbaijan – Lithuania"
-   ],
-   "szczegoly_ramek": 32,
-   "szczegoly_odpowiedzi": "11 z 11",
+   "szczegoly_ramek": 12,
+   "szczegoly_odpowiedzi": "10 z 10",
    "szczegoly_tematy": {
     "f_f2413920_pl": 1,
-    "f_f2413825_pl": 1,
-    "f_f2413820_pl": 1,
-    "f_f2413928_pl": 3,
-    "f_f2413828_pl": 18,
-    "f_f2413932_pl": 3,
-    "f_f3115682_pl": 1,
-    "f_f2413868_pl": 1,
     "f_f3115681_pl": 1,
+    "f_f2413820_pl": 1,
+    "f_f2413868_pl": 1,
+    "f_f2413932_pl": 3,
+    "f_f2413928_pl": 1,
     "f_f3115697_pl": 1,
-    "f_f3115676_pl": 1
+    "f_f3115682_pl": 1,
+    "f_f3115676_pl": 1,
+    "f_f3550055_pl": 1
    },
    "szczegoly_meczow": {
-    "Kosowo - Austria": {
-     "18mee60f09760b": 6,
-     "2m68932732": 104
+    "CA Huracan - CA Aldosivi": {
+     "1m73265366": 99
     },
     "Grecja - Niemcy": {
      "16m61809": 12,
@@ -4793,17 +4819,10 @@
      "17m4bb776794bd": 10,
      "1m68932046": 143
     },
-    "Malta - Andora": {
-     "18me61d54daa82": 6,
-     "2m68932812": 131
-    },
     "Holandia - Serbia": {
      "16m61808": 11,
      "17m5fbf9b90b64": 9,
      "1m68931582": 145
-    },
-    "CA Huracan - CA Aldosivi": {
-     "1m73265366": 99
     },
     "Talleres Cordoba - CA Belgrano": {
      "1m73265346": 99
@@ -4813,220 +4832,255 @@
     },
     "Estudiantes Rio Cuarto - Racing Club Avellaneda": {
      "1m73265362": 99
+    },
+    "Vekic Donna - Świątek Iga": {
+     "16m61993": 5,
+     "17md052a172828": 25,
+     "1m75051498": 1
     }
    },
    "rynki_przyklad": {
-    "Kosowo - Austria": {
+    "CA Huracan - CA Aldosivi": {
      "1 Mecz": [
-      "Mecz | 1:1=4.2",
-      "Mecz | 2:X=3",
-      "Mecz | 3:2=2.05"
-     ],
-     "7 ": [
-      "Wygra od stanu 0:0 | 1:=4.2",
-      "Wygra od stanu 0:0 | 2:=3",
-      "Wygra od stanu 0:0 | 3:=2.05"
+      "Mecz | 1:1=1.72",
+      "Mecz | 2:X=3.1",
+      "Mecz | 3:2=4.9"
      ],
      "8 Następny gol": [
-      "1. gol | 6:1=2.95",
-      "1. gol | 7:nikt=6.25",
-      "1. gol | 8:2=1.8"
+      "1. gol | 6:1=1.58",
+      "1. gol | 7:nikt=6.75",
+      "1. gol | 8:2=3.1"
+     ],
+     "9 Ostatni gol": [
+      "Ostatni gol | 6:1=1.58",
+      "Ostatni gol | 7:nikt=6.75",
+      "Ostatni gol | 8:2=3.1"
      ],
      "10 Podwójna szansa": [
-      "Podwójna szansa | 10:12=1.42",
-      "Podwójna szansa | 11:X2=1.24",
-      "Podwójna szansa | 9:1X=1.82"
+      "Podwójna szansa | 10:12=1.3",
+      "Podwójna szansa | 11:X2=2",
+      "Podwójna szansa | 9:1X=1.16"
      ],
      "11 Zakład bez remisu": [
-      "Zakład bez remisu | 4:1=2.9",
-      "Zakład bez remisu | 5:2=1.4"
+      "Zakład bez remisu | 4:1=1.26",
+      "Zakład bez remisu | 5:2=3.5"
      ],
      "14 Handicap 1X2": [
-      "Handicap 1X2 | 922:1 (2:0)=1.24",
-      "Handicap 1X2 | 923:X (2:0)=6.4",
-      "Handicap 1X2 | 924:2 (2:0)=11",
-      "Handicap 1X2 | 922:1 (3:0)=1.06",
-      "Handicap 1X2 | 923:X (3:0)=14",
-      "Handicap 1X2 | 924:2 (3:0)=29",
-      "Handicap 1X2 | 922:1 (1:0)=1.82",
-      "Handicap 1X2 | 923:X (1:0)=3.65"
+      "Handicap 1X2 | 922:1 (2:0)=1.02",
+      "Handicap 1X2 | 923:X (2:0)=16",
+      "Handicap 1X2 | 924:2 (2:0)=55",
+      "Handicap 1X2 | 922:1 (1:0)=1.16",
+      "Handicap 1X2 | 923:X (1:0)=6.25",
+      "Handicap 1X2 | 924:2 (1:0)=15",
+      "Handicap 1X2 | 922:1 (0:1)=3.1",
+      "Handicap 1X2 | 923:X (0:1)=3.3"
+     ],
+     "17 Różnica zwycięstwa": [
+      "Różnica zwycięstwa | 1262:1. drużyna - 1 golem=3.3",
+      "Różnica zwycięstwa | 1263:1. drużyna - 2 golami=4.9",
+      "Różnica zwycięstwa | 1264:1. drużyna - 3+ golami=6.75",
+      "Różnica zwycięstwa | 1265:2. drużyna - 1 golem=6.25"
+     ],
+     "20 Handicap (z możliwym zwrotem)": [
+      "Handicap (z możliwym zwrotem) | 925:1 (+0)=1.26",
+      "Handicap (z możliwym zwrotem) | 926:2 (-0)=3.5",
+      "Handicap (z możliwym zwrotem) | 925:1 (-2)=5.4",
+      "Handicap (z możliwym zwrotem) | 926:2 (+2)=1.12",
+      "Handicap (z możliwym zwrotem) | 925:1 (-1)=2.35",
+      "Handicap (z możliwym zwrotem) | 926:2 (+1)=1.53"
      ],
      "22 Handicap": [
-      "Handicap | 925:1 (+2.5)=1.05",
-      "Handicap | 926:2 (-2.5)=10",
-      "Handicap | 925:1 (-0.5)=4.1",
-      "Handicap | 926:2 (+0.5)=1.23",
-      "Handicap | 925:1 (+0.5)=1.79",
-      "Handicap | 926:2 (-0.5)=2.02"
+      "Handicap | 925:1 (-0.5)=1.72",
+      "Handicap | 926:2 (+0.5)=2",
+      "Handicap | 925:1 (-1.5)=3.1",
+      "Handicap | 926:2 (+1.5)=1.32",
+      "Handicap | 925:1 (-2.5)=6.75",
+      "Handicap | 926:2 (+2.5)=1.09"
+     ],
+     "23 Liczba goli (z możliwym zwrotem)": [
+      "Liczba goli (z możliwym zwrotem) | 12:+1=1.13",
+      "Liczba goli (z możliwym zwrotem) | 13:-1=5.1",
+      "Liczba goli (z możliwym zwrotem) | 12:+2=1.78",
+      "Liczba goli (z możliwym zwrotem) | 13:-2=1.92",
+      "Liczba goli (z możliwym zwrotem) | 12:+3=3.7",
+      "Liczba goli (z możliwym zwrotem) | 13:-3=1.24"
      ],
      "25 Liczba goli": [
-      "Liczba goli | 12:+1.5=1.64",
-      "Liczba goli | 13:-1.5=2.25",
-      "Liczba goli | 12:+0.5=1.14",
-      "Liczba goli | 13:-0.5=5.6",
-      "Liczba goli | 12:+4.5=14",
-      "Liczba goli | 13:-4.5=1.02"
+      "Liczba goli | 12:+1.5=1.45",
+      "Liczba goli | 13:-1.5=2.55",
+      "Liczba goli | 12:+0.5=1.09",
+      "Liczba goli | 13:-0.5=6.75",
+      "Liczba goli | 12:+4.5=8.1",
+      "Liczba goli | 13:-4.5=1.05"
      ],
      "28 1. drużyna - liczba goli": [
-      "1. drużyna - liczba goli | 12:+1.5=5.2",
-      "1. drużyna - liczba goli | 13:-1.5=1.16",
-      "1. drużyna - liczba goli | 12:+0.5=1.83",
-      "1. drużyna - liczba goli | 13:-0.5=1.97",
-      "1. drużyna - liczba goli | 12:+4.5=60"
+      "1. drużyna - liczba goli | 12:+1.5=2.1",
+      "1. drużyna - liczba goli | 13:-1.5=1.65",
+      "1. drużyna - liczba goli | 12:+0.5=1.24",
+      "1. drużyna - liczba goli | 13:-0.5=3.7",
+      "1. drużyna - liczba goli | 12:+2.5=4.4",
+      "1. drużyna - liczba goli | 13:-2.5=1.18"
      ],
      "31 2. drużyna - liczba goli": [
-      "2. drużyna - liczba goli | 12:+1.5=2.7",
-      "2. drużyna - liczba goli | 13:-1.5=1.46",
-      "2. drużyna - liczba goli | 12:+0.5=1.37",
-      "2. drużyna - liczba goli | 13:-0.5=3.05",
-      "2. drużyna - liczba goli | 12:+4.5=36"
+      "2. drużyna - liczba goli | 12:+1.5=4.8",
+      "2. drużyna - liczba goli | 13:-1.5=1.15",
+      "2. drużyna - liczba goli | 12:+0.5=1.8",
+      "2. drużyna - liczba goli | 13:-0.5=1.88",
+      "2. drużyna - liczba goli | 12:+2.5=16",
+      "2. drużyna - liczba goli | 13:-2.5=1.01"
      ],
-     "32 ": [
-      "Dokładna liczba goli | 1695:=6.25",
-      "Dokładna liczba goli | 1696:=3.15",
-      "Dokładna liczba goli | 1697:=3.1",
-      "Dokładna liczba goli | 1698:=4.75"
+     "33 Dokładna liczba goli": [
+      "Dokładna liczba goli | 1217:0=6.75",
+      "Dokładna liczba goli | 1218:1=3.6",
+      "Dokładna liczba goli | 1219:2=3.1",
+      "Dokładna liczba goli | 1220:3=4.3"
      ],
      "35 1. drużyna - dokładna liczba goli": [
-      "1. drużyna - dokładna liczba goli | 1237:0=2",
-      "1. drużyna - dokładna liczba goli | 1238:1=2.5",
-      "1. drużyna - dokładna liczba goli | 1239:2=6.5",
-      "1. drużyna - dokładna liczba goli | 1240:3+=22"
+      "1. drużyna - dokładna liczba goli | 1237:0=3.7",
+      "1. drużyna - dokładna liczba goli | 1238:1=2.65",
+      "1. drużyna - dokładna liczba goli | 1239:2=3.5",
+      "1. drużyna - dokładna liczba goli | 1240:3+=4.4"
      ],
      "36 2. drużyna - dokładna liczba goli": [
-      "2. drużyna - dokładna liczba goli | 1237:0=3.1",
-      "2. drużyna - dokładna liczba goli | 1238:1=2.5",
-      "2. drużyna - dokładna liczba goli | 1239:2=4.05",
-      "2. drużyna - dokładna liczba goli | 1240:3+=7"
+      "2. drużyna - dokładna liczba goli | 1237:0=1.88",
+      "2. drużyna - dokładna liczba goli | 1238:1=2.45",
+      "2. drużyna - dokładna liczba goli | 1239:2=6.4",
+      "2. drużyna - dokładna liczba goli | 1240:3+=16"
      ],
      "40 Suma goli": [
-      "Suma goli | 24:nieparzysta=2",
-      "Suma goli | 25:parzysta=1.85"
+      "Suma goli | 24:nieparzysta=1.92",
+      "Suma goli | 25:parzysta=1.8"
+     ],
+     "41 1. drużyna - suma goli": [
+      "1. drużyna - suma goli | 24:nieparzysta=1.95",
+      "1. drużyna - suma goli | 25:parzysta=1.77"
+     ],
+     "42 2. drużyna - suma goli": [
+      "2. drużyna - suma goli | 24:nieparzysta=2.35",
+      "2. drużyna - suma goli | 25:parzysta=1.53"
      ],
      "43 Obie drużyny - strzelą gola": [
-      "Obie drużyny - strzelą gola | 26:tak=2.5",
-      "Obie drużyny - strzelą gola | 27:nie=1.52"
+      "Obie drużyny - strzelą gola | 26:tak=2.25",
+      "Obie drużyny - strzelą gola | 27:nie=1.57"
      ],
-     "45 ": [
-      "1. drużyna - zachowa czyste konto | 26:=3.1",
-      "1. drużyna - zachowa czyste konto | 27:=1.37"
+     "47 1. drużyna - wygra do zera": [
+      "1. drużyna - wygra do zera | 26:tak=2.4",
+      "1. drużyna - wygra do zera | 27:nie=1.48"
      ],
-     "46 ": [
-      "2. drużyna - zachowa czyste konto | 26:=2",
-      "2. drużyna - zachowa czyste konto | 27:=1.85"
+     "48 2. drużyna - wygra do zera": [
+      "2. drużyna - wygra do zera | 26:tak=6.6",
+      "2. drużyna - wygra do zera | 27:nie=1.08"
      ],
      "49 Wynik końcowy i obie drużyny - strzelą gola": [
-      "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=12",
-      "Wynik końcowy i obie drużyny - strzelą gola | 29:1 i nie=5.5",
-      "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=4.95",
-      "Wynik końcowy i obie drużyny - strzelą gola | 31:X i nie=6.25"
+      "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=4.6",
+      "Wynik końcowy i obie drużyny - strzelą gola | 29:1 i nie=2.4",
+      "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=5.1",
+      "Wynik końcowy i obie drużyny - strzelą gola | 31:X i nie=6.75"
+     ],
+     "50 Liczba goli i obie drużyny - strzelą gola": [
+      "Liczba goli i obie drużyny - strzelą gola | 34:+2.5 i tak=2.95",
+      "Liczba goli i obie drużyny - strzelą gola | 35:-2.5 i tak=6.4",
+      "Liczba goli i obie drużyny - strzelą gola | 36:+2.5 i nie=8",
+      "Liczba goli i obie drużyny - strzelą gola | 37:-2.5 i nie=1.78"
      ],
      "51 Wynik końcowy i liczba goli": [
-      "Wynik końcowy i liczba goli | 235:1 i -2.5=6",
-      "Wynik końcowy i liczba goli | 236:1 i +2.5=10",
-      "Wynik końcowy i liczba goli | 237:X i -2.5=3",
-      "Wynik końcowy i liczba goli | 238:X i +2.5=24"
-     ],
-     "56 ": [
-      "Dokładny wynik | 66:=6.25",
-      "Dokładny wynik | 67:=7.75",
-      "Dokładny wynik | 68:=20",
-      "Dokładny wynik | 69:=80"
-     ],
-     "72 ": [
-      "1. połowa - wygra od stanu 0:0 | 1:=6.75",
-      "1. połowa - wygra od stanu 0:0 | 2:=1.55",
-      "1. połowa - wygra od stanu 0:0 | 3:=3.9"
-     ],
-     "92 ": [
-      "1. połowa - 1. drużyna - dokładna liczba goli | 1237:=1.15",
-      "1. połowa - 1. drużyna - dokładna liczba goli | 1238:=4.45",
-      "1. połowa - 1. drużyna - dokładna liczba goli | 1239:=40",
-      "1. połowa - 1. drużyna - dokładna liczba goli | 1240:=200"
-     ],
-     "93 ": [
-      "1. połowa - 2. drużyna - dokładna liczba goli | 1237:=1.3",
-      "1. połowa - 2. drużyna - dokładna liczba goli | 1238:=3.45",
-      "1. połowa - 2. drużyna - dokładna liczba goli | 1239:=18.5",
-      "1. połowa - 2. drużyna - dokładna liczba goli | 1240:=150"
-     ],
-     "96 ": [
-      "1. połowa - 1. drużyna - zachowa czyste konto | 26:=1.32",
-      "1. połowa - 1. drużyna - zachowa czyste konto | 27:=3.05"
-     ],
-     "97 ": [
-      "1. połowa - 2. drużyna - zachowa czyste konto | 26:=1.18",
-      "1. połowa - 2. drużyna - zachowa czyste konto | 27:=4.4"
-     ],
-     "122 ": [
-      "2. połowa - 1. drużyna - zachowa czyste konto | 26:=2.2",
-      "2. połowa - 1. drużyna - zachowa czyste konto | 27:=1.6"
-     ],
-     "123 ": [
-      "2. połowa - 2. drużyna - zachowa czyste konto | 26:=1.6",
-      "2. połowa - 2. drużyna - zachowa czyste konto | 27:=2.2"
+      "Wynik końcowy i liczba goli | 235:1 i -1.5=5.25",
+      "Wynik końcowy i liczba goli | 236:1 i +1.5=2.25",
+      "Wynik końcowy i liczba goli | 237:X i -1.5=6.75",
+      "Wynik końcowy i liczba goli | 238:X i +1.5=5.1",
+      "Wynik końcowy i liczba goli | 235:1 i -4.5=1.78",
+      "Wynik końcowy i liczba goli | 236:1 i +4.5=13",
+      "Wynik końcowy i liczba goli | 237:X i -4.5=3",
+      "Wynik końcowy i liczba goli | 238:X i +4.5=50"
      ],
      "125 Następny gol w meczu - przedziały 15-minutowe": [
-      "1. gol - przedziały 15-minutowe | 181:16-30=12",
-      "1. gol - przedziały 15-minutowe | 182:31-45=2.45",
-      "1. gol - przedziały 15-minutowe | 183:46-60=4.25",
-      "1. gol - przedziały 15-minutowe | 184:61-75=6"
+      "1. gol - przedziały 15-minutowe | 180:1-15=3.6",
+      "1. gol - przedziały 15-minutowe | 181:16-30=4.3",
+      "1. gol - przedziały 15-minutowe | 182:31-45=5",
+      "1. gol - przedziały 15-minutowe | 183:46-60=7.9"
      ],
      "126 Następny gol w meczu - przedziały 10-minutowe": [
-      "1. gol - przedziały 10-minutowe | 189:21-30=12.5",
-      "1. gol - przedziały 10-minutowe | 190:31-40=3.95",
-      "1. gol - przedziały 10-minutowe | 191:41-50=4.15",
-      "1. gol - przedziały 10-minutowe | 192:51-60=6.5"
-     ],
-     "127 ": [
-      "Wynik od 16. do 30. minuty | 1:=17.5",
-      "Wynik od 16. do 30. minuty | 2:=1.03",
-      "Wynik od 16. do 30. minuty | 3:=11"
-     ],
-     "128 ": [
-      "1. gol od 16. do 30. minuty | 6:=17.5",
-      "1. gol od 16. do 30. minuty | 7:=1.03",
-      "1. gol od 16. do 30. minuty | 8:=11"
-     ],
-     "131 ": [
-      "Liczba goli od 16. do 30. minuty | 12:+0.5=8.5",
-      "Liczba goli od 16. do 30. minuty | 13:-0.5=1.04"
+      "1. gol - przedziały 10-minutowe | 187:1-10=4.9",
+      "1. gol - przedziały 10-minutowe | 188:11-20=5.25",
+      "1. gol - przedziały 10-minutowe | 189:21-30=6.25",
+      "1. gol - przedziały 10-minutowe | 190:31-40=7.5"
      ],
      "132 Wynik - przedziały 10-minutowe": [
-      "Wynik od 21. do 30. minuty | 1:1=17.5",
-      "Wynik od 21. do 30. minuty | 2:X=1.03",
-      "Wynik od 21. do 30. minuty | 3:2=11"
+      "Wynik od 1. do 10. minuty | 1:1=6.9",
+      "Wynik od 1. do 10. minuty | 2:X=1.14",
+      "Wynik od 1. do 10. minuty | 3:2=15"
      ],
-     "133 ": [
-      "1. gol od 21. do 30. minuty | 6:=17.5",
-      "1. gol od 21. do 30. minuty | 7:=1.03",
-      "1. gol od 21. do 30. minuty | 8:=11"
+     "258 Następny gol i wynik końcowy": [
+      "1. gol i wynik końcowy | 245:1 i 1=1.78",
+      "1. gol i wynik końcowy | 246:1 i X=9.75",
+      "1. gol i wynik końcowy | 247:1 i 2=37",
+      "1. gol i wynik końcowy | 248:2 i 1=14.5"
      ],
-     "136 ": [
-      "Liczba goli od 21. do 30. minuty | 12:+0.5=8.5",
-      "Liczba goli od 21. do 30. minuty | 13:-0.5=1.04"
+     "283 Dokładny wynik": [
+      "Dokładny wynik | 1783:0:0=6.75",
+      "Dokładny wynik | 1784:1:0=4.8",
+      "Dokładny wynik | 1785:2:0=6.25",
+      "Dokładny wynik | 1786:3:0=12.5"
      ],
-     "137 ": [
-      "Wynik od 31. do 35. minuty | 1:=14",
-      "Wynik od 31. do 35. minuty | 2:=1.08",
-      "Wynik od 31. do 35. minuty | 3:=8.5"
+     "811 Podwójna szansa i obie drużyny - strzelą gola": [
+      "Podwójna szansa i obie drużyny - strzelą gola | 929:1X i tak=2.65",
+      "Podwójna szansa i obie drużyny - strzelą gola | 930:1X i nie=1.9",
+      "Podwójna szansa i obie drużyny - strzelą gola | 931:12 i tak=3.6",
+      "Podwójna szansa i obie drużyny - strzelą gola | 932:12 i nie=1.92"
      ],
-     "138 ": [
-      "1. gol od 31. do 35. minuty | 6:=13.5",
-      "1. gol od 31. do 35. minuty | 7:=1.08",
-      "1. gol od 31. do 35. minuty | 8:=8.25"
+     "812 Podwójna szansa i liczba goli": [
+      "Podwójna szansa i liczba goli | 935:1X i -1.5=3.25",
+      "Podwójna szansa i liczba goli | 936:12 i -1.5=3.8",
+      "Podwójna szansa i liczba goli | 937:X2 i -1.5=4.6",
+      "Podwójna szansa i liczba goli | 938:1X i +1.5=1.7",
+      "Podwójna szansa i liczba goli | 935:1X i -4.5=1.24",
+      "Podwójna szansa i liczba goli | 936:12 i -4.5=1.42",
+      "Podwójna szansa i liczba goli | 937:X2 i -4.5=2",
+      "Podwójna szansa i liczba goli | 938:1X i +4.5=12.5"
      ],
-     "141 ": [
-      "Liczba goli od 31. do 35. minuty | 12:+0.5=6",
-      "Liczba goli od 31. do 35. minuty | 13:-0.5=1.09"
+     "813 Liczba goli - przedziały": [
+      "Liczba goli - przedziały | 1008:brak gola=6.75",
+      "Liczba goli - przedziały | 941:1-2=1.62",
+      "Liczba goli - przedziały | 942:1-3=1.27",
+      "Liczba goli - przedziały | 943:1-4=1.15"
      ],
-     "209 ": [
-      "1. połowa - 1. drużyna - liczba kartek | 12:+0.5=2.4",
-      "1. połowa - 1. drużyna - liczba kartek | 13:-0.5=1.51"
+     "814 1. drużyna - liczba goli - przedziały": [
+      "1. drużyna - liczba goli - przedziały | 1009:brak gola=3.7",
+      "1. drużyna - liczba goli - przedziały | 957:1-2=1.53",
+      "1. drużyna - liczba goli - przedziały | 958:1-3=1.3",
+      "1. drużyna - liczba goli - przedziały | 959:2-3=2.25"
      ],
-     "212 ": [
-      "1. połowa - 2. drużyna - liczba kartek | 12:+0.5=2.6",
-      "1. połowa - 2. drużyna - liczba kartek | 13:-0.5=1.44"
+     "815 2. drużyna - liczba goli - przedziały": [
+      "2. drużyna - liczba goli - przedziały | 1009:brak gola=1.88",
+      "2. drużyna - liczba goli - przedziały | 957:1-2=1.85",
+      "2. drużyna - liczba goli - przedziały | 958:1-3=1.75",
+      "2. drużyna - liczba goli - przedziały | 959:2-3=5.1"
+     ],
+     "816 Multiwynik": [
+      "Multiwynik | 1007:X=3.1",
+      "Multiwynik | 961:1:0, 2:0 lub 3:0=2.55",
+      "Multiwynik | 962:0:1, 0:2 lub 0:3=7.25",
+      "Multiwynik | 963:4:0, 5:0 lub 6:0=26"
+     ],
+     "1224 2. drużyna - strzeli gola": [
+      "2. drużyna - strzeli gola | 26:tak=1.8",
+      "2. drużyna - strzeli gola | 27:nie=1.88"
+     ],
+     "1229 1. drużyna - strzeli gola": [
+      "1. drużyna - strzeli gola | 26:tak=1.24",
+      "1. drużyna - strzeli gola | 27:nie=3.7"
+     ],
+     "57 1. połowa / wynik końcowy - dokładny wynik": [
+      "1. połowa / wynik końcowy - dokładny wynik | 100:0:0 / 2:1=25",
+      "1. połowa / wynik końcowy - dokładny wynik | 101:0:0 / 3:0=25",
+      "1. połowa / wynik końcowy - dokładny wynik | 102:0:0 / 4+=25",
+      "1. połowa / wynik końcowy - dokładny wynik | 103:0:1 / 0:1=21"
+     ],
+     "58 1. połowa / wynik końcowy": [
+      "1. połowa / wynik końcowy | 138:1 / 1=2.5",
+      "1. połowa / wynik końcowy | 139:1 / X=16",
+      "1. połowa / wynik końcowy | 140:1 / 2=65",
+      "1. połowa / wynik końcowy | 141:X / 1=4.2"
      ]
     },
     "Grecja - Niemcy": {
@@ -5516,7 +5570,7 @@
      ]
     }
    },
-   "z_wieloma_rynkami": 11
+   "z_wieloma_rynkami": 10
   },
   "ksw": {
    "fortuna": 0,
@@ -5525,18 +5579,16 @@
   "betclic": {
    "bledy": [],
    "niedopasowane": [
-    "pilka: Kosovo – Austria (2026-10-04 18:00)",
-    "pilka: Greece – Germany (2026-10-04 20:45)",
-    "pilka: Azerbaijan – Lithuania (2026-10-04 15:00)",
-    "pilka: Malta – Andorra (2026-10-04 18:00)",
     "pilka: Atlético Huracán – Aldosivi Mar del Plata (2026-10-04 19:45)",
+    "pilka: Greece – Germany (2026-10-04 20:45)",
     "pilka: Talleres – Belgrano de Cordoba (2026-10-04 22:00)",
     "pilka: Argentinos Juniors – CA Tigre BA (2026-10-05 00:15)",
-    "pilka: Estudiantes de Río Cuarto – Racing Club (2026-10-05 02:30)"
+    "pilka: Estudiantes de Río Cuarto – Racing Club (2026-10-05 02:30)",
+    "tenis: Donna Vekic – Iga Świątek (2026-10-05 05:00)"
    ],
-   "stron": 5,
+   "stron": 6,
    "dopasowane": 4,
-   "nasze_mecze": 12,
+   "nasze_mecze": 10,
    "rynki_przyklad": {
     "pilka": {
      "Irlandia - Izrael": [
@@ -5571,10 +5623,10 @@
      ]
     }
    },
-   "sekund": 5,
+   "sekund": 4,
    "z_kursami": 4
   }
  },
- "lista": "6318c0899bea",
- "sekund": 115
+ "lista": "29a3cb0c3e59",
+ "sekund": 113
 }
