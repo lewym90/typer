@@ -84,7 +84,7 @@ def expected_goals(m, home, away, neutral=False):
 # „faworyt powyżej 3,5” 31,3 → 27,3, „outsider strzeli” 47,4 → 51,4, BTTS 44,7 → 49,0). Gole łącznie były trafne.
 # Z karą 0,025: średni błąd kalibracji 13 rynków × 5 przedziałów siły faworyta 1,63 → 1,00 pkt, log-loss lepszy.
 KAPPA_RYNEK = 0.025
-WERSJA = 54          # numer wersji programu (Ustawienia w aplikacji); zmieniać przy każdej nowej wersji
+WERSJA = 55          # numer wersji programu (Ustawienia w aplikacji); zmieniać przy każdej nowej wersji
 
 def score_matrix(lh, la, rho, kappa=0.0):
     M = np.outer(poisson.pmf(np.arange(MAXG + 1), lh), poisson.pmf(np.arange(MAXG + 1), la))
@@ -392,12 +392,18 @@ def dzisiejsze_mecze():
         try: evs = api(f'sports/{key}/events', commenceTimeFrom=f(od), commenceTimeTo=f(koniec))
         except Exception: continue
         if not evs: continue
+        odds = None
         if KREDYTY['wydane_teraz'] - start_kr + 2 > budzet:
-            print(f"→ {key}: pominięto – dzienny budżet kredytów wyczerpany ({budzet})"); continue
-        print(f"→ {key}: {len(evs)} mecz(e) dziś")
-        try: odds = api(f'sports/{key}/odds', regions=REGIONY_ODDS_API, markets='h2h,totals', oddsFormat='decimal',
-                        commenceTimeFrom=f(od), commenceTimeTo=f(koniec))
-        except Exception as e: print("   błąd:", e); continue
+            print(f"→ {key}: dzienny budżet kredytów wyczerpany ({budzet}) – kursy z Pinnacle (za darmo)")
+        else:
+            print(f"→ {key}: {len(evs)} mecz(e) dziś")
+            try: odds = api(f'sports/{key}/odds', regions=REGIONY_ODDS_API, markets='h2h,totals', oddsFormat='decimal',
+                            commenceTimeFrom=f(od), commenceTimeTo=f(koniec))
+            except Exception as e: print("   błąd:", e)
+        if odds is None:      # wersja 55: brak kredytów / błąd → te same mecze z kursami Pinnacle guest (darmowe API strony)
+            try:
+                import pinnacle; odds = pinnacle.jako_odds_api(evs, 'pilka'); print(f"   Pinnacle: {len(odds)} z {len(evs)}")
+            except Exception as e: print("   Pinnacle błąd:", e); odds = []
         for ev in odds: wynik.append((key, model, ev))
     return wynik
 

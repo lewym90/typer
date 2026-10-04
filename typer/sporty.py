@@ -115,16 +115,22 @@ def pobierz():
         od, do = _okno(sp)
         try: evs = core.api(f"sports/{s['key']}/events", commenceTimeFrom=od, commenceTimeTo=do)
         except Exception as e: _blad(f"{s['key']}: {e}"); continue
-        if evs: klucze.append((_ranga(s['key'], s.get('title'), evs), s['key'], s.get('title', ''), s.get('group'), sp, len(evs)))
+        if evs: klucze.append((_ranga(s['key'], s.get('title'), evs), s['key'], s.get('title', ''), s.get('group'), sp, len(evs), evs))
     start_kr = core.KREDYTY['wydane_teraz']
-    for _, key, tytul, grupa, sp, n in sorted(klucze):
+    for _, key, tytul, grupa, sp, n, evs in sorted(klucze, key=lambda x: x[:6]):
         wydane = core.KREDYTY['wydane_teraz'] - start_kr
         poz = core.KREDYTY['pozostalo']
-        if wydane + 1 > LIMIT_KREDYTOW or (poz is not None and poz < REZERWA_KREDYTOW):
-            STAN['pominiete'].append(f'{tytul} ({n}) – brak kredytów'); continue
-        od, do = _okno(sp)
-        try: odds = core.api(f'sports/{key}/odds', regions='eu', markets='h2h', oddsFormat='decimal', commenceTimeFrom=od, commenceTimeTo=do)
-        except Exception as e: _blad(f'{key}: {e}'); continue
+        odds = None
+        if wydane + 1 > LIMIT_KREDYTOW or (poz is not None and poz < REZERWA_KREDYTOW): pass
+        else:
+            od, do = _okno(sp)
+            try: odds = core.api(f'sports/{key}/odds', regions='eu', markets='h2h', oddsFormat='decimal', commenceTimeFrom=od, commenceTimeTo=do)
+            except Exception as e: _blad(f'{key}: {e}')
+        if odds is None:      # wersja 55: brak kredytów → te same mecze z kursami Pinnacle guest (za darmo)
+            try:
+                import pinnacle; odds = pinnacle.jako_odds_api(evs, sp)
+                if not odds: STAN['pominiete'].append(f'{tytul} ({n}) – brak kredytów, brak w Pinnacle')
+            except Exception as e: _blad(f'Pinnacle {key}: {e}'); odds = []
         for ev in odds: wynik[sp].append((key, tytul, grupa, ev))
     STAN['kredyty'] = core.KREDYTY['wydane_teraz'] - start_kr
     return wynik

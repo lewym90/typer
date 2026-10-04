@@ -818,6 +818,29 @@ def zapowiedzi(d):
     st['zapowiedzi'] = zap; zapisz('status.json', st)
     return wyslane
 
+def _sa_mecze_inne(j):
+    return bool(j) and any(((j.get(sp) or {}).get('mecze')) for sp in ('tenis', 'walki'))
+
+
+def odzyskaj(plik, dobry):
+    """Wersja 55: dzisiejsza wersja pliku z historii repozytorium (najnowsza, która spełnia `dobry`) – samonaprawa po pustym przeliczeniu."""
+    repo = os.environ.get('GITHUB_REPOSITORY'); tok = os.environ.get('GH_TOKEN')
+    if not repo: return None
+    dz = wspolne.dzien_str()
+    nag = {'Accept': 'application/vnd.github+json', **({'Authorization': f'Bearer {tok}'} if tok else {})}
+    try:
+        od = (pd.Timestamp(dz).tz_localize('Europe/Warsaw')).tz_convert('UTC').strftime('%Y-%m-%dT%H:%M:%SZ')
+        r = requests.get(f'https://api.github.com/repos/{repo}/commits', params=dict(path=f'docs/data/{plik}', since=od, per_page=60), headers=nag, timeout=30)
+        for c in r.json() if r.status_code == 200 else []:
+            try:
+                j = requests.get(f"https://raw.githubusercontent.com/{repo}/{c['sha']}/docs/data/{plik}", timeout=30).json()
+                if j.get('data') == dz and dobry(j):
+                    print(f'Odzyskano {plik} z {j.get("wygenerowano")} (commit {c["sha"][:7]})'); return j
+            except Exception: continue
+    except Exception as e: print('odzyskaj:', e)
+    return None
+
+
 def _alarm_do_dziennika(sp, eid, powody):
     """Wersja 51: typ dnia z alarmem przed meczem – znacznik w dzienniku (alarm=1, powód). Typ zostaje w statystykach
     (uczciwość liczb), a statystyka 'alarmy' pokazuje, czy alarm naprawdę przewiduje wpadki."""
@@ -1374,10 +1397,26 @@ if __name__ == '__main__':
         try: rozlicz_wszystko()
         except Exception as e: print('Rozliczenie dziennika nie powiodło się:', e); bledy.append(f'rozliczenie: {e}')
     today['api_football_zapytania'] = raport.licznik['zapytania']; today['api_football_bledy'] = raport.bledy[:5]
+    # wersja 55: NIGDY nie nadpisujemy dzisiejszych typów pustym przeliczeniem (04.10: wgranie v54 o 14:27 przeliczyło wszystko przy
+    # wyczerpanym dziennym limicie kredytów i skasowało poranne typy) – zostają stare, a gdy już skasowane – odzyskanie z historii repo
+    if not today.get('mecze'):
+        stare_ok = stare if (stare.get('data') == today['data'] and stare.get('mecze')) else odzyskaj('dzis.json', lambda j: bool(j.get('mecze')))
+        if stare_ok:
+            print('Przeliczenie bez meczów – zostają dzisiejsze typy z', stare_ok.get('wygenerowano'))
+            today = dict(stare_ok, zachowane=f"przeliczenie {teraz.strftime('%H:%M')} bez danych – zostały typy z {stare_ok.get('wygenerowano')}")
     zapisz('dzis.json', today)
     inne = None
     if ODDS_API_KEY:   # 🎾 tenis i 🥊 walki – po piłce, z osobnym limitem kredytów
-        try: w = sporty.licz(); sporty.rozlicz(pelne=True); inne = sporty.zapisz_json(w)
+        try:
+            w = sporty.licz(); sporty.rozlicz(pelne=True)
+            if not _sa_mecze_inne(w):                                    # wersja 55: jak wyżej – puste przeliczenie nie kasuje typów
+                st_inne = sporty.wczytaj_json() or {}
+                if not (st_inne.get('data') == w.get('data') and _sa_mecze_inne(st_inne)):
+                    st_inne = odzyskaj(sporty.PLIK_JSON, _sa_mecze_inne) or {}
+                if _sa_mecze_inne(st_inne):
+                    print('Tenis/walki bez meczów – zostają typy z', st_inne.get('wygenerowano'))
+                    w = dict(st_inne, zachowane=f"przeliczenie {teraz.strftime('%H:%M')} bez danych")
+            inne = sporty.zapisz_json(w)
         except Exception as e: print('Tenis/walki:', e); bledy.append(f'tenis/walki: {e}')
     zapisz('dziennik.json', eksport_calosci())
     try: STRAZNIK.append(pilnuj_straznika(today))

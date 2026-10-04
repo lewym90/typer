@@ -143,3 +143,65 @@ def _zapisz(tryb, mecze, teraz):
     with gzip.open(p, 'wt', encoding='utf-8') as f:
         json.dump(dict(czas=STAN['czas'], buk='pinnacle', tryb=tryb, mecze=stare), f, ensure_ascii=False, separators=(',', ':'))
     STAN['plik'] = os.path.basename(p)
+
+
+# ---------------- wersja 55: Pinnacle guest jako ŹRÓDŁO KURSÓW, gdy The Odds API nie ma kredytów ----------------
+_OFERTA = {}
+SPORT_PIN = {'pilka': ('soccer',), 'tenis': ('tennis',), 'walki': ('mixed martial arts', 'mma', 'boxing')}
+
+
+def oferta(sp, get=None):
+    """[(gosp, gość, start UTC, rynki)] – mecze Pinnacle danego sportu programu (pilka / tenis / walki), w pamięci na czas uruchomienia."""
+    if sp in _OFERTA: return _OFERTA[sp]
+    out = []
+    try:
+        for s in _get('/sports', get) or []:
+            if str(s.get('name', '')).lower() not in SPORT_PIN.get(sp, ()) or not s.get('matchupCount'): continue
+            mu = _get(f"/sports/{s['id']}/matchups?withSpecials=false&brandId=0", get)
+            mk = rynki(_get(f"/sports/{s['id']}/markets/straight?primaryOnly=false&withSpecials=false", get))
+            for m in mu or []:
+                if not isinstance(m, dict) or m.get('type') != 'matchup' or m.get('parentId') or m.get('isLive'): continue
+                uc = {p.get('alignment'): p.get('name') for p in m.get('participants') or [] if isinstance(p, dict)}
+                t = _czas(m.get('startTime')); r = mk.get(m.get('id'))
+                if t and r and uc.get('home') and uc.get('away'): out.append((uc['home'], uc['away'], t, r))
+    except Exception as e: _blad(f'oferta {sp}: {e}')
+    _OFERTA[sp] = out
+    STAN.setdefault('zastepstwo', {})[sp] = len(out)
+    return out
+
+
+def _zgodni(sp, a, b):
+    if str(a).strip().lower() == str(b).strip().lower(): return True
+    try:
+        if sp == 'pilka':
+            import archiwum; return archiwum._podobne(a, b) >= 0.7
+        import archiwum_inne; return archiwum_inne._zgodne(a, b, 'tenis') and archiwum_inne._zgodne(b, a, 'tenis')
+    except Exception: return False
+
+
+def jako_odds_api(evs, sp, get=None):
+    """Wersja 55: mecze z darmowej listy The Odds API (te same id i nazwy – rozliczenia działają bez zmian) z kursami Pinnacle guest
+    w formacie The Odds API (bukmacher 'pinnacle': h2h, totals). Mecze bez odpowiednika w Pinnacle – pominięte."""
+    of = oferta(sp, get)
+    out = []
+    for ev in evs or []:
+        try: t = dt.datetime.fromisoformat(str(ev['commence_time']).replace('Z', '+00:00'))
+        except Exception: continue
+        H, A = ev.get('home_team'), ev.get('away_team')
+        traf = None
+        for h, a, pt, r in of:
+            if abs((pt - t).total_seconds()) > 3 * 3600: continue
+            if _zgodni(sp, H, h) and _zgodni(sp, A, a): traf = (r, False); break
+            if sp != 'pilka' and _zgodni(sp, H, a) and _zgodni(sp, A, h): traf = (r, True); break
+        if not traf: continue
+        r, odwr = traf
+        ml = r.get('ml|0') or {}
+        ph, pa = (ml.get('away'), ml.get('home')) if odwr else (ml.get('home'), ml.get('away'))
+        if not ph or not pa: continue
+        h2h = [dict(name=H, price=ph), dict(name=A, price=pa)] + ([dict(name='Draw', price=ml['draw'])] if sp == 'pilka' and ml.get('draw') else [])
+        markets = [dict(key='h2h', outcomes=h2h)]
+        tot = [dict(name=n, price=v, point=float(k.split('|')[2])) for k, x in r.items() if k.startswith('tot|0|')
+               for n, v in (('Over', x.get('over')), ('Under', x.get('under'))) if v]
+        if tot: markets.append(dict(key='totals', outcomes=tot))
+        out.append(dict(ev, bookmakers=[dict(key='pinnacle', title='Pinnacle', markets=markets)], zrodlo_kursow='pinnacle_guest'))
+    return out
