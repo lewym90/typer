@@ -1,5 +1,5 @@
 {
- "czas": "2026-10-04 23:13 UTC",
+ "czas": "2026-10-04 23:55 UTC",
  "wersja": "czytnik-3",
  "bukmacherzy": {
   "fortuna": {
@@ -822,14 +822,14 @@
      "B": 1.08,
      "A -1.5": 15.0,
      "B min. 1 set": 1.01,
-     "A min. 1 set": 3.2,
-     "B -1.5": 1.32,
+     "A min. 1 set": 3.3,
+     "B -1.5": 1.3,
      "A 2:0": 15.0,
      "A 2:1": 11.0,
-     "B 2:1": 4.9,
+     "B 2:1": 4.8,
      "B 2:0": 1.32,
-     "Ponad 2.5 seta": 3.8,
-     "Poniżej 2.5 seta": 1.26
+     "Ponad 2.5 seta": 3.9,
+     "Poniżej 2.5 seta": 1.24
     },
     "pelna": true
    },
@@ -1023,44 +1023,38 @@
     "nazwa": "Argentinos Juniors - CA Tigre",
     "zgodnosc": 0.98,
     "kursy": {
-     "1": 1.04,
-     "X": 14.0,
+     "1": 1.15,
+     "X": 6.0,
      "2": 50.0,
-     "X2": 12.0,
-     "A o0.5": 2.0,
-     "H -3.5": 8.0,
-     "H -1.5": 1.3,
-     "H -4.5": 25.0,
-     "H -2.5": 2.7,
-     "Over 6.5": 25.0,
-     "Over 4.5": 5.75,
-     "Under 4.5": 1.12,
-     "Over 3.5": 2.4,
-     "Under 3.5": 1.5,
-     "Over 2.5": 1.25,
-     "Under 2.5": 3.6,
-     "Over 5.5": 16.0,
-     "Under 5.5": 1.02,
-     "H o4.5": 16.0,
-     "H o3.5": 5.0,
-     "H o2.5": 1.8,
-     "A o1.5": 7.0,
+     "12": 1.12,
+     "X2": 5.75,
+     "H -1.5": 4.9,
+     "H -2.5": 30.0,
+     "Over 4.5": 9.0,
+     "Under 4.5": 1.06,
+     "Over 3.5": 2.29,
+     "Under 3.5": 1.55,
+     "Over 5.5": 25.0,
+     "H o4.5": 25.0,
+     "H o3.5": 20.0,
+     "H o2.5": 3.6,
+     "A o1.5": 4.2,
      "A o2.5": 20.0,
-     "BTTS Tak": 2.0,
-     "BTTS Nie": 1.7,
-     "1 & u4.5": 1.14,
-     "1 & o4.5": 5.0,
-     "X & u4.5": 11.0,
-     "X & o4.5": 30.0,
+     "1 & u4.5": 1.18,
+     "1 & o4.5": 9.0,
+     "X & u4.5": 4.8,
+     "X & o4.5": 40.0,
      "2 & o4.5": 50.0,
-     "1 & u3.5": 1.4,
-     "1 & o3.5": 2.5,
-     "X & o3.5": 14.0,
+     "1 & u3.5": 1.45,
+     "1 & o3.5": 3.2,
+     "X & o3.5": 6.0,
      "2 & o3.5": 50.0,
-     "1 & u2.5": 2.9,
-     "1 & o2.5": 1.3,
-     "X & o2.5": 14.0,
-     "2 & o2.5": 50.0
+     "1 & u5.5": 1.13,
+     "1 & o5.5": 35.0,
+     "X & u5.5": 5.5,
+     "X & o5.5": 40.0,
+     "2 & u5.5": 22.0,
+     "2 & o5.5": 70.0
     },
     "pelna": true
    }
@@ -1377,7 +1371,7 @@
    "pilka": "ufo:sprt:00"
   },
   "turniejow": 77,
-  "meczow_fortuny": 392,
+  "meczow_fortuny": 402,
   "niedopasowane": [
    "pilka: Atlético Huracán – Aldosivi Mar del Plata",
    "pilka: Greece – Germany",
@@ -1770,10 +1764,10 @@
   },
   "sts": {
    "bledy": [],
-   "meczow_sts": 1386,
+   "meczow_sts": 1395,
    "sporty": {
-    "1": 1099,
-    "3": 220,
+    "1": 1101,
+    "3": 227,
     "166": 41,
     "19": 26
    },
@@ -1786,16 +1780,16 @@
     "pilka: Netherlands – Serbia",
     "pilka: Talleres – Belgrano de Cordoba"
    ],
-   "szczegoly_ramek": 3,
+   "szczegoly_ramek": 8,
    "szczegoly_odpowiedzi": "3 z 3",
    "szczegoly_tematy": {
     "f_f3550055_pl": 1,
-    "f_f3115697_pl": 1,
+    "f_f3115697_pl": 6,
     "f_f3115676_pl": 1
    },
    "szczegoly_meczow": {
     "Argentinos Juniors - CA Tigre": {
-     "3m13397583": 56
+     "3m13397583": 50
     },
     "Estudiantes Rio Cuarto - Racing Club Avellaneda": {
      "1m73265362": 99
@@ -1809,237 +1803,228 @@
    "rynki_przyklad": {
     "Argentinos Juniors - CA Tigre": {
      "1 Mecz": [
-      "Mecz | 1:1=1.04",
-      "Mecz | 2:X=14",
+      "Mecz | 1:1=1.15",
+      "Mecz | 2:X=6",
       "Mecz | 3:2=50"
      ],
      "7 ": [
-      "Wygra od stanu 2:0 | 1:=2.7",
-      "Wygra od stanu 2:0 | 2:=2.5",
-      "Wygra od stanu 2:0 | 3:=3.5"
+      "Wygra od stanu 2:1 | 1:=4.9",
+      "Wygra od stanu 2:1 | 2:=1.5",
+      "Wygra od stanu 2:1 | 3:=5.75"
      ],
      "8 Następny gol": [
-      "3. gol | 6:1=2.29",
-      "3. gol | 7:nikt=3.6",
-      "3. gol | 8:2=2.7"
+      "4. gol | 6:1=4.3",
+      "4. gol | 7:nikt=1.55",
+      "4. gol | 8:2=5"
      ],
      "10 Podwójna szansa": [
-      "Podwójna szansa | 11:X2=12"
+      "Podwójna szansa | 10:12=1.12",
+      "Podwójna szansa | 11:X2=5.75"
      ],
      "14 Handicap 1X2": [
-      "Handicap 1X2 | 922:1 (0:1)=1.3",
-      "Handicap 1X2 | 923:X (0:1)=4.4",
-      "Handicap 1X2 | 924:2 (0:1)=12",
-      "Handicap 1X2 | 922:1 (0:3)=8",
-      "Handicap 1X2 | 923:X (0:3)=3.8",
-      "Handicap 1X2 | 924:2 (0:3)=1.45",
-      "Handicap 1X2 | 922:1 (0:2)=2.7",
-      "Handicap 1X2 | 923:X (0:2)=2.5"
+      "Handicap 1X2 | 922:1 (0:1)=4.9",
+      "Handicap 1X2 | 923:X (0:1)=1.5",
+      "Handicap 1X2 | 924:2 (0:1)=5.75",
+      "Handicap 1X2 | 922:1 (0:3)=50",
+      "Handicap 1X2 | 923:X (0:3)=20",
+      "Handicap 1X2 | 924:2 (0:3)=1.01",
+      "Handicap 1X2 | 922:1 (0:2)=30",
+      "Handicap 1X2 | 923:X (0:2)=4.8"
      ],
      "22 Handicap": [
-      "Handicap | 925:1 (-0.5)=1.04",
-      "Handicap | 926:2 (+0.5)=12",
-      "Handicap | 925:1 (-3.5)=8",
-      "Handicap | 926:2 (+3.5)=1.09",
-      "Handicap | 925:1 (-1.5)=1.3",
-      "Handicap | 926:2 (+1.5)=3.5"
+      "Handicap | 925:1 (-0.5)=1.15",
+      "Handicap | 926:2 (+0.5)=5.75",
+      "Handicap | 925:1 (-1.5)=4.9",
+      "Handicap | 926:2 (+1.5)=1.19",
+      "Handicap | 925:1 (-2.5)=30",
+      "Handicap | 926:2 (+2.5)=1.01"
      ],
      "25 Liczba goli": [
-      "Liczba goli | 12:+6.5=25",
-      "Liczba goli | 12:+4.5=5.75",
-      "Liczba goli | 13:-4.5=1.12",
-      "Liczba goli | 12:+3.5=2.4",
-      "Liczba goli | 13:-3.5=1.5"
+      "Liczba goli | 12:+4.5=9",
+      "Liczba goli | 13:-4.5=1.06",
+      "Liczba goli | 12:+3.5=2.29",
+      "Liczba goli | 13:-3.5=1.55",
+      "Liczba goli | 12:+5.5=25"
      ],
      "28 1. drużyna - liczba goli": [
-      "1. drużyna - liczba goli | 12:+4.5=16",
-      "1. drużyna - liczba goli | 13:-4.5=1.02",
-      "1. drużyna - liczba goli | 12:+3.5=5",
-      "1. drużyna - liczba goli | 13:-3.5=1.15",
-      "1. drużyna - liczba goli | 12:+2.5=1.8",
-      "1. drużyna - liczba goli | 13:-2.5=1.9"
+      "1. drużyna - liczba goli | 12:+4.5=25",
+      "1. drużyna - liczba goli | 12:+3.5=20",
+      "1. drużyna - liczba goli | 13:-3.5=1.01",
+      "1. drużyna - liczba goli | 12:+2.5=3.6",
+      "1. drużyna - liczba goli | 13:-2.5=1.25"
      ],
      "31 2. drużyna - liczba goli": [
-      "2. drużyna - liczba goli | 12:+1.5=7",
-      "2. drużyna - liczba goli | 13:-1.5=1.1",
-      "2. drużyna - liczba goli | 12:+0.5=2",
-      "2. drużyna - liczba goli | 13:-0.5=1.75",
+      "2. drużyna - liczba goli | 12:+1.5=4.2",
+      "2. drużyna - liczba goli | 13:-1.5=1.2",
       "2. drużyna - liczba goli | 12:+2.5=20",
       "2. drużyna - liczba goli | 13:-2.5=1.01"
      ],
      "40 Suma goli": [
-      "Suma goli | 24:nieparzysta=1.9",
-      "Suma goli | 25:parzysta=1.8"
+      "Suma goli | 24:nieparzysta=1.4",
+      "Suma goli | 25:parzysta=2.7"
      ],
      "41 1. drużyna - suma goli": [
-      "1. drużyna - suma goli | 24:nieparzysta=2.29",
-      "1. drużyna - suma goli | 25:parzysta=1.55"
+      "1. drużyna - suma goli | 24:nieparzysta=4.2",
+      "1. drużyna - suma goli | 25:parzysta=1.2"
      ],
      "42 2. drużyna - suma goli": [
-      "2. drużyna - suma goli | 24:nieparzysta=2.5",
-      "2. drużyna - suma goli | 25:parzysta=1.45"
-     ],
-     "43 Obie drużyny - strzelą gola": [
-      "Obie drużyny - strzelą gola | 26:tak=2",
-      "Obie drużyny - strzelą gola | 27:nie=1.7"
-     ],
-     "45 ": [
-      "1. drużyna - zachowa czyste konto | 26:=1.75",
-      "1. drużyna - zachowa czyste konto | 27:=2"
+      "2. drużyna - suma goli | 24:nieparzysta=1.18",
+      "2. drużyna - suma goli | 25:parzysta=4.59"
      ],
      "49 Wynik końcowy i obie drużyny - strzelą gola": [
-      "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=2.1",
-      "Wynik końcowy i obie drużyny - strzelą gola | 29:1 i nie=1.6",
-      "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=14",
+      "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=1.15",
+      "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=6",
       "Wynik końcowy i obie drużyny - strzelą gola | 32:2 i tak=50"
      ],
      "50 Liczba goli i obie drużyny - strzelą gola": [
-      "Liczba goli i obie drużyny - strzelą gola | 34:+4.5 i tak=6.5",
-      "Liczba goli i obie drużyny - strzelą gola | 35:-4.5 i tak=2.7",
-      "Liczba goli i obie drużyny - strzelą gola | 36:+4.5 i nie=25",
-      "Liczba goli i obie drużyny - strzelą gola | 37:-4.5 i nie=1.75",
-      "Liczba goli i obie drużyny - strzelą gola | 34:+3.5 i tak=3",
-      "Liczba goli i obie drużyny - strzelą gola | 35:-3.5 i tak=4.9",
-      "Liczba goli i obie drużyny - strzelą gola | 36:+3.5 i nie=8.5",
-      "Liczba goli i obie drużyny - strzelą gola | 37:-3.5 i nie=2.1"
+      "Liczba goli i obie drużyny - strzelą gola | 34:+4.5 i tak=9",
+      "Liczba goli i obie drużyny - strzelą gola | 35:-4.5 i tak=1.06",
+      "Liczba goli i obie drużyny - strzelą gola | 34:+3.5 i tak=2.29",
+      "Liczba goli i obie drużyny - strzelą gola | 35:-3.5 i tak=1.55",
+      "Liczba goli i obie drużyny - strzelą gola | 34:+5.5 i tak=25"
      ],
      "51 Wynik końcowy i liczba goli": [
-      "Wynik końcowy i liczba goli | 235:1 i -4.5=1.14",
-      "Wynik końcowy i liczba goli | 236:1 i +4.5=5",
-      "Wynik końcowy i liczba goli | 237:X i -4.5=11",
-      "Wynik końcowy i liczba goli | 238:X i +4.5=30",
-      "Wynik końcowy i liczba goli | 235:1 i -3.5=1.4",
-      "Wynik końcowy i liczba goli | 236:1 i +3.5=2.5",
-      "Wynik końcowy i liczba goli | 238:X i +3.5=14",
+      "Wynik końcowy i liczba goli | 235:1 i -4.5=1.18",
+      "Wynik końcowy i liczba goli | 236:1 i +4.5=9",
+      "Wynik końcowy i liczba goli | 237:X i -4.5=4.8",
+      "Wynik końcowy i liczba goli | 238:X i +4.5=40",
+      "Wynik końcowy i liczba goli | 235:1 i -3.5=1.45",
+      "Wynik końcowy i liczba goli | 236:1 i +3.5=3.2",
+      "Wynik końcowy i liczba goli | 238:X i +3.5=6",
       "Wynik końcowy i liczba goli | 240:2 i +3.5=50"
      ],
      "811 Podwójna szansa i obie drużyny - strzelą gola": [
-      "Podwójna szansa i obie drużyny - strzelą gola | 929:1X i tak=2.1",
-      "Podwójna szansa i obie drużyny - strzelą gola | 930:1X i nie=1.75",
-      "Podwójna szansa i obie drużyny - strzelą gola | 931:12 i tak=2.4",
-      "Podwójna szansa i obie drużyny - strzelą gola | 932:12 i nie=1.75"
+      "Podwójna szansa i obie drużyny - strzelą gola | 931:12 i tak=1.12",
+      "Podwójna szansa i obie drużyny - strzelą gola | 933:X2 i tak=5.75"
      ],
      "812 Podwójna szansa i liczba goli": [
+      "Podwójna szansa i liczba goli | 935:1X i -4.5=1.06",
+      "Podwójna szansa i liczba goli | 936:12 i -4.5=1.25",
+      "Podwójna szansa i liczba goli | 937:X2 i -4.5=6",
+      "Podwójna szansa i liczba goli | 938:1X i +4.5=12",
       "Podwójna szansa i liczba goli | 935:1X i -3.5=1.55",
-      "Podwójna szansa i liczba goli | 936:12 i -3.5=1.55",
+      "Podwójna szansa i liczba goli | 936:12 i -3.5=1.6",
       "Podwójna szansa i liczba goli | 938:1X i +3.5=2.5",
-      "Podwójna szansa i liczba goli | 939:12 i +3.5=2.8",
-      "Podwójna szansa i liczba goli | 935:1X i -2.5=3.6",
-      "Podwójna szansa i liczba goli | 936:12 i -2.5=3.6",
-      "Podwójna szansa i liczba goli | 938:1X i +2.5=1.3",
-      "Podwójna szansa i liczba goli | 939:12 i +2.5=1.4"
+      "Podwójna szansa i liczba goli | 939:12 i +3.5=3.8"
      ],
      "1034 ": [
-      "Którakolwiek drużyna - wygra | 26:=1.04",
-      "Którakolwiek drużyna - wygra | 27:=15"
+      "Którakolwiek drużyna - wygra | 26:=1.13",
+      "Którakolwiek drużyna - wygra | 27:=6"
      ],
      "1059 ": [
-      "Zawodnik - strzeli co najmniej 2 gole | 366073151:Gutierrez, Kevin Facundo=11",
-      "Zawodnik - strzeli co najmniej 2 gole | 366073152:Laso, J=80",
-      "Zawodnik - strzeli co najmniej 2 gole | 366073153:Alvarez, Federico Hernán=90",
-      "Zawodnik - strzeli co najmniej 2 gole | 366073154:Verón, Gastón=4.3"
+      "Zawodnik - strzeli co najmniej 2 gole | 366073151:Gutierrez, Kevin Facundo=17",
+      "Zawodnik - strzeli co najmniej 2 gole | 366073152:Laso, J=100",
+      "Zawodnik - strzeli co najmniej 2 gole | 366073153:Alvarez, Federico Hernán=100",
+      "Zawodnik - strzeli co najmniej 2 gole | 366073155:Alvarez, Francisco=100"
      ],
      "1060 ": [
-      "Zawodnik - strzeli co najmniej 3 gole | 366072990:Gutierrez, Kevin Facundo=70",
+      "Zawodnik - strzeli co najmniej 3 gole | 366072990:Gutierrez, Kevin Facundo=150",
       "Zawodnik - strzeli co najmniej 3 gole | 366072991:Laso, J=200",
       "Zawodnik - strzeli co najmniej 3 gole | 366072992:Alvarez, Federico Hernán=200",
-      "Zawodnik - strzeli co najmniej 3 gole | 366072993:Verón, Gastón=25"
-     ],
-     "1224 2. drużyna - strzeli gola": [
-      "2. drużyna - strzeli gola | 26:tak=2",
-      "2. drużyna - strzeli gola | 27:nie=1.7"
-     ],
-     "1281 ": [
-      "Wynik po 75 minutach | 1:=1.01",
-      "Wynik po 75 minutach | 2:=20",
-      "Wynik po 75 minutach | 3:=70",
-      "Wynik po 60 minutach | 2:=11",
-      "Wynik po 60 minutach | 3:=100"
+      "Zawodnik - strzeli co najmniej 3 gole | 366072994:Alvarez, Francisco=200"
      ],
      "1333 ": [
-      "1. drużyna - suma rzutów rożnych | 24:=1.95",
-      "1. drużyna - suma rzutów rożnych | 25:=1.75"
+      "1. drużyna - suma rzutów rożnych | 24:=1.4",
+      "1. drużyna - suma rzutów rożnych | 25:=2.7"
      ],
      "1334 ": [
-      "2. drużyna - suma rzutów rożnych | 24:=1.85",
-      "2. drużyna - suma rzutów rożnych | 25:=1.85"
+      "2. drużyna - suma rzutów rożnych | 24:=1.55",
+      "2. drużyna - suma rzutów rożnych | 25:=2.29"
      ],
      "1857 ": [
-      "Dokładna liczba goli | 366073219:2=3.6",
-      "Dokładna liczba goli | 366073220:3=2.4",
-      "Dokładna liczba goli | 366073221:4=3.4",
-      "Dokładna liczba goli | 366073222:5=7"
+      "Dokładna liczba goli | 366073220:3=1.55",
+      "Dokładna liczba goli | 366073221:4=2.6",
+      "Dokładna liczba goli | 366073222:5=8",
+      "Dokładna liczba goli | 366073223:6=30"
      ],
      "1858 ": [
-      "1. drużyna - dokładna liczba goli | 366073319:2=1.9",
-      "1. drużyna - dokładna liczba goli | 366073320:3=2.4",
-      "1. drużyna - dokładna liczba goli | 366073321:4=5.5",
-      "1. drużyna - dokładna liczba goli | 366073322:5=16"
+      "1. drużyna - dokładna liczba goli | 366073319:2=1.25",
+      "1. drużyna - dokładna liczba goli | 366073320:3=3.6",
+      "1. drużyna - dokładna liczba goli | 366073321:4=14",
+      "1. drużyna - dokładna liczba goli | 366073322:5=40"
      ],
      "1859 ": [
-      "2. drużyna - dokładna liczba goli | 366073324:0=1.75",
-      "2. drużyna - dokładna liczba goli | 366073325:1=2.5",
-      "2. drużyna - dokładna liczba goli | 366073326:2=7",
-      "2. drużyna - dokładna liczba goli | 366073327:3=22"
+      "2. drużyna - dokładna liczba goli | 366073325:1=1.2",
+      "2. drużyna - dokładna liczba goli | 366073326:2=4.2",
+      "2. drużyna - dokładna liczba goli | 366073327:3=17"
      ],
      "1860 ": [
-      "Liczba goli - przedziały | 366073077:2-3=1.5",
-      "Liczba goli - przedziały | 366073078:4-5=2.4",
-      "Liczba goli - przedziały | 366073079:6-7=13",
-      "Liczba goli - przedziały | 366073080:8+=70"
+      "Liczba goli - przedziały | 366073077:2-3=1.55",
+      "Liczba goli - przedziały | 366073078:4-5=2.29",
+      "Liczba goli - przedziały | 366073079:6-7=25",
+      "Liczba goli - przedziały | 366073080:8+=100"
      ],
      "1867 ": [
-      "Rzuty rożne - przedziały | 366073515:0-9=1.35",
-      "Rzuty rożne - przedziały | 366073516:10-11=3.6",
-      "Rzuty rożne - przedziały | 366073517:12+=7.5"
+      "Rzuty rożne - przedziały | 366073515:0-9=1.06",
+      "Rzuty rożne - przedziały | 366073516:10-11=9",
+      "Rzuty rożne - przedziały | 366073517:12+=25"
      ],
      "1868 ": [
-      "1. drużyna - rzuty rożne - przedziały | 366073527:0-2=5.25",
-      "1. drużyna - rzuty rożne - przedziały | 366073528:3-4=2",
-      "1. drużyna - rzuty rożne - przedziały | 366073529:5-6=2.9",
-      "1. drużyna - rzuty rożne - przedziały | 366073530:7+=6"
+      "1. drużyna - rzuty rożne - przedziały | 366073528:3-4=1.18",
+      "1. drużyna - rzuty rożne - przedziały | 366073529:5-6=4.59",
+      "1. drużyna - rzuty rożne - przedziały | 366073530:7+=17"
      ],
      "1869 ": [
-      "2. drużyna - rzuty rożne - przedziały | 366073523:0-2=5.75",
-      "2. drużyna - rzuty rożne - przedziały | 366073524:3-4=1.75",
-      "2. drużyna - rzuty rożne - przedziały | 366073525:5-6=2.9",
-      "2. drużyna - rzuty rożne - przedziały | 366073526:7+=9"
-     ],
-     "1872 ": [
-      "1. drużyna - liczba goli - przedziały | 366073120:2-3=1.15",
-      "1. drużyna - liczba goli - przedziały | 366073121:4-5=5",
-      "1. drużyna - liczba goli - przedziały | 366073122:6+=30"
+      "2. drużyna - rzuty rożne - przedziały | 366073524:3-4=1.19",
+      "2. drużyna - rzuty rożne - przedziały | 366073525:5-6=4.4",
+      "2. drużyna - rzuty rożne - przedziały | 366073526:7+=22"
      ],
      "1873 ": [
-      "2. drużyna - liczba goli - przedziały | 366073123:0-1=1.1",
-      "2. drużyna - liczba goli - przedziały | 366073124:2-3=7",
-      "2. drużyna - liczba goli - przedziały | 366073125:4-5=25",
-      "2. drużyna - liczba goli - przedziały | 366073126:6+=90"
+      "2. drużyna - liczba goli - przedziały | 366073123:0-1=1.2",
+      "2. drużyna - liczba goli - przedziały | 366073124:2-3=4.2",
+      "2. drużyna - liczba goli - przedziały | 366073125:4-5=40",
+      "2. drużyna - liczba goli - przedziały | 366073126:6+=100"
      ],
      "52 Zawodnik - strzeli następnego gola": [
-      "Zawodnik - strzeli 3. gola | 366073127:Gutierrez, Kevin Facundo=25",
-      "Zawodnik - strzeli 3. gola | 366073128:Laso, J=35",
-      "Zawodnik - strzeli 3. gola | 366073129:Alvarez, Federico Hernán=40",
-      "Zawodnik - strzeli 3. gola | 366073130:Verón, Gastón=8.5"
+      "Zawodnik - strzeli 4. gola | 366073127:Gutierrez, Kevin Facundo=30",
+      "Zawodnik - strzeli 4. gola | 366073128:Laso, J=40",
+      "Zawodnik - strzeli 4. gola | 366073129:Alvarez, Federico Hernán=50",
+      "Zawodnik - strzeli 4. gola | 366073131:Alvarez, Francisco=40"
      ],
      "54 Zawodnik - strzeli gola": [
-      "Zawodnik - strzeli gola | 366072965:Laso, J=14",
-      "Zawodnik - strzeli gola | 366072966:Alvarez, Federico Hernán=16",
-      "Zawodnik - strzeli gola | 366072968:Alvarez, Francisco=14",
-      "Zawodnik - strzeli gola | 366072969:Prieto, S=13"
+      "Zawodnik - strzeli gola | 366072965:Laso, J=22",
+      "Zawodnik - strzeli gola | 366072966:Alvarez, Federico Hernán=25",
+      "Zawodnik - strzeli gola | 366072968:Alvarez, Francisco=22",
+      "Zawodnik - strzeli gola | 366072969:Prieto, S=20"
      ],
      "62 2. drużyna - wygra co najmniej jedną połowę": [
-      "2. drużyna - wygra co najmniej jedną połowę | 26:tak=3.3",
-      "2. drużyna - wygra co najmniej jedną połowę | 27:nie=1.3"
+      "2. drużyna - wygra co najmniej jedną połowę | 26:tak=1.19",
+      "2. drużyna - wygra co najmniej jedną połowę | 27:nie=4.4"
      ],
      "67 1. drużyna - strzeli gola w obu połowach": [
-      "1. drużyna - strzeli gola w obu połowach | 26:tak=1.8",
-      "1. drużyna - strzeli gola w obu połowach | 27:nie=1.9"
+      "1. drużyna - strzeli gola w obu połowach | 26:tak=3.6",
+      "1. drużyna - strzeli gola w obu połowach | 27:nie=1.25"
      ],
      "102 2. połowa": [
-      "2. połowa | 1:1=2.7",
-      "2. połowa | 2:X=2.5",
-      "2. połowa | 3:2=3.3"
+      "2. połowa | 1:1=30",
+      "2. połowa | 2:X=4.9",
+      "2. połowa | 3:2=1.19"
+     ],
+     "104 2. połowa - podwójna szansa": [
+      "2. połowa - podwójna szansa | 10:12=1.13",
+      "2. połowa - podwójna szansa | 11:X2=1.01",
+      "2. połowa - podwójna szansa | 9:1X=4"
+     ],
+     "105 2. połowa - zakład bez remisu": [
+      "2. połowa - zakład bez remisu | 4:1=20",
+      "2. połowa - zakład bez remisu | 5:2=1.01"
+     ],
+     "106 2. połowa - handicap 1X2": [
+      "2. połowa - handicap 1X2 | 922:1 (1:0)=4.4",
+      "2. połowa - handicap 1X2 | 923:X (1:0)=1.45",
+      "2. połowa - handicap 1X2 | 924:2 (1:0)=5.25"
+     ],
+     "112 2. połowa - liczba goli": [
+      "2. połowa - liczba goli | 12:+1.5=2.29",
+      "2. połowa - liczba goli | 13:-1.5=1.55",
+      "2. połowa - liczba goli | 12:+2.5=9",
+      "2. połowa - liczba goli | 13:-2.5=1.06"
+     ],
+     "115 2. połowa - 1. drużyna - liczba goli": [
+      "2. połowa - 1. drużyna - liczba goli | 12:+1.5=20",
+      "2. połowa - 1. drużyna - liczba goli | 13:-1.5=1.01",
+      "2. połowa - 1. drużyna - liczba goli | 12:+0.5=3.6",
+      "2. połowa - 1. drużyna - liczba goli | 13:-0.5=1.25"
      ]
     },
     "Estudiantes Rio Cuarto - Racing Club Avellaneda": {
@@ -2293,8 +2278,8 @@
      "265 Sety - handicap": [
       "Sety - handicap | 925:1 (-1.5)=15",
       "Sety - handicap | 926:2 (+1.5)=1.01",
-      "Sety - handicap | 925:1 (+1.5)=3.2",
-      "Sety - handicap | 926:2 (-1.5)=1.32"
+      "Sety - handicap | 925:1 (+1.5)=3.3",
+      "Sety - handicap | 926:2 (-1.5)=1.3"
      ],
      "277 Będzie set do zera": [
       "Będzie set do zera | 26:tak=5",
@@ -2303,74 +2288,74 @@
      "285 Dokładny wynik": [
       "Dokładny wynik | 1157:2:0=15",
       "Dokładny wynik | 1158:2:1=11",
-      "Dokładny wynik | 1159:1:2=4.9",
+      "Dokładny wynik | 1159:1:2=4.8",
       "Dokładny wynik | 1160:0:2=1.32"
      ],
      "292 1. set / wynik końcowy": [
       "1. set / wynik końcowy | 252:1 / 1=10",
       "1. set / wynik końcowy | 253:2 / 1=17",
-      "1. set / wynik końcowy | 254:1 / 2=8.6",
-      "1. set / wynik końcowy | 255:2 / 2=1.18"
+      "1. set / wynik końcowy | 254:1 / 2=9.2",
+      "1. set / wynik końcowy | 255:2 / 2=1.17"
      ],
      "293 Set ": [
-      "1. set  | 4:1=5.4",
-      "1. set  | 5:2=1.14"
+      "1. set  | 4:1=5.6",
+      "1. set  | 5:2=1.13"
      ],
      "301 Set - będzie tie-break": [
-      "1. set - będzie tie-break | 26:tak=8.4",
+      "1. set - będzie tie-break | 26:tak=8.6",
       "1. set - będzie tie-break | 27:nie=1.06"
      ],
      "479 Liczba setów": [
-      "Liczba setów | 12:+2.5=3.8",
-      "Liczba setów | 13:-2.5=1.26"
+      "Liczba setów | 12:+2.5=3.9",
+      "Liczba setów | 13:-2.5=1.24"
      ],
      "1967 Liczba tie-breaków": [
       "Liczba tie-breaków | 12:+1.5=20",
-      "Liczba tie-breaków | 12:+0.5=4.2",
-      "Liczba tie-breaków | 13:-0.5=1.19"
+      "Liczba tie-breaków | 12:+0.5=4.4",
+      "Liczba tie-breaków | 13:-0.5=1.18"
      ],
      "262 Gemy - handicap": [
-      "Gemy - handicap | 925:1 (+3.5)=4.2",
-      "Gemy - handicap | 926:2 (-3.5)=1.21",
-      "Gemy - handicap | 925:1 (+6.5)=1.65",
-      "Gemy - handicap | 926:2 (-6.5)=2.1",
+      "Gemy - handicap | 925:1 (+3.5)=4.4",
+      "Gemy - handicap | 926:2 (-3.5)=1.2",
+      "Gemy - handicap | 925:1 (+6.5)=1.75",
+      "Gemy - handicap | 926:2 (-6.5)=2",
       "Gemy - handicap | 925:1 (+7.5)=1.4",
-      "Gemy - handicap | 926:2 (-7.5)=2.9"
+      "Gemy - handicap | 926:2 (-7.5)=2.85"
      ],
      "268 Liczba gemów": [
-      "Liczba gemów | 12:+19.5=2.15",
-      "Liczba gemów | 13:-19.5=1.65",
-      "Liczba gemów | 12:+21.5=2.8",
-      "Liczba gemów | 13:-21.5=1.4",
-      "Liczba gemów | 12:+20.5=2.55",
+      "Liczba gemów | 12:+19.5=2.25",
+      "Liczba gemów | 13:-19.5=1.6",
+      "Liczba gemów | 12:+21.5=2.9",
+      "Liczba gemów | 13:-21.5=1.37",
+      "Liczba gemów | 12:+20.5=2.6",
       "Liczba gemów | 13:-20.5=1.47"
      ],
      "271 1. zawodnik - liczba gemów": [
       "1. zawodnik - liczba gemów | 12:+6.5=1.9",
-      "1. zawodnik - liczba gemów | 13:-6.5=1.85",
-      "1. zawodnik - liczba gemów | 12:+7.5=2.2",
+      "1. zawodnik - liczba gemów | 13:-6.5=1.8",
+      "1. zawodnik - liczba gemów | 12:+7.5=2.25",
       "1. zawodnik - liczba gemów | 13:-7.5=1.6",
-      "1. zawodnik - liczba gemów | 12:+5.5=1.55",
-      "1. zawodnik - liczba gemów | 13:-5.5=2.3"
+      "1. zawodnik - liczba gemów | 12:+5.5=1.6",
+      "1. zawodnik - liczba gemów | 13:-5.5=2.2"
      ],
      "274 2. zawodnik - liczba gemów": [
       "2. zawodnik - liczba gemów | 12:+13.5=4.1",
       "2. zawodnik - liczba gemów | 13:-13.5=1.21",
       "2. zawodnik - liczba gemów | 12:+11.5=1.02",
       "2. zawodnik - liczba gemów | 13:-11.5=13",
-      "2. zawodnik - liczba gemów | 12:+12.5=2.35",
-      "2. zawodnik - liczba gemów | 13:-12.5=1.55"
+      "2. zawodnik - liczba gemów | 12:+12.5=2.45",
+      "2. zawodnik - liczba gemów | 13:-12.5=1.5"
      ],
      "275 1. zawodnik - wygra co najmniej seta": [
-      "1. zawodnik - wygra co najmniej seta | 26:tak=3.2",
-      "1. zawodnik - wygra co najmniej seta | 27:nie=1.32"
+      "1. zawodnik - wygra co najmniej seta | 26:tak=3.3",
+      "1. zawodnik - wygra co najmniej seta | 27:nie=1.3"
      ],
      "276 2. zawodnik - wygra co najmniej seta": [
       "2. zawodnik - wygra co najmniej seta | 26:tak=1.01",
       "2. zawodnik - wygra co najmniej seta | 27:nie=15"
      ],
      "282 Suma gemów": [
-      "Suma gemów | 24:nieparzysta=1.85",
+      "Suma gemów | 24:nieparzysta=1.9",
       "Suma gemów | 25:parzysta=1.85"
      ],
      "296 Set - gemy - handicap": [
@@ -2384,10 +2369,10 @@
      "299 Set - liczba gemów": [
       "1. set - liczba gemów | 12:+12.5=8.6",
       "1. set - liczba gemów | 13:-12.5=1.06",
-      "1. set - liczba gemów | 12:+9.5=2.65",
-      "1. set - liczba gemów | 13:-9.5=1.45",
+      "1. set - liczba gemów | 12:+9.5=2.8",
+      "1. set - liczba gemów | 13:-9.5=1.42",
       "1. set - liczba gemów | 12:+8.5=1.7",
-      "1. set - liczba gemów | 13:-8.5=2.1"
+      "1. set - liczba gemów | 13:-8.5=2"
      ],
      "300 Set - suma gemów": [
       "1. set - suma gemów | 24:nieparzysta=2",
@@ -2403,12 +2388,12 @@
      ],
      "1186 Zwycięzca i liczba gemów": [
       "Zwycięzca i liczba gemów | 314:1 i +19.5=8.6",
-      "Zwycięzca i liczba gemów | 315:2 i +19.5=2.6",
-      "Zwycięzca i liczba gemów | 316:1 i -19.5=22",
+      "Zwycięzca i liczba gemów | 315:2 i +19.5=2.65",
+      "Zwycięzca i liczba gemów | 316:1 i -19.5=21",
       "Zwycięzca i liczba gemów | 317:2 i -19.5=1.65",
       "Zwycięzca i liczba gemów | 314:1 i +20.5=9.2",
-      "Zwycięzca i liczba gemów | 315:2 i +20.5=3",
-      "Zwycięzca i liczba gemów | 316:1 i -20.5=20",
+      "Zwycięzca i liczba gemów | 315:2 i +20.5=3.2",
+      "Zwycięzca i liczba gemów | 316:1 i -20.5=19",
       "Zwycięzca i liczba gemów | 317:2 i -20.5=1.5"
      ],
      "1956 Zwycięzca meczu - SuperOferta": [
@@ -2440,13 +2425,13 @@
      ],
      "2313 1. zawodnik - 1. gem serwisowy - dokładny wynik": [
       "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=9.6",
-      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=5.6",
-      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3323:wygra do 30=5",
+      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=5.8",
+      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3323:wygra do 30=5.2",
       "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3324:wygra do 40=5.2"
      ],
      "2314 2. zawodnik - 1. gem serwisowy - dokładny wynik": [
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=4.2",
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=3.5",
+      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=4.1",
+      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=3.4",
       "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3323:wygra do 30=4.1",
       "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3324:wygra do 40=4.9"
      ]
@@ -2503,10 +2488,10 @@
      ]
     }
    },
-   "sekund": 7,
+   "sekund": 6,
    "z_kursami": 2
   }
  },
  "lista": "29a3cb0c3e59",
- "sekund": 76
+ "sekund": 64
 }
