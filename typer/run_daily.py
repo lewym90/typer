@@ -245,7 +245,8 @@ def typy_na_dzis():
                 mecz=f"{x['home']} – {x['away']}", gospodarz=x['home'], gosc=x['away'], poziom=poziom, klucz=typ['klucz'],
                 zaklad=typ['zaklad'], szansa=typ['szansa'], kurs_uczciwy=typ['kurs_uczciwy'], kurs_betclic=typ['kurs_betclic'],
                 zrodlo=x['tryb'], ostrzezenie=bool((x.get('raport') or {}).get('powazne')), wynik='', trafiony=np.nan, zysk_na_1zl=np.nan,
-                ai=werd(x) or '', lista=lista, nizsza=bool(nizsza))
+                ai=werd(x) or '', lista=lista, nizsza=bool(nizsza),
+                szansa_ai=(((x.get('raport') or {}).get('ai') or {}).get('szansa_koncowa') if poziom == 'najpewniejszy' else None))   # wersja 54
     for t in sorted(wybrane, key=lambda t: t['x']['start']):
         x, liga = t['x'], t['liga']
         glowny = wybierz(x, liga, [t['z']], 1.0, 99)
@@ -1056,14 +1057,17 @@ def tg_typy_wszystkie(d, inne, gl, status):
     for i, (sp, m) in enumerate(pew, 1):
         lin += _linie_pewnego(sp, m, i)
         if str(m.get('event_id')) in nies: lin.append('   ▫️ <i>nie sprawdzony rano przez AI – to nie znaczy „bez wątpliwości”</i>')   # wersja 52
-        dr = [x for x in (((m.get('raport') or {}).get('ai') or {}).get('drogi') or []) if x.get('realna')]
-        if dr: lin.append('   ⚠️ <i>Droga do porażki: ' + esc_(dr[0]['jak']) + (f" ({esc_(dr[0]['fakt'][:120])})" if dr[0].get('fakt') else '') + '</i>')
+        ai_ = ((m.get('raport') or {}).get('ai') or {})          # wersja 54: jedna liczba po analizie zamiast listy obaw
+        if ai_.get('szansa_koncowa') is not None:
+            lin.append(f"   🧠 po analizie AI: <b>{tg.pct(ai_['szansa_koncowa'])}</b> (z kursów {tg.pct(ai_.get('szansa_rynek') or 0)})")
+            dr = [x for x in (ai_.get('drogi') or []) if (x.get('procent') or 0) >= 15]
+            if ai_.get('werdykt') == 'ryzyko' and dr: lin.append(f"   ⚠️ <i>Główne ryzyko (ok. {dr[0]['procent']}%): {esc_(dr[0]['jak'])}</i>")
     kp = gl.get('kupon')   # wersja 52: kupon dnia – tylko typy sprawdzone bez wątpliwości, z prawdziwą szansą całości
     if kp:
-        lin.append('\n🎫 <b>Kupon dnia</b> (tylko sprawdzone, bez realnej drogi do porażki)')
+        lin.append('\n🎫 <b>Kupon dnia</b> (sprawdzone przez AI, szansa po analizie)')
         for t in kp['typy']: lin.append(f"• {esc_(str(t.get('mecz')))} – {esc_(str(t.get('zaklad')))} · {tg.pct(t['szansa'])}" + (f" · {tg.kurs(t['kurs'])}" if t.get('kurs') else ''))
         lin.append(f"Szansa całego kuponu: <b>{tg.pct(kp['szansa'])}</b>" + (f" · kurs {tg.kurs(kp['kurs'])} · za 50 zł: {kp['wygrana_50']:.2f} zł" if kp.get('kurs') else ''))
-    elif pew: lin.append('\n🎫 <i>Dziś brak kuponu dnia – za mało typów sprawdzonych bez wątpliwości.</i>')
+    elif pew: lin.append('\n🎫 <i>Dziś brak kuponu dnia – za mało typów, które po analizie AI mają co najmniej 70%.</i>')
     odr = [('pilka', m) for m in (d.get('odradzane') or [])] + [(sp, m) for sp in ('tenis', 'walki') for m in ((inne or {}).get(sp) or {}).get('odradzane', [])]
     if odr:
         lin.append('')

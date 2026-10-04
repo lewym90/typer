@@ -138,16 +138,17 @@ Nie zgadzasz się domyślnie z nikim. Werdykt:
  "odradza" – mocny, potwierdzony w źródle powód przeciw, którego kurs prawdopodobnie nie uwzględnia.
 Kurs zawiera to, co powszechnie wiadomo – Twoja wartość to fakty, których rynek może jeszcze nie wycenić."""
 
-CZLOWIEK = """MYŚL JAK CZŁOWIEK, KTÓRY ZNA TYCH LUDZI – NIE JAK TABELKA (wersja 52):
+CZLOWIEK = """MYŚL JAK CZŁOWIEK, KTÓRY ZNA TYCH LUDZI – NIE JAK TABELKA (wersja 52–54):
 Na boisku/korcie są konkretni ludzie z konkretnym życiem TERAZ. Sprawdź, co dzieje się u nich w tych dniach: zdrowie i to, jak sami o nim
 mówią (i czy słowa zgadzają się z tym, co robią – np. wycofanie z debla, skrócony trening), głowa (sprawy prywatne i rodzinne, konflikty,
 kontrakt, transfer, presja, media, kibice), zmęczenie i podróż, motywacja (czy na tym meczu/turnieju naprawdę im zależy), atmosfera w zespole.
 Nie stosuj schematów („uraz = przegra”) – pomyśl, co TO znaczy u TEJ osoby w TYM meczu. Szukaj nieścisłości (kurs się nie ruszył mimo
 złych wieści, deklaracje sprzeczne z zachowaniem, dziwne decyzje trenera) – one mówią najwięcej.
-Najważniejsze: wymień konkretne DROGI DO PORAŻKI tego zakładu (jak realnie może przegrać) i przy każdej oceń, czy jest realna dziś,
-na podstawie faktów. Zakład jest „pewny” tylko wtedy, gdy nie widzisz żadnej realnej drogi do porażki."""
+DROGI DO PORAŻKI ZWAŻ, NIE STRASZ: każdy zakład ma jakąś drogę do porażki – samo jej wymienienie nic nie daje. Przy każdej podaj, jak
+bardzo jest prawdopodobna DZIŚ (procent, oparty na faktach), a potem podaj JEDNĄ końcową szansę zakładu („szansa_wlasna”), w której
+wszystko to już uwzględniłeś. Ta liczba jest Twoją odpowiedzią – ma być rzetelna, nie ostrożna na wszelki wypadek."""
 CZLOWIEK_JSON = ''',
-  "drogi_do_porazki": [{"jak": "jak zakład może przegrać", "fakt": "na czym to opierasz (albo „brak faktów”)", "realna": true/false}],
+  "drogi_do_porazki": [{"jak": "jak zakład może przegrać", "fakt": "na czym to opierasz", "procent": 0}],
   "niescislosci": ["sprzeczność lub dziwny sygnał, jeśli jest"],
   "czlowiek": {"a": "1–2 zdania: co dziś dzieje się u pierwszego zawodnika/drużyny (zdrowie, głowa, motywacja) albo pusty", "b": "to samo dla drugiego"}'''
 
@@ -382,7 +383,9 @@ def raport_ai(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, braki=None, zapowied
                 lepszy_zaklad=str(d.get('lepszy_zaklad') or '')[:160], typ=typ[0] if typ else None,
                 szanse_wlasne=_trzy(d.get('szanse_wlasne')), ponizej_2_5=_ulamek(d.get('ponizej_2_5')),
                 czas=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%H:%M'), **czlowiek_z(d))
-    out['werdykt'] = werdykt_po_drogach(out['werdykt'], out)
+    out['szansa_rynek'] = typ[1] if typ else None
+    out['szansa_koncowa'] = szansa_koncowa(out, typ[1]) if typ else None
+    out['werdykt'] = werdykt_po_drogach(out['werdykt'], out, typ[1] if typ else None)
     if out['werdykt'] != w and out['werdykt']: STAN['werdykty'][out['werdykt']] = STAN['werdykty'].get(out['werdykt'], 0) + 1
     do_pamieci(kp, out)
     try:
@@ -399,19 +402,39 @@ def _pamiec_ludzi(*nazwy):
 
 
 def czlowiek_z(d):
-    """Wersja 52: drogi do porażki, nieścisłości i obserwacje „ludzkie” z odpowiedzi AI."""
+    """Wersja 52/54: drogi do porażki z procentem, nieścisłości i obserwacje „ludzkie” z odpowiedzi AI."""
     drogi = []
     for x in (d.get('drogi_do_porazki') or [])[:6]:
         if isinstance(x, dict) and x.get('jak'):
-            drogi.append(dict(jak=str(x['jak'])[:200], fakt=str(x.get('fakt') or '')[:240], realna=bool(x.get('realna'))))
+            try: pr = max(0, min(100, int(round(float(str(x.get('procent', '')).strip('% ') or 0)))))
+            except Exception: pr = None
+            drogi.append(dict(jak=str(x['jak'])[:200], fakt=str(x.get('fakt') or '')[:240], procent=pr, realna=bool(x.get('realna')) or (pr or 0) >= 15))
+    drogi.sort(key=lambda x: -(x['procent'] or 0))
     cz = d.get('czlowiek') if isinstance(d.get('czlowiek'), dict) else {}
     return dict(drogi=drogi, niescislosci=[str(x)[:200] for x in (d.get('niescislosci') or []) if x][:4],
                 czlowiek={k: str(cz.get(k) or '')[:300] for k in ('a', 'b')})
 
 
-def werdykt_po_drogach(w, out):
-    """Realna droga do porażki oparta na fakcie = to nie jest typ „bez wątpliwości” (zgoda → ryzyko). Werdykt „odradza” zostaje."""
-    if w == 'zgoda' and any(x['realna'] and x['fakt'] and 'brak fakt' not in x['fakt'].lower() for x in out.get('drogi') or []): return 'ryzyko'
+WAGA_AI = 0.5           # ile ważą fakty z analizy AI wobec szansy z kursów (do samokorekty na dzienniku)
+
+
+def szansa_koncowa(out, p_rynek):
+    """Wersja 54: JEDNA szansa zakładu po analizie: szansa z kursów przesunięta w stronę oceny AI (po zważeniu dróg do porażki).
+    Bez wyszukiwania (AI bez świeżych faktów) – mniejsza waga."""
+    sw = out.get('szansa_wlasna')
+    try: p = float(p_rynek)
+    except Exception: return None
+    if sw is None or not 0 < p < 1: return None
+    w = WAGA_AI if out.get('szukal') else WAGA_AI / 2
+    return round(max(0.01, min(0.99, p + w * (sw - p))), 4)
+
+
+def werdykt_po_drogach(w, out, p_rynek=None):
+    """Wersja 54: werdykt zgodny z liczbą – „zgoda” zostaje, chyba że końcowa szansa spadła o ≥ 6 pkt wobec kursów (wtedy „ryzyko”)."""
+    sk = out.get('szansa_koncowa')
+    try: p = float(p_rynek)
+    except Exception: p = None
+    if w == 'zgoda' and sk is not None and p is not None and sk <= p - 0.06: return 'ryzyko'
     return w
 
 def zmiana_istotna(stary, nowy):

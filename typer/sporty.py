@@ -418,7 +418,9 @@ def raport_ai(m, polski_=False, wymus=False, typ=None):
                powod=str(d.get('powod') or '')[:220], forma=str(d.get('forma') or '')[:260], styl=str(d.get('styl') or '')[:260],
                lepszy_zaklad=str(d.get('lepszy_zaklad') or '')[:160], typ=typ[0] if typ else None, czas=teraz().strftime('%H:%M'),
                **ai_raport.czlowiek_z(d))
-    out['werdykt'] = ai_raport.werdykt_po_drogach(out['werdykt'], out)      # wersja 52: realna droga do porażki = nie „bez wątpliwości”
+    out['szansa_rynek'] = typ[1] if typ else None                          # wersja 54: jedna szansa po analizie
+    out['szansa_koncowa'] = ai_raport.szansa_koncowa(out, typ[1]) if typ else None
+    out['werdykt'] = ai_raport.werdykt_po_drogach(out['werdykt'], out, typ[1] if typ else None)
     try:
         import pamiec_ludzi; pamiec_ludzi.z_analizy((m['a'], m['b']), out)
     except Exception: pass
@@ -490,7 +492,8 @@ def wiersze_do_dziennika(sp, pewne, mecze, odradzane=()):
         for poz in ('najpewniejszy', 'lepszy_kurs', 'ryzykowny'):
             t = m.get(poz)
             if t: out.append(dict(base(m), rodzaj='pewne', poziom=poz, klucz=t['klucz'], zaklad=t['zaklad'], szansa=t['szansa'],
-                                  nizsza=bool(m.get('nizsza_pewnosc')) and poz == 'najpewniejszy'))
+                                  nizsza=bool(m.get('nizsza_pewnosc')) and poz == 'najpewniejszy',
+                                  szansa_ai=(((m.get('raport') or {}).get('ai') or {}).get('szansa_koncowa') if poz == 'najpewniejszy' else None)))
     for m in odradzane:   # nie gramy – zapis pokaże, czy AI miało rację
         t = m.get('najpewniejszy')
         if t: out.append(dict(base(m), rodzaj='odradzane', poziom='najpewniejszy', klucz=t['klucz'], zaklad=t['zaklad'], szansa=t['szansa'], nizsza=False))
@@ -658,6 +661,38 @@ def ocen(klucz, sport, bo, w):
     rk = walki.rynki({('A', 'KO'): 0, ('A', 'PKT'): 0, ('B', 'KO'): 0, ('B', 'PKT'): 0})
     return 1.0 if (kto, met) in rk.get(klucz, set()) else 0.0
 
+_FW = {}
+def _flash_walki(m):
+    """Wersja 54: wynik walki z Flashscore (MMA id 28, boks id 16): pole AS = zwycięzca, AG = sposób/runda („TKO/2”, „points/3”, „SUB/1”).
+    ESPN nie podaje sposobu zwycięstwa – bez tego typy „przed czasem / na punkty / pełny dystans” wisiały. Zwraca jak wynik_meczu."""
+    try:
+        import flash, archiwum_inne as AI
+        t = pd.Timestamp(str(m['start'])[:16])
+        dz = teraz().tz_localize(None).normalize()
+        for d in {t.normalize(), (t + pd.Timedelta(hours=8)).normalize()}:
+            przes = int((d - dz).days)
+            if przes > 0 or przes < -7: continue
+            for sid in (28, 16):
+                k = (sid, przes)
+                if k not in _FW: _FW[k] = flash.parsuj(flash._get(sid, przes) or '')
+                for p in _FW[k]:
+                    for odwr in (False, True):
+                        fa, fb = (p.get('AF'), p.get('AE')) if odwr else (p.get('AE'), p.get('AF'))
+                        if not (AI._zgodne(fa, m['a'], 'tenis') and AI._zgodne(fb, m['b'], 'tenis')): continue
+                        if str(p.get('AC')) == '5': return 'odwolany', None, 'walka odwołana'
+                        if str(p.get('AB')) != '3': return None, None, ''
+                        sposob = str(p.get('AG') or p.get('AT') or '')
+                        if re.search(r'draw|remis|\bnc\b|no contest', sposob, re.I): return 'remis', None, 'remis / no contest'
+                        aw = str(p.get('AS') or '')
+                        if aw not in ('1', '2'): return None, None, ''
+                        kto = ('A' if aw == '1' else 'B') if not odwr else ('B' if aw == '1' else 'A')
+                        met = 'PKT' if re.search(r'point|dec|pkt', sposob, re.I) else ('KO' if re.search(r'ko|sub|dq|rtd|stop', sposob, re.I) else None)
+                        opis = f"wygrał {m['a'] if kto == 'A' else m['b']}" + (f" ({'przed czasem' if met == 'KO' else 'na punkty'}, {sposob})" if met else '')
+                        return 'ok', (kto, met), opis
+    except Exception as e: _blad(f'Flashscore walki: {e}')
+    return None, None, ''
+
+
 def _odds_api_wyniki(keys):
     """Zapasowo (2 kredyty na turniej/galę): zwycięzca z The Odds API – gdy ESPN nie ma meczu (np. boks)."""
     out = {}
@@ -746,6 +781,8 @@ def rozlicz(pelne=False):
         if r0.sport_key == 'ksw':
             st, w, op = wynik_ksw(m)
             if st is None: continue
+        elif r0.sport == 'walki' and _flash_walki(m)[0] is not None:     # wersja 54: Flashscore – zwycięzca I sposób (KO/TKO/poddanie/punkty)
+            st, w, op = _flash_walki(m)
         else:
             x, odwr = znajdz_espn(m)
             if not x or not x['koniec']:

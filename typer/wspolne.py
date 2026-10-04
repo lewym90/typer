@@ -50,7 +50,7 @@ def mozna_podmienic_typy(t=None):
 def _pewne_pilka(dzis):
     for m in dzis.get('pewne', []):
         ai = (m.get('raport') or {}).get('ai') or {}
-        yield dict(sport='pilka', event_id=str(m.get('event_id') or m['mecz']), szansa=float(m['szansa']), start=m['start'],
+        yield dict(sport='pilka', event_id=str(m.get('event_id') or m['mecz']), szansa=_sz(ai, m['szansa']), start=m['start'],
                    werdykt=(m.get('raport') or {}).get('werdykt') or m.get('werdykt'), niz=bool(m.get('nizsza_pewnosc')), ksw=False,
                    mecz=m.get('mecz'), zaklad=m.get('zaklad'), kurs=_najlepszy(m), drogi=_drogi_realne(ai))
 
@@ -59,7 +59,7 @@ def _pewne_inne(inne, sp):
     for i in s.get('pewne', []):
         m = byid.get(i)
         if not m or not m.get('najpewniejszy'): continue
-        yield dict(sport=sp, event_id=str(i), szansa=float(m['najpewniejszy']['szansa']), start=m['start'],
+        yield dict(sport=sp, event_id=str(i), szansa=_sz((m.get('raport') or {}).get('ai') or {}, m['najpewniejszy']['szansa']), start=m['start'],
                    werdykt=_werdykt_inne(m), niz=bool(m.get('nizsza_pewnosc')), ksw=bool(m.get('rynek_pl')),
                    mecz=m.get('mecz') or f"{m.get('a')} – {m.get('b')}", zaklad=m['najpewniejszy'].get('zaklad'), kurs=_najlepszy(m['najpewniejszy']),
                    drogi=_drogi_realne((m.get('raport') or {}).get('ai') or {}))
@@ -68,13 +68,20 @@ def _najlepszy(t):
     try: return max(float(v) for v in (t.get('kursy_pl') or {}).values() if v)
     except Exception: return None
 
+def _sz(ai, p):
+    """Wersja 54: szansa po analizie AI (drogi do porażki zważone w procentach), inaczej szansa z kursów."""
+    try: return float(ai.get('szansa_koncowa') or p)
+    except Exception: return float(p)
+
 def _drogi_realne(ai):
-    return [x['jak'] for x in (ai.get('drogi') or []) if isinstance(x, dict) and x.get('realna')][:3]
+    """Wersja 54: drogi do porażki są już w szansie – osobno liczy się tylko ta, przez którą AI obniżyło werdykt."""
+    if ai.get('werdykt') != 'ryzyko': return []
+    return [x['jak'] for x in (ai.get('drogi') or []) if isinstance(x, dict) and (x.get('procent') or 0) >= 15][:1]
 
 def kupon_dnia(kand, maks=4):
-    """Wersja 52: kupon dnia składany przez program – tylko typy sprawdzone rano przez AI („zgoda”, bez realnej drogi do porażki),
+    """Wersja 52/54: kupon dnia składany przez program – tylko typy sprawdzone rano przez AI („zgoda”, szansa po analizie ≥ 70%),
     z różnych meczów, najmocniejsze; prawdziwa szansa całego kuponu = iloczyn szans (pokazywana wprost)."""
-    ok = [k for k in kand if k['werdykt'] == 'zgoda' and not k.get('drogi') and not k['niz'] and k['szansa'] >= MIN_SZANSA]
+    ok = [k for k in kand if k['werdykt'] == 'zgoda' and not k['niz'] and k['szansa'] >= MIN_SZANSA]
     ok.sort(key=lambda k: -k['szansa'])
     wyb, mecze = [], set()
     for k in ok:
@@ -114,7 +121,7 @@ def wybierz(dzis, inne):
     kand = [k for k in kand if k['werdykt'] != 'odradza' and (ksw_ok or not k['ksw'])]
     # wersja 52: rano najpierw typy SPRAWDZONE przez AI bez wątpliwości („zgoda”, bez realnej drogi do porażki), potem niesprawdzone,
     # na końcu „ryzyko” – brak oceny nie może wyglądać jak „bez wątpliwości”
-    rang = lambda k: 0 if (k['werdykt'] == 'zgoda' and not k.get('drogi')) else (1 if not k['werdykt'] or k['werdykt'] == 'niepelna' else 2)
+    rang = lambda k: 0 if k['werdykt'] == 'zgoda' else (1 if not k['werdykt'] or k['werdykt'] == 'niepelna' else 2)
     kand.sort(key=lambda k: (k['niz'] or k['szansa'] < MIN_SZANSA, rang(k), -k['szansa']))
     pewne = sorted(kand[:PEWNE_ILE], key=lambda k: k['start'])
     val = list(_value_pilka(dzis))

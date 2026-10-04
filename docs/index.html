@@ -303,7 +303,7 @@ async function laduj(){
   S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null; S.status = st.value || null; S.inne = inn.value || null; S.glowne = gl.value || null;
 }
 
-const WERSJA_APLIKACJI = 53;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
+const WERSJA_APLIKACJI = 54;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
 /* ---------- model (ten sam co w Pythonie) ---------- */
 const MAXG = 10;
 function pois(l){ const out = [Math.exp(-l)]; for(let k=1;k<=MAXG;k++) out.push(out[k-1]*l/k); return out; }
@@ -839,9 +839,10 @@ function kartaTypu(sp, m, nr){
   const tt = pil ? t : Object.assign({}, t);
   let h = `<article class="bet${werdyktKarty(m) === 'odradza' ? ' odr' : ''}">${naglowekKarty(sp, gdzie, kiedy, A, B)}${typBox(tt, nr, pm)}`;
   if(m.alarm && m.alarm.wstrzymaj) h += `<div class="flag" style="color:var(--neg,#d33);font-weight:700;white-space:normal">⛔ Alarm przed meczem (${esc(m.alarm.czas || '')}) – nie graj tego typu: ${esc((m.alarm.powody || []).join(' · '))}</div>`;   // wersja 51
-  { const ai = ((m.raport || {}).ai) || {}; const dr = (ai.drogi || []).filter(x => x.realna);   // wersja 52
-    if(dr.length) h += `<div class="flag" style="white-space:normal">⚠️ Droga do porażki: ${esc(dr[0].jak)}${dr[0].fakt ? ' – ' + esc(dr[0].fakt) : ''}</div>`;
-    else if(!ai.werdykt) h += `<span class="flag" style="color:var(--muted)">▫️ Nie sprawdzony przez AI – to nie znaczy „bez wątpliwości”</span>`;
+  { const ai = ((m.raport || {}).ai) || {};   // wersja 54: jedna szansa po analizie (drogi do porażki zważone), ryzyko tylko gdy obniżyło werdykt
+    if(ai.szansa_koncowa != null) h += `<p class="note">🧠 Po analizie AI: <b>${pct(ai.szansa_koncowa)}</b>${ai.szansa_rynek ? ` · z kursów ${pct(ai.szansa_rynek)}` : ''}</p>`;
+    const dr = (ai.drogi || []).filter(x => (x.procent || 0) >= 15);
+    if(ai.werdykt === 'ryzyko' && dr.length) h += `<div class="flag" style="white-space:normal">⚠️ Główne ryzyko (ok. ${dr[0].procent}%): ${esc(dr[0].jak)}</div>`;
     const cz = ai.czlowiek || {}; if(cz.a || cz.b) h += `<p class="note">👤 ${esc([cz.a, cz.b].filter(Boolean).join(' · '))}</p>`; }
   if(m.nizsza_pewnosc) h += `<span class="flag">Poniżej 70% – dobrany, żeby było 5 typów; liczony w dzienniku osobno</span>`;
   if(m.rynek_pl) h += `<span class="flag" style="color:var(--muted)">KSW: szanse z kursów polskich bukmacherów (mniej pewne niż Pinnacle)</span>`;
@@ -905,7 +906,7 @@ function widokPewne(){
   const g = sumaGlownych('30');
   if(g.n) h += `<div class="skut"><b>${pct(g.t / g.n)}</b><div><span>Skuteczność typów dnia</span><span>ostatnie 30 dni · ${g.t} z ${g.n} weszło · przewidywane ${pct(g.pr)}</span></div></div>`;
   const kp = f === 'wszystkie' && S.glowne && S.glowne.kupon;   // wersja 52: kupon dnia
-  if(kp) h += `<section class="sekcja"><h2>🎫 Kupon dnia</h2><p class="note">Tylko typy sprawdzone rano przez AI, bez realnej drogi do porażki.</p>` +
+  if(kp) h += `<section class="sekcja"><h2>🎫 Kupon dnia</h2><p class="note">Typy sprawdzone rano przez AI – szanse już po zważeniu ryzyk.</p>` +
     kp.typy.map(t => `<div class="wiersz"><div class="g"><span>${esc(t.mecz || '')}</span><b>${pct(t.szansa)}</b></div><div class="d"><span>${esc(t.zaklad || '')}</span><span>${t.kurs ? num(t.kurs) : ''}</span></div></div>`).join('') +
     `<div class="wiersz"><div class="g"><span>Szansa całego kuponu</span><b>${pct(kp.szansa)}</b></div><div class="d"><span>${kp.kurs ? 'kurs ' + num(kp.kurs) + ' · za 50 zł: ' + num(kp.wygrana_50) + ' zł' : ''}</span><span></span></div></div></section>`;
   let lista;
