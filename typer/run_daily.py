@@ -1088,7 +1088,10 @@ def tg_typy_wszystkie(d, inne, gl, status):
     kp = gl.get('kupon')   # wersja 52: kupon dnia – tylko typy sprawdzone bez wątpliwości, z prawdziwą szansą całości
     if kp:
         lin.append('\n🎫 <b>Kupon dnia</b> (sprawdzone przez AI, szansa po analizie)')
-        for t in kp['typy']: lin.append(f"• {esc_(str(t.get('mecz')))} – {esc_(str(t.get('zaklad')))} · {tg.pct(t['szansa'])}" + (f" · {tg.kurs(t['kurs'])}" if t.get('kurs') else ''))
+        for t in kp['typy']:
+            pil = t.get('sport') == 'pilka'; g_ = str(t.get('mecz') or '').split(' – ')          # wersja 56: nazwy po polsku
+            mz = pl_mecz(t.get('mecz')) if pil else str(t.get('mecz')); zk = pl_txt(t.get('zaklad'), *g_) if pil else str(t.get('zaklad'))
+            lin.append(f"• {esc_(mz)} – {esc_(zk)} · {tg.pct(t['szansa'])}" + (f" · {tg.kurs(t['kurs'])}" if t.get('kurs') else ''))
         lin.append(f"Szansa całego kuponu: <b>{tg.pct(kp['szansa'])}</b>" + (f" · kurs {tg.kurs(kp['kurs'])} · za 50 zł: {kp['wygrana_50']:.2f} zł" if kp.get('kurs') else ''))
     elif pew: lin.append('\n🎫 <i>Dziś brak kuponu dnia – za mało typów, które po analizie AI mają co najmniej 70%.</i>')
     odr = [('pilka', m) for m in (d.get('odradzane') or [])] + [(sp, m) for sp in ('tenis', 'walki') for m in ((inne or {}).get(sp) or {}).get('odradzane', [])]

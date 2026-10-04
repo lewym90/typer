@@ -125,11 +125,12 @@ def pobierz():
         else:
             od, do = _okno(sp)
             try: odds = core.api(f'sports/{key}/odds', regions='eu', markets='h2h', oddsFormat='decimal', commenceTimeFrom=od, commenceTimeTo=do)
-            except Exception as e: _blad(f'{key}: {e}')
+            except Exception as e:
+                if 'limit kredytów' not in str(e): _blad(f'{key}: {e}')       # brak kredytów = normalnie Pinnacle, nie błąd
         if odds is None:      # wersja 55: brak kredytów → te same mecze z kursami Pinnacle guest (za darmo)
             try:
                 import pinnacle; odds = pinnacle.jako_odds_api(evs, sp)
-                if not odds: STAN['pominiete'].append(f'{tytul} ({n}) – brak kredytów, brak w Pinnacle')
+                if not odds: STAN['pominiete'].append(f'{tytul} ({n}) – brak kredytów, brak w Pinnacle' + (' (Pinnacle blokuje MMA z serwerów USA)' if sp == 'walki' else ''))
             except Exception as e: _blad(f'Pinnacle {key}: {e}'); odds = []
         for ev in odds: wynik[sp].append((key, tytul, grupa, ev))
     STAN['kredyty'] = core.KREDYTY['wydane_teraz'] - start_kr
