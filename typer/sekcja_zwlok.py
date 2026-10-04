@@ -23,7 +23,8 @@ ZASADY: tylko fakty ze źródeł; nie wymyślaj; jeśli wynik to raczej przypade
 Odpowiedz WYŁĄCZNIE obiektem JSON (bez ```):
 {{"sygnaly": [{{"czynnik": "z listy", "opis": "konkretny fakt", "przed_meczem": true/false, "zrodlo": "link"}}],
   "czynnik_glowny": "z listy", "przypadek": true/false, "dalo_sie_przewidziec": "tak" | "czesciowo" | "nie",
-  "wniosek": "jedno zdanie – czego program nie uwzględnił"}}"""
+  "wniosek": "1–2 zdania – czego nie zrozumieliśmy o TYCH konkretnych ludziach w TYM meczu (zdrowie, głowa, motywacja, sytuacja) – bez ogólnych reguł"}}
+Myśl jak człowiek, który zna tych zawodników: nie szukaj schematu („kontuzja = porażka”), tylko tego, co w tej sytuacji było inne."""
 
 
 def _wczytaj():
@@ -65,7 +66,7 @@ def przeprowadz(pewne_csv, inne_csv):
         sygn = [dict(czynnik=str(s.get('czynnik'))[:40], opis=str(s.get('opis'))[:240], przed_meczem=bool(s.get('przed_meczem')),
                      zrodlo=str(s.get('zrodlo') or '')[:200]) for s in (d.get('sygnaly') or []) if isinstance(s, dict)][:6]
         a = dict(k, sygnaly=sygn, czynnik_glowny=str(d.get('czynnik_glowny') or 'inne')[:40], przypadek=bool(d.get('przypadek')),
-                 dalo_sie=str(d.get('dalo_sie_przewidziec') or '')[:10], wniosek=str(d.get('wniosek') or '')[:260],
+                 dalo_sie=str(d.get('dalo_sie_przewidziec') or '')[:10], wniosek=str(d.get('wniosek') or '')[:400],
                  zrodla=zr[:4], czas=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m-%d %H:%M'))
         st['analizy'].insert(0, a); juz.add(k['event_id']); STAN['nowe'] += 1
     st['analizy'] = st['analizy'][:300]
@@ -77,6 +78,9 @@ def przeprowadz(pewne_csv, inne_csv):
     st['podsumowanie'] = dict(n=len(st['analizy']), przypadek=sum(1 for a in st['analizy'] if a['przypadek']),
                               dalo_sie=sum(1 for a in st['analizy'] if a['dalo_sie'] in ('tak', 'czesciowo')))
     with open(PLIK, 'w', encoding='utf-8') as f: json.dump(st, f, ensure_ascii=False)
+    try:                                           # wersja 52: wnioski trafiają do pamięci konkretnych ludzi
+        import pamiec_ludzi; pamiec_ludzi.z_sekcji_zwlok()
+    except Exception as e: STAN['bledy'].append(f'pamięć ludzi: {e}'[:120])
     try:
         pd_ = os.path.join(OUT, 'dziennik.json'); dz = json.load(open(pd_)) if os.path.exists(pd_) else {}
         dz['sekcje'] = skrot()

@@ -345,6 +345,7 @@ POLECENIE = """Jesteś profesjonalnym analitykiem {dziedzina} i typerem. Przygot
 {szukaj}
 {rynek}
 Sprawdź wszystko, co wpływa na wynik: {tematy}
+{czlowiek}
 {zasady}
 {ocena}
 {kontekst}
@@ -357,7 +358,7 @@ Odpowiedz WYŁĄCZNIE obiektem JSON (bez ```), dokładnie w tej postaci:
   "lepszy_zaklad": "inny zakład w {czym}, który uważasz za rozsądniejszy, albo pusty tekst",
   "problemy_a": ["krótko", ...], "problemy_b": ["krótko", ...],
   "ostrzezenie": true/false, "ostrzezenie_dla": "a" | "b" | "oba" | "brak", "uzasadnienie": "jedno zdanie",
-  "za": ["argument z faktem", ...], "przeciw": ["argument z faktem", ...], "szansa_wlasna": 0.0{dodatki}}}
+  "za": ["argument z faktem", ...], "przeciw": ["argument z faktem", ...], "szansa_wlasna": 0.0{czlowiek_json}{dodatki}}}
 "ostrzezenie" = true tylko przy poważnej sprawie: {powazne}."""
 DODATKI_WALKI = ''',
   "oceny": {"a": {"stojka": 1-10, "zapasy": 1-10, "parter": 1-10, "kondycja": 1-10}, "b": {...tak samo}}  – tylko gdy źródła opisują styl obu
@@ -397,7 +398,8 @@ def raport_ai(m, polski_=False, wymus=False, typ=None):
     typ = typ_oceny
     t = lambda sz: POLECENIE.format(co=co, dziedzina=dziedzina, kogo=kogo, czym=czym, a=m['a'], b=m['b'], turniej=m['turniej'],
                                     kiedy=f"{m['dzien']}, {m['godzina']}", szukaj=sz, rynek=rynek, tematy=tematy, powazne=powazne,
-                                    zasady=ai_raport.ZASADY, ocena=ai_raport.ocena_txt(typ), kontekst=kontekst,
+                                    zasady=ai_raport.ZASADY, ocena=ai_raport.ocena_txt(typ), kontekst=kontekst + ai_raport._pamiec_ludzi(m['a'], m['b']),
+                                    czlowiek=ai_raport.CZLOWIEK, czlowiek_json=ai_raport.CZLOWIEK_JSON,
                                     dodatki=DODATKI_WALKI if m['sport'] == 'walki' else '')
     if not kont and not ai_raport._szukanie['ok']: return None   # bez wyszukiwania i bez nagłówków AI nie ma z czego pisać
     txt, zr, szukal = ai_raport._zapytaj(t(szukaj), t(ai_raport.BEZ_SZUKANIA))
@@ -414,7 +416,12 @@ def raport_ai(m, polski_=False, wymus=False, typ=None):
                ostrzezenie=bool(d.get('ostrzezenie')), ostrzezenie_dla=str(d.get('ostrzezenie_dla') or 'brak'),
                uzasadnienie=str(d.get('uzasadnienie') or '')[:200], zrodla=zr[:5], szukal=bool(szukal), werdykt=w,
                powod=str(d.get('powod') or '')[:220], forma=str(d.get('forma') or '')[:260], styl=str(d.get('styl') or '')[:260],
-               lepszy_zaklad=str(d.get('lepszy_zaklad') or '')[:160], typ=typ[0] if typ else None, czas=teraz().strftime('%H:%M'))
+               lepszy_zaklad=str(d.get('lepszy_zaklad') or '')[:160], typ=typ[0] if typ else None, czas=teraz().strftime('%H:%M'),
+               **ai_raport.czlowiek_z(d))
+    out['werdykt'] = ai_raport.werdykt_po_drogach(out['werdykt'], out)      # wersja 52: realna droga do porażki = nie „bez wątpliwości”
+    try:
+        import pamiec_ludzi; pamiec_ludzi.z_analizy((m['a'], m['b']), out)
+    except Exception: pass
     if m['sport'] == 'walki' and zr:   # oceny stylu i bilans tylko, gdy AI miało źródła
         oc = d.get('oceny') or {}
         def ok(x):

@@ -49,8 +49,10 @@ def mozna_podmienic_typy(t=None):
 
 def _pewne_pilka(dzis):
     for m in dzis.get('pewne', []):
+        ai = (m.get('raport') or {}).get('ai') or {}
         yield dict(sport='pilka', event_id=str(m.get('event_id') or m['mecz']), szansa=float(m['szansa']), start=m['start'],
-                   werdykt=(m.get('raport') or {}).get('werdykt') or m.get('werdykt'), niz=bool(m.get('nizsza_pewnosc')), ksw=False)
+                   werdykt=(m.get('raport') or {}).get('werdykt') or m.get('werdykt'), niz=bool(m.get('nizsza_pewnosc')), ksw=False,
+                   mecz=m.get('mecz'), zaklad=m.get('zaklad'), kurs=_najlepszy(m), drogi=_drogi_realne(ai))
 
 def _pewne_inne(inne, sp):
     s = inne.get(sp) or {}; byid = {m['event_id']: m for m in s.get('mecze', [])}
@@ -58,7 +60,34 @@ def _pewne_inne(inne, sp):
         m = byid.get(i)
         if not m or not m.get('najpewniejszy'): continue
         yield dict(sport=sp, event_id=str(i), szansa=float(m['najpewniejszy']['szansa']), start=m['start'],
-                   werdykt=_werdykt_inne(m), niz=bool(m.get('nizsza_pewnosc')), ksw=bool(m.get('rynek_pl')))
+                   werdykt=_werdykt_inne(m), niz=bool(m.get('nizsza_pewnosc')), ksw=bool(m.get('rynek_pl')),
+                   mecz=m.get('mecz') or f"{m.get('a')} – {m.get('b')}", zaklad=m['najpewniejszy'].get('zaklad'), kurs=_najlepszy(m['najpewniejszy']),
+                   drogi=_drogi_realne((m.get('raport') or {}).get('ai') or {}))
+
+def _najlepszy(t):
+    try: return max(float(v) for v in (t.get('kursy_pl') or {}).values() if v)
+    except Exception: return None
+
+def _drogi_realne(ai):
+    return [x['jak'] for x in (ai.get('drogi') or []) if isinstance(x, dict) and x.get('realna')][:3]
+
+def kupon_dnia(kand, maks=4):
+    """Wersja 52: kupon dnia składany przez program – tylko typy sprawdzone rano przez AI („zgoda”, bez realnej drogi do porażki),
+    z różnych meczów, najmocniejsze; prawdziwa szansa całego kuponu = iloczyn szans (pokazywana wprost)."""
+    ok = [k for k in kand if k['werdykt'] == 'zgoda' and not k.get('drogi') and not k['niz'] and k['szansa'] >= MIN_SZANSA]
+    ok.sort(key=lambda k: -k['szansa'])
+    wyb, mecze = [], set()
+    for k in ok:
+        if k['event_id'] in mecze: continue
+        wyb.append(k); mecze.add(k['event_id'])
+        if len(wyb) >= maks: break
+    if len(wyb) < 2: return None
+    szansa = 1.0; kurs = 1.0
+    for k in wyb:
+        szansa *= k['szansa']; kurs = kurs * k['kurs'] if (kurs and k.get('kurs')) else None
+    return dict(typy=[{x: k.get(x) for x in ('sport', 'event_id', 'mecz', 'zaklad', 'szansa', 'kurs', 'start')} for k in sorted(wyb, key=lambda k: k['start'])],
+                szansa=round(szansa, 4), kurs=round(kurs, 2) if kurs else None,
+                wygrana_50=round(50 * kurs, 2) if kurs else None)
 
 def _werdykt_inne(m):
     p = (m.get('raport') or {}).get('pro')
@@ -83,7 +112,10 @@ def wybierz(dzis, inne):
     for sp in ('tenis', 'walki'): kand += list(_pewne_inne(inne, sp))
     ksw_ok = bool((inne or {}).get('ksw_do_glownych'))
     kand = [k for k in kand if k['werdykt'] != 'odradza' and (ksw_ok or not k['ksw'])]
-    kand.sort(key=lambda k: (k['niz'] or k['szansa'] < MIN_SZANSA, k['werdykt'] == 'ryzyko', -k['szansa']))
+    # wersja 52: rano najpierw typy SPRAWDZONE przez AI bez wątpliwości („zgoda”, bez realnej drogi do porażki), potem niesprawdzone,
+    # na końcu „ryzyko” – brak oceny nie może wyglądać jak „bez wątpliwości”
+    rang = lambda k: 0 if (k['werdykt'] == 'zgoda' and not k.get('drogi')) else (1 if not k['werdykt'] or k['werdykt'] == 'niepelna' else 2)
+    kand.sort(key=lambda k: (k['niz'] or k['szansa'] < MIN_SZANSA, rang(k), -k['szansa']))
     pewne = sorted(kand[:PEWNE_ILE], key=lambda k: k['start'])
     val = list(_value_pilka(dzis))
     for sp in ('tenis', 'walki'): val += list(_value_inne(inne, sp))
@@ -93,7 +125,8 @@ def wybierz(dzis, inne):
     for sp in ('tenis', 'walki'): licz[sp]['mecze'] = len((inne.get(sp) or {}).get('mecze', []))
     return dict(data=dzien, wygenerowano=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m-%d %H:%M'),
                 pewne=[{k: p[k] for k in ('sport', 'event_id')} for p in pewne], value=[{k: v[k] for k in ('sport', 'event_id', 'zaklad')} for v in val],
-                liczby=licz)
+                liczby=licz, kupon=kupon_dnia(kand),
+                niesprawdzone=[p['event_id'] for p in pewne if not p['werdykt'] or p['werdykt'] == 'niepelna'])
 
 def zapisz(gl):
     with open(os.path.join(OUT, 'glowne.json'), 'w', encoding='utf-8') as f: json.dump(gl, f, ensure_ascii=False)

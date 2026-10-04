@@ -23,7 +23,7 @@ HOSTY = [('https://www.flashscore.pl/x/feed/', 'pl', 'https://www.flashscore.pl/
          ('https://www.flashscore.com/x/feed/', 'en', 'https://www.flashscore.com/'),
          ('https://d.flashscore.com/x/feed/', 'en', 'https://www.flashscore.com/'),
          ('https://local-global.flashscore.ninja/2/x/feed/', 'en', 'https://www.flashscore.com/')]
-ZNANE = {1: 'pilka', 2: 'tenis', 3: 'koszykowka', 4: 'hokej', 6: 'baseball', 7: 'pilka_reczna', 12: 'siatkowka'}
+ZNANE = {1: 'pilka', 2: 'tenis', 3: 'koszykowka', 4: 'hokej', 6: 'baseball', 7: 'pilka_reczna', 12: 'siatkowka', 16: 'boks', 28: 'mma'}   # 16/28 potwierdzone 03.10
 SZUKANE = [('mma', r'\b(ufc|ksw|pfl|oktagon|mma|bellator|cage warriors|babilon|fen\b|one championship)'),
            ('boks', r'(boks|boxing|wbc|wba|ibf|wbo|bokser)'),
            ('zuzel', r'(żużel|zuzel|speedway|ekstraliga żużl|sgp)'),
@@ -127,15 +127,15 @@ def rozpoznaj_sporty(get=None, sila=False):
     """Raz dziennie: id sportów Flashscore dla MMA, boksu, żużla, F1 (po nazwach rozgrywek z dzisiejszego i wczorajszego feedu)."""
     st = _wczytaj_sporty()
     dzis = dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d')
-    if st.get('data') == dzis and not sila: return st
+    if st.get('data') == dzis and not sila and all(str(k) in (st.get('mapa') or {}) for k in ZNANE): return st
     mapa, probki = {str(k): v for k, v in ZNANE.items()}, {}
     for sid in range(13, 46):
+        if sid in ZNANE: continue
         txt = _get(sid, 0, get) or ''
         if '¬' not in txt: txt = _get(sid, -1, get) or ''
         ligi = sorted({p.get('liga', '') for p in parsuj(txt)})
         if not ligi: continue
         probki[str(sid)] = ligi[:6]
-        tekst = ' | '.join(ligi).lower()
         for sp, wz in SZUKANE:
             if sp in mapa.values(): continue
             traf = sum(1 for l in ligi if re.search(wz, l.lower()))

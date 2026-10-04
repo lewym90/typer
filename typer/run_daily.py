@@ -681,6 +681,7 @@ def tekst_zapowiedzi(sp, m, wartosci, minut, powody=None):
         lin = [f"⏰ <b>Za ok. {int(round(minut / 5) * 5)} min</b> · {ik} <b>{esc_(_nazwa_meczu(sp, m))}</b> · {m['godzina']}"]
     if gdzie: lin.append(f"<i>{esc_(gdzie)}</i>")
     for p_ in powody or []: lin.append(f"⚠️ <b>{esc_(p_)}</b>")
+    if powody and any(not str(p_).startswith('Value') for p_ in powody): lin.append('⛔ <b>Rada: nie graj tego typu dnia</b> (alarm przed meczem – zapisany w dzienniku)')   # wersja 51
     lin.append('')
     if sp == 'pilka':
         pm = m.get('przedmeczowe') or {}; ruch = (pm.get('kursy') or {}).get('ruch', {})
@@ -787,7 +788,7 @@ def zapowiedzi(d):
             if not karta: continue
             mecze[k] = [karta, dict(pewne=False, value=[])]
         mecze[k][1]['value'].append(v)
-    wyslane, inne_zmiana = 0, False
+    wyslane, inne_zmiana, pilka_zmiana = 0, False, False
     for (sp, eid), (m, wart) in mecze.items():
         klucz = f'{sp}:{eid}'
         if klucz in zap['wyslane']: continue
@@ -800,12 +801,54 @@ def zapowiedzi(d):
             _przed_do_dziennika_inne(eid, nowe)
         powody = powody_alarmu(sp, m, wart, w0, o0)
         zap['przeliczone'][klucz] = dict(czas=teraz.strftime('%H:%M'), minut=round(minut), alarm=bool(powody), powody=powody[:4])
+        if powody:                               # wersja 51: alarm = typ wstrzymany (karta, Telegram) i znacznik w dzienniku
+            wstrz = wart.get('pewne') and any(not str(p_).startswith('Value') for p_ in powody)
+            m['alarm'] = dict(czas=teraz.strftime('%H:%M'), powody=[str(p_)[:160] for p_ in powody[:3]], wstrzymaj=bool(wstrz))
+            if wstrz: _alarm_do_dziennika(sp, eid, powody)
+            if sp == 'pilka': pilka_zmiana = True
+            else: inne_zmiana = True
         if powody and tg.wyslij_dlugi(tekst_zapowiedzi(sp, m, wart, minut, powody)): zap['wyslane'].append(klucz); wyslane += 1
     if inne_zmiana:
         with open(os.path.join(OUT, sporty.PLIK_JSON), 'w', encoding='utf-8') as f:
             json.dump(inne, f, ensure_ascii=False, default=lambda o: float(o) if isinstance(o, (np.floating, np.integer)) else str(o))
+    if pilka_zmiana:
+        try: zapisz('dzis.json', d)
+        except Exception as e: print('alarm – zapis dzis.json:', e)
     st['zapowiedzi'] = zap; zapisz('status.json', st)
     return wyslane
+
+def _alarm_do_dziennika(sp, eid, powody):
+    """Wersja 51: typ dnia z alarmem przed meczem – znacznik w dzienniku (alarm=1, powód). Typ zostaje w statystykach
+    (uczciwość liczb), a statystyka 'alarmy' pokazuje, czy alarm naprawdę przewiduje wpadki."""
+    try:
+        if sp == 'pilka': d, plik = wczytaj_pewne(), PLIK_PEWNE
+        else: d, plik = sporty.wczytaj_typy(), sporty.PLIK_TYPOW
+        if not len(d): return
+        if 'alarm' not in d: d['alarm'] = np.nan
+        if 'alarm_powod' not in d: d['alarm_powod'] = ''
+        sel = d.event_id.astype(str) == str(eid)
+        if not sel.any(): return
+        d.loc[sel, 'alarm'] = 1; d.loc[sel, 'alarm_powod'] = ' | '.join(str(p) for p in powody[:2])[:300]
+        d.to_csv(plik, index=False)
+    except Exception as e: print('dziennik – alarm:', e)
+
+def statystyka_alarmow():
+    """Wersja 51: trafność typów dnia (najpewniejszy) z alarmem przed meczem vs bez – czy alarm ma wartość."""
+    out = {}
+    try:
+        cz = []
+        for d in (wczytaj_pewne(), sporty.wczytaj_typy()):
+            if not len(d) or 'trafiony' not in d: continue
+            if 'rodzaj' in d: d = d[d.rodzaj == 'pewne']
+            d = d[(d.poziom == 'najpewniejszy') & d.trafiony.notna()]
+            cz.append(pd.DataFrame(dict(trafiony=d.trafiony.astype(float), szansa=d.szansa.astype(float),
+                                        alarm=d['alarm'].fillna(0).astype(float) if 'alarm' in d else 0.0)))
+        if not cz: return out
+        x = pd.concat(cz, ignore_index=True)
+        for nazwa, g in (('z_alarmem', x[x.alarm > 0]), ('bez', x[x.alarm <= 0])):
+            if len(g): out[nazwa] = dict(n=int(len(g)), weszlo=round(float(g.trafiony.mean()), 4), przewidywane=round(float(g.szansa.mean()), 4))
+    except Exception as e: out['blad'] = str(e)[:120]
+    return out
 
 def tg_przed_meczem(m, pm):
     if pm.get('wyslano'): return
@@ -1009,7 +1052,18 @@ def tg_typy_wszystkie(d, inne, gl, status):
     lin = [f"📋 <b>{'Zaktualizowane typy' if zmiana else 'Typy dnia'} · {DNI_PL[dzien.weekday()]} {dzien.strftime('%d.%m')}</b>"]
     sk = _skutecznosc_30()
     lin.append(f"{len(pew)} najpewniejszych" + (f" · 30 dni: <b>{round(100 * sk[0] / sk[1])}%</b> ({sk[0]}/{sk[1]})" if sk and sk[1] >= 10 else ''))
-    for i, (sp, m) in enumerate(pew, 1): lin += _linie_pewnego(sp, m, i)
+    nies = set(gl.get('niesprawdzone') or [])
+    for i, (sp, m) in enumerate(pew, 1):
+        lin += _linie_pewnego(sp, m, i)
+        if str(m.get('event_id')) in nies: lin.append('   ▫️ <i>nie sprawdzony rano przez AI – to nie znaczy „bez wątpliwości”</i>')   # wersja 52
+        dr = [x for x in (((m.get('raport') or {}).get('ai') or {}).get('drogi') or []) if x.get('realna')]
+        if dr: lin.append('   ⚠️ <i>Droga do porażki: ' + esc_(dr[0]['jak']) + (f" ({esc_(dr[0]['fakt'][:120])})" if dr[0].get('fakt') else '') + '</i>')
+    kp = gl.get('kupon')   # wersja 52: kupon dnia – tylko typy sprawdzone bez wątpliwości, z prawdziwą szansą całości
+    if kp:
+        lin.append('\n🎫 <b>Kupon dnia</b> (tylko sprawdzone, bez realnej drogi do porażki)')
+        for t in kp['typy']: lin.append(f"• {esc_(str(t.get('mecz')))} – {esc_(str(t.get('zaklad')))} · {tg.pct(t['szansa'])}" + (f" · {tg.kurs(t['kurs'])}" if t.get('kurs') else ''))
+        lin.append(f"Szansa całego kuponu: <b>{tg.pct(kp['szansa'])}</b>" + (f" · kurs {tg.kurs(kp['kurs'])} · za 50 zł: {kp['wygrana_50']:.2f} zł" if kp.get('kurs') else ''))
+    elif pew: lin.append('\n🎫 <i>Dziś brak kuponu dnia – za mało typów sprawdzonych bez wątpliwości.</i>')
     odr = [('pilka', m) for m in (d.get('odradzane') or [])] + [(sp, m) for sp in ('tenis', 'walki') for m in ((inne or {}).get(sp) or {}).get('odradzane', [])]
     if odr:
         lin.append('')
@@ -1157,6 +1211,13 @@ def zapisz_status(tryb, bledy=None, st=None, tg_info=None):
         zs = json.load(open(os.path.join(os.path.dirname(__file__), '..', 'surowe', 'zbieracz_superbet.json')))
         st['zbieracz_superbet'] = {k: zs.get(k) for k in ('czas', 'sb_odczytane', 'sb_sporty', 'przerwane_po', 'sekund')}
     except Exception: pass
+    try:                                         # wersja 51: alarmy z dzisiejszych przeliczeń → dziennik (także sprzed wgrania v51)
+        for kl, z in ((st.get('zapowiedzi') or {}).get('przeliczone') or {}).items():
+            if z.get('alarm') and not z.get('w_dzienniku') and any(not str(p_).startswith('Value') for p_ in z.get('powody') or []):
+                sp_, eid_ = kl.split(':', 1); _alarm_do_dziennika(sp_, eid_, z.get('powody') or []); z['w_dzienniku'] = True
+    except Exception as e: print('alarmy – dziennik:', e)
+    try: st['alarmy'] = statystyka_alarmow()      # wersja 51
+    except Exception: pass
     try:                                         # wersja 50: Pinnacle za darmo (zbieranie, test dostępu)
         import pinnacle
         if pinnacle.STAN.get('czas'): st['pinnacle'] = {k: pinnacle.STAN.get(k) for k in ('czas', 'tryb', 'http', 'sporty', 'mecze', 'rynki', 'bledy', 'sekund', 'plik')}
@@ -1235,10 +1296,7 @@ def zapisz(nazwa, obj):
 
 if __name__ == '__main__':
     os.makedirs(OUT, exist_ok=True)
-    if os.environ.get('TYPER_TRYB') == 'kursy':
-        # polski serwer zapisał nowe kursy (Fortuna, STS) – tylko dopisanie kursów do typów w następnym kroku,
-        # bez liczenia, bez sprawdzeń i bez wiadomości na Telegram
-        print('Nowe kursy z polskiego serwera – dopisuję je do typów (krok „Kursy polskich bukmacherów”).'); sys.exit(0)
+    kursy_push = os.environ.get('TYPER_TRYB') == 'kursy'
     teraz = pd.Timestamp.now(tz='Europe/Warsaw')
     try: stare = json.load(open(os.path.join(OUT, 'dzis.json')))
     except Exception: stare = {}
@@ -1252,6 +1310,16 @@ if __name__ == '__main__':
     except Exception: pass
     dzis_gotowe = stare.get('data') == wspolne.dzien_str() and str(stare.get('wygenerowano', ''))[11:13] >= '07'
     pelne = os.environ.get('GITHUB_EVENT_NAME') != 'schedule' or (teraz.hour >= 7 and not dzis_gotowe and teraz.hour < 23)
+    if kursy_push:
+        # wersja 53: GitHub gubi zaplanowane uruchomienia (04.10: od 22:45 do 12:00 tylko jedno, bez porannych typów) – każde zapisanie
+        # kursów przez polski serwer (co ~20–30 min, niezawodny zegar) działa jak „bicie serca”: brak dzisiejszych typów po 7:00 → pełne
+        # liczenie; ostatnie sprawdzenie starsze niż 25 min → lekkie sprawdzenie (rozliczenia, alarmy); inaczej tylko dopisanie kursów.
+        try: _ost = pd.Timestamp(json.load(open(os.path.join(OUT, 'status.json'))).get('ostatnie_uruchomienie')).tz_localize('Europe/Warsaw')
+        except Exception: _ost = None
+        if 7 <= teraz.hour < 23 and not dzis_gotowe: pelne = True; print('Bicie serca: brak dzisiejszych typów – pełne liczenie.')
+        elif _ost is None or (teraz - _ost) >= pd.Timedelta(minutes=25): pelne = False; print('Bicie serca: lekkie sprawdzenie.')
+        else:
+            print('Nowe kursy z polskiego serwera – dopisuję je do typów (krok „Kursy polskich bukmacherów”).'); sys.exit(0)
     if not pelne:
         # ---- lekkie sprawdzenie: składy, kursy przed meczem, rozliczenie, podsumowanie wieczorne ----
         bledy = []
@@ -1331,6 +1399,17 @@ if __name__ == '__main__':
             with open(os.path.join(OUT, sporty.PLIK_JSON), 'w', encoding='utf-8') as f:
                 json.dump(inne, f, ensure_ascii=False, default=lambda o: float(o) if isinstance(o, (np.floating, np.integer)) else str(o))
     except Exception as e: bledy.append(f'AI uzupełnienie: {e}')
+    try:   # wersja 52: poranna bramka – po analizie AI wybór jeszcze raz (sprawdzone „bez wątpliwości” najpierw), nowe pozycje też do AI
+        for _ in range(2):
+            gl2 = wspolne.wybierz(today, inne or sporty.wczytaj_json())
+            if not gl2.get('niesprawdzone'): break
+            z, b = uzupelnij_ai(today, inne, limit=10)
+            if z:
+                zapisz('dzis.json', today)
+                with open(os.path.join(OUT, sporty.PLIK_JSON), 'w', encoding='utf-8') as f:
+                    json.dump(inne, f, ensure_ascii=False, default=lambda o: float(o) if isinstance(o, (np.floating, np.integer)) else str(o))
+        gl = wspolne.wybierz(today, inne or sporty.wczytaj_json()); wspolne.zapisz(gl)
+    except Exception as e: bledy.append(f'poranna bramka: {e}')
     try: tg_info = tg_typy_wszystkie(today, inne or sporty.wczytaj_json(), gl, st) if gl else tg_typy_dnia(today, st)
     except Exception as e: bledy.append(f'telegram: {e}')
     zapisz_status('pelne', bledy, st, tg_info)

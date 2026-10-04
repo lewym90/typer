@@ -303,7 +303,7 @@ async function laduj(){
   S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null; S.status = st.value || null; S.inne = inn.value || null; S.glowne = gl.value || null;
 }
 
-const WERSJA_APLIKACJI = 50;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
+const WERSJA_APLIKACJI = 53;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
 /* ---------- model (ten sam co w Pythonie) ---------- */
 const MAXG = 10;
 function pois(l){ const out = [Math.exp(-l)]; for(let k=1;k<=MAXG;k++) out.push(out[k-1]*l/k); return out; }
@@ -838,6 +838,11 @@ function kartaTypu(sp, m, nr){
   const A = pil ? plN(m.gospodarz) : m.a, B = pil ? plN(m.gosc) : m.b;
   const tt = pil ? t : Object.assign({}, t);
   let h = `<article class="bet${werdyktKarty(m) === 'odradza' ? ' odr' : ''}">${naglowekKarty(sp, gdzie, kiedy, A, B)}${typBox(tt, nr, pm)}`;
+  if(m.alarm && m.alarm.wstrzymaj) h += `<div class="flag" style="color:var(--neg,#d33);font-weight:700;white-space:normal">⛔ Alarm przed meczem (${esc(m.alarm.czas || '')}) – nie graj tego typu: ${esc((m.alarm.powody || []).join(' · '))}</div>`;   // wersja 51
+  { const ai = ((m.raport || {}).ai) || {}; const dr = (ai.drogi || []).filter(x => x.realna);   // wersja 52
+    if(dr.length) h += `<div class="flag" style="white-space:normal">⚠️ Droga do porażki: ${esc(dr[0].jak)}${dr[0].fakt ? ' – ' + esc(dr[0].fakt) : ''}</div>`;
+    else if(!ai.werdykt) h += `<span class="flag" style="color:var(--muted)">▫️ Nie sprawdzony przez AI – to nie znaczy „bez wątpliwości”</span>`;
+    const cz = ai.czlowiek || {}; if(cz.a || cz.b) h += `<p class="note">👤 ${esc([cz.a, cz.b].filter(Boolean).join(' · '))}</p>`; }
   if(m.nizsza_pewnosc) h += `<span class="flag">Poniżej 70% – dobrany, żeby było 5 typów; liczony w dzienniku osobno</span>`;
   if(m.rynek_pl) h += `<span class="flag" style="color:var(--muted)">KSW: szanse z kursów polskich bukmacherów (mniej pewne niż Pinnacle)</span>`;
   h += ksiazka(t) + aiSkrot(m);
@@ -899,6 +904,10 @@ function widokPewne(){
   let h = chipy('flt', true);
   const g = sumaGlownych('30');
   if(g.n) h += `<div class="skut"><b>${pct(g.t / g.n)}</b><div><span>Skuteczność typów dnia</span><span>ostatnie 30 dni · ${g.t} z ${g.n} weszło · przewidywane ${pct(g.pr)}</span></div></div>`;
+  const kp = f === 'wszystkie' && S.glowne && S.glowne.kupon;   // wersja 52: kupon dnia
+  if(kp) h += `<section class="sekcja"><h2>🎫 Kupon dnia</h2><p class="note">Tylko typy sprawdzone rano przez AI, bez realnej drogi do porażki.</p>` +
+    kp.typy.map(t => `<div class="wiersz"><div class="g"><span>${esc(t.mecz || '')}</span><b>${pct(t.szansa)}</b></div><div class="d"><span>${esc(t.zaklad || '')}</span><span>${t.kurs ? num(t.kurs) : ''}</span></div></div>`).join('') +
+    `<div class="wiersz"><div class="g"><span>Szansa całego kuponu</span><b>${pct(kp.szansa)}</b></div><div class="d"><span>${kp.kurs ? 'kurs ' + num(kp.kurs) + ' · za 50 zł: ' + num(kp.wygrana_50) + ' zł' : ''}</span><span></span></div></div></section>`;
   let lista;
   if(f === 'wszystkie'){ const gl = glowneListy(); lista = gl ? gl.pew : pewneSportu('pilka').map(m => ['pilka', m]); }
   else lista = pewneSportu(f).map(m => [f, m]);
@@ -1559,6 +1568,9 @@ function widokStanu(){
   const fl = wy && wy.flash; if(fl){ const n = Object.entries(fl.liczby || {}).map(([k, v]) => `${k} ${v}`).join(', '); const zg = fl.zgodnosc_z_espn;
     h += wiersz('Wyniki Flashscore', n ? `${esc(n)}${zg && zg.wspolne ? ` · zgodność z ESPN ${zg.zgodne}/${zg.wspolne}` : ''} ✅` : `brak ⚠️ ${esc((fl.bledy || [])[0] || '')}`, n ? '' : 'neg'); }
   if(ar.superbet && ar.superbet.meczow) h += wiersz('Archiwum – piłka Superbet', `${ar.superbet.dopasowanych || 0} z ${ar.superbet.meczow} meczów · ${ar.superbet.kursow || 0} kursów`);
+  const lu = ar.lustro_pl; if(lu && lu.par){ const o = lu.ogolne || {}, f = o['fortuna/pilka'] || {}, ok = lu.okazje || {};
+    h += wiersz('Lustro PL vs Pinnacle', `${lu.par} par · Fortuna marża ${f.marza != null ? (f.marza * 100).toFixed(1) + '%' : '–'}, różnica ${f.roznica_sr_pkt ?? '–'} pkt · okazje ${ok.n || 0}${ok.rozliczone ? ` (rozl. ${ok.rozliczone}, ROI ${sgn(ok.roi || 0)})` : ''}`); }
+  const al = s.alarmy; if(al && (al.z_alarmem || {}).n) h += wiersz('Typy z alarmem przed meczem', `weszło ${pct(al.z_alarmem.weszlo)} z ${al.z_alarmem.n} · bez alarmu ${pct((al.bez || {}).weszlo || 0)} z ${(al.bez || {}).n || 0}`);
   const pn = s.pinnacle; if(pn) h += wiersz('Pinnacle (za darmo)', pn.mecze ? `${esc(pn.czas)} · ${pn.mecze} meczów, ${pn.rynki} rynków ✅` : `brak danych ⚠️ ${esc((pn.bledy || [])[0] || ('HTTP ' + (pn.http || '?')))}`, pn.mecze ? '' : 'neg');
   h += wiersz('Telegram', !t.wlaczony ? 'wyłączony' : (t.ostatni_blad ? '⚠️ problem' : '✅ działa'), t.ostatni_blad ? 'neg' : '');
   const sp = s.sporty; if(sp){ const f = x => x ? `${x.z_kursami || 0} z kursami (z ${x.mecze || 0}), pewnych ${x.pewne || 0}` : '–';

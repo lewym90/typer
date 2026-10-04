@@ -153,6 +153,7 @@ def flash_pilka(dzien):
         except Exception: continue
         for x in w:
             if x.get('zr') != 'flash' or x.get('sp') != 'pilka' or not x.get('koniec') or x.get('gh') is None: continue
+            if str(x.get('stan')) in ('10', '11') and not x.get('reg'): continue    # wersja 51: po dogrywce/karnych – brak wyniku po 90 min
             try: t = pd.Timestamp(x['t']); t = t.tz_convert('UTC') if t.tzinfo else t.tz_localize('UTC')
             except Exception: continue
             gh, ga = (x.get('reg') or [x['gh'], x['ga']])[:2]
@@ -325,6 +326,9 @@ def dzienny():
     try:                                   # wersja 43: skaner składów – braki vs kurs i wynik
         import sklady_lab; STAN['sklady'] = sklady_lab.licz()
     except Exception as e: _blad(f'skaner składów: {type(e).__name__}: {e}')
+    try:                                   # wersja 51: lustro polskiego rynku (Fortuna/Superbet vs Pinnacle) + okazje
+        import polski_rynek; STAN['lustro_pl'] = polski_rynek.licz()
+    except Exception as e: _blad(f'lustro PL: {type(e).__name__}: {e}')
     try: st = statystyki()
     except Exception as e: _blad(f'statystyki: {e}'); st = None
     if st:

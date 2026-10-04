@@ -108,6 +108,7 @@ POLECENIE = """Jesteś profesjonalnym analitykiem sportowym i typerem. Przygotuj
 Sprawdź wszystko, co wpływa na wynik: kto na pewno nie zagra (kontuzja, zawieszenie, powołanie), kto jest niepewny, zapowiadana rotacja,
 zmiana trenera, o co grają (tabela, motywacja), zmęczenie i terminarz (mecz 2–3 dni wcześniej lub zaraz potem ważniejszy), forma z ostatnich
 meczów, styl gry obu drużyn i to, jak do siebie pasują (pressing, kontry, stałe fragmenty, gra w obronie).
+{czlowiek}
 {zasady}
 {ocena}
 {kontekst}
@@ -123,7 +124,7 @@ Odpowiedz WYŁĄCZNIE obiektem JSON (bez ```), dokładnie w tej postaci:
   "powazne": true/false, "powazne_dla": "gosp" | "gosc" | "oba" | "brak",
   "uzasadnienie": "jedno zdanie – dlaczego braki są / nie są poważne",
   "za": ["argument z faktem", ...], "przeciw": ["argument z faktem", ...], "szansa_wlasna": 0.0,
-  "szanse_wlasne": {{"1": 0.0, "X": 0.0, "2": 0.0}}, "ponizej_2_5": 0.0}}
+  "szanse_wlasne": {{"1": 0.0, "X": 0.0, "2": 0.0}}, "ponizej_2_5": 0.0{czlowiek_json}}}
 (szanse_wlasne i ponizej_2_5 – Twoja własna ocena po analizie, ułamki 0–1; nie przepisuj szans z kursów, ale odchodź od nich tylko z powodu konkretnych faktów)
 "powazne" = true tylko, gdy brakuje co najmniej jednego kluczowego zawodnika (najlepszy strzelec, kapitan, podstawowy bramkarz)
 albo zapowiedziano dużą rotację (4+ zmiany w składzie)."""
@@ -136,6 +137,19 @@ Nie zgadzasz się domyślnie z nikim. Werdykt:
  "ryzyko" – istotny argument przeciw (niepewny ważny zawodnik, zmęczenie, rotacja, forma, zestawienie stylów, stawka meczu);
  "odradza" – mocny, potwierdzony w źródle powód przeciw, którego kurs prawdopodobnie nie uwzględnia.
 Kurs zawiera to, co powszechnie wiadomo – Twoja wartość to fakty, których rynek może jeszcze nie wycenić."""
+
+CZLOWIEK = """MYŚL JAK CZŁOWIEK, KTÓRY ZNA TYCH LUDZI – NIE JAK TABELKA (wersja 52):
+Na boisku/korcie są konkretni ludzie z konkretnym życiem TERAZ. Sprawdź, co dzieje się u nich w tych dniach: zdrowie i to, jak sami o nim
+mówią (i czy słowa zgadzają się z tym, co robią – np. wycofanie z debla, skrócony trening), głowa (sprawy prywatne i rodzinne, konflikty,
+kontrakt, transfer, presja, media, kibice), zmęczenie i podróż, motywacja (czy na tym meczu/turnieju naprawdę im zależy), atmosfera w zespole.
+Nie stosuj schematów („uraz = przegra”) – pomyśl, co TO znaczy u TEJ osoby w TYM meczu. Szukaj nieścisłości (kurs się nie ruszył mimo
+złych wieści, deklaracje sprzeczne z zachowaniem, dziwne decyzje trenera) – one mówią najwięcej.
+Najważniejsze: wymień konkretne DROGI DO PORAŻKI tego zakładu (jak realnie może przegrać) i przy każdej oceń, czy jest realna dziś,
+na podstawie faktów. Zakład jest „pewny” tylko wtedy, gdy nie widzisz żadnej realnej drogi do porażki."""
+CZLOWIEK_JSON = ''',
+  "drogi_do_porazki": [{"jak": "jak zakład może przegrać", "fakt": "na czym to opierasz (albo „brak faktów”)", "realna": true/false}],
+  "niescislosci": ["sprzeczność lub dziwny sygnał, jeśli jest"],
+  "czlowiek": {"a": "1–2 zdania: co dziś dzieje się u pierwszego zawodnika/drużyny (zdrowie, głowa, motywacja) albo pusty", "b": "to samo dla drugiego"}'''
 
 ZASADY = """ZASADY RZETELNOŚCI (najważniejsze):
 - Podawaj WYŁĄCZNIE fakty, które znalazłeś w źródłach z ostatnich 7 dni albo w danych poniżej. Niczego nie wymyślaj: żadnych nazwisk,
@@ -348,7 +362,8 @@ def raport_ai(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, braki=None, zapowied
     rynek = (f"Szanse z kursów bukmacherów: wygra {dom_pl} {szanse['1']*100:.0f}%, remis {szanse['X']*100:.0f}%, wygra {gosc_pl} {szanse['2']*100:.0f}%."
              if szanse and all(k in szanse for k in ('1', 'X', '2')) else '')
     t = lambda sz: POLECENIE.format(mecz=f'{dom_pl} – {gosc_pl}', rozgrywki=rozgrywki, kiedy=kiedy, dom=f'{dom_pl} ({dom})', gosc=f'{gosc_pl} ({gosc})',
-                                    szukaj=sz, rynek=rynek, ocena=ocena_txt(typ), zasady=ZASADY, kontekst=_kontekst(braki, zapowiedz, naglowki))
+                                    szukaj=sz, rynek=rynek, ocena=ocena_txt(typ), zasady=ZASADY, czlowiek=CZLOWIEK, czlowiek_json=CZLOWIEK_JSON,
+                                    kontekst=_kontekst(braki, zapowiedz, naglowki) + _pamiec_ludzi(dom, gosc))
     txt, zr, szukal = _zapytaj(t(szukaj_txt), t(BEZ_SZUKANIA))
     if not txt: return None
     try: d = _wyciagnij_json(txt)
@@ -366,9 +381,38 @@ def raport_ai(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, braki=None, zapowied
                 werdykt=w, powod=str(d.get('powod') or '')[:220], forma=str(d.get('forma') or '')[:260], styl=str(d.get('styl') or '')[:260],
                 lepszy_zaklad=str(d.get('lepszy_zaklad') or '')[:160], typ=typ[0] if typ else None,
                 szanse_wlasne=_trzy(d.get('szanse_wlasne')), ponizej_2_5=_ulamek(d.get('ponizej_2_5')),
-                czas=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%H:%M'))
+                czas=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%H:%M'), **czlowiek_z(d))
+    out['werdykt'] = werdykt_po_drogach(out['werdykt'], out)
+    if out['werdykt'] != w and out['werdykt']: STAN['werdykty'][out['werdykt']] = STAN['werdykty'].get(out['werdykt'], 0) + 1
     do_pamieci(kp, out)
+    try:
+        import pamiec_ludzi; pamiec_ludzi.z_analizy((dom, gosc), out)
+    except Exception as e: _blad(f'pamięć ludzi: {e}')
     return out
+
+
+def _pamiec_ludzi(*nazwy):
+    try:
+        import pamiec_ludzi; k = pamiec_ludzi.kontekst(nazwy)
+        return ('\n' + k) if k else ''
+    except Exception: return ''
+
+
+def czlowiek_z(d):
+    """Wersja 52: drogi do porażki, nieścisłości i obserwacje „ludzkie” z odpowiedzi AI."""
+    drogi = []
+    for x in (d.get('drogi_do_porazki') or [])[:6]:
+        if isinstance(x, dict) and x.get('jak'):
+            drogi.append(dict(jak=str(x['jak'])[:200], fakt=str(x.get('fakt') or '')[:240], realna=bool(x.get('realna'))))
+    cz = d.get('czlowiek') if isinstance(d.get('czlowiek'), dict) else {}
+    return dict(drogi=drogi, niescislosci=[str(x)[:200] for x in (d.get('niescislosci') or []) if x][:4],
+                czlowiek={k: str(cz.get(k) or '')[:300] for k in ('a', 'b')})
+
+
+def werdykt_po_drogach(w, out):
+    """Realna droga do porażki oparta na fakcie = to nie jest typ „bez wątpliwości” (zgoda → ryzyko). Werdykt „odradza” zostaje."""
+    if w == 'zgoda' and any(x['realna'] and x['fakt'] and 'brak fakt' not in x['fakt'].lower() for x in out.get('drogi') or []): return 'ryzyko'
+    return w
 
 def zmiana_istotna(stary, nowy):
     """Czy odświeżony raport przynosi coś nowego (nowy brak, zmiana oceny powagi)."""
