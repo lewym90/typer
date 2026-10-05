@@ -1,9 +1,9 @@
 {
- "czas": "2026-10-04 07:00 UTC",
+ "czas": "2026-10-05 07:00 UTC",
  "wersja": "analityk-1",
  "nasze": {
-  "pilka": 0,
-  "tenis": 0,
+  "pilka": 12,
+  "tenis": 9,
   "walki": 0
  },
  "zrodla": {
@@ -20,16 +20,16 @@
    "zawodnicy_ze_statystykami": 0
   },
   "sofascore": {
-   "sekund": 8,
+   "sekund": 9,
    "blad": null,
    "tryb": null,
    "pilka": {
     "dopasowane": 0,
-    "niedopasowane": 0
+    "niedopasowane": 12
    },
    "tenis": {
     "dopasowane": 0,
-    "niedopasowane": 0
+    "niedopasowane": 9
    },
    "walki": {
     "dopasowane": 0,
@@ -40,21 +40,46 @@
    "sekund": 1,
    "blad": null,
    "requests": true,
-   "meczow": 296,
-   "dopasowane": 0,
-   "niedopasowane": 0,
-   "szczegoly": []
+   "meczow": 69,
+   "dopasowane": 11,
+   "niedopasowane": 1,
+   "szczegoly": [
+    "requests",
+    "requests",
+    "requests"
+   ]
   },
   "transfermarkt": {
-   "sekund": 0,
+   "sekund": 3,
    "blad": null,
    "start": [
     200
    ],
-   "kluby": []
+   "kluby": [
+    [
+     "zypern",
+     200,
+     2
+    ],
+    [
+     "unbekannt",
+     200,
+     0
+    ],
+    [
+     "fc-kostopil",
+     200,
+     0
+    ],
+    [
+     "ungarn",
+     200,
+     2
+    ]
+   ]
   }
  },
  "ip": "188.68.247.55",
  "przegladarka": "ok",
- "sekund": 25
+ "sekund": 29
 }
