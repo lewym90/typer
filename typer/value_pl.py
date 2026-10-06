@@ -5,15 +5,17 @@ Uczciwa szansa z rynku Pinnacle/Betfair (bez marży):
  - piłka: macierz wyników z rynku (dzis.json → analiza.lam) – wszystkie rodzaje zakładów, które czytamy u bukmacherów;
  - tenis, MMA, boks: zwycięzca (szansa_a / szansa_b z Pinnacle/Betfair; inne rynki tylko z modelu – za mało pewne na Value);
  - KSW (bez Pinnacle) – bez zmian, liczone w sporty.py z rynku polskiego (rynek_pl).
-Zakład = najwyższy kurs spośród polskich bukmacherów; przewaga min. 3%, kurs 1,30–4,00. Przewaga ponad 25% = prawie zawsze błąd
+Zakład = najwyższy kurs spośród polskich bukmacherów; przewaga min. 5%, kurs 1,30–2,60 (wersja 57). Przewaga ponad 25% = prawie zawsze błąd
 odczytu kursu → pomijana. Mecze już rozpoczęte: Value zostaje taka, jak była przed startem."""
 import os, json, datetime as dt
 import numpy as np, pandas as pd
 
 OUT = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
-MIN_EV = 0.03
+# Wersja 57 – kalibracja na wynikach: archiwum 18 951 kursów Fortuny (ROI wg kursu: 1–2 → −1…−5%, 3–5 → −21%, 5–10 → −36%) i dziennik Value
+# (73 rozliczone: kurs > 2,6 → −30% przy 28% trafień zamiast 43%; przewaga < 5% → −26%). Dlatego: kurs 1,30–2,60 i przewaga min. 5%.
+MIN_EV = 0.05
 MAX_EV = 0.25
-KURS_MIN, KURS_MAX = 1.30, 4.00
+KURS_MIN, KURS_MAX = 1.30, 2.60
 NA_MECZ = 2
 # Wersja 41 – bezpiecznik rozbieżności: gdy nasza szansa jest o ponad 15% (względnie) wyższa niż szansa z mediany kursów
 # 4 polskich bukmacherów (z odjętą typową marżą ~5%), to prawie zawsze błąd przeliczenia, a nie okazja – np. przy wielkim
