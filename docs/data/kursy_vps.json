@@ -1,10 +1,10 @@
 {
- "czas": "2026-10-08 03:08 UTC",
+ "czas": "2026-10-08 05:01 UTC",
  "wersja": "czytnik-3",
  "bukmacherzy": {
   "fortuna": {
    "ok": true,
-   "dopasowane": 17
+   "dopasowane": 13
   },
   "sts": {
    "ok": true,
@@ -12,7 +12,7 @@
   },
   "betclic": {
    "ok": true,
-   "dopasowane": 17
+   "dopasowane": 13
   }
  },
  "mecze": {
@@ -44,9 +44,15 @@
     "kursy": {
      "A": 1.37,
      "B": 3.0,
-     "A min. 1 set": 1.13,
+     "A -1.5": 2.0,
      "B min. 1 set": 1.75,
-     "Ponad 2.5 seta": 2.45,
+     "A min. 1 set": 1.14,
+     "B -1.5": 5.4,
+     "A 2:0": 2.0,
+     "A 2:1": 3.8,
+     "B 2:1": 5.6,
+     "B 2:0": 5.4,
+     "Ponad 2.5 seta": 2.4,
      "Poniżej 2.5 seta": 1.5
     },
     "pelna": true
@@ -514,7 +520,7 @@
      "B 2:0": 2.14,
      "A 2:1": 5.8,
      "B 2:1": 3.6,
-     "Ponad 2.5 seta": 2.18,
+     "Ponad 2.5 seta": 2.17,
      "Poniżej 2.5 seta": 1.47,
      "A -1.5": 4.7,
      "B -1.5": 2.14
@@ -657,7 +663,7 @@
      "Czy obaj zawodnicy wygrają seta w meczu": [
       [
        "Tak",
-       2.18
+       2.17
       ],
       [
        "Nie",
@@ -1340,231 +1346,6 @@
     }
    }
   },
-  "333980ed121c08c335b86c91a1de3a48": {
-   "fortuna": {
-    "id": "ufo:mtch:1wn-083",
-    "nazwa": "Borges N. - Diaz Acosta F.",
-    "zgodnosc": 0.97,
-    "kursy": {
-     "A": 1.26,
-     "B": 3.7,
-     "A -1.5": 1.81,
-     "B min. 1 set": 1.89,
-     "Poniżej 2.5 seta": 1.46,
-     "Ponad 2.5 seta": 2.46,
-     "A 2:0": 1.76,
-     "A 2:1": 3.45,
-     "B 2:1": 7.2,
-     "B 2:0": 6.4,
-     "B -1.5": 6.4,
-     "A min. 1 set": 1.11
-    },
-    "pelna": true
-   },
-   "sts": {
-    "id": "f3594815",
-    "nazwa": "Borges Nuno - Diaz Acosta Facundo",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "A": 1.26,
-     "B": 3.8,
-     "A -1.5": 1.75,
-     "B min. 1 set": 1.9,
-     "A min. 1 set": 1.1,
-     "B -1.5": 6.6,
-     "A 2:0": 1.75,
-     "A 2:1": 3.7,
-     "B 2:1": 6.4,
-     "B 2:0": 7.2,
-     "Ponad 2.5 seta": 2.55,
-     "Poniżej 2.5 seta": 1.47
-    },
-    "pelna": true
-   },
-   "betclic": {
-    "id": "1244275524263936",
-    "nazwa": "Nuno Borges - Facundo Diaz Acosta",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "A": 1.24,
-     "B": 3.55,
-     "A min. 1 set": 1.1,
-     "B min. 1 set": 1.82,
-     "A 2:0": 1.85,
-     "B 2:0": 6.2,
-     "A 2:1": 3.5,
-     "B 2:1": 7.0,
-     "Ponad 2.5 seta": 2.33,
-     "Poniżej 2.5 seta": 1.4,
-     "A -1.5": 1.85,
-     "B -1.5": 6.2
-    },
-    "pelna": true,
-    "rynkow": 8,
-    "oferta": {
-     "Zwycięzca meczu": [
-      [
-       "Nuno Borges",
-       1.24
-      ],
-      [
-       "Facundo Diaz Acosta",
-       3.55
-      ]
-     ],
-     "Zawodnik wygra 1. seta 6-0, 6-1, 6-2 lub wygra mecz": [
-      [
-       "Nuno Borges",
-       1.2
-      ],
-      [
-       "Facundo Diaz Acosta",
-       3.45
-      ]
-     ],
-     "Łączna liczba gemów": [
-      [
-       "Powyżej 17,5",
-       1.12
-      ],
-      [
-       "Poniżej 17,5",
-       5.4
-      ],
-      [
-       "Powyżej 18,5",
-       1.25
-      ],
-      [
-       "Poniżej 18,5",
-       3.55
-      ],
-      [
-       "Powyżej 19,5",
-       1.38
-      ],
-      [
-       "Poniżej 19,5",
-       2.8
-      ],
-      [
-       "Powyżej 20,5",
-       1.58
-      ],
-      [
-       "Poniżej 20,5",
-       2.23
-      ],
-      [
-       "Powyżej 21,5",
-       1.73
-      ],
-      [
-       "Poniżej 21,5",
-       1.99
-      ],
-      [
-       "Powyżej 22,5",
-       2.02
-      ],
-      [
-       "Poniżej 22,5",
-       1.71
-      ],
-      [
-       "Powyżej 23,5",
-       2.28
-      ],
-      [
-       "Poniżej 23,5",
-       1.56
-      ],
-      [
-       "Powyżej 24,5",
-       2.36
-      ],
-      [
-       "Poniżej 24,5",
-       1.52
-      ],
-      [
-       "Powyżej 25,5",
-       2.55
-      ],
-      [
-       "Poniżej 25,5",
-       1.45
-      ]
-     ],
-     "Nuno Borges wygra seta": [
-      [
-       "Tak",
-       1.1
-      ],
-      [
-       "Nie",
-       5.2
-      ]
-     ],
-     "Facundo Diaz Acosta wygra seta": [
-      [
-       "Tak",
-       1.82
-      ],
-      [
-       "Nie",
-       1.81
-      ]
-     ],
-     "Wynik w setach": [
-      [
-       "2 - 0",
-       1.85
-      ],
-      [
-       "0 - 2",
-       6.2
-      ],
-      [
-       "2 - 1",
-       3.5
-      ],
-      [
-       "1 - 2",
-       7.0
-      ]
-     ],
-     "Czy obaj zawodnicy wygrają seta w meczu": [
-      [
-       "Tak",
-       2.33
-      ],
-      [
-       "Nie",
-       1.4
-      ]
-     ],
-     "Handicap setowy": [
-      [
-       "Nuno Borges (-1,5)",
-       1.85
-      ],
-      [
-       "Facundo Diaz Acosta (+1.5)",
-       1.86
-      ],
-      [
-       "Nuno Borges (+1,5)",
-       1.11
-      ],
-      [
-       "Facundo Diaz Acosta (-1.5)",
-       6.2
-      ]
-     ]
-    }
-   }
-  },
   "fd28d05a1e60816704c0dc6a7eb12b72": {
    "fortuna": {
     "id": "ufo:mtch:1wn-07t",
@@ -1844,8 +1625,8 @@
      "B 2:0": 5.2,
      "A 2:1": 3.45,
      "B 2:1": 5.8,
-     "Ponad 2.5 seta": 2.1,
-     "Poniżej 2.5 seta": 1.5,
+     "Ponad 2.5 seta": 2.13,
+     "Poniżej 2.5 seta": 1.49,
      "A -1.5": 2.09,
      "B -1.5": 5.2
     },
@@ -1987,11 +1768,11 @@
      "Czy obaj zawodnicy wygrają seta w meczu": [
       [
        "Tak",
-       2.1
+       2.13
       ],
       [
        "Nie",
-       1.5
+       1.49
       ]
      ],
      "Handicap setowy": [
@@ -2240,231 +2021,6 @@
     }
    }
   },
-  "e891a02e881883be43d898107660ddcf": {
-   "fortuna": {
-    "id": "ufo:mtch:1wn-080",
-    "nazwa": "Munar J. - Brooksby J.",
-    "zgodnosc": 0.96,
-    "kursy": {
-     "A": 1.48,
-     "B": 2.57,
-     "A -1.5": 2.21,
-     "B min. 1 set": 1.6,
-     "Ponad 2.5 seta": 2.33,
-     "Poniżej 2.5 seta": 1.51,
-     "A min. 1 set": 1.21,
-     "A 2:0": 2.16,
-     "B 2:0": 4.2,
-     "B -1.5": 4.2,
-     "B 2:1": 5.6,
-     "A 2:1": 3.7
-    },
-    "pelna": true
-   },
-   "sts": {
-    "id": "f3594819",
-    "nazwa": "Munar Jaume - Brooksby Jenson",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "A": 1.47,
-     "B": 2.6,
-     "A -1.5": 2.15,
-     "B min. 1 set": 1.65,
-     "A min. 1 set": 1.2,
-     "B -1.5": 4.3,
-     "A 2:0": 2.15,
-     "A 2:1": 4.0,
-     "B 2:1": 5.2,
-     "B 2:0": 4.4,
-     "Ponad 2.5 seta": 2.45,
-     "Poniżej 2.5 seta": 1.5
-    },
-    "pelna": true
-   },
-   "betclic": {
-    "id": "1244227762675715",
-    "nazwa": "Jaume Munar - Jenson Brooksby",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "A": 1.43,
-     "B": 2.55,
-     "A min. 1 set": 1.19,
-     "B min. 1 set": 1.57,
-     "A 2:0": 2.21,
-     "B 2:0": 4.2,
-     "A 2:1": 3.75,
-     "B 2:1": 5.6,
-     "Ponad 2.5 seta": 2.17,
-     "Poniżej 2.5 seta": 1.47,
-     "A -1.5": 2.21,
-     "B -1.5": 4.2
-    },
-    "pelna": true,
-    "rynkow": 8,
-    "oferta": {
-     "Zwycięzca meczu": [
-      [
-       "Jaume Munar",
-       1.43
-      ],
-      [
-       "Jenson Brooksby",
-       2.55
-      ]
-     ],
-     "Zawodnik wygra 1. seta 6-0, 6-1, 6-2 lub wygra mecz": [
-      [
-       "Jaume Munar",
-       1.39
-      ],
-      [
-       "Jenson Brooksby",
-       2.48
-      ]
-     ],
-     "Łączna liczba gemów": [
-      [
-       "Powyżej 17,5",
-       1.17
-      ],
-      [
-       "Poniżej 17,5",
-       4.5
-      ],
-      [
-       "Powyżej 18,5",
-       1.28
-      ],
-      [
-       "Poniżej 18,5",
-       3.35
-      ],
-      [
-       "Powyżej 19,5",
-       1.44
-      ],
-      [
-       "Poniżej 19,5",
-       2.6
-      ],
-      [
-       "Powyżej 20,5",
-       1.61
-      ],
-      [
-       "Poniżej 20,5",
-       2.18
-      ],
-      [
-       "Powyżej 21,5",
-       1.77
-      ],
-      [
-       "Poniżej 21,5",
-       1.95
-      ],
-      [
-       "Powyżej 22,5",
-       2.01
-      ],
-      [
-       "Poniżej 22,5",
-       1.72
-      ],
-      [
-       "Powyżej 23,5",
-       2.23
-      ],
-      [
-       "Poniżej 23,5",
-       1.58
-      ],
-      [
-       "Powyżej 24,5",
-       2.32
-      ],
-      [
-       "Poniżej 24,5",
-       1.54
-      ],
-      [
-       "Powyżej 25,5",
-       2.55
-      ],
-      [
-       "Poniżej 25,5",
-       1.45
-      ]
-     ],
-     "Jaume Munar wygra seta": [
-      [
-       "Tak",
-       1.19
-      ],
-      [
-       "Nie",
-       3.85
-      ]
-     ],
-     "Jenson Brooksby wygra seta": [
-      [
-       "Tak",
-       1.57
-      ],
-      [
-       "Nie",
-       2.16
-      ]
-     ],
-     "Wynik w setach": [
-      [
-       "2 - 0",
-       2.21
-      ],
-      [
-       "0 - 2",
-       4.2
-      ],
-      [
-       "2 - 1",
-       3.75
-      ],
-      [
-       "1 - 2",
-       5.6
-      ]
-     ],
-     "Czy obaj zawodnicy wygrają seta w meczu": [
-      [
-       "Tak",
-       2.17
-      ],
-      [
-       "Nie",
-       1.47
-      ]
-     ],
-     "Handicap setowy": [
-      [
-       "Jaume Munar (-1,5)",
-       2.21
-      ],
-      [
-       "Jenson Brooksby (+1.5)",
-       1.6
-      ],
-      [
-       "Jaume Munar (+1,5)",
-       1.2
-      ],
-      [
-       "Jenson Brooksby (-1.5)",
-       4.2
-      ]
-     ]
-    }
-   }
-  },
   "42be07567c4f51b78a693eb640738bc5": {
    "fortuna": {
     "id": "ufo:mtch:1wn-1h1",
@@ -2498,9 +2054,9 @@
      "A min. 1 set": 1.18,
      "B -1.5": 4.8,
      "A 2:0": 2.0,
-     "A 2:1": 4.0,
+     "A 2:1": 4.1,
      "B 2:1": 5.4,
-     "B 2:0": 4.8,
+     "B 2:0": 4.7,
      "Ponad 2.5 seta": 2.45,
      "Poniżej 2.5 seta": 1.5
     },
@@ -2685,231 +2241,6 @@
       [
        "Nicolas Mejia (-1.5)",
        4.5
-      ]
-     ]
-    }
-   }
-  },
-  "92596d91796dc3550ab6ffe4c7c772e0": {
-   "fortuna": {
-    "id": "ufo:mtch:1wn-1gz",
-    "nazwa": "Coppejans K. - Tsitsipas S.",
-    "zgodnosc": 0.97,
-    "kursy": {
-     "A": 7.8,
-     "B": 1.07,
-     "A min. 1 set": 3.1,
-     "B -1.5": 1.32,
-     "Ponad 2.5 seta": 3.5,
-     "Poniżej 2.5 seta": 1.25,
-     "B 2:1": 4.1,
-     "A 2:1": 14.0,
-     "A 2:0": 18.0,
-     "A -1.5": 18.0,
-     "B 2:0": 1.28,
-     "B min. 1 set": 1.02
-    },
-    "pelna": true
-   },
-   "sts": {
-    "id": "f3601777",
-    "nazwa": "Coppejans Kimmer - Tsitsipas Stefanos",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "A": 9.6,
-     "B": 1.06,
-     "A -1.5": 17.0,
-     "B min. 1 set": 1.01,
-     "A min. 1 set": 3.1,
-     "B -1.5": 1.35,
-     "A 2:0": 16.0,
-     "A 2:1": 12.0,
-     "B 2:1": 4.3,
-     "B 2:0": 1.35,
-     "Ponad 2.5 seta": 3.5,
-     "Poniżej 2.5 seta": 1.28
-    },
-    "pelna": true
-   },
-   "betclic": {
-    "id": "1245382488113154",
-    "nazwa": "Kimmer Coppejans - Stefanos Tsitsipas",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "A": 7.4,
-     "B": 1.05,
-     "A min. 1 set": 3.0,
-     "B min. 1 set": 1.01,
-     "A 2:0": 18.0,
-     "B 2:0": 1.32,
-     "A 2:1": 14.0,
-     "B 2:1": 4.2,
-     "Ponad 2.5 seta": 3.05,
-     "Poniżej 2.5 seta": 1.23,
-     "A -1.5": 18.0,
-     "B -1.5": 1.32
-    },
-    "pelna": true,
-    "rynkow": 8,
-    "oferta": {
-     "Zwycięzca meczu": [
-      [
-       "Kimmer Coppejans",
-       7.4
-      ],
-      [
-       "Stefanos Tsitsipas",
-       1.05
-      ]
-     ],
-     "Zawodnik wygra 1. seta 6-0, 6-1, 6-2 lub wygra mecz": [
-      [
-       "Kimmer Coppejans",
-       7.25
-      ],
-      [
-       "Stefanos Tsitsipas",
-       1.02
-      ]
-     ],
-     "Łączna liczba gemów": [
-      [
-       "Powyżej 16,5",
-       1.12
-      ],
-      [
-       "Poniżej 16,5",
-       5.4
-      ],
-      [
-       "Powyżej 17,5",
-       1.27
-      ],
-      [
-       "Poniżej 17,5",
-       3.45
-      ],
-      [
-       "Powyżej 18,5",
-       1.44
-      ],
-      [
-       "Poniżej 18,5",
-       2.6
-      ],
-      [
-       "Powyżej 19,5",
-       1.69
-      ],
-      [
-       "Poniżej 19,5",
-       2.04
-      ],
-      [
-       "Powyżej 20,5",
-       1.96
-      ],
-      [
-       "Poniżej 20,5",
-       1.75
-      ],
-      [
-       "Powyżej 21,5",
-       2.24
-      ],
-      [
-       "Poniżej 21,5",
-       1.58
-      ],
-      [
-       "Powyżej 22,5",
-       2.7
-      ],
-      [
-       "Poniżej 22,5",
-       1.41
-      ],
-      [
-       "Powyżej 23,5",
-       3.1
-      ],
-      [
-       "Poniżej 23,5",
-       1.32
-      ],
-      [
-       "Powyżej 24,5",
-       3.2
-      ],
-      [
-       "Poniżej 24,5",
-       1.3
-      ]
-     ],
-     "Kimmer Coppejans wygra seta": [
-      [
-       "Tak",
-       3.0
-      ],
-      [
-       "Nie",
-       1.3
-      ]
-     ],
-     "Stefanos Tsitsipas wygra seta": [
-      [
-       "Tak",
-       1.01
-      ],
-      [
-       "Nie",
-       8.8
-      ]
-     ],
-     "Wynik w setach": [
-      [
-       "2 - 0",
-       18.0
-      ],
-      [
-       "0 - 2",
-       1.32
-      ],
-      [
-       "2 - 1",
-       14.0
-      ],
-      [
-       "1 - 2",
-       4.2
-      ]
-     ],
-     "Czy obaj zawodnicy wygrają seta w meczu": [
-      [
-       "Tak",
-       3.05
-      ],
-      [
-       "Nie",
-       1.23
-      ]
-     ],
-     "Handicap setowy": [
-      [
-       "Kimmer Coppejans (-1,5)",
-       18.0
-      ],
-      [
-       "Stefanos Tsitsipas (+1.5)",
-       1.02
-      ],
-      [
-       "Kimmer Coppejans (+1,5)",
-       3.1
-      ],
-      [
-       "Stefanos Tsitsipas (-1.5)",
-       1.32
       ]
      ]
     }
@@ -3365,231 +2696,6 @@
     }
    }
   },
-  "1c8fbf9838f67d1a2e3e9db46c5eb3a6": {
-   "fortuna": {
-    "id": "ufo:mtch:1wn-1h4",
-    "nazwa": "Kotov P. - Griekspoor T.",
-    "zgodnosc": 0.96,
-    "kursy": {
-     "A": 2.71,
-     "B": 1.44,
-     "A min. 1 set": 1.61,
-     "B -1.5": 2.18,
-     "B min. 1 set": 1.18,
-     "Poniżej 2.5 seta": 1.55,
-     "Ponad 2.5 seta": 2.25,
-     "A 2:1": 5.6,
-     "B 2:1": 3.5,
-     "A 2:0": 4.6,
-     "A -1.5": 4.6,
-     "B 2:0": 2.14
-    },
-    "pelna": true
-   },
-   "sts": {
-    "id": "f3601778",
-    "nazwa": "Kotov Pavel - Griekspoor Tallon",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "A": 2.8,
-     "B": 1.42,
-     "A -1.5": 4.9,
-     "B min. 1 set": 1.17,
-     "A min. 1 set": 1.65,
-     "B -1.5": 2.15,
-     "A 2:0": 4.7,
-     "A 2:1": 5.4,
-     "B 2:1": 3.8,
-     "B 2:0": 2.1,
-     "Ponad 2.5 seta": 2.35,
-     "Poniżej 2.5 seta": 1.55
-    },
-    "pelna": true
-   },
-   "betclic": {
-    "id": "1245321917120512",
-    "nazwa": "Pavel Kotov - Tallon Griekspoor",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "A": 2.7,
-     "B": 1.39,
-     "A min. 1 set": 1.58,
-     "B min. 1 set": 1.16,
-     "A 2:0": 4.7,
-     "B 2:0": 2.18,
-     "A 2:1": 5.6,
-     "B 2:1": 3.55,
-     "Ponad 2.5 seta": 2.13,
-     "Poniżej 2.5 seta": 1.49,
-     "A -1.5": 4.7,
-     "B -1.5": 2.18
-    },
-    "pelna": true,
-    "rynkow": 8,
-    "oferta": {
-     "Zwycięzca meczu": [
-      [
-       "Pavel Kotov",
-       2.7
-      ],
-      [
-       "Tallon Griekspoor",
-       1.39
-      ]
-     ],
-     "Zawodnik wygra 1. seta 6-0, 6-1, 6-2 lub wygra mecz": [
-      [
-       "Pavel Kotov",
-       2.62
-      ],
-      [
-       "Tallon Griekspoor",
-       1.35
-      ]
-     ],
-     "Łączna liczba gemów": [
-      [
-       "Powyżej 18,5",
-       1.14
-      ],
-      [
-       "Poniżej 18,5",
-       4.9
-      ],
-      [
-       "Powyżej 19,5",
-       1.26
-      ],
-      [
-       "Poniżej 19,5",
-       3.5
-      ],
-      [
-       "Powyżej 20,5",
-       1.4
-      ],
-      [
-       "Poniżej 20,5",
-       2.75
-      ],
-      [
-       "Powyżej 21,5",
-       1.51
-      ],
-      [
-       "Poniżej 21,5",
-       2.38
-      ],
-      [
-       "Powyżej 22,5",
-       1.76
-      ],
-      [
-       "Poniżej 22,5",
-       1.96
-      ],
-      [
-       "Powyżej 23,5",
-       2.01
-      ],
-      [
-       "Poniżej 23,5",
-       1.71
-      ],
-      [
-       "Powyżej 24,5",
-       2.05
-      ],
-      [
-       "Poniżej 24,5",
-       1.69
-      ],
-      [
-       "Powyżej 25,5",
-       2.21
-      ],
-      [
-       "Poniżej 25,5",
-       1.59
-      ],
-      [
-       "Powyżej 26,5",
-       2.49
-      ],
-      [
-       "Poniżej 26,5",
-       1.47
-      ]
-     ],
-     "Pavel Kotov wygra seta": [
-      [
-       "Tak",
-       1.58
-      ],
-      [
-       "Nie",
-       2.13
-      ]
-     ],
-     "Tallon Griekspoor wygra seta": [
-      [
-       "Tak",
-       1.16
-      ],
-      [
-       "Nie",
-       4.2
-      ]
-     ],
-     "Wynik w setach": [
-      [
-       "2 - 0",
-       4.7
-      ],
-      [
-       "0 - 2",
-       2.18
-      ],
-      [
-       "2 - 1",
-       5.6
-      ],
-      [
-       "1 - 2",
-       3.55
-      ]
-     ],
-     "Czy obaj zawodnicy wygrają seta w meczu": [
-      [
-       "Tak",
-       2.13
-      ],
-      [
-       "Nie",
-       1.49
-      ]
-     ],
-     "Handicap setowy": [
-      [
-       "Pavel Kotov (-1,5)",
-       4.7
-      ],
-      [
-       "Tallon Griekspoor (+1.5)",
-       1.17
-      ],
-      [
-       "Pavel Kotov (+1,5)",
-       1.61
-      ],
-      [
-       "Tallon Griekspoor (-1.5)",
-       2.18
-      ]
-     ]
-    }
-   }
-  },
   "df1352ed67512cd95822357e152abc7c": {
    "fortuna": {
     "id": "ufo:mtch:1wn-07x",
@@ -3598,14 +2704,14 @@
     "kursy": {
      "B": 1.35,
      "A": 3.15,
-     "A min. 1 set": 1.76,
-     "B -1.5": 1.95,
-     "Ponad 2.5 seta": 2.39,
-     "Poniżej 2.5 seta": 1.49,
+     "A min. 1 set": 1.77,
+     "B -1.5": 1.94,
+     "Ponad 2.5 seta": 2.41,
+     "Poniżej 2.5 seta": 1.48,
      "B 2:0": 1.9,
      "A 2:0": 5.4,
      "A -1.5": 5.4,
-     "B 2:1": 3.5,
+     "B 2:1": 3.55,
      "A 2:1": 6.4,
      "B min. 1 set": 1.15
     },
@@ -3638,16 +2744,16 @@
     "kursy": {
      "A": 3.1,
      "B": 1.3,
-     "A min. 1 set": 1.73,
+     "A min. 1 set": 1.74,
      "B min. 1 set": 1.13,
      "A 2:0": 5.4,
-     "B 2:0": 1.95,
+     "B 2:0": 1.94,
      "A 2:1": 6.6,
-     "B 2:1": 3.55,
+     "B 2:1": 3.6,
      "Ponad 2.5 seta": 2.25,
      "Poniżej 2.5 seta": 1.44,
      "A -1.5": 5.4,
-     "B -1.5": 1.95
+     "B -1.5": 1.94
     },
     "pelna": true,
     "rynkow": 8,
@@ -3674,82 +2780,82 @@
      ],
      "Łączna liczba gemów": [
       [
+       "Powyżej 17,5",
+       1.15
+      ],
+      [
+       "Poniżej 17,5",
+       4.7
+      ],
+      [
        "Powyżej 18,5",
-       1.24
+       1.27
       ],
       [
        "Poniżej 18,5",
-       3.65
+       3.4
       ],
       [
        "Powyżej 19,5",
-       1.39
+       1.43
       ],
       [
        "Poniżej 19,5",
-       2.8
+       2.65
       ],
       [
        "Powyżej 20,5",
-       1.56
+       1.61
       ],
       [
        "Poniżej 20,5",
-       2.27
+       2.19
       ],
       [
        "Powyżej 21,5",
-       1.71
+       1.77
       ],
       [
        "Poniżej 21,5",
-       2.02
+       1.95
       ],
       [
        "Powyżej 22,5",
-       1.98
+       2.03
       ],
       [
        "Poniżej 22,5",
-       1.74
+       1.7
       ],
       [
        "Powyżej 23,5",
-       2.22
+       2.27
       ],
       [
        "Poniżej 23,5",
-       1.59
+       1.56
       ],
       [
        "Powyżej 24,5",
-       2.3
+       2.35
       ],
       [
        "Poniżej 24,5",
-       1.55
+       1.53
       ],
       [
        "Powyżej 25,5",
-       2.5
+       2.55
       ],
       [
        "Poniżej 25,5",
-       1.47
-      ],
-      [
-       "Powyżej 26,5",
-       2.8
-      ],
-      [
-       "Poniżej 26,5",
-       1.38
+       1.45
       ]
      ],
      "Vit Kopriva wygra seta": [
       [
        "Tak",
-       1.73
+       1.74
       ],
       [
        "Nie",
@@ -3773,7 +2879,7 @@
       ],
       [
        "0 - 2",
-       1.95
+       1.94
       ],
       [
        "2 - 1",
@@ -3781,7 +2887,7 @@
       ],
       [
        "1 - 2",
-       3.55
+       3.6
       ]
      ],
      "Czy obaj zawodnicy wygrają seta w meczu": [
@@ -3805,14 +2911,96 @@
       ],
       [
        "Vit Kopriva (+1,5)",
-       1.76
+       1.77
       ],
       [
        "Zizou Bergs (-1.5)",
-       1.95
+       1.94
       ]
      ]
     }
+   }
+  },
+  "333980ed121c08c335b86c91a1de3a48": {
+   "sts": {
+    "id": "f3594815",
+    "nazwa": "Borges Nuno - Diaz Acosta Facundo",
+    "zgodnosc": 0.95,
+    "kursy": {
+     "A": 1.4,
+     "B": 2.7,
+     "A -1.5": 2.45,
+     "B min. 1 set": 1.48,
+     "A min. 1 set": 1.12,
+     "A 2:0": 2.5,
+     "A 2:1": 2.95,
+     "B 2:1": 4.9,
+     "B 2:0": 5.6,
+     "B -1.5": 5.6,
+     "Ponad 2.5 seta": 1.91,
+     "Poniżej 2.5 seta": 1.79
+    },
+    "pelna": true
+   }
+  },
+  "e891a02e881883be43d898107660ddcf": {
+   "sts": {
+    "id": "f3594819",
+    "nazwa": "Munar Jaume - Brooksby Jenson",
+    "zgodnosc": 0.95,
+    "kursy": {
+     "A": 1.55,
+     "B": 2.27,
+     "A -1.5": 2.7,
+     "B min. 1 set": 1.4,
+     "A min. 1 set": 1.18,
+     "A 2:0": 2.75,
+     "A 2:1": 3.3,
+     "B 2:1": 4.3,
+     "B 2:0": 4.5,
+     "B -1.5": 4.5,
+     "Ponad 2.5 seta": 1.93,
+     "Poniżej 2.5 seta": 1.77
+    },
+    "pelna": true
+   }
+  },
+  "92596d91796dc3550ab6ffe4c7c772e0": {
+   "sts": {
+    "id": "f3601777",
+    "nazwa": "Coppejans Kimmer - Tsitsipas Stefanos",
+    "zgodnosc": 0.95,
+    "kursy": {
+     "A": 11.0,
+     "B": 1.01,
+     "A min. 1 set": 3.35,
+     "B -1.5": 1.27,
+     "A 2:1": 12.0,
+     "B 2:1": 4.4,
+     "B 2:0": 1.29,
+     "Ponad 2.5 seta": 3.35,
+     "Poniżej 2.5 seta": 1.27
+    },
+    "pelna": true
+   }
+  },
+  "1c8fbf9838f67d1a2e3e9db46c5eb3a6": {
+   "sts": {
+    "id": "f3601778",
+    "nazwa": "Kotov Pavel - Griekspoor Tallon",
+    "zgodnosc": 0.95,
+    "kursy": {
+     "A": 1.03,
+     "B": 9.6,
+     "A -1.5": 1.07,
+     "B min. 1 set": 6.8,
+     "A 2:0": 1.09,
+     "A 2:1": 13.0,
+     "B 2:1": 12.0,
+     "Ponad 2.5 seta": 6.8,
+     "Poniżej 2.5 seta": 1.07
+    },
+    "pelna": true
    }
   }
  },
@@ -4077,6 +3265,10 @@
     "Zakłady Specjalne"
    ],
    [
+    "ufo:sprt:35",
+    "eHokej"
+   ],
+   [
     "ufo:sprt:1v",
     "MISTRZOWSKI BOOST"
    ],
@@ -4143,8 +3335,8 @@
    "sporty walki": "ufo:sprt:19",
    "pilka": "ufo:sprt:00"
   },
-  "turniejow": 169,
-  "meczow_fortuny": 828,
+  "turniejow": 170,
+  "meczow_fortuny": 833,
   "niedopasowane": [
    "pilka: Bragantino-SP – Mirassol",
    "pilka: Internacional – Corinthians",
@@ -4164,9 +3356,13 @@
    "tenis: Arthur Fery – Marin Cilic",
    "tenis: Ann Li – Elina Svitolina",
    "tenis: Ekaterina Alexandrova – Mirra Andreeva",
-   "tenis: Cameron Norrie – Dalibor Svrcina"
+   "tenis: Cameron Norrie – Dalibor Svrcina",
+   "tenis: Nuno Borges – Facundo Diaz Acosta",
+   "tenis: Jaume Munar – Jenson Brooksby",
+   "tenis: Kimmer Coppejans – Stefanos Tsitsipas",
+   "tenis: Pavel Kotov – Tallon Griekspoor"
   ],
-  "pelna_oferta": 17,
+  "pelna_oferta": 13,
   "rynki_nazwy": {
    "tenis": {
     "Zwycięzca meczu (krecz=zwrot)": [
@@ -4511,38 +3707,6 @@
      "Tak",
      "Nie"
     ],
-    "Mecz: Borges N. - liczba gemów": [
-     "+ 13.5",
-     "- 13.5"
-    ],
-    "Mecz: Borges N. - wygra swój pierwszy gem serwisowy": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: Diaz Acosta F. - wygra swój pierwszy gem serwisowy": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: Diaz Acosta F. - liczba gemów": [
-     "+ 10.5",
-     "- 10.5"
-    ],
-    "Mecz: Borges N. - wygra dokładnie jeden set": [
-     "Nie",
-     "Tak"
-    ],
-    "Mecz: Diaz Acosta F. - wygra dokładnie jeden set": [
-     "Nie",
-     "Tak"
-    ],
-    "Mecz: Diaz Acosta F. - wygra co najmniej jeden set": [
-     "Nie",
-     "Tak"
-    ],
-    "Mecz: Borges N. - wygra co najmniej jeden set": [
-     "Nie",
-     "Tak"
-    ],
     "Mecz: Medjedovic H. - wygra dokładnie jeden set": [
      "Nie",
      "Tak"
@@ -4655,18 +3819,50 @@
      "Tak",
      "Nie"
     ],
-    "Mecz: Munar J. - liczba gemów": [
+    "Mecz: Mejia N. - wygra co najmniej jeden set": [
+     "Nie",
+     "Tak"
+    ],
+    "Mecz: Cerundolo J.M. - wygra dokładnie jeden set": [
+     "Tak",
+     "Nie"
+    ],
+    "Mecz: Cerundolo J.M. - wygra co najmniej jeden set": [
+     "Nie",
+     "Tak"
+    ],
+    "Mecz: Cerundolo J.M. - liczba gemów": [
+     "+ 11.5",
+     "- 11.5"
+    ],
+    "Mecz: Mejia N. - liczba gemów": [
      "- 11.5",
      "+ 11.5"
+    ],
+    "Mecz: Cerundolo J.M. - wygra swój pierwszy gem serwisowy": [
+     "Tak",
+     "Nie"
+    ],
+    "Mecz: Mejia N. - wygra swój pierwszy gem serwisowy": [
+     "Tak",
+     "Nie"
+    ],
+    "Mecz: Mejia N. - wygra dokładnie jeden set": [
+     "Tak",
+     "Nie"
+    ],
+    "Mecz: Baez S. - liczba gemów": [
+     "- 13.5",
+     "+ 13.5"
     ]
    }
   },
   "sts": {
    "bledy": [],
-   "meczow_sts": 1937,
+   "meczow_sts": 1965,
    "sporty": {
-    "1": 1496,
-    "3": 346,
+    "1": 1518,
+    "3": 352,
     "166": 59,
     "19": 36
    },
@@ -4692,30 +3888,30 @@
     "tenis: Cameron Norrie – Dalibor Svrcina",
     "tenis: Fabian Marozsan – Zachary Svajda"
    ],
-   "szczegoly_ramek": 16,
+   "szczegoly_ramek": 19,
    "szczegoly_odpowiedzi": "16 z 16",
    "szczegoly_tematy": {
     "f_f3601776_pl": 1,
     "f_f3550088_pl": 1,
     "f_f3594808_pl": 1,
-    "f_f3594810_pl": 1,
-    "f_f3594815_pl": 1,
     "f_f3594820_pl": 1,
-    "f_f3594818_pl": 1,
-    "f_f3594809_pl": 1,
+    "f_f3594815_pl": 1,
+    "f_f3594810_pl": 1,
     "f_f3594816_pl": 1,
-    "f_f3601777_pl": 1,
-    "f_f3594819_pl": 1,
+    "f_f3594809_pl": 1,
+    "f_f3594818_pl": 1,
+    "f_f3601777_pl": 2,
+    "f_f3594819_pl": 3,
     "f_f3601775_pl": 1,
-    "f_f3601778_pl": 1,
     "f_f3594812_pl": 1,
+    "f_f3601778_pl": 1,
     "f_f3594811_pl": 1,
     "f_f3594807_pl": 1
    },
    "szczegoly_meczow": {
     "Muchova Karolina - Bartunkova Nikola": {
      "16m62440": 4,
-     "17mea4226831a5": 22,
+     "17mea4226831a5": 25,
      "1m75051584": 1
     },
     "Vallejo Adolfo Daniel - Royer Valentin": {
@@ -4735,8 +3931,7 @@
      "1m75314390": 1
     },
     "Borges Nuno - Diaz Acosta Facundo": {
-     "17m09818672c4b": 26,
-     "1m75314396": 1
+     "18m09818672c4b": 28
     },
     "Tirante Thiago Agustin - Medjedovic Hamad": {
      "17mf2cd8f73229": 26,
@@ -4752,16 +3947,14 @@
      "1m75314386": 1
     },
     "Munar Jaume - Brooksby Jenson": {
-     "17m20833c1492e": 26,
-     "1m75314402": 1
+     "18m20833c1492e": 33
     },
     "Cerundolo Juan Manuel - Mejia Nicolas": {
      "17mff9f79a5bf4": 26,
      "1m75364266": 1
     },
     "Coppejans Kimmer - Tsitsipas Stefanos": {
-     "17m2a2b2553817": 26,
-     "1m75364270": 1
+     "18m2a2b2553817": 31
     },
     "Giron Marcos - Baez Sebastian": {
      "17mdd275ac43df": 26,
@@ -4772,8 +3965,7 @@
      "1m75314388": 1
     },
     "Kotov Pavel - Griekspoor Tallon": {
-     "17mb8d1aacdf61": 26,
-     "1m75364274": 1
+     "18mb8d1aacdf61": 31
     },
     "Kopriva Vit - Bergs Zizou": {
      "17mefd8faef9f8": 26,
@@ -4786,69 +3978,84 @@
       "Zwycięzca meczu | 4:1=1.37",
       "Zwycięzca meczu | 5:2=3"
      ],
+     "265 Sety - handicap": [
+      "Sety - handicap | 925:1 (-1.5)=2",
+      "Sety - handicap | 926:2 (+1.5)=1.75",
+      "Sety - handicap | 925:1 (+1.5)=1.14",
+      "Sety - handicap | 926:2 (-1.5)=5.4"
+     ],
      "277 Będzie set do zera": [
       "Będzie set do zera | 26:tak=8.2",
       "Będzie set do zera | 27:nie=1.05"
      ],
+     "285 Dokładny wynik": [
+      "Dokładny wynik | 1157:2:0=2",
+      "Dokładny wynik | 1158:2:1=3.8",
+      "Dokładny wynik | 1159:1:2=5.6",
+      "Dokładny wynik | 1160:0:2=5.4"
+     ],
      "292 1. set / wynik końcowy": [
-      "1. set / wynik końcowy | 252:1 / 1=1.55",
-      "1. set / wynik końcowy | 253:2 / 1=7",
+      "1. set / wynik końcowy | 252:1 / 1=1.6",
+      "1. set / wynik końcowy | 253:2 / 1=6.6",
       "1. set / wynik końcowy | 254:1 / 2=9.6",
-      "1. set / wynik końcowy | 255:2 / 2=3.9"
+      "1. set / wynik końcowy | 255:2 / 2=3.8"
+     ],
+     "293 Set ": [
+      "1. set  | 4:1=1.45",
+      "1. set  | 5:2=2.7"
      ],
      "301 Set - będzie tie-break": [
-      "1. set - będzie tie-break | 26:tak=5.8",
-      "1. set - będzie tie-break | 27:nie=1.12"
+      "1. set - będzie tie-break | 26:tak=6",
+      "1. set - będzie tie-break | 27:nie=1.11"
      ],
      "479 Liczba setów": [
-      "Liczba setów | 12:+2.5=2.45",
+      "Liczba setów | 12:+2.5=2.4",
       "Liczba setów | 13:-2.5=1.5"
      ],
      "1967 Liczba tie-breaków": [
-      "Liczba tie-breaków | 12:+1.5=12",
-      "Liczba tie-breaków | 13:-1.5=1.01",
-      "Liczba tie-breaków | 12:+0.5=2.9",
-      "Liczba tie-breaków | 13:-0.5=1.35"
+      "Liczba tie-breaków | 12:+1.5=14",
+      "Liczba tie-breaków | 12:+0.5=3",
+      "Liczba tie-breaków | 13:-0.5=1.33"
      ],
      "262 Gemy - handicap": [
-      "Gemy - handicap | 925:1 (-0.5)=1.37",
-      "Gemy - handicap | 926:2 (+0.5)=3",
+      "Gemy - handicap | 925:1 (-0.5)=1.4",
+      "Gemy - handicap | 926:2 (+0.5)=2.9",
       "Gemy - handicap | 925:1 (-3.5)=1.75",
       "Gemy - handicap | 926:2 (+3.5)=2",
       "Gemy - handicap | 925:1 (-5.5)=2.8",
-      "Gemy - handicap | 926:2 (+5.5)=1.42"
+      "Gemy - handicap | 926:2 (+5.5)=1.4"
      ],
      "268 Liczba gemów": [
-      "Liczba gemów | 12:+24.5=2.45",
-      "Liczba gemów | 13:-24.5=1.5",
+      "Liczba gemów | 12:+24.5=2.4",
+      "Liczba gemów | 13:-24.5=1.55",
       "Liczba gemów | 12:+19.5=1.5",
       "Liczba gemów | 13:-19.5=2.45",
       "Liczba gemów | 12:+21.5=1.85",
-      "Liczba gemów | 13:-21.5=1.85"
+      "Liczba gemów | 13:-21.5=1.9"
      ],
      "271 1. zawodnik - liczba gemów": [
-      "1. zawodnik - liczba gemów | 12:+13.5=2.85",
-      "1. zawodnik - liczba gemów | 13:-13.5=1.37",
-      "1. zawodnik - liczba gemów | 12:+11.5=1.16",
-      "1. zawodnik - liczba gemów | 13:-11.5=4.9",
+      "1. zawodnik - liczba gemów | 12:+13.5=2.8",
+      "1. zawodnik - liczba gemów | 13:-13.5=1.4",
+      "1. zawodnik - liczba gemów | 12:+11.5=1.17",
+      "1. zawodnik - liczba gemów | 13:-11.5=4.7",
       "1. zawodnik - liczba gemów | 12:+12.5=1.9",
       "1. zawodnik - liczba gemów | 13:-12.5=1.8"
      ],
      "274 2. zawodnik - liczba gemów": [
-      "2. zawodnik - liczba gemów | 12:+10.5=1.85",
+      "2. zawodnik - liczba gemów | 12:+10.5=1.8",
       "2. zawodnik - liczba gemów | 13:-10.5=1.9",
-      "2. zawodnik - liczba gemów | 12:+9.5=1.7",
-      "2. zawodnik - liczba gemów | 13:-9.5=2",
+      "2. zawodnik - liczba gemów | 12:+9.5=1.65",
+      "2. zawodnik - liczba gemów | 13:-9.5=2.1",
       "2. zawodnik - liczba gemów | 12:+11.5=1.9",
-      "2. zawodnik - liczba gemów | 13:-11.5=1.75"
+      "2. zawodnik - liczba gemów | 13:-11.5=1.8"
      ],
      "275 1. zawodnik - wygra co najmniej seta": [
-      "1. zawodnik - wygra co najmniej seta | 26:tak=1.13",
-      "1. zawodnik - wygra co najmniej seta | 27:nie=5.8"
+      "1. zawodnik - wygra co najmniej seta | 26:tak=1.14",
+      "1. zawodnik - wygra co najmniej seta | 27:nie=5.4"
      ],
      "276 2. zawodnik - wygra co najmniej seta": [
       "2. zawodnik - wygra co najmniej seta | 26:tak=1.75",
-      "2. zawodnik - wygra co najmniej seta | 27:nie=1.9"
+      "2. zawodnik - wygra co najmniej seta | 27:nie=2"
      ],
      "282 Suma gemów": [
       "Suma gemów | 24:nieparzysta=1.85",
@@ -4863,34 +4070,34 @@
       "1. set - gemy - handicap | 926:2 (+1.5)=2.15"
      ],
      "299 Set - liczba gemów": [
-      "1. set - liczba gemów | 12:+12.5=5.8",
-      "1. set - liczba gemów | 13:-12.5=1.12",
+      "1. set - liczba gemów | 12:+12.5=6.2",
+      "1. set - liczba gemów | 13:-12.5=1.11",
       "1. set - liczba gemów | 12:+9.5=2",
       "1. set - liczba gemów | 13:-9.5=1.75",
-      "1. set - liczba gemów | 12:+8.5=1.37",
-      "1. set - liczba gemów | 13:-8.5=3"
+      "1. set - liczba gemów | 12:+8.5=1.4",
+      "1. set - liczba gemów | 13:-8.5=2.9"
      ],
      "300 Set - suma gemów": [
-      "1. set - suma gemów | 24:nieparzysta=1.9",
+      "1. set - suma gemów | 24:nieparzysta=2",
       "1. set - suma gemów | 25:parzysta=1.75"
      ],
      "1016 1. zawodnik - wygra dokładnie 1 seta": [
-      "1. zawodnik - wygra dokładnie 1 seta | 26:tak=5.8",
-      "1. zawodnik - wygra dokładnie 1 seta | 27:nie=1.13"
+      "1. zawodnik - wygra dokładnie 1 seta | 26:tak=5.6",
+      "1. zawodnik - wygra dokładnie 1 seta | 27:nie=1.14"
      ],
      "1017 2. zawodnik - wygra dokładnie 1 seta": [
-      "2. zawodnik - wygra dokładnie 1 seta | 26:tak=3.9",
-      "2. zawodnik - wygra dokładnie 1 seta | 27:nie=1.25"
+      "2. zawodnik - wygra dokładnie 1 seta | 26:tak=3.8",
+      "2. zawodnik - wygra dokładnie 1 seta | 27:nie=1.26"
      ],
      "1186 Zwycięzca i liczba gemów": [
-      "Zwycięzca i liczba gemów | 314:1 i +19.5=2.25",
+      "Zwycięzca i liczba gemów | 314:1 i +19.5=2.3",
       "Zwycięzca i liczba gemów | 315:2 i +19.5=3.8",
       "Zwycięzca i liczba gemów | 316:1 i -19.5=2.95",
-      "Zwycięzca i liczba gemów | 317:2 i -19.5=9.6",
-      "Zwycięzca i liczba gemów | 314:1 i +21.5=2.9",
+      "Zwycięzca i liczba gemów | 317:2 i -19.5=9.4",
+      "Zwycięzca i liczba gemów | 314:1 i +21.5=2.85",
       "Zwycięzca i liczba gemów | 315:2 i +21.5=4.4",
-      "Zwycięzca i liczba gemów | 316:1 i -21.5=2.3",
-      "Zwycięzca i liczba gemów | 317:2 i -21.5=7.2"
+      "Zwycięzca i liczba gemów | 316:1 i -21.5=2.35",
+      "Zwycięzca i liczba gemów | 317:2 i -21.5=7"
      ],
      "1956 Zwycięzca meczu - SuperOferta": [
       "Zwycięzca meczu - SuperOferta | 4:1=1.4",
@@ -4909,24 +4116,24 @@
       "2. zawodnik - liczba asów | 13:-2.5=2.25"
      ],
      "2311 1. zawodnik - 1. gem serwisowy - zwycięzca": [
-      "1. zawodnik - 1. gem serwisowy - zwycięzca | 4:1=1.22",
-      "1. zawodnik - 1. gem serwisowy - zwycięzca | 5:2=3.9"
+      "1. zawodnik - 1. gem serwisowy - zwycięzca | 4:1=1.26",
+      "1. zawodnik - 1. gem serwisowy - zwycięzca | 5:2=3.5"
      ],
      "2312 2. zawodnik - 1. gem serwisowy - zwycięzca": [
-      "2. zawodnik - 1. gem serwisowy - zwycięzca | 4:1=2.6",
-      "2. zawodnik - 1. gem serwisowy - zwycięzca | 5:2=1.42"
+      "2. zawodnik - 1. gem serwisowy - zwycięzca | 4:1=2.5",
+      "2. zawodnik - 1. gem serwisowy - zwycięzca | 5:2=1.45"
      ],
      "2313 1. zawodnik - 1. gem serwisowy - dokładny wynik": [
-      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=5",
-      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=3.8",
+      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=5.4",
+      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=3.9",
       "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3323:wygra do 30=4.1",
       "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3324:wygra do 40=4.8"
      ],
      "2314 2. zawodnik - 1. gem serwisowy - dokładny wynik": [
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=7",
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=4.6",
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3323:wygra do 30=4.4",
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3324:wygra do 40=4.8"
+      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=7.2",
+      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=4.7",
+      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3323:wygra do 30=4.5",
+      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3324:wygra do 40=4.9"
      ]
     },
     "Vallejo Adolfo Daniel - Royer Valentin": {
@@ -5265,10 +4472,14 @@
     "tenis: Arthur Fery – Marin Cilic (2026-10-07 13:10)",
     "tenis: Ann Li – Elina Svitolina (2026-10-07 14:30)",
     "tenis: Ekaterina Alexandrova – Mirra Andreeva (2026-10-08 05:00)",
-    "tenis: Cameron Norrie – Dalibor Svrcina (2026-10-08 06:00)"
+    "tenis: Cameron Norrie – Dalibor Svrcina (2026-10-08 06:00)",
+    "tenis: Nuno Borges – Facundo Diaz Acosta (2026-10-08 06:00)",
+    "tenis: Jaume Munar – Jenson Brooksby (2026-10-08 06:00)",
+    "tenis: Kimmer Coppejans – Stefanos Tsitsipas (2026-10-08 06:00)",
+    "tenis: Pavel Kotov – Tallon Griekspoor (2026-10-08 06:00)"
    ],
-   "stron": 25,
-   "dopasowane": 17,
+   "stron": 21,
+   "dopasowane": 13,
    "nasze_mecze": 36,
    "rynki_przyklad": {
     "tenis": {
@@ -5294,10 +4505,10 @@
      ]
     }
    },
-   "sekund": 16,
-   "z_kursami": 17
+   "sekund": 14,
+   "z_kursami": 13
   }
  },
  "lista": "c2ba882538d0",
- "sekund": 119
+ "sekund": 109
 }
