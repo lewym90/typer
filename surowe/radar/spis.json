@@ -1,63 +1,78 @@
 {
- "czas": "2026-10-05 08:00 UTC",
+ "czas": "2026-10-08 08:09 UTC",
  "wersja": "radar-1",
- "nasze_mecze": 20,
+ "nasze_mecze": 0,
  "zrodla": {
   "blogabet": {
    "rodzaj": "weryfikowane",
-   "sekund": 1,
+   "sekund": 18,
    "blad": null,
    "requests": [
     [
      200,
-     140827,
+     175927,
      false,
-     2,
+     0,
      0
     ],
     [
      200,
-     117579,
+     152538,
      false,
-     2,
+     0,
      0
     ],
     [
      200,
-     51573,
+     51646,
      false,
      0,
      0
     ]
    ],
-   "przegladarka": [],
+   "przegladarka": [
+    [
+     200,
+     false,
+     0,
+     1,
+     0
+    ],
+    [
+     200,
+     false,
+     0,
+     0,
+     0
+    ]
+   ],
    "glebiej": [
     [
      "https://blogabet.com/tips/football",
      200,
-     2,
+     0,
      0
     ],
     [
      "https://blogabet.com/tips/football/338",
      200,
-     2,
+     0,
+     0
+    ],
+    [
+     "https://blogabet.com/tips/football/226",
+     200,
+     0,
      0
     ],
     [
      "https://blogabet.com/tips/football/29",
      200,
-     2,
-     0
-    ],
-    [
-     "https://blogabet.com/tips/football/31",
-     200,
-     2,
+     0,
      0
     ]
    ],
-   "max_naszych": 2,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/blogabet_0.html.gz",
@@ -71,7 +86,7 @@
     },
     {
      "plik": "surowe/radar/strony/blogabet_2.html.gz",
-     "url": "https://blogabet.com/tips/football",
+     "url": "https://blogabet.com/",
      "metoda": "requests"
     }
    ]
@@ -90,7 +105,7 @@
     ],
     [
      403,
-     5703,
+     5724,
      true,
      0,
      0
@@ -129,7 +144,7 @@
     [
      "https://tipstrr.com/tipstrr-frontend-main-26275517886.main.b9c7b3a494a172cc.js",
      200,
-     8,
+     0,
      56
     ],
     [
@@ -145,7 +160,7 @@
      0
     ]
    ],
-   "max_naszych": 8,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/tipstrr_0.html.gz",
@@ -171,24 +186,24 @@
    "requests": [
     [
      200,
-     408916,
+     406581,
      false,
      0,
      16
     ],
     [
      200,
-     271001,
+     256747,
      false,
-     5,
+     0,
      1
     ],
     [
      200,
-     329362,
+     349295,
      false,
-     3,
-     0
+     0,
+     2
     ]
    ],
    "przegladarka": [],
@@ -215,45 +230,45 @@
      "https://www.olbg.com/best-tipsters",
      200,
      0,
-     9
+     7
     ]
    ],
-   "max_naszych": 5,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/olbg_0.html.gz",
-     "url": "https://www.olbg.com/betting-tips/Tennis/3",
+     "url": "https://www.olbg.com/betting-tips/Football/1",
      "metoda": "requests"
     },
     {
      "plik": "surowe/radar/strony/olbg_1.html.gz",
-     "url": "https://www.olbg.com/betting-tips",
+     "url": "https://www.olbg.com/best-tipsters",
      "metoda": "requests"
     },
     {
      "plik": "surowe/radar/strony/olbg_2.html.gz",
-     "url": "https://www.olbg.com/betting-tips/Football/1",
+     "url": "https://www.olbg.com/betting-tips",
      "metoda": "requests"
     }
    ]
   },
   "bettingexpert": {
    "rodzaj": "weryfikowane",
-   "sekund": 3,
+   "sekund": 5,
    "blad": null,
    "requests": [
     [
      200,
-     557378,
+     557891,
      false,
-     5,
-     11
+     0,
+     12
     ],
     [
      200,
-     855974,
+     853129,
      false,
-     8,
+     0,
      39
     ]
    ],
@@ -266,25 +281,25 @@
      0
     ],
     [
+     "https://www.bettingexpert.com/prediction-markets",
+     200,
+     0,
+     2
+    ],
+    [
      "https://www.bettingexpert.com/about/terms-and-conditions/tip",
      200,
-     1,
+     0,
      2
     ],
     [
      "https://www.bettingexpert.com/tips/tomorrow",
      200,
      0,
-     13
-    ],
-    [
-     "https://www.bettingexpert.com/tips/upcoming",
-     200,
-     0,
-     11
+     17
     ]
    ],
-   "max_naszych": 8,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/bettingexpert_0.html.gz",
@@ -293,12 +308,12 @@
     },
     {
      "plik": "surowe/radar/strony/bettingexpert_1.html.gz",
-     "url": "https://www.bettingexpert.com/tips",
+     "url": "https://www.bettingexpert.com/tips/tomorrow",
      "metoda": "requests"
     },
     {
      "plik": "surowe/radar/strony/bettingexpert_2.html.gz",
-     "url": "https://www.bettingexpert.com/about/terms-and-conditions/tip",
+     "url": "https://www.bettingexpert.com/tips",
      "metoda": "requests"
     }
    ]
@@ -310,14 +325,14 @@
    "requests": [
     [
      200,
-     456476,
+     472321,
      false,
      0,
      2
     ],
     [
      200,
-     325188,
+     328209,
      false,
      0,
      2
@@ -329,14 +344,14 @@
      false,
      0,
      7,
-     1
+     0
     ],
     [
      200,
      false,
-     4,
+     0,
      7,
-     1
+     0
     ]
    ],
    "glebiej": [
@@ -347,7 +362,7 @@
      2
     ]
    ],
-   "max_naszych": 4,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/oddsportal_0.html.gz",
@@ -373,14 +388,14 @@
    "requests": [
     [
      200,
-     1577696,
+     1578697,
      false,
      0,
-     170
+     169
     ],
     [
      200,
-     537318,
+     538262,
      false,
      0,
      4
@@ -398,19 +413,19 @@
      "https://bet2invest.com/en-gb/tipsters",
      200,
      0,
-     170
+     169
     ],
     [
      "https://bet2invest.com/es/tipsters",
      200,
      0,
-     170
+     169
     ],
     [
      "https://bet2invest.com/it/tipsters",
      200,
      0,
-     170
+     169
     ]
    ],
    "max_naszych": 0,
@@ -434,19 +449,19 @@
   },
   "tipsto": {
    "rodzaj": "weryfikowane",
-   "sekund": 18,
+   "sekund": 17,
    "blad": null,
    "requests": [
     [
      200,
-     1853837,
+     1854237,
      true,
      0,
      0
     ],
     [
      404,
-     2214,
+     2215,
      false,
      0,
      0
@@ -492,10 +507,10 @@
    "requests": [
     [
      200,
-     28872,
+     29555,
      false,
-     1,
-     14
+     0,
+     19
     ],
     [
      404,
@@ -510,8 +525,8 @@
     [
      "https://www.betrush.com/picks.html",
      200,
-     1,
-     33
+     0,
+     44
     ],
     [
      "https://www.betrush.com/tipsters.html",
@@ -532,7 +547,7 @@
      2
     ]
    ],
-   "max_naszych": 1,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/betrush_0.html.gz",
@@ -558,24 +573,24 @@
    "requests": [
     [
      200,
-     115619,
+     134192,
      false,
-     7,
-     48
+     0,
+     44
     ],
     [
      200,
-     73155,
+     95532,
      false,
      0,
      23
     ],
     [
      200,
-     159611,
+     162066,
      false,
      0,
-     115
+     93
     ]
    ],
    "przegladarka": [],
@@ -590,7 +605,7 @@
      "https://typersi.pl/ranking",
      200,
      0,
-     42
+     34
     ],
     [
      "https://typersi.pl/typer/35996/YOSSARIAN",
@@ -605,16 +620,16 @@
      28
     ]
    ],
-   "max_naszych": 7,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/typersi_0.html.gz",
-     "url": "https://typersi.pl/",
+     "url": "https://typersi.pl/wczoraj/yesterday",
      "metoda": "requests"
     },
     {
      "plik": "surowe/radar/strony/typersi_1.html.gz",
-     "url": "https://typersi.pl/wczoraj/yesterday",
+     "url": "https://typersi.pl/",
      "metoda": "requests"
     },
     {
@@ -626,22 +641,22 @@
   },
   "zagranie": {
    "rodzaj": "spolecznosc",
-   "sekund": 1,
+   "sekund": 0,
    "blad": null,
    "requests": [
     [
      200,
-     141481,
+     141009,
      false,
-     2,
-     2
+     0,
+     6
     ],
     [
      200,
-     172184,
+     171916,
      false,
-     4,
-     8
+     0,
+     10
     ]
    ],
    "przegladarka": [],
@@ -649,57 +664,57 @@
     [
      "https://zagranie.com/typy/",
      200,
-     2,
-     2
+     0,
+     6
     ],
     [
-     "https://zagranie.com/typy/bosnia-i-hercegowina-polska-typy-kursy-05102026/",
+     "/zagranie.com/typy/formacje-specjalne-zdecyduja-o-wyniku-w-detorit-nhl-ako-3-65/",
      200,
-     3,
-     11
+     0,
+     9
     ],
     [
-     "https://zagranie.com/wlochy-turcja-typy-i-kursy-5-10-2026/",
+     "https://zagranie.com/typy/chorwacja-hiszpania-typy-i-kursy-06-10-2026/",
      200,
-     4,
+     0,
      16
     ],
     [
-     "https://zagranie.com/typy/wlochy-u21-polska-u21-typy-i-kursy/",
+     "https://zagranie.com/typy/anglia-czechy-typy-i-kursy-6-10-2026/",
      200,
-     4,
-     16
+     0,
+     9
     ]
    ],
-   "max_naszych": 4,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/zagranie_0.html.gz",
-     "url": "https://zagranie.com/wlochy-turcja-typy-i-kursy-5-10-2026/",
+     "url": "https://zagranie.com/typy/chorwacja-hiszpania-typy-i-kursy-06-10-2026/",
      "metoda": "requests"
     },
     {
      "plik": "surowe/radar/strony/zagranie_1.html.gz",
-     "url": "https://zagranie.com/typy/wlochy-u21-polska-u21-typy-i-kursy/",
+     "url": "https://zagranie.com/",
      "metoda": "requests"
     },
     {
      "plik": "surowe/radar/strony/zagranie_2.html.gz",
-     "url": "https://zagranie.com/",
+     "url": "https://zagranie.com/typy/formacje-specjalne-zdecyduja-o-wyniku-w-detorit-nhl-ako-3-65/",
      "metoda": "requests"
     }
    ]
   },
   "betonline": {
    "rodzaj": "spolecznosc",
-   "sekund": 5,
+   "sekund": 4,
    "blad": null,
    "requests": [
     [
      200,
-     125006,
+     124041,
      false,
-     4,
+     0,
      24
     ],
     [
@@ -715,29 +730,29 @@
     [
      "https://betonline.net.pl/typy",
      200,
-     4,
+     0,
      24
     ],
     [
      "https://betonline.net.pl/typy/pilka-nozna",
      200,
-     4,
+     0,
      24
     ],
     [
      "https://betonline.net.pl/typy/siatkowka",
      200,
-     4,
+     0,
      24
     ],
     [
      "https://betonline.net.pl/typy/koszykowka",
      200,
-     4,
+     0,
      24
     ]
    ],
-   "max_naszych": 4,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/betonline_0.html.gz",
@@ -758,7 +773,7 @@
   },
   "legalni": {
    "rodzaj": "spolecznosc",
-   "sekund": 12,
+   "sekund": 11,
    "blad": null,
    "requests": [
     [
@@ -773,9 +788,9 @@
     [
      200,
      false,
-     6,
+     0,
      4,
-     3
+     0
     ]
    ],
    "glebiej": [
@@ -804,7 +819,7 @@
      0
     ]
    ],
-   "max_naszych": 6,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/legalni_0.html.gz",
@@ -830,14 +845,14 @@
    "requests": [
     [
      200,
-     239855,
+     240985,
      false,
-     1,
+     0,
      25
     ],
     [
      404,
-     64863,
+     64613,
      false,
      0,
      0
@@ -870,7 +885,7 @@
      3
     ]
    ],
-   "max_naszych": 1,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/meczyki_0.html.gz",
@@ -891,25 +906,40 @@
   },
   "zawodtyper": {
    "rodzaj": "eksperci",
-   "sekund": 1,
+   "sekund": 22,
    "blad": null,
    "requests": [
     [
      200,
-     375572,
+     375515,
      false,
-     2,
+     0,
      0
     ],
     [
      200,
-     188219,
+     189860,
      false,
      0,
      1
     ]
    ],
-   "przegladarka": [],
+   "przegladarka": [
+    [
+     200,
+     false,
+     0,
+     6,
+     0
+    ],
+    [
+     200,
+     false,
+     0,
+     0,
+     0
+    ]
+   ],
    "glebiej": [
     [
      "https://zawodtyper.pl/wp-content/themes/zawodtyper/manifest.json",
@@ -936,12 +966,12 @@
      0
     ]
    ],
-   "max_naszych": 2,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/zawodtyper_0.html.gz",
      "url": "https://zawodtyper.pl/",
-     "metoda": "requests"
+     "metoda": "przegladarka"
     },
     {
      "plik": "surowe/radar/strony/zawodtyper_1.html.gz",
@@ -950,19 +980,19 @@
     },
     {
      "plik": "surowe/radar/strony/zawodtyper_2.html.gz",
-     "url": "https://zawodtyper.pl/wp-content/themes/zawodtyper/manifest.json",
-     "metoda": "requests"
+     "url": "https://zawodtyper.pl/typy-bukmacherskie-na-igrzyska-olimpijskie-2024/",
+     "metoda": "przegladarka"
     }
    ]
   },
   "goal": {
    "rodzaj": "eksperci",
-   "sekund": 14,
+   "sekund": 15,
    "blad": null,
    "requests": [
     [
      404,
-     96039,
+     95620,
      false,
      0,
      0
@@ -974,14 +1004,14 @@
      false,
      0,
      9,
-     1
+     0
     ]
    ],
    "glebiej": [
     [
      "https://www.goal.pl/fifa-ranking/",
      200,
-     1,
+     0,
      1
     ],
     [
@@ -993,11 +1023,11 @@
     [
      "https://www.goal.pl/typy/",
      200,
-     1,
+     0,
      15
     ]
    ],
-   "max_naszych": 1,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/goal_0.html.gz",
@@ -1023,10 +1053,10 @@
    "requests": [
     [
      200,
-     157034,
+     129957,
      false,
-     6,
-     13
+     0,
+     11
     ]
    ],
    "przegladarka": [],
@@ -1034,29 +1064,29 @@
     [
      "https://typydnia.net.pl/typy",
      200,
-     8,
+     0,
      100
     ],
     [
      "https://typydnia.net.pl/kupony",
      200,
-     5,
-     21
+     0,
+     9
     ],
     [
-     "https://typydnia.net.pl/typy/france-vs-belgium-2026-10-05",
+     "https://typydnia.net.pl/typy/wieczysta-krakow-vs-wisla-plock-2026-10-09",
      200,
-     5,
-     5
+     0,
+     2
     ],
     [
-     "https://typydnia.net.pl/typy/italy-vs-turkiye-2026-10-05",
+     "https://typydnia.net.pl/typy/borussia-dortmund-vs-werder-bremen-2026-10-09",
      200,
-     5,
-     5
+     0,
+     1
     ]
    ],
-   "max_naszych": 8,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/typydnia_0.html.gz",
@@ -1077,15 +1107,15 @@
   },
   "trafnetypy": {
    "rodzaj": "eksperci",
-   "sekund": 7,
+   "sekund": 9,
    "blad": null,
    "requests": [
     [
-     429,
-     1168,
+     200,
+     151122,
      false,
      0,
-     0
+     7
     ]
    ],
    "przegladarka": [
@@ -1097,13 +1127,44 @@
      0
     ]
    ],
-   "glebiej": [],
+   "glebiej": [
+    [
+     "https://trafnetypy.com/poradnik-typera/",
+     429,
+     0,
+     0
+    ],
+    [
+     "https://trafnetypy.com/typy-bukmacherskie/",
+     429,
+     0,
+     0
+    ],
+    [
+     "https://trafnetypy.com/typy-3/",
+     429,
+     0,
+     0
+    ],
+    [
+     "//trafnetypy.com/typerzy-telegram-gdzie-szukac-najlepszych-typow-bukmacherskich/",
+     429,
+     0,
+     0
+    ]
+   ],
    "max_naszych": 0,
-   "pliki": []
+   "pliki": [
+    {
+     "plik": "surowe/radar/strony/trafnetypy_0.html.gz",
+     "url": "https://trafnetypy.com/",
+     "metoda": "requests"
+    }
+   ]
   },
   "sportytrader": {
    "rodzaj": "eksperci",
-   "sekund": 10,
+   "sekund": 11,
    "blad": null,
    "requests": [
     [
@@ -1125,7 +1186,7 @@
     [
      200,
      false,
-     8,
+     0,
      0,
      0
     ],
@@ -1145,7 +1206,7 @@
      0
     ],
     [
-     "https://www.sportytrader.com/build/assets/flatpickr_controller-BjBdHH1R.js",
+     "https://www.sportytrader.com/build/assets/flatpickr_controller-VSS4AAz1.js",
      200,
      0,
      0
@@ -1163,7 +1224,7 @@
      0
     ]
    ],
-   "max_naszych": 8,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/sportytrader_0.html.gz",
@@ -1172,7 +1233,7 @@
     },
     {
      "plik": "surowe/radar/strony/sportytrader_1.html.gz",
-     "url": "https://www.sportytrader.com/build/assets/flatpickr_controller-BjBdHH1R.js",
+     "url": "https://www.sportytrader.com/build/assets/flatpickr_controller-VSS4AAz1.js",
      "metoda": "requests"
     },
     {
@@ -1184,7 +1245,7 @@
   },
   "forebet": {
    "rodzaj": "algorytm",
-   "sekund": 20,
+   "sekund": 21,
    "blad": null,
    "requests": [
     [
@@ -1206,7 +1267,7 @@
     [
      200,
      false,
-     9,
+     0,
      2,
      0
     ],
@@ -1244,7 +1305,7 @@
      0
     ]
    ],
-   "max_naszych": 9,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/forebet_0.html.gz",
@@ -1255,7 +1316,7 @@
   },
   "predictz": {
    "rodzaj": "algorytm",
-   "sekund": 15,
+   "sekund": 16,
    "blad": null,
    "requests": [
     [
@@ -1277,27 +1338,27 @@
     [
      200,
      false,
-     11,
+     0,
      0,
      0
     ],
     [
      200,
      false,
-     9,
+     0,
      0,
      0
     ]
    ],
    "glebiej": [
     [
-     "https://www.predictz.com/us/picks/",
+     "https://www.predictz.com/us/picks/tomorrow/",
      403,
      0,
      0
     ],
     [
-     "https://www.predictz.com/de/tipps/",
+     "https://www.predictz.com/de/tipps/morgen/",
      403,
      0,
      0
@@ -1315,23 +1376,23 @@
      0
     ]
    ],
-   "max_naszych": 11,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/predictz_0.html.gz",
-     "url": "https://www.predictz.com/predictions/",
+     "url": "https://www.predictz.com/predictions/tomorrow/",
      "metoda": "przegladarka"
     },
     {
      "plik": "surowe/radar/strony/predictz_1.html.gz",
-     "url": "https://www.predictz.com/predictions/tomorrow/",
+     "url": "https://www.predictz.com/predictions/",
      "metoda": "przegladarka"
     }
    ]
   },
   "windrawwin": {
    "rodzaj": "algorytm",
-   "sekund": 51,
+   "sekund": 19,
    "blad": null,
    "requests": [
     [
@@ -1353,27 +1414,21 @@
     [
      200,
      false,
-     11,
+     0,
      0,
      0
     ],
     [
      200,
      false,
-     1,
+     0,
      0,
      0
     ]
    ],
    "glebiej": [
     [
-     "https://www.windrawwin.com/us/picks/today/",
-     null,
-     null,
-     null
-    ],
-    [
-     "https://www.windrawwin.com/tips/uefa-nations-league/",
+     "https://www.windrawwin.com/us/picks/tomorrow/",
      403,
      0,
      0
@@ -1389,18 +1444,24 @@
      403,
      0,
      0
+    ],
+    [
+     "tps://www.windrawwin.com/tips/england-premier-league/man-utd-v-tottenham/875715/",
+     403,
+     0,
+     0
     ]
    ],
-   "max_naszych": 11,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/windrawwin_0.html.gz",
-     "url": "https://www.windrawwin.com/predictions/today/",
+     "url": "https://www.windrawwin.com/predictions/tomorrow/",
      "metoda": "przegladarka"
     },
     {
      "plik": "surowe/radar/strony/windrawwin_1.html.gz",
-     "url": "https://www.windrawwin.com/predictions/tomorrow/",
+     "url": "https://www.windrawwin.com/predictions/today/",
      "metoda": "przegladarka"
     }
    ]
@@ -1412,10 +1473,10 @@
    "requests": [
     [
      200,
-     520468,
+     703565,
      false,
-     9,
-     29
+     0,
+     52
     ]
    ],
    "przegladarka": [],
@@ -1423,29 +1484,29 @@
     [
      "https://www.vitibet.com/football/tips/premier-league/england/39/",
      200,
-     7,
+     0,
      40
     ],
     [
      "https://www.vitibet.com/football/tips/laliga/spain/140/",
      200,
-     7,
+     0,
      39
     ],
     [
      "https://www.vitibet.com/football/tips/bundesliga/germany/78/",
      200,
-     7,
+     0,
      42
     ],
     [
      "https://www.vitibet.com/football/tips/serie-a/italy/135/",
      200,
-     7,
+     0,
      39
     ]
    ],
-   "max_naszych": 9,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/vitibet_0.html.gz",
@@ -1466,7 +1527,7 @@
   },
   "betensured": {
    "rodzaj": "algorytm",
-   "sekund": 11,
+   "sekund": 12,
    "blad": null,
    "requests": [
     [
@@ -1481,7 +1542,7 @@
     [
      200,
      false,
-     6,
+     0,
      0,
      0
     ]
@@ -1512,7 +1573,7 @@
      0
     ]
    ],
-   "max_naszych": 6,
+   "max_naszych": 0,
    "pliki": [
     {
      "plik": "surowe/radar/strony/betensured_0.html.gz",
@@ -1523,11 +1584,12 @@
   }
  },
  "przegladarka": "ok",
- "do_zbierania": 56,
- "sekund": 368,
+ "do_zbierania": 33,
+ "sekund": 382,
  "archiwum": {
-  "dni": 0,
-  "plikow": 0,
-  "mb": 0
+  "dni": 3,
+  "od": "2026-10-05",
+  "plikow": 392,
+  "mb": 18.8
  }
 }
