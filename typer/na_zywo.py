@@ -1,7 +1,7 @@
 """Strażnik na żywo: co minutę sprawdza wyniki w ESPN i wysyła na Telegram start, gole, gole anulowane i koniec
 meczów z zakładek Pewne i Value oraz meczów obserwowanych dzwonkiem 🔔; po ostatnim wytypowanym meczu – podsumowanie dnia.
 Uruchamiany przez GitHub Actions (tryb na_zywo). Działa maks. ok. 5 h 40 min, potem sam uruchamia swojego następcę."""
-import os, re, sys, json, time, subprocess, requests
+import os, re, sys, json, time, base64, subprocess, requests
 sys.path.insert(0, os.path.dirname(__file__))
 import pandas as pd
 import powiadomienia as tg
@@ -33,26 +33,67 @@ def wczytaj_stan():
         s['data'] = dzis
     return s
 
+# wersja 60: runner GitHuba nie ma tożsamości git. Dotąd tożsamość była podana tylko przy `git commit`, więc `git pull --rebase`
+# (potrzebny, gdy polski serwer zdążył wypchnąć nowy commit) kończył się „Committer identity unknown”, kolejna próba widziała pusty
+# diff i cicho kończyła – stan strażnika nigdy nie trafiał do repozytorium, a lekkie sprawdzenie co 30 min uruchamiało strażnika
+# od nowa, który wysyłał ten sam „🏁 Koniec” jeszcze raz.
+IDENT = {'GIT_AUTHOR_NAME': 'typer-bot', 'GIT_AUTHOR_EMAIL': 'typer-bot@users.noreply.github.com',
+         'GIT_COMMITTER_NAME': 'typer-bot', 'GIT_COMMITTER_EMAIL': 'typer-bot@users.noreply.github.com'}
+GALAZ = os.environ.get('GITHUB_REF_NAME') or 'main'
+
+def _git(*a, check=True):
+    return subprocess.run(['git', *a], check=check, env={**os.environ, **IDENT}, capture_output=True, text=True, timeout=180)
+
+def _zapisz_api(opis):
+    """Zapis pliku stanu przez API GitHuba (bez lokalnego git: bez tożsamości, rebase i konfliktów)."""
+    if not (REPO and GH_TOKEN): return False
+    h = {'Authorization': f'Bearer {GH_TOKEN}', 'Accept': 'application/vnd.github+json'}
+    url = f'https://api.github.com/repos/{REPO}/contents/docs/data/na_zywo.json'
+    tresc = base64.b64encode(open(PLIK_STANU, 'rb').read()).decode()
+    for proba in range(4):
+        try:
+            r = requests.get(url, headers=h, params={'ref': GALAZ}, timeout=30)
+            body = {'message': opis, 'content': tresc, 'branch': GALAZ, 'committer': {'name': 'typer-bot', 'email': 'typer-bot@users.noreply.github.com'}}
+            if r.status_code == 200: body['sha'] = r.json().get('sha')
+            elif r.status_code != 404: print('stan (API) odczyt:', r.status_code); time.sleep(3 * (proba + 1)); continue
+            p = requests.put(url, headers=h, json=body, timeout=30)
+            if p.status_code in (200, 201): return True
+            print('stan (API) zapis:', p.status_code, p.text[:150])
+        except Exception as e: print('stan (API):', e)
+        time.sleep(3 * (proba + 1))
+    return False
+
+def _zapisz_git(opis):
+    for proba in range(5):
+        try:
+            _git('rebase', '--abort', check=False)   # sprzątanie po przerwanym rebase z poprzedniej próby
+            _git('add', PLIK_STANU)
+            if _git('diff', '--cached', '--quiet', check=False).returncode != 0: _git('commit', '-q', '-m', opis)
+            _git('fetch', '-q', 'origin', GALAZ)
+            if int(_git('rev-list', '--count', f'origin/{GALAZ}..HEAD').stdout.strip() or 0) == 0: return True   # nic nie czeka na wypchnięcie
+            _git('rebase', '-q', '-X', 'theirs', f'origin/{GALAZ}')   # przy konflikcie wygrywa nasz (świeższy) stan
+            _git('push', '-q', 'origin', f'HEAD:{GALAZ}'); return True
+        except Exception as e:
+            print('commit stanu:', getattr(e, 'stderr', None) or e); time.sleep(5 * (proba + 1))
+    return False
+
 def zapisz_stan(s, commit=False, opis='stan na żywo'):
     s['aktualizacja'] = teraz().strftime('%Y-%m-%d %H:%M')
     json.dump(s, open(PLIK_STANU, 'w'), ensure_ascii=False, indent=0)
     if commit and os.environ.get('GITHUB_ACTIONS'):
-        for proba in range(4):
-            try:
-                subprocess.run(['git', 'add', PLIK_STANU], check=True)
-                if subprocess.run(['git', 'diff', '--cached', '--quiet']).returncode == 0: return
-                subprocess.run(['git', '-c', 'user.name=typer-bot', '-c', 'user.email=typer-bot@users.noreply.github.com',
-                                'commit', '-q', '-m', opis], check=True)
-                subprocess.run(['git', 'pull', '-q', '--rebase', '-X', 'theirs'], check=True)
-                subprocess.run(['git', 'push', '-q'], check=True); return
-            except Exception as e:
-                print('commit stanu:', e); time.sleep(5 * (proba + 1))
+        if _zapisz_api(opis): return True
+        if _zapisz_git(opis): return True
+        print('UWAGA: stan strażnika nie został zapisany w repozytorium (ani przez API, ani przez git)')
+        return False
+    return None
 
 def odswiez_repo():
     """Pobiera najnowsze typy (dzis.json) z repozytorium – poranne liczenie mogło je zmienić."""
     if os.environ.get('GITHUB_ACTIONS'):
-        try: subprocess.run(['git', 'pull', '-q', '--rebase', '--autostash'], check=True, timeout=60)
-        except Exception as e: print('git pull:', e)
+        try:
+            _git('checkout', '--', PLIK_STANU, check=False)   # stan trzymamy w pamięci, plik zapisze zapisz_stan (bez konfliktów przy autostash)
+            _git('pull', '-q', '--rebase', '--autostash')
+        except Exception as e: print('git pull:', getattr(e, 'stderr', None) or e)
 
 def dzis_json():
     try: return json.load(open(os.path.join(KATALOG, 'dzis.json')))
@@ -319,6 +360,9 @@ def obieg(stan, sl, pierwszy):
 def main():
     t0 = time.time(); stan = wczytaj_stan(); ostatni_pull = time.time()
     d = dzis_json(); pierwszy = True; inne = sporty.wczytaj_json()
+    podpis = lambda: json.dumps({k: stan.get(k) for k in ('mecze', 'inne', 'obserwowane', 'podsumowanie', 'podsumowanie_tenis', 'podsumowanie_walki')},
+                                sort_keys=True, default=str)
+    zapisany, t_zapisu = podpis(), 0   # wersja 60: stan trafia do repozytorium zaraz po wysłanych wiadomościach (kolejne zapisy co min. 90 s)
     while True:
         if komendy(stan): zapisz_stan(stan, commit=True, opis='Obserwowane mecze')
         if time.time() - ostatni_pull > 600: odswiez_repo(); d = dzis_json(); inne = sporty.wczytaj_json(); ostatni_pull = time.time()
@@ -329,6 +373,8 @@ def main():
         try: trwa_i, przyszle_i = sporty.obieg_na_zywo(stan, inne)   # 🎾 tenis i 🥊 walki
         except Exception as e: print('tenis/walki na żywo:', e); trwa_i, przyszle_i = False, []
         zapisz_stan(stan)
+        if podpis() != zapisany and time.time() - t_zapisu > 90:
+            if zapisz_stan(stan, commit=True, opis='stan na żywo: wysłane powiadomienia') is not False: zapisany, t_zapisu = podpis(), time.time()
         # podsumowanie: gdy wszystkie mecze z Pewne i Value się skończyły
         wytyp = [m for m in sl.values() if m['wytypowany']]
         if wytyp and stan.get('podsumowanie') != dzis and not d.get('podsumowanie_wyslane') and not any(m['klucz'] in aktywne for m in wytyp):
