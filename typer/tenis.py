@@ -10,8 +10,9 @@ import numpy as np
 # Test 2021–2026: log-loss 0,58288 → 0,58271; szansa 80%+: przewidywane 87,7%, weszło 87,9%.
 PLATT = 1.0114
 # P(wynik bez straty seta | wygrał) = sigmoid(a + b*logit(p_zwycięzcy)); dla 5 setów także P(3:1 | wygrał i stracił seta)
-SETY = {3: {'g': (0.4244, 0.3665)}, 5: {'g': (-0.5918, 0.4521), 'h': (0.3065, 0.3307)}}
-SETY_WTA = {'g': (0.5106, 0.396)}   # dopasowane na 38 390 meczach WTA 2010–2026 (więcej 2:0 niż u mężczyzn)
+# Wersja 58: wyraz wolny P(2:0) obniżony o 0,10 (3 sety; 58 meczów z dziennika: 2:0 w 31 meczach przy oczekiwanych 38,5; poprawka ostrożnościowa – dane historyczne 80 tys. nie wskazywały błędu)
+SETY = {3: {'g': (0.3244, 0.3665)}, 5: {'g': (-0.5918, 0.4521), 'h': (0.3065, 0.3307)}}
+SETY_WTA = {'g': (0.4106, 0.396)}   # dopasowane na 38 390 meczach WTA 2010–2026 (więcej 2:0 niż u mężczyzn)
 WIELKIE_SZLEMY = ('aus_open', 'french_open', 'wimbledon', 'us_open')
 
 _sig = lambda z: 1 / (1 + np.exp(-z))

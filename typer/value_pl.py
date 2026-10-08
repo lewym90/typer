@@ -14,6 +14,10 @@ OUT = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
 # Wersja 57 – kalibracja na wynikach: archiwum 18 951 kursów Fortuny (ROI wg kursu: 1–2 → −1…−5%, 3–5 → −21%, 5–10 → −36%) i dziennik Value
 # (73 rozliczone: kurs > 2,6 → −30% przy 28% trafień zamiast 43%; przewaga < 5% → −26%). Dlatego: kurs 1,30–2,60 i przewaga min. 5%.
 MIN_EV = 0.05
+# Wersja 59 – dziennik Value (109 rozliczonych): kurs do 1,90 → 79% trafień (+28% zysku), kurs powyżej 1,90 → 41% trafień i ok. 0% zysku
+# (szansa z rynku zawyżona o ok. 8 pkt). Przy dłuższych kursach program wymaga więc większej przewagi: min. 7% zamiast 5%.
+MIN_EV_DLUGI = 0.07
+KURS_DLUGI = 1.90
 MAX_EV = 0.25
 KURS_MIN, KURS_MAX = 1.30, 2.60
 NA_MECZ = 2
@@ -65,7 +69,7 @@ def value_pilka(dzis, kursy, vps, KP):
             b, kurs, kk = _najlepszy(zrodla, z)
             if not b: continue
             e = p * kurs - 1
-            if not (KURS_MIN <= kurs <= KURS_MAX) or e < MIN_EV: continue
+            if not (KURS_MIN <= kurs <= KURS_MAX) or e < (MIN_EV_DLUGI if kurs > KURS_DLUGI else MIN_EV): continue
             if e > MAX_EV: odrzucone += 1; continue
             if rozbiezne(p, kk): ROZB['n'] += 1; ROZB['przyklady'].append(f"{m['gospodarz']} – {m['gosc']}: {z} {p:.0%} vs kurs {np.median(list(kk.values())):.2f}"); continue
             kand.append((e, z, p, nazwa, opis, b, kurs, kk))
@@ -90,7 +94,7 @@ def value_duel(m, kursy, vps, KP, sp):
         b, kurs, kk = _najlepszy(zrodla, strona)
         if not b: continue
         e = sz * kurs - 1
-        if not (KURS_MIN <= kurs <= KURS_MAX) or not (MIN_EV <= e <= MAX_EV): continue
+        if not (KURS_MIN <= kurs <= KURS_MAX) or not ((MIN_EV_DLUGI if kurs > KURS_DLUGI else MIN_EV) <= e <= MAX_EV): continue
         if rozbiezne(sz, kk): ROZB['n'] += 1; ROZB['przyklady'].append(f"{m.get('a')} – {m.get('b')}: {strona} {sz:.0%} vs kurs {np.median(list(kk.values())):.2f}"); continue
         out.append(dict(event_id=m['event_id'], klucz=strona, zaklad=f'wygra {kto}' if kto else 'remis', kurs=round(kurs, 2), bukmacher=b, kursy_pl=kk,
                         kursy_odczyt=sorted(x for x, d in stan.items() if KP.czytany(x, sp, strona, d)),
