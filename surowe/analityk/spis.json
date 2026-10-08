@@ -1,14 +1,14 @@
 {
- "czas": "2026-10-07 07:00 UTC",
+ "czas": "2026-10-08 07:00 UTC",
  "wersja": "analityk-1",
  "nasze": {
-  "pilka": 6,
-  "tenis": 30,
+  "pilka": 0,
+  "tenis": 0,
   "walki": 0
  },
  "zrodla": {
   "ufcstats": {
-   "sekund": 7,
+   "sekund": 12,
    "blad": null,
    "start": [
     200,
@@ -20,16 +20,16 @@
    "zawodnicy_ze_statystykami": 0
   },
   "sofascore": {
-   "sekund": 9,
+   "sekund": 7,
    "blad": null,
    "tryb": null,
    "pilka": {
     "dopasowane": 0,
-    "niedopasowane": 6
+    "niedopasowane": 0
    },
    "tenis": {
     "dopasowane": 0,
-    "niedopasowane": 30
+    "niedopasowane": 0
    },
    "walki": {
     "dopasowane": 0,
@@ -40,43 +40,18 @@
    "sekund": 1,
    "blad": null,
    "requests": true,
-   "meczow": 75,
-   "dopasowane": 5,
-   "niedopasowane": 1,
-   "szczegoly": [
-    "requests",
-    "requests",
-    "requests"
-   ]
+   "meczow": 73,
+   "dopasowane": 0,
+   "niedopasowane": 0,
+   "szczegoly": []
   },
   "transfermarkt": {
-   "sekund": 4,
+   "sekund": 0,
    "blad": null,
    "start": [
     200
    ],
-   "kluby": [
-    [
-     null,
-     null,
-     null
-    ],
-    [
-     "unbekannt",
-     200,
-     0
-    ],
-    [
-     "inter-miami-cf",
-     200,
-     10
-    ],
-    [
-     "corinthians-sao-paulo",
-     200,
-     8
-    ]
-   ]
+   "kluby": []
   }
  },
  "ip": "188.68.247.55",
