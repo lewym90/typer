@@ -1,35 +1,35 @@
 {
- "czas": "2026-10-08 07:00 UTC",
+ "czas": "2026-10-09 07:00 UTC",
  "wersja": "analityk-1",
  "nasze": {
-  "pilka": 0,
-  "tenis": 0,
+  "pilka": 23,
+  "tenis": 28,
   "walki": 0
  },
  "zrodla": {
   "ufcstats": {
-   "sekund": 12,
+   "sekund": 7,
    "blad": null,
    "start": [
     200,
     null,
     200
    ],
-   "gale": 2,
+   "gale": 0,
    "dopasowane": 0,
    "zawodnicy_ze_statystykami": 0
   },
   "sofascore": {
-   "sekund": 7,
+   "sekund": 9,
    "blad": null,
    "tryb": null,
    "pilka": {
     "dopasowane": 0,
-    "niedopasowane": 0
+    "niedopasowane": 23
    },
    "tenis": {
     "dopasowane": 0,
-    "niedopasowane": 0
+    "niedopasowane": 28
    },
    "walki": {
     "dopasowane": 0,
@@ -40,21 +40,46 @@
    "sekund": 1,
    "blad": null,
    "requests": true,
-   "meczow": 73,
-   "dopasowane": 0,
-   "niedopasowane": 0,
-   "szczegoly": []
+   "meczow": 209,
+   "dopasowane": 20,
+   "niedopasowane": 3,
+   "szczegoly": [
+    "requests",
+    "requests",
+    "requests"
+   ]
   },
   "transfermarkt": {
-   "sekund": 0,
+   "sekund": 7,
    "blad": null,
    "start": [
     200
    ],
-   "kluby": []
+   "kluby": [
+    [
+     "kashima-antlers",
+     200,
+     3
+    ],
+    [
+     "gamba-osaka",
+     200,
+     6
+    ],
+    [
+     "kashiwa-reysol",
+     200,
+     4
+    ],
+    [
+     "vissel-kobe",
+     200,
+     3
+    ]
+   ]
   }
  },
  "ip": "188.68.247.55",
  "przegladarka": "ok",
- "sekund": 30
+ "sekund": 33
 }
