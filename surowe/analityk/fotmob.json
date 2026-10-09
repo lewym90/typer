@@ -2,33 +2,733 @@
  "zrodlo": "FotMob",
  "proby": [
   {
-   "url": "https://www.fotmob.com/api/data/matches?date=20261008&timezone=Europe%2FWarsaw&ccode3=POL",
+   "url": "https://www.fotmob.com/api/data/matches?date=20261009&timezone=Europe%2FWarsaw&ccode3=POL",
    "kod": 200,
    "typ": "application/json; charset=utf-8",
-   "rozmiar": 39574,
-   "ms": 241,
-   "mecze": 68
+   "rozmiar": 109409,
+   "ms": 323,
+   "mecze": 200
   },
   {
-   "url": "https://www.fotmob.com/api/matches?date=20261008&timezone=Europe%2FWarsaw&ccode3=POL",
+   "url": "https://www.fotmob.com/api/matches?date=20261009&timezone=Europe%2FWarsaw&ccode3=POL",
    "kod": 404,
    "typ": "text/html; charset=utf-8",
-   "rozmiar": 205606,
-   "ms": 760,
+   "rozmiar": 206090,
+   "ms": 762,
    "poczatek": "<!DOCTYPE html><html lang=\"en\" dir=\"ltr\"><head><meta name=\"apple-itunes-app\" content=\"app-id=488575683\"/><link rel=\"alternate\" href=\"android-app://com.mobilefootie.wc2010/http\"/><link rel=\"apple-touch"
   },
   {
-   "url": "https://www.fotmob.com/api/data/matches?date=20261008",
+   "url": "https://www.fotmob.com/api/data/matches?date=20261009",
    "kod": 200,
    "typ": "application/json; charset=utf-8",
-   "rozmiar": 30637,
-   "ms": 34,
-   "mecze": 73
+   "rozmiar": 110711,
+   "ms": 37,
+   "mecze": 209
   }
  ],
- "dopasowane": [],
- "niedopasowane": [],
+ "dopasowane": [
+  {
+   "nasz": "Kashima Antlers – Gamba Osaka",
+   "event_id": "12fdf684beaef6886c881097adc1bdf6",
+   "start": "2026-10-09 12:00",
+   "fotmob_id": "5803602",
+   "fotmob": "Kashima Antlers – Gamba Osaka",
+   "zgodnosc": 1.0,
+   "odwrocone": false,
+   "url": null,
+   "szczegoly": {
+    "requests": [
+     {
+      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5803602",
+      "kod": 200,
+      "typ": "application/json; charset=utf-8",
+      "rozmiar": 35705,
+      "ms": 35
+     }
+    ],
+    "dane": {
+     "lineup_klucze": [],
+     "lineup_typ": null,
+     "homeTeam": {
+      "formacja": null,
+      "ocena": null,
+      "klucze": [],
+      "wyjsciowi": null,
+      "lawka_ile": 0,
+      "nieobecni": null,
+      "trener": null
+     },
+     "awayTeam": {
+      "formacja": null,
+      "ocena": null,
+      "klucze": [],
+      "wyjsciowi": null,
+      "lawka_ile": 0,
+      "nieobecni": null,
+      "trener": null
+     },
+     "matchFacts_klucze": [
+      "matchId",
+      "highlights",
+      "playerOfTheMatch",
+      "events",
+      "infoBox",
+      "teamForm",
+      "poll",
+      "topPlayers",
+      "insights",
+      "topScorers",
+      "countryCode",
+      "QAData"
+     ],
+     "infoBox": {
+      "legInfo": null,
+      "Match Date": {
+       "utcTime": "2026-10-09T10:00:00.000Z",
+       "isDateCorrect": true
+      },
+      "Tournament": {
+       "id": 937875,
+       "parentLeagueId": 223,
+       "link": "/leagues/223/overview/j-league",
+       "leagueName": "J. League",
+       "roundName": "9",
+       "round": "9"
+      },
+      "Stadium": {
+       "name": "Mercari Stadium",
+       "city": "Kashima",
+       "country": "Japan",
+       "lat": 35.991896528,
+       "long": 140.640192032,
+       "capacity": 40728,
+       "surface": "grass"
+      },
+      "Referee": {
+       "text": "",
+       "countryCode": "",
+       "country": ""
+      },
+      "Attendance": null
+     },
+     "content_klucze": [
+      "matchFacts",
+      "liveticker",
+      "superlive",
+      "buzz",
+      "stats",
+      "playerStats",
+      "shotmap",
+      "weather",
+      "lineup",
+      "hasPlayoff",
+      "table",
+      "h2h",
+      "momentum"
+     ],
+     "general": {
+      "matchId": "5803602",
+      "matchName": "Kashima Antlers-vs-Gamba Osaka_Fri, Oct 9, 2026, 10:00 UTC",
+      "matchRound": "9",
+      "teamColors": {
+       "darkMode": {
+        "home": "#A10026",
+        "away": "#224cad"
+       },
+       "lightMode": {
+        "home": "#A10026",
+        "away": "#003287"
+       },
+       "fontDarkMode": {
+        "home": "rgba(255, 255, 255, 1.0)",
+        "away": "rgba(255, 255, 255, 1.0)"
+       },
+       "fontLightMode": {
+        "home": "rgba(255, 255, 255, 1.0)",
+        "away": "rgba(255, 255, 255, 1.0)"
+       }
+      },
+      "leagueId": 937875,
+      "leagueName": "J. League",
+      "leagueRoundName": "9",
+      "parentLeagueId": 223,
+      "countryCode": "JPN",
+      "homeTeam": {
+       "name": "Kashima Antlers",
+       "id": 4397
+      },
+      "awayTeam": {
+       "name": "Gamba Osaka",
+       "id": 6582
+      },
+      "coverageLevel": "lower",
+      "matchTimeUTC": "Fri, Oct 9, 2026, 10:00 UTC",
+      "matchTimeUTCDate": "2026-10-09T10:00:00.000Z",
+      "started": false,
+      "finished": false,
+      "gender": "male"
+     },
+     "header": {
+      "teams": [
+       {
+        "name": "Kashima Antlers",
+        "id": 4397,
+        "score": 0,
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/4397_small.png",
+        "pageUrl": "/teams/4397/overview/kashima-antlers"
+       },
+       {
+        "name": "Gamba Osaka",
+        "id": 6582,
+        "score": 0,
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/6582_small.png",
+        "pageUrl": "/teams/6582/overview/gamba-osaka"
+       }
+      ],
+      "status": {
+       "utcTime": "2026-10-09T10:00:00.000Z",
+       "numberOfHomeRedCards": 0,
+       "numberOfAwayRedCards": 0,
+       "halfs": {},
+       "started": false,
+       "cancelled": false,
+       "finished": false
+      },
+      "events": null
+     },
+     "tabela_jest": true,
+     "h2h_jest": true
+    },
+    "skad": "requests"
+   }
+  },
+  {
+   "nasz": "Kashiwa Reysol – Vissel Kobe",
+   "event_id": "831ac48414d7dad57b5a89c43819df32",
+   "start": "2026-10-09 12:00",
+   "fotmob_id": "5803603",
+   "fotmob": "Kashiwa Reysol – Vissel Kobe",
+   "zgodnosc": 1.0,
+   "odwrocone": false,
+   "url": null,
+   "szczegoly": {
+    "requests": [
+     {
+      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5803603",
+      "kod": 200,
+      "typ": "application/json; charset=utf-8",
+      "rozmiar": 33546,
+      "ms": 35
+     }
+    ],
+    "dane": {
+     "lineup_klucze": [],
+     "lineup_typ": null,
+     "homeTeam": {
+      "formacja": null,
+      "ocena": null,
+      "klucze": [],
+      "wyjsciowi": null,
+      "lawka_ile": 0,
+      "nieobecni": null,
+      "trener": null
+     },
+     "awayTeam": {
+      "formacja": null,
+      "ocena": null,
+      "klucze": [],
+      "wyjsciowi": null,
+      "lawka_ile": 0,
+      "nieobecni": null,
+      "trener": null
+     },
+     "matchFacts_klucze": [
+      "matchId",
+      "highlights",
+      "playerOfTheMatch",
+      "events",
+      "infoBox",
+      "teamForm",
+      "poll",
+      "topPlayers",
+      "insights",
+      "topScorers",
+      "countryCode",
+      "QAData"
+     ],
+     "infoBox": {
+      "legInfo": null,
+      "Match Date": {
+       "utcTime": "2026-10-09T10:00:00.000Z",
+       "isDateCorrect": true
+      },
+      "Tournament": {
+       "id": 937875,
+       "parentLeagueId": 223,
+       "link": "/leagues/223/overview/j-league",
+       "leagueName": "J. League",
+       "roundName": "9",
+       "round": "9"
+      },
+      "Stadium": {
+       "name": "SANKYO FRONTIER Kashiwa Stadium",
+       "city": "Kashiwa",
+       "country": "Japan",
+       "lat": 35.848465401,
+       "long": 139.975132942,
+       "capacity": 15900,
+       "surface": "grass"
+      },
+      "Referee": {
+       "text": "",
+       "countryCode": "",
+       "country": ""
+      },
+      "Attendance": null
+     },
+     "content_klucze": [
+      "matchFacts",
+      "liveticker",
+      "superlive",
+      "buzz",
+      "stats",
+      "playerStats",
+      "shotmap",
+      "weather",
+      "lineup",
+      "hasPlayoff",
+      "table",
+      "h2h",
+      "momentum"
+     ],
+     "general": {
+      "matchId": "5803603",
+      "matchName": "Kashiwa Reysol-vs-Vissel Kobe_Fri, Oct 9, 2026, 10:00 UTC",
+      "matchRound": "9",
+      "teamColors": {
+       "darkMode": {
+        "home": "#FFE700",
+        "away": "#a41226"
+       },
+       "lightMode": {
+        "home": "#d4a300",
+        "away": "#980323"
+       },
+       "fontDarkMode": {
+        "home": "rgba(29, 29, 29, 1.0)",
+        "away": "rgba(255, 255, 255, 1.0)"
+       },
+       "fontLightMode": {
+        "home": "rgba(255, 255, 255, 1.0)",
+        "away": "rgba(255, 255, 255, 1.0)"
+       }
+      },
+      "leagueId": 937875,
+      "leagueName": "J. League",
+      "leagueRoundName": "9",
+      "parentLeagueId": 223,
+      "countryCode": "JPN",
+      "homeTeam": {
+       "name": "Kashiwa Reysol",
+       "id": 8699
+      },
+      "awayTeam": {
+       "name": "Vissel Kobe",
+       "id": 4688
+      },
+      "coverageLevel": "lower",
+      "matchTimeUTC": "Fri, Oct 9, 2026, 10:00 UTC",
+      "matchTimeUTCDate": "2026-10-09T10:00:00.000Z",
+      "started": false,
+      "finished": false,
+      "gender": "male"
+     },
+     "header": {
+      "teams": [
+       {
+        "name": "Kashiwa Reysol",
+        "id": 8699,
+        "score": 0,
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8699_small.png",
+        "pageUrl": "/teams/8699/overview/kashiwa-reysol"
+       },
+       {
+        "name": "Vissel Kobe",
+        "id": 4688,
+        "score": 0,
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/4688_small.png",
+        "pageUrl": "/teams/4688/overview/vissel-kobe"
+       }
+      ],
+      "status": {
+       "utcTime": "2026-10-09T10:00:00.000Z",
+       "numberOfHomeRedCards": 0,
+       "numberOfAwayRedCards": 0,
+       "halfs": {},
+       "started": false,
+       "cancelled": false,
+       "finished": false
+      },
+      "events": null
+     },
+     "tabela_jest": true,
+     "h2h_jest": true
+    },
+    "skad": "requests"
+   }
+  },
+  {
+   "nasz": "Qingdao Hainiu FC – Beijing FC",
+   "event_id": "56ce9d464f852129053dd5ff931d1ef3",
+   "start": "2026-10-09 13:35",
+   "fotmob_id": "5186617",
+   "fotmob": "Qingdao Hainiu – Beijing Guoan",
+   "zgodnosc": 0.97,
+   "odwrocone": false,
+   "url": null,
+   "szczegoly": {
+    "requests": [
+     {
+      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5186617",
+      "kod": 200,
+      "typ": "application/json; charset=utf-8",
+      "rozmiar": 24629,
+      "ms": 34
+     }
+    ],
+    "dane": {
+     "lineup_klucze": [],
+     "lineup_typ": null,
+     "homeTeam": {
+      "formacja": null,
+      "ocena": null,
+      "klucze": [],
+      "wyjsciowi": null,
+      "lawka_ile": 0,
+      "nieobecni": null,
+      "trener": null
+     },
+     "awayTeam": {
+      "formacja": null,
+      "ocena": null,
+      "klucze": [],
+      "wyjsciowi": null,
+      "lawka_ile": 0,
+      "nieobecni": null,
+      "trener": null
+     },
+     "matchFacts_klucze": [
+      "matchId",
+      "highlights",
+      "playerOfTheMatch",
+      "events",
+      "infoBox",
+      "teamForm",
+      "poll",
+      "topPlayers",
+      "insights",
+      "topScorers",
+      "countryCode",
+      "QAData"
+     ],
+     "infoBox": {
+      "legInfo": null,
+      "Match Date": {
+       "utcTime": "2026-10-09T11:35:00.000Z",
+       "isDateCorrect": true
+      },
+      "Tournament": {
+       "id": 920266,
+       "parentLeagueId": 120,
+       "link": "/leagues/120/overview/super-league",
+       "leagueName": "Super League",
+       "roundName": "27",
+       "round": "27"
+      },
+      "Stadium": {
+       "name": "Qingdao Youth Football Stadium",
+       "city": "Qingdao",
+       "country": "China",
+       "lat": 36.281636066,
+       "long": 120.409706307,
+       "capacity": 50000,
+       "surface": "grass"
+      },
+      "Referee": {
+       "text": "",
+       "countryCode": "",
+       "country": ""
+      },
+      "Attendance": null
+     },
+     "content_klucze": [
+      "matchFacts",
+      "liveticker",
+      "superlive",
+      "buzz",
+      "stats",
+      "playerStats",
+      "shotmap",
+      "weather",
+      "lineup",
+      "hasPlayoff",
+      "table",
+      "h2h",
+      "momentum"
+     ],
+     "general": {
+      "matchId": "5186617",
+      "matchName": "Qingdao Hainiu-vs-Beijing Guoan_Fri, Oct 9, 2026, 11:35 UTC",
+      "matchRound": "27",
+      "teamColors": {
+       "darkMode": {
+        "home": "#FD6921",
+        "away": "#006830"
+       },
+       "lightMode": {
+        "home": "#FD6921",
+        "away": "#006830"
+       },
+       "fontDarkMode": {
+        "home": "rgba(255, 255, 255, 1.0)",
+        "away": "rgba(255, 255, 255, 1.0)"
+       },
+       "fontLightMode": {
+        "home": "rgba(255, 255, 255, 1.0)",
+        "away": "rgba(255, 255, 255, 1.0)"
+       }
+      },
+      "leagueId": 920266,
+      "leagueName": "Super League",
+      "leagueRoundName": "27",
+      "parentLeagueId": 120,
+      "countryCode": "CHN",
+      "homeTeam": {
+       "name": "Qingdao Hainiu",
+       "id": 4183
+      },
+      "awayTeam": {
+       "name": "Beijing Guoan",
+       "id": 4177
+      },
+      "coverageLevel": "lower",
+      "matchTimeUTC": "Fri, Oct 9, 2026, 11:35 UTC",
+      "matchTimeUTCDate": "2026-10-09T11:35:00.000Z",
+      "started": false,
+      "finished": false,
+      "gender": "male"
+     },
+     "header": {
+      "teams": [
+       {
+        "name": "Qingdao Hainiu",
+        "id": 4183,
+        "score": 0,
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/4183_small.png",
+        "pageUrl": "/teams/4183/overview/qingdao-hainiu"
+       },
+       {
+        "name": "Beijing Guoan",
+        "id": 4177,
+        "score": 0,
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/4177_small.png",
+        "pageUrl": "/teams/4177/overview/beijing-guoan"
+       }
+      ],
+      "status": {
+       "utcTime": "2026-10-09T11:35:00.000Z",
+       "numberOfHomeRedCards": 0,
+       "numberOfAwayRedCards": 0,
+       "halfs": {},
+       "started": false,
+       "cancelled": false,
+       "finished": false
+      },
+      "events": null
+     },
+     "tabela_jest": true,
+     "h2h_jest": true
+    },
+    "skad": "requests"
+   }
+  },
+  {
+   "nasz": "Shenzhen Peng City FC – Henan FC",
+   "event_id": "679027c9188ea3f1cb981e8161a99fd6",
+   "start": "2026-10-09 13:35",
+   "fotmob_id": "5186613",
+   "fotmob": "Shenzhen Peng City – Henan FC",
+   "zgodnosc": 1.0,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "Zhejiang – Shanghai SIPG FC",
+   "event_id": "0597ef7674d52a77a889653a47761e04",
+   "start": "2026-10-09 14:00",
+   "fotmob_id": "5186614",
+   "fotmob": "Zhejiang Professional – Shanghai Port",
+   "zgodnosc": 0.769,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "Wieczysta Kraków – Wisła Płock",
+   "event_id": "f5264edfec1328ce555a05d3ffacc98d",
+   "start": "2026-10-09 18:00",
+   "fotmob_id": "5804003",
+   "fotmob": "Wieczysta Kraków – Wisła Płock",
+   "zgodnosc": 1.0,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "1. FC Heidenheim – 1. FC Kaiserslautern",
+   "event_id": "78773ce49c803868efcc014fce7299c2",
+   "start": "2026-10-09 18:30",
+   "fotmob_id": "5881684",
+   "fotmob": "FC Heidenheim – Kaiserslautern",
+   "zgodnosc": 0.991,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "Eintracht Braunschweig – Holstein Kiel",
+   "event_id": "8dbe13623ac23fa7d820a7d0c6c001ca",
+   "start": "2026-10-09 18:30",
+   "fotmob_id": "5881682",
+   "fotmob": "Eintracht Braunschweig – Holstein Kiel",
+   "zgodnosc": 1.0,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "Galatasaray – Kasimpasa SK",
+   "event_id": "eff2c3d60eb0c1e5c079cc6096e47905",
+   "start": "2026-10-09 19:00",
+   "fotmob_id": "5904764",
+   "fotmob": "Galatasaray – Kasımpaşa",
+   "zgodnosc": 0.941,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "Aldosivi Mar del Plata – Sarmiento de Junin",
+   "event_id": "271a6d20ede17d1858ebf2089454b948",
+   "start": "2026-10-09 19:30",
+   "fotmob_id": "1000019571",
+   "fotmob": "Aldosivi – Sarmiento",
+   "zgodnosc": 0.953,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "Moreirense FC – Gil Vicente",
+   "event_id": "0956c06cd173899e11422bece0fbf94f",
+   "start": "2026-10-09 19:45",
+   "fotmob_id": "5887651",
+   "fotmob": "Moreirense – Gil Vicente",
+   "zgodnosc": 1.0,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "PSV Eindhoven – Heerenveen",
+   "event_id": "217aec5dbea235fb2716756cd089c458",
+   "start": "2026-10-09 20:00",
+   "fotmob_id": "5781762",
+   "fotmob": "PSV Eindhoven – SC Heerenveen",
+   "zgodnosc": 1.0,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "Borussia Dortmund – Werder Bremen",
+   "event_id": "3fb63658405d468954f57745cd115118",
+   "start": "2026-10-09 20:30",
+   "fotmob_id": "5881180",
+   "fotmob": "Borussia Dortmund – Werder Bremen",
+   "zgodnosc": 1.0,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "Raków Częstochowa – GKS Katowice",
+   "event_id": "f155c8dd1a68e47b09bd472d4ac20289",
+   "start": "2026-10-09 20:30",
+   "fotmob_id": "5804001",
+   "fotmob": "Raków Częstochowa – GKS Katowice",
+   "zgodnosc": 1.0,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "SK Beveren – Lommel SK",
+   "event_id": "13f6082d5c8639fefe5928313d221b44",
+   "start": "2026-10-09 20:45",
+   "fotmob_id": "5811773",
+   "fotmob": "SK Beveren – Lommel",
+   "zgodnosc": 1.0,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "RC Lens – Lyon",
+   "event_id": "17694e68f399fdf9c5030021ec9bb595",
+   "start": "2026-10-09 20:45",
+   "fotmob_id": "5802947",
+   "fotmob": "Lens – Lyon",
+   "zgodnosc": 0.973,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "Málaga – Espanyol",
+   "event_id": "4e4c6763037ffc0e1dfe92ed16287b6d",
+   "start": "2026-10-09 21:00",
+   "fotmob_id": "5868086",
+   "fotmob": "Málaga – Espanyol",
+   "zgodnosc": 1.0,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "West Ham United – Queens Park Rangers",
+   "event_id": "838aaa8567409b87835ad22ed9255e61",
+   "start": "2026-10-09 21:00",
+   "fotmob_id": "5836861",
+   "fotmob": "West Ham United – Queens Park Rangers",
+   "zgodnosc": 1.0,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "Gimnasia La Plata – Atlético Tucuman",
+   "event_id": "52782f7a9b6917268227ca65fec15528",
+   "start": "2026-10-09 23:00",
+   "fotmob_id": "1000019569",
+   "fotmob": "Gimnasia LP – Atlético Tucumán",
+   "zgodnosc": 0.786,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "Instituto de Córdoba – Boca Juniors",
+   "event_id": "f87773f0aca0cfaa154985be26336c21",
+   "start": "2026-10-10 00:30",
+   "fotmob_id": "1000019565",
+   "fotmob": "Instituto – Boca Juniors",
+   "zgodnosc": 0.969,
+   "odwrocone": false,
+   "url": null
+  }
+ ],
+ "niedopasowane": [
+  "Union Santa Fe – Defensa y Justicia 2026-10-10 02:45",
+  "Puebla – León 2026-10-10 03:00",
+  "Tigres – Toluca 2026-10-10 05:00"
+ ],
  "requests_dziala": true,
- "meczow": 73,
+ "meczow": 209,
  "sekund": 1
 }
