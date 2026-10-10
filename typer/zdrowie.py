@@ -113,13 +113,12 @@ def uruchom(wyslij=True):
     doba = (teraz - dt.timedelta(hours=6)).strftime('%Y-%m-%d')
     wyslane = {k: v for k, v in (stare.get('wyslane') or {}).items() if v == doba}   # co dobę od nowa
     krytyczne = [p for p in problemy if p['poziom'] == 'krytyczne']
-    nowe = [p for p in krytyczne if p['id'] not in wyslane]
+    nowe = [p for p in krytyczne if p['id'] not in wyslane and p['id'] != 'ai_blokada']   # v62: o braku środków/AI Telegram milczy (tylko pasek w aplikacji)
     ai_bylo_zle = (stare.get('ai') or {}).get('dziala') is False
     naprawione = ai_bylo_zle and ai.get('dziala') and stare.get('ai_alarm_wyslany')
     wiad = []
     if nowe:
         wiad.append('⚠️ <b>Typer – coś nie działa</b>\n' + '\n'.join(f"• <b>{p['tytul']}</b> – {p['tekst']}" for p in nowe))
-    if naprawione: wiad.append('✅ AI znów odpowiada – analizy wznowione.')
     wys = False
     if wiad and wyslij:
         try:
