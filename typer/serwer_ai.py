@@ -97,7 +97,9 @@ def analiza(z):
     z_p = ai_raport.z_pamieci(kp, 6)
     if z_p and (z_p.get('werdykt') or not typ_t): return 200, {'ai': z_p, 'z_pamieci': True}
     if _licz_reczne() >= RECZNE_DZIENNIE: return 429, {'blad': f'Dzisiejszy limit analiz ręcznych ({RECZNE_DZIENNIE}) wyczerpany.'}
-    if ai_raport.zostalo_analiz() <= 0: return 429, {'blad': 'Wyczerpany miesięczny budżet analiz AI.'}
+    if ai_raport.zostalo_analiz() <= 0:
+        b = ai_raport.blokada()
+        return (503, {'blad': b.get('opis') or 'AI wstrzymane (konto Google).'}) if b else (429, {'blad': 'Wyczerpany miesięczny budżet analiz AI.'})
     with _blokada:
         if sp == 'pilka':
             sz = z.get('szanse') or {}

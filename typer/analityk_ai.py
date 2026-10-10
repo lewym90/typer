@@ -134,6 +134,8 @@ def _json(txt):
 
 def zapytaj(tekst, szukaj=True):
     """(dane JSON, źródła z wyszukiwania) albo (None, [])."""
+    import ai_raport
+    if ai_raport._BLOK_RUN['stop'] or (ai_raport.blokada() and ai_raport._minut_od(ai_raport.blokada().get('ostatnia_proba')) < ai_raport.PONOW_PO_MIN): return None, []
     for m in model_pro():
         body = {'contents': [{'parts': [{'text': tekst}]}],
                 'generationConfig': {'temperature': 0.3, 'maxOutputTokens': 20000}}
@@ -141,6 +143,8 @@ def zapytaj(tekst, szukaj=True):
         else: body['generationConfig']['responseMimeType'] = 'application/json'
         try: r = requests.post(URL.format(m=m), json=body, timeout=240, headers={'x-goog-api-key': KLUCZ})
         except Exception as e: _blad(f'{m}: {e}'); continue
+        if r.status_code in (401, 402):                  # wersja 61: rozliczenia/klucz – koniec prób w tym uruchomieniu
+            _blad(f'{m}: HTTP {r.status_code} ' + re.sub(r'\s+', ' ', r.text)[:160]); ai_raport.ustaw_blokade(r.status_code, r.text); return None, []
         if r.status_code != 200:
             opis = re.sub(r'\s+', ' ', r.text)[:200]; _blad(f'{m}: HTTP {r.status_code} {opis}')
             if r.status_code in (400, 403) and szukaj: szukaj = False; continue

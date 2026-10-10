@@ -75,7 +75,11 @@ h3{font:700 17px/1.3 var(--body);margin:0}
 .bk.best{border-color:var(--accent);background:var(--accent-bg)} .bk.best b{color:var(--accent)}
 .bk.low b{color:var(--muted);font-weight:600}
 .bk.none{opacity:.45} .bk.none b{color:var(--muted);font-weight:500}
-.bk.unk{border-style:dashed}
+.zdrowie{display:flex;flex-direction:column;gap:8px;margin:0 0 14px}
+.zd{border:1px solid var(--warn);background:rgba(255,170,0,.08);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:3px;font-size:13.5px;line-height:1.45}
+.zd.kryt{border-color:#e5484d;background:rgba(229,72,77,.10)} .zd span{color:var(--muted)}
+.zdrowie small{color:var(--muted);font-size:11.5px}
+.bk.unk{border-style:dashed} .bk.nd{border-style:dotted}
 .bks.kmini{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;width:100%;margin:2px 0 12px}
 .bks.kmini .bk{min-height:46px;border-radius:12px;padding:5px 2px;gap:2px}
 .bks.kmini .bk span{font-size:11px} .bks.kmini .bk b{font-size:15px}
@@ -299,11 +303,12 @@ async function laduj(){
   const osadz = $('#dane-osadzone').textContent.trim();
   if (osadz){ const d = JSON.parse(osadz); Object.assign(S, d); S.demo = !!d.demo; return; }
   const get = async f => { const r = await fetch('data/' + f + '?t=' + Date.now()); if(!r.ok) throw new Error(f); return r.json(); };
-  const [a, b, c, k, st, inn, gl] = await Promise.allSettled([get('dzis.json'), get('modele.json'), get('dziennik.json'), get('kalibracja.json'), get('status.json'), get('inne.json'), get('glowne.json')]);
+  const [a, b, c, k, st, inn, gl, zd] = await Promise.allSettled([get('dzis.json'), get('modele.json'), get('dziennik.json'), get('kalibracja.json'), get('status.json'), get('inne.json'), get('glowne.json'), get('zdrowie.json')]);
+  S.zdrowie = zd.value || null;
   S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null; S.status = st.value || null; S.inne = inn.value || null; S.glowne = gl.value || null;
 }
 
-const WERSJA_APLIKACJI = 60;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
+const WERSJA_APLIKACJI = 61;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
 /* ---------- model (ten sam co w Pythonie) ---------- */
 const MAXG = 10;
 function pois(l){ const out = [Math.exp(-l)]; for(let k=1;k<=MAXG;k++) out.push(out[k-1]*l/k); return out; }
@@ -725,20 +730,24 @@ function kafelkiBuk(t, mini){
   // „—” = odczytaliśmy ofertę meczu u bukmachera i tego zakładu w niej nie ma (faktyczny brak);
   // „?” = nie odczytano (mecz nieznaleziony, błąd odczytu, kursy nieświeże albo rynek jeszcze nieczytany) – problem po stronie programu.
   const kk = Object.fromEntries(kursyLista(t)); const best = Math.max(0, ...Object.values(kk));
-  const odczyt = new Set((t.kursy_odczyt || []).map(NAZWA_BUK));
+  const odczyt = new Set((t.kursy_odczyt || []).map(NAZWA_BUK)), nd = new Set((t.kursy_nd || []).map(NAZWA_BUK));   // wersja 61: n/d = program tego rynku u tego bukmachera jeszcze nie czyta
   const lista = BUKMACHERZY.concat(Object.keys(kk).filter(n => !BUKMACHERZY.includes(n)));
   return `<div class="bks${mini ? ' kmini' : ''}">` + lista.map(n => kk[n]
     ? `<div class="bk${kk[n] === best && Object.keys(kk).length > 1 ? ' best' : ''}${kk[n] * t.szansa < 1 ? ' low' : ''}"><span>${esc(n)}</span><b>${num(kk[n])}</b></div>`
     : (odczyt.has(n)
       ? `<div class="bk none" title="Bukmacher nie ma tego zakładu w ofercie"><span>${esc(n)}</span><b>—</b></div>`
-      : `<div class="bk none unk" title="Nie odczytano kursu"><span>${esc(n)}</span><b>?</b></div>`)).join('') + `</div>`;
+      : (nd.has(n)
+        ? `<div class="bk none nd" title="Program nie czyta jeszcze tego rodzaju zakładu u tego bukmachera"><span>${esc(n)}</span><b>n/d</b></div>`
+        : `<div class="bk none unk" title="Nie odczytano kursu"><span>${esc(n)}</span><b>?</b></div>`))).join('') + `</div>`;
 }
 function legendaBuk(t){
-  const kk = Object.fromEntries(kursyLista(t)), odczyt = new Set((t.kursy_odczyt || []).map(NAZWA_BUK));
+  const kk = Object.fromEntries(kursyLista(t)), odczyt = new Set((t.kursy_odczyt || []).map(NAZWA_BUK)), nd = new Set((t.kursy_nd || []).map(NAZWA_BUK));
   const brak = BUKMACHERZY.filter(n => !kk[n]);
   if(!brak.length) return '';
-  const kreski = brak.filter(n => odczyt.has(n)), pytajniki = brak.filter(n => !odczyt.has(n));
-  return `<p class="note">${kreski.length ? '— = bukmacher nie ma tego zakładu' : ''}${kreski.length && pytajniki.length ? ' · ' : ''}${pytajniki.length ? '? = nie odczytano kursu (problem programu, nie brak w ofercie)' : ''}</p>`;
+  const kreski = brak.filter(n => odczyt.has(n)), nds = brak.filter(n => !odczyt.has(n) && nd.has(n)), pytajniki = brak.filter(n => !odczyt.has(n) && !nd.has(n));
+  const czesci = [kreski.length ? '— = bukmacher nie ma tego zakładu' : '', nds.length ? 'n/d = program nie czyta jeszcze tego rynku u tego bukmachera' : '',
+                  pytajniki.length ? '? = nie odczytano kursu (awaria odczytu, nie brak w ofercie)' : ''].filter(Boolean);
+  return `<p class="note">${czesci.join(' · ')}</p>`;
 }
 function ksiazka(t){
   return `<div style="display:flex;flex-direction:column;gap:8px"><div class="lab">Kursy bukmacherów${t.kursy_czas ? ` <span style="text-transform:none;letter-spacing:0;font-weight:500">· ${esc(t.kursy_czas)}</span>` : ''}</div>`
@@ -808,7 +817,7 @@ function aiPelny(m, sp){
   for(const o of (r.ostrzezenia || (r.ostrzezenie ? [r.ostrzezenie] : []))) h += `<p class="note" style="color:var(--warn)">⚠ ${esc(sp === 'pilka' ? plTxt(o, m) : o)}</p>`;
   const ng = sp === 'pilka' ? [...((r.naglowki||{}).gosp || []), ...((r.naglowki||{}).gosc || [])] : [...((m.naglowki||{}).a || []), ...((m.naglowki||{}).b || [])];
   if(ng.length) h += `<details><summary>Nagłówki (${ng.length})</summary><ul class="news">${ng.map(x => `<li><a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.tytul)}</a> <span class="muted">${esc(x.data)}</span></li>`).join('')}</ul></details>`;
-  if(!h) h = `<p class="note">${ai === null && (S.dzis||{}).raport_ai ? 'Brak analizy AI dla tego meczu (limit analiz lub brak źródeł).' : 'Brak analizy AI.'}</p>`;
+  if(!h) h = `<p class="note">${powodBrakuAI() || (ai === null && (S.dzis||{}).raport_ai ? 'Brak analizy AI dla tego meczu (limit analiz lub brak źródeł).' : 'Brak analizy AI.')}</p>`;
   return h;
 }
 function naglowekKarty(sp, gdzie, kiedy, A, B){
@@ -1583,12 +1592,24 @@ function widokStanu(){
   return h;
 }
 
+/* ---------- kontrola zdrowia (wersja 61): czerwony pasek, gdy coś nie działa – z przyczyną ---------- */
+function bannerZdrowia(){
+  const z = S.zdrowie, p = (z && z.problemy) || [];
+  if(!p.length) return '';
+  return `<div class="zdrowie">` + p.map(x => `<div class="zd ${x.poziom === 'krytyczne' ? 'kryt' : ''}"><b>${x.poziom === 'krytyczne' ? '⛔' : '⚠️'} ${esc(x.tytul)}</b><span>${esc(x.tekst)}</span></div>`).join('')
+    + `<small>Kontrola programu: ${esc(z.czas || '')}</small></div>`;
+}
+function powodBrakuAI(){
+  const a = (S.zdrowie || {}).ai;
+  return a && a.dziala === false && a.powod ? 'AI wstrzymane: ' + a.powod : null;
+}
+
 /* ---------- nawigacja ---------- */
 function renderuj(){
   if(!['live','value','pewne','sporty','dziennik'].includes(S.tab)) S.tab = 'sporty';
   const v = ({live:widokLive, value:widokValue, pewne:widokPewne, sporty:widokSporty, dziennik:widokDziennik}[S.tab])();
   if(S.tab === 'live') { if(!LIVE.timer) startLive(); } else stopLive();
-  $('#view').innerHTML = v;
+  $('#view').innerHTML = (S.tab === 'live' ? '' : bannerZdrowia()) + v;
   document.querySelectorAll('nav button').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === S.tab));
   podepnijAnalize();
   if($('#licz') && $('#liga') && S.modele){

@@ -397,8 +397,14 @@ def _fortuna_klucze(rynki, odwr, sport, bo=3, druzyny=None):
                     if mm: k.setdefault(f"{ {'1': '1', '0': 'X', '2': '2'}[mm.group(1)]} & {'o' if mm.group(2) == '+' else 'u'}{mm.group(3)}.5", c)
             else:
                 pierwszy = lambda nr: ('A' if (nr == '1') != odwr else 'B')
-                if (n.startswith('zwycięzca meczu') or n in ('wynik meczu', 'zwycięzca', 'mecz')) and 'zwrot jeżeli' not in n and on in ('1', '2'):
+                if (n.startswith('zwycięzca meczu') or n in ('wynik meczu', 'zwycięzca', 'mecz', 'zwycięzca walki')) and 'zwrot jeżeli' not in n and on in ('1', '2'):
                     k.setdefault(pierwszy(on), c)
+                # wersja 61: walki (MMA/KSW/boks) – Fortuna nazywa rynek „Zwycięzca walki” (program szukał „Zwycięzca meczu”, więc od początku
+                # żadna walka nie miała kursów Fortuny) + sposób zakończenia i pełny dystans (nazwy z odczytu 10.10)
+                elif sport == 'duel' and n == 'zwycięstwo przez ko/tko/dq lub poddanie' and on in ('1', '2'): k.setdefault(pierwszy(on) + ' przed czasem', c)
+                elif sport == 'duel' and n == 'zwycięstwo przez decyzję' and on in ('1', '2'): k.setdefault(pierwszy(on) + ' na punkty', c)
+                elif sport == 'duel' and n in ('walka potrwa pełen dystans', 'walka potrwa pełny dystans') and onl in ('tak', 'nie'):
+                    k.setdefault('Pełny dystans' if onl == 'tak' else 'Przed czasem', c)
                 elif sport == 'tenis' and ('set' in n) and 'handicap' in n and 'gem' not in n and not re.search(r'\d\.\s*set', n):
                     mm = re.fullmatch(r'([12])\s*\(([+-]1[.,]5)\)', on)
                     if mm:
@@ -441,6 +447,8 @@ def ksw_fortuna(s, oferta, diag):
         try:
             j = s.get(f'{FAPI}/markets/api/v1_0/fixtures/markets/overview', params={'fixtureIds': f['id']}, timeout=20).json()
             k = _fortuna_klucze(j.get(f['id']) or [], False, 'duel')
+            if not (k.get('A') and k.get('B')):                      # wersja 61: zwycięzca bywa tylko w pełnej ofercie walki
+                k = _fortuna_klucze(fortuna_pelna_oferta(s, f['id']), False, 'duel')
         except Exception as e:
             diag['bledy'].append(f'KSW Fortuna {f["id"]}: {e}'[:120]); continue
         if k.get('A') and k.get('B'):

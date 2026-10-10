@@ -1076,6 +1076,10 @@ def tg_typy_wszystkie(d, inne, gl, status):
     lin = [f"📋 <b>{'Zaktualizowane typy' if zmiana else 'Typy dnia'} · {DNI_PL[dzien.weekday()]} {dzien.strftime('%d.%m')}</b>"]
     sk = _skutecznosc_30()
     lin.append(f"{len(pew)} najpewniejszych" + (f" · 30 dni: <b>{round(100 * sk[0] / sk[1])}%</b> ({sk[0]}/{sk[1]})" if sk and sk[1] >= 10 else ''))
+    try:                                                      # wersja 61: gdy AI nie działa, wiadomość mówi to wprost (zamiast cichych braków ocen)
+        _b = ai_raport.blokada()
+        if _b: lin.append('⚠️ <i>AI wyłączone – typy bez ocen. ' + esc_((_b.get('opis') or '')[:170]) + '</i>')
+    except Exception: pass
     nies = set(gl.get('niesprawdzone') or [])
     for i, (sp, m) in enumerate(pew, 1):
         lin += _linie_pewnego(sp, m, i)

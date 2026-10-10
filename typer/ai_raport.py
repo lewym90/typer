@@ -23,6 +23,45 @@ _KAT = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
 PLIK_LICZNIKA = os.path.join(_KAT, 'ai_licznik.json')
 PLIK_PAMIECI = os.path.join(_KAT, 'ai_pamiec.json')
 
+PLIK_BLOKADY = os.path.join(_KAT, 'ai_blokada.json')
+PONOW_PO_MIN = 45            # po błędzie rozliczeń/klucza: jedna próba na uruchomienie, nie częściej niż co 45 min
+_BLOK_RUN = {'stop': False}  # w tym uruchomieniu Google odrzucił zapytanie (402/401) – dalej nie pytamy
+OPISY_BLOKADY = {402: 'Skończyły się przedpłacone środki na koncie Google AI Studio (błąd 402). Doładuj konto (najlepiej włącz automatyczne doładowanie) – program wznowi analizy sam.',
+                 401: 'Google odrzuca klucz GEMINI_API_KEY (błąd 401) – sprawdź klucz w sekretach GitHuba i na koncie Google AI Studio.'}
+
+def blokada():
+    """None albo {kod, od, ostatnia_proba, opis} – AI wstrzymane, bo Google odrzuca zapytania z powodu rozliczeń/klucza (wersja 61)."""
+    try: b = json.load(open(PLIK_BLOKADY))
+    except Exception: return None
+    return b if isinstance(b, dict) and b.get('kod') else None
+
+def _minut_od(t):
+    try: return (pd.Timestamp.now(tz='UTC') - pd.Timestamp(t)).total_seconds() / 60
+    except Exception: return 1e9
+
+def ustaw_blokade(kod, opis=''):
+    b = blokada() or {}
+    teraz = pd.Timestamp.now(tz='UTC').isoformat()
+    b = dict(kod=int(kod), od=b.get('od') if b.get('kod') == kod and b.get('od') else teraz, ostatnia_proba=teraz,
+             opis=OPISY_BLOKADY.get(int(kod), str(opis)[:200]), google=str(opis)[:160])
+    _BLOK_RUN['stop'] = True; STAN['blokada'] = b
+    try:
+        os.makedirs(os.path.dirname(PLIK_BLOKADY), exist_ok=True); json.dump(b, open(PLIK_BLOKADY, 'w', encoding='utf-8'), ensure_ascii=False)
+    except Exception: pass
+    return b
+
+def zdejmij_blokade():
+    STAN.pop('blokada', None)
+    try: os.remove(PLIK_BLOKADY)
+    except Exception: pass
+
+def stan_ai():
+    """Dla aplikacji i kontroli zdrowia: czy AI w ogóle może odpowiadać i dlaczego nie."""
+    b = blokada()
+    if b: return dict(dziala=False, kod=b.get('kod'), od=b.get('od'), powod=b.get('opis'), ostatnia_proba=b.get('ostatnia_proba'))
+    if not KLUCZ: return dict(dziala=False, kod=None, powod='Brak klucza GEMINI_API_KEY.')
+    return dict(dziala=True)
+
 def _plik_licznika():
     # wersja 41: doba programu (od 6:00 czasu polskiego) – wcześniej doba pacyficzna, przez co poranne liczenie (7:10)
     # dzieliło limit z poprzednim popołudniem i wieczorem; plan płatny nie ma już dziennego limitu Google
@@ -31,6 +70,7 @@ def _plik_licznika():
     try: d = json.load(open(PLIK_LICZNIKA))
     except Exception: d = {}
     if d.get('data') != dzien: d.update({'data': dzien, 'n': 0, 'analizy': 0})
+    if d.get('kod_wersji') != 61: d.update({'kod_wersji': 61, 'n': 0})    # wersja 61: licznik z 10.10 był zjedzony przez odrzucone (402) zapytania
     if d.get('miesiac') != mies: d.update({'miesiac': mies, 'koszt_zl': 0.0})
     return d
 
@@ -60,6 +100,9 @@ def _licznik(dodaj=0):
     return d.get('n', 0)
 
 def zostalo_analiz():
+    if _BLOK_RUN['stop']: return 0
+    b = blokada()
+    if b and _minut_od(b.get('ostatnia_proba')) < PONOW_PO_MIN: return 0      # AI wstrzymane – bez zapytań, do następnej próby
     if koszt_miesiac() >= BUDZET_ZL: return 0
     return max(0, MAKS_ANALIZ - analiz_dzis())
 
@@ -253,13 +296,14 @@ NAPRAW = ('Poniższy tekst miał być jednym obiektem JSON, ale ma błędy skła
 
 def _napraw_modelem(t):
     """Ostatnia próba: najtańszy model (Flash-Lite, tryb JSON, bez wyszukiwania) poprawia składnię. Koszt ułamka grosza."""
-    if not KLUCZ or not t or _licznik() >= MAKS_DZIENNIE: return None
+    if not KLUCZ or not t or _licznik() >= MAKS_DZIENNIE or _BLOK_RUN['stop']: return None
     lista = modele(); lite = [m for m in lista if 'lite' in m] or lista
     for m in lite[:2]:
         body = {'contents': [{'parts': [{'text': NAPRAW + t[:30000]}]}],
                 'generationConfig': {'temperature': 0, 'maxOutputTokens': 12000, 'responseMimeType': 'application/json'}}
         try:
             _licznik(1); r = requests.post(URL.format(m=m), json=body, timeout=120, headers={'x-goog-api-key': KLUCZ})
+            if r.status_code in (401, 402): _licznik(-1); ustaw_blokade(r.status_code, r.text); _blad(f'naprawa JSON {m}: HTTP {r.status_code}'); return None
             if r.status_code != 200: _blad(f'naprawa JSON {m}: HTTP {r.status_code}'); continue
             j = r.json(); c = (j.get('candidates') or [{}])[0]
             try: koszt_miesiac(_koszt(m, j.get('usageMetadata') or {}))
@@ -301,6 +345,7 @@ def modele():
 
 def _zapytaj(tekst_szukaj, tekst_bez):
     """Pyta kolejne modele. Limit (429) przy wyszukiwaniu Google = spróbuj tego samego modelu bez wyszukiwania."""
+    if _BLOK_RUN['stop']: return None, [], False
     for m in modele():
         if m in _zly: continue
         for z_szukaniem in ((True, False) if _szukanie['ok'] and m not in _bez_szukania else (False,)):
@@ -311,7 +356,11 @@ def _zapytaj(tekst_szukaj, tekst_bez):
                 STAN['zapytania'] += 1; _licznik(1)
                 r = requests.post(URL.format(m=m), json=body, timeout=150, headers={'x-goog-api-key': KLUCZ})
             except Exception as e: _blad(f'{m}: {e}'); continue
+            if r.status_code in (401, 402):            # wersja 61: rozliczenia/klucz – ponawianie innym modelem nic nie da i zjada limit zapytań
+                _licznik(-1); _blad(f'{m}: HTTP {r.status_code} {re.sub(chr(10), " ", r.text)[:200]}'); ustaw_blokade(r.status_code, r.text)
+                return None, [], False
             if r.status_code == 200:
+                if blokada(): zdejmij_blokade()           # Google znów odpowiada (np. doładowano konto)
                 j = r.json(); c = (j.get('candidates') or [{}])[0]
                 try: koszt_miesiac(_koszt(m, j.get('usageMetadata') or {}))
                 except Exception: pass

@@ -400,9 +400,16 @@ def czytany(buk, sp, klucz, dane):
     if not dane: return False
     if klucz in GLOWNE_KLUCZE: return True
     if not dane.get('pelna'): return False
-    if sp == 'walki' and buk in ('Superbet', 'Fortuna', 'STS'): return False          # u nich czytamy tylko zwycięzcę walki
-    if buk == 'Betclic PL' and sp == 'pilka' and '&' in klucz: return False           # „wynik i gole” – dodatkowe zakładki Betclic
+    if nieczytane(buk, sp, klucz): return False
     return True
+
+def nieczytane(buk, sp, klucz):
+    """Wersja 61: True, gdy program tego rodzaju zakładu u tego bukmachera po prostu jeszcze nie czyta (ograniczenie programu, nie awaria) –
+    w aplikacji „n/d”, żeby „?” znaczyło wyłącznie prawdziwą awarię odczytu."""
+    if klucz in GLOWNE_KLUCZE: return False
+    if sp == 'walki' and buk in ('Superbet', 'STS'): return True                      # u nich czytamy tylko zwycięzcę walki (Fortuna – od v61 także metody)
+    if buk == 'Betclic PL' and sp == 'pilka' and '&' in klucz: return True            # „wynik i gole” – dodatkowe zakładki Betclic
+    return False
 
 def zrodla_meczu(kursy, vps, m, eid):
     """({bukmacher: {klucz: kurs}}, {bukmacher: dane odczytu}) dla meczu: Superbet + serwer (Fortuna, STS, Betclic PL) + KSW."""
@@ -427,6 +434,9 @@ def dopisz(kursy):
             kp = {b: k[t['klucz']] for b, k in zrodla.items() if k.get(t['klucz'])}
             if t.get('rynek_pl'): kp = dict(t.get('kursy_pl') or {}, **kp)   # value KSW – nie kasuj kursów z liczenia
             t['kursy_odczyt'] = sorted(b for b, d in stan.items() if czytany(b, sp, t['klucz'], d))
+            nd = sorted(b for b in ('STS', 'Fortuna', 'Superbet', 'Betclic PL') if b not in kp and b not in t['kursy_odczyt'] and nieczytane(b, sp, t['klucz']))
+            if nd: t['kursy_nd'] = nd
+            else: t.pop('kursy_nd', None)
             if kp: t['kursy_pl'] = kp; t['kursy_czas'] = dt.datetime.now(TZ).strftime('%H:%M'); ile += 1
             else: t.pop('kursy_pl', None)
     p = os.path.join(OUT, 'dzis.json')
