@@ -1,6 +1,6 @@
 {
- "czas": "2026-10-11 06:15 UTC",
- "tryb": "rano",
+ "czas": "2026-10-11 13:00 UTC",
+ "tryb": "popoludnie",
  "sporty": [
   [
    "ufo:sprt:01",
@@ -59,8 +59,16 @@
    "Tenis"
   ],
   [
+   "ufo:sprt:08",
+   "Esport Overwatch"
+  ],
+  [
    "ufo:sprt:0y",
    "Piłka ręczna"
+  ],
+  [
+   "ufo:sprt:0z",
+   "Piłka plażowa"
   ],
   [
    "ufo:sprt:1k",
@@ -75,16 +83,8 @@
    "Florbal"
   ],
   [
-   "ufo:sprt:1r",
-   "Sporty motorowe"
-  ],
-  [
    "ufo:sprt:13",
    "Zakłady Specjalne"
-  ],
-  [
-   "ufo:sprt:35",
-   "eHokej"
   ],
   [
    "ufo:sprt:1v",
@@ -111,10 +111,6 @@
    "eKoszykówka"
   ],
   [
-   "ufo:sprt:2h",
-   "Golf"
-  ],
-  [
    "ufo:sprt:0g",
    "Futbol amerykański"
   ],
@@ -139,10 +135,6 @@
    "Siatkówka"
   ],
   [
-   "ufo:sprt:0o",
-   "Piłka wodna"
-  ],
-  [
    "ufo:sprt:00",
    "Piłka nożna"
   ],
@@ -157,8 +149,8 @@
   "hokej": "ufo:sprt:0w",
   "tenis": "ufo:sprt:0x",
   "pilka_reczna": "ufo:sprt:0y",
-  "f1": "ufo:sprt:1r",
   "sporty walki": "ufo:sprt:19",
+  "f1": "ufo:sprt:2a",
   "koszykowka": "ufo:sprt:0i",
   "siatkowka": "ufo:sprt:0m",
   "pilka": "ufo:sprt:00"
@@ -166,22 +158,22 @@
  "bledy": [
   "turnieje ufo:sprt:01 today: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:01 tomorrow: Expecting value: line 1 column 1 (char 0)",
-  "turnieje ufo:sprt:1r tomorrow: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:19 today: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)",
-  "mecze ufo:tour:0c-012: Expecting value: line 1 column 1 (char 0)"
+  "turnieje ufo:sprt:2a tomorrow: Expecting value: line 1 column 1 (char 0)",
+  "mecze ufo:tour:0c-00z: Expecting value: line 1 column 1 (char 0)"
  ],
- "turniejow": 381,
- "meczow_fortuny": 1450,
+ "turniejow": 324,
+ "meczow_fortuny": 1138,
  "inne_sporty": {
-  "koszykowka": 108,
-  "siatkowka": 33,
-  "hokej": 101,
-  "pilka_reczna": 42,
+  "koszykowka": 91,
+  "hokej": 79,
+  "siatkowka": 25,
+  "pilka_reczna": 31,
   "baseball": 1
  },
- "w_ofercie_24h": 1077,
- "odczytane": 1077,
- "rynkow": 111833,
- "sekund": 309
+ "w_ofercie_24h": 709,
+ "odczytane": 709,
+ "rynkow": 75745,
+ "sekund": 221
 }
