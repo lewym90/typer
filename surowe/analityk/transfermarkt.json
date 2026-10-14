@@ -5,271 +5,239 @@
    "url": "https://www.transfermarkt.com/",
    "kod": 200,
    "typ": "text/html; charset=UTF-8",
-   "rozmiar": 326335,
-   "ms": 199
+   "rozmiar": 290384,
+   "ms": 185
   }
  ],
  "druzyny": [
   {
-   "nasza": "RC Lens",
+   "nasza": "Feyenoord",
    "szukaj": {
-    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=RC+Lens",
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Feyenoord",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 99970,
-    "ms": 154
+    "rozmiar": 98890,
+    "ms": 170
    },
    "klub": {
-    "slug": "rc-lens",
-    "id": "826"
+    "slug": "feyenoord-rotterdam",
+    "id": "234"
    },
    "kontuzje": {
-    "url": "https://www.transfermarkt.com/rc-lens/sperrenundverletzungen/verein/826",
+    "url": "https://www.transfermarkt.com/feyenoord-rotterdam/sperrenundverletzungen/verein/234",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 104546,
-    "ms": 174,
+    "rozmiar": 110555,
+    "ms": 106,
+    "wierszy": 8,
+    "zawodnicy": [
+     "Thomas Beelen",
+     "Jordan Bos",
+     "Bart Nieuwkoop",
+     "Jakub Moder",
+     "Gijs Smal",
+     "Gonçalo Borges",
+     "Shaqueel van Persie",
+     "Reiss Nelson"
+    ],
+    "powody": []
+   },
+   "kadra": {
+    "url": "https://www.transfermarkt.com/feyenoord-rotterdam/kader/verein/234/plus/1",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 185842,
+    "ms": 375,
+    "wartosci": [
+     "€6.00m",
+     "€1.00m",
+     "€350k",
+     "€75k",
+     "€15.00m",
+     "€8.00m",
+     "€5.00m",
+     "€4.00m",
+     "€3.00m",
+     "€600k",
+     "€12.00m",
+     "€5.50m",
+     "€5.00m",
+     "€30.00m",
+     "€2.00m",
+     "€1.50m",
+     "€16.00m",
+     "€7.00m",
+     "€20.00m",
+     "€7.00m",
+     "€24.00m",
+     "€11.00m",
+     "€2.00m",
+     "€8.00m",
+     "€1.70m",
+     "€1.50m",
+     "€28.00m",
+     "€3.00m",
+     "€2.00m",
+     "€10.00m"
+    ],
+    "zawodnicy": []
+   }
+  },
+  {
+   "nasza": "Como",
+   "szukaj": {
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Como",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 144187,
+    "ms": 242
+   },
+   "klub": {
+    "slug": "atalanta-bergamo",
+    "id": "800"
+   },
+   "kontuzje": {
+    "url": "https://www.transfermarkt.com/atalanta-bergamo/sperrenundverletzungen/verein/800",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 104092,
+    "ms": 91,
     "wierszy": 3,
     "zawodnicy": [
-     "Abdallah Sima",
-     "Maik Nawrocki",
-     "Jonathan Gradit"
+     "Isak Hien",
+     "Odilon Kossounou",
+     "Thomas Pompei"
     ],
     "powody": []
    },
    "kadra": {
-    "url": "https://www.transfermarkt.com/rc-lens/kader/verein/826/plus/1",
+    "url": "https://www.transfermarkt.com/atalanta-bergamo/kader/verein/800/plus/1",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 175324,
-    "ms": 473,
+    "rozmiar": 168000,
+    "ms": 359,
     "wartosci": [
      "€30.00m",
-     "€200k",
-     "€100k",
-     "€30.00m",
-     "€25.00m",
+     "€800k",
+     "€250k",
+     "€38.00m",
      "€22.00m",
-     "€10.00m",
-     "€7.00m",
-     "€3.00m",
-     "€2.50m",
-     "€2.50m",
-     "€8.00m",
-     "€2.00m",
-     "€9.00m",
-     "€2.50m",
-     "€9.00m",
-     "€8.00m",
-     "€6.00m",
-     "€5.00m",
-     "€8.00m",
-     "€2.00m",
-     "€7.00m",
-     "€6.00m",
-     "€5.00m",
-     "€5.00m",
+     "€18.00m",
      "€15.00m",
-     "€12.00m",
-     "€1.20m"
-    ],
-    "zawodnicy": []
-   }
-  },
-  {
-   "nasza": "Sporting Lisbon",
-   "szukaj": {
-    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Sporting+Lisbon",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 87080,
-    "ms": 693
-   },
-   "klub": {
-    "slug": "sporting-lissabon",
-    "id": "336"
-   },
-   "kontuzje": {
-    "url": "https://www.transfermarkt.com/sporting-lissabon/sperrenundverletzungen/verein/336",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 102941,
-    "ms": 57,
-    "wierszy": 1,
-    "zawodnicy": [
-     "Luis Suárez"
-    ],
-    "powody": []
-   },
-   "kadra": {
-    "url": "https://www.transfermarkt.com/sporting-lissabon/kader/verein/336/plus/1",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 178420,
-    "ms": 382,
-    "wartosci": [
-     "€5.00m",
      "€4.00m",
-     "€1.50m",
-     "€35.00m",
-     "€25.00m",
-     "€20.00m",
-     "€17.00m",
-     "€40.00m",
-     "€4.00m",
-     "€2.00m",
      "€1.50m",
      "€20.00m",
-     "€6.00m",
-     "€2.50m",
-     "€25.00m",
-     "€7.00m",
-     "€20.00m",
      "€15.00m",
-     "€3.00m",
-     "€1.20m",
-     "€30.00m",
-     "€15.00m",
-     "€15.00m",
-     "€2.00m",
-     "€35.00m",
-     "€12.00m",
-     "€30.00m",
-     "€16.00m",
-     "€4.00m"
-    ],
-    "zawodnicy": []
-   }
-  },
-  {
-   "nasza": "Sabah FK",
-   "szukaj": {
-    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Sabah+FK",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 97533,
-    "ms": 85
-   },
-   "klub": {
-    "slug": "sabah-fk",
-    "id": "63993"
-   },
-   "kontuzje": {
-    "url": "https://www.transfermarkt.com/sabah-fk/sperrenundverletzungen/verein/63993",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 99896,
-    "ms": 56,
-    "wierszy": 1,
-    "zawodnicy": [
-     "Khayal Aliyev"
-    ],
-    "powody": []
-   },
-   "kadra": {
-    "url": "https://www.transfermarkt.com/sabah-fk/kader/verein/63993/plus/1",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 153119,
-    "ms": 402,
-    "wartosci": [
-     "€600k",
-     "€125k",
-     "€1.00m",
-     "€600k",
-     "€500k",
-     "€300k",
-     "€2.50m",
-     "€800k",
-     "€200k",
-     "€2.00m",
-     "€1.20m",
-     "€350k",
-     "€175k",
-     "€1.50m",
-     "€1.00m",
-     "€450k",
-     "€300k",
-     "€800k",
-     "€800k",
-     "€750k",
-     "€600k",
-     "€1.00m",
-     "€600k",
-     "€500k",
-     "€350k"
-    ],
-    "zawodnicy": []
-   }
-  },
-  {
-   "nasza": "Slavia Praha",
-   "szukaj": {
-    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Slavia+Praha",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 90628,
-    "ms": 144
-   },
-   "klub": {
-    "slug": "sk-slavia-prag",
-    "id": "62"
-   },
-   "kontuzje": {
-    "url": "https://www.transfermarkt.com/sk-slavia-prag/sperrenundverletzungen/verein/62",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 108876,
-    "ms": 107,
-    "wierszy": 7,
-    "zawodnicy": [
-     "Igoh Ogbu",
-     "Hamidou Kante",
-     "Stepan Chaloupek",
-     "Adonija Ouanda",
-     "Oskar Kubiak",
-     "Pavel Kacor",
-     "Ivan Schranz"
-    ],
-    "powody": []
-   },
-   "kadra": {
-    "url": "https://www.transfermarkt.com/sk-slavia-prag/kader/verein/62/plus/1",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 178242,
-    "ms": 386,
-    "wartosci": [
-     "€4.00m",
-     "€4.00m",
-     "€50k",
-     "€10.00m",
-     "€7.00m",
-     "€5.00m",
-     "€4.50m",
-     "€4.00m",
-     "€3.00m",
-     "€1.00m",
-     "€5.00m",
-     "€600k",
-     "€600k",
-     "€5.00m",
-     "€1.00m",
-     "€10.00m",
-     "€8.00m",
-     "€5.00m",
-     "€3.00m",
-     "€1.50m",
      "€3.50m",
-     "€7.00m",
-     "€5.00m",
-     "€3.00m",
-     "€2.00m",
-     "€1.80m",
-     "€450k",
-     "€4.00m",
-     "€2.20m"
+     "€12.00m",
+     "€40.00m",
+     "€12.00m",
+     "€6.00m",
+     "€20.00m",
+     "€35.00m",
+     "€16.00m",
+     "€13.00m",
+     "€33.00m",
+     "€17.00m",
+     "€22.00m",
+     "€30.00m",
+     "€25.00m"
     ],
+    "zawodnicy": []
+   }
+  },
+  {
+   "nasza": "LASK",
+   "szukaj": {
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=LASK",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 134988,
+    "ms": 470
+   },
+   "klub": {
+    "slug": "sd-eibar",
+    "id": "1533"
+   },
+   "kontuzje": {
+    "url": "https://www.transfermarkt.com/sd-eibar/sperrenundverletzungen/verein/1533",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 100197,
+    "ms": 132,
+    "wierszy": 2,
+    "zawodnicy": [
+     "Sergio Álvarez",
+     "Adu Ares"
+    ],
+    "powody": []
+   },
+   "kadra": {
+    "url": "https://www.transfermarkt.com/sd-eibar/kader/verein/1533/plus/1",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 152605,
+    "ms": 137,
+    "wartosci": [
+     "€1.50m",
+     "€300k",
+     "€500k",
+     "€300k",
+     "€100k",
+     "€100k",
+     "€600k",
+     "€400k",
+     "€800k",
+     "€300k",
+     "€600k",
+     "€200k",
+     "€1.20m",
+     "€800k",
+     "€400k",
+     "€100k",
+     "€900k",
+     "€800k",
+     "€1.00m",
+     "€200k",
+     "€1.20m",
+     "€800k",
+     "€600k",
+     "€1.50m",
+     "€1.30m"
+    ],
+    "zawodnicy": []
+   }
+  },
+  {
+   "nasza": "Liverpool",
+   "szukaj": {
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Liverpool",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 101103,
+    "ms": 118
+   },
+   "klub": {
+    "slug": "-tm",
+    "id": "4023"
+   },
+   "kontuzje": {
+    "url": "https://www.transfermarkt.com/-tm/sperrenundverletzungen/verein/4023",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 290384,
+    "ms": 104,
+    "wierszy": 0,
+    "zawodnicy": [],
+    "powody": []
+   },
+   "kadra": {
+    "url": "https://www.transfermarkt.com/-tm/kader/verein/4023/plus/1",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 290384,
+    "ms": 99,
+    "wartosci": [],
     "zawodnicy": []
    }
   }
