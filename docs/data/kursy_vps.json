@@ -1,283 +1,39 @@
 {
- "czas": "2026-10-14 02:26 UTC",
+ "czas": "2026-10-14 03:10 UTC",
  "wersja": "czytnik-3",
  "bukmacherzy": {
   "fortuna": {
    "ok": true,
-   "dopasowane": 6
+   "dopasowane": 4
   },
   "sts": {
-   "ok": true,
-   "dopasowane": 5
+   "ok": false,
+   "dopasowane": 0
   },
   "betclic": {
    "ok": true,
-   "dopasowane": 6
+   "dopasowane": 4
   }
  },
  "mecze": {
-  "84b2b76188bf23330d4c6c7ce5ed25c5": {
-   "fortuna": {
-    "id": "ufo:mtch:1wu-0jm",
-    "nazwa": "Fręch M. - Świątek I.",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "A": 7.8,
-     "B": 1.06,
-     "B -1.5": 1.28,
-     "A min. 1 set": 3.35,
-     "B min. 1 set": 1.02,
-     "Ponad 2.5 seta": 3.85,
-     "Poniżej 2.5 seta": 1.2,
-     "A 2:0": 17.0,
-     "A -1.5": 17.0,
-     "B 2:1": 4.5,
-     "A 2:1": 17.0,
-     "B 2:0": 1.25
-    },
-    "pelna": true
-   },
-   "sts": {
-    "id": "f3604944",
-    "nazwa": "Fręch Magdalena - Świątek Iga",
-    "zgodnosc": 0.96,
-    "kursy": {
-     "A": 8.6,
-     "B": 1.06,
-     "A -1.5": 17.0,
-     "A min. 1 set": 3.4,
-     "B -1.5": 1.28,
-     "A 2:0": 17.0,
-     "A 2:1": 12.0,
-     "B 2:1": 5.0,
-     "B 2:0": 1.28,
-     "Ponad 2.5 seta": 4.0,
-     "Poniżej 2.5 seta": 1.23
-    },
-    "pelna": true
-   },
-   "betclic": {
-    "id": "1250603289296896",
-    "nazwa": "Magdalena Frech - Iga Świątek",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "A": 8.6,
-     "B": 1.07,
-     "A min. 1 set": 3.25,
-     "B min. 1 set": 1.02,
-     "A 2:0": 17.0,
-     "B 2:0": 1.28,
-     "A 2:1": 17.0,
-     "B 2:1": 4.5,
-     "Ponad 2.5 seta": 3.5,
-     "Poniżej 2.5 seta": 1.17,
-     "A -1.5": 17.0,
-     "B -1.5": 1.28
-    },
-    "pelna": true,
-    "rynkow": 8,
-    "oferta": {
-     "Zwycięzca meczu": [
-      [
-       "Magdalena Frech",
-       8.6
-      ],
-      [
-       "Iga Świątek",
-       1.07
-      ]
-     ],
-     "Zawodnik wygra 1. seta 6-0, 6-1, 6-2 lub wygra mecz": [
-      [
-       "Magdalena Frech",
-       8.25
-      ],
-      [
-       "Iga Świątek",
-       1.04
-      ]
-     ],
-     "Łączna liczba gemów": [
-      [
-       "Powyżej 14,5",
-       1.08
-      ],
-      [
-       "Poniżej 14,5",
-       6.6
-      ],
-      [
-       "Powyżej 15,5",
-       1.2
-      ],
-      [
-       "Poniżej 15,5",
-       4.1
-      ],
-      [
-       "Powyżej 16,5",
-       1.4
-      ],
-      [
-       "Poniżej 16,5",
-       2.75
-      ],
-      [
-       "Powyżej 17,5",
-       1.67
-      ],
-      [
-       "Poniżej 17,5",
-       2.07
-      ],
-      [
-       "Powyżej 18,5",
-       1.99
-      ],
-      [
-       "Poniżej 18,5",
-       1.73
-      ],
-      [
-       "Powyżej 19,5",
-       2.36
-      ],
-      [
-       "Poniżej 19,5",
-       1.52
-      ],
-      [
-       "Powyżej 20,5",
-       2.75
-      ],
-      [
-       "Poniżej 20,5",
-       1.39
-      ],
-      [
-       "Powyżej 21,5",
-       3.15
-      ],
-      [
-       "Poniżej 21,5",
-       1.31
-      ],
-      [
-       "Powyżej 22,5",
-       3.6
-      ],
-      [
-       "Poniżej 22,5",
-       1.25
-      ]
-     ],
-     "Magdalena Frech wygra seta": [
-      [
-       "Tak",
-       3.25
-      ],
-      [
-       "Nie",
-       1.26
-      ]
-     ],
-     "Iga Świątek wygra seta": [
-      [
-       "Tak",
-       1.02
-      ],
-      [
-       "Nie",
-       8.6
-      ]
-     ],
-     "Wynik w setach": [
-      [
-       "2 - 0",
-       17.0
-      ],
-      [
-       "0 - 2",
-       1.28
-      ],
-      [
-       "2 - 1",
-       17.0
-      ],
-      [
-       "1 - 2",
-       4.5
-      ]
-     ],
-     "Czy obaj zawodnicy wygrają seta w meczu": [
-      [
-       "Tak",
-       3.5
-      ],
-      [
-       "Nie",
-       1.17
-      ]
-     ],
-     "Handicap setowy": [
-      [
-       "Magdalena Frech (-1,5)",
-       17.0
-      ],
-      [
-       "Iga Świątek (+1.5)",
-       1.02
-      ],
-      [
-       "Magdalena Frech (+1,5)",
-       3.35
-      ],
-      [
-       "Iga Świątek (-1.5)",
-       1.28
-      ]
-     ]
-    }
-   }
-  },
   "77cd15bc0cd98c5294c57d566ed289c9": {
    "fortuna": {
     "id": "ufo:mtch:1wt-1h5",
     "nazwa": "Van De Zandschulp B. - Jodar R.",
     "zgodnosc": 0.96,
     "kursy": {
-     "B": 1.56,
-     "A": 2.39,
-     "B -1.5": 2.35,
-     "A min. 1 set": 1.53,
+     "B": 1.54,
+     "A": 2.44,
+     "B -1.5": 2.31,
+     "A min. 1 set": 1.55,
      "Poniżej 2.5 seta": 1.54,
-     "Ponad 2.5 seta": 2.27,
-     "B min. 1 set": 1.24,
-     "B 2:0": 2.31,
-     "B 2:1": 3.75,
+     "Ponad 2.5 seta": 2.28,
+     "B min. 1 set": 1.23,
+     "B 2:0": 2.27,
+     "B 2:1": 3.7,
      "A 2:1": 5.2,
-     "A 2:0": 3.9,
-     "A -1.5": 3.9
-    },
-    "pelna": true
-   },
-   "sts": {
-    "id": "f3639395",
-    "nazwa": "Van de Zandschulp Botic - Jodar Rafael",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "A": 2.6,
-     "B": 1.47,
-     "A -1.5": 4.4,
-     "B min. 1 set": 1.2,
-     "A min. 1 set": 1.6,
-     "B -1.5": 2.25,
-     "A 2:0": 4.3,
-     "A 2:1": 5.2,
-     "B 2:1": 4.0,
-     "B 2:0": 2.2,
-     "Ponad 2.5 seta": 2.4,
-     "Poniżej 2.5 seta": 1.5
+     "A 2:0": 4.0,
+     "A -1.5": 4.0
     },
     "pelna": true
    },
@@ -286,18 +42,18 @@
     "nazwa": "Botic Van De Zandschulp - Rafael Jodar",
     "zgodnosc": 1.0,
     "kursy": {
-     "A": 2.6,
-     "B": 1.42,
-     "A min. 1 set": 1.58,
-     "B min. 1 set": 1.18,
-     "A 2:0": 4.4,
-     "B 2:0": 2.2,
-     "A 2:1": 5.6,
-     "B 2:1": 3.7,
+     "A": 2.65,
+     "B": 1.41,
+     "A min. 1 set": 1.59,
+     "B min. 1 set": 1.17,
+     "A 2:0": 4.5,
+     "B 2:0": 2.16,
+     "A 2:1": 5.8,
+     "B 2:1": 3.65,
      "Ponad 2.5 seta": 2.17,
      "Poniżej 2.5 seta": 1.47,
-     "A -1.5": 4.4,
-     "B -1.5": 2.2
+     "A -1.5": 4.5,
+     "B -1.5": 2.16
     },
     "pelna": true,
     "rynkow": 8,
@@ -305,21 +61,21 @@
      "Zwycięzca meczu": [
       [
        "Botic Van De Zandschulp",
-       2.6
+       2.65
       ],
       [
        "Rafael Jodar",
-       1.42
+       1.41
       ]
      ],
      "Zawodnik wygra 1. seta 6-0, 6-1, 6-2 lub wygra mecz": [
       [
        "Botic Van De Zandschulp",
-       2.52
+       2.57
       ],
       [
        "Rafael Jodar",
-       1.38
+       1.37
       ]
      ],
      "Łączna liczba gemów": [
@@ -329,11 +85,11 @@
       ],
       [
        "Poniżej 18,5",
-       4.0
+       3.95
       ],
       [
        "Powyżej 19,5",
-       1.34
+       1.35
       ],
       [
        "Poniżej 19,5",
@@ -341,47 +97,47 @@
       ],
       [
        "Powyżej 20,5",
-       1.5
+       1.51
       ],
       [
        "Poniżej 20,5",
-       2.42
+       2.41
       ],
       [
        "Powyżej 21,5",
-       1.64
-      ],
-      [
-       "Poniżej 21,5",
-       2.13
-      ],
-      [
-       "Powyżej 22,5",
-       1.88
-      ],
-      [
-       "Poniżej 22,5",
-       1.82
-      ],
-      [
-       "Powyżej 23,5",
-       2.12
-      ],
-      [
-       "Poniżej 23,5",
        1.65
       ],
       [
+       "Poniżej 21,5",
+       2.12
+      ],
+      [
+       "Powyżej 22,5",
+       1.89
+      ],
+      [
+       "Poniżej 22,5",
+       1.81
+      ],
+      [
+       "Powyżej 23,5",
+       2.13
+      ],
+      [
+       "Poniżej 23,5",
+       1.64
+      ],
+      [
        "Powyżej 24,5",
-       2.18
+       2.19
       ],
       [
        "Poniżej 24,5",
-       1.61
+       1.6
       ],
       [
        "Powyżej 25,5",
-       2.37
+       2.38
       ],
       [
        "Poniżej 25,5",
@@ -399,39 +155,39 @@
      "Botic Van De Zandschulp wygra seta": [
       [
        "Tak",
-       1.58
+       1.59
       ],
       [
        "Nie",
-       2.15
+       2.11
       ]
      ],
      "Rafael Jodar wygra seta": [
       [
        "Tak",
-       1.18
+       1.17
       ],
       [
        "Nie",
-       3.95
+       4.1
       ]
      ],
      "Wynik w setach": [
       [
        "2 - 0",
-       4.4
+       4.5
       ],
       [
        "0 - 2",
-       2.2
+       2.16
       ],
       [
        "2 - 1",
-       5.6
+       5.8
       ],
       [
        "1 - 2",
-       3.7
+       3.65
       ]
      ],
      "Czy obaj zawodnicy wygrają seta w meczu": [
@@ -447,19 +203,19 @@
      "Handicap setowy": [
       [
        "Botic Van De Zandschulp (-1,5)",
-       4.4
+       4.5
       ],
       [
        "Rafael Jodar (+1.5)",
-       1.19
+       1.18
       ],
       [
        "Botic Van De Zandschulp (+1,5)",
-       1.6
+       1.62
       ],
       [
        "Rafael Jodar (-1.5)",
-       2.2
+       2.16
       ]
      ]
     }
@@ -483,26 +239,6 @@
      "B 2:1": 3.75,
      "B 2:0": 2.6,
      "B min. 1 set": 1.27
-    },
-    "pelna": true
-   },
-   "sts": {
-    "id": "f3637466",
-    "nazwa": "Ruud Casper - Auger-Aliassime Felix",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "A": 2.15,
-     "B": 1.65,
-     "A -1.5": 3.5,
-     "B min. 1 set": 1.28,
-     "A min. 1 set": 1.47,
-     "B -1.5": 2.55,
-     "A 2:0": 3.6,
-     "A 2:1": 4.8,
-     "B 2:1": 4.1,
-     "B 2:0": 2.5,
-     "Ponad 2.5 seta": 2.35,
-     "Poniżej 2.5 seta": 1.55
     },
     "pelna": true
    },
@@ -696,38 +432,18 @@
     "nazwa": "Medvedev D. - Tsitsipas S.",
     "zgodnosc": 0.97,
     "kursy": {
-     "B": 2.77,
-     "A": 1.43,
-     "B min. 1 set": 1.61,
-     "A -1.5": 2.17,
-     "Poniżej 2.5 seta": 1.55,
-     "Ponad 2.5 seta": 2.25,
+     "B": 2.8,
+     "A": 1.41,
+     "B min. 1 set": 1.63,
+     "A -1.5": 2.15,
+     "Poniżej 2.5 seta": 1.54,
+     "Ponad 2.5 seta": 2.26,
      "A min. 1 set": 1.18,
-     "A 2:0": 2.13,
+     "A 2:0": 2.1,
      "A 2:1": 3.5,
      "B 2:1": 5.6,
-     "B 2:0": 4.7,
-     "B -1.5": 4.7
-    },
-    "pelna": true
-   },
-   "sts": {
-    "id": "f3639047",
-    "nazwa": "Medvedev Daniil - Tsitsipas Stefanos",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "A": 1.42,
-     "B": 2.85,
-     "A -1.5": 2.0,
-     "B min. 1 set": 1.7,
-     "A min. 1 set": 1.16,
-     "B -1.5": 5.0,
-     "A 2:0": 2.0,
-     "A 2:1": 3.9,
-     "B 2:1": 5.6,
-     "B 2:0": 5.0,
-     "Ponad 2.5 seta": 2.45,
-     "Poniżej 2.5 seta": 1.5
+     "B 2:0": 4.8,
+     "B -1.5": 4.8
     },
     "pelna": true
    },
@@ -736,18 +452,18 @@
     "nazwa": "Daniil Medvedev - Stefanos Tsitsipas",
     "zgodnosc": 1.0,
     "kursy": {
-     "A": 1.37,
-     "B": 2.75,
-     "A min. 1 set": 1.16,
-     "B min. 1 set": 1.59,
-     "A 2:0": 2.17,
-     "B 2:0": 4.7,
+     "A": 1.36,
+     "B": 2.8,
+     "A min. 1 set": 1.15,
+     "B min. 1 set": 1.6,
+     "A 2:0": 2.15,
+     "B 2:0": 4.8,
      "A 2:1": 3.55,
      "B 2:1": 5.6,
      "Ponad 2.5 seta": 2.13,
      "Poniżej 2.5 seta": 1.49,
-     "A -1.5": 2.17,
-     "B -1.5": 4.7
+     "A -1.5": 2.15,
+     "B -1.5": 4.8
     },
     "pelna": true,
     "rynkow": 8,
@@ -755,21 +471,21 @@
      "Zwycięzca meczu": [
       [
        "Daniil Medvedev",
-       1.37
+       1.36
       ],
       [
        "Stefanos Tsitsipas",
-       2.75
+       2.8
       ]
      ],
      "Zawodnik wygra 1. seta 6-0, 6-1, 6-2 lub wygra mecz": [
       [
        "Daniil Medvedev",
-       1.33
+       1.32
       ],
       [
        "Stefanos Tsitsipas",
-       2.67
+       2.72
       ]
      ],
      "Łączna liczba gemów": [
@@ -787,15 +503,15 @@
       ],
       [
        "Poniżej 19,5",
-       3.3
+       3.25
       ],
       [
        "Powyżej 20,5",
-       1.44
+       1.45
       ],
       [
        "Poniżej 20,5",
-       2.6
+       2.55
       ],
       [
        "Powyżej 21,5",
@@ -803,7 +519,7 @@
       ],
       [
        "Poniżej 21,5",
-       2.26
+       2.25
       ],
       [
        "Powyżej 22,5",
@@ -811,69 +527,69 @@
       ],
       [
        "Poniżej 22,5",
-       1.89
+       1.88
       ],
       [
        "Powyżej 23,5",
-       2.07
+       2.08
       ],
       [
        "Poniżej 23,5",
-       1.68
+       1.67
       ],
       [
        "Powyżej 24,5",
-       2.11
+       2.13
       ],
       [
        "Poniżej 24,5",
-       1.65
+       1.64
       ],
       [
        "Powyżej 25,5",
-       2.28
+       2.3
       ],
       [
        "Poniżej 25,5",
-       1.56
+       1.55
       ],
       [
        "Powyżej 26,5",
-       2.55
+       2.6
       ],
       [
        "Poniżej 26,5",
-       1.45
+       1.44
       ]
      ],
      "Daniil Medvedev wygra seta": [
       [
        "Tak",
-       1.16
+       1.15
       ],
       [
        "Nie",
-       4.2
+       4.3
       ]
      ],
      "Stefanos Tsitsipas wygra seta": [
       [
        "Tak",
-       1.59
+       1.6
       ],
       [
        "Nie",
-       2.12
+       2.1
       ]
      ],
      "Wynik w setach": [
       [
        "2 - 0",
-       2.17
+       2.15
       ],
       [
        "0 - 2",
-       4.7
+       4.8
       ],
       [
        "2 - 1",
@@ -897,11 +613,11 @@
      "Handicap setowy": [
       [
        "Daniil Medvedev (-1,5)",
-       2.17
+       2.15
       ],
       [
        "Stefanos Tsitsipas (+1.5)",
-       1.61
+       1.63
       ],
       [
        "Daniil Medvedev (+1,5)",
@@ -909,232 +625,7 @@
       ],
       [
        "Stefanos Tsitsipas (-1.5)",
-       4.7
-      ]
-     ]
-    }
-   }
-  },
-  "4a22193d4d0978eac90ec6ebff702b4f": {
-   "fortuna": {
-    "id": "ufo:mtch:1wt-0qa",
-    "nazwa": "Kartal S. - Bencic B.",
-    "zgodnosc": 0.96,
-    "kursy": {
-     "A": 2.82,
-     "B": 1.39,
-     "B -1.5": 1.97,
-     "A min. 1 set": 1.75,
-     "Poniżej 2.5 seta": 1.44,
-     "Ponad 2.5 seta": 2.55,
-     "B min. 1 set": 1.18,
-     "A -1.5": 4.4,
-     "B 2:1": 4.0,
-     "B 2:0": 1.93,
-     "A 2:0": 4.7,
-     "A 2:1": 6.2
-    },
-    "pelna": true
-   },
-   "sts": {
-    "id": "f3604918",
-    "nazwa": "Kartal Sonay - Bencic Belinda",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "A": 3.0,
-     "B": 1.37,
-     "A -1.5": 5.2,
-     "B min. 1 set": 1.15,
-     "A min. 1 set": 1.8,
-     "B -1.5": 1.9,
-     "A 2:0": 5.2,
-     "A 2:1": 5.8,
-     "B 2:1": 4.0,
-     "B 2:0": 1.9,
-     "Ponad 2.5 seta": 2.55,
-     "Poniżej 2.5 seta": 1.47
-    },
-    "pelna": true
-   },
-   "betclic": {
-    "id": "1250586401964060",
-    "nazwa": "Sonay Kartal - Belinda Bencic",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "A": 2.85,
-     "B": 1.35,
-     "A min. 1 set": 1.72,
-     "B min. 1 set": 1.16,
-     "A 2:0": 4.7,
-     "B 2:0": 1.97,
-     "A 2:1": 6.2,
-     "B 2:1": 4.0,
-     "Ponad 2.5 seta": 2.37,
-     "Poniżej 2.5 seta": 1.39,
-     "A -1.5": 4.7,
-     "B -1.5": 1.97
-    },
-    "pelna": true,
-    "rynkow": 8,
-    "oferta": {
-     "Zwycięzca meczu": [
-      [
-       "Sonay Kartal",
-       2.85
-      ],
-      [
-       "Belinda Bencic",
-       1.35
-      ]
-     ],
-     "Zawodnik wygra 1. seta 6-0, 6-1, 6-2 lub wygra mecz": [
-      [
-       "Sonay Kartal",
-       2.77
-      ],
-      [
-       "Belinda Bencic",
-       1.31
-      ]
-     ],
-     "Łączna liczba gemów": [
-      [
-       "Powyżej 16,5",
-       1.14
-      ],
-      [
-       "Poniżej 16,5",
-       5.0
-      ],
-      [
-       "Powyżej 17,5",
-       1.26
-      ],
-      [
-       "Poniżej 17,5",
-       3.45
-      ],
-      [
-       "Powyżej 18,5",
-       1.42
-      ],
-      [
-       "Poniżej 18,5",
-       2.65
-      ],
-      [
-       "Powyżej 19,5",
-       1.61
-      ],
-      [
-       "Poniżej 19,5",
-       2.17
-      ],
-      [
-       "Powyżej 20,5",
-       1.83
-      ],
-      [
-       "Poniżej 20,5",
-       1.88
-      ],
-      [
-       "Powyżej 21,5",
-       2.02
-      ],
-      [
-       "Poniżej 21,5",
-       1.71
-      ],
-      [
-       "Powyżej 22,5",
-       2.3
-      ],
-      [
-       "Poniżej 22,5",
-       1.55
-      ],
-      [
-       "Powyżej 23,5",
-       2.5
-      ],
-      [
-       "Poniżej 23,5",
-       1.46
-      ],
-      [
-       "Powyżej 24,5",
-       2.7
-      ],
-      [
-       "Poniżej 24,5",
-       1.42
-      ]
-     ],
-     "Sonay Kartal wygra seta": [
-      [
-       "Tak",
-       1.72
-      ],
-      [
-       "Nie",
-       1.93
-      ]
-     ],
-     "Belinda Bencic wygra seta": [
-      [
-       "Tak",
-       1.16
-      ],
-      [
-       "Nie",
-       4.2
-      ]
-     ],
-     "Wynik w setach": [
-      [
-       "2 - 0",
-       4.7
-      ],
-      [
-       "0 - 2",
-       1.97
-      ],
-      [
-       "2 - 1",
-       6.2
-      ],
-      [
-       "1 - 2",
-       4.0
-      ]
-     ],
-     "Czy obaj zawodnicy wygrają seta w meczu": [
-      [
-       "Tak",
-       2.37
-      ],
-      [
-       "Nie",
-       1.39
-      ]
-     ],
-     "Handicap setowy": [
-      [
-       "Sonay Kartal (-1,5)",
-       4.7
-      ],
-      [
-       "Belinda Bencic (+1.5)",
-       1.17
-      ],
-      [
-       "Sonay Kartal (+1,5)",
-       1.75
-      ],
-      [
-       "Belinda Bencic (-1.5)",
-       1.97
+       4.8
       ]
      ]
     }
@@ -1346,98 +837,14 @@
    }
   }
  },
- "ksw": [
-  {
-   "a": "Bartosiński Adrian",
-   "b": "Łopaczyk Tymoteusz",
-   "t": "2026-11-21T22:30:00+00:00",
-   "gala": "KSW 123",
-   "kursy": {
-    "sts": {
-     "A": 1.18,
-     "B": 4.9
-    }
-   }
-  },
-  {
-   "a": "Mircea Valeriu",
-   "b": "Held Marcin",
-   "t": "2026-11-21T22:00:00+00:00",
-   "gala": "KSW 123",
-   "kursy": {
-    "sts": {
-     "A": 1.9,
-     "B": 1.9
-    }
-   }
-  },
-  {
-   "a": "Kawa Wojciech",
-   "b": "Moisa Oleksandr",
-   "t": "2026-11-21T18:30:00+00:00",
-   "gala": "KSW 123",
-   "kursy": {
-    "sts": {
-     "A": 2.35,
-     "B": 1.6
-    }
-   }
-  },
-  {
-   "a": "Szczepaniak Oskar",
-   "b": "Krt Steven",
-   "t": "2026-11-21T19:00:00+00:00",
-   "gala": "KSW 123",
-   "kursy": {
-    "sts": {
-     "A": 1.37,
-     "B": 3.1
-    }
-   }
-  },
-  {
-   "a": "Romanowski Tomasz",
-   "b": "Michaliszyn Igor",
-   "t": "2026-11-21T20:00:00+00:00",
-   "gala": "KSW 123",
-   "kursy": {
-    "sts": {
-     "A": 2.3,
-     "B": 1.62
-    }
-   }
-  },
-  {
-   "a": "Fleminas Madars",
-   "b": "Pawlik Mateusz",
-   "t": "2026-11-21T20:30:00+00:00",
-   "gala": "KSW 123",
-   "kursy": {
-    "sts": {
-     "A": 1.57,
-     "B": 2.4
-    }
-   }
-  },
-  {
-   "a": "Pawlak Paweł",
-   "b": "Kuberski Piotr",
-   "t": "2026-12-19T22:30:00+00:00",
-   "gala": "KSW 124",
-   "kursy": {
-    "sts": {
-     "A": 2.0,
-     "B": 1.8
-    }
-   }
-  }
- ],
+ "ksw": [],
  "diag": {
   "bledy": [
    "turnieje ufo:sprt:01 today: Expecting value: line 1 column 1 (char 0)",
    "turnieje ufo:sprt:01 tomorrow: Expecting value: line 1 column 1 (char 0)",
    "turnieje ufo:sprt:19 today: Expecting value: line 1 column 1 (char 0)",
-   "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)"
+   "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)",
+   "mecze ufo:tour:0x-5rz: Expecting value: line 1 column 1 (char 0)"
   ],
   "nasze_mecze": 31,
   "sporty": [
@@ -1450,24 +857,24 @@
     "Baseball"
    ],
    [
-    "ufo:sprt:02",
-    "Esport Counter Strike"
-   ],
-   [
     "ufo:sprt:0r",
     "Badminton"
+   ],
+   [
+    "ufo:sprt:02",
+    "Esport Counter Strike"
    ],
    [
     "ufo:sprt:03",
     "Esport LOL"
    ],
    [
-    "ufo:sprt:26",
-    "POJEDYNEK"
-   ],
-   [
     "ufo:sprt:04",
     "Esport DOTA2"
+   ],
+   [
+    "ufo:sprt:26",
+    "POJEDYNEK"
    ],
    [
     "ufo:sprt:27",
@@ -1478,12 +885,12 @@
     "Squash"
    ],
    [
-    "ufo:sprt:0w",
-    "Hokej"
-   ],
-   [
     "ufo:sprt:07",
     "Rugby"
+   ],
+   [
+    "ufo:sprt:0w",
+    "Hokej"
    ],
    [
     "ufo:sprt:0x",
@@ -1572,8 +979,8 @@
    "sporty walki": "ufo:sprt:19",
    "pilka": "ufo:sprt:00"
   },
-  "turniejow": 158,
-  "meczow_fortuny": 808,
+  "turniejow": 160,
+  "meczow_fortuny": 802,
   "niedopasowane": [
    "pilka: Cardiff City – Watford",
    "pilka: Burnley – Charlton Athletic",
@@ -1599,14 +1006,16 @@
    "tenis: Ashlyn Krueger – Shuai Zhang",
    "tenis: Hubert Hurkacz – Alejandro Davidovich Fokina",
    "tenis: Mia Pohánková – Xiyu Wang",
-   "tenis: Tommy Paul – Zizou Bergs"
+   "tenis: Magdalena Fręch – Iga Świątek",
+   "tenis: Tommy Paul – Zizou Bergs",
+   "tenis: Sonay Kartal – Belinda Bencic"
   ],
-  "pelna_oferta": 6,
+  "pelna_oferta": 4,
   "rynki_nazwy": {
    "tenis": {
     "Zwycięzca meczu (krecz=zwrot)": [
-     "1",
-     "2"
+     "2",
+     "1"
     ],
     "Zwycięzca meczu (zwrot jeżeli przegra 1:2 w setach)": [
      "2",
@@ -1616,124 +1025,43 @@
      "2 (-1.5)",
      "1 (+1.5)"
     ],
-    "Najpopularniejsze zakłady łączone": [
-     "Swiatek wygra  mecz , powyżej  18.5 Gemach  w mecz"
-    ],
-    "Mecz: Świątek I. - wygra swój pierwszy gem serwisowy": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: Fręch M. - wygra swój pierwszy gem serwisowy": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: Fręch M. - liczba gemów": [
-     "- 5.5",
-     "+ 5.5"
-    ],
-    "Mecz: handicap gemowy": [
-     "1 (+8.5)",
-     "2 (-8.5)"
-    ],
-    "Mecz: Świątek I. - wygra co najmniej jeden set": [
-     "Nie",
-     "Tak"
-    ],
-    "Mecz: liczba setów (krecz=zwrot)": [
-     "+ 2.5",
-     "- 2.5"
-    ],
-    "Mecz: Świątek I. - wygra dokładnie jeden set": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: Fręch M. - wygra dokładnie jeden set": [
-     "Nie",
-     "Tak"
-    ],
-    "Mecz: Fręch M. - wygra co najmniej jeden set": [
-     "Nie",
-     "Tak"
-    ],
-    "Mecz: dokładny wynik": [
-     "2:0",
-     "1:2",
-     "2:1",
-     "0:2 "
-    ],
-    "1.set / zwycięzca meczu": [
-     "2/2",
-     "1/2",
-     "2/1",
-     "1/1"
-    ],
-    "Spotkanie potrwa dłużej niż 120 minut": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: liczba gemów": [
-     "- 22.5",
-     "+ 22.5"
-    ],
-    "Mecz: będzie tiebreak": [
-     "Tak",
-     "Nie"
-    ],
-    "1.set: handicap (gemy)": [
-     "1 (+4.5)",
-     "2 (-4.5)"
-    ],
-    "Mecz: Świątek I. - liczba gemów": [
-     "+ 13.5",
-     "- 13.5"
-    ],
-    "1.set": [
-     "2",
-     "1"
-    ],
-    "1.set: liczba gemów": [
-     "+ 7.5",
-     "- 7.5"
-    ],
-    "Co najmniej jeden zawodnik wygra wszystkie swoje gemy serwisowe": [
-     "Tak",
-     "Nie"
-    ],
-    "1.set: stan po czterech gemach - 2:2": [
-     "Tak",
-     "Nie"
-    ],
-    "1.set: stan po dwóch gemach - 1:1": [
-     "Tak",
-     "Nie"
+    "Mecz: Van De Zandschulp B. - liczba gemów": [
+     "+ 10.5",
+     "- 10.5"
     ],
     "Mecz: będzie set do zera": [
      "Tak",
      "Nie"
     ],
-    "1.set: stan po sześciu gemach - 3:3": [
-     "Tak",
-     "Nie"
+    "1.set: liczba gemów": [
+     "+ 6.5",
+     "- 6.5"
     ],
-    "1.set: dokładny wynik": [
-     "6:4",
-     "5:7",
-     "6:1",
-     "4:6"
-    ],
-    "Mecz: Van De Zandschulp B. - liczba gemów": [
-     "+ 10.5",
-     "- 10.5"
+    "Mecz: liczba gemów": [
+     "+ 23.5",
+     "- 23.5"
     ],
     "Mecz: Jodar R. - liczba gemów": [
      "- 12.5",
      "+ 12.5"
+    ],
+    "Mecz: handicap gemowy": [
+     "2 (-4.5)",
+     "1 (+4.5)"
     ],
     "1.set: zwycięzca / liczba gemów w secie": [
      "2/+ 9.5",
      "1/+ 9.5",
      "2/- 9.5",
      "1/- 9.5"
+    ],
+    "1.set: handicap (gemy)": [
+     "2 (-1.5)",
+     "1 (+1.5)"
+    ],
+    "Mecz: będzie tiebreak": [
+     "Tak",
+     "Nie"
     ],
     "Mecz: Van De Zandschulp B. - wygra swój pierwszy gem serwisowy": [
      "Nie",
@@ -1743,6 +1071,10 @@
      "Tak",
      "Nie"
     ],
+    "Mecz: liczba setów (krecz=zwrot)": [
+     "- 2.5",
+     "+ 2.5"
+    ],
     "Mecz: Van De Zandschulp B. - wygra dokładnie jeden set": [
      "Tak",
      "Nie"
@@ -1750,6 +1082,12 @@
     "Mecz: Jodar R. - wygra dokładnie jeden set": [
      "Tak",
      "Nie"
+    ],
+    "1.set / zwycięzca meczu": [
+     "1/2",
+     "2/2",
+     "1/1",
+     "2/1"
     ],
     "Mecz: dokładna liczba setów (krecz=zwrot)": [
      "2",
@@ -1783,6 +1121,16 @@
      "+ 4.5",
      "- 4.5"
     ],
+    "Mecz: dokładny wynik": [
+     "0:2 ",
+     "1:2",
+     "2:1",
+     "2:0"
+    ],
+    "1.set": [
+     "2",
+     "1"
+    ],
     "Mecz: liczba asów": [
      "+ 7.5",
      "- 7.5"
@@ -1796,10 +1144,55 @@
      "1",
      "Równo"
     ],
+    "1.set: stan po dwóch gemach - 1:1": [
+     "Tak",
+     "Nie"
+    ],
+    "1.set: stan po czterech gemach - 2:2": [
+     "Tak",
+     "Nie"
+    ],
+    "Spotkanie potrwa dłużej niż 120 minut": [
+     "Tak",
+     "Nie"
+    ],
     "Mecz: więcej asów": [
      "1",
      "2",
      "Rowno"
+    ],
+    "Najpopularniejsze zakłady łączone": [
+     "Zandschulp wygra  mecz , powyżej  24.5 Gemach  w mecz"
+    ],
+    "1.set: stan po sześciu gemach - 3:3": [
+     "Tak",
+     "Nie"
+    ],
+    "Co najmniej jeden zawodnik wygra wszystkie swoje gemy serwisowe": [
+     "Tak",
+     "Nie"
+    ],
+    "1.set: dokładny wynik": [
+     "7:5",
+     "7:6",
+     "0:6",
+     "1:6"
+    ],
+    "Mecz: Auger-Aliassime F. - wygra swój pierwszy gem serwisowy": [
+     "Tak",
+     "Nie"
+    ],
+    "Mecz: Ruud C. - wygra swój pierwszy gem serwisowy": [
+     "Tak",
+     "Nie"
+    ],
+    "Mecz: Ruud C. - wygra dokładnie jeden set": [
+     "Tak",
+     "Nie"
+    ],
+    "Mecz: Auger-Aliassime F. - wygra co najmniej jeden set": [
+     "Tak",
+     "Nie"
     ],
     "Mecz: Ruud C. - liczba gemów": [
      "+ 13.5",
@@ -1829,37 +1222,21 @@
      "+ 12.5",
      "- 12.5"
     ],
-    "Mecz: Auger-Aliassime F. - wygra swój pierwszy gem serwisowy": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: Ruud C. - wygra swój pierwszy gem serwisowy": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: Ruud C. - wygra dokładnie jeden set": [
-     "Tak",
-     "Nie"
-    ],
     "Mecz: Ruud C. - liczba podwójnych błędów": [
      "- 1.5",
      "+ 1.5"
-    ],
-    "Mecz: Auger-Aliassime F. - wygra co najmniej jeden set": [
-     "Tak",
-     "Nie"
     ],
     "Mecz: Medvedev D. - liczba gemów": [
      "+ 12.5",
      "- 12.5"
     ],
-    "Mecz: Tsitsipas S. - liczba gemów": [
-     "+ 13.5",
-     "- 13.5"
-    ],
     "Mecz: Tsitsipas S. - wygra dokładnie jeden set": [
      "Nie",
      "Tak"
+    ],
+    "Mecz: Tsitsipas S. - liczba gemów": [
+     "- 11.5",
+     "+ 11.5"
     ],
     "Mecz: Tsitsipas S. - wygra swój pierwszy gem serwisowy": [
      "Nie",
@@ -1880,38 +1257,6 @@
     "Mecz: Tsitsipas S. - wygra co najmniej jeden set": [
      "Nie",
      "Tak"
-    ],
-    "Mecz: Bencic B. - wygra swój pierwszy gem serwisowy": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: Bencic B. - wygra co najmniej jeden set": [
-     "Nie",
-     "Tak"
-    ],
-    "Mecz: Kartal S. - wygra dokładnie jeden set": [
-     "Nie",
-     "Tak"
-    ],
-    "Mecz: Kartal S. - wygra swój pierwszy gem serwisowy": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: Bencic B. - liczba gemów": [
-     "- 12.5",
-     "+ 12.5"
-    ],
-    "Mecz: Kartal S. - wygra co najmniej jeden set": [
-     "Nie",
-     "Tak"
-    ],
-    "Mecz: Bencic B. - wygra dokładnie jeden set": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: Kartal S. - liczba gemów": [
-     "- 9.5",
-     "+ 9.5"
     ],
     "Mecz: McNally C. - liczba gemów": [
      "+ 8.5",
@@ -1969,603 +1314,13 @@
    }
   },
   "sts": {
-   "bledy": [],
-   "meczow_sts": 1887,
-   "sporty": {
-    "1": 1358,
-    "3": 461,
-    "166": 40,
-    "19": 28
-   },
-   "niedopasowane": [
-    "pilka: Cardiff City – Watford",
-    "pilka: Burnley – Charlton Athletic",
-    "pilka: Millwall – Swansea City",
-    "pilka: Galatasaray – Barcelona",
-    "pilka: Atlético Madrid – Manchester United",
-    "pilka: RC Lens – Sporting Lisbon",
-    "pilka: Sabah FK – Slavia Praha",
-    "pilka: Arsenal – Lille",
-    "pilka: Viking FK – Bayern Munich",
-    "pilka: Inter Milan – Club Brugge",
-    "pilka: Villarreal – Napoli",
-    "pilka: RB Leipzig – PSV Eindhoven",
-    "pilka: Bristol City – Blackburn Rovers",
-    "pilka: Wolverhampton Wanderers – Bolton Wanderers",
-    "pilka: Wrexham AFC – West Bromwich Albion",
-    "pilka: Birmingham City – Preston North End",
-    "pilka: Stoke City – Middlesbrough",
-    "tenis: Lilli Tagger – Nikola Bartunkova",
-    "tenis: Daria Kasatkina – Jelena Ostapenko",
-    "tenis: Daria Snigur – Elise Mertens",
-    "tenis: Alexander Zverev – Alexander Bublik",
-    "tenis: Ashlyn Krueger – Shuai Zhang",
-    "tenis: Hubert Hurkacz – Alejandro Davidovich Fokina",
-    "tenis: Mia Pohánková – Xiyu Wang",
-    "tenis: Tommy Paul – Zizou Bergs",
-    "tenis: Karolina Muchova – Caty McNally"
-   ],
-   "szczegoly_ramek": 6,
-   "szczegoly_odpowiedzi": "5 z 5",
-   "szczegoly_tematy": {
-    "f_f3604944_pl": 2,
-    "f_f3639395_pl": 1,
-    "f_f3637466_pl": 1,
-    "f_f3604918_pl": 1,
-    "f_f3639047_pl": 1
-   },
-   "szczegoly_meczow": {
-    "Fręch Magdalena - Świątek Iga": {
-     "16m63043": 11,
-     "17mce2f1dfc7b2": 26,
-     "1m75373636": 1
-    },
-    "Van de Zandschulp Botic - Jodar Rafael": {
-     "16m63167": 3,
-     "17m4fdf3bf1f64": 26,
-     "1m75559898": 1
-    },
-    "Ruud Casper - Auger-Aliassime Felix": {
-     "16m63168": 3,
-     "17m686d4add13a": 25,
-     "1m75542000": 1
-    },
-    "Medvedev Daniil - Tsitsipas Stefanos": {
-     "16m63169": 3,
-     "17mceb10928743": 25,
-     "1m75558184": 1
-    },
-    "Kartal Sonay - Bencic Belinda": {
-     "17mdbe5fe4f0e1": 26,
-     "1m75373590": 1
-    }
-   },
-   "rynki_przyklad": {
-    "Fręch Magdalena - Świątek Iga": {
-     "259 Zwycięzca meczu": [
-      "Zwycięzca meczu | 4:1=8.6",
-      "Zwycięzca meczu | 5:2=1.06"
-     ],
-     "265 Sety - handicap": [
-      "Sety - handicap | 925:1 (-1.5)=17",
-      "Sety - handicap | 925:1 (+1.5)=3.4",
-      "Sety - handicap | 926:2 (-1.5)=1.28"
-     ],
-     "277 Będzie set do zera": [
-      "Będzie set do zera | 26:tak=4.5",
-      "Będzie set do zera | 27:nie=1.17"
-     ],
-     "285 Dokładny wynik": [
-      "Dokładny wynik | 1157:2:0=17",
-      "Dokładny wynik | 1158:2:1=12",
-      "Dokładny wynik | 1159:1:2=5",
-      "Dokładny wynik | 1160:0:2=1.28"
-     ],
-     "292 1. set / wynik końcowy": [
-      "1. set / wynik końcowy | 252:1 / 1=11",
-      "1. set / wynik końcowy | 253:2 / 1=18",
-      "1. set / wynik końcowy | 254:1 / 2=9",
-      "1. set / wynik końcowy | 255:2 / 2=1.16"
-     ],
-     "293 Set ": [
-      "1. set  | 4:1=6.2",
-      "1. set  | 5:2=1.11"
-     ],
-     "301 Set - będzie tie-break": [
-      "1. set - będzie tie-break | 26:tak=10",
-      "1. set - będzie tie-break | 27:nie=1.04"
-     ],
-     "302 Set - dokładny wynik": [
-      "1. set - dokładny wynik | 256:6:0=46",
-      "1. set - dokładny wynik | 257:6:1=32",
-      "1. set - dokładny wynik | 258:6:2=23",
-      "1. set - dokładny wynik | 259:6:3=18"
-     ],
-     "479 Liczba setów": [
-      "Liczba setów | 12:+2.5=4",
-      "Liczba setów | 13:-2.5=1.23"
-     ],
-     "1959 Liczba podwójnych błędów": [
-      "Liczba podwójnych błędów | 12:+4.5=1.75",
-      "Liczba podwójnych błędów | 13:-4.5=1.95"
-     ],
-     "1960 Liczba przełamanych serwisów": [
-      "Liczba przełamanych serwisów | 12:+6.5=1.65",
-      "Liczba przełamanych serwisów | 13:-6.5=2.1"
-     ],
-     "1967 Liczba tie-breaków": [
-      "Liczba tie-breaków | 12:+1.5=24",
-      "Liczba tie-breaków | 12:+0.5=5",
-      "Liczba tie-breaków | 13:-0.5=1.13"
-     ],
-     "262 Gemy - handicap": [
-      "Gemy - handicap | 925:1 (+3.5)=4.8",
-      "Gemy - handicap | 926:2 (-3.5)=1.17",
-      "Gemy - handicap | 925:1 (+6.5)=1.9",
-      "Gemy - handicap | 926:2 (-6.5)=1.8",
-      "Gemy - handicap | 925:1 (+7.5)=1.5",
-      "Gemy - handicap | 926:2 (-7.5)=2.5"
-     ],
-     "268 Liczba gemów": [
-      "Liczba gemów | 12:+19.5=2.4",
-      "Liczba gemów | 13:-19.5=1.5",
-      "Liczba gemów | 12:+21.5=3.1",
-      "Liczba gemów | 13:-21.5=1.33",
-      "Liczba gemów | 12:+20.5=2.8",
-      "Liczba gemów | 13:-20.5=1.42"
-     ],
-     "271 1. zawodnik - liczba gemów": [
-      "1. zawodnik - liczba gemów | 12:+6.5=2.1",
-      "1. zawodnik - liczba gemów | 13:-6.5=1.65",
-      "1. zawodnik - liczba gemów | 12:+4.5=1.45",
-      "1. zawodnik - liczba gemów | 13:-4.5=2.65",
-      "1. zawodnik - liczba gemów | 12:+5.5=1.75",
-      "1. zawodnik - liczba gemów | 13:-5.5=2"
-     ],
-     "274 2. zawodnik - liczba gemów": [
-      "2. zawodnik - liczba gemów | 12:+13.5=4.3",
-      "2. zawodnik - liczba gemów | 13:-13.5=1.2",
-      "2. zawodnik - liczba gemów | 12:+11.5=1.01",
-      "2. zawodnik - liczba gemów | 13:-11.5=14",
-      "2. zawodnik - liczba gemów | 12:+12.5=2.55",
-      "2. zawodnik - liczba gemów | 13:-12.5=1.47"
-     ],
-     "275 1. zawodnik - wygra co najmniej seta": [
-      "1. zawodnik - wygra co najmniej seta | 26:tak=3.4",
-      "1. zawodnik - wygra co najmniej seta | 27:nie=1.28"
-     ],
-     "276 2. zawodnik - wygra co najmniej seta": [
-      "2. zawodnik - wygra co najmniej seta | 27:nie=17"
-     ],
-     "282 Suma gemów": [
-      "Suma gemów | 24:nieparzysta=1.8",
-      "Suma gemów | 25:parzysta=1.9"
-     ],
-     "296 Set - gemy - handicap": [
-      "1. set - gemy - handicap | 925:1 (+3.5)=1.65",
-      "1. set - gemy - handicap | 926:2 (-3.5)=2.1",
-      "1. set - gemy - handicap | 925:1 (+2.5)=2.35",
-      "1. set - gemy - handicap | 926:2 (-2.5)=1.55",
-      "1. set - gemy - handicap | 925:1 (+4.5)=1.28",
-      "1. set - gemy - handicap | 926:2 (-4.5)=3.5"
-     ],
-     "299 Set - liczba gemów": [
-      "1. set - liczba gemów | 12:+12.5=10",
-      "1. set - liczba gemów | 13:-12.5=1.04",
-      "1. set - liczba gemów | 12:+9.5=3.1",
-      "1. set - liczba gemów | 13:-9.5=1.35",
-      "1. set - liczba gemów | 12:+8.5=1.85",
-      "1. set - liczba gemów | 13:-8.5=1.9"
-     ],
-     "300 Set - suma gemów": [
-      "1. set - suma gemów | 24:nieparzysta=1.9",
-      "1. set - suma gemów | 25:parzysta=1.8"
-     ],
-     "1016 1. zawodnik - wygra dokładnie 1 seta": [
-      "1. zawodnik - wygra dokładnie 1 seta | 26:tak=5",
-      "1. zawodnik - wygra dokładnie 1 seta | 27:nie=1.16"
-     ],
-     "1017 2. zawodnik - wygra dokładnie 1 seta": [
-      "2. zawodnik - wygra dokładnie 1 seta | 26:tak=13",
-      "2. zawodnik - wygra dokładnie 1 seta | 27:nie=1.02"
-     ],
-     "1186 Zwycięzca i liczba gemów": [
-      "Zwycięzca i liczba gemów | 314:1 i +19.5=9.6",
-      "Zwycięzca i liczba gemów | 315:2 i +19.5=2.9",
-      "Zwycięzca i liczba gemów | 316:1 i -19.5=24",
-      "Zwycięzca i liczba gemów | 317:2 i -19.5=1.55",
-      "Zwycięzca i liczba gemów | 314:1 i +15.5=8.4",
-      "Zwycięzca i liczba gemów | 315:2 i +15.5=1.4",
-      "Zwycięzca i liczba gemów | 316:1 i -15.5=45",
-      "Zwycięzca i liczba gemów | 317:2 i -15.5=3.7"
-     ],
-     "1956 Zwycięzca meczu - SuperOferta": [
-      "Zwycięzca meczu - SuperOferta | 4:1=11",
-      "Zwycięzca meczu - SuperOferta | 5:2=1.08"
-     ],
-     "1957 Wysokie kursy": [
-      "Powyżej 2.5 seta | 1:tak=4.25"
-     ],
-     "1958 Liczba asów": [
-      "Liczba asów | 12:+3.5=2.15",
-      "Liczba asów | 13:-3.5=1.6"
-     ],
-     "1961 1. zawodnik - liczba asów": [
-      "1. zawodnik - liczba asów | 12:+1.5=2.15",
-      "1. zawodnik - liczba asów | 13:-1.5=1.6"
-     ],
-     "1962 2. zawodnik - liczba asów": [
-      "2. zawodnik - liczba asów | 12:+1.5=1.8",
-      "2. zawodnik - liczba asów | 13:-1.5=1.9"
-     ],
-     "1963 1. zawodnik - liczba podwójnych błędów": [
-      "1. zawodnik - liczba podwójnych błędów | 12:+1.5=1.6",
-      "1. zawodnik - liczba podwójnych błędów | 13:-1.5=2.15"
-     ],
-     "1964 2. zawodnik - liczba podwójnych błędów": [
-      "2. zawodnik - liczba podwójnych błędów | 12:+2.5=1.7",
-      "2. zawodnik - liczba podwójnych błędów | 13:-2.5=2"
-     ],
-     "1965 1. zawodnik - liczba przełamanych serwisów": [
-      "1. zawodnik - liczba przełamanych serwisów | 12:+1.5=1.6",
-      "1. zawodnik - liczba przełamanych serwisów | 13:-1.5=2.15"
-     ],
-     "1966 2. zawodnik - liczba przełamanych serwisów": [
-      "2. zawodnik - liczba przełamanych serwisów | 12:+5.5=2.6",
-      "2. zawodnik - liczba przełamanych serwisów | 13:-5.5=1.42"
-     ],
-     "2311 1. zawodnik - 1. gem serwisowy - zwycięzca": [
-      "1. zawodnik - 1. gem serwisowy - zwycięzca | 4:1=2",
-      "1. zawodnik - 1. gem serwisowy - zwycięzca | 5:2=1.7"
-     ],
-     "2312 2. zawodnik - 1. gem serwisowy - zwycięzca": [
-      "2. zawodnik - 1. gem serwisowy - zwycięzca | 4:1=4.2",
-      "2. zawodnik - 1. gem serwisowy - zwycięzca | 5:2=1.19"
-     ],
-     "2313 1. zawodnik - 1. gem serwisowy - dokładny wynik": [
-      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=11",
-      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=6.6",
-      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3323:wygra do 30=5.6",
-      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3324:wygra do 40=5.6"
-     ],
-     "2314 2. zawodnik - 1. gem serwisowy - dokładny wynik": [
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=4.7",
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=3.6",
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3323:wygra do 30=4",
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3324:wygra do 40=4.9"
-     ]
-    },
-    "Van de Zandschulp Botic - Jodar Rafael": {
-     "259 Zwycięzca meczu": [
-      "Zwycięzca meczu | 4:1=2.6",
-      "Zwycięzca meczu | 5:2=1.47"
-     ],
-     "265 Sety - handicap": [
-      "Sety - handicap | 925:1 (-1.5)=4.4",
-      "Sety - handicap | 926:2 (+1.5)=1.2",
-      "Sety - handicap | 925:1 (+1.5)=1.6",
-      "Sety - handicap | 926:2 (-1.5)=2.25"
-     ],
-     "277 Będzie set do zera": [
-      "Będzie set do zera | 26:tak=11",
-      "Będzie set do zera | 27:nie=1.02"
-     ],
-     "285 Dokładny wynik": [
-      "Dokładny wynik | 1157:2:0=4.3",
-      "Dokładny wynik | 1158:2:1=5.2",
-      "Dokładny wynik | 1159:1:2=4",
-      "Dokładny wynik | 1160:0:2=2.2"
-     ],
-     "292 1. set / wynik końcowy": [
-      "1. set / wynik końcowy | 252:1 / 1=3.3",
-      "1. set / wynik końcowy | 253:2 / 1=8.6",
-      "1. set / wynik końcowy | 254:1 / 2=7",
-      "1. set / wynik końcowy | 255:2 / 2=1.75"
-     ],
-     "293 Set ": [
-      "1. set  | 4:1=2.4",
-      "1. set  | 5:2=1.5"
-     ],
-     "301 Set - będzie tie-break": [
-      "1. set - będzie tie-break | 26:tak=4.2",
-      "1. set - będzie tie-break | 27:nie=1.2"
-     ],
-     "302 Set - dokładny wynik": [
-      "1. set - dokładny wynik | 256:6:0=35",
-      "1. set - dokładny wynik | 257:6:1=23",
-      "1. set - dokładny wynik | 258:6:2=13",
-      "1. set - dokładny wynik | 259:6:3=9.6"
-     ],
-     "479 Liczba setów": [
-      "Liczba setów | 12:+2.5=2.4",
-      "Liczba setów | 13:-2.5=1.5"
-     ],
-     "1967 Liczba tie-breaków": [
-      "Liczba tie-breaków | 12:+1.5=8.6",
-      "Liczba tie-breaków | 13:-1.5=1.05",
-      "Liczba tie-breaków | 12:+0.5=2.25",
-      "Liczba tie-breaków | 13:-0.5=1.55"
-     ],
-     "262 Gemy - handicap": [
-      "Gemy - handicap | 925:1 (+2.5)=2",
-      "Gemy - handicap | 926:2 (-2.5)=1.75",
-      "Gemy - handicap | 925:1 (+3.5)=1.7",
-      "Gemy - handicap | 926:2 (-3.5)=2",
-      "Gemy - handicap | 925:1 (-0.5)=2.7",
-      "Gemy - handicap | 926:2 (+0.5)=1.42"
-     ],
-     "268 Liczba gemów": [
-      "Liczba gemów | 12:+24.5=2.2",
-      "Liczba gemów | 13:-24.5=1.6",
-      "Liczba gemów | 12:+19.5=1.42",
-      "Liczba gemów | 13:-19.5=2.75",
-      "Liczba gemów | 12:+21.5=1.7",
-      "Liczba gemów | 13:-21.5=2.1"
-     ],
-     "271 1. zawodnik - liczba gemów": [
-      "1. zawodnik - liczba gemów | 12:+10.5=1.6",
-      "1. zawodnik - liczba gemów | 13:-10.5=2.25",
-      "1. zawodnik - liczba gemów | 12:+11.5=1.7",
-      "1. zawodnik - liczba gemów | 13:-11.5=2",
-      "1. zawodnik - liczba gemów | 12:+12.5=2.2",
-      "1. zawodnik - liczba gemów | 13:-12.5=1.6"
-     ],
-     "274 2. zawodnik - liczba gemów": [
-      "2. zawodnik - liczba gemów | 12:+13.5=2.55",
-      "2. zawodnik - liczba gemów | 13:-13.5=1.47",
-      "2. zawodnik - liczba gemów | 12:+11.5=1.21",
-      "2. zawodnik - liczba gemów | 13:-11.5=4.1",
-      "2. zawodnik - liczba gemów | 12:+12.5=1.85",
-      "2. zawodnik - liczba gemów | 13:-12.5=1.9"
-     ],
-     "275 1. zawodnik - wygra co najmniej seta": [
-      "1. zawodnik - wygra co najmniej seta | 26:tak=1.6",
-      "1. zawodnik - wygra co najmniej seta | 27:nie=2.25"
-     ],
-     "276 2. zawodnik - wygra co najmniej seta": [
-      "2. zawodnik - wygra co najmniej seta | 26:tak=1.2",
-      "2. zawodnik - wygra co najmniej seta | 27:nie=4.4"
-     ],
-     "282 Suma gemów": [
-      "Suma gemów | 24:nieparzysta=1.85",
-      "Suma gemów | 25:parzysta=1.9"
-     ],
-     "296 Set - gemy - handicap": [
-      "1. set - gemy - handicap | 925:1 (+2.5)=1.4",
-      "1. set - gemy - handicap | 926:2 (-2.5)=2.85",
-      "1. set - gemy - handicap | 925:1 (+1.5)=1.9",
-      "1. set - gemy - handicap | 926:2 (-1.5)=1.85",
-      "1. set - gemy - handicap | 925:1 (-1.5)=2.9",
-      "1. set - gemy - handicap | 926:2 (+1.5)=1.37"
-     ],
-     "299 Set - liczba gemów": [
-      "1. set - liczba gemów | 12:+12.5=4.3",
-      "1. set - liczba gemów | 13:-12.5=1.21",
-      "1. set - liczba gemów | 12:+9.5=1.8",
-      "1. set - liczba gemów | 13:-9.5=1.9",
-      "1. set - liczba gemów | 12:+8.5=1.28",
-      "1. set - liczba gemów | 13:-8.5=3.5"
-     ],
-     "300 Set - suma gemów": [
-      "1. set - suma gemów | 24:nieparzysta=1.75",
-      "1. set - suma gemów | 25:parzysta=1.9"
-     ],
-     "1016 1. zawodnik - wygra dokładnie 1 seta": [
-      "1. zawodnik - wygra dokładnie 1 seta | 26:tak=4",
-      "1. zawodnik - wygra dokładnie 1 seta | 27:nie=1.24"
-     ],
-     "1017 2. zawodnik - wygra dokładnie 1 seta": [
-      "2. zawodnik - wygra dokładnie 1 seta | 26:tak=5",
-      "2. zawodnik - wygra dokładnie 1 seta | 27:nie=1.16"
-     ],
-     "1186 Zwycięzca i liczba gemów": [
-      "Zwycięzca i liczba gemów | 314:1 i +24.5=4.8",
-      "Zwycięzca i liczba gemów | 315:2 i +24.5=3.6",
-      "Zwycięzca i liczba gemów | 316:1 i -24.5=4.5",
-      "Zwycięzca i liczba gemów | 317:2 i -24.5=2.25",
-      "Zwycięzca i liczba gemów | 314:1 i +21.5=3.7",
-      "Zwycięzca i liczba gemów | 315:2 i +21.5=2.75",
-      "Zwycięzca i liczba gemów | 316:1 i -21.5=6",
-      "Zwycięzca i liczba gemów | 317:2 i -21.5=2.8"
-     ],
-     "1958 Liczba asów": [
-      "Liczba asów | 12:+7.5=1.85",
-      "Liczba asów | 13:-7.5=1.85"
-     ],
-     "1961 1. zawodnik - liczba asów": [
-      "1. zawodnik - liczba asów | 12:+4.5=1.75",
-      "1. zawodnik - liczba asów | 13:-4.5=1.95"
-     ],
-     "1962 2. zawodnik - liczba asów": [
-      "2. zawodnik - liczba asów | 12:+2.5=1.75",
-      "2. zawodnik - liczba asów | 13:-2.5=1.95"
-     ],
-     "2311 1. zawodnik - 1. gem serwisowy - zwycięzca": [
-      "1. zawodnik - 1. gem serwisowy - zwycięzca | 4:1=1.27",
-      "1. zawodnik - 1. gem serwisowy - zwycięzca | 5:2=3.4"
-     ],
-     "2312 2. zawodnik - 1. gem serwisowy - zwycięzca": [
-      "2. zawodnik - 1. gem serwisowy - zwycięzca | 4:1=4.9",
-      "2. zawodnik - 1. gem serwisowy - zwycięzca | 5:2=1.15"
-     ],
-     "2313 1. zawodnik - 1. gem serwisowy - dokładny wynik": [
-      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=5.4",
-      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=3.9",
-      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3323:wygra do 30=4.2",
-      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3324:wygra do 40=4.9"
-     ],
-     "2314 2. zawodnik - 1. gem serwisowy - dokładny wynik": [
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=4.2",
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=3.4",
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3323:wygra do 30=4.1",
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3324:wygra do 40=5"
-     ]
-    },
-    "Ruud Casper - Auger-Aliassime Felix": {
-     "259 Zwycięzca meczu": [
-      "Zwycięzca meczu | 4:1=2.15",
-      "Zwycięzca meczu | 5:2=1.65"
-     ],
-     "265 Sety - handicap": [
-      "Sety - handicap | 925:1 (-1.5)=3.5",
-      "Sety - handicap | 926:2 (+1.5)=1.28",
-      "Sety - handicap | 925:1 (+1.5)=1.47",
-      "Sety - handicap | 926:2 (-1.5)=2.55"
-     ],
-     "277 Będzie set do zera": [
-      "Będzie set do zera | 26:tak=15"
-     ],
-     "285 Dokładny wynik": [
-      "Dokładny wynik | 1157:2:0=3.6",
-      "Dokładny wynik | 1158:2:1=4.8",
-      "Dokładny wynik | 1159:1:2=4.1",
-      "Dokładny wynik | 1160:0:2=2.5"
-     ],
-     "292 1. set / wynik końcowy": [
-      "1. set / wynik końcowy | 252:1 / 1=2.7",
-      "1. set / wynik końcowy | 253:2 / 1=8.6",
-      "1. set / wynik końcowy | 254:1 / 2=7.6",
-      "1. set / wynik końcowy | 255:2 / 2=1.9"
-     ],
-     "293 Set ": [
-      "1. set  | 4:1=2.1",
-      "1. set  | 5:2=1.7"
-     ],
-     "301 Set - będzie tie-break": [
-      "1. set - będzie tie-break | 26:tak=3.2",
-      "1. set - będzie tie-break | 27:nie=1.32"
-     ],
-     "479 Liczba setów": [
-      "Liczba setów | 12:+2.5=2.35",
-      "Liczba setów | 13:-2.5=1.55"
-     ],
-     "1967 Liczba tie-breaków": [
-      "Liczba tie-breaków | 12:+1.5=5",
-      "Liczba tie-breaków | 13:-1.5=1.14",
-      "Liczba tie-breaków | 12:+0.5=1.8",
-      "Liczba tie-breaków | 13:-0.5=1.85"
-     ],
-     "262 Gemy - handicap": [
-      "Gemy - handicap | 925:1 (+2.5)=1.65",
-      "Gemy - handicap | 926:2 (-2.5)=2.15",
-      "Gemy - handicap | 925:1 (+3.5)=1.45",
-      "Gemy - handicap | 926:2 (-3.5)=2.65",
-      "Gemy - handicap | 925:1 (-0.5)=2.2",
-      "Gemy - handicap | 926:2 (+0.5)=1.6"
-     ],
-     "268 Liczba gemów": [
-      "Liczba gemów | 12:+24.5=2",
-      "Liczba gemów | 13:-24.5=1.7",
-      "Liczba gemów | 12:+19.5=1.3",
-      "Liczba gemów | 13:-19.5=3.4",
-      "Liczba gemów | 12:+21.5=1.5",
-      "Liczba gemów | 13:-21.5=2.4"
-     ],
-     "271 1. zawodnik - liczba gemów": [
-      "1. zawodnik - liczba gemów | 12:+13.5=2.6",
-      "1. zawodnik - liczba gemów | 13:-13.5=1.45",
-      "1. zawodnik - liczba gemów | 12:+11.5=1.47",
-      "1. zawodnik - liczba gemów | 13:-11.5=2.5",
-      "1. zawodnik - liczba gemów | 12:+12.5=1.9",
-      "1. zawodnik - liczba gemów | 13:-12.5=1.8"
-     ],
-     "274 2. zawodnik - liczba gemów": [
-      "2. zawodnik - liczba gemów | 12:+13.5=2.45",
-      "2. zawodnik - liczba gemów | 13:-13.5=1.5",
-      "2. zawodnik - liczba gemów | 12:+11.5=1.27",
-      "2. zawodnik - liczba gemów | 13:-11.5=3.6",
-      "2. zawodnik - liczba gemów | 12:+12.5=1.75",
-      "2. zawodnik - liczba gemów | 13:-12.5=1.9"
-     ],
-     "275 1. zawodnik - wygra co najmniej seta": [
-      "1. zawodnik - wygra co najmniej seta | 26:tak=1.47",
-      "1. zawodnik - wygra co najmniej seta | 27:nie=2.55"
-     ],
-     "276 2. zawodnik - wygra co najmniej seta": [
-      "2. zawodnik - wygra co najmniej seta | 26:tak=1.28",
-      "2. zawodnik - wygra co najmniej seta | 27:nie=3.5"
-     ],
-     "282 Suma gemów": [
-      "Suma gemów | 24:nieparzysta=1.9",
-      "Suma gemów | 25:parzysta=1.8"
-     ],
-     "296 Set - gemy - handicap": [
-      "1. set - gemy - handicap | 925:1 (-2.5)=4.6",
-      "1. set - gemy - handicap | 926:2 (+2.5)=1.18",
-      "1. set - gemy - handicap | 925:1 (-0.5)=2",
-      "1. set - gemy - handicap | 926:2 (+0.5)=1.7",
-      "1. set - gemy - handicap | 925:1 (+1.5)=1.55",
-      "1. set - gemy - handicap | 926:2 (-1.5)=2.25"
-     ],
-     "299 Set - liczba gemów": [
-      "1. set - liczba gemów | 12:+12.5=3.2",
-      "1. set - liczba gemów | 13:-12.5=1.33",
-      "1. set - liczba gemów | 12:+9.5=1.6",
-      "1. set - liczba gemów | 13:-9.5=2.25",
-      "1. set - liczba gemów | 12:+8.5=1.19",
-      "1. set - liczba gemów | 13:-8.5=4.5"
-     ],
-     "300 Set - suma gemów": [
-      "1. set - suma gemów | 24:nieparzysta=1.7",
-      "1. set - suma gemów | 25:parzysta=2"
-     ],
-     "1016 1. zawodnik - wygra dokładnie 1 seta": [
-      "1. zawodnik - wygra dokładnie 1 seta | 26:tak=4.1",
-      "1. zawodnik - wygra dokładnie 1 seta | 27:nie=1.23"
-     ],
-     "1017 2. zawodnik - wygra dokładnie 1 seta": [
-      "2. zawodnik - wygra dokładnie 1 seta | 26:tak=4.8",
-      "2. zawodnik - wygra dokładnie 1 seta | 27:nie=1.18"
-     ],
-     "1186 Zwycięzca i liczba gemów": [
-      "Zwycięzca i liczba gemów | 314:1 i +24.5=4.1",
-      "Zwycięzca i liczba gemów | 315:2 i +24.5=3.5",
-      "Zwycięzca i liczba gemów | 316:1 i -24.5=3.9",
-      "Zwycięzca i liczba gemów | 317:2 i -24.5=2.75",
-      "Zwycięzca i liczba gemów | 314:1 i +21.5=3.2",
-      "Zwycięzca i liczba gemów | 315:2 i +21.5=2.6",
-      "Zwycięzca i liczba gemów | 316:1 i -21.5=5.4",
-      "Zwycięzca i liczba gemów | 317:2 i -21.5=3.8"
-     ],
-     "1958 Liczba asów": [
-      "Liczba asów | 12:+19.5=1.95",
-      "Liczba asów | 13:-19.5=1.75"
-     ],
-     "1961 1. zawodnik - liczba asów": [
-      "1. zawodnik - liczba asów | 12:+6.5=1.85",
-      "1. zawodnik - liczba asów | 13:-6.5=1.85"
-     ],
-     "1962 2. zawodnik - liczba asów": [
-      "2. zawodnik - liczba asów | 12:+12.5=1.85",
-      "2. zawodnik - liczba asów | 13:-12.5=1.85"
-     ],
-     "2311 1. zawodnik - 1. gem serwisowy - zwycięzca": [
-      "1. zawodnik - 1. gem serwisowy - zwycięzca | 4:1=1.16",
-      "1. zawodnik - 1. gem serwisowy - zwycięzca | 5:2=4.7"
-     ],
-     "2312 2. zawodnik - 1. gem serwisowy - zwycięzca": [
-      "2. zawodnik - 1. gem serwisowy - zwycięzca | 4:1=5.8",
-      "2. zawodnik - 1. gem serwisowy - zwycięzca | 5:2=1.1"
-     ],
-     "2313 1. zawodnik - 1. gem serwisowy - dokładny wynik": [
-      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=4.1",
-      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=3.3",
-      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3323:wygra do 30=4.1",
-      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3324:wygra do 40=5.4"
-     ],
-     "2314 2. zawodnik - 1. gem serwisowy - dokładny wynik": [
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=3.6",
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=3.2",
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3323:wygra do 30=4.2",
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3324:wygra do 40=5.4"
-     ]
-    }
-   },
-   "z_wieloma_rynkami": 5
+   "bledy": [
+    "RuntimeError: brak migawki oferty (i_pl) w 20 s"
+   ]
   },
   "ksw": {
    "fortuna": 0,
-   "razem": 7
+   "razem": 0
   },
   "betclic": {
    "bledy": [],
@@ -2594,23 +1349,15 @@
     "tenis: Ashlyn Krueger – Shuai Zhang (2026-10-13 13:00)",
     "tenis: Hubert Hurkacz – Alejandro Davidovich Fokina (2026-10-13 13:10)",
     "tenis: Mia Pohánková – Xiyu Wang (2026-10-13 14:30)",
-    "tenis: Tommy Paul – Zizou Bergs (2026-10-14 06:00)"
+    "tenis: Magdalena Fręch – Iga Świątek (2026-10-14 05:00)",
+    "tenis: Tommy Paul – Zizou Bergs (2026-10-14 06:00)",
+    "tenis: Sonay Kartal – Belinda Bencic (2026-10-14 06:00)"
    ],
-   "stron": 17,
-   "dopasowane": 6,
+   "stron": 15,
+   "dopasowane": 4,
    "nasze_mecze": 31,
    "rynki_przyklad": {
     "tenis": {
-     "Magdalena Frech - Iga Świątek": [
-      "Czy obaj zawodnicy wygrają seta w meczu",
-      "Handicap setowy",
-      "Iga Świątek wygra seta",
-      "Magdalena Frech wygra seta",
-      "Wynik w setach",
-      "Zawodnik wygra 1. seta 6-0, 6-1, 6-2 lub wygra mecz",
-      "Zwycięzca meczu",
-      "Łączna liczba gemów"
-     ],
      "Botic Van De Zandschulp - Rafael Jodar": [
       "Botic Van De Zandschulp wygra seta",
       "Czy obaj zawodnicy wygrają seta w meczu",
@@ -2620,13 +1367,23 @@
       "Zawodnik wygra 1. seta 6-0, 6-1, 6-2 lub wygra mecz",
       "Zwycięzca meczu",
       "Łączna liczba gemów"
+     ],
+     "Casper Ruud - Felix Auger Aliassime": [
+      "Casper Ruud wygra seta",
+      "Czy obaj zawodnicy wygrają seta w meczu",
+      "Felix Auger Aliassime wygra seta",
+      "Handicap setowy",
+      "Wynik w setach",
+      "Zawodnik wygra 1. seta 6-0, 6-1, 6-2 lub wygra mecz",
+      "Zwycięzca meczu",
+      "Łączna liczba gemów"
      ]
     }
    },
-   "sekund": 13,
-   "z_kursami": 6
+   "sekund": 11,
+   "z_kursami": 4
   }
  },
  "lista": "5e49b36132fa",
- "sekund": 141
+ "sekund": 81
 }
