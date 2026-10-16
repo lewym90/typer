@@ -1,5 +1,5 @@
 {
- "czas": "2026-10-16 02:43 UTC",
+ "czas": "2026-10-16 03:26 UTC",
  "wersja": "czytnik-3",
  "bukmacherzy": {
   "fortuna": {
@@ -566,7 +566,9 @@
   }
  ],
  "diag": {
-  "bledy": [],
+  "bledy": [
+   "turnieje ufo:sprt:01 today: Expecting value: line 1 column 1 (char 0)"
+  ],
   "nasze_mecze": 47,
   "sporty": [
    [
@@ -582,12 +584,12 @@
     "Esport Valorant"
    ],
    [
-    "ufo:sprt:0r",
-    "Badminton"
-   ],
-   [
     "ufo:sprt:02",
     "Esport Counter Strike"
+   ],
+   [
+    "ufo:sprt:0r",
+    "Badminton"
    ],
    [
     "ufo:sprt:03",
@@ -602,12 +604,12 @@
     "Szachy"
    ],
    [
-    "ufo:sprt:07",
-    "Rugby"
-   ],
-   [
     "ufo:sprt:0w",
     "Hokej"
+   ],
+   [
+    "ufo:sprt:07",
+    "Rugby"
    ],
    [
     "ufo:sprt:29",
@@ -670,10 +672,6 @@
     "Bandy"
    ],
    [
-    "ufo:sprt:0e",
-    "eKoszykówka"
-   ],
-   [
     "ufo:sprt:0g",
     "Futbol amerykański"
    ],
@@ -716,8 +714,8 @@
    "sporty walki": "ufo:sprt:19",
    "pilka": "ufo:sprt:00"
   },
-  "turniejow": 266,
-  "meczow_fortuny": 1261,
+  "turniejow": 264,
+  "meczow_fortuny": 1260,
   "niedopasowane": [
    "pilka: Lech Poznań – Bayer Leverkusen",
    "pilka: Bournemouth – SK Sturm Graz",
@@ -985,10 +983,10 @@
   },
   "sts": {
    "bledy": [],
-   "meczow_sts": 2172,
+   "meczow_sts": 2191,
    "sporty": {
-    "1": 1825,
-    "3": 193,
+    "1": 1831,
+    "3": 206,
     "166": 82,
     "19": 72
    },
@@ -1042,8 +1040,8 @@
    "szczegoly_ramek": 2,
    "szczegoly_odpowiedzi": "2 z 2",
    "szczegoly_tematy": {
-    "f_f3647576_pl": 1,
-    "f_f3649456_pl": 1
+    "f_f3649456_pl": 1,
+    "f_f3647576_pl": 1
    },
    "szczegoly_meczow": {
     "Jodar Rafael - Ruud Casper": {
@@ -1287,11 +1285,11 @@
       "1. zawodnik - liczba gemów | 13:-12.5=2"
      ],
      "274 2. zawodnik - liczba gemów": [
-      "2. zawodnik - liczba gemów | 12:+13.5=2.8",
-      "2. zawodnik - liczba gemów | 13:-13.5=1.4",
+      "2. zawodnik - liczba gemów | 12:+10.5=1.55",
+      "2. zawodnik - liczba gemów | 13:-10.5=2.25",
       "2. zawodnik - liczba gemów | 12:+11.5=1.65",
       "2. zawodnik - liczba gemów | 13:-11.5=2.1",
-      "2. zawodnik - liczba gemów | 12:+12.5=2.1",
+      "2. zawodnik - liczba gemów | 12:+12.5=2.15",
       "2. zawodnik - liczba gemów | 13:-12.5=1.65"
      ],
      "275 1. zawodnik - wygra co najmniej seta": [
@@ -1303,8 +1301,8 @@
       "2. zawodnik - wygra co najmniej seta | 27:nie=2.3"
      ],
      "282 Suma gemów": [
-      "Suma gemów | 24:nieparzysta=1.85",
-      "Suma gemów | 25:parzysta=1.85"
+      "Suma gemów | 24:nieparzysta=1.9",
+      "Suma gemów | 25:parzysta=1.8"
      ],
      "296 Set - gemy - handicap": [
       "1. set - gemy - handicap | 925:1 (-2.5)=3",
@@ -1317,10 +1315,10 @@
      "299 Set - liczba gemów": [
       "1. set - liczba gemów | 12:+12.5=4.3",
       "1. set - liczba gemów | 13:-12.5=1.21",
-      "1. set - liczba gemów | 12:+9.5=1.65",
-      "1. set - liczba gemów | 13:-9.5=2.1",
-      "1. set - liczba gemów | 12:+8.5=1.22",
-      "1. set - liczba gemów | 13:-8.5=4.2"
+      "1. set - liczba gemów | 12:+9.5=1.7",
+      "1. set - liczba gemów | 13:-9.5=2",
+      "1. set - liczba gemów | 12:+8.5=1.23",
+      "1. set - liczba gemów | 13:-8.5=4"
      ],
      "300 Set - suma gemów": [
       "1. set - suma gemów | 24:nieparzysta=1.85",
@@ -1460,10 +1458,10 @@
      ]
     }
    },
-   "sekund": 10,
+   "sekund": 12,
    "z_kursami": 2
   }
  },
  "lista": "b8fb99521a30",
- "sekund": 111
+ "sekund": 120
 }
