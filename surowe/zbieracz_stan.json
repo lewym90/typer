@@ -1,6 +1,6 @@
 {
- "czas": "2026-10-15 13:00 UTC",
- "tryb": "popoludnie",
+ "czas": "2026-10-16 06:15 UTC",
+ "tryb": "rano",
  "sporty": [
   [
    "ufo:sprt:01",
@@ -91,6 +91,10 @@
    "Zakłady Specjalne"
   ],
   [
+   "ufo:sprt:35",
+   "eHokej"
+  ],
+  [
    "ufo:sprt:1v",
    "MISTRZOWSKI BOOST"
   ],
@@ -123,6 +127,10 @@
    "Futbol amerykański"
   ],
   [
+   "ufo:sprt:0h",
+   "Snooker"
+  ],
+  [
    "ufo:sprt:0i",
    "Koszykówka"
   ],
@@ -149,10 +157,6 @@
   [
    "ufo:sprt:00",
    "Piłka nożna"
-  ],
-  [
-   "ufo:sprt:0p",
-   "Futsal"
   ]
  ],
  "sporty_uzyte": {
@@ -168,21 +172,23 @@
   "pilka": "ufo:sprt:00"
  },
  "bledy": [
+  "turnieje ufo:sprt:01 today: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:1r today: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:1r tomorrow: Expecting value: line 1 column 1 (char 0)",
-  "turnieje ufo:sprt:19 today: Expecting value: line 1 column 1 (char 0)"
+  "mecze ufo:tour:0c-012: Expecting value: line 1 column 1 (char 0)",
+  "mecze ufo:tour:0c-01l: Expecting value: line 1 column 1 (char 0)"
  ],
- "turniejow": 281,
- "meczow_fortuny": 1168,
+ "turniejow": 388,
+ "meczow_fortuny": 1790,
  "inne_sporty": {
-  "hokej": 45,
-  "pilka_reczna": 21,
-  "siatkowka": 5,
-  "koszykowka": 29,
-  "baseball": 3
+  "koszykowka": 74,
+  "baseball": 3,
+  "siatkowka": 15,
+  "hokej": 148,
+  "pilka_reczna": 35
  },
- "w_ofercie_24h": 403,
- "odczytane": 399,
- "rynkow": 52096,
- "sekund": 154
+ "w_ofercie_24h": 791,
+ "odczytane": 790,
+ "rynkow": 52242,
+ "sekund": 245
 }
