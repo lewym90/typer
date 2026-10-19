@@ -61,13 +61,21 @@ systemctl restart typer-ai
 ( crontab -l 2>/dev/null | grep -v typer_ai_restart; echo "30 5 * * * systemctl restart typer-ai # typer_ai_restart" ) | crontab -
 
 echo "== 6/6 HTTPS (Caddy)"
-cat > /etc/caddy/Caddyfile <<S
+# Istniejącego, działającego pliku Caddy NIE nadpisujemy (mogą w nim być trasy innych aplikacji z /etc/caddy/conf.d).
+# Zapisujemy go tylko wtedy, gdy go nie ma, nie ma w nim trasy Typera albo zmienił się adres serwera.
+CF=/etc/caddy/Caddyfile
+if ! grep -q "^$DOMENA {" "$CF" 2>/dev/null || ! grep -q "127.0.0.1:8787" "$CF" 2>/dev/null; then
+  [ -f "$CF" ] && cp -p "$CF" "$CF.typer-bak-$(date +%s)"
+  cat > "$CF" <<S
 $DOMENA {
 	reverse_proxy 127.0.0.1:8787
 }
 S
+fi
 command -v ufw >/dev/null && ufw status | grep -q active && { ufw allow 80/tcp; ufw allow 443/tcp; } || true
-systemctl restart caddy
+systemctl reload caddy 2>/dev/null || systemctl restart caddy
+# Folder conf.d na trasy innych aplikacji (kalendarz). Skrypt sam sprawdza konfigurację i w razie problemu wraca do poprzedniej.
+bash <(curl -fsSL "$REPO/typer/caddy_confd.sh") || echo "UWAGA: nie udało się włączyć folderu conf.d w Caddy. Typer działa bez zmian."
 
 echo "== Sprawdzam (do 60 s)…"
 for i in $(seq 1 12); do
