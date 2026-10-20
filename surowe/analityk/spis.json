@@ -1,14 +1,14 @@
 {
- "czas": "2026-10-19 07:00 UTC",
+ "czas": "2026-10-20 07:00 UTC",
  "wersja": "analityk-1",
  "nasze": {
-  "pilka": 11,
-  "tenis": 7,
+  "pilka": 14,
+  "tenis": 5,
   "walki": 0
  },
  "zrodla": {
   "ufcstats": {
-   "sekund": 8,
+   "sekund": 7,
    "blad": null,
    "start": [
     200,
@@ -20,16 +20,16 @@
    "zawodnicy_ze_statystykami": 0
   },
   "sofascore": {
-   "sekund": 13,
+   "sekund": 9,
    "blad": null,
    "tryb": null,
    "pilka": {
     "dopasowane": 0,
-    "niedopasowane": 11
+    "niedopasowane": 14
    },
    "tenis": {
     "dopasowane": 0,
-    "niedopasowane": 7
+    "niedopasowane": 5
    },
    "walki": {
     "dopasowane": 0,
@@ -40,9 +40,9 @@
    "sekund": 1,
    "blad": null,
    "requests": true,
-   "meczow": 127,
+   "meczow": 169,
    "dopasowane": 10,
-   "niedopasowane": 1,
+   "niedopasowane": 4,
    "szczegoly": [
     "requests",
     "requests",
@@ -50,36 +50,36 @@
    ]
   },
   "transfermarkt": {
-   "sekund": 17,
+   "sekund": 2,
    "blad": null,
    "start": [
     200
    ],
    "kluby": [
     [
-     "-tm",
+     "fenerbahce-istanbul",
+     200,
+     3
+    ],
+    [
+     "sk-slavia-prag",
+     200,
+     7
+    ],
+    [
+     "sabah-fk",
      200,
      0
     ],
     [
-     "club-atletico-lambert-mm-",
+     "borussia-dortmund",
      200,
-     0
-    ],
-    [
-     "wisla-plock",
-     200,
-     1
-    ],
-    [
-     "radomiak-radom",
-     200,
-     1
+     8
     ]
    ]
   }
  },
  "ip": "188.68.247.55",
  "przegladarka": "ok",
- "sekund": 49
+ "sekund": 31
 }
