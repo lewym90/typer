@@ -2,44 +2,45 @@
  "zrodlo": "Sofascore",
  "pilka": {
   "wydarzen": {
-   "2026-10-19": 0,
-   "2026-10-20": 0
+   "2026-10-20": 0,
+   "2026-10-21": 0
   },
   "dopasowane": [],
   "niedopasowane": [
-   "Monza – Cagliari 2026-10-19 18:30",
-   "Wisła Płock – Radomiak Radom 2026-10-19 19:00",
-   "Trabzonspor – Besiktas JK 2026-10-19 19:00",
-   "Parma – Torino 2026-10-19 20:45",
-   "Tottenham Hotspur – Coventry City 2026-10-19 21:00",
-   "Getafe – Rayo Vallecano 2026-10-19 21:00",
-   "Braga – Gil Vicente 2026-10-19 21:15",
-   "Sarmiento de Junin – Barracas Central 2026-10-20 00:00",
-   "Newells Old Boys – Central Córdoba 2026-10-20 00:00",
-   "Corinthians – Vitoria 2026-10-20 01:00",
-   "Deportivo Riestra – Union Santa Fe 2026-10-20 02:15"
+   "Fenerbahce – Slavia Praha 2026-10-20 18:45",
+   "Sabah FK – Borussia Dortmund 2026-10-20 18:45",
+   "Wolverhampton Wanderers – Portsmouth 2026-10-20 20:45",
+   "Liverpool – Villarreal 2026-10-20 21:00",
+   "Napoli – Bodø/Glimt 2026-10-20 21:00",
+   "AS Roma – ŠK Slovan Bratislava 2026-10-20 21:00",
+   "Manchester City – AEK Athens 2026-10-20 21:00",
+   "VfB Stuttgart – Atlético Madrid 2026-10-20 21:00",
+   "Paris Saint Germain – Barcelona 2026-10-20 21:00",
+   "Porto – PSV Eindhoven 2026-10-20 21:00",
+   "Guadalajara – Necaxa 2026-10-21 02:07",
+   "FC Juárez – Atlante FC 2026-10-21 03:00",
+   "Atlético San Luis – Querétaro 2026-10-21 03:00",
+   "Tigres – León 2026-10-21 05:00"
   ]
  },
  "tenis": {
   "wydarzen": {
-   "2026-10-19": 0,
-   "2026-10-20": 0
+   "2026-10-20": 0,
+   "2026-10-21": 0
   },
   "dopasowane": [],
   "niedopasowane": [
-   "Daria Kasatkina – Aliaksandra Sasnovich 2026-10-19 10:00",
-   "Kamilla Rakhimova – Marie Bouzkova 2026-10-19 11:30",
-   "Alexandra Eala – Diane Parry 2026-10-19 13:30",
-   "Jelena Ostapenko – Belinda Bencic 2026-10-20 06:00",
-   "Yulia Putintseva – Diana Shnaider 2026-10-20 06:00",
-   "Guo Hanyu – Ekaterina Alexandrova 2026-10-20 06:00",
-   "Sara Bejlek – Xiyu Wang 2026-10-20 06:00"
+   "Jasmine Paolini – Anhelina Kalinina 2026-10-20 08:30",
+   "Cristina Bucsa – Polina Kudermetova 2026-10-20 08:30",
+   "Jelena Ostapenko – Belinda Bencic 2026-10-20 09:20",
+   "Katarzyna Kawa – Daria Snigur 2026-10-20 11:30",
+   "Guo Hanyu – Ekaterina Alexandrova 2026-10-20 13:00"
   ]
  },
  "walki": {
   "wydarzen": {
-   "2026-10-19": 0,
-   "2026-10-20": 0
+   "2026-10-20": 0,
+   "2026-10-21": 0
   },
   "dopasowane": [],
   "niedopasowane": []
@@ -47,19 +48,19 @@
  "tryb": null,
  "log": [
   {
-   "url": "https://api.sofascore.com/api/v1/sport/football/scheduled-events/2026-10-19",
+   "url": "https://api.sofascore.com/api/v1/sport/football/scheduled-events/2026-10-20",
    "kod": 403,
    "typ": "application/json",
    "rozmiar": 48,
-   "ms": 303,
+   "ms": 153,
    "tryb": "api"
   },
   {
-   "url": "https://www.sofascore.com/api/v1/sport/football/scheduled-events/2026-10-19",
+   "url": "https://www.sofascore.com/api/v1/sport/football/scheduled-events/2026-10-20",
    "kod": 403,
    "typ": "application/json",
    "rozmiar": 48,
-   "ms": 169,
+   "ms": 153,
    "tryb": "www"
   },
   {
@@ -71,51 +72,29 @@
    "tryb": "przeglądarka – strona"
   },
   {
-   "url": "/sport/football/scheduled-events/2026-10-19",
-   "kod": 403,
-   "tryb": "przeglądarka",
-   "blad": null
-  },
-  {
-   "url": "https://api.sofascore.com/api/v1/sport/football/scheduled-events/2026-10-20",
-   "kod": 403,
-   "typ": "application/json",
-   "rozmiar": 48,
-   "ms": 361,
-   "tryb": "api"
-  },
-  {
-   "url": "https://www.sofascore.com/api/v1/sport/football/scheduled-events/2026-10-20",
-   "kod": 403,
-   "typ": "application/json",
-   "rozmiar": 48,
-   "ms": 257,
-   "tryb": "www"
-  },
-  {
    "url": "/sport/football/scheduled-events/2026-10-20",
    "kod": 403,
    "tryb": "przeglądarka",
    "blad": null
   },
   {
-   "url": "https://api.sofascore.com/api/v1/sport/tennis/scheduled-events/2026-10-19",
+   "url": "https://api.sofascore.com/api/v1/sport/football/scheduled-events/2026-10-21",
    "kod": 403,
    "typ": "application/json",
    "rozmiar": 48,
-   "ms": 282,
+   "ms": 208,
    "tryb": "api"
   },
   {
-   "url": "https://www.sofascore.com/api/v1/sport/tennis/scheduled-events/2026-10-19",
+   "url": "https://www.sofascore.com/api/v1/sport/football/scheduled-events/2026-10-21",
    "kod": 403,
    "typ": "application/json",
    "rozmiar": 48,
-   "ms": 238,
+   "ms": 210,
    "tryb": "www"
   },
   {
-   "url": "/sport/tennis/scheduled-events/2026-10-19",
+   "url": "/sport/football/scheduled-events/2026-10-21",
    "kod": 403,
    "tryb": "przeglądarka",
    "blad": null
@@ -125,7 +104,7 @@
    "kod": 403,
    "typ": "application/json",
    "rozmiar": 48,
-   "ms": 250,
+   "ms": 220,
    "tryb": "api"
   },
   {
@@ -133,7 +112,7 @@
    "kod": 403,
    "typ": "application/json",
    "rozmiar": 48,
-   "ms": 242,
+   "ms": 205,
    "tryb": "www"
   },
   {
@@ -143,23 +122,23 @@
    "blad": null
   },
   {
-   "url": "https://api.sofascore.com/api/v1/sport/mma/scheduled-events/2026-10-19",
+   "url": "https://api.sofascore.com/api/v1/sport/tennis/scheduled-events/2026-10-21",
    "kod": 403,
    "typ": "application/json",
    "rozmiar": 48,
-   "ms": 427,
+   "ms": 210,
    "tryb": "api"
   },
   {
-   "url": "https://www.sofascore.com/api/v1/sport/mma/scheduled-events/2026-10-19",
+   "url": "https://www.sofascore.com/api/v1/sport/tennis/scheduled-events/2026-10-21",
    "kod": 403,
    "typ": "application/json",
    "rozmiar": 48,
-   "ms": 285,
+   "ms": 156,
    "tryb": "www"
   },
   {
-   "url": "/sport/mma/scheduled-events/2026-10-19",
+   "url": "/sport/tennis/scheduled-events/2026-10-21",
    "kod": 403,
    "tryb": "przeglądarka",
    "blad": null
@@ -169,7 +148,7 @@
    "kod": 403,
    "typ": "application/json",
    "rozmiar": 48,
-   "ms": 202,
+   "ms": 165,
    "tryb": "api"
   },
   {
@@ -177,7 +156,7 @@
    "kod": 403,
    "typ": "application/json",
    "rozmiar": 48,
-   "ms": 261,
+   "ms": 150,
    "tryb": "www"
   },
   {
@@ -185,7 +164,29 @@
    "kod": 403,
    "tryb": "przeglądarka",
    "blad": null
+  },
+  {
+   "url": "https://api.sofascore.com/api/v1/sport/mma/scheduled-events/2026-10-21",
+   "kod": 403,
+   "typ": "application/json",
+   "rozmiar": 48,
+   "ms": 159,
+   "tryb": "api"
+  },
+  {
+   "url": "https://www.sofascore.com/api/v1/sport/mma/scheduled-events/2026-10-21",
+   "kod": 403,
+   "typ": "application/json",
+   "rozmiar": 48,
+   "ms": 155,
+   "tryb": "www"
+  },
+  {
+   "url": "/sport/mma/scheduled-events/2026-10-21",
+   "kod": 403,
+   "tryb": "przeglądarka",
+   "blad": null
   }
  ],
- "sekund": 13
+ "sekund": 9
 }
