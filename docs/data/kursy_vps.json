@@ -1,5 +1,5 @@
 {
- "czas": "2026-10-21 05:08 UTC",
+ "czas": "2026-10-21 05:38 UTC",
  "wersja": "czytnik-3",
  "bukmacherzy": {
   "fortuna": {
@@ -12,7 +12,7 @@
   },
   "betclic": {
    "ok": true,
-   "dopasowane": 26
+   "dopasowane": 29
   }
  },
  "mecze": {
@@ -22,17 +22,15 @@
     "nazwa": "Real M. - Leipzig",
     "zgodnosc": 0.95,
     "kursy": {
-     "2": 9.8,
-     "X": 7.3,
-     "1": 1.22,
-     "12": 1.1,
-     "1X": 1.07,
-     "X2": 3.85,
-     "BTTS Tak": 1.49,
-     "BTTS Nie": 2.48,
+     "2": 10.0,
+     "X": 7.6,
+     "1": 1.23,
+     "12": 1.11,
+     "1X": 1.08,
+     "X2": 4.0,
      "A o0.5": 1.43,
-     "Over 2.5": 1.2,
-     "Under 2.5": 4.4,
+     "Over 2.5": 1.21,
+     "Under 2.5": 4.5,
      "H o2.5": 1.49,
      "1 & o2.5": 1.33,
      "1 & u2.5": 6.6,
@@ -41,11 +39,11 @@
      "2 & o2.5": 11.0,
      "2 & u2.5": 30.0,
      "H -1.5": 1.56,
-     "Over 3.5": 1.52,
-     "Under 3.5": 2.47,
+     "Over 3.5": 1.53,
+     "Under 3.5": 2.5,
      "A o1.5": 3.0,
-     "Under 5.5": 1.31,
-     "Over 5.5": 3.3,
+     "Under 5.5": 1.32,
+     "Over 5.5": 3.4,
      "BTTS & o2.5": 1.55,
      "H o1.5": 1.15,
      "2 & o1.5": 9.0,
@@ -55,7 +53,7 @@
      "2 & u1.5": 45.0,
      "X & o1.5": 6.4,
      "Over 1.5": 1.05,
-     "Under 1.5": 8.9,
+     "Under 1.5": 9.8,
      "1 & u3.5": 3.1,
      "1 & o3.5": 1.66,
      "2 & u3.5": 15.0,
@@ -63,12 +61,14 @@
      "X & u3.5": 12.0,
      "X & o3.5": 13.0,
      "H -2.5": 2.23,
-     "Over 6.5": 5.5,
+     "Over 6.5": 5.8,
      "Under 6.5": 1.14,
-     "Over 4.5": 2.15,
-     "Under 4.5": 1.68,
+     "Over 4.5": 2.17,
+     "Under 4.5": 1.7,
      "H o3.5": 2.23,
      "A o2.5": 7.0,
+     "BTTS Tak": 1.51,
+     "BTTS Nie": 2.5,
      "H o5.5": 6.4,
      "H o4.5": 3.7
     },
@@ -373,12 +373,8 @@
      ],
      "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
       [
-       "K. Mbappe / Yan Diomande",
-       1.01
-      ],
-      [
        "A. Güler / K. Mbappe",
-       1.02
+       1.01
       ],
       [
        "K. Mbappe / Ju. Bellingham",
@@ -417,11 +413,11 @@
        1.07
       ],
       [
-       "K. Mbappe / Ber. Silva",
-       1.08
+       "C. Espi / Yan Diomande",
+       1.07
       ],
       [
-       "C. Espi / Yan Diomande",
+       "K. Mbappe / Ber. Silva",
        1.08
       ],
       [
@@ -433,12 +429,12 @@
        1.08
       ],
       [
-       "Vinícius Jr. / A. Güler",
+       "A. Güler / C. Espi",
        1.08
       ],
       [
-       "K. Mbappe / A. Nusa",
-       1.09
+       "Vinícius Jr. / A. Güler",
+       1.08
       ],
       [
        "J. Bakayoko / K. Mbappe",
@@ -453,15 +449,11 @@
        1.09
       ],
       [
-       "A. Güler / C. Espi",
-       1.09
-      ],
-      [
        "T. Gomis / K. Mbappe",
        1.09
       ],
       [
-       "Ju. Bellingham / C. Espi",
+       "K. Mbappe / A. Nusa",
        1.1
       ],
       [
@@ -473,6 +465,10 @@
        1.1
       ],
       [
+       "Ju. Bellingham / C. Espi",
+       1.11
+      ],
+      [
        "B. Díaz / Vinícius Jr.",
        1.11
       ],
@@ -481,16 +477,20 @@
        1.11
       ],
       [
-       "Endrick F. / Ju. Bellingham",
-       1.12
-      ],
-      [
        "A. Güler / Yan Diomande",
        1.12
       ],
       [
        "B. Díaz / Endrick F.",
        1.13
+      ],
+      [
+       "Endrick F. / Ju. Bellingham",
+       1.13
+      ],
+      [
+       "Ju. Bellingham / Yan Diomande",
+       1.15
       ]
      ],
      "Liczba goli - Real Madryt": [
@@ -770,17 +770,17 @@
     "nazwa": "Aston Villa - Viking",
     "zgodnosc": 1.0,
     "kursy": {
-     "2": 12.5,
-     "1": 1.22,
-     "X": 6.5,
+     "2": 13.5,
+     "1": 1.21,
+     "X": 6.4,
      "1X": 1.05,
-     "X2": 3.85,
+     "X2": 3.9,
      "12": 1.12,
-     "BTTS Nie": 2.07,
-     "BTTS Tak": 1.69,
+     "BTTS Nie": 2.05,
+     "BTTS Tak": 1.71,
      "Over 2.5": 1.29,
      "Under 2.5": 3.5,
-     "Under 0.5": 14.5,
+     "Under 0.5": 14.0,
      "Over 0.5": 1.01,
      "Over 5.5": 4.15,
      "Under 5.5": 1.21,
@@ -788,37 +788,37 @@
      "Under 4.5": 1.48,
      "Under 1.5": 7.5,
      "Over 1.5": 1.08,
-     "2 & o2.5": 16.0,
-     "2 & u2.5": 30.0,
+     "2 & o2.5": 17.0,
+     "2 & u2.5": 35.0,
      "X & o2.5": 14.0,
      "X & u2.5": 8.6,
-     "1 & o2.5": 1.39,
-     "1 & u2.5": 5.2,
-     "H -1.5": 1.55,
-     "H o2.5": 1.6,
+     "1 & o2.5": 1.38,
+     "1 & u2.5": 5.0,
+     "H -1.5": 1.53,
+     "H o2.5": 1.59,
      "1 & u3.5": 2.6,
      "2 & o3.5": 35.0,
      "2 & u3.5": 17.0,
      "X & o3.5": 14.0,
-     "X & u3.5": 9.2,
-     "1 & o3.5": 1.82,
-     "H o3.5": 2.45,
-     "A o1.5": 3.9,
-     "A o0.5": 1.62,
-     "A o2.5": 9.2,
+     "X & u3.5": 9.0,
+     "1 & o3.5": 1.81,
+     "H o3.5": 2.43,
+     "A o1.5": 3.95,
+     "2 & u1.5": 45.0,
+     "2 & o1.5": 13.0,
+     "X & u1.5": 26.0,
+     "X & o1.5": 6.2,
+     "1 & u1.5": 12.0,
+     "1 & o1.5": 1.23,
+     "A o0.5": 1.63,
+     "A o2.5": 9.4,
      "H o1.5": 1.19,
-     "BTTS & o2.5": 1.82,
-     "1 & o4.5": 2.55,
-     "X & u4.5": 6.2,
-     "X & o4.5": 50.0,
-     "2 & u4.5": 15.0,
-     "2 & o4.5": 45.0,
-     "1 & u4.5": 1.85,
+     "BTTS & o2.5": 1.84,
      "Under 3.5": 2.1,
      "Over 3.5": 1.71,
-     "H -2.5": 2.23,
-     "H o4.5": 4.2,
-     "H o5.5": 7.2
+     "H -2.5": 2.2,
+     "H o4.5": 4.1,
+     "H o5.5": 7.0
     },
     "pelna": true
    },
@@ -859,7 +859,7 @@
      "H o5.5": 8.0,
      "A o1.5": 3.9,
      "A o2.5": 12.0,
-     "BTTS Tak": 1.7,
+     "BTTS Tak": 1.68,
      "BTTS Nie": 2.15,
      "1 & u1.5": 13.0,
      "1 & o1.5": 1.26,
@@ -895,10 +895,10 @@
     "kursy": {
      "1": 1.2,
      "X": 7.0,
-     "2": 10.25,
-     "1X": 1.06,
+     "2": 10.75,
+     "1X": 1.05,
      "12": 1.09,
-     "X2": 4.2,
+     "X2": 4.25,
      "Over 0.5": 1.01,
      "Under 0.5": 38.0,
      "Over 1.5": 1.07,
@@ -913,24 +913,24 @@
      "Under 5.5": 1.21,
      "Over 6.5": 6.75,
      "Under 6.5": 1.08,
-     "BTTS Tak": 1.66,
-     "BTTS Nie": 2.15,
+     "BTTS Tak": 1.67,
+     "BTTS Nie": 2.12,
      "H o1.5": 1.19,
-     "H o2.5": 1.61,
-     "H o3.5": 2.52,
+     "H o2.5": 1.6,
+     "H o3.5": 2.5,
      "H o4.5": 4.3,
-     "H o5.5": 7.5,
-     "A o0.5": 1.57,
-     "A o1.5": 3.63,
-     "A o2.5": 13.0,
+     "H o5.5": 7.25,
+     "A o0.5": 1.58,
+     "A o1.5": 3.7,
+     "A o2.5": 13.5,
      "A o3.5": 12.25,
      "H -6.5": 21.0,
-     "H -5.5": 13.0,
-     "H -4.5": 7.0,
-     "H -3.5": 3.85,
-     "H -2.5": 2.3,
-     "H -1.5": 1.55,
-     "A -1.5": 22.0
+     "H -5.5": 12.75,
+     "H -4.5": 6.9,
+     "H -3.5": 3.78,
+     "H -2.5": 2.27,
+     "H -1.5": 1.54,
+     "A -1.5": 23.0
     },
     "pelna": true,
     "rynkow": 13,
@@ -946,7 +946,7 @@
       ],
       [
        "Viking FK",
-       10.25
+       10.75
       ]
      ],
      "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
@@ -956,19 +956,19 @@
       ],
       [
        "Viking FK",
-       8.25
+       8.5
       ]
      ],
      "Wynik meczu - Xtra Wygrana": [
       [
        "Viking FK",
-       9.0
+       9.25
       ]
      ],
      "Podwójna Szansa": [
       [
        "Aston Villa lub remis",
-       1.06
+       1.05
       ],
       [
        "Aston Villa lub Viking FK",
@@ -976,7 +976,7 @@
       ],
       [
        "Remis lub Viking FK",
-       4.2
+       4.25
       ]
      ],
      "Gole Powyżej/Poniżej": [
@@ -1040,11 +1040,11 @@
      "Oba zespoły strzelą gola": [
       [
        "Tak",
-       1.66
+       1.67
       ],
       [
        "Nie",
-       2.15
+       2.12
       ]
      ],
      "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
@@ -1071,19 +1071,19 @@
        1.2
       ],
       [
-       "N. Jackson / J. Manzambi",
-       1.26
+       "T. Abraham / E. Buendia",
+       1.27
       ],
       [
        "T. Abraham / J. Manzambi",
        1.27
       ],
       [
-       "E. Buendia / N. Jackson",
+       "N. Jackson / J. Manzambi",
        1.27
       ],
       [
-       "T. Abraham / E. Buendia",
+       "E. Buendia / N. Jackson",
        1.28
       ],
       [
@@ -1095,27 +1095,23 @@
        1.31
       ],
       [
-       "N. Jackson / I. Mbaye",
+       "T. Abraham / I. Mbaye",
        1.33
       ],
       [
-       "N. Jackson / Alysson da R.",
+       "N. Jackson / I. Mbaye",
        1.34
       ],
       [
-       "T. Abraham / I. Mbaye",
-       1.34
+       "N. Jackson / Alysson da R.",
+       1.35
       ],
       [
        "T. Abraham / Alysson da R.",
        1.35
       ],
       [
-       "J. McGinn / N. Jackson",
-       1.37
-      ],
-      [
-       "R. Barkley / N. Jackson",
+       "J. McGinn / T. Abraham",
        1.38
       ],
       [
@@ -1123,11 +1119,15 @@
        1.38
       ],
       [
-       "J. McGinn / T. Abraham",
+       "R. Barkley / N. Jackson",
        1.39
       ],
       [
        "R. Barkley / T. Abraham",
+       1.39
+      ],
+      [
+       "J. McGinn / N. Jackson",
        1.39
       ],
       [
@@ -1143,14 +1143,6 @@
        1.44
       ],
       [
-       "L. Goretzka / N. Jackson",
-       1.44
-      ],
-      [
-       "E. Botheim / N. Jackson",
-       1.44
-      ],
-      [
        "R. Barkley / B. Madjo",
        1.45
       ],
@@ -1159,23 +1151,31 @@
        1.45
       ],
       [
-       "P. B. Christiansen / N. Jackson",
+       "T. Abraham / E. Botheim",
        1.45
       ],
       [
-       "T. Abraham / E. Botheim",
-       1.46
+       "L. Goretzka / N. Jackson",
+       1.45
       ],
       [
        "T. Abraham / P. B. Christiansen",
-       1.47
+       1.46
       ],
       [
-       "Z. Tripic / N. Jackson",
-       1.48
+       "P. B. Christiansen / N. Jackson",
+       1.46
+      ],
+      [
+       "E. Botheim / N. Jackson",
+       1.46
       ],
       [
        "Z. Tripic / T. Abraham",
+       1.5
+      ],
+      [
+       "Z. Tripic / N. Jackson",
        1.5
       ]
      ],
@@ -1308,11 +1308,11 @@
       ],
       [
        "Poniżej 1,5",
-       4.15
+       4.2
       ],
       [
        "Powyżej 2,5",
-       1.61
+       1.6
       ],
       [
        "Poniżej 2,5",
@@ -1320,7 +1320,7 @@
       ],
       [
        "Powyżej 3,5",
-       2.52
+       2.5
       ],
       [
        "Poniżej 3,5",
@@ -1336,7 +1336,7 @@
       ],
       [
        "Powyżej 5,5",
-       7.5
+       7.25
       ],
       [
        "Poniżej 5,5",
@@ -1346,15 +1346,15 @@
      "Liczba goli - Viking FK": [
       [
        "Powyżej 0,5",
-       1.57
+       1.58
       ],
       [
        "Poniżej 0,5",
-       2.27
+       2.23
       ],
       [
        "Powyżej 1,5",
-       3.63
+       3.7
       ],
       [
        "Poniżej 1,5",
@@ -1362,7 +1362,7 @@
       ],
       [
        "Powyżej 2,5",
-       13.0
+       13.5
       ],
       [
        "Poniżej 2,5",
@@ -1384,7 +1384,7 @@
       ],
       [
        "Remis (Aston Villa -6)",
-       13.75
+       13.5
       ],
       [
        "Viking FK (+6)",
@@ -1392,11 +1392,11 @@
       ],
       [
        "Aston Villa (-5)",
-       13.0
+       12.75
       ],
       [
        "Remis (Aston Villa -5)",
-       10.25
+       10.0
       ],
       [
        "Viking FK (+5)",
@@ -1404,11 +1404,11 @@
       ],
       [
        "Aston Villa (-4)",
-       7.0
+       6.9
       ],
       [
        "Remis (Aston Villa -4)",
-       7.0
+       6.9
       ],
       [
        "Viking FK (+4)",
@@ -1416,51 +1416,51 @@
       ],
       [
        "Aston Villa (-3)",
-       3.85
+       3.78
       ],
       [
        "Remis (Aston Villa -3)",
-       5.1
+       5.0
       ],
       [
        "Viking FK (+3)",
-       1.56
+       1.57
       ],
       [
        "Aston Villa (-2)",
-       2.3
+       2.27
       ],
       [
        "Remis (Aston Villa -2)",
-       4.3
+       4.35
       ],
       [
        "Viking FK (+2)",
-       2.32
+       2.35
       ],
       [
        "Aston Villa (-1)",
-       1.55
+       1.54
       ],
       [
        "Remis (Aston Villa -1)",
-       4.6
+       4.65
       ],
       [
        "Viking FK (+1)",
-       4.2
+       4.25
       ],
       [
        "Aston Villa (+1)",
-       1.06
+       1.05
       ],
       [
        "Remis (Aston Villa +1)",
-       13.75
+       14.25
       ],
       [
        "Viking FK (-1)",
-       22.0
+       23.0
       ]
      ],
      "Dokładny wynik": [
@@ -1478,15 +1478,15 @@
       ],
       [
        "2 - 0",
-       8.75
+       8.5
       ],
       [
        "1 - 1",
-       14.5
+       14.25
       ],
       [
        "0 - 2",
-       90.0
+       95.0
       ],
       [
        "2 - 1",
@@ -1510,15 +1510,15 @@
       ],
       [
        "0 - 3",
-       300.0
+       325.0
       ],
       [
        "3 - 1",
-       9.25
+       9.5
       ],
       [
        "4 - 4",
-       375.0
+       400.0
       ],
       [
        "1 - 3",
@@ -1530,11 +1530,11 @@
       ],
       [
        "Inny",
-       4.2
+       4.15
       ],
       [
        "2 - 3",
-       65.0
+       70.0
       ],
       [
        "4 - 0",
@@ -1558,15 +1558,15 @@
       ],
       [
        "2 - 4",
-       275.0
+       300.0
       ],
       [
        "4 - 3",
-       85.0
+       90.0
       ],
       [
        "3 - 4",
-       275.0
+       300.0
       ]
      ]
     }
@@ -1584,49 +1584,49 @@
      "X2": 1.79,
      "12": 1.26,
      "1X": 1.34,
-     "BTTS Tak": 1.41,
-     "BTTS Nie": 2.77,
-     "A o2.5": 4.3,
-     "H o2.5": 2.75,
-     "Under 5.5": 1.13,
-     "Over 5.5": 5.7,
-     "Under 0.5": 13.5,
-     "Over 0.5": 1.02,
-     "1 & u2.5": 7.0,
-     "X & u2.5": 6.2,
-     "1 & o2.5": 2.37,
-     "2 & u2.5": 10.0,
-     "X & o2.5": 7.8,
-     "2 & o2.5": 4.0,
-     "X & u3.5": 6.2,
-     "X & o3.5": 7.8,
-     "1 & u3.5": 3.45,
-     "1 & o3.5": 3.55,
-     "2 & u3.5": 5.2,
-     "2 & o3.5": 6.6,
-     "H -1.5": 3.25,
-     "H o0.5": 1.11,
-     "Over 4.5": 3.3,
-     "Under 4.5": 1.32,
-     "H o1.5": 1.59,
-     "BTTS & o2.5": 1.57,
-     "Under 2.5": 2.8,
-     "Over 2.5": 1.42,
-     "A o0.5": 1.23,
-     "X & u4.5": 4.0,
-     "X & o4.5": 26.0,
-     "1 & u4.5": 2.65,
-     "1 & o4.5": 5.2,
-     "2 & u4.5": 4.2,
-     "2 & o4.5": 9.6,
-     "A o1.5": 2.07,
-     "Over 1.5": 1.12,
-     "Under 1.5": 5.8,
-     "Over 3.5": 2.02,
-     "Under 3.5": 1.76,
-     "H o3.5": 5.4,
-     "H o4.5": 9.6,
-     "A o3.5": 8.6
+     "BTTS Tak": 1.38,
+     "BTTS Nie": 2.9,
+     "A o2.5": 4.1,
+     "H o2.5": 2.65,
+     "Under 5.5": 1.15,
+     "Over 5.5": 5.2,
+     "Under 0.5": 14.0,
+     "Over 0.5": 1.01,
+     "1 & u2.5": 7.4,
+     "X & u2.5": 6.4,
+     "1 & o2.5": 2.32,
+     "2 & u2.5": 11.0,
+     "X & o2.5": 7.4,
+     "2 & o2.5": 3.95,
+     "X & u3.5": 6.4,
+     "X & o3.5": 7.6,
+     "1 & u3.5": 3.6,
+     "1 & o3.5": 3.4,
+     "2 & u3.5": 5.4,
+     "2 & o3.5": 6.4,
+     "H -1.5": 3.2,
+     "H o0.5": 1.1,
+     "Over 4.5": 3.1,
+     "Under 4.5": 1.35,
+     "H o1.5": 1.55,
+     "BTTS & o2.5": 1.53,
+     "Under 2.5": 2.95,
+     "Over 2.5": 1.39,
+     "A o0.5": 1.21,
+     "X & u4.5": 4.1,
+     "X & o4.5": 24.0,
+     "1 & u4.5": 2.75,
+     "1 & o4.5": 4.9,
+     "2 & u4.5": 4.3,
+     "2 & o4.5": 9.0,
+     "A o1.5": 2.01,
+     "Over 1.5": 1.11,
+     "Under 1.5": 6.3,
+     "Over 3.5": 1.94,
+     "Under 3.5": 1.84,
+     "H o3.5": 5.2,
+     "H o4.5": 9.2,
+     "A o3.5": 8.2
     },
     "pelna": true
    },
@@ -1635,60 +1635,60 @@
     "nazwa": "Club Brugge - RC Lens",
     "zgodnosc": 1.0,
     "kursy": {
-     "1": 2.0,
-     "X": 3.75,
-     "2": 3.3,
+     "1": 1.95,
+     "X": 3.9,
+     "2": 3.35,
      "12": 1.27,
-     "X2": 1.82,
-     "1X": 1.35,
-     "A o0.5": 1.24,
-     "H o0.5": 1.12,
-     "H -1.5": 3.4,
-     "Over 1.5": 1.13,
-     "Under 1.5": 6.1,
+     "X2": 1.85,
+     "1X": 1.34,
+     "A o0.5": 1.23,
+     "H o0.5": 1.11,
+     "H -1.5": 3.25,
+     "Over 1.5": 1.12,
+     "Under 1.5": 6.5,
      "Over 0.5": 1.02,
-     "Under 0.5": 22.0,
-     "Over 4.5": 3.35,
-     "Under 4.5": 1.33,
-     "Over 3.5": 2.05,
-     "Under 3.5": 1.78,
-     "Over 2.5": 1.43,
-     "Under 2.5": 2.85,
-     "Over 5.5": 5.75,
-     "Under 5.5": 1.14,
-     "H o1.5": 1.6,
+     "Under 0.5": 24.0,
+     "Over 4.5": 3.15,
+     "Under 4.5": 1.37,
+     "Over 3.5": 1.95,
+     "Under 3.5": 1.85,
+     "Over 2.5": 1.4,
+     "Under 2.5": 3.0,
+     "Over 5.5": 5.4,
+     "Under 5.5": 1.15,
+     "H o1.5": 1.55,
      "H o4.5": 11.0,
-     "H o3.5": 5.75,
-     "H o2.5": 2.8,
+     "H o3.5": 5.25,
+     "H o2.5": 2.7,
      "A o1.5": 2.1,
      "A o4.5": 15.0,
-     "A o3.5": 11.0,
-     "A o2.5": 4.5,
-     "BTTS Tak": 1.42,
-     "BTTS Nie": 2.85,
-     "1 & u1.5": 14.5,
-     "1 & o1.5": 2.12,
-     "X & u1.5": 22.0,
-     "X & o1.5": 4.25,
-     "2 & u1.5": 19.0,
+     "A o3.5": 10.0,
+     "A o2.5": 4.4,
+     "BTTS Tak": 1.4,
+     "BTTS Nie": 2.95,
+     "1 & u1.5": 15.0,
+     "1 & o1.5": 2.05,
+     "X & u1.5": 24.0,
+     "X & o1.5": 4.3,
+     "2 & u1.5": 20.0,
      "2 & o1.5": 3.6,
-     "1 & u4.5": 2.75,
-     "1 & o4.5": 5.5,
-     "X & u4.5": 4.2,
-     "X & o4.5": 28.0,
-     "2 & u4.5": 4.3,
-     "2 & o4.5": 10.0,
-     "1 & u3.5": 3.6,
-     "1 & o3.5": 3.75,
-     "X & u3.5": 6.4,
-     "X & o3.5": 8.25,
-     "2 & u3.5": 5.4,
-     "2 & o3.5": 6.9,
-     "1 & u2.5": 7.4,
-     "1 & o2.5": 2.45,
-     "X & u2.5": 6.4,
-     "X & o2.5": 8.25,
-     "2 & u2.5": 11.0,
+     "1 & u4.5": 2.8,
+     "1 & o4.5": 5.0,
+     "X & u4.5": 4.3,
+     "X & o4.5": 26.0,
+     "2 & u4.5": 4.5,
+     "2 & o4.5": 9.6,
+     "1 & u3.5": 3.7,
+     "1 & o3.5": 3.5,
+     "X & u3.5": 6.9,
+     "X & o3.5": 8.0,
+     "2 & u3.5": 5.75,
+     "2 & o3.5": 6.75,
+     "1 & u2.5": 7.6,
+     "1 & o2.5": 2.35,
+     "X & u2.5": 6.9,
+     "X & o2.5": 8.0,
+     "2 & u2.5": 12.0,
      "2 & o2.5": 4.2
     },
     "pelna": true
@@ -1698,41 +1698,41 @@
     "nazwa": "Club Brugge - RC Lens",
     "zgodnosc": 1.0,
     "kursy": {
-     "1": 1.96,
-     "X": 3.95,
-     "2": 3.27,
-     "1X": 1.32,
-     "12": 1.24,
-     "X2": 1.78,
+     "1": 1.92,
+     "X": 4.05,
+     "2": 3.33,
+     "1X": 1.31,
+     "12": 1.23,
+     "X2": 1.81,
      "Over 0.5": 1.01,
      "Under 0.5": 12.25,
-     "Over 1.5": 1.11,
-     "Under 1.5": 5.9,
-     "Over 2.5": 1.4,
-     "Under 2.5": 2.8,
-     "Over 3.5": 1.98,
-     "Under 3.5": 1.77,
-     "Over 4.5": 3.2,
-     "Under 4.5": 1.32,
-     "Over 5.5": 5.4,
-     "Under 5.5": 1.13,
-     "BTTS Tak": 1.41,
-     "BTTS Nie": 2.78,
-     "H o0.5": 1.11,
-     "H o1.5": 1.59,
-     "H o2.5": 2.83,
-     "H o3.5": 5.4,
-     "H o4.5": 9.5,
+     "Over 1.5": 1.1,
+     "Under 1.5": 6.25,
+     "Over 2.5": 1.37,
+     "Under 2.5": 2.95,
+     "Over 3.5": 1.9,
+     "Under 3.5": 1.83,
+     "Over 4.5": 3.02,
+     "Under 4.5": 1.35,
+     "Over 5.5": 5.0,
+     "Under 5.5": 1.15,
+     "BTTS Tak": 1.38,
+     "BTTS Nie": 2.88,
+     "H o0.5": 1.1,
+     "H o1.5": 1.54,
+     "H o2.5": 2.67,
+     "H o3.5": 5.1,
+     "H o4.5": 9.0,
      "A o0.5": 1.22,
-     "A o1.5": 2.07,
-     "A o2.5": 4.6,
-     "A o3.5": 8.5,
-     "A o4.5": 12.0,
-     "H -4.5": 24.0,
-     "H -3.5": 13.0,
-     "H -2.5": 6.25,
-     "H -1.5": 3.25,
-     "A -1.5": 6.25,
+     "A o1.5": 2.02,
+     "A o2.5": 4.45,
+     "A o3.5": 8.25,
+     "A o4.5": 11.75,
+     "H -4.5": 22.0,
+     "H -3.5": 12.0,
+     "H -2.5": 6.0,
+     "H -1.5": 3.13,
+     "A -1.5": 6.4,
      "A -2.5": 16.5,
      "A -3.5": 26.0
     },
@@ -1742,49 +1742,49 @@
      "Wynik meczu (z wyłączeniem dogrywki)": [
       [
        "Club Brugge",
-       1.96
+       1.92
       ],
       [
        "Remis",
-       3.95
+       4.05
       ],
       [
        "RC Lens",
-       3.27
+       3.33
       ]
      ],
      "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
       [
        "Club Brugge",
-       1.86
+       1.82
       ],
       [
        "RC Lens",
-       2.97
+       3.0
       ]
      ],
      "Wynik meczu - Xtra Wygrana": [
       [
        "Club Brugge",
-       1.55
+       1.51
       ],
       [
        "RC Lens",
-       2.48
+       2.52
       ]
      ],
      "Podwójna Szansa": [
       [
        "Club Brugge lub remis",
-       1.32
+       1.31
       ],
       [
        "Club Brugge lub Lens",
-       1.24
+       1.23
       ],
       [
        "Remis lub RC Lens",
-       1.78
+       1.81
       ]
      ],
      "Gole Powyżej/Poniżej": [
@@ -1798,53 +1798,53 @@
       ],
       [
        "Powyżej 1,5",
-       1.11
+       1.1
       ],
       [
        "Poniżej 1,5",
-       5.9
+       6.25
       ],
       [
        "Powyżej 2,5",
-       1.4
+       1.37
       ],
       [
        "Poniżej 2,5",
-       2.8
+       2.95
       ],
       [
        "Powyżej 3,5",
-       1.98
+       1.9
       ],
       [
        "Poniżej 3,5",
-       1.77
+       1.83
       ],
       [
        "Powyżej 4,5",
-       3.2
+       3.02
       ],
       [
        "Poniżej 4,5",
-       1.32
+       1.35
       ],
       [
        "Powyżej 5,5",
-       5.4
+       5.0
       ],
       [
        "Poniżej 5,5",
-       1.13
+       1.15
       ]
      ],
      "Oba zespoły strzelą gola": [
       [
        "Tak",
-       1.41
+       1.38
       ],
       [
        "Nie",
-       2.78
+       2.88
       ]
      ],
      "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
@@ -1860,11 +1860,11 @@
      "Którykolwiek zawodnik strzeli gola": [
       [
        "R. Vermant / N. Tresoldi",
-       1.42
+       1.41
       ],
       [
        "N. Tresoldi / A. Vasovic",
-       1.43
+       1.42
       ],
       [
        "O. Edouard / N. Tresoldi",
@@ -1872,7 +1872,7 @@
       ],
       [
        "F. Thauvin / N. Tresoldi",
-       1.5
+       1.49
       ],
       [
        "F. Ivanovic / N. Tresoldi",
@@ -1883,23 +1883,23 @@
        1.55
       ],
       [
+       "R. Vermant / A. Vasovic",
+       1.55
+      ],
+      [
        "T. Hazard / N. Tresoldi",
-       1.57
+       1.56
       ],
       [
        "H. Vetlesen / N. Tresoldi",
        1.57
       ],
       [
-       "R. Vermant / A. Vasovic",
+       "N. Tresoldi / J. Virgili",
        1.57
       ],
       [
        "J. Kadile / N. Tresoldi",
-       1.59
-      ],
-      [
-       "N. Tresoldi / J. Virgili",
        1.59
       ],
       [
@@ -1911,32 +1911,32 @@
        1.63
       ],
       [
+       "O. Edouard / R. Vermant",
+       1.64
+      ],
+      [
        "N. Tresoldi / M. Soares",
        1.65
       ],
       [
-       "O. Edouard / R. Vermant",
+       "O. Edouard / A. Vasovic",
        1.65
       ],
       [
        "F. Thauvin / R. Vermant",
-       1.67
-      ],
-      [
-       "O. Edouard / A. Vasovic",
-       1.67
+       1.66
       ],
       [
        "R. Vermant / F. Ivanovic",
-       1.68
+       1.67
       ],
       [
        "F. Thauvin / A. Vasovic",
-       1.69
+       1.68
       ],
       [
        "F. Ivanovic / A. Vasovic",
-       1.7
+       1.68
       ],
       [
        "M. Skoras / N. Tresoldi",
@@ -1948,56 +1948,64 @@
       ],
       [
        "F. Sotoca / R. Vermant",
-       1.75
-      ],
-      [
-       "F. Sotoca / A. Vasovic",
-       1.77
+       1.74
       ],
       [
        "T. Hazard / R. Vermant",
-       1.78
+       1.76
+      ],
+      [
+       "F. Sotoca / A. Vasovic",
+       1.76
       ],
       [
        "F. Thauvin / O. Edouard",
+       1.77
+      ],
+      [
+       "T. Hazard / A. Vasovic",
        1.78
       ],
       [
        "H. Vetlesen / R. Vermant",
-       1.79
+       1.78
+      ],
+      [
+       "R. Vermant / J. Virgili",
+       1.78
       ],
       [
        "O. Edouard / F. Ivanovic",
-       1.79
-      ],
-      [
-       "T. Hazard / A. Vasovic",
-       1.8
-      ],
-      [
-       "F. Thauvin / F. Ivanovic",
-       1.81
+       1.78
       ]
      ],
      "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
       [
        "N. Tresoldi / R. Vermant",
-       1.21
+       1.19
       ],
       [
        "N. Tresoldi / F. Thauvin",
-       1.25
+       1.24
       ],
       [
        "N. Tresoldi / M. Robberechts",
-       1.26
+       1.25
       ],
       [
        "N. Tresoldi / J. Virgili",
-       1.27
+       1.26
       ],
       [
        "N. Tresoldi / O. Edouard",
+       1.27
+      ],
+      [
+       "C. Forbs / N. Tresoldi",
+       1.27
+      ],
+      [
+       "N. Tresoldi / J. Kadile",
        1.28
       ],
       [
@@ -2009,72 +2017,68 @@
        1.28
       ],
       [
-       "C. Forbs / N. Tresoldi",
+       "F. Thauvin / R. Vermant",
        1.28
       ],
       [
-       "N. Tresoldi / J. Kadile",
-       1.29
-      ],
-      [
        "N. Tresoldi / T. Hazard",
-       1.29
+       1.28
       ],
       [
        "N. Tresoldi / F. Sotoca",
-       1.29
+       1.28
       ],
       [
-       "F. Thauvin / R. Vermant",
+       "M. Robberechts / R. Vermant",
        1.3
       ],
       [
        "M. Soares / N. Tresoldi",
-       1.32
+       1.31
+      ],
+      [
+       "R. Vermant / J. Virgili",
+       1.31
       ],
       [
        "N. Tresoldi / H. Vetlesen",
        1.32
       ],
       [
-       "M. Robberechts / R. Vermant",
+       "C. Forbs / R. Vermant",
        1.32
       ],
       [
-       "R. Vermant / J. Virgili",
+       "O. Edouard / R. Vermant",
        1.33
       ],
       [
-       "O. Edouard / R. Vermant",
+       "J. Kadile / R. Vermant",
        1.34
       ],
       [
-       "C. Forbs / R. Vermant",
+       "T. Hazard / R. Vermant",
        1.34
       ],
       [
        "H. Vanaken / R. Vermant",
-       1.35
+       1.34
       ],
       [
        "R. Vermant / F. Ivanovic",
-       1.35
-      ],
-      [
-       "J. Kadile / R. Vermant",
-       1.36
-      ],
-      [
-       "T. Hazard / R. Vermant",
-       1.36
+       1.34
       ],
       [
        "R. Vermant / F. Sotoca",
-       1.36
+       1.34
       ],
       [
        "M. Robberechts / F. Thauvin",
        1.37
+      ],
+      [
+       "M. Soares / R. Vermant",
+       1.38
       ],
       [
        "F. Thauvin / J. Virgili",
@@ -2085,58 +2089,54 @@
        1.38
       ],
       [
-       "M. Soares / R. Vermant",
-       1.4
-      ],
-      [
        "N. Tresoldi / M. Cuisance",
-       1.4
-      ],
-      [
-       "O. Edouard / F. Thauvin",
-       1.4
+       1.39
       ],
       [
        "H. Vetlesen / R. Vermant",
+       1.39
+      ],
+      [
+       "O. Edouard / F. Thauvin",
        1.4
       ]
      ],
      "Liczba goli - Club Brugge": [
       [
        "Powyżej 0,5",
-       1.11
+       1.1
       ],
       [
        "Poniżej 0,5",
-       6.4
+       6.75
       ],
       [
        "Powyżej 1,5",
-       1.59
+       1.54
       ],
       [
        "Poniżej 1,5",
-       2.22
+       2.32
       ],
       [
        "Powyżej 2,5",
-       2.83
+       2.67
       ],
       [
        "Poniżej 2,5",
-       1.39
+       1.43
       ],
       [
        "Powyżej 3,5",
-       5.4
+       5.1
       ],
       [
        "Poniżej 3,5",
-       1.12
+       1.13
       ],
       [
        "Powyżej 4,5",
-       9.5
+       9.0
       ],
       [
        "Poniżej 4,5",
@@ -2150,27 +2150,27 @@
       ],
       [
        "Poniżej 0,5",
-       4.0
+       4.15
       ],
       [
        "Powyżej 1,5",
-       2.07
+       2.02
       ],
       [
        "Poniżej 1,5",
-       1.68
+       1.71
       ],
       [
        "Powyżej 2,5",
-       4.6
+       4.45
       ],
       [
        "Poniżej 2,5",
-       1.18
+       1.19
       ],
       [
        "Powyżej 3,5",
-       8.5
+       8.25
       ],
       [
        "Poniżej 3,5",
@@ -2178,7 +2178,7 @@
       ],
       [
        "Powyżej 4,5",
-       12.0
+       11.75
       ],
       [
        "Poniżej 4,5",
@@ -2188,31 +2188,31 @@
      "Handicap": [
       [
        "Club Brugge (-4)",
-       24.0
+       22.0
       ],
       [
        "Remis (Club Brugge -4)",
-       12.5
+       12.25
       ],
       [
        "RC Lens (+4)",
-       1.02
+       1.03
       ],
       [
        "Club Brugge (-3)",
-       13.0
+       12.0
       ],
       [
        "Remis (Club Brugge -3)",
-       8.75
+       8.5
       ],
       [
        "RC Lens (+3)",
-       1.1
+       1.11
       ],
       [
        "Club Brugge (-2)",
-       6.25
+       6.0
       ],
       [
        "Remis (Club Brugge -2)",
@@ -2220,11 +2220,11 @@
       ],
       [
        "RC Lens (+2)",
-       1.3
+       1.32
       ],
       [
        "Club Brugge (-1)",
-       3.25
+       3.13
       ],
       [
        "Remis (Club Brugge -1)",
@@ -2232,19 +2232,19 @@
       ],
       [
        "RC Lens (+1)",
-       1.78
+       1.81
       ],
       [
        "Club Brugge (+1)",
-       1.32
+       1.31
       ],
       [
        "Remis (Club Brugge +1)",
-       5.4
+       5.5
       ],
       [
        "RC Lens (-1)",
-       6.25
+       6.4
       ],
       [
        "Club Brugge (+2)",
@@ -2252,7 +2252,7 @@
       ],
       [
        "Remis (Club Brugge +2)",
-       10.0
+       10.25
       ],
       [
        "RC Lens (-2)",
@@ -2274,31 +2274,31 @@
      "Dokładny wynik": [
       [
        "1 - 0",
-       13.25
+       14.25
       ],
       [
        "0 - 0",
-       24.0
+       27.0
       ],
       [
        "0 - 1",
-       17.5
+       19.25
       ],
       [
        "2 - 0",
-       13.25
+       13.75
       ],
       [
        "1 - 1",
-       8.0
+       8.25
       ],
       [
        "0 - 2",
-       23.0
+       25.0
       ],
       [
        "2 - 1",
-       8.75
+       9.0
       ],
       [
        "2 - 2",
@@ -2306,27 +2306,27 @@
       ],
       [
        "1 - 2",
-       11.75
+       12.0
       ],
       [
        "3 - 0",
-       19.75
+       19.5
       ],
       [
        "3 - 3",
-       30.0
+       29.0
       ],
       [
        "0 - 3",
-       45.0
+       48.0
       ],
       [
        "3 - 1",
-       13.25
+       12.75
       ],
       [
        "4 - 4",
-       150.0
+       140.0
       ],
       [
        "1 - 3",
@@ -2334,19 +2334,19 @@
       ],
       [
        "3 - 2",
-       17.25
+       16.5
       ],
       [
        "Inny",
-       11.25
+       10.0
       ],
       [
        "2 - 3",
-       23.0
+       22.0
       ],
       [
        "4 - 0",
-       40.0
+       38.0
       ],
       [
        "0 - 4",
@@ -2354,7 +2354,7 @@
       ],
       [
        "4 - 1",
-       26.0
+       24.0
       ],
       [
        "1 - 4",
@@ -2362,19 +2362,19 @@
       ],
       [
        "4 - 2",
-       35.0
+       33.0
       ],
       [
        "2 - 4",
-       60.0
+       55.0
       ],
       [
        "4 - 3",
-       70.0
+       60.0
       ],
       [
        "3 - 4",
-       90.0
+       85.0
       ]
      ]
     }
@@ -2386,57 +2386,57 @@
     "nazwa": "Cincinnati - D.C. United",
     "zgodnosc": 1.0,
     "kursy": {
-     "X": 4.35,
-     "1": 1.69,
-     "2": 3.9,
-     "12": 1.21,
-     "X2": 1.99,
-     "1X": 1.24,
-     "H -1.5": 2.5,
+     "X": 4.4,
+     "1": 1.66,
+     "2": 3.95,
+     "12": 1.2,
+     "X2": 2.02,
+     "1X": 1.23,
+     "H -1.5": 2.46,
      "Under 1.5": 6.8,
      "Over 1.5": 1.07,
      "2 & u4.5": 5.6,
-     "X & o4.5": 21.0,
-     "2 & o4.5": 9.6,
-     "1 & u4.5": 2.65,
-     "X & u4.5": 4.8,
-     "1 & o4.5": 3.6,
+     "X & o4.5": 22.0,
+     "2 & o4.5": 9.8,
+     "1 & u4.5": 2.6,
+     "X & u4.5": 4.9,
+     "1 & o4.5": 3.5,
      "Under 3.5": 2.05,
      "Over 3.5": 1.69,
      "BTTS Nie": 3.0,
-     "BTTS Tak": 1.32,
-     "A o1.5": 2.01,
-     "H o2.5": 2.12,
-     "H o1.5": 1.37,
-     "A o2.5": 4.0,
-     "X & u2.5": 7.8,
-     "X & o2.5": 7.4,
+     "BTTS Tak": 1.33,
+     "A o1.5": 2.04,
+     "H o2.5": 2.09,
+     "H o1.5": 1.36,
+     "A o2.5": 4.1,
+     "X & u2.5": 8.0,
+     "X & o2.5": 7.6,
      "2 & u2.5": 15.0,
-     "2 & o2.5": 4.5,
+     "2 & o2.5": 4.6,
      "1 & u2.5": 7.8,
-     "1 & o2.5": 1.92,
-     "A o0.5": 1.21,
-     "Under 2.5": 3.35,
+     "1 & o2.5": 1.89,
+     "A o0.5": 1.22,
+     "Under 2.5": 3.4,
      "Over 2.5": 1.27,
      "X & u1.5": 30.0,
-     "X & o1.5": 4.3,
+     "X & o1.5": 4.4,
      "2 & u1.5": 26.0,
-     "2 & o1.5": 3.95,
-     "1 & u1.5": 17.0,
-     "1 & o1.5": 1.72,
+     "2 & o1.5": 4.0,
+     "1 & u1.5": 16.0,
+     "1 & o1.5": 1.69,
      "2 & u3.5": 7.0,
-     "X & o3.5": 7.4,
-     "2 & o3.5": 7.0,
-     "1 & u3.5": 3.65,
-     "X & u3.5": 8.0,
-     "1 & o3.5": 2.6,
-     "H o3.5": 3.75,
+     "X & o3.5": 7.6,
+     "2 & o3.5": 7.2,
+     "1 & u3.5": 3.6,
+     "X & u3.5": 8.2,
+     "1 & o3.5": 2.55,
+     "H o3.5": 3.7,
      "Under 5.5": 1.2,
      "Over 5.5": 4.0,
      "BTTS & o2.5": 1.44,
      "Under 4.5": 1.46,
      "Over 4.5": 2.52,
-     "H o4.5": 6.8,
+     "H o4.5": 6.6,
      "Over 6.5": 6.6,
      "Under 6.5": 1.07,
      "A o3.5": 8.0,
@@ -2449,16 +2449,16 @@
     "nazwa": "FC Cincinnati - DC United",
     "zgodnosc": 0.97,
     "kursy": {
-     "1": 1.72,
-     "X": 4.25,
-     "2": 3.9,
+     "1": 1.68,
+     "X": 4.3,
+     "2": 4.0,
      "12": 1.22,
-     "X2": 2.1,
+     "X2": 2.15,
      "1X": 1.25,
-     "A o0.5": 1.22,
+     "A o0.5": 1.23,
      "H o0.5": 1.07,
-     "H -1.5": 2.6,
-     "H -2.5": 4.5,
+     "H -1.5": 2.55,
+     "H -2.5": 4.4,
      "Over 1.5": 1.08,
      "Under 1.5": 8.0,
      "Over 6.5": 7.25,
@@ -2469,43 +2469,719 @@
      "Under 4.5": 1.48,
      "Over 3.5": 1.72,
      "Under 3.5": 2.1,
-     "Over 2.5": 1.3,
+     "Over 2.5": 1.28,
      "Under 2.5": 3.5,
      "Over 5.5": 4.2,
      "Under 5.5": 1.22,
      "H o1.5": 1.38,
-     "H o3.5": 3.9,
-     "H o2.5": 2.15,
-     "A o1.5": 2.05,
-     "A o2.5": 4.3,
-     "BTTS Tak": 1.34,
-     "BTTS Nie": 3.2,
-     "1 & u1.5": 17.0,
-     "1 & o1.5": 1.72,
+     "H o3.5": 3.8,
+     "H o2.5": 2.1,
+     "A o1.5": 2.1,
+     "A o2.5": 4.4,
+     "BTTS Tak": 1.35,
+     "BTTS Nie": 3.1,
+     "1 & u1.5": 16.0,
+     "1 & o1.5": 1.68,
      "X & u1.5": 31.0,
      "X & o1.5": 4.4,
      "2 & u1.5": 26.0,
-     "2 & o1.5": 3.9,
-     "1 & u4.5": 2.65,
-     "1 & o4.5": 3.6,
-     "X & u4.5": 4.75,
-     "X & o4.5": 21.0,
-     "2 & u4.5": 5.5,
-     "2 & o4.5": 9.5,
-     "1 & u3.5": 3.7,
-     "1 & o3.5": 2.6,
-     "X & u3.5": 7.9,
-     "X & o3.5": 7.4,
-     "2 & u3.5": 7.0,
-     "2 & o3.5": 7.0,
-     "1 & u2.5": 7.9,
-     "1 & o2.5": 1.92,
-     "X & u2.5": 7.9,
-     "X & o2.5": 7.4,
+     "2 & o1.5": 4.0,
+     "1 & u4.5": 2.6,
+     "1 & o4.5": 3.5,
+     "X & u4.5": 4.9,
+     "X & o4.5": 22.0,
+     "2 & u4.5": 5.6,
+     "2 & o4.5": 9.9,
+     "1 & u3.5": 3.6,
+     "1 & o3.5": 2.55,
+     "X & u3.5": 8.0,
+     "X & o3.5": 7.6,
+     "2 & u3.5": 7.1,
+     "2 & o3.5": 7.25,
+     "1 & u2.5": 7.75,
+     "1 & o2.5": 1.88,
+     "X & u2.5": 8.0,
+     "X & o2.5": 7.6,
      "2 & u2.5": 15.0,
-     "2 & o2.5": 4.5
+     "2 & o2.5": 4.6
     },
     "pelna": true
+   },
+   "betclic": {
+    "id": "1256475200610304",
+    "nazwa": "FC Cincinnati - DC United",
+    "zgodnosc": 0.97,
+    "kursy": {
+     "1": 1.63,
+     "X": 4.35,
+     "2": 3.9,
+     "1X": 1.22,
+     "12": 1.18,
+     "X2": 2.1,
+     "Over 1.5": 1.06,
+     "Under 1.5": 6.5,
+     "Over 2.5": 1.25,
+     "Under 2.5": 3.33,
+     "Over 3.5": 1.65,
+     "Under 3.5": 2.03,
+     "Over 4.5": 2.43,
+     "Under 4.5": 1.45,
+     "Over 5.5": 3.8,
+     "Under 5.5": 1.2,
+     "Over 6.5": 6.0,
+     "Under 6.5": 1.07,
+     "BTTS Tak": 1.32,
+     "BTTS Nie": 2.93,
+     "H o0.5": 1.06,
+     "H o1.5": 1.35,
+     "H o2.5": 2.08,
+     "H o3.5": 3.6,
+     "H o4.5": 6.25,
+     "A o0.5": 1.21,
+     "A o1.5": 2.02,
+     "A o2.5": 4.5,
+     "A o3.5": 7.5,
+     "A o4.5": 9.75,
+     "H -4.5": 14.5,
+     "H -3.5": 8.0,
+     "H -2.5": 4.25,
+     "H -1.5": 2.45,
+     "A -1.5": 7.5,
+     "A -2.5": 22.0,
+     "A -3.5": 25.0
+    },
+    "pelna": true,
+    "rynkow": 12,
+    "oferta": {
+     "Wynik meczu (z wyłączeniem dogrywki)": [
+      [
+       "FC Cincinnati",
+       1.63
+      ],
+      [
+       "Remis",
+       4.35
+      ],
+      [
+       "DC United",
+       3.9
+      ]
+     ],
+     "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
+      [
+       "FC Cincinnati",
+       1.55
+      ],
+      [
+       "DC United",
+       3.38
+      ]
+     ],
+     "Podwójna Szansa": [
+      [
+       "FC Cincinnati lub remis",
+       1.22
+      ],
+      [
+       "Cincinnati lub DC United",
+       1.18
+      ],
+      [
+       "Remis lub DC United",
+       2.1
+      ]
+     ],
+     "Gole Powyżej/Poniżej": [
+      [
+       "Powyżej 1,5",
+       1.06
+      ],
+      [
+       "Poniżej 1,5",
+       6.5
+      ],
+      [
+       "Powyżej 2,5",
+       1.25
+      ],
+      [
+       "Poniżej 2,5",
+       3.33
+      ],
+      [
+       "Powyżej 3,5",
+       1.65
+      ],
+      [
+       "Poniżej 3,5",
+       2.03
+      ],
+      [
+       "Powyżej 4,5",
+       2.43
+      ],
+      [
+       "Poniżej 4,5",
+       1.45
+      ],
+      [
+       "Powyżej 5,5",
+       3.8
+      ],
+      [
+       "Poniżej 5,5",
+       1.2
+      ],
+      [
+       "Powyżej 6,5",
+       6.0
+      ],
+      [
+       "Poniżej 6,5",
+       1.07
+      ]
+     ],
+     "Oba zespoły strzelą gola": [
+      [
+       "Tak",
+       1.32
+      ],
+      [
+       "Nie",
+       2.93
+      ]
+     ],
+     "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
+      [
+       "Tak",
+       1.2
+      ],
+      [
+       "Nie",
+       3.8
+      ]
+     ],
+     "Którykolwiek zawodnik strzeli gola": [
+      [
+       "Evander / K.Denkey",
+       1.28
+      ],
+      [
+       "T. Baribo / K.Denkey",
+       1.33
+      ],
+      [
+       "K.Denkey / T. Barlow",
+       1.34
+      ],
+      [
+       "Evander / T. Baribo",
+       1.36
+      ],
+      [
+       "K.Denkey / A. Jabbari",
+       1.37
+      ],
+      [
+       "K.Denkey / S. Chirila",
+       1.37
+      ],
+      [
+       "Evander / T. Barlow",
+       1.37
+      ],
+      [
+       "Evander / A. Jabbari",
+       1.4
+      ],
+      [
+       "Evander / S. Chirila",
+       1.4
+      ],
+      [
+       "K.Denkey / K. Fletcher",
+       1.4
+      ],
+      [
+       "K.Denkey / L. Munteanu",
+       1.44
+      ],
+      [
+       "Evander / K. Fletcher",
+       1.44
+      ],
+      [
+       "T. Baribo / T. Barlow",
+       1.45
+      ],
+      [
+       "Evander / L. Munteanu",
+       1.48
+      ],
+      [
+       "T. Barlow / A. Jabbari",
+       1.49
+      ],
+      [
+       "T. Barlow / S. Chirila",
+       1.49
+      ],
+      [
+       "T. Baribo / A. Jabbari",
+       1.49
+      ],
+      [
+       "T. Baribo / S. Chirila",
+       1.49
+      ],
+      [
+       "A. Jabbari / S. Chirila",
+       1.53
+      ],
+      [
+       "T. Barlow / K. Fletcher",
+       1.53
+      ],
+      [
+       "T. Baribo / K. Fletcher",
+       1.53
+      ],
+      [
+       "K.Denkey / N. Ordaz",
+       1.55
+      ],
+      [
+       "K.Denkey / J. Hopkins",
+       1.57
+      ],
+      [
+       "K. Fletcher / S. Chirila",
+       1.57
+      ],
+      [
+       "A. Jabbari / K. Fletcher",
+       1.58
+      ],
+      [
+       "K.Denkey / J. Peglow",
+       1.59
+      ],
+      [
+       "L. Munteanu / T. Barlow",
+       1.59
+      ],
+      [
+       "T. Baribo / L. Munteanu",
+       1.59
+      ],
+      [
+       "K.Denkey / H. Kijima",
+       1.6
+      ],
+      [
+       "Evander / N. Ordaz",
+       1.61
+      ]
+     ],
+     "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
+      [
+       "Evander / K.Denkey",
+       1.07
+      ],
+      [
+       "Evander / A. Chávez",
+       1.07
+      ],
+      [
+       "T. Barlow / Evander",
+       1.09
+      ],
+      [
+       "Evander / S. Chirila",
+       1.1
+      ],
+      [
+       "Evander / A. Jabbari",
+       1.11
+      ],
+      [
+       "Evander / T. Baribo",
+       1.11
+      ],
+      [
+       "K.Denkey / A. Chávez",
+       1.13
+      ],
+      [
+       "T. Barlow / K.Denkey",
+       1.16
+      ],
+      [
+       "Evander / N. Ordaz",
+       1.16
+      ],
+      [
+       "K.Denkey / S. Chirila",
+       1.16
+      ],
+      [
+       "K.Denkey / T. Baribo",
+       1.17
+      ],
+      [
+       "Evander / O. Avilez",
+       1.18
+      ],
+      [
+       "T. Barlow / A. Chávez",
+       1.18
+      ],
+      [
+       "Evander / J. Stroud",
+       1.18
+      ],
+      [
+       "Evander / J. Peglow",
+       1.18
+      ],
+      [
+       "K.Denkey / A. Jabbari",
+       1.18
+      ],
+      [
+       "A. Chávez / S. Chirila",
+       1.19
+      ],
+      [
+       "A. Chávez / T. Baribo",
+       1.2
+      ],
+      [
+       "A. Chávez / A. Jabbari",
+       1.21
+      ],
+      [
+       "T. Barlow / S. Chirila",
+       1.22
+      ],
+      [
+       "S. Chirila / T. Baribo",
+       1.24
+      ],
+      [
+       "T. Barlow / T. Baribo",
+       1.24
+      ],
+      [
+       "S. Chirila / A. Jabbari",
+       1.25
+      ],
+      [
+       "K.Denkey / N. Ordaz",
+       1.27
+      ],
+      [
+       "T. Baribo / A. Jabbari",
+       1.27
+      ],
+      [
+       "K.Denkey / O. Avilez",
+       1.29
+      ],
+      [
+       "N. Ordaz / A. Chávez",
+       1.29
+      ],
+      [
+       "K.Denkey / J. Stroud",
+       1.29
+      ],
+      [
+       "K.Denkey / J. Peglow",
+       1.29
+      ],
+      [
+       "O. Avilez / A. Chávez",
+       1.31
+      ]
+     ],
+     "Liczba goli - FC Cincinnati": [
+      [
+       "Powyżej 0,5",
+       1.06
+      ],
+      [
+       "Poniżej 0,5",
+       9.25
+      ],
+      [
+       "Powyżej 1,5",
+       1.35
+      ],
+      [
+       "Poniżej 1,5",
+       2.78
+      ],
+      [
+       "Powyżej 2,5",
+       2.08
+      ],
+      [
+       "Poniżej 2,5",
+       1.62
+      ],
+      [
+       "Powyżej 3,5",
+       3.6
+      ],
+      [
+       "Poniżej 3,5",
+       1.22
+      ],
+      [
+       "Powyżej 4,5",
+       6.25
+      ],
+      [
+       "Poniżej 4,5",
+       1.06
+      ]
+     ],
+     "Liczba goli - DC United": [
+      [
+       "Powyżej 0,5",
+       1.21
+      ],
+      [
+       "Poniżej 0,5",
+       3.93
+      ],
+      [
+       "Powyżej 1,5",
+       2.02
+      ],
+      [
+       "Poniżej 1,5",
+       1.66
+      ],
+      [
+       "Powyżej 2,5",
+       4.5
+      ],
+      [
+       "Poniżej 2,5",
+       1.17
+      ],
+      [
+       "Powyżej 3,5",
+       7.5
+      ],
+      [
+       "Poniżej 3,5",
+       1.03
+      ],
+      [
+       "Powyżej 4,5",
+       9.75
+      ],
+      [
+       "Poniżej 4,5",
+       1.01
+      ]
+     ],
+     "Handicap": [
+      [
+       "FC Cincinnati (-4)",
+       14.5
+      ],
+      [
+       "Remis (FC Cincinnati -4)",
+       10.0
+      ],
+      [
+       "DC United (+4)",
+       1.05
+      ],
+      [
+       "FC Cincinnati (-3)",
+       8.0
+      ],
+      [
+       "Remis (FC Cincinnati -3)",
+       7.0
+      ],
+      [
+       "DC United (+3)",
+       1.18
+      ],
+      [
+       "FC Cincinnati (-2)",
+       4.25
+      ],
+      [
+       "Remis (FC Cincinnati -2)",
+       5.0
+      ],
+      [
+       "DC United (+2)",
+       1.46
+      ],
+      [
+       "FC Cincinnati (-1)",
+       2.45
+      ],
+      [
+       "Remis (FC Cincinnati -1)",
+       4.3
+      ],
+      [
+       "DC United (+1)",
+       2.1
+      ],
+      [
+       "FC Cincinnati (+1)",
+       1.22
+      ],
+      [
+       "Remis (FC Cincinnati +1)",
+       6.5
+      ],
+      [
+       "DC United (-1)",
+       7.5
+      ],
+      [
+       "FC Cincinnati (+2)",
+       1.06
+      ],
+      [
+       "Remis (FC Cincinnati +2)",
+       12.75
+      ],
+      [
+       "DC United (-2)",
+       22.0
+      ],
+      [
+       "FC Cincinnati (+3)",
+       1.01
+      ],
+      [
+       "Remis (FC Cincinnati +3)",
+       11.25
+      ],
+      [
+       "DC United (-3)",
+       25.0
+      ]
+     ],
+     "Dokładny wynik": [
+      [
+       "1 - 0",
+       14.25
+      ],
+      [
+       "0 - 0",
+       35.0
+      ],
+      [
+       "0 - 1",
+       23.0
+      ],
+      [
+       "2 - 0",
+       11.75
+      ],
+      [
+       "1 - 1",
+       8.75
+      ],
+      [
+       "0 - 2",
+       30.0
+      ],
+      [
+       "2 - 1",
+       8.0
+      ],
+      [
+       "2 - 2",
+       9.5
+      ],
+      [
+       "1 - 2",
+       12.5
+      ],
+      [
+       "3 - 0",
+       14.5
+      ],
+      [
+       "3 - 3",
+       23.0
+      ],
+      [
+       "0 - 3",
+       60.0
+      ],
+      [
+       "3 - 1",
+       9.75
+      ],
+      [
+       "4 - 4",
+       100.0
+      ],
+      [
+       "1 - 3",
+       25.0
+      ],
+      [
+       "3 - 2",
+       12.75
+      ],
+      [
+       "Inny",
+       6.0
+      ],
+      [
+       "2 - 3",
+       20.0
+      ],
+      [
+       "4 - 0",
+       24.0
+      ],
+      [
+       "0 - 4",
+       150.0
+      ],
+      [
+       "4 - 1",
+       15.75
+      ],
+      [
+       "1 - 4",
+       65.0
+      ],
+      [
+       "4 - 2",
+       21.0
+      ],
+      [
+       "2 - 4",
+       55.0
+      ],
+      [
+       "4 - 3",
+       40.0
+      ],
+      [
+       "3 - 4",
+       65.0
+      ]
+     ]
+    }
    }
   },
   "0c2a678f69b702ad3579488a6bf60cfd": {
@@ -2904,12 +3580,12 @@
      ],
      "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
       [
-       "H. Cuypers / U. Djurdjevic",
+       "H. Cuypers / L. Ocampos",
        1.24
       ],
       [
-       "H. Cuypers / L. Ocampos",
-       1.24
+       "H. Cuypers / U. Djurdjevic",
+       1.25
       ],
       [
        "U. Djurdjevic / L. Ocampos",
@@ -2917,7 +3593,7 @@
       ],
       [
        "H. Cuypers / R. de la Rosa",
-       1.29
+       1.3
       ],
       [
        "L. Ocampos / R. de la Rosa",
@@ -2928,56 +3604,56 @@
        1.3
       ],
       [
-       "L. Hernández / H. Cuypers",
-       1.33
-      ],
-      [
        "L. Hernández / L. Ocampos",
-       1.33
+       1.34
       ],
       [
-       "H. Cuypers / E. Mustre",
-       1.34
+       "L. Hernández / H. Cuypers",
+       1.35
       ],
       [
        "L. Hernández / U. Djurdjevic",
-       1.34
+       1.35
       ],
       [
        "E. Mustre / L. Ocampos",
        1.35
       ],
       [
-       "E. Mustre / U. Djurdjevic",
+       "H. Cuypers / E. Mustre",
        1.36
       ],
       [
-       "H. Cuypers / K. Velasco",
-       1.4
+       "E. Mustre / U. Djurdjevic",
+       1.37
       ],
       [
        "L. Ocampos / K. Velasco",
        1.4
       ],
       [
+       "H. Cuypers / K. Velasco",
+       1.41
+      ],
+      [
        "M. Tomas / L. Ocampos",
-       1.4
-      ],
-      [
-       "I. Maestro Puch / H. Cuypers",
-       1.41
-      ],
-      [
-       "H. Cuypers / M. Tomas",
-       1.41
-      ],
-      [
-       "L. Hernández / R. de la Rosa",
        1.41
       ],
       [
        "I. Maestro Puch / L. Ocampos",
        1.41
+      ],
+      [
+       "I. Maestro Puch / H. Cuypers",
+       1.42
+      ],
+      [
+       "H. Cuypers / M. Tomas",
+       1.42
+      ],
+      [
+       "L. Hernández / R. de la Rosa",
+       1.42
       ],
       [
        "I. Maestro Puch / U. Djurdjevic",
@@ -2988,15 +3664,7 @@
        1.43
       ],
       [
-       "H. Cuypers / C. Baltazar",
-       1.43
-      ],
-      [
        "U. Djurdjevic / K. Velasco",
-       1.43
-      ],
-      [
-       "E. Mustre / R. de la Rosa",
        1.43
       ],
       [
@@ -3004,12 +3672,20 @@
        1.43
       ],
       [
+       "H. Cuypers / C. Baltazar",
+       1.44
+      ],
+      [
+       "E. Mustre / R. de la Rosa",
+       1.44
+      ],
+      [
        "U. Djurdjevic / C. Baltazar",
        1.46
       ],
       [
        "L. Hernández / E. Mustre",
-       1.48
+       1.51
       ],
       [
        "K. Velasco / R. de la Rosa",
@@ -3301,20 +3977,18 @@
     "nazwa": "Como - Man.United",
     "zgodnosc": 0.67,
     "kursy": {
-     "X": 3.8,
-     "2": 2.9,
-     "1": 2.25,
-     "1X": 1.41,
-     "12": 1.28,
-     "X2": 1.63,
-     "BTTS Tak": 1.46,
-     "BTTS Nie": 2.6,
+     "X": 3.85,
+     "2": 2.95,
+     "1": 2.27,
+     "1X": 1.43,
+     "12": 1.29,
+     "X2": 1.65,
      "H o4.5": 11.0,
      "H o0.5": 1.16,
-     "Over 1.5": 1.15,
-     "Under 1.5": 5.0,
-     "Under 3.5": 1.62,
-     "Over 3.5": 2.24,
+     "Over 1.5": 1.16,
+     "Under 1.5": 5.2,
+     "Under 3.5": 1.64,
+     "Over 3.5": 2.27,
      "X & u2.5": 5.4,
      "1 & o2.5": 2.8,
      "2 & u2.5": 8.2,
@@ -3328,10 +4002,12 @@
      "1 & u3.5": 3.5,
      "2 & o3.5": 6.2,
      "A o0.5": 1.22,
-     "Under 5.5": 1.09,
-     "Over 5.5": 6.7,
+     "Under 5.5": 1.1,
+     "Over 5.5": 7.0,
      "H o1.5": 1.78,
      "A o2.5": 4.2,
+     "BTTS Tak": 1.47,
+     "BTTS Nie": 2.65,
      "2 & u4.5": 3.5,
      "2 & o4.5": 9.2,
      "X & u4.5": 3.75,
@@ -3339,13 +4015,13 @@
      "1 & u4.5": 2.8,
      "1 & o4.5": 6.8,
      "BTTS & o2.5": 1.67,
-     "Under 4.5": 1.25,
-     "Over 4.5": 3.8,
-     "Under 0.5": 12.5,
-     "Over 0.5": 1.02,
+     "Under 4.5": 1.26,
+     "Over 4.5": 3.9,
+     "Under 0.5": 13.0,
+     "Over 0.5": 1.03,
      "H o2.5": 3.35,
-     "Under 2.5": 2.51,
-     "Over 2.5": 1.52,
+     "Under 2.5": 2.55,
+     "Over 2.5": 1.53,
      "A o1.5": 2.05,
      "H o3.5": 6.8,
      "A o3.5": 8.6
@@ -3357,16 +4033,16 @@
     "nazwa": "Como - Manchester United",
     "zgodnosc": 1.0,
     "kursy": {
-     "1": 2.2,
+     "1": 2.25,
      "X": 3.8,
-     "2": 3.1,
+     "2": 3.0,
      "12": 1.3,
-     "X2": 1.7,
-     "1X": 1.4,
-     "A o0.5": 1.25,
-     "H o0.5": 1.16,
-     "H -1.5": 3.9,
-     "A -1.5": 6.1,
+     "X2": 1.67,
+     "1X": 1.42,
+     "A o0.5": 1.24,
+     "H o0.5": 1.17,
+     "H -1.5": 4.0,
+     "A -1.5": 5.9,
      "Over 1.5": 1.16,
      "Under 1.5": 5.25,
      "Over 0.5": 1.03,
@@ -3381,37 +4057,38 @@
      "Under 5.5": 1.1,
      "H o1.5": 1.8,
      "H o4.5": 13.0,
-     "H o3.5": 7.25,
-     "H o2.5": 3.4,
+     "H o3.5": 7.5,
+     "H o2.5": 3.5,
      "A o1.5": 2.1,
+     "A o4.5": 15.0,
      "A o3.5": 11.0,
-     "A o2.5": 4.7,
+     "A o2.5": 4.6,
      "BTTS Tak": 1.47,
      "BTTS Nie": 2.65,
      "1 & u1.5": 13.0,
-     "1 & o1.5": 2.4,
+     "1 & o1.5": 2.45,
      "X & u1.5": 18.0,
-     "X & o1.5": 4.2,
+     "X & o1.5": 4.1,
      "2 & u1.5": 15.0,
-     "2 & o1.5": 3.4,
-     "1 & u4.5": 2.8,
-     "1 & o4.5": 6.9,
-     "X & u4.5": 3.9,
-     "X & o4.5": 33.0,
-     "2 & u4.5": 3.8,
-     "2 & o4.5": 10.5,
+     "2 & o1.5": 3.3,
+     "1 & u4.5": 2.85,
+     "1 & o4.5": 7.1,
+     "X & u4.5": 3.8,
+     "X & o4.5": 32.0,
+     "2 & u4.5": 3.7,
+     "2 & o4.5": 10.0,
      "1 & u3.5": 3.6,
-     "1 & o3.5": 4.5,
+     "1 & o3.5": 4.7,
      "X & u3.5": 5.6,
      "X & o3.5": 8.6,
-     "2 & u3.5": 4.7,
-     "2 & o3.5": 6.9,
-     "1 & u2.5": 6.9,
-     "1 & o2.5": 2.85,
+     "2 & u3.5": 4.6,
+     "2 & o3.5": 6.75,
+     "1 & u2.5": 7.1,
+     "1 & o2.5": 2.9,
      "X & u2.5": 5.6,
      "X & o2.5": 8.6,
-     "2 & u2.5": 9.1,
-     "2 & o2.5": 4.0
+     "2 & u2.5": 8.9,
+     "2 & o2.5": 3.9
     },
     "pelna": true
    },
@@ -3704,34 +4381,50 @@
      "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
       [
        "A. Douvikas / B. Fernandes",
-       1.36
-      ],
-      [
-       "A. Douvikas / N. Paz",
-       1.36
+       1.33
       ],
       [
        "B. Fernandes / N. Paz",
-       1.37
+       1.33
+      ],
+      [
+       "A. Douvikas / N. Paz",
+       1.34
+      ],
+      [
+       "M. Baturina / B. Fernandes",
+       1.39
+      ],
+      [
+       "B. Fernandes / Jesús Rodriguez",
+       1.39
+      ],
+      [
+       "M. Baturina / N. Paz",
+       1.4
+      ],
+      [
+       "B. Mbeumo / B. Fernandes",
+       1.4
       ],
       [
        "A. Douvikas / M. Baturina",
        1.4
       ],
       [
-       "M. Baturina / N. Paz",
+       "B. Fernandes / M. Cunha",
+       1.4
+      ],
+      [
+       "A. Douvikas / Jesús Rodriguez",
        1.41
       ],
       [
-       "M. Baturina / B. Fernandes",
+       "Jesús Rodriguez / N. Paz",
        1.41
       ],
       [
        "A. Douvikas / B. Mbeumo",
-       1.42
-      ],
-      [
-       "A. Douvikas / Jesús Rodriguez",
        1.42
       ],
       [
@@ -3743,23 +4436,11 @@
        1.42
       ],
       [
-       "B. Fernandes / M. Cunha",
+       "B. Mbeumo / N. Paz",
        1.42
       ],
       [
-       "B. Mbeumo / B. Fernandes",
-       1.44
-      ],
-      [
-       "B. Mbeumo / N. Paz",
-       1.44
-      ],
-      [
-       "Jesús Rodriguez / N. Paz",
-       1.44
-      ],
-      [
-       "B. Fernandes / Jesús Rodriguez",
+       "Mattia Liberali / B. Fernandes",
        1.44
       ],
       [
@@ -3767,12 +4448,12 @@
        1.45
       ],
       [
-       "Mattia Liberali / B. Fernandes",
-       1.46
+       "Mattia Liberali / N. Paz",
+       1.45
       ],
       [
-       "Mattia Liberali / N. Paz",
-       1.46
+       "J. Zirkzee / B. Fernandes",
+       1.48
       ],
       [
        "M. Baturina / M. Cunha",
@@ -3787,19 +4468,19 @@
        1.48
       ],
       [
-       "J. Zirkzee / B. Fernandes",
-       1.5
-      ],
-      [
-       "J. Zirkzee / N. Paz",
-       1.5
+       "B. Mbeumo / Jesús Rodriguez",
+       1.49
       ],
       [
        "B. Mbeumo / M. Cunha",
-       1.5
+       1.49
       ],
       [
        "Jesús Rodriguez / M. Cunha",
+       1.49
+      ],
+      [
+       "J. Zirkzee / N. Paz",
        1.5
       ],
       [
@@ -3807,7 +4488,7 @@
        1.5
       ],
       [
-       "B. Mbeumo / Jesús Rodriguez",
+       "L. Da Cunha / B. Fernandes",
        1.51
       ],
       [
@@ -3815,12 +4496,8 @@
        1.52
       ],
       [
-       "A. Douvikas / S. Lacey",
-       1.53
-      ],
-      [
-       "A. Douvikas / A. Diallo",
-       1.53
+       "B. Fernandes / S. Lacey",
+       1.52
       ]
      ],
      "Liczba goli - Como": [
@@ -4510,7 +5187,7 @@
      "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
       [
        "O. Giroud / V. Osimhen",
-       1.28
+       1.29
       ],
       [
        "Soriba Diaoune / V. Osimhen",
@@ -4529,10 +5206,6 @@
        1.34
       ],
       [
-       "D. Bakwa / O. Giroud",
-       1.36
-      ],
-      [
        "D. Bakwa / V. Osimhen",
        1.37
       ],
@@ -4549,27 +5222,23 @@
        1.38
       ],
       [
-       "V. Osimhen / B. Onal",
+       "D. Bakwa / O. Giroud",
        1.39
       ],
       [
-       "O. Giroud / B. Onal",
-       1.4
+       "V. Osimhen / B. Onal",
+       1.39
       ],
       [
        "O. Sahraoui / V. Osimhen",
        1.41
       ],
       [
-       "O. Sahraoui / O. Giroud",
-       1.42
+       "O. Giroud / B. Onal",
+       1.41
       ],
       [
        "H. A. Haraldsson / Soriba Diaoune",
-       1.42
-      ],
-      [
-       "M. Kjaergaard / V. Osimhen",
        1.42
       ],
       [
@@ -4577,11 +5246,19 @@
        1.43
       ],
       [
+       "O. Sahraoui / O. Giroud",
+       1.43
+      ],
+      [
        "D. Bakwa / Soriba Diaoune",
        1.43
       ],
       [
-       "M. Kjaergaard / O. Giroud",
+       "M. Kjaergaard / V. Osimhen",
+       1.43
+      ],
+      [
+       "H. A. Haraldsson / G. Perrin",
        1.43
       ],
       [
@@ -4598,35 +5275,35 @@
       ],
       [
        "D. Bakwa / G. Perrin",
-       1.44
-      ],
-      [
-       "D. Gul / O. Giroud",
-       1.44
-      ],
-      [
-       "H. A. Haraldsson / G. Perrin",
-       1.44
-      ],
-      [
-       "L. Sane / O. Giroud",
-       1.44
-      ],
-      [
-       "Y. Akgun / O. Giroud",
-       1.44
-      ],
-      [
-       "A. Batrakov / O. Giroud",
-       1.44
-      ],
-      [
-       "Soriba Diaoune / B. Onal",
        1.45
       ],
       [
-       "G. Sara / O. Giroud",
+       "D. Gul / O. Giroud",
+       1.45
+      ],
+      [
+       "M. Kjaergaard / O. Giroud",
+       1.45
+      ],
+      [
+       "L. Sane / O. Giroud",
        1.46
+      ],
+      [
+       "Y. Akgun / O. Giroud",
+       1.46
+      ],
+      [
+       "A. Batrakov / O. Giroud",
+       1.46
+      ],
+      [
+       "Soriba Diaoune / B. Onal",
+       1.46
+      ],
+      [
+       "G. Sara / V. Osimhen",
+       1.47
       ]
      ],
      "Liczba goli - Lille": [
@@ -4914,55 +5591,55 @@
     "nazwa": "Bayern M. - Arsenal",
     "zgodnosc": 0.95,
     "kursy": {
-     "2": 3.35,
-     "X": 3.8,
-     "1": 2.02,
-     "1X": 1.33,
-     "12": 1.28,
+     "2": 3.3,
+     "X": 3.9,
+     "1": 2.08,
+     "1X": 1.36,
+     "12": 1.29,
      "X2": 1.76,
-     "BTTS Tak": 1.51,
-     "BTTS Nie": 2.47,
      "H o4.5": 11.0,
      "H o3.5": 6.4,
-     "A o3.5": 9.8,
-     "Over 5.5": 7.2,
+     "A o3.5": 9.4,
+     "Over 5.5": 7.4,
      "Under 5.5": 1.09,
-     "2 & u4.5": 3.9,
+     "BTTS Tak": 1.5,
+     "BTTS Nie": 2.55,
+     "2 & u4.5": 3.85,
      "X & o4.5": 35.0,
-     "2 & o4.5": 12.0,
-     "1 & u4.5": 2.48,
+     "2 & o4.5": 11.0,
+     "1 & u4.5": 2.55,
      "X & u4.5": 3.7,
      "1 & o4.5": 6.4,
-     "H o2.5": 3.15,
-     "A o1.5": 2.29,
-     "Under 0.5": 12.0,
+     "H o2.5": 3.2,
+     "A o1.5": 2.23,
+     "Under 0.5": 13.0,
      "Over 0.5": 1.03,
-     "BTTS & o2.5": 1.74,
-     "X & o3.5": 8.8,
+     "BTTS & o2.5": 1.71,
+     "X & o3.5": 8.6,
      "2 & u3.5": 4.7,
-     "2 & o3.5": 7.8,
-     "1 & u3.5": 3.15,
-     "1 & o3.5": 4.1,
-     "X & u3.5": 5.2,
+     "2 & o3.5": 7.4,
+     "1 & u3.5": 3.2,
+     "1 & o3.5": 4.2,
+     "X & u3.5": 5.4,
      "H o1.5": 1.72,
-     "A o2.5": 5.0,
+     "A o2.5": 4.8,
      "Over 4.5": 4.0,
-     "Under 4.5": 1.23,
-     "X & u2.5": 5.2,
-     "X & o2.5": 8.8,
-     "2 & u2.5": 9.0,
-     "2 & o2.5": 4.4,
+     "Under 4.5": 1.25,
+     "X & u2.5": 5.4,
+     "X & o2.5": 8.6,
+     "2 & u2.5": 8.8,
+     "2 & o2.5": 4.2,
      "1 & u2.5": 6.0,
      "1 & o2.5": 2.6,
-     "Under 1.5": 4.9,
+     "Under 1.5": 5.2,
      "Over 1.5": 1.17,
-     "Under 2.5": 2.4,
-     "Over 2.5": 1.56,
-     "A o0.5": 1.28,
-     "H o0.5": 1.14,
+     "Under 2.5": 2.46,
+     "Over 2.5": 1.55,
+     "A o0.5": 1.26,
+     "H o0.5": 1.15,
      "Over 3.5": 2.33,
-     "Under 3.5": 1.58,
-     "H -1.5": 3.4
+     "Under 3.5": 1.61,
+     "H -1.5": 3.5
     },
     "pelna": true
    },
@@ -4978,53 +5655,53 @@
      "X2": 1.8,
      "1X": 1.35,
      "A o0.5": 1.28,
-     "H o0.5": 1.16,
-     "H -1.5": 3.6,
-     "Over 1.5": 1.18,
-     "Under 1.5": 5.0,
+     "H o0.5": 1.15,
+     "H -1.5": 3.5,
+     "Over 1.5": 1.17,
+     "Under 1.5": 5.1,
      "Over 0.5": 1.03,
      "Under 0.5": 17.0,
-     "Over 4.5": 4.1,
-     "Under 4.5": 1.24,
+     "Over 4.5": 4.0,
+     "Under 4.5": 1.25,
      "Over 3.5": 2.35,
      "Under 3.5": 1.6,
-     "Over 2.5": 1.57,
+     "Over 2.5": 1.55,
      "Under 2.5": 2.45,
-     "Over 5.5": 7.6,
+     "Over 5.5": 7.5,
      "Under 5.5": 1.09,
      "H o1.5": 1.75,
      "H o4.5": 13.0,
      "H o3.5": 7.0,
-     "H o2.5": 3.3,
+     "H o2.5": 3.2,
      "A o1.5": 2.3,
-     "A o3.5": 14.0,
-     "A o2.5": 5.5,
-     "BTTS Tak": 1.52,
+     "A o3.5": 13.0,
+     "A o2.5": 5.25,
+     "BTTS Tak": 1.5,
      "BTTS Nie": 2.55,
-     "1 & u1.5": 11.5,
+     "1 & u1.5": 12.0,
      "1 & o1.5": 2.25,
      "X & u1.5": 17.0,
      "X & o1.5": 4.3,
-     "2 & u1.5": 15.0,
+     "2 & u1.5": 16.0,
      "2 & o1.5": 3.8,
      "1 & u4.5": 2.6,
-     "1 & o4.5": 6.75,
+     "1 & o4.5": 6.6,
      "X & u4.5": 3.9,
-     "X & o4.5": 37.0,
-     "2 & u4.5": 4.0,
-     "2 & o4.5": 12.5,
-     "1 & u3.5": 3.25,
+     "X & o4.5": 36.0,
+     "2 & u4.5": 4.1,
+     "2 & o4.5": 12.0,
+     "1 & u3.5": 3.3,
      "1 & o3.5": 4.3,
-     "X & u3.5": 5.5,
-     "X & o3.5": 9.4,
+     "X & u3.5": 5.6,
+     "X & o3.5": 9.25,
      "2 & u3.5": 4.9,
-     "2 & o3.5": 8.1,
+     "2 & o3.5": 8.0,
      "1 & u2.5": 6.25,
-     "1 & o2.5": 2.7,
-     "X & u2.5": 5.5,
-     "X & o2.5": 9.4,
-     "2 & u2.5": 9.25,
-     "2 & o2.5": 4.6
+     "1 & o2.5": 2.65,
+     "X & u2.5": 5.6,
+     "X & o2.5": 9.25,
+     "2 & u2.5": 9.4,
+     "2 & o2.5": 4.5
     },
     "pelna": true
    },
@@ -5033,43 +5710,43 @@
     "nazwa": "Bayern Monachium - Arsenal",
     "zgodnosc": 1.0,
     "kursy": {
-     "1": 2.0,
+     "1": 2.03,
      "X": 3.75,
-     "2": 3.32,
-     "1X": 1.31,
+     "2": 3.22,
+     "1X": 1.33,
      "12": 1.26,
-     "X2": 1.75,
+     "X2": 1.73,
      "Over 0.5": 1.02,
-     "Under 0.5": 11.0,
-     "Over 1.5": 1.16,
-     "Under 1.5": 4.85,
-     "Over 2.5": 1.53,
-     "Under 2.5": 2.4,
-     "Over 3.5": 2.28,
-     "Under 3.5": 1.58,
-     "Over 4.5": 3.88,
-     "Under 4.5": 1.23,
-     "Over 5.5": 6.75,
+     "Under 0.5": 11.25,
+     "Over 1.5": 1.15,
+     "Under 1.5": 4.95,
+     "Over 2.5": 1.52,
+     "Under 2.5": 2.42,
+     "Over 3.5": 2.25,
+     "Under 3.5": 1.59,
+     "Over 4.5": 3.83,
+     "Under 4.5": 1.24,
+     "Over 5.5": 6.6,
      "Under 5.5": 1.09,
-     "BTTS Tak": 1.5,
-     "BTTS Nie": 2.47,
+     "BTTS Tak": 1.49,
+     "BTTS Nie": 2.5,
      "H o0.5": 1.15,
-     "H o1.5": 1.72,
-     "H o2.5": 3.28,
+     "H o1.5": 1.73,
+     "H o2.5": 3.3,
      "H o3.5": 6.4,
-     "H o4.5": 10.5,
-     "A o0.5": 1.27,
-     "A o1.5": 2.28,
-     "A o2.5": 5.5,
-     "A o3.5": 9.75,
+     "H o4.5": 10.75,
+     "A o0.5": 1.26,
+     "A o1.5": 2.22,
+     "A o2.5": 5.25,
+     "A o3.5": 9.5,
      "A o4.5": 12.25,
      "H -4.5": 27.0,
-     "H -3.5": 14.75,
-     "H -2.5": 7.0,
-     "H -1.5": 3.43,
-     "A -1.5": 6.75,
-     "A -2.5": 18.5,
-     "A -3.5": 29.0
+     "H -3.5": 15.25,
+     "H -2.5": 7.25,
+     "H -1.5": 3.5,
+     "A -1.5": 6.4,
+     "A -2.5": 17.5,
+     "A -3.5": 28.0
     },
     "pelna": true,
     "rynkow": 14,
@@ -5077,7 +5754,7 @@
      "Wynik meczu (z wyłączeniem dogrywki)": [
       [
        "Bayern Monachium",
-       2.0
+       2.03
       ],
       [
        "Remis",
@@ -5085,33 +5762,33 @@
       ],
       [
        "Arsenal",
-       3.32
+       3.22
       ]
      ],
      "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
       [
        "Bayern Monachium",
-       1.91
+       1.93
       ],
       [
        "Arsenal",
-       3.05
+       2.97
       ]
      ],
      "Wynik meczu - Xtra Wygrana": [
       [
        "Bayern Monachium",
-       1.59
+       1.61
       ],
       [
        "Arsenal",
-       2.55
+       2.47
       ]
      ],
      "Podwójna Szansa": [
       [
        "Bayern Monachium lub remis",
-       1.31
+       1.33
       ],
       [
        "Bayern Monachium lub Arsenal",
@@ -5119,7 +5796,7 @@
       ],
       [
        "Remis lub Arsenal",
-       1.75
+       1.73
       ]
      ],
      "Gole Powyżej/Poniżej": [
@@ -5129,43 +5806,43 @@
       ],
       [
        "Poniżej 0,5",
-       11.0
+       11.25
       ],
       [
        "Powyżej 1,5",
-       1.16
+       1.15
       ],
       [
        "Poniżej 1,5",
-       4.85
+       4.95
       ],
       [
        "Powyżej 2,5",
-       1.53
+       1.52
       ],
       [
        "Poniżej 2,5",
-       2.4
+       2.42
       ],
       [
        "Powyżej 3,5",
-       2.28
+       2.25
       ],
       [
        "Poniżej 3,5",
-       1.58
+       1.59
       ],
       [
        "Powyżej 4,5",
-       3.88
+       3.83
       ],
       [
        "Poniżej 4,5",
-       1.23
+       1.24
       ],
       [
        "Powyżej 5,5",
-       6.75
+       6.6
       ],
       [
        "Poniżej 5,5",
@@ -5175,11 +5852,11 @@
      "Oba zespoły strzelą gola": [
       [
        "Tak",
-       1.5
+       1.49
       ],
       [
        "Nie",
-       2.47
+       2.5
       ]
      ],
      "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
@@ -5201,31 +5878,31 @@
      "Którykolwiek zawodnik strzeli gola": [
       [
        "H. Kane / V. Gyokeres",
-       1.55
+       1.53
       ],
       [
        "H. Kane / K. Havertz",
-       1.55
+       1.53
       ],
       [
        "H. Kane / L. Diaz",
-       1.57
+       1.54
       ],
       [
        "H. Kane / I. Saibari",
        1.59
       ],
       [
+       "H. Kane / S. Gnabry",
+       1.62
+      ],
+      [
        "H. Kane / B. Saka",
        1.63
       ],
       [
-       "H. Kane / S. Gnabry",
-       1.64
-      ],
-      [
        "H. Kane / L. Karl",
-       1.66
+       1.64
       ],
       [
        "H. Kane / M. Merino",
@@ -5241,18 +5918,30 @@
       ],
       [
        "H. Kane / N. Madueke",
-       1.76
+       1.75
       ],
       [
        "H. Kane / N. Brown",
-       1.78
+       1.79
       ],
       [
        "H. Kane / M. Ødegaard",
        1.81
       ],
       [
+       "V. Gyokeres / K. Havertz",
+       1.82
+      ],
+      [
        "H. Kane / T. Bischof",
+       1.83
+      ],
+      [
+       "V. Gyokeres / L. Diaz",
+       1.83
+      ],
+      [
+       "K. Havertz / L. Diaz",
        1.83
       ],
       [
@@ -5260,90 +5949,78 @@
        1.85
       ],
       [
-       "V. Gyokeres / K. Havertz",
-       1.87
-      ],
-      [
        "H. Kane / D. Rice",
        1.89
-      ],
-      [
-       "K. Havertz / L. Diaz",
-       1.9
       ],
       [
        "H. Kane / A. Pavlovic",
        1.91
       ],
       [
-       "V. Gyokeres / L. Diaz",
-       1.91
+       "K. Havertz / I. Saibari",
+       1.93
       ],
       [
        "H. Kane / J. Kimmich",
        1.93
       ],
       [
-       "H. Kane / Gabriel Mag",
-       1.95
-      ],
-      [
        "V. Gyokeres / I. Saibari",
-       1.96
+       1.94
       ],
       [
-       "K. Havertz / I. Saibari",
-       1.96
+       "H. Kane / Gabriel Mag",
+       1.94
       ],
       [
        "L. Diaz / I. Saibari",
+       1.95
+      ],
+      [
+       "S. Gnabry / K. Havertz",
+       2.0
+      ],
+      [
+       "V. Gyokeres / B. Saka",
+       2.0
+      ],
+      [
+       "S. Gnabry / V. Gyokeres",
        2.0
       ],
       [
        "K. Havertz / B. Saka",
-       2.03
+       2.0
       ],
       [
-       "S. Gnabry / K. Havertz",
-       2.05
-      ],
-      [
-       "V. Gyokeres / B. Saka",
-       2.05
-      ],
-      [
-       "S. Gnabry / V. Gyokeres",
-       2.07
-      ],
-      [
-       "L. Diaz / B. Saka",
-       2.07
+       "S. Gnabry / L. Diaz",
+       2.02
       ]
      ],
      "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
       [
        "L. Diaz / H. Kane",
-       1.26
+       1.27
       ],
       [
        "H. Kane / I. Saibari",
        1.28
       ],
       [
+       "L. Karl / H. Kane",
+       1.29
+      ],
+      [
        "H. Kane / B. Saka",
        1.29
       ],
       [
-       "H. Kane / S. Gnabry",
-       1.29
-      ],
-      [
        "H. Kane / K. Havertz",
-       1.31
+       1.3
       ],
       [
-       "L. Karl / H. Kane",
-       1.32
+       "H. Kane / S. Gnabry",
+       1.3
       ],
       [
        "H. Kane / V. Gyokeres",
@@ -5382,8 +6059,12 @@
        1.42
       ],
       [
+       "L. Diaz / K. Havertz",
+       1.44
+      ],
+      [
        "L. Diaz / S. Gnabry",
-       1.43
+       1.44
       ],
       [
        "H. Kane / B. Guimaraes",
@@ -5394,6 +6075,10 @@
        1.44
       ],
       [
+       "L. Karl / L. Diaz",
+       1.45
+      ],
+      [
        "L. Diaz / B. Saka",
        1.45
       ],
@@ -5402,31 +6087,27 @@
        1.45
       ],
       [
-       "L. Diaz / K. Havertz",
+       "I. Saibari / K. Havertz",
        1.46
       ],
       [
-       "L. Karl / L. Diaz",
-       1.47
-      ],
-      [
        "I. Saibari / S. Gnabry",
-       1.47
+       1.46
       ],
       [
        "I. Saibari / B. Saka",
        1.48
       ],
       [
-       "I. Saibari / K. Havertz",
-       1.49
-      ],
-      [
        "L. Karl / I. Saibari",
-       1.49
+       1.48
       ],
       [
        "L. Diaz / V. Gyokeres",
+       1.48
+      ],
+      [
+       "K. Havertz / S. Gnabry",
        1.49
       ],
       [
@@ -5434,12 +6115,8 @@
        1.5
       ],
       [
-       "B. Saka / S. Gnabry",
+       "L. Karl / K. Havertz",
        1.5
-      ],
-      [
-       "K. Havertz / S. Gnabry",
-       1.51
       ]
      ],
      "Liczba goli - Bayern Monachium": [
@@ -5453,7 +6130,7 @@
       ],
       [
        "Powyżej 1,5",
-       1.72
+       1.73
       ],
       [
        "Poniżej 1,5",
@@ -5461,11 +6138,11 @@
       ],
       [
        "Powyżej 2,5",
-       3.28
+       3.3
       ],
       [
        "Poniżej 2,5",
-       1.31
+       1.3
       ],
       [
        "Powyżej 3,5",
@@ -5477,7 +6154,7 @@
       ],
       [
        "Powyżej 4,5",
-       10.5
+       10.75
       ],
       [
        "Poniżej 4,5",
@@ -5487,35 +6164,35 @@
      "Liczba goli - Arsenal": [
       [
        "Powyżej 0,5",
-       1.27
+       1.26
       ],
       [
        "Poniżej 0,5",
-       3.53
+       3.63
       ],
       [
        "Powyżej 1,5",
-       2.28
+       2.22
       ],
       [
        "Poniżej 1,5",
-       1.56
+       1.59
       ],
       [
        "Powyżej 2,5",
-       5.5
+       5.25
       ],
       [
        "Poniżej 2,5",
-       1.14
+       1.15
       ],
       [
        "Powyżej 3,5",
-       9.75
+       9.5
       ],
       [
        "Poniżej 3,5",
-       1.02
+       1.03
       ],
       [
        "Powyżej 4,5",
@@ -5541,11 +6218,11 @@
       ],
       [
        "Bayern Monachium (-3)",
-       14.75
+       15.25
       ],
       [
        "Remis (Bayern Monachium -3)",
-       9.0
+       9.25
       ],
       [
        "Arsenal (+3)",
@@ -5553,7 +6230,7 @@
       ],
       [
        "Bayern Monachium (-2)",
-       7.0
+       7.25
       ],
       [
        "Remis (Bayern Monachium -2)",
@@ -5561,23 +6238,23 @@
       ],
       [
        "Arsenal (+2)",
-       1.28
+       1.27
       ],
       [
        "Bayern Monachium (-1)",
-       3.43
+       3.5
       ],
       [
        "Remis (Bayern Monachium -1)",
-       4.2
+       4.25
       ],
       [
        "Arsenal (+1)",
-       1.75
+       1.73
       ],
       [
        "Bayern Monachium (+1)",
-       1.31
+       1.33
       ],
       [
        "Remis (Bayern Monachium +1)",
@@ -5585,19 +6262,19 @@
       ],
       [
        "Arsenal (-1)",
-       6.75
+       6.4
       ],
       [
        "Bayern Monachium (+2)",
-       1.09
+       1.1
       ],
       [
        "Remis (Bayern Monachium +2)",
-       10.25
+       9.75
       ],
       [
        "Arsenal (-2)",
-       18.5
+       17.5
       ],
       [
        "Bayern Monachium (+3)",
@@ -5609,17 +6286,17 @@
       ],
       [
        "Arsenal (-3)",
-       29.0
+       28.0
       ]
      ],
      "Dokładny wynik": [
       [
        "1 - 0",
-       10.75
+       11.0
       ],
       [
        "0 - 0",
-       18.25
+       18.75
       ],
       [
        "0 - 1",
@@ -5627,7 +6304,7 @@
       ],
       [
        "2 - 0",
-       11.75
+       12.0
       ],
       [
        "1 - 1",
@@ -5635,11 +6312,11 @@
       ],
       [
        "0 - 2",
-       21.0
+       20.0
       ],
       [
        "2 - 1",
-       8.5
+       8.75
       ],
       [
        "2 - 2",
@@ -5651,7 +6328,7 @@
       ],
       [
        "3 - 0",
-       19.0
+       19.75
       ],
       [
        "3 - 3",
@@ -5659,7 +6336,7 @@
       ],
       [
        "0 - 3",
-       45.0
+       43.0
       ],
       [
        "3 - 1",
@@ -5667,27 +6344,27 @@
       ],
       [
        "4 - 4",
-       250.0
+       225.0
       ],
       [
        "1 - 3",
-       24.0
+       23.0
       ],
       [
        "3 - 2",
-       20.0
+       19.75
       ],
       [
        "Inny",
-       15.25
+       15.0
       ],
       [
        "2 - 3",
-       27.0
+       26.0
       ],
       [
        "4 - 0",
-       40.0
+       43.0
       ],
       [
        "0 - 4",
@@ -5699,7 +6376,7 @@
       ],
       [
        "1 - 4",
-       70.0
+       65.0
       ],
       [
        "4 - 2",
@@ -5707,11 +6384,11 @@
       ],
       [
        "2 - 4",
-       75.0
+       70.0
       ],
       [
        "4 - 3",
-       95.0
+       90.0
       ],
       [
        "3 - 4",
@@ -5727,54 +6404,54 @@
     "nazwa": "Betis - Feyenoord",
     "zgodnosc": 0.97,
     "kursy": {
-     "1": 1.6,
-     "2": 4.75,
-     "X": 4.65,
-     "1X": 1.2,
-     "X2": 2.26,
-     "12": 1.21,
-     "BTTS Tak": 1.45,
-     "BTTS Nie": 2.66,
-     "H o4.5": 7.2,
+     "1": 1.65,
+     "2": 4.45,
+     "X": 4.5,
+     "1X": 1.22,
+     "X2": 2.17,
+     "12": 1.22,
+     "BTTS Tak": 1.43,
+     "BTTS Nie": 2.7,
+     "H o4.5": 7.6,
      "A o3.5": 10.0,
-     "1 & o2.5": 1.87,
+     "1 & o2.5": 1.92,
      "X & u2.5": 7.0,
-     "X & o2.5": 8.8,
+     "X & o2.5": 8.6,
      "2 & u2.5": 14.0,
-     "2 & o2.5": 5.6,
-     "1 & u2.5": 6.0,
+     "2 & o2.5": 5.4,
+     "1 & u2.5": 6.4,
      "Over 1.5": 1.1,
      "Under 1.5": 6.3,
-     "BTTS & o2.5": 1.58,
+     "BTTS & o2.5": 1.57,
      "Over 3.5": 1.91,
      "Under 3.5": 1.86,
      "Under 5.5": 1.15,
      "Over 5.5": 5.1,
-     "A o1.5": 2.43,
-     "A o2.5": 5.4,
+     "A o1.5": 2.34,
+     "A o2.5": 5.2,
      "Over 4.5": 3.0,
      "Under 4.5": 1.37,
      "H o0.5": 1.07,
      "Over 0.5": 1.01,
-     "Under 0.5": 13.5,
-     "H o2.5": 2.19,
-     "H -1.5": 2.38,
+     "Under 0.5": 13.0,
+     "H o2.5": 2.25,
+     "H -1.5": 2.49,
      "Over 2.5": 1.37,
      "Under 2.5": 3.05,
-     "H o3.5": 3.95,
-     "H o1.5": 1.4,
-     "1 & o3.5": 2.65,
-     "X & u3.5": 7.2,
-     "X & o3.5": 9.0,
-     "2 & u3.5": 7.2,
-     "2 & o3.5": 9.8,
-     "1 & u3.5": 3.05,
-     "A o0.5": 1.31,
-     "2 & o1.5": 4.8,
-     "2 & u1.5": 23.0,
-     "X & o1.5": 4.6,
+     "H o3.5": 4.1,
+     "H o1.5": 1.42,
+     "1 & o3.5": 2.75,
+     "X & u3.5": 7.0,
+     "X & o3.5": 8.6,
+     "2 & u3.5": 6.8,
+     "2 & o3.5": 9.0,
+     "1 & u3.5": 3.1,
+     "A o0.5": 1.29,
+     "2 & o1.5": 4.5,
+     "2 & u1.5": 22.0,
+     "X & o1.5": 4.5,
      "X & u1.5": 25.0,
-     "1 & o1.5": 1.63,
+     "1 & o1.5": 1.68,
      "1 & u1.5": 13.0
     },
     "pelna": true
@@ -5784,16 +6461,16 @@
     "nazwa": "Real Betis - Feyenoord Rotterdam",
     "zgodnosc": 0.96,
     "kursy": {
-     "1": 1.56,
-     "X": 4.8,
-     "2": 5.25,
+     "1": 1.6,
+     "X": 4.7,
+     "2": 4.9,
      "12": 1.22,
-     "X2": 2.45,
-     "1X": 1.19,
-     "A o0.5": 1.35,
-     "H o0.5": 1.07,
-     "H -1.5": 2.3,
-     "H -2.5": 3.9,
+     "X2": 2.4,
+     "1X": 1.2,
+     "A o0.5": 1.33,
+     "H o0.5": 1.08,
+     "H -1.5": 2.4,
+     "H -2.5": 4.1,
      "Over 1.5": 1.11,
      "Under 1.5": 6.6,
      "Over 0.5": 1.01,
@@ -5807,38 +6484,38 @@
      "Over 5.5": 5.25,
      "Under 5.5": 1.16,
      "H o1.5": 1.4,
-     "H o4.5": 7.75,
-     "H o3.5": 3.9,
+     "H o4.5": 8.0,
+     "H o3.5": 4.0,
      "H o2.5": 2.2,
-     "A o1.5": 2.6,
-     "A o3.5": 17.0,
-     "A o2.5": 6.5,
-     "BTTS Tak": 1.48,
-     "BTTS Nie": 2.65,
-     "1 & u1.5": 13.0,
-     "1 & o1.5": 1.62,
+     "A o1.5": 2.5,
+     "A o3.5": 16.0,
+     "A o2.5": 6.0,
+     "BTTS Tak": 1.46,
+     "BTTS Nie": 2.7,
+     "1 & u1.5": 13.5,
+     "1 & o1.5": 1.67,
      "X & u1.5": 25.0,
-     "X & o1.5": 5.0,
+     "X & o1.5": 4.9,
      "2 & u1.5": 25.0,
-     "2 & o1.5": 5.6,
-     "1 & u4.5": 2.25,
-     "1 & o4.5": 3.8,
-     "X & u4.5": 4.9,
-     "X & o4.5": 33.0,
-     "2 & u4.5": 6.6,
-     "2 & o4.5": 16.0,
+     "2 & o1.5": 5.25,
+     "1 & u4.5": 2.3,
+     "1 & o4.5": 3.9,
+     "X & u4.5": 4.8,
+     "X & o4.5": 32.0,
+     "2 & u4.5": 6.25,
+     "2 & o4.5": 15.0,
      "1 & u3.5": 3.1,
-     "1 & o3.5": 2.65,
-     "X & u3.5": 7.5,
-     "X & o3.5": 9.75,
-     "2 & u3.5": 8.0,
-     "2 & o3.5": 11.5,
-     "1 & u2.5": 6.25,
-     "1 & o2.5": 1.85,
-     "X & u2.5": 7.5,
-     "X & o2.5": 9.75,
+     "1 & o3.5": 2.7,
+     "X & u3.5": 7.4,
+     "X & o3.5": 9.4,
+     "2 & u3.5": 7.6,
+     "2 & o3.5": 10.5,
+     "1 & u2.5": 6.4,
+     "1 & o2.5": 1.9,
+     "X & u2.5": 7.4,
+     "X & o2.5": 9.4,
      "2 & u2.5": 16.0,
-     "2 & o2.5": 6.6
+     "2 & o2.5": 6.1
     },
     "pelna": true
    },
@@ -5847,16 +6524,16 @@
     "nazwa": "Betis - Feyenoord",
     "zgodnosc": 0.97,
     "kursy": {
-     "1": 1.57,
-     "X": 4.6,
-     "2": 4.65,
-     "1X": 1.18,
-     "12": 1.19,
-     "X2": 2.3,
+     "1": 1.62,
+     "X": 4.45,
+     "2": 4.4,
+     "1X": 1.2,
+     "12": 1.2,
+     "X2": 2.2,
      "Over 0.5": 1.01,
      "Under 0.5": 12.5,
      "Over 1.5": 1.1,
-     "Under 1.5": 6.25,
+     "Under 1.5": 6.4,
      "Over 2.5": 1.35,
      "Under 2.5": 3.02,
      "Over 3.5": 1.88,
@@ -5865,24 +6542,24 @@
      "Under 4.5": 1.37,
      "Over 5.5": 4.9,
      "Under 5.5": 1.15,
-     "BTTS Tak": 1.45,
-     "BTTS Nie": 2.65,
+     "BTTS Tak": 1.43,
+     "BTTS Nie": 2.7,
      "H o0.5": 1.07,
-     "H o1.5": 1.4,
-     "H o2.5": 2.2,
-     "H o3.5": 3.95,
-     "H o4.5": 7.25,
-     "A o0.5": 1.31,
-     "A o1.5": 2.43,
-     "A o2.5": 6.25,
-     "A o3.5": 10.25,
+     "H o1.5": 1.42,
+     "H o2.5": 2.25,
+     "H o3.5": 4.1,
+     "H o4.5": 7.5,
+     "A o0.5": 1.29,
+     "A o1.5": 2.35,
+     "A o2.5": 5.75,
+     "A o3.5": 10.0,
      "A o4.5": 12.25,
-     "H -4.5": 15.5,
-     "H -3.5": 8.0,
-     "H -2.5": 4.1,
-     "H -1.5": 2.35,
-     "A -1.5": 9.75,
-     "A -2.5": 30.0,
+     "H -4.5": 16.5,
+     "H -3.5": 8.5,
+     "H -2.5": 4.35,
+     "H -1.5": 2.45,
+     "A -1.5": 9.0,
+     "A -2.5": 28.0,
      "A -3.5": 33.0
     },
     "pelna": true,
@@ -5891,49 +6568,49 @@
      "Wynik meczu (z wyłączeniem dogrywki)": [
       [
        "Betis",
-       1.57
+       1.62
       ],
       [
        "Remis",
-       4.6
+       4.45
       ],
       [
        "Feyenoord",
-       4.65
+       4.4
       ]
      ],
      "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
       [
        "Betis",
-       1.51
+       1.56
       ],
       [
        "Feyenoord",
-       4.05
+       3.85
       ]
      ],
      "Wynik meczu - Xtra Wygrana": [
       [
        "Betis",
-       1.29
+       1.32
       ],
       [
        "Feyenoord",
-       3.6
+       3.37
       ]
      ],
      "Podwójna Szansa": [
       [
        "Betis lub remis",
-       1.18
+       1.2
       ],
       [
        "Betis lub Feyenoord",
-       1.19
+       1.2
       ],
       [
        "Remis lub Feyenoord",
-       2.3
+       2.2
       ]
      ],
      "Gole Powyżej/Poniżej": [
@@ -5951,7 +6628,7 @@
       ],
       [
        "Poniżej 1,5",
-       6.25
+       6.4
       ],
       [
        "Powyżej 2,5",
@@ -5989,11 +6666,11 @@
      "Oba zespoły strzelą gola": [
       [
        "Tak",
-       1.45
+       1.43
       ],
       [
        "Nie",
-       2.65
+       2.7
       ]
      ],
      "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
@@ -6044,16 +6721,16 @@
        1.58
       ],
       [
-       "A. Fidalgo / T. Parrott",
-       1.6
-      ],
-      [
        "T. Parrott / A. H. Moussa",
        1.6
       ],
       [
        "G. Zechiël / T. Parrott",
        1.61
+      ],
+      [
+       "A. Fidalgo / T. Parrott",
+       1.62
       ],
       [
        "Antony / Isco",
@@ -6142,11 +6819,11 @@
        1.16
       ],
       [
-       "Isco / T. Parrott",
-       1.17
+       "A. Ezzalzouli / T. Parrott",
+       1.18
       ],
       [
-       "A. Ezzalzouli / T. Parrott",
+       "Isco / T. Parrott",
        1.18
       ],
       [
@@ -6162,28 +6839,28 @@
        1.21
       ],
       [
-       "A. Ezzalzouli / Antony",
+       "Isco / Antony",
        1.21
       ],
       [
-       "Isco / Antony",
-       1.21
+       "A. Ezzalzouli / Antony",
+       1.22
       ],
       [
        "G. Lo Celso / Cucho Hernandez",
        1.22
       ],
       [
+       "T. Parrott / P. Fornals",
+       1.23
+      ],
+      [
        "T. Parrott / R. Riquelme",
-       1.22
+       1.23
       ],
       [
        "A. Ezzalzouli / Isco",
-       1.23
-      ],
-      [
-       "T. Parrott / P. Fornals",
-       1.23
+       1.24
       ],
       [
        "P. Fornals / Cucho Hernandez",
@@ -6202,6 +6879,10 @@
        1.26
       ],
       [
+       "R. Riquelme / Antony",
+       1.26
+      ],
+      [
        "T. Parrott / S. Steijn",
        1.27
       ],
@@ -6214,20 +6895,12 @@
        1.27
       ],
       [
-       "R. Riquelme / Antony",
-       1.27
-      ],
-      [
        "A. Ezzalzouli / G. Lo Celso",
        1.28
       ],
       [
        "A. Fidalgo / Cucho Hernandez",
        1.28
-      ],
-      [
-       "Isco / R. Riquelme",
-       1.29
       ],
       [
        "T. Parrott / N. Ferri",
@@ -6238,16 +6911,20 @@
        1.3
       ],
       [
-       "A. Fidalgo / Antony",
+       "Isco / R. Riquelme",
        1.3
       ],
       [
-       "A. Ezzalzouli / P. Fornals",
+       "A. Fidalgo / Antony",
        1.3
       ],
       [
        "A. Ezzalzouli / R. Riquelme",
        1.3
+      ],
+      [
+       "A. Ezzalzouli / P. Fornals",
+       1.31
       ]
      ],
      "Liczba goli - Betis": [
@@ -6257,35 +6934,35 @@
       ],
       [
        "Poniżej 0,5",
-       8.75
+       8.5
       ],
       [
        "Powyżej 1,5",
-       1.4
+       1.42
       ],
       [
        "Poniżej 1,5",
-       2.75
+       2.68
       ],
       [
        "Powyżej 2,5",
-       2.2
+       2.25
       ],
       [
        "Poniżej 2,5",
-       1.6
+       1.57
       ],
       [
        "Powyżej 3,5",
-       3.95
+       4.1
       ],
       [
        "Poniżej 3,5",
-       1.21
+       1.2
       ],
       [
        "Powyżej 4,5",
-       7.25
+       7.5
       ],
       [
        "Poniżej 4,5",
@@ -6295,31 +6972,31 @@
      "Liczba goli - Feyenoord": [
       [
        "Powyżej 0,5",
-       1.31
+       1.29
       ],
       [
        "Poniżej 0,5",
-       3.25
+       3.4
       ],
       [
        "Powyżej 1,5",
-       2.43
+       2.35
       ],
       [
        "Poniżej 1,5",
-       1.5
+       1.53
       ],
       [
        "Powyżej 2,5",
-       6.25
+       5.75
       ],
       [
        "Poniżej 2,5",
-       1.12
+       1.13
       ],
       [
        "Powyżej 3,5",
-       10.25
+       10.0
       ],
       [
        "Poniżej 3,5",
@@ -6337,11 +7014,11 @@
      "Handicap": [
       [
        "Betis (-4)",
-       15.5
+       16.5
       ],
       [
        "Remis (Betis -4)",
-       10.5
+       10.75
       ],
       [
        "Feyenoord (+4)",
@@ -6349,31 +7026,31 @@
       ],
       [
        "Betis (-3)",
-       8.0
+       8.5
       ],
       [
        "Remis (Betis -3)",
-       6.9
+       7.25
       ],
       [
        "Feyenoord (+3)",
-       1.2
+       1.19
       ],
       [
        "Betis (-2)",
-       4.1
+       4.35
       ],
       [
        "Remis (Betis -2)",
-       4.9
+       5.0
       ],
       [
        "Feyenoord (+2)",
-       1.53
+       1.49
       ],
       [
        "Betis (-1)",
-       2.35
+       2.45
       ],
       [
        "Remis (Betis -1)",
@@ -6381,19 +7058,19 @@
       ],
       [
        "Feyenoord (+1)",
-       2.3
+       2.2
       ],
       [
        "Betis (+1)",
-       1.18
+       1.2
       ],
       [
        "Remis (Betis +1)",
-       7.0
+       6.75
       ],
       [
        "Feyenoord (-1)",
-       9.75
+       9.0
       ],
       [
        "Betis (+2)",
@@ -6401,11 +7078,11 @@
       ],
       [
        "Remis (Betis +2)",
-       15.25
+       14.0
       ],
       [
        "Feyenoord (-2)",
-       30.0
+       28.0
       ],
       [
        "Betis (+3)",
@@ -6423,19 +7100,19 @@
      "Dokładny wynik": [
       [
        "1 - 0",
-       12.75
+       13.0
       ],
       [
        "0 - 0",
-       29.0
+       28.0
       ],
       [
        "0 - 1",
-       23.0
+       22.0
       ],
       [
        "2 - 0",
-       10.75
+       11.25
       ],
       [
        "1 - 1",
@@ -6443,7 +7120,7 @@
       ],
       [
        "0 - 2",
-       35.0
+       33.0
       ],
       [
        "2 - 1",
@@ -6451,27 +7128,27 @@
       ],
       [
        "2 - 2",
-       12.25
+       11.75
       ],
       [
        "1 - 2",
-       15.25
+       14.5
       ],
       [
        "3 - 0",
-       13.75
+       14.5
       ],
       [
        "3 - 3",
-       35.0
+       33.0
       ],
       [
        "0 - 3",
-       80.0
+       75.0
       ],
       [
        "3 - 1",
-       10.75
+       11.0
       ],
       [
        "4 - 4",
@@ -6479,35 +7156,35 @@
       ],
       [
        "1 - 3",
-       35.0
+       33.0
       ],
       [
        "3 - 2",
-       16.5
+       16.25
       ],
       [
        "Inny",
-       7.75
+       8.25
       ],
       [
        "2 - 3",
-       30.0
+       28.0
       ],
       [
        "4 - 0",
-       23.0
+       25.0
       ],
       [
        "0 - 4",
-       250.0
+       225.0
       ],
       [
        "4 - 1",
-       18.0
+       18.75
       ],
       [
        "1 - 4",
-       110.0
+       95.0
       ],
       [
        "4 - 2",
@@ -6515,11 +7192,11 @@
       ],
       [
        "2 - 4",
-       90.0
+       85.0
       ],
       [
        "4 - 3",
-       65.0
+       60.0
       ],
       [
        "3 - 4",
@@ -6535,55 +7212,55 @@
     "nazwa": "Sporting L. - LASK",
     "zgodnosc": 0.97,
     "kursy": {
-     "2": 11.5,
-     "X": 7.4,
-     "1": 1.2,
-     "X2": 4.0,
-     "1X": 1.06,
+     "2": 12.5,
+     "X": 7.6,
+     "1": 1.19,
+     "X2": 4.15,
+     "1X": 1.05,
      "12": 1.1,
-     "BTTS Tak": 1.72,
-     "BTTS Nie": 2.04,
-     "H o4.5": 4.3,
-     "H o5.5": 7.4,
+     "BTTS Tak": 1.76,
+     "BTTS Nie": 1.99,
+     "H o4.5": 4.2,
+     "H o5.5": 7.2,
      "Over 5.5": 4.4,
      "Under 5.5": 1.2,
-     "H -1.5": 1.54,
-     "Over 4.5": 2.65,
+     "H -1.5": 1.51,
+     "Over 4.5": 2.66,
      "Under 4.5": 1.47,
      "X & u2.5": 9.8,
-     "X & o2.5": 16.0,
-     "1 & u2.5": 4.8,
-     "1 & o2.5": 1.38,
-     "2 & u2.5": 28.0,
-     "2 & o2.5": 15.0,
-     "H o1.5": 1.19,
-     "H o2.5": 1.61,
+     "X & o2.5": 17.0,
+     "1 & u2.5": 4.7,
+     "1 & o2.5": 1.37,
+     "2 & u2.5": 30.0,
+     "2 & o2.5": 16.0,
+     "H o1.5": 1.18,
+     "H o2.5": 1.59,
      "Over 1.5": 1.08,
      "Under 1.5": 7.3,
-     "X & o3.5": 17.0,
+     "X & o3.5": 18.0,
      "X & u3.5": 10.0,
-     "1 & o3.5": 1.84,
-     "1 & u3.5": 2.5,
-     "2 & o3.5": 30.0,
-     "2 & u3.5": 15.0,
-     "BTTS & o2.5": 1.82,
-     "A o2.5": 9.2,
-     "Over 2.5": 1.29,
+     "1 & o3.5": 1.82,
+     "1 & u3.5": 2.47,
+     "2 & o3.5": 35.0,
+     "2 & u3.5": 16.0,
+     "BTTS & o2.5": 1.86,
+     "A o2.5": 9.6,
+     "Over 2.5": 1.3,
      "Under 2.5": 3.45,
-     "H -2.5": 2.27,
-     "A o1.5": 3.95,
+     "H -2.5": 2.2,
+     "A o1.5": 4.1,
      "Over 3.5": 1.75,
      "Under 3.5": 2.04,
-     "1 & o1.5": 1.22,
-     "X & u1.5": 29.0,
+     "1 & o1.5": 1.21,
+     "X & u1.5": 28.0,
      "1 & u1.5": 11.0,
-     "2 & o1.5": 12.0,
-     "X & o1.5": 7.0,
-     "2 & u1.5": 35.0,
+     "2 & o1.5": 13.0,
+     "X & o1.5": 7.2,
+     "2 & u1.5": 40.0,
      "Under 0.5": 15.0,
      "Over 0.5": 1.01,
-     "H o3.5": 2.5,
-     "A o0.5": 1.63
+     "H o3.5": 2.46,
+     "A o0.5": 1.67
     },
     "pelna": true
    },
@@ -6656,12 +7333,12 @@
     "nazwa": "Sporting Lizbona - LASK Linz",
     "zgodnosc": 0.96,
     "kursy": {
-     "1": 1.19,
-     "X": 7.25,
-     "2": 11.25,
-     "1X": 1.05,
+     "1": 1.17,
+     "X": 7.5,
+     "2": 12.0,
+     "1X": 1.04,
      "12": 1.08,
-     "X2": 4.45,
+     "X2": 4.7,
      "Over 0.5": 1.01,
      "Under 0.5": 38.0,
      "Over 1.5": 1.07,
@@ -6674,62 +7351,56 @@
      "Under 4.5": 1.46,
      "Over 5.5": 4.2,
      "Under 5.5": 1.2,
-     "BTTS Tak": 1.72,
-     "BTTS Nie": 2.05,
-     "H o1.5": 1.19,
-     "H o2.5": 1.61,
-     "H o3.5": 2.5,
-     "H o4.5": 4.3,
-     "H o5.5": 7.5,
-     "A o0.5": 1.63,
-     "A o1.5": 3.93,
-     "A o2.5": 15.0,
+     "BTTS Tak": 1.76,
+     "BTTS Nie": 1.98,
+     "H o1.5": 1.18,
+     "H o2.5": 1.59,
+     "H o3.5": 2.47,
+     "H o4.5": 4.2,
+     "H o5.5": 7.25,
+     "A o0.5": 1.67,
+     "A o1.5": 4.15,
+     "A o2.5": 16.75,
      "A o3.5": 12.25,
-     "H -6.5": 21.0,
-     "H -5.5": 12.75,
-     "H -4.5": 6.9,
-     "H -3.5": 3.73,
-     "H -2.5": 2.23,
-     "H -1.5": 1.52,
-     "A -1.5": 24.0
+     "H -6.5": 20.0,
+     "H -5.5": 12.25,
+     "H -4.5": 6.6,
+     "H -3.5": 3.6,
+     "H -2.5": 2.17,
+     "H -1.5": 1.49,
+     "A -1.5": 26.0
     },
     "pelna": true,
-    "rynkow": 13,
+    "rynkow": 12,
     "oferta": {
      "Wynik meczu (z wyłączeniem dogrywki)": [
-      [
-       "Sporting Lizbona",
-       1.19
-      ],
-      [
-       "Remis",
-       7.25
-      ],
-      [
-       "LASK Linz",
-       11.25
-      ]
-     ],
-     "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
       [
        "Sporting Lizbona",
        1.17
       ],
       [
-       "LASK Linz",
-       9.0
-      ]
-     ],
-     "Wynik meczu - Xtra Wygrana": [
+       "Remis",
+       7.5
+      ],
       [
        "LASK Linz",
-       10.0
+       12.0
+      ]
+     ],
+     "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
+      [
+       "Sporting Lizbona",
+       1.16
+      ],
+      [
+       "LASK Linz",
+       9.5
       ]
      ],
      "Podwójna Szansa": [
       [
        "Sporting Lizbona lub remis",
-       1.05
+       1.04
       ],
       [
        "Sporting Lizbona lub LASK Linz",
@@ -6737,7 +7408,7 @@
       ],
       [
        "Remis lub LASK Linz",
-       4.45
+       4.7
       ]
      ],
      "Gole Powyżej/Poniżej": [
@@ -6793,11 +7464,11 @@
      "Oba zespoły strzelą gola": [
       [
        "Tak",
-       1.72
+       1.76
       ],
       [
        "Nie",
-       2.05
+       1.98
       ]
      ],
      "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
@@ -6824,12 +7495,12 @@
        1.26
       ],
       [
-       "F. Ioannidis / R. Nel",
+       "Luis Suárez / J. Derry",
        1.28
       ],
       [
-       "Luis Suárez / J. Derry",
-       1.28
+       "F. Ioannidis / R. Nel",
+       1.29
       ],
       [
        "Luis Suárez / F. Gonçalves",
@@ -6852,12 +7523,12 @@
        1.35
       ],
       [
-       "F. Ioannidis / J. Derry",
+       "N. Irankunda / R. Nel",
        1.36
       ],
       [
-       "N. Irankunda / R. Nel",
-       1.36
+       "F. Ioannidis / J. Derry",
+       1.37
       ],
       [
        "F. Ioannidis / F. Gonçalves",
@@ -6888,20 +7559,20 @@
        1.45
       ],
       [
-       "F. Ioannidis / Issa Doumbia",
-       1.45
-      ],
-      [
-       "F. Ioannidis / L. Guilherme",
-       1.45
-      ],
-      [
        "M. Araujo / Luis Suárez",
        1.45
       ],
       [
        "Luis Suárez / C. Lang",
        1.45
+      ],
+      [
+       "F. Ioannidis / Issa Doumbia",
+       1.46
+      ],
+      [
+       "F. Ioannidis / L. Guilherme",
+       1.46
       ],
       [
        "N. Irankunda / J. Derry",
@@ -6925,11 +7596,11 @@
       ],
       [
        "F. Ioannidis / Pedro Lima",
-       1.54
+       1.55
       ],
       [
        "F. Ioannidis / S. Adeniran",
-       1.55
+       1.56
       ]
      ],
      "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
@@ -7057,39 +7728,39 @@
      "Liczba goli - Sporting Lizbona": [
       [
        "Powyżej 1,5",
-       1.19
-      ],
-      [
-       "Poniżej 1,5",
-       4.15
-      ],
-      [
-       "Powyżej 2,5",
-       1.61
-      ],
-      [
-       "Poniżej 2,5",
-       2.18
-      ],
-      [
-       "Powyżej 3,5",
-       2.5
-      ],
-      [
-       "Poniżej 3,5",
-       1.47
-      ],
-      [
-       "Powyżej 4,5",
-       4.3
-      ],
-      [
-       "Poniżej 4,5",
        1.18
       ],
       [
+       "Poniżej 1,5",
+       4.25
+      ],
+      [
+       "Powyżej 2,5",
+       1.59
+      ],
+      [
+       "Poniżej 2,5",
+       2.22
+      ],
+      [
+       "Powyżej 3,5",
+       2.47
+      ],
+      [
+       "Poniżej 3,5",
+       1.48
+      ],
+      [
+       "Powyżej 4,5",
+       4.2
+      ],
+      [
+       "Poniżej 4,5",
+       1.19
+      ],
+      [
        "Powyżej 5,5",
-       7.5
+       7.25
       ],
       [
        "Poniżej 5,5",
@@ -7099,27 +7770,27 @@
      "Liczba goli - LASK Linz": [
       [
        "Powyżej 0,5",
-       1.63
+       1.67
       ],
       [
        "Poniżej 0,5",
-       2.15
+       2.08
       ],
       [
        "Powyżej 1,5",
-       3.93
+       4.15
       ],
       [
        "Poniżej 1,5",
-       1.21
+       1.19
       ],
       [
        "Powyżej 2,5",
-       15.0
+       16.75
       ],
       [
        "Poniżej 2,5",
-       1.03
+       1.02
       ],
       [
        "Powyżej 3,5",
@@ -7133,11 +7804,11 @@
      "Handicap": [
       [
        "Sporting Lizbona (-6)",
-       21.0
+       20.0
       ],
       [
        "Remis (Sporting Lizbona -6)",
-       13.5
+       13.25
       ],
       [
        "LASK Linz (+6)",
@@ -7145,81 +7816,81 @@
       ],
       [
        "Sporting Lizbona (-5)",
-       12.75
+       12.25
       ],
       [
        "Remis (Sporting Lizbona -5)",
-       10.0
+       9.75
       ],
       [
        "LASK Linz (+5)",
-       1.08
+       1.09
       ],
       [
        "Sporting Lizbona (-4)",
-       6.9
+       6.6
       ],
       [
        "Remis (Sporting Lizbona -4)",
-       6.75
+       6.6
       ],
       [
        "LASK Linz (+4)",
-       1.24
+       1.25
       ],
       [
        "Sporting Lizbona (-3)",
-       3.73
+       3.6
       ],
       [
        "Remis (Sporting Lizbona -3)",
-       4.95
+       4.9
       ],
       [
        "LASK Linz (+3)",
-       1.59
+       1.62
       ],
       [
        "Sporting Lizbona (-2)",
-       2.23
+       2.17
       ],
       [
        "Remis (Sporting Lizbona -2)",
-       4.3
+       4.25
       ],
       [
        "LASK Linz (+2)",
-       2.38
+       2.47
       ],
       [
        "Sporting Lizbona (-1)",
-       1.52
+       1.49
       ],
       [
        "Remis (Sporting Lizbona -1)",
-       4.6
+       4.7
       ],
       [
        "LASK Linz (+1)",
-       4.45
+       4.7
       ],
       [
        "Sporting Lizbona (+1)",
-       1.05
+       1.04
       ],
       [
        "Remis (Sporting Lizbona +1)",
-       14.75
+       15.75
       ],
       [
        "LASK Linz (-1)",
-       24.0
+       26.0
       ]
      ],
      "Dokładny wynik": [
       [
        "1 - 0",
-       12.25
+       12.0
       ],
       [
        "0 - 0",
@@ -7231,39 +7902,39 @@
       ],
       [
        "2 - 0",
-       8.25
-      ],
-      [
-       "1 - 1",
-       14.75
-      ],
-      [
-       "0 - 2",
-       100.0
-      ],
-      [
-       "2 - 1",
-       9.5
-      ],
-      [
-       "2 - 2",
-       23.0
-      ],
-      [
-       "1 - 2",
-       33.0
-      ],
-      [
-       "3 - 0",
        8.0
       ],
       [
+       "1 - 1",
+       15.25
+      ],
+      [
+       "0 - 2",
+       110.0
+      ],
+      [
+       "2 - 1",
+       9.75
+      ],
+      [
+       "2 - 2",
+       24.0
+      ],
+      [
+       "1 - 2",
+       35.0
+      ],
+      [
+       "3 - 0",
+       7.75
+      ],
+      [
        "3 - 3",
-       75.0
+       85.0
       ],
       [
        "0 - 3",
-       350.0
+       375.0
       ],
       [
        "3 - 1",
@@ -7271,27 +7942,27 @@
       ],
       [
        "4 - 4",
-       500.0
+       550.0
       ],
       [
        "1 - 3",
-       110.0
+       125.0
       ],
       [
        "3 - 2",
-       22.0
+       23.0
       ],
       [
        "Inny",
-       4.2
+       4.05
       ],
       [
        "2 - 3",
-       75.0
+       85.0
       ],
       [
        "4 - 0",
-       10.75
+       10.25
       ],
       [
        "0 - 4",
@@ -7299,27 +7970,27 @@
       ],
       [
        "4 - 1",
-       12.5
+       12.25
       ],
       [
        "1 - 4",
-       550.0
+       600.0
       ],
       [
        "4 - 2",
-       28.0
+       29.0
       ],
       [
        "2 - 4",
-       350.0
+       400.0
       ],
       [
        "4 - 3",
-       100.0
+       110.0
       ],
       [
        "3 - 4",
-       350.0
+       400.0
       ]
      ]
     }
@@ -7444,6 +8115,683 @@
      "2 & o2.5": 3.4
     },
     "pelna": true
+   },
+   "betclic": {
+    "id": "1249812214194176",
+    "nazwa": "Levante - Athletic Bilbao",
+    "zgodnosc": 1.0,
+    "kursy": {
+     "1": 3.47,
+     "X": 3.25,
+     "2": 2.1,
+     "1X": 1.67,
+     "12": 1.32,
+     "X2": 1.29,
+     "Over 0.5": 1.05,
+     "Under 0.5": 8.25,
+     "Over 1.5": 1.29,
+     "Under 1.5": 3.37,
+     "Over 2.5": 1.94,
+     "Under 2.5": 1.81,
+     "Over 3.5": 3.23,
+     "Under 3.5": 1.31,
+     "Over 4.5": 6.1,
+     "Under 4.5": 1.11,
+     "Over 5.5": 10.25,
+     "Under 5.5": 1.03,
+     "BTTS Tak": 1.76,
+     "BTTS Nie": 1.98,
+     "H o0.5": 1.4,
+     "H o1.5": 2.9,
+     "H o2.5": 8.5,
+     "H o3.5": 11.5,
+     "A o0.5": 1.23,
+     "A o1.5": 2.1,
+     "A o2.5": 4.7,
+     "A o3.5": 8.75,
+     "A o4.5": 12.0,
+     "H -3.5": 35.0,
+     "H -2.5": 25.0,
+     "H -1.5": 7.75,
+     "A -1.5": 3.98,
+     "A -2.5": 9.25,
+     "A -3.5": 20.0,
+     "A -4.5": 33.0
+    },
+    "pelna": true,
+    "rynkow": 13,
+    "oferta": {
+     "Wynik meczu (z wyłączeniem dogrywki)": [
+      [
+       "Levante",
+       3.47
+      ],
+      [
+       "Remis",
+       3.25
+      ],
+      [
+       "Athletic Bilbao",
+       2.1
+      ]
+     ],
+     "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
+      [
+       "Levante",
+       3.28
+      ],
+      [
+       "Athletic Bilbao",
+       2.03
+      ]
+     ],
+     "Wynik meczu - Xtra Wygrana": [
+      [
+       "Levante",
+       2.78
+      ],
+      [
+       "Athletic Bilbao",
+       1.72
+      ]
+     ],
+     "Podwójna Szansa": [
+      [
+       "Levante lub remis",
+       1.67
+      ],
+      [
+       "Levante lub Athletic Bilbao",
+       1.32
+      ],
+      [
+       "Remis lub Athletic Bilbao",
+       1.29
+      ]
+     ],
+     "Gole Powyżej/Poniżej": [
+      [
+       "Powyżej 0,5",
+       1.05
+      ],
+      [
+       "Poniżej 0,5",
+       8.25
+      ],
+      [
+       "Powyżej 1,5",
+       1.29
+      ],
+      [
+       "Poniżej 1,5",
+       3.37
+      ],
+      [
+       "Powyżej 2,5",
+       1.94
+      ],
+      [
+       "Poniżej 2,5",
+       1.81
+      ],
+      [
+       "Powyżej 3,5",
+       3.23
+      ],
+      [
+       "Poniżej 3,5",
+       1.31
+      ],
+      [
+       "Powyżej 4,5",
+       6.1
+      ],
+      [
+       "Poniżej 4,5",
+       1.11
+      ],
+      [
+       "Powyżej 5,5",
+       10.25
+      ],
+      [
+       "Poniżej 5,5",
+       1.03
+      ]
+     ],
+     "Oba zespoły strzelą gola": [
+      [
+       "Tak",
+       1.76
+      ],
+      [
+       "Nie",
+       1.98
+      ]
+     ],
+     "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
+      [
+       "Tak",
+       1.45
+      ],
+      [
+       "Nie",
+       2.55
+      ]
+     ],
+     "Którykolwiek zawodnik strzeli gola": [
+      [
+       "R. Navarro / Maroan Sannadi",
+       2.07
+      ],
+      [
+       "Iv. Romero / Maroan Sannadi",
+       2.07
+      ],
+      [
+       "P. Ratkov / Maroan Sannadi",
+       2.1
+      ],
+      [
+       "R. Navarro / Iv. Romero",
+       2.13
+      ],
+      [
+       "N. Serrano / Maroan Sannadi",
+       2.17
+      ],
+      [
+       "R. Navarro / P. Ratkov",
+       2.17
+      ],
+      [
+       "Iv. Romero / P. Ratkov",
+       2.17
+      ],
+      [
+       "R. Navarro / N. Serrano",
+       2.23
+      ],
+      [
+       "Iv. Romero / N. Serrano",
+       2.23
+      ],
+      [
+       "R. Brugue / Maroan Sannadi",
+       2.25
+      ],
+      [
+       "Maroan Sannadi / P. Canales",
+       2.25
+      ],
+      [
+       "P. Ratkov / N. Serrano",
+       2.27
+      ],
+      [
+       "A. Berenguer / Maroan Sannadi",
+       2.3
+      ],
+      [
+       "R. Brugue / Iv. Romero",
+       2.32
+      ],
+      [
+       "R. Brugue / R. Navarro",
+       2.33
+      ],
+      [
+       "Iv. Romero / P. Canales",
+       2.33
+      ],
+      [
+       "R. Navarro / P. Canales",
+       2.35
+      ],
+      [
+       "T. Fernandez / Maroan Sannadi",
+       2.35
+      ],
+      [
+       "P. Cortés / Maroan Sannadi",
+       2.35
+      ],
+      [
+       "A. Berenguer / Iv. Romero",
+       2.37
+      ],
+      [
+       "R. Brugue / P. Ratkov",
+       2.37
+      ],
+      [
+       "A. Berenguer / R. Navarro",
+       2.38
+      ],
+      [
+       "P. Ratkov / P. Canales",
+       2.38
+      ],
+      [
+       "A. Berenguer / P. Ratkov",
+       2.42
+      ],
+      [
+       "R. Navarro / T. Fernandez",
+       2.43
+      ],
+      [
+       "R. Navarro / P. Cortés",
+       2.43
+      ],
+      [
+       "R. Brugue / N. Serrano",
+       2.43
+      ],
+      [
+       "Iv. Romero / T. Fernandez",
+       2.43
+      ],
+      [
+       "Iv. Romero / P. Cortés",
+       2.43
+      ],
+      [
+       "N. Serrano / P. Canales",
+       2.45
+      ]
+     ],
+     "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
+      [
+       "A. Hierro / I. Williams",
+       1.39
+      ],
+      [
+       "A. Hierro / Maroan Sannadi",
+       1.41
+      ],
+      [
+       "A. Hierro / R. Navarro",
+       1.44
+      ],
+      [
+       "A. Berenguer / A. Hierro",
+       1.46
+      ],
+      [
+       "A. Hierro / N. Serrano",
+       1.46
+      ],
+      [
+       "A. Hierro / Iv. Romero",
+       1.47
+      ],
+      [
+       "A. Hierro / Y. Musuayi",
+       1.47
+      ],
+      [
+       "A. Hierro / P. Canales",
+       1.47
+      ],
+      [
+       "A. Hierro / R. Brugue",
+       1.48
+      ],
+      [
+       "P. Ratkov / A. Hierro",
+       1.48
+      ],
+      [
+       "K. Etta / A. Hierro",
+       1.49
+      ],
+      [
+       "Maroan Sannadi / I. Williams",
+       1.49
+      ],
+      [
+       "T. Fernandez / A. Hierro",
+       1.51
+      ],
+      [
+       "R. Navarro / I. Williams",
+       1.53
+      ],
+      [
+       "N. Serrano / I. Williams",
+       1.55
+      ],
+      [
+       "A. Berenguer / I. Williams",
+       1.55
+      ],
+      [
+       "I. Williams / P. Canales",
+       1.56
+      ],
+      [
+       "P. Cortés / A. Hierro",
+       1.56
+      ],
+      [
+       "Y. Musuayi / I. Williams",
+       1.57
+      ],
+      [
+       "R. Navarro / Maroan Sannadi",
+       1.57
+      ],
+      [
+       "Iv. Romero / I. Williams",
+       1.57
+      ],
+      [
+       "P. Ratkov / I. Williams",
+       1.58
+      ],
+      [
+       "R. Brugue / I. Williams",
+       1.58
+      ],
+      [
+       "K. Etta / I. Williams",
+       1.59
+      ],
+      [
+       "A. Berenguer / Maroan Sannadi",
+       1.6
+      ],
+      [
+       "Maroan Sannadi / N. Serrano",
+       1.6
+      ],
+      [
+       "Maroan Sannadi / Iv. Romero",
+       1.61
+      ],
+      [
+       "Maroan Sannadi / Y. Musuayi",
+       1.61
+      ],
+      [
+       "Maroan Sannadi / P. Canales",
+       1.61
+      ],
+      [
+       "T. Fernandez / I. Williams",
+       1.61
+      ]
+     ],
+     "Liczba goli - Levante": [
+      [
+       "Powyżej 0,5",
+       1.4
+      ],
+      [
+       "Poniżej 0,5",
+       2.75
+      ],
+      [
+       "Powyżej 1,5",
+       2.9
+      ],
+      [
+       "Poniżej 1,5",
+       1.36
+      ],
+      [
+       "Powyżej 2,5",
+       8.5
+      ],
+      [
+       "Poniżej 2,5",
+       1.07
+      ],
+      [
+       "Powyżej 3,5",
+       11.5
+      ],
+      [
+       "Poniżej 3,5",
+       1.01
+      ]
+     ],
+     "Liczba goli - Athletic Bilbao": [
+      [
+       "Powyżej 0,5",
+       1.23
+      ],
+      [
+       "Poniżej 0,5",
+       3.95
+      ],
+      [
+       "Powyżej 1,5",
+       2.1
+      ],
+      [
+       "Poniżej 1,5",
+       1.66
+      ],
+      [
+       "Powyżej 2,5",
+       4.7
+      ],
+      [
+       "Poniżej 2,5",
+       1.18
+      ],
+      [
+       "Powyżej 3,5",
+       8.75
+      ],
+      [
+       "Poniżej 3,5",
+       1.04
+      ],
+      [
+       "Powyżej 4,5",
+       12.0
+      ],
+      [
+       "Poniżej 4,5",
+       1.01
+      ]
+     ],
+     "Handicap": [
+      [
+       "Levante (-3)",
+       35.0
+      ],
+      [
+       "Remis (Levante -3)",
+       12.25
+      ],
+      [
+       "Athletic Bilbao (+3)",
+       1.01
+      ],
+      [
+       "Levante (-2)",
+       25.0
+      ],
+      [
+       "Remis (Levante -2)",
+       11.0
+      ],
+      [
+       "Athletic Bilbao (+2)",
+       1.07
+      ],
+      [
+       "Levante (-1)",
+       7.75
+      ],
+      [
+       "Remis (Levante -1)",
+       5.1
+      ],
+      [
+       "Athletic Bilbao (+1)",
+       1.29
+      ],
+      [
+       "Levante (+1)",
+       1.67
+      ],
+      [
+       "Remis (Levante +1)",
+       4.0
+      ],
+      [
+       "Athletic Bilbao (-1)",
+       3.98
+      ],
+      [
+       "Levante (+2)",
+       1.22
+      ],
+      [
+       "Remis (Levante +2)",
+       6.1
+      ],
+      [
+       "Athletic Bilbao (-2)",
+       9.25
+      ],
+      [
+       "Levante (+3)",
+       1.05
+      ],
+      [
+       "Remis (Levante +3)",
+       10.0
+      ],
+      [
+       "Athletic Bilbao (-3)",
+       20.0
+      ],
+      [
+       "Levante (+4)",
+       1.01
+      ],
+      [
+       "Remis (Levante +4)",
+       13.0
+      ],
+      [
+       "Athletic Bilbao (-4)",
+       33.0
+      ]
+     ],
+     "Dokładny wynik": [
+      [
+       "1 - 0",
+       10.5
+      ],
+      [
+       "0 - 0",
+       10.25
+      ],
+      [
+       "0 - 1",
+       7.75
+      ],
+      [
+       "2 - 0",
+       17.75
+      ],
+      [
+       "1 - 1",
+       5.75
+      ],
+      [
+       "0 - 2",
+       9.75
+      ],
+      [
+       "2 - 1",
+       11.75
+      ],
+      [
+       "2 - 2",
+       13.25
+      ],
+      [
+       "1 - 2",
+       8.75
+      ],
+      [
+       "3 - 0",
+       48.0
+      ],
+      [
+       "3 - 3",
+       70.0
+      ],
+      [
+       "0 - 3",
+       19.25
+      ],
+      [
+       "3 - 1",
+       30.0
+      ],
+      [
+       "4 - 4",
+       700.0
+      ],
+      [
+       "1 - 3",
+       17.25
+      ],
+      [
+       "3 - 2",
+       40.0
+      ],
+      [
+       "Inny",
+       33.0
+      ],
+      [
+       "2 - 3",
+       30.0
+      ],
+      [
+       "4 - 0",
+       175.0
+      ],
+      [
+       "0 - 4",
+       50.0
+      ],
+      [
+       "4 - 1",
+       110.0
+      ],
+      [
+       "1 - 4",
+       45.0
+      ],
+      [
+       "4 - 2",
+       150.0
+      ],
+      [
+       "2 - 4",
+       80.0
+      ],
+      [
+       "4 - 3",
+       300.0
+      ],
+      [
+       "3 - 4",
+       225.0
+      ]
+     ]
+    }
    }
   },
   "03cd9aab53293d44e78489ce0ab707e3": {
@@ -7842,15 +9190,19 @@
      "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
       [
        "H. Martín / M. Borja",
-       1.24
+       1.23
       ],
       [
        "M. Borja / A. Zendejas",
-       1.25
+       1.24
       ],
       [
        "H. Martín / A. Zendejas",
-       1.25
+       1.24
+      ],
+      [
+       "H. Martín / R. Veiga",
+       1.26
       ],
       [
        "H. Martín / B.Rodríguez",
@@ -7858,11 +9210,11 @@
       ],
       [
        "B.Rodríguez / M. Borja",
-       1.27
+       1.26
       ],
       [
-       "H. Martín / R. Veiga",
-       1.28
+       "H. Martín / J. Zuniga",
+       1.27
       ],
       [
        "R. Veiga / M. Borja",
@@ -7873,15 +9225,15 @@
        1.28
       ],
       [
-       "R. Veiga / A. Zendejas",
-       1.28
-      ],
-      [
-       "H. Martín / J. Zuniga",
+       "M. Borja / J. Zuniga",
        1.29
       ],
       [
-       "M. Borja / J. Zuniga",
+       "R. Veiga / A. Zendejas",
+       1.29
+      ],
+      [
+       "J. Zuniga / A. Zendejas",
        1.3
       ],
       [
@@ -7889,76 +9241,72 @@
        1.31
       ],
       [
-       "J. Zuniga / A. Zendejas",
-       1.31
-      ],
-      [
        "B.Rodríguez / J. Zuniga",
-       1.33
+       1.32
       ],
       [
        "H. Martín / F. Monzón",
+       1.32
+      ],
+      [
+       "R. Veiga / J. Zuniga",
        1.33
       ],
       [
        "M. Borja / F. Monzón",
-       1.34
+       1.33
       ],
       [
        "F. Monzón / A. Zendejas",
        1.34
       ],
       [
-       "R. Veiga / J. Zuniga",
-       1.35
+       "H. Martín / L. Gamboa",
+       1.37
       ],
       [
        "B.Rodríguez / F. Monzón",
        1.37
       ],
       [
-       "H. Martín / L. Gamboa",
+       "M. Borja / L. Gamboa",
        1.38
       ],
       [
-       "M. Borja / L. Gamboa",
-       1.39
+       "H. Martín / J. Martin",
+       1.38
       ],
       [
        "R. Veiga / F. Monzón",
        1.39
       ],
       [
-       "H. Martín / J. Martin",
+       "M. Borja / J. Martin",
        1.39
       ],
       [
-       "M. Borja / J. Martin",
-       1.4
-      ],
-      [
        "H. Martín / L. Esteves",
-       1.4
+       1.39
       ],
       [
        "H. Martín / A. Gonzalez",
-       1.4
+       1.39
       ],
       [
        "J. Zuniga / F. Monzón",
-       1.41
+       1.4
       ],
       [
        "L. Gamboa / A. Zendejas",
-       1.41
-      ],
-      [
-       "A. Zendejas / J. Martin",
-       1.41
+       1.4
       ],
       [
        "M. Borja / L. Esteves",
-       1.41
+       1.4
+      ],
+      [
+       "M. Borja / A. Gonzalez",
+       1.4
       ]
      ],
      "Liczba goli - Atlas Guadalajara": [
@@ -9033,46 +10381,46 @@
      "X2": 1.34,
      "1X": 1.55,
      "1 & o4.5": 12.0,
-     "1 & u4.5": 3.35,
+     "1 & u4.5": 3.4,
      "X & o4.5": 40.0,
      "X & u4.5": 3.4,
-     "2 & o4.5": 8.4,
-     "2 & u4.5": 2.6,
+     "2 & o4.5": 8.2,
+     "2 & u4.5": 2.65,
      "2 & o2.5": 3.05,
-     "1 & u2.5": 7.2,
-     "1 & o2.5": 4.2,
-     "X & u2.5": 4.6,
-     "X & o2.5": 9.4,
+     "1 & u2.5": 7.4,
+     "1 & o2.5": 4.1,
+     "X & u2.5": 4.7,
+     "X & o2.5": 9.2,
      "2 & u2.5": 5.8,
      "2 & u1.5": 10.0,
-     "X & o1.5": 4.0,
+     "X & o1.5": 3.95,
      "X & u1.5": 14.0,
-     "1 & o1.5": 3.4,
+     "1 & o1.5": 3.35,
      "1 & u1.5": 12.0,
-     "2 & o1.5": 2.5,
-     "A o2.5": 3.85,
-     "H o1.5": 2.31,
-     "A o1.5": 1.94,
-     "BTTS Tak": 1.56,
-     "BTTS Nie": 2.27,
-     "H o0.5": 1.28,
-     "Over 3.5": 2.65,
-     "Under 3.5": 1.47,
-     "Under 2.5": 2.15,
-     "Over 2.5": 1.68,
-     "H o2.5": 5.0,
-     "BTTS & o2.5": 1.81,
-     "Under 1.5": 4.2,
+     "2 & o1.5": 2.49,
+     "A o2.5": 3.8,
+     "H o1.5": 2.28,
+     "A o1.5": 1.92,
+     "BTTS Tak": 1.55,
+     "BTTS Nie": 2.31,
+     "H o0.5": 1.27,
+     "Over 3.5": 2.6,
+     "Under 3.5": 1.48,
+     "Under 2.5": 2.18,
+     "Over 2.5": 1.66,
+     "H o2.5": 4.9,
+     "BTTS & o2.5": 1.79,
+     "Under 1.5": 4.3,
      "Over 1.5": 1.21,
-     "Over 4.5": 4.8,
+     "Over 4.5": 4.6,
      "Under 4.5": 1.18,
-     "1 & u3.5": 4.0,
-     "1 & o3.5": 7.8,
-     "X & u3.5": 4.6,
-     "X & o3.5": 9.4,
-     "2 & u3.5": 3.2,
-     "2 & o3.5": 5.4,
-     "A o0.5": 1.2
+     "1 & u3.5": 4.1,
+     "1 & o3.5": 7.6,
+     "X & u3.5": 4.7,
+     "X & o3.5": 9.2,
+     "2 & u3.5": 3.25,
+     "2 & o3.5": 5.2,
+     "A o0.5": 1.19
     },
     "pelna": true
    },
@@ -9087,52 +10435,52 @@
      "12": 1.28,
      "X2": 1.37,
      "1X": 1.6,
-     "A o0.5": 1.2,
-     "H o0.5": 1.28,
+     "A o0.5": 1.19,
+     "H o0.5": 1.27,
      "H -1.5": 5.75,
      "A -1.5": 4.0,
-     "Over 1.5": 1.2,
-     "Under 1.5": 4.0,
+     "Over 1.5": 1.19,
+     "Under 1.5": 4.1,
      "Over 0.5": 1.03,
-     "Under 0.5": 13.0,
-     "Over 4.5": 4.5,
+     "Under 0.5": 13.5,
+     "Over 4.5": 4.4,
      "Under 4.5": 1.17,
-     "Over 3.5": 2.55,
-     "Under 3.5": 1.45,
-     "Over 2.5": 1.65,
-     "Under 2.5": 2.1,
-     "Over 5.5": 8.75,
-     "Under 5.5": 1.05,
+     "Over 3.5": 2.5,
+     "Under 3.5": 1.46,
+     "Over 2.5": 1.62,
+     "Under 2.5": 2.15,
+     "Over 5.5": 8.5,
+     "Under 5.5": 1.06,
      "H o1.5": 2.3,
-     "H o2.5": 5.25,
-     "A o1.5": 1.95,
-     "A o2.5": 3.9,
-     "BTTS Tak": 1.56,
-     "BTTS Nie": 2.25,
+     "H o2.5": 5.1,
+     "A o1.5": 1.92,
+     "A o2.5": 3.8,
+     "BTTS Tak": 1.55,
+     "BTTS Nie": 2.3,
      "1 & u1.5": 12.0,
      "1 & o1.5": 3.4,
-     "X & u1.5": 13.0,
+     "X & u1.5": 13.5,
      "X & o1.5": 4.0,
-     "2 & u1.5": 10.0,
+     "2 & u1.5": 10.5,
      "2 & o1.5": 2.5,
      "1 & u4.5": 3.4,
      "1 & o4.5": 12.0,
      "X & u4.5": 3.4,
-     "X & o4.5": 41.0,
-     "2 & u4.5": 2.6,
-     "2 & o4.5": 8.5,
-     "1 & u3.5": 4.0,
-     "1 & o3.5": 7.75,
-     "X & u3.5": 4.6,
-     "X & o3.5": 9.4,
-     "2 & u3.5": 3.2,
+     "X & o4.5": 39.0,
+     "2 & u4.5": 2.65,
+     "2 & o4.5": 8.25,
+     "1 & u3.5": 4.1,
+     "1 & o3.5": 7.5,
+     "X & u3.5": 4.7,
+     "X & o3.5": 9.25,
+     "2 & u3.5": 3.25,
      "2 & o3.5": 5.25,
-     "1 & u2.5": 7.25,
-     "1 & o2.5": 4.2,
-     "X & u2.5": 4.6,
-     "X & o2.5": 9.4,
-     "2 & u2.5": 5.75,
-     "2 & o2.5": 3.1
+     "1 & u2.5": 7.4,
+     "1 & o2.5": 4.1,
+     "X & u2.5": 4.7,
+     "X & o2.5": 9.25,
+     "2 & u2.5": 5.9,
+     "2 & o2.5": 3.0
     },
     "pelna": true
    },
@@ -9144,40 +10492,40 @@
      "1": 2.9,
      "X": 3.43,
      "2": 2.15,
-     "1X": 1.6,
+     "1X": 1.59,
      "12": 1.26,
      "X2": 1.36,
      "Over 0.5": 1.02,
      "Under 0.5": 8.25,
-     "Over 1.5": 1.18,
-     "Under 1.5": 3.95,
-     "Over 2.5": 1.61,
-     "Under 2.5": 2.08,
-     "Over 3.5": 2.47,
-     "Under 3.5": 1.44,
-     "Over 4.5": 4.2,
-     "Under 4.5": 1.16,
-     "Over 5.5": 6.75,
+     "Over 1.5": 1.17,
+     "Under 1.5": 4.05,
+     "Over 2.5": 1.59,
+     "Under 2.5": 2.12,
+     "Over 3.5": 2.42,
+     "Under 3.5": 1.45,
+     "Over 4.5": 4.1,
+     "Under 4.5": 1.17,
+     "Over 5.5": 6.6,
      "Under 5.5": 1.05,
-     "BTTS Tak": 1.54,
-     "BTTS Nie": 2.22,
+     "BTTS Tak": 1.52,
+     "BTTS Nie": 2.25,
      "H o0.5": 1.26,
-     "H o1.5": 2.25,
-     "H o2.5": 5.5,
-     "H o3.5": 8.5,
+     "H o1.5": 2.22,
+     "H o2.5": 5.4,
+     "H o3.5": 8.25,
      "H o4.5": 9.75,
      "A o0.5": 1.18,
-     "A o1.5": 1.9,
-     "A o2.5": 4.0,
-     "A o3.5": 7.0,
+     "A o1.5": 1.88,
+     "A o2.5": 3.93,
+     "A o3.5": 6.9,
      "A o4.5": 9.5,
      "H -3.5": 24.0,
-     "H -2.5": 16.25,
-     "H -1.5": 5.9,
-     "A -1.5": 3.98,
-     "A -2.5": 9.25,
-     "A -3.5": 17.25,
-     "A -4.5": 27.0
+     "H -2.5": 16.0,
+     "H -1.5": 5.75,
+     "A -1.5": 3.95,
+     "A -2.5": 9.0,
+     "A -3.5": 17.0,
+     "A -4.5": 26.0
     },
     "pelna": true,
     "rynkow": 12,
@@ -9209,7 +10557,7 @@
      "Podwójna Szansa": [
       [
        "Pachuca lub remis",
-       1.6
+       1.59
       ],
       [
        "Pachuca lub Cruz Azul",
@@ -9231,39 +10579,39 @@
       ],
       [
        "Powyżej 1,5",
-       1.18
+       1.17
       ],
       [
        "Poniżej 1,5",
-       3.95
+       4.05
       ],
       [
        "Powyżej 2,5",
-       1.61
+       1.59
       ],
       [
        "Poniżej 2,5",
-       2.08
+       2.12
       ],
       [
        "Powyżej 3,5",
-       2.47
+       2.42
       ],
       [
        "Poniżej 3,5",
-       1.44
+       1.45
       ],
       [
        "Powyżej 4,5",
-       4.2
+       4.1
       ],
       [
        "Poniżej 4,5",
-       1.16
+       1.17
       ],
       [
        "Powyżej 5,5",
-       6.75
+       6.6
       ],
       [
        "Poniżej 5,5",
@@ -9273,11 +10621,11 @@
      "Oba zespoły strzelą gola": [
       [
        "Tak",
-       1.54
+       1.52
       ],
       [
        "Nie",
-       2.22
+       2.25
       ]
      ],
      "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
@@ -9300,71 +10648,87 @@
        1.6
       ],
       [
-       "N. Ibanez / G. Fernandez",
-       1.63
-      ],
-      [
        "S. Rondon / D. Mendez",
-       1.67
+       1.61
       ],
       [
        "S. Rondon / J. Ramirez",
-       1.67
+       1.61
       ],
       [
-       "S. Rondon / J. Calero",
-       1.69
+       "N. Ibanez / G. Fernandez",
+       1.62
       ],
       [
        "G. Fernandez / D. Mendez",
-       1.7
+       1.64
       ],
       [
        "G. Fernandez / J. Ramirez",
+       1.64
+      ],
+      [
+       "N. Ibanez / D. Mendez",
+       1.66
+      ],
+      [
+       "N. Ibanez / J. Ramirez",
+       1.66
+      ],
+      [
+       "S. Rondon / J. Calero",
+       1.67
+      ],
+      [
+       "D. Mendez / J. Ramirez",
+       1.68
+      ],
+      [
+       "J. Calero / G. Fernandez",
        1.7
       ],
       [
        "S. Rondon / C. Ebere",
-       1.72
-      ],
-      [
-       "J. Calero / G. Fernandez",
-       1.72
-      ],
-      [
-       "N. Ibanez / D. Mendez",
-       1.73
-      ],
-      [
-       "N. Ibanez / J. Ramirez",
-       1.73
+       1.71
       ],
       [
        "S. Rondon / A. Alcaraz",
-       1.74
+       1.72
       ],
       [
        "S. Rondon / M. Levy",
-       1.74
+       1.73
+      ],
+      [
+       "J. Calero / N. Ibanez",
+       1.73
+      ],
+      [
+       "J. Calero / D. Mendez",
+       1.75
+      ],
+      [
+       "J. Calero / J. Ramirez",
+       1.75
       ],
       [
        "C. Ebere / G. Fernandez",
        1.75
       ],
       [
-       "J. Calero / N. Ibanez",
-       1.75
+       "S. Rondon / E. Portillo",
+       1.76
       ],
       [
-       "S. Rondon / E. Portillo",
-       1.77
+       "G. Fernandez / A. Alcaraz",
+       1.76
       ],
       [
        "G. Fernandez / M. Levy",
        1.77
       ],
       [
-       "G. Fernandez / A. Alcaraz",
+       "S. Rondon / A. Arroyo",
        1.78
       ],
       [
@@ -9372,125 +10736,113 @@
        1.78
       ],
       [
+       "N. Ibanez / A. Alcaraz",
+       1.79
+      ],
+      [
+       "S. Rondon / P. Achinulo",
+       1.79
+      ],
+      [
+       "C. Ebere / D. Mendez",
+       1.8
+      ],
+      [
+       "C. Ebere / J. Ramirez",
+       1.8
+      ],
+      [
        "G. Fernandez / E. Portillo",
        1.8
       ],
       [
-       "S. Rondon / A. Arroyo",
-       1.81
-      ],
-      [
-       "D. Mendez / J. Ramirez",
-       1.81
-      ],
-      [
-       "N. Ibanez / A. Alcaraz",
-       1.81
-      ],
-      [
        "N. Ibanez / M. Levy",
-       1.81
-      ],
-      [
-       "S. Rondon / P. Achinulo",
-       1.82
-      ],
-      [
-       "J. Calero / D. Mendez",
-       1.83
-      ],
-      [
-       "J. Calero / J. Ramirez",
-       1.83
-      ],
-      [
-       "N. Ibanez / E. Portillo",
-       1.84
-      ],
-      [
-       "G. Fernandez / A. Arroyo",
-       1.85
+       1.8
       ]
      ],
      "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
       [
        "S. Rondon / B. Gamboa",
-       1.29
+       1.28
       ],
       [
        "S. Rondon / N. Ibanez",
-       1.29
+       1.28
       ],
       [
        "S. Rondon / J. Calero",
-       1.3
+       1.28
       ],
       [
        "S. Rondon / J. Paradela",
-       1.31
+       1.3
       ],
       [
-       "S. Rondon / A. Palavecino",
-       1.31
+       "S. Rondon / E. Portillo",
+       1.3
+      ],
+      [
+       "A. Arroyo / S. Rondon",
+       1.34
+      ],
+      [
+       "S. Rondon / O. Idrissi",
+       1.34
+      ],
+      [
+       "S. Rondon / A. Alcaraz",
+       1.34
       ],
       [
        "B. Gamboa / N. Ibanez",
        1.34
       ],
       [
-       "A. Arroyo / S. Rondon",
-       1.35
-      ],
-      [
-       "S. Rondon / O. Idrissi",
-       1.35
-      ],
-      [
-       "S. Rondon / A. Alcaraz",
-       1.35
-      ],
-      [
        "B. Gamboa / J. Calero",
-       1.36
+       1.34
       ],
       [
        "N. Ibanez / J. Calero",
-       1.36
+       1.34
       ],
       [
        "B. Gamboa / J. Paradela",
-       1.37
+       1.36
+      ],
+      [
+       "B. Gamboa / E. Portillo",
+       1.36
       ],
       [
        "J. Paradela / N. Ibanez",
        1.37
       ],
       [
-       "B. Gamboa / A. Palavecino",
-       1.37
-      ],
-      [
-       "N. Ibanez / A. Palavecino",
+       "N. Ibanez / E. Portillo",
        1.37
       ],
       [
        "J. Paradela / J. Calero",
-       1.38
+       1.37
+      ],
+      [
+       "E. Portillo / J. Calero",
+       1.37
       ],
       [
        "S. Rondon / C. Alcantara",
-       1.38
-      ],
-      [
-       "J. Calero / A. Palavecino",
-       1.39
+       1.37
       ],
       [
        "S. Rondon / Kenedy",
+       1.39
+      ],
+      [
+       "A. Arroyo / B. Gamboa",
        1.4
       ],
       [
-       "J. Paradela / A. Palavecino",
+       "J. Paradela / E. Portillo",
        1.4
       ],
       [
@@ -9503,14 +10855,6 @@
       ],
       [
        "A. Alcaraz / N. Ibanez",
-       1.41
-      ],
-      [
-       "O. Idrissi / N. Ibanez",
-       1.41
-      ],
-      [
-       "A. Arroyo / B. Gamboa",
        1.42
       ],
       [
@@ -9518,19 +10862,23 @@
        1.42
       ],
       [
-       "A. Arroyo / J. Calero",
+       "O. Idrissi / N. Ibanez",
        1.42
       ],
       [
        "A. Alcaraz / J. Calero",
-       1.43
+       1.42
+      ],
+      [
+       "A. Arroyo / J. Calero",
+       1.42
       ],
       [
        "O. Idrissi / J. Calero",
-       1.43
+       1.42
       ],
       [
-       "A. Alcaraz / A. Palavecino",
+       "B. Gamboa / C. Alcantara",
        1.43
       ]
      ],
@@ -9541,19 +10889,19 @@
       ],
       [
        "Poniżej 0,5",
-       3.42
+       3.47
       ],
       [
        "Powyżej 1,5",
-       2.25
+       2.22
       ],
       [
        "Poniżej 1,5",
-       1.52
+       1.54
       ],
       [
        "Powyżej 2,5",
-       5.5
+       5.4
       ],
       [
        "Poniżej 2,5",
@@ -9561,7 +10909,7 @@
       ],
       [
        "Powyżej 3,5",
-       8.5
+       8.25
       ],
       [
        "Poniżej 3,5",
@@ -9583,19 +10931,19 @@
       ],
       [
        "Poniżej 0,5",
-       4.35
+       4.4
       ],
       [
        "Powyżej 1,5",
-       1.9
+       1.88
       ],
       [
        "Poniżej 1,5",
-       1.74
+       1.76
       ],
       [
        "Powyżej 2,5",
-       4.0
+       3.93
       ],
       [
        "Poniżej 2,5",
@@ -9603,11 +10951,11 @@
       ],
       [
        "Powyżej 3,5",
-       7.0
+       6.9
       ],
       [
        "Poniżej 3,5",
-       1.04
+       1.05
       ],
       [
        "Powyżej 4,5",
@@ -9633,7 +10981,7 @@
       ],
       [
        "Pachuca (-2)",
-       16.25
+       16.0
       ],
       [
        "Remis (Pachuca -2)",
@@ -9645,7 +10993,7 @@
       ],
       [
        "Pachuca (-1)",
-       5.9
+       5.75
       ],
       [
        "Remis (Pachuca -1)",
@@ -9657,7 +11005,7 @@
       ],
       [
        "Pachuca (+1)",
-       1.6
+       1.59
       ],
       [
        "Remis (Pachuca +1)",
@@ -9665,7 +11013,7 @@
       ],
       [
        "Cruz Azul (-1)",
-       3.98
+       3.95
       ],
       [
        "Pachuca (+2)",
@@ -9677,7 +11025,7 @@
       ],
       [
        "Cruz Azul (-2)",
-       9.25
+       9.0
       ],
       [
        "Pachuca (+3)",
@@ -9689,7 +11037,7 @@
       ],
       [
        "Cruz Azul (-3)",
-       17.25
+       17.0
       ],
       [
        "Pachuca (+4)",
@@ -9701,29 +11049,29 @@
       ],
       [
        "Cruz Azul (-4)",
-       27.0
+       26.0
       ]
      ],
      "Dokładny wynik": [
       [
        "1 - 0",
-       10.0
+       10.25
       ],
       [
        "0 - 0",
-       14.25
+       14.75
       ],
       [
        "0 - 1",
-       8.5
+       8.75
       ],
       [
        "2 - 0",
-       14.5
+       14.75
       ],
       [
        "1 - 1",
-       5.6
+       5.75
       ],
       [
        "0 - 2",
@@ -9735,7 +11083,7 @@
       ],
       [
        "2 - 2",
-       10.0
+       9.75
       ],
       [
        "1 - 2",
@@ -9747,7 +11095,7 @@
       ],
       [
        "3 - 3",
-       40.0
+       38.0
       ],
       [
        "0 - 3",
@@ -9755,7 +11103,7 @@
       ],
       [
        "3 - 1",
-       19.5
+       19.25
       ],
       [
        "4 - 4",
@@ -9763,7 +11111,7 @@
       ],
       [
        "1 - 3",
-       14.0
+       13.75
       ],
       [
        "3 - 2",
@@ -9771,7 +11119,7 @@
       ],
       [
        "Inny",
-       18.25
+       17.5
       ],
       [
        "2 - 3",
@@ -9795,11 +11143,11 @@
       ],
       [
        "4 - 2",
-       70.0
+       65.0
       ],
       [
        "2 - 4",
-       50.0
+       48.0
       ],
       [
        "4 - 3",
@@ -9807,7 +11155,7 @@
       ],
       [
        "3 - 4",
-       110.0
+       100.0
       ]
      ]
     }
@@ -10208,19 +11556,47 @@
      ],
      "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
       [
-       "D. Gonzalez Alcaraz / Juninho",
-       1.33
+       "J. Medina / D. Gonzalez Alcaraz",
+       1.31
       ],
       [
        "J. Medina / Juninho",
-       1.36
+       1.31
+      ],
+      [
+       "D. Gonzalez Alcaraz / Juninho",
+       1.32
+      ],
+      [
+       "J. Medina / L. Vuoso",
+       1.34
+      ],
+      [
+       "J. Medina / T. Jimenez",
+       1.34
+      ],
+      [
+       "R. Morales / J. Medina",
+       1.35
+      ],
+      [
+       "L. Vuoso / D. Gonzalez Alcaraz",
+       1.35
+      ],
+      [
+       "L. Vuoso / Juninho",
+       1.35
       ],
       [
        "Juninho / T. Jimenez",
-       1.36
+       1.35
       ],
       [
-       "J. Medina / D. Gonzalez Alcaraz",
+       "D. Gonzalez Alcaraz / T. Jimenez",
+       1.35
+      ],
+      [
+       "R. Morales / D. Gonzalez Alcaraz",
        1.37
       ],
       [
@@ -10228,67 +11604,43 @@
        1.37
       ],
       [
-       "E. Lozano / Juninho",
+       "L. Vuoso / T. Jimenez",
        1.37
       ],
       [
-       "D. Gonzalez Alcaraz / T. Jimenez",
-       1.37
-      ],
-      [
-       "R. Morales / D. Gonzalez Alcaraz",
+       "C. Huerta / J. Medina",
        1.38
       ],
       [
-       "E. Lozano / D. Gonzalez Alcaraz",
-       1.38
+       "R. Morales / L. Vuoso",
+       1.39
+      ],
+      [
+       "C. Huerta / D. Gonzalez Alcaraz",
+       1.39
       ],
       [
        "C. Huerta / Juninho",
        1.39
       ],
       [
-       "J. Medina / T. Jimenez",
+       "R. Morales / T. Jimenez",
        1.39
       ],
       [
-       "R. Morales / J. Medina",
-       1.4
+       "C. Huerta / L. Vuoso",
+       1.43
       ],
       [
-       "E. Lozano / J. Medina",
-       1.4
-      ],
-      [
-       "E. Lozano / T. Jimenez",
-       1.4
-      ],
-      [
-       "R. Morales / T. Jimenez",
-       1.4
-      ],
-      [
-       "R. Morales / E. Lozano",
-       1.41
-      ],
-      [
-       "C. Huerta / D. Gonzalez Alcaraz",
-       1.41
-      ],
-      [
-       "C. Huerta / J. Medina",
-       1.44
+       "J. Medina / S. Lopez",
+       1.43
       ],
       [
        "C. Huerta / T. Jimenez",
-       1.44
+       1.43
       ],
       [
        "R. Morales / C. Huerta",
-       1.45
-      ],
-      [
-       "C. Huerta / E. Lozano",
        1.45
       ],
       [
@@ -10297,19 +11649,15 @@
       ],
       [
        "D. Gonzalez Alcaraz / S. Lopez",
-       1.46
+       1.45
       ],
       [
        "S. Lopez / T. Jimenez",
-       1.49
+       1.47
       ],
       [
-       "J. Medina / S. Lopez",
-       1.49
-      ],
-      [
-       "E. Lozano / S. Lopez",
-       1.51
+       "L. Vuoso / S. Lopez",
+       1.47
       ],
       [
        "R. Morales / S. Lopez",
@@ -12316,7 +13664,7 @@
      "Under 2.5": 1.66,
      "Over 3.5": 3.78,
      "Under 3.5": 1.24,
-     "Over 4.5": 7.25,
+     "Over 4.5": 7.5,
      "Under 4.5": 1.05,
      "Over 5.5": 11.5,
      "Under 5.5": 1.02,
@@ -12415,7 +13763,7 @@
       ],
       [
        "Powyżej 4,5",
-       7.25
+       7.5
       ],
       [
        "Poniżej 4,5",
@@ -14833,20 +16181,20 @@
        1.56
       ],
       [
-       "S. Haller / M. Kato",
-       1.57
-      ],
-      [
        "S. Haller / Shun Ayukawa",
        1.57
       ],
       [
+       "S. Haller / M. Kato",
+       1.58
+      ],
+      [
        "Shun Ayukawa / K. Yengi",
-       1.62
+       1.63
       ],
       [
        "M. Kato / K. Yengi",
-       1.63
+       1.64
       ],
       [
        "T. Asano / A. Suzuki",
@@ -14858,7 +16206,7 @@
       ],
       [
        "T, Santana / A. Suzuki",
-       1.68
+       1.69
       ],
       [
        "S. Haller / T, Santana",
@@ -14866,7 +16214,7 @@
       ],
       [
        "M. Kato / Shun Ayukawa",
-       1.7
+       1.71
       ],
       [
        "T. Asano / K. Yengi",
@@ -14874,39 +16222,35 @@
       ],
       [
        "T, Santana / K. Yengi",
-       1.77
+       1.79
       ],
       [
        "T. Asano / Shun Ayukawa",
-       1.81
-      ],
-      [
-       "T. Asano / M. Kato",
        1.82
       ],
       [
-       "R. Yamasaki / A. Suzuki",
+       "T. Asano / M. Kato",
        1.83
+      ],
+      [
+       "R. Yamasaki / A. Suzuki",
+       1.84
       ],
       [
        "M. Jesus / A. Suzuki",
        1.85
       ],
       [
-       "S. Haller / R. Yamasaki",
-       1.86
-      ],
-      [
-       "M. Kato / T, Santana",
-       1.87
-      ],
-      [
        "S. Haller / M. Jesus",
        1.87
       ],
       [
-       "T, Santana / Shun Ayukawa",
+       "S. Haller / R. Yamasaki",
        1.87
+      ],
+      [
+       "M. Kato / T, Santana",
+       1.89
       ],
       [
        "N. Campbell / A. Suzuki",
@@ -14914,6 +16258,10 @@
       ],
       [
        "Y. Iwasaki / A. Suzuki",
+       1.89
+      ],
+      [
+       "T, Santana / Shun Ayukawa",
        1.89
       ],
       [
@@ -17813,6 +19161,673 @@
      "2 & o2.5": 8.25
     },
     "pelna": true
+   },
+   "betclic": {
+    "id": "1254258388238336",
+    "nazwa": "Urawa Red Diamonds - JEF United Chiba",
+    "zgodnosc": 1.0,
+    "kursy": {
+     "1": 1.61,
+     "X": 3.98,
+     "2": 5.1,
+     "1X": 1.16,
+     "12": 1.23,
+     "X2": 2.22,
+     "Over 0.5": 1.04,
+     "Under 0.5": 9.5,
+     "Over 1.5": 1.25,
+     "Under 1.5": 3.73,
+     "Over 2.5": 1.78,
+     "Under 2.5": 1.97,
+     "Over 3.5": 2.9,
+     "Under 3.5": 1.38,
+     "Over 4.5": 5.25,
+     "Under 4.5": 1.14,
+     "Over 5.5": 9.0,
+     "Under 5.5": 1.04,
+     "BTTS Tak": 1.83,
+     "BTTS Nie": 1.91,
+     "H o0.5": 1.14,
+     "H o1.5": 1.69,
+     "H o2.5": 3.15,
+     "H o3.5": 6.1,
+     "H o4.5": 10.25,
+     "A o0.5": 1.56,
+     "A o1.5": 3.6,
+     "A o2.5": 12.75,
+     "A o3.5": 12.25,
+     "H -4.5": 23.0,
+     "H -3.5": 11.25,
+     "H -2.5": 5.25,
+     "H -1.5": 2.63,
+     "A -1.5": 12.5,
+     "A -2.5": 55.0,
+     "A -3.5": 45.0
+    },
+    "pelna": true,
+    "rynkow": 12,
+    "oferta": {
+     "Wynik meczu (z wyłączeniem dogrywki)": [
+      [
+       "Urawa Red Diamonds",
+       1.61
+      ],
+      [
+       "Remis",
+       3.98
+      ],
+      [
+       "JEF United Chiba",
+       5.1
+      ]
+     ],
+     "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
+      [
+       "Urawa Red Diamonds",
+       1.58
+      ],
+      [
+       "JEF United Chiba",
+       4.7
+      ]
+     ],
+     "Podwójna Szansa": [
+      [
+       "Urawa Red Diamonds lub remis",
+       1.16
+      ],
+      [
+       "Urawa Red Diamonds lub JEF Utd Chiba",
+       1.23
+      ],
+      [
+       "Remis lub JEF United Chiba",
+       2.22
+      ]
+     ],
+     "Gole Powyżej/Poniżej": [
+      [
+       "Powyżej 0,5",
+       1.04
+      ],
+      [
+       "Poniżej 0,5",
+       9.5
+      ],
+      [
+       "Powyżej 1,5",
+       1.25
+      ],
+      [
+       "Poniżej 1,5",
+       3.73
+      ],
+      [
+       "Powyżej 2,5",
+       1.78
+      ],
+      [
+       "Poniżej 2,5",
+       1.97
+      ],
+      [
+       "Powyżej 3,5",
+       2.9
+      ],
+      [
+       "Poniżej 3,5",
+       1.38
+      ],
+      [
+       "Powyżej 4,5",
+       5.25
+      ],
+      [
+       "Poniżej 4,5",
+       1.14
+      ],
+      [
+       "Powyżej 5,5",
+       9.0
+      ],
+      [
+       "Poniżej 5,5",
+       1.04
+      ]
+     ],
+     "Oba zespoły strzelą gola": [
+      [
+       "Tak",
+       1.83
+      ],
+      [
+       "Nie",
+       1.91
+      ]
+     ],
+     "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
+      [
+       "Tak",
+       1.45
+      ],
+      [
+       "Nie",
+       2.5
+      ]
+     ],
+     "Którykolwiek zawodnik strzeli gola": [
+      [
+       "M. Savio / H. Minamino",
+       1.64
+      ],
+      [
+       "A. Onaiwu / H. Minamino",
+       1.67
+      ],
+      [
+       "H. Minamino / H. Komori",
+       1.67
+      ],
+      [
+       "A. Onaiwu / M. Savio",
+       1.7
+      ],
+      [
+       "M. Savio / H. Komori",
+       1.7
+      ],
+      [
+       "A. Onaiwu / H. Komori",
+       1.73
+      ],
+      [
+       "K. Yamura / H. Minamino",
+       1.85
+      ],
+      [
+       "R. Watanabe / H. Minamino",
+       1.85
+      ],
+      [
+       "H. Minamino / R. Hidano",
+       1.86
+      ],
+      [
+       "D. Ishikawa / H. Minamino",
+       1.87
+      ],
+      [
+       "Erison / H. Minamino",
+       1.87
+      ],
+      [
+       "M. Savio / K. Yamura",
+       1.89
+      ],
+      [
+       "R. Watanabe / M. Savio",
+       1.89
+      ],
+      [
+       "H. Goya / H. Minamino",
+       1.9
+      ],
+      [
+       "M. Savio / R. Hidano",
+       1.9
+      ],
+      [
+       "M. Savio / D. Ishikawa",
+       1.91
+      ],
+      [
+       "M. Savio / Erison",
+       1.91
+      ],
+      [
+       "A. Onaiwu / K. Yamura",
+       1.93
+      ],
+      [
+       "K. Yamura / H. Komori",
+       1.93
+      ],
+      [
+       "R. Watanabe / A. Onaiwu",
+       1.93
+      ],
+      [
+       "R. Watanabe / H. Komori",
+       1.93
+      ],
+      [
+       "M. Savio / H. Goya",
+       1.95
+      ],
+      [
+       "A. Onaiwu / Erison",
+       1.95
+      ],
+      [
+       "Erison / H. Komori",
+       1.95
+      ],
+      [
+       "A. Onaiwu / R. Hidano",
+       1.95
+      ],
+      [
+       "H. Komori / R. Hidano",
+       1.95
+      ],
+      [
+       "A. Onaiwu / D. Ishikawa",
+       1.96
+      ],
+      [
+       "D. Ishikawa / H. Komori",
+       1.96
+      ],
+      [
+       "L. Rocha / H. Minamino",
+       1.96
+      ],
+      [
+       "A. Onaiwu / H. Goya",
+       2.0
+      ]
+     ],
+     "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
+      [
+       "H. Minamino / M. Savio",
+       1.31
+      ],
+      [
+       "H. Komori / M. Savio",
+       1.33
+      ],
+      [
+       "A. Onaiwu / M. Savio",
+       1.34
+      ],
+      [
+       "J. Hayakawa / M. Savio",
+       1.37
+      ],
+      [
+       "H. Minamino / H. Komori",
+       1.37
+      ],
+      [
+       "K. Mizunuma / M. Savio",
+       1.37
+      ],
+      [
+       "H. Minamino / A. Onaiwu",
+       1.38
+      ],
+      [
+       "H. Komori / A. Onaiwu",
+       1.41
+      ],
+      [
+       "H. Minamino / J. Hayakawa",
+       1.41
+      ],
+      [
+       "H. Minamino / K. Mizunuma",
+       1.41
+      ],
+      [
+       "J. Hayakawa / H. Komori",
+       1.43
+      ],
+      [
+       "K. Mizunuma / H. Komori",
+       1.43
+      ],
+      [
+       "Erison / M. Savio",
+       1.45
+      ],
+      [
+       "J. Hayakawa / A. Onaiwu",
+       1.45
+      ],
+      [
+       "K. Mizunuma / A. Onaiwu",
+       1.45
+      ],
+      [
+       "K. Yamura / M. Savio",
+       1.47
+      ],
+      [
+       "H. Goya / M. Savio",
+       1.47
+      ],
+      [
+       "K. Mizunuma / J. Hayakawa",
+       1.48
+      ],
+      [
+       "T. Tsukui / M. Savio",
+       1.5
+      ],
+      [
+       "D. Ishikawa / M. Savio",
+       1.51
+      ],
+      [
+       "H. Minamino / Erison",
+       1.51
+      ],
+      [
+       "H. Minamino / K. Yamura",
+       1.52
+      ],
+      [
+       "L. Rocha / M. Savio",
+       1.52
+      ],
+      [
+       "H. Minamino / H. Goya",
+       1.53
+      ],
+      [
+       "K. Yamura / H. Komori",
+       1.55
+      ],
+      [
+       "H. Komori / Erison",
+       1.55
+      ],
+      [
+       "Erison / A. Onaiwu",
+       1.56
+      ],
+      [
+       "H. Minamino / T. Tsukui",
+       1.56
+      ],
+      [
+       "H. Minamino / D. Ishikawa",
+       1.57
+      ],
+      [
+       "H. Goya / H. Komori",
+       1.57
+      ]
+     ],
+     "Liczba goli - Urawa Red Diamonds": [
+      [
+       "Powyżej 0,5",
+       1.14
+      ],
+      [
+       "Poniżej 0,5",
+       5.5
+      ],
+      [
+       "Powyżej 1,5",
+       1.69
+      ],
+      [
+       "Poniżej 1,5",
+       2.05
+      ],
+      [
+       "Powyżej 2,5",
+       3.15
+      ],
+      [
+       "Poniżej 2,5",
+       1.33
+      ],
+      [
+       "Powyżej 3,5",
+       6.1
+      ],
+      [
+       "Poniżej 3,5",
+       1.09
+      ],
+      [
+       "Powyżej 4,5",
+       10.25
+      ],
+      [
+       "Poniżej 4,5",
+       1.02
+      ]
+     ],
+     "Liczba goli - JEF United Chiba": [
+      [
+       "Powyżej 0,5",
+       1.56
+      ],
+      [
+       "Poniżej 0,5",
+       2.28
+      ],
+      [
+       "Powyżej 1,5",
+       3.6
+      ],
+      [
+       "Poniżej 1,5",
+       1.25
+      ],
+      [
+       "Powyżej 2,5",
+       12.75
+      ],
+      [
+       "Poniżej 2,5",
+       1.04
+      ],
+      [
+       "Powyżej 3,5",
+       12.25
+      ],
+      [
+       "Poniżej 3,5",
+       1.01
+      ]
+     ],
+     "Handicap": [
+      [
+       "Urawa Red Diamonds (-4)",
+       23.0
+      ],
+      [
+       "Remis (Urawa Red Diamonds -4)",
+       11.5
+      ],
+      [
+       "JEF United Chiba (+4)",
+       1.03
+      ],
+      [
+       "Urawa Red Diamonds (-3)",
+       11.25
+      ],
+      [
+       "Remis (Urawa Red Diamonds -3)",
+       7.5
+      ],
+      [
+       "JEF United Chiba (+3)",
+       1.14
+      ],
+      [
+       "Urawa Red Diamonds (-2)",
+       5.25
+      ],
+      [
+       "Remis (Urawa Red Diamonds -2)",
+       4.75
+      ],
+      [
+       "JEF United Chiba (+2)",
+       1.43
+      ],
+      [
+       "Urawa Red Diamonds (-1)",
+       2.63
+      ],
+      [
+       "Remis (Urawa Red Diamonds -1)",
+       3.68
+      ],
+      [
+       "JEF United Chiba (+1)",
+       2.22
+      ],
+      [
+       "Urawa Red Diamonds (+1)",
+       1.16
+      ],
+      [
+       "Remis (Urawa Red Diamonds +1)",
+       6.9
+      ],
+      [
+       "JEF United Chiba (-1)",
+       12.5
+      ],
+      [
+       "Urawa Red Diamonds (+2)",
+       1.03
+      ],
+      [
+       "Remis (Urawa Red Diamonds +2)",
+       18.25
+      ],
+      [
+       "JEF United Chiba (-2)",
+       55.0
+      ],
+      [
+       "Urawa Red Diamonds (+3)",
+       1.01
+      ],
+      [
+       "Remis (Urawa Red Diamonds +3)",
+       12.5
+      ],
+      [
+       "JEF United Chiba (-3)",
+       45.0
+      ]
+     ],
+     "Dokładny wynik": [
+      [
+       "1 - 0",
+       7.0
+      ],
+      [
+       "0 - 0",
+       13.0
+      ],
+      [
+       "0 - 1",
+       14.0
+      ],
+      [
+       "2 - 0",
+       7.5
+      ],
+      [
+       "1 - 1",
+       7.0
+      ],
+      [
+       "0 - 2",
+       29.0
+      ],
+      [
+       "2 - 1",
+       8.0
+      ],
+      [
+       "2 - 2",
+       16.0
+      ],
+      [
+       "1 - 2",
+       16.0
+      ],
+      [
+       "3 - 0",
+       11.75
+      ],
+      [
+       "3 - 3",
+       85.0
+      ],
+      [
+       "0 - 3",
+       95.0
+      ],
+      [
+       "3 - 1",
+       12.75
+      ],
+      [
+       "4 - 4",
+       800.0
+      ],
+      [
+       "1 - 3",
+       50.0
+      ],
+      [
+       "3 - 2",
+       27.0
+      ],
+      [
+       "Inny",
+       17.5
+      ],
+      [
+       "2 - 3",
+       55.0
+      ],
+      [
+       "4 - 0",
+       25.0
+      ],
+      [
+       "0 - 4",
+       400.0
+      ],
+      [
+       "4 - 1",
+       27.0
+      ],
+      [
+       "1 - 4",
+       225.0
+      ],
+      [
+       "4 - 2",
+       60.0
+      ],
+      [
+       "2 - 4",
+       225.0
+      ],
+      [
+       "4 - 3",
+       175.0
+      ],
+      [
+       "3 - 4",
+       375.0
+      ]
+     ]
+    }
    }
   },
   "6d35a679c6d7ad7551c06bf07a240079": {
@@ -17869,8 +19884,8 @@
      "B 2:0": 4.5,
      "A 2:1": 4.0,
      "B 2:1": 6.0,
-     "Ponad 2.5 seta": 2.32,
-     "Poniżej 2.5 seta": 1.41,
+     "Ponad 2.5 seta": 2.33,
+     "Poniżej 2.5 seta": 1.4,
      "A -1.5": 2.02,
      "B -1.5": 4.5
     },
@@ -18012,11 +20027,11 @@
      "Czy obaj zawodnicy wygrają seta w meczu": [
       [
        "Tak",
-       2.32
+       2.33
       ],
       [
        "Nie",
-       1.41
+       1.4
       ]
      ],
      "Handicap setowy": [
@@ -18094,8 +20109,8 @@
      "B 2:0": 4.5,
      "A 2:1": 4.0,
      "B 2:1": 6.2,
-     "Ponad 2.5 seta": 2.33,
-     "Poniżej 2.5 seta": 1.41,
+     "Ponad 2.5 seta": 2.35,
+     "Poniżej 2.5 seta": 1.4,
      "A -1.5": 2.01,
      "B -1.5": 4.5
     },
@@ -18237,11 +20252,11 @@
      "Czy obaj zawodnicy wygrają seta w meczu": [
       [
        "Tak",
-       2.33
+       2.35
       ],
       [
        "Nie",
-       1.41
+       1.4
       ]
      ],
      "Handicap setowy": [
@@ -18320,7 +20335,7 @@
      "A 2:1": 5.2,
      "B 2:1": 4.2,
      "Ponad 2.5 seta": 2.25,
-     "Poniżej 2.5 seta": 1.44,
+     "Poniżej 2.5 seta": 1.43,
      "A -1.5": 3.55,
      "B -1.5": 2.35
     },
@@ -18466,7 +20481,7 @@
       ],
       [
        "Nie",
-       1.44
+       1.43
       ]
      ],
      "Handicap setowy": [
@@ -19329,7 +21344,7 @@
    "turnieje ufo:sprt:19 today: Expecting value: line 1 column 1 (char 0)",
    "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)"
   ],
-  "nasze_mecze": 48,
+  "nasze_mecze": 29,
   "sporty": [
    [
     "ufo:sprt:01",
@@ -19364,12 +21379,16 @@
     "Szachy"
    ],
    [
+    "ufo:sprt:0w",
+    "Hokej"
+   ],
+   [
     "ufo:sprt:07",
     "Rugby"
    ],
    [
-    "ufo:sprt:0w",
-    "Hokej"
+    "ufo:sprt:29",
+    "Wyścigi konne"
    ],
    [
     "ufo:sprt:0x",
@@ -19398,6 +21417,10 @@
    [
     "ufo:sprt:13",
     "Zakłady Specjalne"
+   ],
+   [
+    "ufo:sprt:35",
+    "eHokej"
    ],
    [
     "ufo:sprt:1v",
@@ -19474,30 +21497,11 @@
    "sporty walki": "ufo:sprt:19",
    "pilka": "ufo:sprt:00"
   },
-  "turniejow": 166,
-  "meczow_fortuny": 714,
+  "turniejow": 169,
+  "meczow_fortuny": 716,
   "pelna_oferta": 28,
   "niedopasowane": [
-   "pilka: Inter Milan – Shakhtar Donetsk",
-   "pilka: Fenerbahce – Slavia Praha",
-   "pilka: Liverpool – Villarreal",
-   "pilka: Napoli – Bodø/Glimt",
-   "pilka: AS Roma – ŠK Slovan Bratislava",
-   "pilka: FC Juárez – Atlante FC",
-   "pilka: Sabah FK – Borussia Dortmund",
-   "pilka: Manchester City – AEK Athens",
-   "pilka: VfB Stuttgart – Atlético Madrid",
-   "pilka: Paris Saint Germain – Barcelona",
-   "pilka: Porto – PSV Eindhoven",
-   "pilka: Wolverhampton Wanderers – Portsmouth",
-   "pilka: Guadalajara – Necaxa",
-   "pilka: Atlético San Luis – Querétaro",
-   "pilka: Tigres – León",
-   "tenis: Jasmine Paolini – Anhelina Kalinina",
-   "tenis: Cristina Bucsa – Polina Kudermetova",
-   "tenis: Jelena Ostapenko – Belinda Bencic",
-   "tenis: Katarzyna Kawa – Daria Snigur",
-   "tenis: Guo Hanyu – Ekaterina Alexandrova"
+   "pilka: Inter Milan – Shakhtar Donetsk"
   ],
   "rynki_nazwy": {
    "pilka": {
@@ -19511,9 +21515,9 @@
      "10",
      "02"
     ],
-    "Mecz: obie drużyny strzelą gola": [
-     "Tak",
-     "Nie"
+    "Mecz: bez remisu (remis = zwrot)": [
+     "2",
+     "1"
     ],
     "Zawodnik - liczba goli w 1.połowie (OPTA)": [
      "1+"
@@ -19521,9 +21525,6 @@
     "SuperSub: Zawodnik i jego zmiennik - liczba fauli (reg.czas)(OPTA)": [
      "1+",
      "2+"
-    ],
-    "Zawodnik - strzeli ostatniego gola w meczu (OPTA)": [
-     "Tak"
     ],
     "SuperSub: Zawodnik i jego zmiennik - liczba strzałów w światło bramki (reg.czas)(OPTA)": [
      "2+",
@@ -19577,9 +21578,6 @@
      "2+",
      "3+"
     ],
-    "Zawodnik - liczba spalonych w 1.połowie (OPTA)": [
-     "1+"
-    ],
     "Zawodnik - otrzyma Żółtą Kartkę (Nie liczy się: druga ŻK dla zawodnika, ŻK dla ławki, po meczu)": [
      "1+"
     ],
@@ -19615,9 +21613,6 @@
     ],
     "Zawodnik - liczba strzałów w światło bramki głową (OPTA)": [
      "1+"
-    ],
-    "Zawodnik - strzeli pierwszego gola w meczu (OPTA)": [
-     "Tak"
     ],
     "Real M. - Zawodnik strzeli ostatniego gola w meczu (OPTA)": [
      "Tak"
@@ -19910,10 +21905,6 @@
      "2.",
      "="
     ],
-    "Mecz: bez remisu (remis = zwrot)": [
-     "2",
-     "1"
-    ],
     "Mecz: handicap 0:1": [
      "0",
      "2",
@@ -19985,6 +21976,26 @@
      "remis",
      "1",
      "2"
+    ],
+    "2.połowa: Leipzig - liczba goli": [
+     "- 0.5",
+     "+ 0.5"
+    ],
+    "Mecz: dwójtyp/liczba goli": [
+     "02 / -1.5",
+     "10 / +1.5",
+     "12 / +1.5",
+     "02 / +1.5"
+    ],
+    "1.połowa: dokładny wynik": [
+     "2:1",
+     "0:0",
+     "0:1",
+     "inny"
+    ],
+    "Mecz: Jedna z drużyn wygra mecz": [
+     "Nie",
+     "Tak"
     ]
    },
    "tenis": {
@@ -20114,8 +22125,42 @@
      "Tak",
      "Nie"
     ],
+    "Mecz: Cirstea S. - liczba asów": [
+     "- 1.5",
+     "+ 1.5"
+    ],
+    "Mecz: Bejlek S. - liczba podwójnych błędów": [
+     "- 2.5",
+     "+ 2.5"
+    ],
+    "Mecz: liczba podwójnych błędów": [
+     "+ 8.5",
+     "- 8.5"
+    ],
+    "Mecz: Cirstea S. - liczba podwójnych błędów": [
+     "- 2.5",
+     "+ 2.5"
+    ],
     "Najpopularniejsze zakłady łączone": [
      "Cirstea wygra  mecz , powyżej  23.5 Gemach  w mecz"
+    ],
+    "Mecz: liczba asów": [
+     "+ 2.5",
+     "- 2.5"
+    ],
+    "Mecz: Bejlek S. - liczba asów": [
+     "+ 0.5",
+     "- 0.5"
+    ],
+    "Mecz: więcej asów": [
+     "1",
+     "2",
+     "Rowno"
+    ],
+    "Mecz: więcej podwójnych błędów": [
+     "2",
+     "1",
+     "Równo"
     ],
     "Mecz: Cirstea S. - wygra swój pierwszy gem serwisowy": [
      "Tak",
@@ -20182,57 +22227,39 @@
   },
   "sts": {
    "bledy": [],
-   "meczow_sts": 1902,
+   "meczow_sts": 1900,
    "sporty": {
-    "1": 1389,
-    "3": 433,
+    "1": 1390,
+    "3": 430,
     "166": 44,
     "19": 36
    },
    "niedopasowane": [
-    "pilka: Real Madrid – RB Leipzig",
-    "pilka: Fenerbahce – Slavia Praha",
-    "pilka: Liverpool – Villarreal",
-    "pilka: Napoli – Bodø/Glimt",
-    "pilka: AS Roma – ŠK Slovan Bratislava",
-    "pilka: FC Juárez – Atlante FC",
-    "pilka: Sabah FK – Borussia Dortmund",
-    "pilka: Manchester City – AEK Athens",
-    "pilka: VfB Stuttgart – Atlético Madrid",
-    "pilka: Paris Saint Germain – Barcelona",
-    "pilka: Porto – PSV Eindhoven",
-    "pilka: Wolverhampton Wanderers – Portsmouth",
-    "pilka: Guadalajara – Necaxa",
-    "pilka: Atlético San Luis – Querétaro",
-    "tenis: Jasmine Paolini – Anhelina Kalinina",
-    "tenis: Cristina Bucsa – Polina Kudermetova",
-    "tenis: Jelena Ostapenko – Belinda Bencic",
-    "tenis: Katarzyna Kawa – Daria Snigur",
-    "tenis: Guo Hanyu – Ekaterina Alexandrova"
+    "pilka: Real Madrid – RB Leipzig"
    ],
-   "szczegoly_ramek": 43,
-   "szczegoly_odpowiedzi": "29 z 29",
+   "szczegoly_ramek": 38,
+   "szczegoly_odpowiedzi": "28 z 28",
    "szczegoly_tematy": {
+    "f_f3487316_pl": 3,
     "f_f3395541_pl": 3,
-    "f_f3487316_pl": 1,
-    "f_f3395542_pl": 3,
-    "f_f3395550_pl": 5,
+    "f_f3395542_pl": 1,
+    "f_f3395548_pl": 1,
     "f_f2916424_pl": 1,
-    "f_f3395548_pl": 3,
-    "f_f3395549_pl": 1,
+    "f_f3395550_pl": 3,
     "f_f3395540_pl": 3,
+    "f_f3395549_pl": 3,
     "f_f3395551_pl": 1,
-    "f_f2916092_pl": 1,
-    "f_f3395564_pl": 3,
+    "f_f3395564_pl": 1,
     "f_f3502064_pl": 1,
-    "f_f2916343_pl": 1,
+    "f_f2916092_pl": 1,
     "f_f2916178_pl": 1,
     "f_f2915978_pl": 1,
+    "f_f2916343_pl": 1,
+    "f_f2916314_pl": 1,
     "f_f2915934_pl": 1,
     "f_f2916198_pl": 1,
-    "f_f2916314_pl": 1,
-    "f_f2916121_pl": 1,
-    "f_f2915921_pl": 1
+    "f_f2916065_pl": 1,
+    "f_f2916121_pl": 1
    },
    "szczegoly_meczow": {
     "Aston Villa - Viking FK": {
@@ -20341,12 +22368,8 @@
     },
     "Alexandrova Ekaterina - Kostyuk Marta": {
      "17m940e0d65ea0": 26
-    },
-    "Tigres UANL - Club Leon": {}
+    }
    },
-   "bez_kursow": [
-    "pilka: Tigres – León (Tigres UANL - Club Leon)"
-   ],
    "rynki_przyklad": {
     "Aston Villa - Viking FK": {
      "1 Mecz": [
@@ -20468,14 +22491,14 @@
       "2. drużyna - suma goli | 25:parzysta=1.65"
      ],
      "43 Obie drużyny - strzelą gola": [
-      "Obie drużyny - strzelą gola | 26:tak=1.7",
+      "Obie drużyny - strzelą gola | 26:tak=1.68",
       "Obie drużyny - strzelą gola | 27:nie=2.15"
      ],
      "44 Która drużyna strzeli gola": [
       "Która drużyna strzeli gola | 231:brak goli=31",
       "Która drużyna strzeli gola | 232:tylko 1. drużyna=2.35",
       "Która drużyna strzeli gola | 233:tylko 2. drużyna=25",
-      "Która drużyna strzeli gola | 234:obie drużyny=1.7"
+      "Która drużyna strzeli gola | 234:obie drużyny=1.68"
      ],
      "47 1. drużyna - wygra do zera": [
       "1. drużyna - wygra do zera | 26:tak=2.35",
@@ -20593,28 +22616,28 @@
     },
     "Club Brugge - RC Lens": {
      "1 Mecz": [
-      "Mecz | 1:1=2",
-      "Mecz | 2:X=3.75",
-      "Mecz | 3:2=3.3"
+      "Mecz | 1:1=1.95",
+      "Mecz | 2:X=3.9",
+      "Mecz | 3:2=3.35"
      ],
      "8 Następny gol": [
       "1. gol | 6:1=1.7",
-      "1. gol | 7:nikt=22",
+      "1. gol | 7:nikt=24",
       "1. gol | 8:2=2.2"
      ],
      "9 Ostatni gol": [
       "Ostatni gol | 6:1=1.7",
-      "Ostatni gol | 7:nikt=22",
+      "Ostatni gol | 7:nikt=24",
       "Ostatni gol | 8:2=2.2"
      ],
      "10 Podwójna szansa": [
       "Podwójna szansa | 10:12=1.27",
-      "Podwójna szansa | 11:X2=1.82",
-      "Podwójna szansa | 9:1X=1.35"
+      "Podwójna szansa | 11:X2=1.85",
+      "Podwójna szansa | 9:1X=1.34"
      ],
      "11 Zakład bez remisu": [
-      "Zakład bez remisu | 4:1=1.54",
-      "Zakład bez remisu | 5:2=2.5"
+      "Zakład bez remisu | 4:1=1.52",
+      "Zakład bez remisu | 5:2=2.55"
      ],
      "14 Handicap 1X2": [
       "Handicap 1X2 | 922:1 (2:0)=1.12",
@@ -20622,81 +22645,81 @@
       "Handicap 1X2 | 924:2 (2:0)=17",
       "Handicap 1X2 | 922:1 (3:0)=1.03",
       "Handicap 1X2 | 923:X (3:0)=18",
-      "Handicap 1X2 | 924:2 (3:0)=40",
-      "Handicap 1X2 | 922:1 (1:0)=1.35",
+      "Handicap 1X2 | 924:2 (3:0)=39",
+      "Handicap 1X2 | 922:1 (1:0)=1.34",
       "Handicap 1X2 | 923:X (1:0)=5.75"
      ],
      "17 Różnica zwycięstwa": [
       "Różnica zwycięstwa | 1262:1. drużyna - 1 golem=4.4",
-      "Różnica zwycięstwa | 1263:1. drużyna - 2 golami=6",
-      "Różnica zwycięstwa | 1264:1. drużyna - 3+ golami=6.6",
+      "Różnica zwycięstwa | 1263:1. drużyna - 2 golami=5.9",
+      "Różnica zwycięstwa | 1264:1. drużyna - 3+ golami=6.25",
       "Różnica zwycięstwa | 1265:2. drużyna - 1 golem=5.75"
      ],
      "20 Handicap (z możliwym zwrotem)": [
       "Handicap (z możliwym zwrotem) | 925:1 (+1)=1.15",
-      "Handicap (z możliwym zwrotem) | 926:2 (-1)=5.5",
-      "Handicap (z możliwym zwrotem) | 925:1 (+0)=1.54",
-      "Handicap (z możliwym zwrotem) | 926:2 (-0)=2.5",
-      "Handicap (z możliwym zwrotem) | 925:1 (-2)=5.6",
-      "Handicap (z możliwym zwrotem) | 926:2 (+2)=1.15"
+      "Handicap (z możliwym zwrotem) | 926:2 (-1)=5.6",
+      "Handicap (z możliwym zwrotem) | 925:1 (+0)=1.52",
+      "Handicap (z możliwym zwrotem) | 926:2 (-0)=2.55",
+      "Handicap (z możliwym zwrotem) | 925:1 (-2)=5.25",
+      "Handicap (z możliwym zwrotem) | 926:2 (+2)=1.16"
      ],
      "22 Handicap": [
-      "Handicap | 925:1 (-0.5)=2",
-      "Handicap | 926:2 (+0.5)=1.82",
-      "Handicap | 925:1 (-1.5)=3.4",
-      "Handicap | 926:2 (+1.5)=1.34",
-      "Handicap | 925:1 (+0.5)=1.35",
-      "Handicap | 926:2 (-0.5)=3.3"
+      "Handicap | 925:1 (-0.5)=1.95",
+      "Handicap | 926:2 (+0.5)=1.85",
+      "Handicap | 925:1 (-1.5)=3.25",
+      "Handicap | 926:2 (+1.5)=1.36",
+      "Handicap | 925:1 (+0.5)=1.34",
+      "Handicap | 926:2 (-0.5)=3.35"
      ],
      "23 Liczba goli (z możliwym zwrotem)": [
-      "Liczba goli (z możliwym zwrotem) | 12:+2=1.17",
-      "Liczba goli (z możliwym zwrotem) | 13:-2=5.1",
-      "Liczba goli (z możliwym zwrotem) | 12:+3=1.62",
-      "Liczba goli (z możliwym zwrotem) | 13:-3=2.3",
-      "Liczba goli (z możliwym zwrotem) | 12:+4=2.75",
-      "Liczba goli (z możliwym zwrotem) | 13:-4=1.46"
+      "Liczba goli (z możliwym zwrotem) | 12:+2=1.15",
+      "Liczba goli (z możliwym zwrotem) | 13:-2=5.5",
+      "Liczba goli (z możliwym zwrotem) | 12:+3=1.57",
+      "Liczba goli (z możliwym zwrotem) | 13:-3=2.4",
+      "Liczba goli (z możliwym zwrotem) | 12:+4=2.6",
+      "Liczba goli (z możliwym zwrotem) | 13:-4=1.5"
      ],
      "25 Liczba goli": [
-      "Liczba goli | 12:+1.5=1.13",
-      "Liczba goli | 13:-1.5=6.1",
+      "Liczba goli | 12:+1.5=1.12",
+      "Liczba goli | 13:-1.5=6.5",
       "Liczba goli | 12:+0.5=1.02",
-      "Liczba goli | 13:-0.5=22",
-      "Liczba goli | 12:+4.5=3.35",
-      "Liczba goli | 13:-4.5=1.33"
+      "Liczba goli | 13:-0.5=24",
+      "Liczba goli | 12:+4.5=3.15",
+      "Liczba goli | 13:-4.5=1.37"
      ],
      "28 1. drużyna - liczba goli": [
-      "1. drużyna - liczba goli | 12:+1.5=1.6",
-      "1. drużyna - liczba goli | 13:-1.5=2.3",
-      "1. drużyna - liczba goli | 12:+0.5=1.12",
-      "1. drużyna - liczba goli | 13:-0.5=6",
+      "1. drużyna - liczba goli | 12:+1.5=1.55",
+      "1. drużyna - liczba goli | 13:-1.5=2.4",
+      "1. drużyna - liczba goli | 12:+0.5=1.11",
+      "1. drużyna - liczba goli | 13:-0.5=6.5",
       "1. drużyna - liczba goli | 12:+4.5=11",
-      "1. drużyna - liczba goli | 13:-4.5=1.03"
+      "1. drużyna - liczba goli | 13:-4.5=1.04"
      ],
      "31 2. drużyna - liczba goli": [
       "2. drużyna - liczba goli | 12:+1.5=2.1",
-      "2. drużyna - liczba goli | 13:-1.5=1.7",
-      "2. drużyna - liczba goli | 12:+0.5=1.25",
-      "2. drużyna - liczba goli | 13:-0.5=3.9",
+      "2. drużyna - liczba goli | 13:-1.5=1.75",
+      "2. drużyna - liczba goli | 12:+0.5=1.22",
+      "2. drużyna - liczba goli | 13:-0.5=4",
       "2. drużyna - liczba goli | 12:+4.5=15",
-      "2. drużyna - liczba goli | 13:-4.5=1.005"
+      "2. drużyna - liczba goli | 13:-4.5=1.006"
      ],
      "33 Dokładna liczba goli": [
-      "Dokładna liczba goli | 1217:0=22",
-      "Dokładna liczba goli | 1218:1=8.1",
-      "Dokładna liczba goli | 1219:2=4.4",
-      "Dokładna liczba goli | 1220:3=4"
+      "Dokładna liczba goli | 1217:0=24",
+      "Dokładna liczba goli | 1218:1=8.6",
+      "Dokładna liczba goli | 1219:2=4.6",
+      "Dokładna liczba goli | 1220:3=4.1"
      ],
      "35 1. drużyna - dokładna liczba goli": [
-      "1. drużyna - dokładna liczba goli | 1237:0=6",
-      "1. drużyna - dokładna liczba goli | 1238:1=3.25",
+      "1. drużyna - dokładna liczba goli | 1237:0=6.4",
+      "1. drużyna - dokładna liczba goli | 1238:1=3.4",
       "1. drużyna - dokładna liczba goli | 1239:2=3.3",
-      "1. drużyna - dokładna liczba goli | 1240:3+=2.85"
+      "1. drużyna - dokładna liczba goli | 1240:3+=2.7"
      ],
      "36 2. drużyna - dokładna liczba goli": [
-      "2. drużyna - dokładna liczba goli | 1237:0=3.9",
-      "2. drużyna - dokładna liczba goli | 1238:1=2.7",
+      "2. drużyna - dokładna liczba goli | 1237:0=4",
+      "2. drużyna - dokładna liczba goli | 1238:1=2.75",
       "2. drużyna - dokładna liczba goli | 1239:2=3.5",
-      "2. drużyna - dokładna liczba goli | 1240:3+=4.5"
+      "2. drużyna - dokładna liczba goli | 1240:3+=4.4"
      ],
      "40 Suma goli": [
       "Suma goli | 24:nieparzysta=1.95",
@@ -20711,121 +22734,121 @@
       "2. drużyna - suma goli | 25:parzysta=1.82"
      ],
      "43 Obie drużyny - strzelą gola": [
-      "Obie drużyny - strzelą gola | 26:tak=1.42",
-      "Obie drużyny - strzelą gola | 27:nie=2.85"
+      "Obie drużyny - strzelą gola | 26:tak=1.4",
+      "Obie drużyny - strzelą gola | 27:nie=2.95"
      ],
      "44 Która drużyna strzeli gola": [
-      "Która drużyna strzeli gola | 231:brak goli=22",
-      "Która drużyna strzeli gola | 232:tylko 1. drużyna=4.6",
-      "Która drużyna strzeli gola | 233:tylko 2. drużyna=7.9",
-      "Która drużyna strzeli gola | 234:obie drużyny=1.42"
+      "Która drużyna strzeli gola | 231:brak goli=24",
+      "Która drużyna strzeli gola | 232:tylko 1. drużyna=4.7",
+      "Która drużyna strzeli gola | 233:tylko 2. drużyna=8.4",
+      "Która drużyna strzeli gola | 234:obie drużyny=1.4"
      ],
      "47 1. drużyna - wygra do zera": [
-      "1. drużyna - wygra do zera | 26:tak=4.6",
+      "1. drużyna - wygra do zera | 26:tak=4.7",
       "1. drużyna - wygra do zera | 27:nie=1.18"
      ],
      "48 2. drużyna - wygra do zera": [
-      "2. drużyna - wygra do zera | 26:tak=7.9",
-      "2. drużyna - wygra do zera | 27:nie=1.08"
+      "2. drużyna - wygra do zera | 26:tak=8.4",
+      "2. drużyna - wygra do zera | 27:nie=1.07"
      ],
      "49 Wynik końcowy i obie drużyny - strzelą gola": [
-      "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=3",
-      "Wynik końcowy i obie drużyny - strzelą gola | 29:1 i nie=4.6",
-      "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=4.25",
-      "Wynik końcowy i obie drużyny - strzelą gola | 31:X i nie=22"
+      "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=2.9",
+      "Wynik końcowy i obie drużyny - strzelą gola | 29:1 i nie=4.7",
+      "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=4.3",
+      "Wynik końcowy i obie drużyny - strzelą gola | 31:X i nie=24"
      ],
      "50 Liczba goli i obie drużyny - strzelą gola": [
-      "Liczba goli i obie drużyny - strzelą gola | 34:+2.5 i tak=1.57",
-      "Liczba goli i obie drużyny - strzelą gola | 35:-2.5 i tak=8.25",
-      "Liczba goli i obie drużyny - strzelą gola | 36:+2.5 i nie=8.5",
-      "Liczba goli i obie drużyny - strzelą gola | 37:-2.5 i nie=3.7"
+      "Liczba goli i obie drużyny - strzelą gola | 34:+2.5 i tak=1.53",
+      "Liczba goli i obie drużyny - strzelą gola | 35:-2.5 i tak=8.6",
+      "Liczba goli i obie drużyny - strzelą gola | 36:+2.5 i nie=8.25",
+      "Liczba goli i obie drużyny - strzelą gola | 37:-2.5 i nie=3.9"
      ],
      "51 Wynik końcowy i liczba goli": [
-      "Wynik końcowy i liczba goli | 235:1 i -1.5=14.5",
-      "Wynik końcowy i liczba goli | 236:1 i +1.5=2.12",
-      "Wynik końcowy i liczba goli | 237:X i -1.5=22",
-      "Wynik końcowy i liczba goli | 238:X i +1.5=4.25",
-      "Wynik końcowy i liczba goli | 235:1 i -4.5=2.75",
-      "Wynik końcowy i liczba goli | 236:1 i +4.5=5.5",
-      "Wynik końcowy i liczba goli | 237:X i -4.5=4.2",
-      "Wynik końcowy i liczba goli | 238:X i +4.5=28"
+      "Wynik końcowy i liczba goli | 235:1 i -1.5=15",
+      "Wynik końcowy i liczba goli | 236:1 i +1.5=2.05",
+      "Wynik końcowy i liczba goli | 237:X i -1.5=24",
+      "Wynik końcowy i liczba goli | 238:X i +1.5=4.3",
+      "Wynik końcowy i liczba goli | 235:1 i -4.5=2.8",
+      "Wynik końcowy i liczba goli | 236:1 i +4.5=5",
+      "Wynik końcowy i liczba goli | 237:X i -4.5=4.3",
+      "Wynik końcowy i liczba goli | 238:X i +4.5=26"
      ],
      "125 Następny gol w meczu - przedziały 15-minutowe": [
-      "1. gol - przedziały 15-minutowe | 180:1-15=2.4",
+      "1. gol - przedziały 15-minutowe | 180:1-15=2.35",
       "1. gol - przedziały 15-minutowe | 181:16-30=3.3",
       "1. gol - przedziały 15-minutowe | 182:31-45=4.7",
-      "1. gol - przedziały 15-minutowe | 183:46-60=8.9"
+      "1. gol - przedziały 15-minutowe | 183:46-60=9.1"
      ],
      "126 Następny gol w meczu - przedziały 10-minutowe": [
-      "1. gol - przedziały 10-minutowe | 187:1-10=3.3",
-      "1. gol - przedziały 10-minutowe | 188:11-20=3.9",
-      "1. gol - przedziały 10-minutowe | 189:21-30=5.25",
-      "1. gol - przedziały 10-minutowe | 190:31-40=7"
+      "1. gol - przedziały 10-minutowe | 187:1-10=3.25",
+      "1. gol - przedziały 10-minutowe | 188:11-20=3.8",
+      "1. gol - przedziały 10-minutowe | 189:21-30=5.1",
+      "1. gol - przedziały 10-minutowe | 190:31-40=7.1"
      ],
      "132 Wynik - przedziały 10-minutowe": [
-      "Wynik od 1. do 10. minuty | 1:1=6.4",
-      "Wynik od 1. do 10. minuty | 2:X=1.25",
+      "Wynik od 1. do 10. minuty | 1:1=6.25",
+      "Wynik od 1. do 10. minuty | 2:X=1.26",
       "Wynik od 1. do 10. minuty | 3:2=8.6"
      ],
      "258 Następny gol i wynik końcowy": [
-      "1. gol i wynik końcowy | 245:1 i 1=2.25",
+      "1. gol i wynik końcowy | 245:1 i 1=2.2",
       "1. gol i wynik końcowy | 246:1 i X=8",
       "1. gol i wynik końcowy | 247:1 i 2=13.5",
-      "1. gol i wynik końcowy | 248:2 i 1=9"
+      "1. gol i wynik końcowy | 248:2 i 1=8.6"
      ],
      "283 Dokładny wynik": [
-      "Dokładny wynik | 1783:0:0=22",
-      "Dokładny wynik | 1784:1:0=13.5",
+      "Dokładny wynik | 1783:0:0=24",
+      "Dokładny wynik | 1784:1:0=14",
       "Dokładny wynik | 1785:2:0=13.5",
       "Dokładny wynik | 1786:3:0=20"
      ],
      "811 Podwójna szansa i obie drużyny - strzelą gola": [
-      "Podwójna szansa i obie drużyny - strzelą gola | 929:1X i tak=1.88",
-      "Podwójna szansa i obie drużyny - strzelą gola | 930:1X i nie=4",
-      "Podwójna szansa i obie drużyny - strzelą gola | 931:12 i tak=1.95",
-      "Podwójna szansa i obie drużyny - strzelą gola | 932:12 i nie=3.1"
+      "Podwójna szansa i obie drużyny - strzelą gola | 929:1X i tak=1.82",
+      "Podwójna szansa i obie drużyny - strzelą gola | 930:1X i nie=4.1",
+      "Podwójna szansa i obie drużyny - strzelą gola | 931:12 i tak=1.88",
+      "Podwójna szansa i obie drużyny - strzelą gola | 932:12 i nie=3.2"
      ],
      "812 Podwójna szansa i liczba goli": [
-      "Podwójna szansa i liczba goli | 935:1X i -1.5=8.9",
-      "Podwójna szansa i liczba goli | 936:12 i -1.5=8.25",
-      "Podwójna szansa i liczba goli | 937:X2 i -1.5=10.5",
-      "Podwójna szansa i liczba goli | 938:1X i +1.5=1.5",
-      "Podwójna szansa i liczba goli | 935:1X i -4.5=1.75",
-      "Podwójna szansa i liczba goli | 936:12 i -4.5=1.78",
-      "Podwójna szansa i liczba goli | 937:X2 i -4.5=2.25",
-      "Podwójna szansa i liczba goli | 938:1X i +4.5=4.7"
+      "Podwójna szansa i liczba goli | 935:1X i -1.5=9.5",
+      "Podwójna szansa i liczba goli | 936:12 i -1.5=8.75",
+      "Podwójna szansa i liczba goli | 937:X2 i -1.5=11.5",
+      "Podwójna szansa i liczba goli | 938:1X i +1.5=1.47",
+      "Podwójna szansa i liczba goli | 935:1X i -4.5=1.8",
+      "Podwójna szansa i liczba goli | 936:12 i -4.5=1.82",
+      "Podwójna szansa i liczba goli | 937:X2 i -4.5=2.3",
+      "Podwójna szansa i liczba goli | 938:1X i +4.5=4.3"
      ],
      "813 Liczba goli - przedziały": [
-      "Liczba goli - przedziały | 1008:brak gola=22",
-      "Liczba goli - przedziały | 941:1-2=2.65",
-      "Liczba goli - przedziały | 942:1-3=1.68",
-      "Liczba goli - przedziały | 943:1-4=1.3"
+      "Liczba goli - przedziały | 1008:brak gola=24",
+      "Liczba goli - przedziały | 941:1-2=2.8",
+      "Liczba goli - przedziały | 942:1-3=1.72",
+      "Liczba goli - przedziały | 943:1-4=1.33"
      ],
      "814 1. drużyna - liczba goli - przedziały": [
-      "1. drużyna - liczba goli - przedziały | 1009:brak gola=6",
-      "1. drużyna - liczba goli - przedziały | 957:1-2=1.65",
+      "1. drużyna - liczba goli - przedziały | 1009:brak gola=6.4",
+      "1. drużyna - liczba goli - przedziały | 957:1-2=1.68",
       "1. drużyna - liczba goli - przedziały | 958:1-3=1.3",
-      "1. drużyna - liczba goli - przedziały | 959:2-3=1.95"
+      "1. drużyna - liczba goli - przedziały | 959:2-3=1.92"
      ],
      "815 2. drużyna - liczba goli - przedziały": [
-      "2. drużyna - liczba goli - przedziały | 1009:brak gola=3.9",
-      "2. drużyna - liczba goli - przedziały | 957:1-2=1.54",
-      "2. drużyna - liczba goli - przedziały | 958:1-3=1.32",
+      "2. drużyna - liczba goli - przedziały | 1009:brak gola=4",
+      "2. drużyna - liczba goli - przedziały | 957:1-2=1.55",
+      "2. drużyna - liczba goli - przedziały | 958:1-3=1.3",
       "2. drużyna - liczba goli - przedziały | 959:2-3=2.25"
      ],
      "816 Multiwynik": [
-      "Multiwynik | 1007:X=3.75",
-      "Multiwynik | 961:1:0, 2:0 lub 3:0=5.6",
-      "Multiwynik | 962:0:1, 0:2 lub 0:3=9.1",
-      "Multiwynik | 963:4:0, 5:0 lub 6:0=28"
+      "Multiwynik | 1007:X=3.9",
+      "Multiwynik | 961:1:0, 2:0 lub 3:0=5.75",
+      "Multiwynik | 962:0:1, 0:2 lub 0:3=9.75",
+      "Multiwynik | 963:4:0, 5:0 lub 6:0=27"
      ],
      "1224 2. drużyna - strzeli gola": [
-      "2. drużyna - strzeli gola | 26:tak=1.24",
-      "2. drużyna - strzeli gola | 27:nie=3.9"
+      "2. drużyna - strzeli gola | 26:tak=1.23",
+      "2. drużyna - strzeli gola | 27:nie=4"
      ],
      "1229 1. drużyna - strzeli gola": [
-      "1. drużyna - strzeli gola | 26:tak=1.12",
-      "1. drużyna - strzeli gola | 27:nie=6"
+      "1. drużyna - strzeli gola | 26:tak=1.11",
+      "1. drużyna - strzeli gola | 27:nie=6.4"
      ],
      "52 Zawodnik - strzeli następnego gola": [
       "Zawodnik - strzeli 1. gola | 1091640:Skóraś Michał=15",
@@ -20836,59 +22859,59 @@
     },
     "FC Cincinnati - DC United": {
      "1 Mecz": [
-      "Mecz | 1:1=1.72",
-      "Mecz | 2:X=4.25",
-      "Mecz | 3:2=3.9"
+      "Mecz | 1:1=1.68",
+      "Mecz | 2:X=4.3",
+      "Mecz | 3:2=4"
      ],
      "8 Następny gol": [
-      "1. gol | 6:1=1.57",
+      "1. gol | 6:1=1.56",
       "1. gol | 7:nikt=31",
-      "1. gol | 8:2=2.35"
+      "1. gol | 8:2=2.4"
      ],
      "9 Ostatni gol": [
-      "Ostatni gol | 6:1=1.58",
+      "Ostatni gol | 6:1=1.57",
       "Ostatni gol | 7:nikt=31",
       "Ostatni gol | 8:2=2.4"
      ],
      "10 Podwójna szansa": [
       "Podwójna szansa | 10:12=1.22",
-      "Podwójna szansa | 11:X2=2.1",
+      "Podwójna szansa | 11:X2=2.15",
       "Podwójna szansa | 9:1X=1.25"
      ],
      "11 Zakład bez remisu": [
-      "Zakład bez remisu | 4:1=1.36",
-      "Zakład bez remisu | 5:2=3.1"
+      "Zakład bez remisu | 4:1=1.35",
+      "Zakład bez remisu | 5:2=3.2"
      ],
      "14 Handicap 1X2": [
       "Handicap 1X2 | 922:1 (2:0)=1.08",
-      "Handicap 1X2 | 923:X (2:0)=11.5",
-      "Handicap 1X2 | 924:2 (2:0)=20",
+      "Handicap 1X2 | 923:X (2:0)=12",
+      "Handicap 1X2 | 924:2 (2:0)=21",
       "Handicap 1X2 | 922:1 (3:0)=1.02",
       "Handicap 1X2 | 923:X (3:0)=17",
-      "Handicap 1X2 | 924:2 (3:0)=37",
+      "Handicap 1X2 | 924:2 (3:0)=38",
       "Handicap 1X2 | 922:1 (1:0)=1.25",
       "Handicap 1X2 | 923:X (1:0)=6.6"
      ],
      "17 Różnica zwycięstwa": [
-      "Różnica zwycięstwa | 1262:1. drużyna - 1 golem=4.4",
+      "Różnica zwycięstwa | 1262:1. drużyna - 1 golem=4.3",
       "Różnica zwycięstwa | 1263:1. drużyna - 2 golami=5.25",
-      "Różnica zwycięstwa | 1264:1. drużyna - 3+ golami=4.5",
+      "Różnica zwycięstwa | 1264:1. drużyna - 3+ golami=4.4",
       "Różnica zwycięstwa | 1265:2. drużyna - 1 golem=6.6"
      ],
      "20 Handicap (z możliwym zwrotem)": [
-      "Handicap (z możliwym zwrotem) | 925:1 (+0)=1.36",
-      "Handicap (z możliwym zwrotem) | 926:2 (-0)=3.1",
-      "Handicap (z możliwym zwrotem) | 925:1 (-2)=3.8",
-      "Handicap (z możliwym zwrotem) | 926:2 (+2)=1.25",
-      "Handicap (z możliwym zwrotem) | 925:1 (-1)=2.1",
-      "Handicap (z możliwym zwrotem) | 926:2 (+1)=1.72"
+      "Handicap (z możliwym zwrotem) | 925:1 (+0)=1.35",
+      "Handicap (z możliwym zwrotem) | 926:2 (-0)=3.2",
+      "Handicap (z możliwym zwrotem) | 925:1 (-2)=3.7",
+      "Handicap (z możliwym zwrotem) | 926:2 (+2)=1.27",
+      "Handicap (z możliwym zwrotem) | 925:1 (-1)=2.05",
+      "Handicap (z możliwym zwrotem) | 926:2 (+1)=1.75"
      ],
      "22 Handicap": [
-      "Handicap | 925:1 (-0.5)=1.72",
-      "Handicap | 926:2 (+0.5)=2.1",
-      "Handicap | 925:1 (-1.5)=2.6",
-      "Handicap | 926:2 (+1.5)=1.48",
-      "Handicap | 925:1 (-2.5)=4.5",
+      "Handicap | 925:1 (-0.5)=1.68",
+      "Handicap | 926:2 (+0.5)=2.15",
+      "Handicap | 925:1 (-1.5)=2.55",
+      "Handicap | 926:2 (+1.5)=1.5",
+      "Handicap | 925:1 (-2.5)=4.4",
       "Handicap | 926:2 (+2.5)=1.2"
      ],
      "23 Liczba goli (z możliwym zwrotem)": [
@@ -20909,19 +22932,19 @@
      ],
      "28 1. drużyna - liczba goli": [
       "1. drużyna - liczba goli | 12:+1.5=1.38",
-      "1. drużyna - liczba goli | 13:-1.5=2.85",
-      "1. drużyna - liczba goli | 12:+3.5=3.9",
-      "1. drużyna - liczba goli | 13:-3.5=1.23",
-      "1. drużyna - liczba goli | 12:+2.5=2.15",
-      "1. drużyna - liczba goli | 13:-2.5=1.65"
+      "1. drużyna - liczba goli | 13:-1.5=2.9",
+      "1. drużyna - liczba goli | 12:+3.5=3.8",
+      "1. drużyna - liczba goli | 13:-3.5=1.24",
+      "1. drużyna - liczba goli | 12:+2.5=2.1",
+      "1. drużyna - liczba goli | 13:-2.5=1.67"
      ],
      "31 2. drużyna - liczba goli": [
-      "2. drużyna - liczba goli | 12:+1.5=2.05",
-      "2. drużyna - liczba goli | 13:-1.5=1.72",
-      "2. drużyna - liczba goli | 12:+0.5=1.22",
+      "2. drużyna - liczba goli | 12:+1.5=2.1",
+      "2. drużyna - liczba goli | 13:-1.5=1.7",
+      "2. drużyna - liczba goli | 12:+0.5=1.23",
       "2. drużyna - liczba goli | 13:-0.5=3.9",
-      "2. drużyna - liczba goli | 12:+2.5=4.3",
-      "2. drużyna - liczba goli | 13:-2.5=1.2"
+      "2. drużyna - liczba goli | 12:+2.5=4.4",
+      "2. drużyna - liczba goli | 13:-2.5=1.19"
      ],
      "33 Dokładna liczba goli": [
       "Dokładna liczba goli | 1217:0=25",
@@ -20930,16 +22953,16 @@
       "Dokładna liczba goli | 1220:3=4.3"
      ],
      "35 1. drużyna - dokładna liczba goli": [
-      "1. drużyna - dokładna liczba goli | 1237:0=8.4",
-      "1. drużyna - dokładna liczba goli | 1238:1=3.9",
+      "1. drużyna - dokładna liczba goli | 1237:0=8.6",
+      "1. drużyna - dokładna liczba goli | 1238:1=4",
       "1. drużyna - dokładna liczba goli | 1239:2=3.3",
-      "1. drużyna - dokładna liczba goli | 1240:3+=2.15"
+      "1. drużyna - dokładna liczba goli | 1240:3+=2.1"
      ],
      "36 2. drużyna - dokładna liczba goli": [
       "2. drużyna - dokładna liczba goli | 1237:0=3.9",
-      "2. drużyna - dokładna liczba goli | 1238:1=2.7",
-      "2. drużyna - dokładna liczba goli | 1239:2=3.4",
-      "2. drużyna - dokładna liczba goli | 1240:3+=4.3"
+      "2. drużyna - dokładna liczba goli | 1238:1=2.65",
+      "2. drużyna - dokładna liczba goli | 1239:2=3.5",
+      "2. drużyna - dokładna liczba goli | 1240:3+=4.4"
      ],
      "38 Liczba goli - przedziały": [
       "Liczba goli - przedziały | 1501:0-1=8",
@@ -20949,7 +22972,7 @@
      ],
      "40 Suma goli": [
       "Suma goli | 24:nieparzysta=1.95",
-      "Suma goli | 25:parzysta=1.85"
+      "Suma goli | 25:parzysta=1.88"
      ],
      "41 1. drużyna - suma goli": [
       "1. drużyna - suma goli | 24:nieparzysta=1.92",
@@ -20960,12 +22983,12 @@
       "2. drużyna - suma goli | 25:parzysta=1.82"
      ],
      "43 Obie drużyny - strzelą gola": [
-      "Obie drużyny - strzelą gola | 26:tak=1.34",
-      "Obie drużyny - strzelą gola | 27:nie=3.2"
+      "Obie drużyny - strzelą gola | 26:tak=1.35",
+      "Obie drużyny - strzelą gola | 27:nie=3.1"
      ],
      "47 1. drużyna - wygra do zera": [
-      "1. drużyna - wygra do zera | 26:tak=4.3",
-      "1. drużyna - wygra do zera | 27:nie=1.19"
+      "1. drużyna - wygra do zera | 26:tak=4.2",
+      "1. drużyna - wygra do zera | 27:nie=1.2"
      ],
      "48 2. drużyna - wygra do zera": [
       "2. drużyna - wygra do zera | 26:tak=10.5",
@@ -20973,25 +22996,25 @@
      ],
      "49 Wynik końcowy i obie drużyny - strzelą gola": [
       "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=2.35",
-      "Wynik końcowy i obie drużyny - strzelą gola | 29:1 i nie=4.3",
+      "Wynik końcowy i obie drużyny - strzelą gola | 29:1 i nie=4.2",
       "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=4.4",
       "Wynik końcowy i obie drużyny - strzelą gola | 31:X i nie=31"
      ],
      "50 Liczba goli i obie drużyny - strzelą gola": [
       "Liczba goli i obie drużyny - strzelą gola | 34:+2.5 i tak=1.42",
-      "Liczba goli i obie drużyny - strzelą gola | 35:-2.5 i tak=9.75",
-      "Liczba goli i obie drużyny - strzelą gola | 36:+2.5 i nie=7",
+      "Liczba goli i obie drużyny - strzelą gola | 35:-2.5 i tak=9.9",
+      "Liczba goli i obie drużyny - strzelą gola | 36:+2.5 i nie=6.75",
       "Liczba goli i obie drużyny - strzelą gola | 37:-2.5 i nie=4.4"
      ],
      "51 Wynik końcowy i liczba goli": [
-      "Wynik końcowy i liczba goli | 235:1 i -1.5=17",
-      "Wynik końcowy i liczba goli | 236:1 i +1.5=1.72",
+      "Wynik końcowy i liczba goli | 235:1 i -1.5=16",
+      "Wynik końcowy i liczba goli | 236:1 i +1.5=1.68",
       "Wynik końcowy i liczba goli | 237:X i -1.5=31",
       "Wynik końcowy i liczba goli | 238:X i +1.5=4.4",
-      "Wynik końcowy i liczba goli | 235:1 i -4.5=2.65",
-      "Wynik końcowy i liczba goli | 236:1 i +4.5=3.6",
-      "Wynik końcowy i liczba goli | 237:X i -4.5=4.75",
-      "Wynik końcowy i liczba goli | 238:X i +4.5=21"
+      "Wynik końcowy i liczba goli | 235:1 i -4.5=2.6",
+      "Wynik końcowy i liczba goli | 236:1 i +4.5=3.5",
+      "Wynik końcowy i liczba goli | 237:X i -4.5=4.9",
+      "Wynik końcowy i liczba goli | 238:X i +4.5=22"
      ],
      "125 Następny gol w meczu - przedziały 15-minutowe": [
       "1. gol - przedziały 15-minutowe | 180:1-15=2.12",
@@ -21006,37 +23029,37 @@
       "1. gol - przedziały 10-minutowe | 190:31-40=7.1"
      ],
      "132 Wynik - przedziały 10-minutowe": [
-      "Wynik od 1. do 10. minuty | 1:1=5.4",
+      "Wynik od 1. do 10. minuty | 1:1=5.25",
       "Wynik od 1. do 10. minuty | 2:X=1.28",
-      "Wynik od 1. do 10. minuty | 3:2=8.75"
+      "Wynik od 1. do 10. minuty | 3:2=8.9"
      ],
      "258 Następny gol i wynik końcowy": [
-      "1. gol i wynik końcowy | 245:1 i 1=1.95",
-      "1. gol i wynik końcowy | 246:1 i X=8.6",
-      "1. gol i wynik końcowy | 247:1 i 2=14.5",
-      "1. gol i wynik końcowy | 248:2 i 1=7.4"
+      "1. gol i wynik końcowy | 245:1 i 1=1.92",
+      "1. gol i wynik końcowy | 246:1 i X=8.75",
+      "1. gol i wynik końcowy | 247:1 i 2=15",
+      "1. gol i wynik końcowy | 248:2 i 1=7.25"
      ],
      "283 Dokładny wynik": [
       "Dokładny wynik | 1783:0:0=31",
       "Dokładny wynik | 1784:1:0=17",
-      "Dokładny wynik | 1785:2:0=14",
+      "Dokładny wynik | 1785:2:0=13.5",
       "Dokładny wynik | 1786:3:0=17"
      ],
      "811 Podwójna szansa i obie drużyny - strzelą gola": [
       "Podwójna szansa i obie drużyny - strzelą gola | 929:1X i tak=1.68",
-      "Podwójna szansa i obie drużyny - strzelą gola | 930:1X i nie=4.1",
+      "Podwójna szansa i obie drużyny - strzelą gola | 930:1X i nie=4",
       "Podwójna szansa i obie drużyny - strzelą gola | 931:12 i tak=1.75",
-      "Podwójna szansa i obie drużyny - strzelą gola | 932:12 i nie=3.4"
+      "Podwójna szansa i obie drużyny - strzelą gola | 932:12 i nie=3.3"
      ],
      "812 Podwójna szansa i liczba goli": [
       "Podwójna szansa i liczba goli | 935:1X i -1.5=11.5",
       "Podwójna szansa i liczba goli | 936:12 i -1.5=10.5",
       "Podwójna szansa i liczba goli | 937:X2 i -1.5=15",
-      "Podwójna szansa i liczba goli | 938:1X i +1.5=1.34",
+      "Podwójna szansa i liczba goli | 938:1X i +1.5=1.33",
       "Podwójna szansa i liczba goli | 935:1X i -4.5=1.85",
       "Podwójna szansa i liczba goli | 936:12 i -4.5=1.95",
-      "Podwójna szansa i liczba goli | 937:X2 i -4.5=2.8",
-      "Podwójna szansa i liczba goli | 938:1X i +4.5=3.3"
+      "Podwójna szansa i liczba goli | 937:X2 i -4.5=2.85",
+      "Podwójna szansa i liczba goli | 938:1X i +4.5=3.25"
      ],
      "813 Liczba goli - przedziały": [
       "Liczba goli - przedziały | 1008:brak gola=25",
@@ -21045,30 +23068,30 @@
       "Liczba goli - przedziały | 943:1-4=1.42"
      ],
      "814 1. drużyna - liczba goli - przedziały": [
-      "1. drużyna - liczba goli - przedziały | 1009:brak gola=8.4",
+      "1. drużyna - liczba goli - przedziały | 1009:brak gola=8.6",
       "1. drużyna - liczba goli - przedziały | 957:1-2=1.85",
       "1. drużyna - liczba goli - przedziały | 958:1-3=1.36",
-      "1. drużyna - liczba goli - przedziały | 959:2-3=1.88"
+      "1. drużyna - liczba goli - przedziały | 959:2-3=1.9"
      ],
      "815 2. drużyna - liczba goli - przedziały": [
       "2. drużyna - liczba goli - przedziały | 1009:brak gola=3.9",
       "2. drużyna - liczba goli - przedziały | 957:1-2=1.55",
-      "2. drużyna - liczba goli - przedziały | 958:1-3=1.3",
+      "2. drużyna - liczba goli - przedziały | 958:1-3=1.32",
       "2. drużyna - liczba goli - przedziały | 959:2-3=2.25"
      ],
      "816 Multiwynik": [
-      "Multiwynik | 1007:X=4.25",
-      "Multiwynik | 961:1:0, 2:0 lub 3:0=6",
-      "Multiwynik | 962:0:1, 0:2 lub 0:3=13.5",
-      "Multiwynik | 963:4:0, 5:0 lub 6:0=19"
+      "Multiwynik | 1007:X=4.3",
+      "Multiwynik | 961:1:0, 2:0 lub 3:0=5.9",
+      "Multiwynik | 962:0:1, 0:2 lub 0:3=14",
+      "Multiwynik | 963:4:0, 5:0 lub 6:0=18"
      ],
      "1224 2. drużyna - strzeli gola": [
-      "2. drużyna - strzeli gola | 26:tak=1.22",
+      "2. drużyna - strzeli gola | 26:tak=1.23",
       "2. drużyna - strzeli gola | 27:nie=3.9"
      ],
      "1229 1. drużyna - strzeli gola": [
       "1. drużyna - strzeli gola | 26:tak=1.07",
-      "1. drużyna - strzeli gola | 27:nie=8.4"
+      "1. drużyna - strzeli gola | 27:nie=8.6"
      ],
      "52 Zawodnik - strzeli następnego gola": [
       "Zawodnik - strzeli 1. gola | 1082692:Denkey Kevin=4.75",
@@ -21086,33 +23109,10 @@
   },
   "betclic": {
    "bledy": [],
-   "niedopasowane": [
-    "pilka: FC Cincinnati – D.C. United (2026-10-22 01:00)",
-    "pilka: Levante – Athletic Bilbao (2026-10-21 20:00)",
-    "pilka: Urawa Red Diamonds – JEF United Chiba (2026-10-21 12:30)",
-    "pilka: Fenerbahce – Slavia Praha (2026-10-20 18:45)",
-    "pilka: Liverpool – Villarreal (2026-10-20 21:00)",
-    "pilka: Napoli – Bodø/Glimt (2026-10-20 21:00)",
-    "pilka: AS Roma – ŠK Slovan Bratislava (2026-10-20 21:00)",
-    "pilka: FC Juárez – Atlante FC (2026-10-21 03:00)",
-    "pilka: Sabah FK – Borussia Dortmund (2026-10-20 18:45)",
-    "pilka: Manchester City – AEK Athens (2026-10-20 21:00)",
-    "pilka: VfB Stuttgart – Atlético Madrid (2026-10-20 21:00)",
-    "pilka: Paris Saint Germain – Barcelona (2026-10-20 21:00)",
-    "pilka: Porto – PSV Eindhoven (2026-10-20 21:00)",
-    "pilka: Wolverhampton Wanderers – Portsmouth (2026-10-20 20:45)",
-    "pilka: Guadalajara – Necaxa (2026-10-21 02:07)",
-    "pilka: Atlético San Luis – Querétaro (2026-10-21 03:00)",
-    "pilka: Tigres – León (2026-10-21 05:00)",
-    "tenis: Jasmine Paolini – Anhelina Kalinina (2026-10-20 08:30)",
-    "tenis: Cristina Bucsa – Polina Kudermetova (2026-10-20 08:30)",
-    "tenis: Jelena Ostapenko – Belinda Bencic (2026-10-20 09:20)",
-    "tenis: Katarzyna Kawa – Daria Snigur (2026-10-20 11:30)",
-    "tenis: Guo Hanyu – Ekaterina Alexandrova (2026-10-20 13:00)"
-   ],
+   "niedopasowane": [],
    "stron": 37,
-   "dopasowane": 26,
-   "nasze_mecze": 48,
+   "dopasowane": 29,
+   "nasze_mecze": 29,
    "rynki_przyklad": {
     "pilka": {
      "Real Madryt - RB Leipzig": [
@@ -21170,10 +23170,10 @@
      ]
     }
    },
-   "sekund": 31,
-   "z_kursami": 26
+   "sekund": 30,
+   "z_kursami": 29
   }
  },
  "lista": "8944e9c236a0",
- "sekund": 160
+ "sekund": 154
 }
