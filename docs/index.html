@@ -1149,7 +1149,7 @@ function opisMma(n, a, b){ const kto = x => x === 'A' ? a : b;
   if(n === 'Pełny dystans') return 'walka potrwa pełny dystans (decyzja sędziów)'; if(n === 'Remis') return 'remis';
   return `${kto(n[0])} wygra ${n.endsWith('przed czasem') ? 'przed czasem' : 'na punkty'}`; }
 /* ---------- analiza AI przy ręcznej analizie (serwer AI na polskim VPS) ---------- */
-const AI_URL = 'https://188-68-247-201.sslip.io';
+const AI_URL = 'https://188-68-247-55.sslip.io';
 function aiReczna(sp, zap, karta){
   // zap: {a, b, rozgrywki, typ:{zaklad,szansa}, szanse?, szansa_a?, szansa_b?}; karta: obiekt do aiPelny (gospodarz/gosc albo a/b)
   const id = 'air' + Math.random().toString(36).slice(2, 8);
