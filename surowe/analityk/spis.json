@@ -1,14 +1,14 @@
 {
- "czas": "2026-10-24 07:00 UTC",
+ "czas": "2026-10-25 08:00 UTC",
  "wersja": "analityk-1",
  "nasze": {
-  "pilka": 93,
-  "tenis": 2,
-  "walki": 13
+  "pilka": 55,
+  "tenis": 1,
+  "walki": 2
  },
  "zrodla": {
   "ufcstats": {
-   "sekund": 7,
+   "sekund": 6,
    "blad": null,
    "start": [
     200,
@@ -25,24 +25,24 @@
    "tryb": null,
    "pilka": {
     "dopasowane": 0,
-    "niedopasowane": 93
+    "niedopasowane": 55
    },
    "tenis": {
     "dopasowane": 0,
-    "niedopasowane": 2
+    "niedopasowane": 1
    },
    "walki": {
     "dopasowane": 0,
-    "niedopasowane": 13
+    "niedopasowane": 2
    }
   },
   "fotmob": {
-   "sekund": 2,
+   "sekund": 3,
    "blad": null,
    "requests": true,
-   "meczow": 786,
-   "dopasowane": 82,
-   "niedopasowane": 11,
+   "meczow": 524,
+   "dopasowane": 50,
+   "niedopasowane": 5,
    "szczegoly": [
     "requests",
     "requests",
@@ -50,36 +50,36 @@
    ]
   },
   "transfermarkt": {
-   "sekund": 3,
+   "sekund": 6,
    "blad": null,
    "start": [
     200
    ],
    "kluby": [
     [
-     "tokyo-verdy",
+     "fc-tokyo",
      200,
-     5
+     6
     ],
     [
-     "avispa-fukuoka",
+     "mito-hollyhock",
+     200,
+     8
+    ],
+    [
+     "kawasaki-frontale",
+     200,
+     8
+    ],
+    [
+     "fagiano-okayama",
      200,
      2
-    ],
-    [
-     "vissel-kobe",
-     200,
-     3
-    ],
-    [
-     "machida-zelvia",
-     200,
-     0
     ]
    ]
   }
  },
  "ip": "188.68.247.201",
  "przegladarka": "ok",
- "sekund": 28
+ "sekund": 31
 }
