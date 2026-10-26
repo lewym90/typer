@@ -2,2159 +2,48 @@
  "zrodlo": "FotMob",
  "proby": [
   {
-   "url": "https://www.fotmob.com/api/data/matches?date=20261025&timezone=Europe%2FWarsaw&ccode3=POL",
+   "url": "https://www.fotmob.com/api/data/matches?date=20261026&timezone=Europe%2FWarsaw&ccode3=POL",
    "kod": 200,
    "typ": "application/json; charset=utf-8",
-   "rozmiar": 283472,
-   "ms": 974,
-   "mecze": 511
+   "rozmiar": 66381,
+   "ms": 283,
+   "mecze": 111
   },
   {
-   "url": "https://www.fotmob.com/api/matches?date=20261025&timezone=Europe%2FWarsaw&ccode3=POL",
+   "url": "https://www.fotmob.com/api/matches?date=20261026&timezone=Europe%2FWarsaw&ccode3=POL",
    "kod": 404,
    "typ": "text/html; charset=utf-8",
    "rozmiar": 214393,
-   "ms": 1106,
+   "ms": 916,
    "poczatek": "<!DOCTYPE html><html lang=\"en\" dir=\"ltr\"><head><meta charSet=\"utf-8\" data-next-head=\"\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=5.0\" data-next-head=\"\"/><met"
   },
   {
-   "url": "https://www.fotmob.com/api/data/matches?date=20261025",
+   "url": "https://www.fotmob.com/api/data/matches?date=20261026",
    "kod": 200,
    "typ": "application/json; charset=utf-8",
-   "rozmiar": 265544,
-   "ms": 46,
-   "mecze": 524
+   "rozmiar": 59772,
+   "ms": 34,
+   "mecze": 117
   }
  ],
  "dopasowane": [
   {
-   "nasz": "FC Tokyo – Mito HollyHock",
-   "event_id": "b1bf08698f7eda9ec10876f5de868280",
-   "start": "2026-10-25 08:00",
-   "fotmob_id": "5803629",
-   "fotmob": "FC Tokyo – Mito Hollyhock",
-   "zgodnosc": 1.0,
+   "nasz": "Besiktas JK – Basaksehir",
+   "event_id": "54ecd2cf77168d62e84f2fd5ccc54a82",
+   "start": "2026-10-26 17:00",
+   "fotmob_id": "5904783",
+   "fotmob": "Beşiktaş – Başakşehir",
+   "zgodnosc": 0.984,
    "odwrocone": false,
    "url": null,
    "szczegoly": {
     "requests": [
      {
-      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5803629",
+      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5904783",
       "kod": 200,
       "typ": "application/json; charset=utf-8",
-      "rozmiar": 169248,
-      "ms": 17
-     }
-    ],
-    "dane": {
-     "lineup_klucze": [
-      "matchId",
-      "lineupType",
-      "source",
-      "availableFilters",
-      "homeTeam",
-      "awayTeam"
-     ],
-     "lineup_typ": "standard",
-     "homeTeam": {
-      "formacja": "4-4-2",
-      "ocena": 6.8,
-      "klucze": [
-       "id",
-       "name",
-       "rating",
-       "formation",
-       "starters",
-       "coach",
-       "subs",
-       "averageStarterAge",
-       "totalStarterMarketValue"
-      ],
-      "wyjsciowi": [
-       {
-        "id": 167247,
-        "age": 36,
-        "name": "Seung-Gyu Kim",
-        "positionId": 11,
-        "usualPlayingPositionId": 0,
-        "shirtNumber": "81",
-        "countryName": "South Korea",
-        "countryCode": "KOR",
-        "horizontalLayout": {
-         "x": 0.1,
-         "y": 0.5,
-         "height": 0.25,
-         "width": 0.2
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.1,
-         "height": 0.2,
-         "width": 1
-        },
-        "marketValue": 296513,
-        "performance": {
-         "rating": 6.8,
-         "seasonRating": 6.67
-        },
-        "firstName": "Seung-Gyu",
-        "lastName": "Kim",
-        "nationalTeamId": 7804,
-        "rankings": null
-       },
-       {
-        "id": 834648,
-        "age": 27,
-        "name": "Hirokazu Ishihara",
-        "positionId": 32,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "22",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.357,
-         "y": 0.875,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.125,
-         "y": 0.357,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 467800,
-        "performance": {
-         "rating": 7.4,
-         "events": [
-          {
-           "type": "<str>"
-          }
-         ],
-         "seasonAssists": 1,
-         "seasonRating": 6.96
-        },
-        "firstName": "Hirokazu",
-        "lastName": "Ishihara",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 203755,
-        "age": 34,
-        "name": "Alexander Scholz",
-        "positionId": 34,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "24",
-        "countryName": "Denmark",
-        "countryCode": "DEN",
-        "horizontalLayout": {
-         "x": 0.357,
-         "y": 0.625,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.375,
-         "y": 0.357,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 645870,
-        "performance": {
-         "rating": 6.8,
-         "seasonGoals": 1,
-         "seasonRating": 7.32
-        },
-        "firstName": "Alexander",
-        "lastName": "Scholz",
-        "nationalTeamId": 8238,
-        "rankings": null
-       },
-       {
-        "id": 1638975,
-        "age": 24,
-        "name": "Hayato Inamura",
-        "positionId": 36,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "4",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.357,
-         "y": 0.375,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.625,
-         "y": 0.357,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 313375,
-        "performance": {
-         "rating": 6.6,
-         "seasonRating": 7.39
-        },
-        "firstName": "Hayato",
-        "lastName": "Inamura",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 1089572,
-        "age": 25,
-        "name": "Kashifu Bangunagande",
-        "positionId": 38,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "6",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.357,
-         "y": 0.125,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.875,
-         "y": 0.357,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 250721,
-        "performance": {
-         "rating": 6.9,
-         "seasonAssists": 2,
-         "seasonRating": 7.17
-        },
-        "firstName": "Kashifu",
-        "lastName": "Bangunagande",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 1544870,
-        "age": 25,
-        "name": "Kein Sato",
-        "positionId": 72,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "10",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.613,
-         "y": 0.875,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.125,
-         "y": 0.613,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 1097079,
-        "performance": {
-         "rating": 6.1,
-         "events": [
-          {
-           "type": "<str>"
-          }
-         ],
-         "seasonGoals": 1,
-         "seasonAssists": 2,
-         "seasonRating": 6.93
-        },
-        "firstName": "Kein",
-        "lastName": "Sato",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 1714916,
-        "age": 24,
-        "name": "Kyota Tokiwa",
-        "positionId": 74,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "27",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.613,
-         "y": 0.625,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.375,
-         "y": 0.613,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "performance": {
-         "rating": 6.5,
-         "seasonRating": 6.98
-        },
-        "firstName": "Kyota",
-        "lastName": "Tokiwa",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 824618,
-        "age": 28,
-        "name": "Takahiro Ko",
-        "positionId": 76,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "8",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.613,
-         "y": 0.375,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.625,
-         "y": 0.613,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 854473,
-        "performance": {
-         "rating": 6.9,
-         "seasonGoals": 1,
-         "seasonRating": 7.2
-        },
-        "firstName": "Takahiro",
-        "lastName": "Ko",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 1473298,
-        "age": 24,
-        "name": "Soma Anzai",
-        "positionId": 78,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "7",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.613,
-         "y": 0.125,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.875,
-         "y": 0.613,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 418624,
-        "performance": {
-         "rating": 6.3,
-         "seasonGoals": 4,
-         "seasonRating": 7.32
-        },
-        "firstName": "Soma",
-        "lastName": "Anzai",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 621514,
-        "age": 34,
-        "name": "Teruhito Nakagawa",
-        "positionId": 104,
-        "usualPlayingPositionId": 3,
-        "shirtNumber": "39",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.87,
-         "y": 0.7,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.3,
-         "y": 0.87,
-         "height": 0.2,
-         "width": 0.4
-        },
-        "marketValue": 234383,
-        "performance": {
-         "rating": 7.8,
-         "events": [
-          {
-           "type": "<str>"
-          }
-         ],
-         "seasonGoals": 1,
-         "seasonAssists": 2,
-         "seasonRating": 6.45
-        },
-        "firstName": "Teruhito",
-        "lastName": "Nakagawa",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 1396529,
-        "age": 27,
-        "name": "Motoki Nagakura",
-        "positionId": 106,
-        "usualPlayingPositionId": 3,
-        "shirtNumber": "26",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.87,
-         "y": 0.3,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.7,
-         "y": 0.87,
-         "height": 0.2,
-         "width": 0.4
-        },
-        "marketValue": 442052,
-        "performance": {
-         "rating": 6.6,
-         "seasonGoals": 7,
-         "seasonAssists": 4,
-         "seasonRating": 7.65
-        },
-        "firstName": "Motoki",
-        "lastName": "Nagakura",
-        "nationalTeamId": 6715,
-        "rankings": null
-       }
-      ],
-      "lawka_ile": 9,
-      "nieobecni": null,
-      "trener": {
-       "id": 1340641,
-       "age": 58,
-       "name": "Rikizo Matsuhashi",
-       "countryName": "Japan",
-       "countryCode": "JPN",
-       "firstName": "Rikizo",
-       "lastName": "Matsuhashi",
-       "nationalTeamId": 6715,
-       "primaryTeamId": 4399,
-       "primaryTeamName": "FC Tokyo",
-       "usualPlayingPositionId": null,
-       "isCoach": true
-      }
-     },
-     "awayTeam": {
-      "formacja": "4-4-2",
-      "ocena": 6.3,
-      "klucze": [
-       "id",
-       "name",
-       "rating",
-       "formation",
-       "starters",
-       "coach",
-       "subs",
-       "averageStarterAge",
-       "totalStarterMarketValue"
-      ],
-      "wyjsciowi": [
-       {
-        "id": 206822,
-        "age": 35,
-        "name": "Jakub Słowik",
-        "positionId": 11,
-        "usualPlayingPositionId": 0,
-        "shirtNumber": "27",
-        "countryName": "Poland",
-        "countryCode": "POL",
-        "horizontalLayout": {
-         "x": 0.1,
-         "y": 0.5,
-         "height": 0.25,
-         "width": 0.2
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.1,
-         "height": 0.2,
-         "width": 1
-        },
-        "marketValue": 169173,
-        "performance": {
-         "rating": 6.1,
-         "seasonRating": 6.85
-        },
-        "firstName": "Jakub",
-        "lastName": "Słowik",
-        "nationalTeamId": 8568,
-        "rankings": null
-       },
-       {
-        "id": 1155058,
-        "age": 28,
-        "name": "Takumi Mase",
-        "positionId": 32,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "25",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.357,
-         "y": 0.875,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.125,
-         "y": 0.357,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 468750,
-        "performance": {
-         "rating": 6.6,
-         "seasonGoals": 1,
-         "seasonRating": 6.87
-        },
-        "firstName": "Takumi",
-        "lastName": "Mase",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 735811,
-        "age": 33,
-        "name": "Yasuki Kimoto",
-        "positionId": 34,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "15",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.357,
-         "y": 0.625,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.375,
-         "y": 0.357,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 160633,
-        "performance": {
-         "rating": 6.6,
-         "seasonGoals": 2,
-         "seasonRating": 6.98
-        },
-        "firstName": "Yasuki",
-        "lastName": "Kimoto",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 1715146,
-        "age": 24,
-        "name": "Kenta Itakura",
-        "positionId": 36,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "17",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.357,
-         "y": 0.375,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.625,
-         "y": 0.357,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 525045,
-        "performance": {
-         "rating": 6.2,
-         "seasonRating": 6.72
-        },
-        "firstName": "Kenta",
-        "lastName": "Itakura",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 1252931,
-        "age": 28,
-        "name": "Koshi Osaki",
-        "positionId": 38,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "3",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.357,
-         "y": 0.125,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.875,
-         "y": 0.357,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 430957,
-        "performance": {
-         "rating": 7.1,
-         "seasonRating": 6.55
-        },
-        "firstName": "Koshi",
-        "lastName": "Osaki",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 943212,
-        "age": 27,
-        "name": "Chihiro Kato",
-        "positionId": 72,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "8",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.613,
-         "y": 0.875,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.125,
-         "y": 0.613,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 169674,
-        "performance": {
-         "rating": 5.8,
-         "seasonGoals": 2,
-         "seasonRating": 6.6
-        },
-        "firstName": "Chihiro",
-        "lastName": "Kato",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 1611431,
-        "age": 25,
-        "name": "Kiichi Yamazaki",
-        "positionId": 74,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "24",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.613,
-         "y": 0.625,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.375,
-         "y": 0.613,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 271050,
-        "performance": {
-         "rating": 6.3,
-         "seasonRating": 6.05
-        },
-        "firstName": "Kiichi",
-        "lastName": "Yamazaki",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 1894948,
-        "age": 22,
-        "name": "Hugo Leonardo",
-        "positionId": 76,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "38",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.613,
-         "y": 0.375,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.625,
-         "y": 0.613,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "performance": {
-         "rating": 6,
-         "seasonRating": 6.89
-        },
-        "firstName": "Hugo",
-        "lastName": "Leonardo",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 1715139,
-        "age": 23,
-        "name": "Hayata Yamamoto",
-        "positionId": 78,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "39",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.613,
-         "y": 0.125,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.875,
-         "y": 0.613,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 299471,
-        "performance": {
-         "rating": 6.3,
-         "seasonRating": 6.27
-        },
-        "firstName": "Hayata",
-        "lastName": "Yamamoto",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 1611144,
-        "age": 25,
-        "name": "Jin Okumura",
-        "positionId": 104,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "30",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.87,
-         "y": 0.7,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.3,
-         "y": 0.87,
-         "height": 0.2,
-         "width": 0.4
-        },
-        "marketValue": 267230,
-        "performance": {
-         "rating": 6.5,
-         "seasonRating": 6.03
-        },
-        "firstName": "Jin",
-        "lastName": "Okumura",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 1055147,
-        "age": 31,
-        "name": "Kaito Taniguchi",
-        "positionId": 106,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "22",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.87,
-         "y": 0.3,
-         "height": 0.25,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.7,
-         "y": 0.87,
-         "height": 0.2,
-         "width": 0.4
-        },
-        "marketValue": 191625,
-        "performance": {
-         "rating": 6.2,
-         "seasonAssists": 2,
-         "seasonRating": 6.79
-        },
-        "firstName": "Kaito",
-        "lastName": "Taniguchi",
-        "nationalTeamId": 6715,
-        "rankings": null
-       }
-      ],
-      "lawka_ile": 9,
-      "nieobecni": null,
-      "trener": {
-       "id": 1708434,
-       "age": 49,
-       "name": "Daisuke Kimori",
-       "countryName": "Japan",
-       "countryCode": "JPN",
-       "firstName": "Daisuke",
-       "lastName": "Kimori",
-       "nationalTeamId": 6715,
-       "primaryTeamId": 162195,
-       "primaryTeamName": "Mito Hollyhock",
-       "usualPlayingPositionId": null,
-       "isCoach": true
-      }
-     },
-     "matchFacts_klucze": [
-      "matchId",
-      "highlights",
-      "playerOfTheMatch",
-      "events",
-      "infoBox",
-      "teamForm",
-      "poll",
-      "topPlayers",
-      "insights",
-      "topScorers",
-      "momentum",
-      "countryCode",
-      "QAData"
-     ],
-     "infoBox": {
-      "legInfo": null,
-      "Match Date": {
-       "utcTime": "2026-10-25T07:00:00.000Z",
-       "isDateCorrect": true
-      },
-      "Tournament": {
-       "id": 937875,
-       "parentLeagueId": 223,
-       "link": "/leagues/223/overview/j-league",
-       "leagueName": "J. League",
-       "roundName": "12",
-       "round": "12"
-      },
-      "Stadium": {
-       "name": "Ajinomoto Stadium",
-       "city": "Chōfu",
-       "country": "Japan",
-       "lat": 35.664269843,
-       "long": 139.527139664,
-       "capacity": 48955,
-       "surface": "grass"
-      },
-      "Referee": {
-       "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/jpn.png",
-       "text": "Hayato Shimizu",
-       "countryCode": "JPN",
-       "country": "Japan",
-       "id": 1001082016,
-       "leagueId": 223,
-       "leagueName": "J. League",
-       "stats": [
-        {
-         "type": "matches",
-         "value": 21,
-         "valueType": "total"
-        },
-        {
-         "type": "yellowCards",
-         "value": 2.1,
-         "valueType": "perMatch",
-         "average": 2.51,
-         "total": 44,
-         "averageType": "below",
-         "fillPercentage": 36.15,
-         "averagePercentage": 50
-        },
-        {
-         "type": "redCards",
-         "value": 2,
-         "valueType": "total"
-        },
-        {
-         "type": "unknown",
-         "value": 1,
-         "valueType": "total"
-        },
-        {
-         "type": "penalties",
-         "value": 4,
-         "valueType": "total"
-        },
-        {
-         "type": "fouls",
-         "value": 18.55,
-         "valueType": "perMatch",
-         "average": 22.06,
-         "total": 371,
-         "averageType": "below",
-         "fillPercentage": 28.24,
-         "averagePercentage": 50
-        }
-       ]
-      },
-      "Attendance": null
-     },
-     "content_klucze": [
-      "matchFacts",
-      "liveticker",
-      "superlive",
-      "buzz",
-      "stats",
-      "playerStats",
-      "shotmap",
-      "weather",
-      "lineup",
-      "hasPlayoff",
-      "table",
-      "h2h",
-      "momentum",
-      "attackingZones",
-      "heatmapUrl"
-     ],
-     "general": {
-      "matchId": "5803629",
-      "matchName": "FC Tokyo-vs-Mito Hollyhock_Sun, Oct 25, 2026, 07:00 UTC",
-      "matchRound": "12",
-      "teamColors": {
-       "darkMode": {
-        "home": "#004cc6",
-        "away": "#ffffff"
-       },
-       "lightMode": {
-        "home": "#052883",
-        "away": "#0075ea"
-       },
-       "fontDarkMode": {
-        "home": "rgba(255, 255, 255, 1.0)",
-        "away": "rgba(29, 29, 29, 1.0)"
-       },
-       "fontLightMode": {
-        "home": "rgba(255, 255, 255, 1.0)",
-        "away": "rgba(255, 255, 255, 1.0)"
-       }
-      },
-      "leagueId": 937875,
-      "leagueName": "J. League",
-      "leagueRoundName": "12",
-      "parentLeagueId": 223,
-      "countryCode": "JPN",
-      "homeTeam": {
-       "name": "FC Tokyo",
-       "id": 4399
-      },
-      "awayTeam": {
-       "name": "Mito Hollyhock",
-       "id": 162195
-      },
-      "coverageLevel": "xG",
-      "matchTimeUTC": "Sun, Oct 25, 2026, 07:00 UTC",
-      "matchTimeUTCDate": "2026-10-25T07:00:00.000Z",
-      "started": true,
-      "finished": false,
-      "gender": "male"
-     },
-     "header": {
-      "teams": [
-       {
-        "name": "FC Tokyo",
-        "id": 4399,
-        "score": 1,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/4399_small.png",
-        "pageUrl": "/teams/4399/overview/fc-tokyo"
-       },
-       {
-        "name": "Mito Hollyhock",
-        "id": 162195,
-        "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/162195_small.png",
-        "pageUrl": "/teams/162195/overview/mito-hollyhock"
-       }
-      ],
-      "status": {
-       "utcTime": "2026-10-25T07:00:00.000Z",
-       "numberOfHomeRedCards": 0,
-       "numberOfAwayRedCards": 0,
-       "halfs": {
-        "firstHalfStarted": "25.10.2026 08:03:56",
-        "firstHalfEnded": "25.10.2026 08:51:28",
-        "secondHalfStarted": "",
-        "secondHalfEnded": "",
-        "firstExtraHalfStarted": "",
-        "secondExtraHalfStarted": "",
-        "gameEnded": ""
-       },
-       "finished": false,
-       "started": true,
-       "cancelled": false,
-       "ongoing": true,
-       "scoreStr": "1 - 0",
-       "liveTime": {
-        "short": "HT",
-        "shortKey": "halftime_short",
-        "long": "Half-Time",
-        "longKey": "pause_match",
-        "maxTime": 45,
-        "basePeriod": 45,
-        "penalties": null,
-        "addedTime": 0
-       }
-      },
-      "events": {
-       "homeTeamGoals": {
-        "Nakagawa": [
-         {
-          "reactKey": "<str>",
-          "timeStr": "<int>",
-          "type": "<str>",
-          "time": "<int>",
-          "overloadTime": "<NoneType>",
-          "eventId": "<int>",
-          "player": "<dict>",
-          "homeScore": "<int>",
-          "awayScore": "<int>",
-          "profileUrl": "<str>",
-          "overloadTimeStr": "<bool>",
-          "isHome": "<bool>",
-          "ownGoal": "<NoneType>",
-          "goalDescription": "<NoneType>",
-          "goalDescriptionKey": "<NoneType>",
-          "suffix": "<NoneType>",
-          "suffixKey": "<NoneType>",
-          "isPenaltyShootoutEvent": "<bool>",
-          "nameStr": "<str>",
-          "firstName": "<str>",
-          "lastName": "<str>",
-          "fullName": "<str>",
-          "playerId": "<int>",
-          "newScore": "<list>",
-          "penShootoutScore": "<NoneType>",
-          "shotmapEvent": "<dict>",
-          "assistStr": "<str>",
-          "assistProfileUrl": "<str>",
-          "assistPlayerId": "<int>",
-          "assistKey": "<str>",
-          "assistInput": "<str>"
-         }
-        ]
-       },
-       "awayTeamGoals": {},
-       "homeTeamRedCards": {},
-       "awayTeamRedCards": {}
-      }
-     },
-     "tabela_jest": true,
-     "h2h_jest": true
-    },
-    "skad": "requests"
-   }
-  },
-  {
-   "nasz": "Kawasaki Frontale – Fagiano Okayama",
-   "event_id": "6877d7a799170623675d730a7548a2e5",
-   "start": "2026-10-25 08:00",
-   "fotmob_id": "5803632",
-   "fotmob": "Kawasaki Frontale – Fagiano Okayama FC",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null,
-   "szczegoly": {
-    "requests": [
-     {
-      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5803632",
-      "kod": 200,
-      "typ": "application/json; charset=utf-8",
-      "rozmiar": 154252,
-      "ms": 57
-     }
-    ],
-    "dane": {
-     "lineup_klucze": [
-      "matchId",
-      "lineupType",
-      "source",
-      "availableFilters",
-      "homeTeam",
-      "awayTeam"
-     ],
-     "lineup_typ": "standard",
-     "homeTeam": {
-      "formacja": "4-2-3-1",
-      "ocena": 7,
-      "klucze": [
-       "id",
-       "name",
-       "rating",
-       "formation",
-       "starters",
-       "coach",
-       "subs",
-       "averageStarterAge",
-       "totalStarterMarketValue"
-      ],
-      "wyjsciowi": [
-       {
-        "id": 538435,
-        "age": 29,
-        "name": "Svend Brodersen",
-        "positionId": 11,
-        "usualPlayingPositionId": 0,
-        "shirtNumber": "49",
-        "countryName": "Germany",
-        "countryCode": "GER",
-        "horizontalLayout": {
-         "x": 0.1,
-         "y": 0.5,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.1,
-         "height": 0.192,
-         "width": 1
-        },
-        "marketValue": 730992,
-        "performance": {
-         "rating": 6.5,
-         "seasonRating": 6.72
-        },
-        "firstName": "Svend",
-        "lastName": "Brodersen",
-        "nationalTeamId": 8570,
-        "rankings": null
-       },
-       {
-        "id": 1292274,
-        "age": 27,
-        "name": "Reon Yamahara",
-        "positionId": 32,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "29",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.875,
-         "height": 0.25,
-         "width": 0.385
-        },
-        "verticalLayout": {
-         "x": 0.125,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 689033,
-        "performance": {
-         "rating": 6.8,
-         "seasonAssists": 2,
-         "seasonRating": 6.89
-        },
-        "firstName": "Reon",
-        "lastName": "Yamahara",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 1521407,
-        "age": 25,
-        "name": "Pedro Romano",
-        "positionId": 34,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "4",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.625,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.375,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "performance": {
-         "rating": 7.1,
-         "seasonGoals": 2,
-         "seasonRating": 7.14
-        },
-        "firstName": "Pedro",
-        "lastName": "Romano",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 767508,
-        "age": 29,
-        "name": "Filip Uremović",
-        "positionId": 36,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "22",
-        "countryName": "Croatia",
-        "countryCode": "CRO",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.375,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.625,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 1377914,
-        "performance": {
-         "rating": 7.2,
-         "seasonRating": 6.72
-        },
-        "firstName": "Filip",
-        "lastName": "Uremović",
-        "nationalTeamId": 10155,
-        "rankings": null
-       },
-       {
-        "id": 1337487,
-        "age": 26,
-        "name": "Sota Miura",
-        "positionId": 38,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "13",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.125,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.875,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 1089436,
-        "performance": {
-         "rating": 7.4,
-         "seasonAssists": 2,
-         "seasonRating": 6.91
-        },
-        "firstName": "Sota",
-        "lastName": "Miura",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 1227819,
-        "age": 28,
-        "name": "Kento Tachibanada",
-        "positionId": 64,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "8",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.485,
-         "y": 0.7,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.3,
-         "y": 0.485,
-         "height": 0.192,
-         "width": 0.4
-        },
-        "marketValue": 899809,
-        "performance": {
-         "rating": 6.3,
-         "seasonGoals": 1,
-         "seasonRating": 7.42
-        },
-        "firstName": "Kento",
-        "lastName": "Tachibanada",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 1134465,
-        "age": 28,
-        "name": "Yuki Yamamoto",
-        "positionId": 66,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "6",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.485,
-         "y": 0.3,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.7,
-         "y": 0.485,
-         "height": 0.192,
-         "width": 0.4
-        },
-        "marketValue": 879128,
-        "performance": {
-         "rating": 6.6,
-         "seasonGoals": 1,
-         "seasonAssists": 1,
-         "seasonRating": 7.79
-        },
-        "firstName": "Yuki",
-        "lastName": "Yamamoto",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 843782,
-        "age": 29,
-        "name": "Tatsuya Ito",
-        "positionId": 83,
-        "usualPlayingPositionId": 3,
-        "shirtNumber": "17",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.678,
-         "y": 0.837,
-         "height": 0.25,
-         "width": 0.385
-        },
-        "verticalLayout": {
-         "x": 0.162,
-         "y": 0.678,
-         "height": 0.192,
-         "width": 0.325
-        },
-        "marketValue": 807697,
-        "performance": {
-         "rating": 7,
-         "seasonGoals": 3,
-         "seasonAssists": 2,
-         "seasonRating": 7.61
-        },
-        "firstName": "Tatsuya",
-        "lastName": "Ito",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 915101,
-        "age": 31,
-        "name": "Yasuto Wakizaka",
-        "positionId": 85,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "14",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.678,
-         "y": 0.5,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.678,
-         "height": 0.192,
-         "width": 0.337
-        },
-        "marketValue": 1073151,
-        "performance": {
-         "rating": 7,
-         "seasonGoals": 4,
-         "seasonAssists": 3,
-         "seasonRating": 7.74
-        },
-        "firstName": "Yasuto",
-        "lastName": "Wakizaka",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 853613,
-        "age": 31,
-        "name": "Marcinho",
-        "positionId": 87,
-        "usualPlayingPositionId": 3,
-        "shirtNumber": "23",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.678,
-         "y": 0.163,
-         "height": 0.25,
-         "width": 0.193
-        },
-        "verticalLayout": {
-         "x": 0.837,
-         "y": 0.678,
-         "height": 0.192,
-         "width": 0.325
-        },
-        "marketValue": 541834,
-        "performance": {
-         "rating": 7.4,
-         "events": [
-          {
-           "type": "<str>"
-          }
-         ],
-         "seasonGoals": 7,
-         "seasonAssists": 3,
-         "seasonRating": 7.68
-        },
-        "firstName": "",
-        "lastName": "Marcinho",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 1088118,
-        "age": 27,
-        "name": "Derik Lacerda",
-        "positionId": 115,
-        "usualPlayingPositionId": 3,
-        "shirtNumber": "97",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.87,
-         "y": 0.5,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.87,
-         "height": 0.192,
-         "width": 1
-        },
-        "marketValue": 1001653,
-        "performance": {
-         "rating": 7.4,
-         "events": [
-          {
-           "type": "<str>"
-          }
-         ],
-         "seasonGoals": 2,
-         "seasonAssists": 3,
-         "seasonRating": 7.01
-        },
-        "firstName": "Derik",
-        "lastName": "Lacerda",
-        "nationalTeamId": 8256,
-        "rankings": null
-       }
-      ],
-      "lawka_ile": 9,
-      "nieobecni": null,
-      "trener": {
-       "id": 1134553,
-       "age": 55,
-       "name": "Shigetoshi Hasebe",
-       "countryName": "Japan",
-       "countryCode": "JPN",
-       "firstName": "Shigetoshi",
-       "lastName": "Hasebe",
-       "nationalTeamId": 6715,
-       "primaryTeamId": 6304,
-       "primaryTeamName": "Kawasaki Frontale",
-       "usualPlayingPositionId": null,
-       "isCoach": true
-      }
-     },
-     "awayTeam": {
-      "formacja": "3-4-2-1",
-      "ocena": 6,
-      "klucze": [
-       "id",
-       "name",
-       "rating",
-       "formation",
-       "starters",
-       "coach",
-       "subs",
-       "averageStarterAge",
-       "totalStarterMarketValue"
-      ],
-      "wyjsciowi": [
-       {
-        "id": 934832,
-        "age": 26,
-        "name": "Lennart Moser",
-        "positionId": 11,
-        "usualPlayingPositionId": 0,
-        "shirtNumber": "1",
-        "countryName": "Germany",
-        "countryCode": "GER",
-        "horizontalLayout": {
-         "x": 0.1,
-         "y": 0.5,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.1,
-         "height": 0.192,
-         "width": 1
-        },
-        "marketValue": 362110,
-        "performance": {
-         "rating": 5.3,
-         "seasonRating": 6.58
-        },
-        "firstName": "Lennart",
-        "lastName": "Moser",
-        "nationalTeamId": 8570,
-        "rankings": null
-       },
-       {
-        "id": 1337276,
-        "age": 27,
-        "name": "Haruka Motoyama",
-        "positionId": 33,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "26",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.79,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.21,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.29
-        },
-        "marketValue": 317243,
-        "performance": {
-         "rating": 6.1,
-         "seasonAssists": 3,
-         "seasonRating": 7.77
-        },
-        "firstName": "Haruka",
-        "lastName": "Motoyama",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 824563,
-        "age": 28,
-        "name": "Yugo Tatsuta",
-        "positionId": 35,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "48",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.5,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.29
-        },
-        "marketValue": 568019,
-        "performance": {
-         "rating": 6.3,
-         "seasonGoals": 1,
-         "seasonAssists": 1,
-         "seasonRating": 7.06
-        },
-        "firstName": "Yugo",
-        "lastName": "Tatsuta",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 824515,
-        "age": 28,
-        "name": "Yoshitake Suzuki",
-        "positionId": 37,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "43",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.21,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.79,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.29
-        },
-        "marketValue": 193941,
-        "performance": {
-         "rating": 6,
-         "events": [
-          {
-           "type": "<str>"
-          }
-         ],
-         "seasonGoals": 1,
-         "seasonAssists": 1,
-         "seasonRating": 7.1
-        },
-        "firstName": "Yoshitake",
-        "lastName": "Suzuki",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 430846,
-        "age": 31,
-        "name": "Masaya Matsumoto",
-        "positionId": 62,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "28",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.485,
-         "y": 0.875,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.125,
-         "y": 0.485,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 377222,
-        "performance": {
-         "rating": 5.7,
-         "seasonRating": 6.25
-        },
-        "firstName": "Masaya",
-        "lastName": "Matsumoto",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 1385784,
-        "age": 28,
-        "name": "Eiji Miyamoto",
-        "positionId": 64,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "41",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.485,
-         "y": 0.625,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.375,
-         "y": 0.485,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 368464,
-        "performance": {
-         "rating": 6,
-         "seasonAssists": 1,
-         "seasonRating": 7.09
-        },
-        "firstName": "Eiji",
-        "lastName": "Miyamoto",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 1359812,
-        "age": 31,
-        "name": "Oberdan",
-        "positionId": 66,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "80",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.485,
-         "y": 0.375,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.625,
-         "y": 0.485,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "performance": {
-         "rating": 6.3,
-         "seasonAssists": 1,
-         "seasonRating": 7.18
-        },
-        "firstName": "",
-        "lastName": "Oberdan",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 621532,
-        "age": 32,
-        "name": "Kosuke Shirai",
-        "positionId": 68,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "51",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.485,
-         "y": 0.125,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.875,
-         "y": 0.485,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 231733,
-        "performance": {
-         "rating": 6,
-         "seasonGoals": 1,
-         "seasonRating": 6.8
-        },
-        "firstName": "Kosuke",
-        "lastName": "Shirai",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 1110789,
-        "age": 23,
-        "name": "Kota Kawano",
-        "positionId": 84,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "20",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.678,
-         "y": 0.7,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.3,
-         "y": 0.678,
-         "height": 0.192,
-         "width": 0.4
-        },
-        "marketValue": 275807,
-        "performance": {
-         "rating": 6,
-         "seasonGoals": 3,
-         "seasonRating": 6.79
-        },
-        "firstName": "Kota",
-        "lastName": "Kawano",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 624056,
-        "age": 34,
-        "name": "Ataru Esaka",
-        "positionId": 86,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "8",
-        "countryName": "Japan",
-        "countryCode": "JPN",
-        "horizontalLayout": {
-         "x": 0.678,
-         "y": 0.3,
-         "height": 0.25,
-         "width": 0.193
-        },
-        "verticalLayout": {
-         "x": 0.7,
-         "y": 0.678,
-         "height": 0.192,
-         "width": 0.4
-        },
-        "marketValue": 266193,
-        "performance": {
-         "rating": 6.3,
-         "seasonGoals": 2,
-         "seasonRating": 6.88
-        },
-        "firstName": "Ataru",
-        "lastName": "Esaka",
-        "nationalTeamId": 6715,
-        "rankings": null
-       },
-       {
-        "id": 891762,
-        "age": 31,
-        "name": "Lucão",
-        "positionId": 105,
-        "usualPlayingPositionId": 3,
-        "shirtNumber": "99",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.87,
-         "y": 0.5,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.87,
-         "height": 0.192,
-         "width": 1
-        },
-        "marketValue": 256714,
-        "performance": {
-         "rating": 5.4,
-         "seasonGoals": 1,
-         "seasonAssists": 4,
-         "seasonRating": 6.78
-        },
-        "firstName": "",
-        "lastName": "Lucão",
-        "nationalTeamId": 8256,
-        "rankings": null
-       }
-      ],
-      "lawka_ile": 9,
-      "nieobecni": null,
-      "trener": {
-       "id": 1134531,
-       "age": 54,
-       "name": "Takashi Kiyama",
-       "countryName": "Japan",
-       "countryCode": "JPN",
-       "firstName": "Takashi",
-       "lastName": "Kiyama",
-       "nationalTeamId": 6715,
-       "primaryTeamId": 164739,
-       "primaryTeamName": "Fagiano Okayama FC",
-       "usualPlayingPositionId": null,
-       "isCoach": true
-      }
-     },
-     "matchFacts_klucze": [
-      "matchId",
-      "highlights",
-      "playerOfTheMatch",
-      "events",
-      "infoBox",
-      "teamForm",
-      "poll",
-      "topPlayers",
-      "insights",
-      "topScorers",
-      "momentum",
-      "countryCode",
-      "QAData"
-     ],
-     "infoBox": {
-      "legInfo": null,
-      "Match Date": {
-       "utcTime": "2026-10-25T07:00:00.000Z",
-       "isDateCorrect": true
-      },
-      "Tournament": {
-       "id": 937875,
-       "parentLeagueId": 223,
-       "link": "/leagues/223/overview/j-league",
-       "leagueName": "J. League",
-       "roundName": "12",
-       "round": "12"
-      },
-      "Stadium": {
-       "name": "Uvance Todoroki Stadium by Fujitsu",
-       "city": "Kawasaki",
-       "country": "Japan",
-       "lat": 35.585803605,
-       "long": 139.652715325,
-       "capacity": 27495,
-       "surface": "grass"
-      },
-      "Referee": {
-       "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/jpn.png",
-       "text": "Keigo Sendachi",
-       "countryCode": "JPN",
-       "country": "Japan",
-       "id": 1001075566,
-       "leagueId": 223,
-       "leagueName": "J. League",
-       "stats": [
-        {
-         "type": "matches",
-         "value": 15,
-         "valueType": "total"
-        },
-        {
-         "type": "yellowCards",
-         "value": 3.07,
-         "valueType": "perMatch",
-         "average": 2.51,
-         "total": 46,
-         "averageType": "above",
-         "fillPercentage": 68.21,
-         "averagePercentage": 50
-        },
-        {
-         "type": "redCards",
-         "value": 0,
-         "valueType": "total"
-        },
-        {
-         "type": "unknown",
-         "value": 0,
-         "valueType": "total"
-        },
-        {
-         "type": "penalties",
-         "value": 5,
-         "valueType": "total"
-        },
-        {
-         "type": "fouls",
-         "value": 19.93,
-         "valueType": "perMatch",
-         "average": 22.06,
-         "total": 299,
-         "averageType": "below",
-         "fillPercentage": 36.83,
-         "averagePercentage": 50
-        }
-       ]
-      },
-      "Attendance": null
-     },
-     "content_klucze": [
-      "matchFacts",
-      "liveticker",
-      "superlive",
-      "buzz",
-      "stats",
-      "playerStats",
-      "shotmap",
-      "weather",
-      "lineup",
-      "hasPlayoff",
-      "table",
-      "h2h",
-      "momentum",
-      "attackingZones",
-      "heatmapUrl"
-     ],
-     "general": {
-      "matchId": "5803632",
-      "matchName": "Kawasaki Frontale-vs-Fagiano Okayama FC_Sun, Oct 25, 2026, 07:00 UTC",
-      "matchRound": "12",
-      "teamColors": {
-       "darkMode": {
-        "home": "#33A3DC",
-        "away": "#B00848"
-       },
-       "lightMode": {
-        "home": "#33A3DC",
-        "away": "#B00848"
-       },
-       "fontDarkMode": {
-        "home": "rgba(255, 255, 255, 1.0)",
-        "away": "rgba(255, 255, 255, 1.0)"
-       },
-       "fontLightMode": {
-        "home": "rgba(255, 255, 255, 1.0)",
-        "away": "rgba(255, 255, 255, 1.0)"
-       }
-      },
-      "leagueId": 937875,
-      "leagueName": "J. League",
-      "leagueRoundName": "12",
-      "parentLeagueId": 223,
-      "countryCode": "JPN",
-      "homeTeam": {
-       "name": "Kawasaki Frontale",
-       "id": 6304
-      },
-      "awayTeam": {
-       "name": "Fagiano Okayama FC",
-       "id": 164739
-      },
-      "coverageLevel": "xG",
-      "matchTimeUTC": "Sun, Oct 25, 2026, 07:00 UTC",
-      "matchTimeUTCDate": "2026-10-25T07:00:00.000Z",
-      "started": true,
-      "finished": false,
-      "gender": "male"
-     },
-     "header": {
-      "teams": [
-       {
-        "name": "Kawasaki Frontale",
-        "id": 6304,
-        "score": 1,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/6304_small.png",
-        "pageUrl": "/teams/6304/overview/kawasaki-frontale"
-       },
-       {
-        "name": "Fagiano Okayama FC",
-        "id": 164739,
-        "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/164739_small.png",
-        "pageUrl": "/teams/164739/overview/fagiano-okayama-fc"
-       }
-      ],
-      "status": {
-       "utcTime": "2026-10-25T07:00:00.000Z",
-       "numberOfHomeRedCards": 0,
-       "numberOfAwayRedCards": 0,
-       "halfs": {
-        "firstHalfStarted": "25.10.2026 08:03:56",
-        "firstHalfEnded": "25.10.2026 08:50:57",
-        "secondHalfStarted": "",
-        "secondHalfEnded": "",
-        "firstExtraHalfStarted": "",
-        "secondExtraHalfStarted": "",
-        "gameEnded": ""
-       },
-       "finished": false,
-       "started": true,
-       "cancelled": false,
-       "ongoing": true,
-       "scoreStr": "1 - 0",
-       "liveTime": {
-        "short": "HT",
-        "shortKey": "halftime_short",
-        "long": "Half-Time",
-        "longKey": "pause_match",
-        "maxTime": 45,
-        "basePeriod": 45,
-        "penalties": null,
-        "addedTime": 0
-       }
-      },
-      "events": {
-       "homeTeamGoals": {
-        "Lacerda": [
-         {
-          "reactKey": "<str>",
-          "timeStr": "<int>",
-          "type": "<str>",
-          "time": "<int>",
-          "overloadTime": "<NoneType>",
-          "eventId": "<int>",
-          "player": "<dict>",
-          "homeScore": "<int>",
-          "awayScore": "<int>",
-          "profileUrl": "<str>",
-          "overloadTimeStr": "<bool>",
-          "isHome": "<bool>",
-          "ownGoal": "<NoneType>",
-          "goalDescription": "<NoneType>",
-          "goalDescriptionKey": "<NoneType>",
-          "suffix": "<NoneType>",
-          "suffixKey": "<NoneType>",
-          "isPenaltyShootoutEvent": "<bool>",
-          "nameStr": "<str>",
-          "firstName": "<str>",
-          "lastName": "<str>",
-          "fullName": "<str>",
-          "playerId": "<int>",
-          "newScore": "<list>",
-          "penShootoutScore": "<NoneType>",
-          "shotmapEvent": "<dict>",
-          "assistStr": "<str>",
-          "assistProfileUrl": "<str>",
-          "assistPlayerId": "<int>",
-          "assistKey": "<str>",
-          "assistInput": "<str>"
-         }
-        ]
-       },
-       "awayTeamGoals": {},
-       "homeTeamRedCards": {},
-       "awayTeamRedCards": {}
-      }
-     },
-     "tabela_jest": true,
-     "h2h_jest": true
-    },
-    "skad": "requests"
-   }
-  },
-  {
-   "nasz": "Śląsk Wrocław – Wieczysta Kraków",
-   "event_id": "081acf0f093e5c83d3b272bf80e8cd4f",
-   "start": "2026-10-25 12:15",
-   "fotmob_id": "5804019",
-   "fotmob": "Śląsk Wrocław – Wieczysta Kraków",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null,
-   "szczegoly": {
-    "requests": [
-     {
-      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5804019",
-      "kod": 200,
-      "typ": "application/json; charset=utf-8",
-      "rozmiar": 38478,
-      "ms": 156
+      "rozmiar": 56116,
+      "ms": 34
      }
     ],
     "dane": {
@@ -2168,7 +57,7 @@
      ],
      "lineup_typ": "lastStarting11",
      "homeTeam": {
-      "formacja": "5-4-1",
+      "formacja": "4-1-4-1",
       "ocena": null,
       "klucze": [
        "id",
@@ -2184,825 +73,861 @@
       ],
       "wyjsciowi": [
        {
-        "id": 867286,
-        "age": 27,
-        "name": "Karol Niemczycki",
+        "id": 554534,
+        "age": 30,
+        "name": "Alexander Nübel",
         "positionId": 11,
         "usualPlayingPositionId": 0,
         "shirtNumber": "1",
-        "countryName": "Poland",
-        "countryCode": "POL",
+        "countryName": "Germany",
+        "countryCode": "GER",
         "horizontalLayout": {
          "x": 0.1,
          "y": 0.5,
-         "height": 0.195,
-         "width": 0.2
+         "height": 0.25,
+         "width": 0.192
         },
         "verticalLayout": {
          "x": 0.5,
          "y": 0.1,
-         "height": 0.2,
+         "height": 0.192,
          "width": 1
         },
-        "marketValue": 474095,
-        "performance": {
-         "seasonRating": 6.75
-        },
-        "firstName": "Karol",
-        "lastName": "Niemczycki",
-        "nationalTeamId": 8568,
-        "rankings": null
-       },
-       {
-        "id": 1270392,
-        "age": 24,
-        "name": "Yegor Matsenko",
-        "positionId": 33,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "33",
-        "countryName": "Ukraine",
-        "countryCode": "UKR",
-        "horizontalLayout": {
-         "x": 0.357,
-         "y": 0.695,
-         "height": 0.195,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.305,
-         "y": 0.357,
-         "height": 0.2,
-         "width": 0.195
-        },
-        "marketValue": 279740,
-        "performance": {
-         "seasonRating": 6.63
-        },
-        "firstName": "Yegor",
-        "lastName": "Matsenko",
-        "nationalTeamId": 6718,
-        "rankings": null
-       },
-       {
-        "id": 833506,
-        "age": 29,
-        "name": "Lamine Ba",
-        "positionId": 35,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "5",
-        "countryName": "Mauritania",
-        "countryCode": "MTN",
-        "horizontalLayout": {
-         "x": 0.357,
-         "y": 0.5,
-         "height": 0.195,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.357,
-         "height": 0.2,
-         "width": 0.195
-        },
-        "marketValue": 189061,
-        "performance": {
-         "seasonRating": 6.49
-        },
-        "firstName": "Lamine",
-        "lastName": "Ba",
-        "nationalTeamId": 68374,
-        "rankings": null
-       },
-       {
-        "id": 686333,
-        "age": 31,
-        "name": "Mariusz Malec",
-        "positionId": 37,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "44",
-        "countryName": "Poland",
-        "countryCode": "POL",
-        "horizontalLayout": {
-         "x": 0.357,
-         "y": 0.305,
-         "height": 0.195,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.695,
-         "y": 0.357,
-         "height": 0.2,
-         "width": 0.195
-        },
-        "marketValue": 155948,
+        "marketValue": 13535188,
         "performance": {
          "seasonRating": 6.55
         },
-        "firstName": "Mariusz",
-        "lastName": "Malec",
-        "nationalTeamId": 8568,
+        "firstName": "Alexander",
+        "lastName": "Nübel",
+        "nationalTeamId": 8570,
         "rankings": null
        },
        {
-        "id": 836685,
-        "age": 25,
-        "name": "Alexander Timossi Andersson",
-        "positionId": 51,
+        "id": 1487872,
+        "age": 20,
+        "name": "Taylan Bulut",
+        "positionId": 32,
         "usualPlayingPositionId": 1,
-        "shirtNumber": "21",
-        "countryName": "Sweden",
-        "countryCode": "SWE",
+        "shirtNumber": "22",
+        "countryName": "Germany",
+        "countryCode": "GER",
         "horizontalLayout": {
-         "x": 0.371,
-         "y": 0.89,
-         "height": 0.195,
-         "width": 0.243
-        },
-        "verticalLayout": {
-         "x": 0.11,
-         "y": 0.371,
-         "height": 0.2,
-         "width": 0.195
-        },
-        "marketValue": 568759,
-        "performance": {
-         "seasonAssists": 1,
-         "seasonRating": 6.58
-        },
-        "firstName": "Alexander Timossi",
-        "lastName": "Andersson",
-        "nationalTeamId": 8520,
-        "rankings": null
-       },
-       {
-        "id": 1209419,
-        "age": 27,
-        "name": "Marc Llinares",
-        "positionId": 59,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "8",
-        "countryName": "Spain",
-        "countryCode": "ESP",
-        "horizontalLayout": {
-         "x": 0.371,
-         "y": 0.11,
-         "height": 0.195,
-         "width": 0.243
-        },
-        "verticalLayout": {
-         "x": 0.89,
-         "y": 0.371,
-         "height": 0.2,
-         "width": 0.195
-        },
-        "marketValue": 148107,
-        "performance": {
-         "seasonRating": 6.52
-        },
-        "firstName": "Marc",
-        "lastName": "Llinares",
-        "nationalTeamId": 6720,
-        "rankings": null
-       },
-       {
-        "id": 974202,
-        "age": 24,
-        "name": "Piotr Samiec-Talar",
-        "positionId": 72,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "7",
-        "countryName": "Poland",
-        "countryCode": "POL",
-        "horizontalLayout": {
-         "x": 0.613,
+         "x": 0.292,
          "y": 0.875,
-         "height": 0.195,
-         "width": 0.243
+         "height": 0.25,
+         "width": 0.385
         },
         "verticalLayout": {
          "x": 0.125,
-         "y": 0.613,
-         "height": 0.2,
+         "y": 0.292,
+         "height": 0.192,
          "width": 0.25
         },
-        "marketValue": 275188,
+        "marketValue": 6316081,
         "performance": {
-         "seasonGoals": 4,
-         "seasonAssists": 5,
-         "seasonRating": 7.59
+         "seasonRating": 6.77
         },
-        "firstName": "Piotr",
-        "lastName": "Samiec-Talar",
-        "nationalTeamId": 8568,
+        "firstName": "Taylan",
+        "lastName": "Bulut",
+        "nationalTeamId": 8570,
         "rankings": null
        },
        {
-        "id": 361403,
-        "age": 31,
-        "name": "Karol Linetty",
-        "positionId": 74,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "17",
-        "countryName": "Poland",
-        "countryCode": "POL",
+        "id": 866358,
+        "age": 26,
+        "name": "Tiago Djaló",
+        "positionId": 34,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "35",
+        "countryName": "Portugal",
+        "countryCode": "POR",
         "horizontalLayout": {
-         "x": 0.613,
+         "x": 0.292,
          "y": 0.625,
-         "height": 0.195,
-         "width": 0.257
+         "height": 0.25,
+         "width": 0.385
         },
         "verticalLayout": {
          "x": 0.375,
-         "y": 0.613,
-         "height": 0.2,
+         "y": 0.292,
+         "height": 0.192,
          "width": 0.25
         },
-        "marketValue": 594575,
+        "marketValue": 6232006,
+        "performance": {
+         "seasonRating": 7.32
+        },
+        "firstName": "Tiago",
+        "lastName": "Djaló",
+        "nationalTeamId": 8361,
+        "rankings": null
+       },
+       {
+        "id": 1366373,
+        "age": 23,
+        "name": "Ümit Akdağ",
+        "positionId": 36,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "50",
+        "countryName": "Romania",
+        "countryCode": "ROU",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.375,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.625,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 4264916,
+        "performance": {
+         "seasonRating": 7.07
+        },
+        "firstName": "Ümit",
+        "lastName": "Akdağ",
+        "nationalTeamId": 9730,
+        "rankings": null
+       },
+       {
+        "id": 1387194,
+        "age": 22,
+        "name": "Kassoum Ouattara",
+        "positionId": 38,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "11",
+        "countryName": "Ivory Coast",
+        "countryCode": "CIV",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.125,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.875,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 15444255,
         "performance": {
          "seasonRating": 6.65
         },
-        "firstName": "Karol",
-        "lastName": "Linetty",
-        "nationalTeamId": 8568,
+        "firstName": "Kassoum",
+        "lastName": "Ouattara",
+        "nationalTeamId": 6709,
         "rankings": null
        },
        {
-        "id": 1338988,
-        "age": 23,
-        "name": "Eniss Shabani",
-        "positionId": 76,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "77",
-        "countryName": "Albania",
-        "countryCode": "ALB",
-        "horizontalLayout": {
-         "x": 0.613,
-         "y": 0.375,
-         "height": 0.195,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.625,
-         "y": 0.613,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 517636,
-        "performance": {
-         "seasonGoals": 1,
-         "seasonAssists": 1,
-         "seasonRating": 6.85
-        },
-        "firstName": "Eniss",
-        "lastName": "Shabani",
-        "nationalTeamId": 10024,
-        "rankings": null
-       },
-       {
-        "id": 1358601,
-        "age": 23,
-        "name": "Luka Marjanac",
-        "positionId": 78,
-        "usualPlayingPositionId": 3,
-        "shirtNumber": "11",
-        "countryName": "Bosnia and Herzegovina",
-        "countryCode": "BIH",
-        "horizontalLayout": {
-         "x": 0.613,
-         "y": 0.125,
-         "height": 0.195,
-         "width": 0.243
-        },
-        "verticalLayout": {
-         "x": 0.875,
-         "y": 0.613,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "performance": {
-         "seasonGoals": 1,
-         "seasonRating": 6.56
-        },
-        "firstName": "Luka",
-        "lastName": "Marjanac",
-        "nationalTeamId": 10106,
-        "rankings": null
-       },
-       {
-        "id": 988801,
+        "id": 533228,
         "age": 29,
-        "name": "Przemysław Banaszak",
-        "positionId": 115,
-        "usualPlayingPositionId": 3,
-        "shirtNumber": "19",
-        "countryName": "Poland",
-        "countryCode": "POL",
-        "horizontalLayout": {
-         "x": 0.87,
-         "y": 0.5,
-         "height": 0.195,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.87,
-         "height": 0.2,
-         "width": 1
-        },
-        "marketValue": 245516,
-        "performance": {
-         "seasonGoals": 3,
-         "seasonRating": 6.56
-        },
-        "firstName": "Przemysław",
-        "lastName": "Banaszak",
-        "nationalTeamId": 8568,
-        "rankings": null
-       }
-      ],
-      "lawka_ile": 9,
-      "nieobecni": [
-       {
-        "id": 1209419,
-        "age": 27,
-        "name": "Marc Llinares",
-        "countryName": "Spain",
-        "countryCode": "ESP",
-        "marketValue": 148107,
-        "unavailability": {
-         "type": "suspension",
-         "expectedReturn": "Late October 2026",
-         "expectedReturnDate": "2026-10-25T12:15:00Z"
-        },
-        "performance": {
-         "seasonRating": 6.52
-        },
-        "firstName": "Marc",
-        "lastName": "Llinares",
-        "nationalTeamId": 6720
-       },
-       {
-        "id": 1407077,
-        "age": 24,
-        "name": "Irodotos Christodoulou",
-        "countryName": "Cyprus",
-        "countryCode": "CYP",
-        "marketValue": 317689,
-        "unavailability": {
-         "injuryId": 87,
-         "type": "injury",
-         "expectedReturn": "Early November 2026"
-        },
-        "performance": {
-         "seasonRating": 6.95
-        },
-        "firstName": "Irodotos",
-        "lastName": "Christodoulou",
-        "nationalTeamId": 5793
-       },
-       {
-        "id": 598066,
-        "age": 31,
-        "name": "Damian Warchoł",
-        "countryName": "Poland",
-        "countryCode": "POL",
-        "marketValue": 50000,
-        "unavailability": {
-         "injuryId": 87,
-         "type": "injury",
-         "expectedReturn": "Doubtful"
-        },
-        "firstName": "Damian",
-        "lastName": "Warchoł",
-        "nationalTeamId": 8568
-       },
-       {
-        "id": 767281,
-        "age": 28,
-        "name": "Michał Mokrzycki",
-        "countryName": "Poland",
-        "countryCode": "POL",
-        "marketValue": 149299,
-        "unavailability": {
-         "injuryId": 76,
-         "type": "injury",
-         "expectedReturn": "Out for season"
-        },
-        "performance": {
-         "seasonAssists": 1,
-         "seasonRating": 6.79
-        },
-        "firstName": "Michał",
-        "lastName": "Mokrzycki",
-        "nationalTeamId": 8568
-       }
-      ],
-      "trener": {
-       "id": 308512,
-       "age": 55,
-       "name": "Ante Šimundža",
-       "countryName": "Slovenia",
-       "countryCode": "SVN",
-       "firstName": "Ante",
-       "lastName": "Šimundža",
-       "nationalTeamId": 5787,
-       "primaryTeamId": 8025,
-       "primaryTeamName": "Śląsk Wrocław",
-       "usualPlayingPositionId": null,
-       "isCoach": true
-      }
-     },
-     "awayTeam": {
-      "formacja": "5-4-1",
-      "ocena": null,
-      "klucze": [
-       "id",
-       "name",
-       "formation",
-       "starters",
-       "coach",
-       "subs",
-       "unavailable",
-       "averageStarterAge",
-       "totalStarterMarketValue",
-       "lastMatch"
-      ],
-      "wyjsciowi": [
-       {
-        "id": 1154332,
-        "age": 26,
-        "name": "Mateusz Kochalski",
-        "positionId": 11,
-        "usualPlayingPositionId": 0,
-        "shirtNumber": "77",
-        "countryName": "Poland",
-        "countryCode": "POL",
-        "horizontalLayout": {
-         "x": 0.1,
-         "y": 0.5,
-         "height": 0.195,
-         "width": 0.2
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.1,
-         "height": 0.2,
-         "width": 1
-        },
-        "marketValue": 1505188,
-        "performance": {
-         "seasonRating": 7.04
-        },
-        "firstName": "Mateusz",
-        "lastName": "Kochalski",
-        "nationalTeamId": 8568,
-        "rankings": null
-       },
-       {
-        "id": 1748450,
-        "age": 24,
-        "name": "Aleksandar Đermanović",
-        "positionId": 33,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "15",
-        "countryName": "Serbia",
-        "countryCode": "SRB",
-        "horizontalLayout": {
-         "x": 0.357,
-         "y": 0.695,
-         "height": 0.195,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.305,
-         "y": 0.357,
-         "height": 0.2,
-         "width": 0.195
-        },
-        "marketValue": 657885,
-        "performance": {
-         "seasonRating": 6.95
-        },
-        "firstName": "Aleksandar",
-        "lastName": "Đermanović",
-        "nationalTeamId": 8205,
-        "rankings": null
-       },
-       {
-        "id": 298941,
-        "age": 32,
-        "name": "Antonio Milić",
-        "positionId": 35,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "16",
-        "countryName": "Croatia",
-        "countryCode": "CRO",
-        "horizontalLayout": {
-         "x": 0.357,
-         "y": 0.5,
-         "height": 0.195,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.357,
-         "height": 0.2,
-         "width": 0.195
-        },
-        "marketValue": 440973,
-        "performance": {
-         "seasonGoals": 1,
-         "seasonRating": 6.32
-        },
-        "firstName": "Antonio",
-        "lastName": "Milić",
-        "nationalTeamId": 10155,
-        "rankings": null
-       },
-       {
-        "id": 1383973,
-        "age": 22,
-        "name": "Duje Dujmović",
-        "positionId": 37,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "55",
-        "countryName": "Croatia",
-        "countryCode": "CRO",
-        "horizontalLayout": {
-         "x": 0.357,
-         "y": 0.305,
-         "height": 0.195,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.695,
-         "y": 0.357,
-         "height": 0.2,
-         "width": 0.195
-        },
-        "marketValue": 530175,
-        "performance": {
-         "seasonGoals": 1,
-         "seasonAssists": 1,
-         "seasonRating": 6.83
-        },
-        "firstName": "Duje",
-        "lastName": "Dujmović",
-        "nationalTeamId": 10155,
-        "rankings": null
-       },
-       {
-        "id": 823122,
-        "age": 28,
-        "name": "Karol Fila",
-        "positionId": 51,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "4",
-        "countryName": "Poland",
-        "countryCode": "POL",
-        "horizontalLayout": {
-         "x": 0.371,
-         "y": 0.89,
-         "height": 0.195,
-         "width": 0.243
-        },
-        "verticalLayout": {
-         "x": 0.11,
-         "y": 0.371,
-         "height": 0.2,
-         "width": 0.195
-        },
-        "marketValue": 167350,
-        "performance": {
-         "seasonAssists": 1,
-         "seasonRating": 7.05
-        },
-        "firstName": "Karol",
-        "lastName": "Fila",
-        "nationalTeamId": 8568,
-        "rankings": null
-       },
-       {
-        "id": 770992,
-        "age": 28,
-        "name": "Kamil Pestka",
-        "positionId": 59,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "33",
-        "countryName": "Poland",
-        "countryCode": "POL",
-        "horizontalLayout": {
-         "x": 0.371,
-         "y": 0.11,
-         "height": 0.195,
-         "width": 0.243
-        },
-        "verticalLayout": {
-         "x": 0.89,
-         "y": 0.371,
-         "height": 0.2,
-         "width": 0.195
-        },
-        "marketValue": 166310,
-        "performance": {
-         "seasonAssists": 1,
-         "seasonRating": 6.76
-        },
-        "firstName": "Kamil",
-        "lastName": "Pestka",
-        "nationalTeamId": 8568,
-        "rankings": null
-       },
-       {
-        "id": 1418119,
-        "age": 22,
-        "name": "José Antonio de la Rosa",
-        "positionId": 72,
+        "name": "Wilfred Ndidi",
+        "positionId": 65,
         "usualPlayingPositionId": 2,
-        "shirtNumber": "19",
-        "countryName": "Spain",
-        "countryCode": "ESP",
+        "shirtNumber": "4",
+        "countryName": "Nigeria",
+        "countryCode": "NGA",
         "horizontalLayout": {
-         "x": 0.613,
+         "x": 0.485,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 6368467,
+        "performance": {
+         "seasonRating": 6.65
+        },
+        "firstName": "Wilfred",
+        "lastName": "Ndidi",
+        "nationalTeamId": 6346,
+        "rankings": null
+       },
+       {
+        "id": 1642084,
+        "age": 20,
+        "name": "İlhan Fakılı",
+        "positionId": 82,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "29",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "horizontalLayout": {
+         "x": 0.678,
          "y": 0.875,
-         "height": 0.195,
-         "width": 0.243
+         "height": 0.25,
+         "width": 0.385
         },
         "verticalLayout": {
          "x": 0.125,
-         "y": 0.613,
-         "height": 0.2,
+         "y": 0.678,
+         "height": 0.192,
          "width": 0.25
         },
-        "marketValue": 927088,
+        "marketValue": 1688136,
         "performance": {
+         "seasonGoals": 1,
          "seasonAssists": 1,
-         "seasonRating": 6.75
+         "seasonRating": 6.69
         },
-        "firstName": "José Antonio",
-        "lastName": "de la Rosa",
-        "nationalTeamId": 6720,
+        "firstName": "İlhan",
+        "lastName": "Fakılı",
+        "nationalTeamId": 6595,
         "rankings": null
        },
        {
-        "id": 633093,
-        "age": 26,
-        "name": "Tobias Christensen",
-        "positionId": 74,
+        "id": 1280080,
+        "age": 23,
+        "name": "Fabio Miretti",
+        "positionId": 84,
         "usualPlayingPositionId": 2,
-        "shirtNumber": "10",
-        "countryName": "Norway",
-        "countryCode": "NOR",
+        "shirtNumber": "21",
+        "countryName": "Italy",
+        "countryCode": "ITA",
         "horizontalLayout": {
-         "x": 0.613,
+         "x": 0.678,
          "y": 0.625,
-         "height": 0.195,
-         "width": 0.257
+         "height": 0.25,
+         "width": 0.385
         },
         "verticalLayout": {
          "x": 0.375,
-         "y": 0.613,
-         "height": 0.2,
+         "y": 0.678,
+         "height": 0.192,
          "width": 0.25
         },
-        "marketValue": 1626960,
+        "marketValue": 16810620,
         "performance": {
-         "seasonGoals": 3,
-         "seasonRating": 7.34
+         "seasonRating": 6.83
         },
-        "firstName": "Tobias",
-        "lastName": "Christensen",
-        "nationalTeamId": 8492,
+        "firstName": "Fabio",
+        "lastName": "Miretti",
+        "nationalTeamId": 8204,
         "rankings": null
        },
        {
-        "id": 485911,
-        "age": 31,
-        "name": "Mikkel Maigaard",
-        "positionId": 76,
+        "id": 1001348,
+        "age": 25,
+        "name": "Kartal Yılmaz",
+        "positionId": 86,
         "usualPlayingPositionId": 2,
-        "shirtNumber": "20",
-        "countryName": "Denmark",
-        "countryCode": "DEN",
+        "shirtNumber": "8",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
         "horizontalLayout": {
-         "x": 0.613,
+         "x": 0.678,
          "y": 0.375,
-         "height": 0.195,
-         "width": 0.257
+         "height": 0.25,
+         "width": 0.193
         },
         "verticalLayout": {
          "x": 0.625,
-         "y": 0.613,
-         "height": 0.2,
+         "y": 0.678,
+         "height": 0.192,
          "width": 0.25
         },
-        "marketValue": 233565,
+        "marketValue": 1810558,
         "performance": {
-         "seasonRating": 6.97
+         "seasonRating": 6.52
         },
-        "firstName": "Mikkel",
-        "lastName": "Maigaard",
-        "nationalTeamId": 8238,
+        "firstName": "Kartal",
+        "lastName": "Yılmaz",
+        "nationalTeamId": 6595,
         "rankings": null
        },
        {
-        "id": 267380,
-        "age": 32,
-        "name": "Lucas Piazón",
-        "positionId": 78,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "12",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
+        "id": 318615,
+        "age": 31,
+        "name": "Leandro Trossard",
+        "positionId": 88,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "19",
+        "countryName": "Belgium",
+        "countryCode": "BEL",
         "horizontalLayout": {
-         "x": 0.613,
+         "x": 0.678,
          "y": 0.125,
-         "height": 0.195,
-         "width": 0.243
+         "height": 0.25,
+         "width": 0.385
         },
         "verticalLayout": {
          "x": 0.875,
-         "y": 0.613,
-         "height": 0.2,
+         "y": 0.678,
+         "height": 0.192,
          "width": 0.25
         },
-        "marketValue": 188042,
+        "marketValue": 19006601,
         "performance": {
-         "seasonGoals": 3,
-         "seasonAssists": 2,
-         "seasonRating": 7.5
+         "seasonGoals": 1,
+         "seasonAssists": 1,
+         "seasonRating": 7.3
         },
-        "firstName": "Lucas",
-        "lastName": "Piazón",
-        "nationalTeamId": 8256,
+        "firstName": "Leandro",
+        "lastName": "Trossard",
+        "nationalTeamId": 8263,
         "rankings": null
        },
        {
-        "id": 521905,
-        "age": 30,
-        "name": "Efthimios Koulouris",
+        "id": 1044299,
+        "age": 25,
+        "name": "Hyeon-Gyu Oh",
         "positionId": 115,
         "usualPlayingPositionId": 3,
         "shirtNumber": "9",
-        "countryName": "Greece",
-        "countryCode": "GRE",
+        "countryName": "South Korea",
+        "countryCode": "KOR",
         "horizontalLayout": {
-         "x": 0.87,
+         "x": 0.89,
          "y": 0.5,
-         "height": 0.195,
-         "width": 0.257
+         "height": 0.25,
+         "width": 0.212
         },
         "verticalLayout": {
          "x": 0.5,
-         "y": 0.87,
-         "height": 0.2,
+         "y": 0.89,
+         "height": 0.192,
          "width": 1
         },
-        "marketValue": 1635740,
+        "marketValue": 16158162,
         "performance": {
          "seasonAssists": 1,
-         "seasonRating": 6.61
+         "seasonRating": 6.49
         },
-        "firstName": "Efthimios",
-        "lastName": "Koulouris",
-        "nationalTeamId": 6383,
+        "firstName": "Hyeon-Gyu",
+        "lastName": "Oh",
+        "nationalTeamId": 7804,
         "rankings": null
        }
       ],
       "lawka_ile": 12,
       "nieobecni": [
        {
-        "id": 1073576,
-        "age": 24,
-        "name": "Stefan Feiertag",
-        "countryName": "Austria",
-        "countryCode": "AUT",
-        "marketValue": 278757,
+        "id": 1366373,
+        "age": 23,
+        "name": "Ümit Akdağ",
+        "countryName": "Romania",
+        "countryCode": "ROU",
+        "marketValue": 4264916,
         "unavailability": {
-         "injuryId": 14,
+         "injuryId": 17,
          "type": "injury",
-         "expectedReturn": "Late December 2026"
+         "expectedReturn": "Early December 2026"
         },
         "performance": {
-         "seasonGoals": 1,
-         "seasonRating": 7.98
+         "seasonRating": 7.07
         },
-        "firstName": "Stefan",
-        "lastName": "Feiertag",
-        "nationalTeamId": 8255
+        "firstName": "Ümit",
+        "lastName": "Akdağ",
+        "nationalTeamId": 9730
+       },
+       {
+        "id": 1280080,
+        "age": 23,
+        "name": "Fabio Miretti",
+        "countryName": "Italy",
+        "countryCode": "ITA",
+        "marketValue": 16810620,
+        "unavailability": {
+         "injuryId": 32,
+         "type": "injury",
+         "expectedReturn": "Early November 2026"
+        },
+        "performance": {
+         "seasonRating": 6.83
+        },
+        "firstName": "Fabio",
+        "lastName": "Miretti",
+        "nationalTeamId": 8204
+       },
+       {
+        "id": 660165,
+        "age": 30,
+        "name": "Milot Rashica",
+        "countryName": "Kosovo",
+        "countryCode": "KVX",
+        "marketValue": 1746832,
+        "unavailability": {
+         "injuryId": 42,
+         "type": "injury",
+         "expectedReturn": "Early November 2026"
+        },
+        "performance": {
+         "seasonRating": 6.48
+        },
+        "firstName": "Milot",
+        "lastName": "Rashica",
+        "nationalTeamId": 430156
+       },
+       {
+        "id": 935409,
+        "age": 25,
+        "name": "Orkun Kökcü",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "marketValue": 24972615,
+        "unavailability": {
+         "injuryId": 116,
+         "type": "injury",
+         "expectedReturn": "Early November 2026"
+        },
+        "performance": {
+         "seasonGoals": 2,
+         "seasonAssists": 2,
+         "seasonRating": 7.62
+        },
+        "firstName": "Orkun",
+        "lastName": "Kökcü",
+        "nationalTeamId": 6595
        }
       ],
       "trener": {
-       "id": 306169,
-       "age": 49,
-       "name": "Željko Kopić",
-       "countryName": "Croatia",
-       "countryCode": "CRO",
-       "firstName": "Željko",
-       "lastName": "Kopić",
-       "nationalTeamId": 10155,
-       "primaryTeamId": 1286895,
-       "primaryTeamName": "Wieczysta Kraków",
+       "id": 42581,
+       "age": 48,
+       "name": "Vincenzo Italiano",
+       "countryName": "Italy",
+       "countryCode": "ITA",
+       "firstName": "Vincenzo",
+       "lastName": "Italiano",
+       "nationalTeamId": 8204,
+       "primaryTeamId": 10188,
+       "primaryTeamName": "Beşiktaş",
+       "usualPlayingPositionId": null,
+       "isCoach": true
+      }
+     },
+     "awayTeam": {
+      "formacja": "4-2-3-1",
+      "ocena": null,
+      "klucze": [
+       "id",
+       "name",
+       "formation",
+       "starters",
+       "coach",
+       "subs",
+       "unavailable",
+       "averageStarterAge",
+       "totalStarterMarketValue",
+       "lastMatch"
+      ],
+      "wyjsciowi": [
+       {
+        "id": 814153,
+        "age": 29,
+        "name": "Muhammed Şengezer",
+        "positionId": 11,
+        "usualPlayingPositionId": 0,
+        "shirtNumber": "16",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "horizontalLayout": {
+         "x": 0.1,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.1,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 2328109,
+        "performance": {
+         "seasonRating": 7.19
+        },
+        "firstName": "Muhammed",
+        "lastName": "Şengezer",
+        "nationalTeamId": 6595,
+        "rankings": null
+       },
+       {
+        "id": 1065940,
+        "age": 25,
+        "name": "Michał Karbownik",
+        "positionId": 32,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "33",
+        "countryName": "Poland",
+        "countryCode": "POL",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.875,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.125,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 1511855,
+        "performance": {
+         "seasonRating": 6.75
+        },
+        "firstName": "Michał",
+        "lastName": "Karbownik",
+        "nationalTeamId": 8568,
+        "rankings": null
+       },
+       {
+        "id": 1114123,
+        "age": 23,
+        "name": "Emin Bayram",
+        "positionId": 34,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "23",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.625,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.375,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 5051676,
+        "performance": {
+         "seasonRating": 6.32
+        },
+        "firstName": "Emin",
+        "lastName": "Bayram",
+        "nationalTeamId": 6595,
+        "rankings": null
+       },
+       {
+        "id": 864066,
+        "age": 30,
+        "name": "Ousseynou Ba",
+        "positionId": 36,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "27",
+        "countryName": "Senegal",
+        "countryCode": "SEN",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.375,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.625,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 573169,
+        "performance": {
+         "seasonRating": 7.06
+        },
+        "firstName": "Ousseynou",
+        "lastName": "Ba",
+        "nationalTeamId": 6395,
+        "rankings": null
+       },
+       {
+        "id": 1658140,
+        "age": 18,
+        "name": "Saba Kharebashvili",
+        "positionId": 38,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "38",
+        "countryName": "Georgia",
+        "countryCode": "GEO",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.125,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.875,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "performance": {
+         "seasonRating": 6.49
+        },
+        "firstName": "Saba",
+        "lastName": "Kharebashvili",
+        "nationalTeamId": 8268,
+        "rankings": null
+       },
+       {
+        "id": 625164,
+        "age": 30,
+        "name": "Olivier Kemen",
+        "positionId": 64,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "8",
+        "countryName": "Cameroon",
+        "countryCode": "CMR",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.7,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.3,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.4
+        },
+        "marketValue": 1366608,
+        "performance": {
+         "seasonRating": 6.68
+        },
+        "firstName": "Olivier",
+        "lastName": "Kemen",
+        "nationalTeamId": 6629,
+        "rankings": null
+       },
+       {
+        "id": 1131992,
+        "age": 23,
+        "name": "Jakub Kałuziński",
+        "positionId": 66,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "18",
+        "countryName": "Poland",
+        "countryCode": "POL",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.3,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.7,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.4
+        },
+        "marketValue": 1995406,
+        "performance": {
+         "seasonRating": 6.58
+        },
+        "firstName": "Jakub",
+        "lastName": "Kałuziński",
+        "nationalTeamId": 8568,
+        "rankings": null
+       },
+       {
+        "id": 861932,
+        "age": 26,
+        "name": "Andreas Skov Olsen",
+        "positionId": 83,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "70",
+        "countryName": "Denmark",
+        "countryCode": "DEN",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.837,
+         "height": 0.25,
+         "width": 0.193
+        },
+        "verticalLayout": {
+         "x": 0.162,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.325
+        },
+        "marketValue": 5788005,
+        "performance": {
+         "seasonGoals": 1,
+         "seasonAssists": 2,
+         "seasonRating": 7.12
+        },
+        "firstName": "Andreas Skov",
+        "lastName": "Olsen",
+        "nationalTeamId": 8238,
+        "rankings": null
+       },
+       {
+        "id": 619513,
+        "age": 31,
+        "name": "Eldor Shomurodov",
+        "positionId": 85,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "14",
+        "countryName": "Uzbekistan",
+        "countryCode": "UZB",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.337
+        },
+        "marketValue": 5735477,
+        "performance": {
+         "seasonGoals": 7,
+         "seasonAssists": 1,
+         "seasonRating": 7.58
+        },
+        "firstName": "Eldor",
+        "lastName": "Shomurodov",
+        "nationalTeamId": 8700,
+        "rankings": null
+       },
+       {
+        "id": 1186010,
+        "age": 25,
+        "name": "Ivan Brnić",
+        "positionId": 87,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "77",
+        "countryName": "Croatia",
+        "countryCode": "CRO",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.163,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.837,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.325
+        },
+        "marketValue": 1542209,
+        "performance": {
+         "seasonAssists": 2,
+         "seasonRating": 6.78
+        },
+        "firstName": "Ivan",
+        "lastName": "Brnić",
+        "nationalTeamId": 10155,
+        "rankings": null
+       },
+       {
+        "id": 791915,
+        "age": 30,
+        "name": "Umut Bozok",
+        "positionId": 115,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "17",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "horizontalLayout": {
+         "x": 0.87,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.87,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 1427130,
+        "performance": {
+         "seasonAssists": 1,
+         "seasonRating": 6.67
+        },
+        "firstName": "Umut",
+        "lastName": "Bozok",
+        "nationalTeamId": 6595,
+        "rankings": null
+       }
+      ],
+      "lawka_ile": 10,
+      "nieobecni": [
+       {
+        "id": 802462,
+        "age": 29,
+        "name": "Christopher Opéri",
+        "countryName": "Ivory Coast",
+        "countryCode": "CIV",
+        "marketValue": 1881256,
+        "unavailability": {
+         "injuryId": 87,
+         "type": "injury",
+         "expectedReturn": "Doubtful"
+        },
+        "performance": {
+         "seasonGoals": 1,
+         "seasonRating": 6.96
+        },
+        "firstName": "Christopher",
+        "lastName": "Opéri",
+        "nationalTeamId": 6709
+       },
+       {
+        "id": 199302,
+        "age": 36,
+        "name": "Edin Višća",
+        "countryName": "Bosnia and Herzegovina",
+        "countryCode": "BIH",
+        "marketValue": 146906,
+        "unavailability": {
+         "injuryId": 87,
+         "type": "injury",
+         "expectedReturn": "Doubtful"
+        },
+        "performance": {
+         "seasonRating": 6.39
+        },
+        "firstName": "Edin",
+        "lastName": "Višća",
+        "nationalTeamId": 10106
+       },
+       {
+        "id": 873227,
+        "age": 28,
+        "name": "Jerome Opoku",
+        "countryName": "Ghana",
+        "countryCode": "GHA",
+        "marketValue": 4148959,
+        "unavailability": {
+         "injuryId": 87,
+         "type": "injury",
+         "expectedReturn": "Doubtful"
+        },
+        "performance": {
+         "seasonRating": 6.11
+        },
+        "firstName": "Jerome",
+        "lastName": "Opoku",
+        "nationalTeamId": 6714
+       }
+      ],
+      "trener": {
+       "id": 27365,
+       "age": 38,
+       "name": "Nuri Şahin",
+       "countryName": "Turkiye",
+       "countryCode": "TUR",
+       "firstName": "Nuri",
+       "lastName": "Şahin",
+       "nationalTeamId": 6595,
+       "primaryTeamId": 1933,
+       "primaryTeamName": "Başakşehir",
        "usualPlayingPositionId": null,
        "isCoach": true
       }
@@ -3019,78 +944,79 @@
       "insights",
       "topScorers",
       "countryCode",
-      "QAData"
+      "QAData",
+      "matchInsightsConfig"
      ],
      "infoBox": {
       "legInfo": null,
       "Match Date": {
-       "utcTime": "2026-10-25T11:15:00.000Z",
+       "utcTime": "2026-10-26T16:00:00.000Z",
        "isDateCorrect": true
       },
       "Tournament": {
-       "id": 937879,
-       "parentLeagueId": 196,
-       "link": "/leagues/196/overview/ekstraklasa",
-       "leagueName": "Ekstraklasa",
-       "roundName": "12",
-       "round": "12"
+       "id": 71,
+       "parentLeagueId": 71,
+       "link": "/leagues/71/overview/super-lig",
+       "leagueName": "Super Lig",
+       "roundName": "9",
+       "round": "9"
       },
       "Stadium": {
-       "name": "Tarczyński Arena",
-       "city": "Wrocław",
-       "country": "Poland",
-       "lat": 51.141172044,
-       "long": 16.943793297,
-       "capacity": 42771,
+       "name": "Tüpraş Stadyumu",
+       "city": "İstanbul",
+       "country": "Türkiye",
+       "lat": 41.039423708,
+       "long": 28.994443888,
+       "capacity": 43500,
        "surface": "grass"
       },
       "Referee": {
-       "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/pol.png",
-       "text": "Mateusz Piszczelok",
-       "countryCode": "POL",
-       "country": "Poland",
-       "id": 1001073847,
-       "leagueId": 196,
-       "leagueName": "Ekstraklasa",
+       "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/tur.png",
+       "text": "Ümit Öztürk",
+       "countryCode": "TUR",
+       "country": "Türkiye",
+       "id": 1001070370,
+       "leagueId": 71,
+       "leagueName": "Süper Lig",
        "stats": [
         {
          "type": "matches",
-         "value": 12,
+         "value": 19,
          "valueType": "total"
         },
         {
          "type": "yellowCards",
-         "value": 4.17,
+         "value": 4.74,
          "valueType": "perMatch",
-         "average": 4,
-         "total": 50,
+         "average": 4.68,
+         "total": 90,
          "averageType": "average",
-         "fillPercentage": 54.08,
+         "fillPercentage": 51.04,
          "averagePercentage": 50
         },
         {
          "type": "redCards",
-         "value": 0,
-         "valueType": "total"
-        },
-        {
-         "type": "unknown",
-         "value": 1,
-         "valueType": "total"
-        },
-        {
-         "type": "penalties",
          "value": 2,
          "valueType": "total"
         },
         {
+         "type": "unknown",
+         "value": 2,
+         "valueType": "total"
+        },
+        {
+         "type": "penalties",
+         "value": 8,
+         "valueType": "total"
+        },
+        {
          "type": "fouls",
-         "value": 23.33,
+         "value": 25.63,
          "valueType": "perMatch",
-         "average": 24.93,
-         "total": 280,
-         "averageType": "below",
-         "fillPercentage": 42.7,
+         "average": 26.2,
+         "total": 487,
+         "averageType": "average",
+         "fillPercentage": 47.08,
          "averagePercentage": 50
         }
        ]
@@ -3113,43 +1039,43 @@
       "momentum"
      ],
      "general": {
-      "matchId": "5804019",
-      "matchName": "Śląsk Wrocław-vs-Wieczysta Kraków_Sun, Oct 25, 2026, 11:15 UTC",
-      "matchRound": "12",
+      "matchId": "5904783",
+      "matchName": "Beşiktaş-vs-Başakşehir_Mon, Oct 26, 2026, 16:00 UTC",
+      "matchRound": "9",
       "teamColors": {
        "darkMode": {
-        "home": "#138445",
-        "away": "#fde73c"
+        "home": "#ffffff",
+        "away": "#FC5000"
        },
        "lightMode": {
-        "home": "#006643",
-        "away": "#E09D00"
+        "home": "#000000",
+        "away": "#FC5000"
        },
        "fontDarkMode": {
-        "home": "rgba(255, 255, 255, 1.0)",
-        "away": "rgba(29, 29, 29, 1.0)"
+        "home": "rgba(29, 29, 29, 1.0)",
+        "away": "rgba(255, 255, 255, 1.0)"
        },
        "fontLightMode": {
         "home": "rgba(255, 255, 255, 1.0)",
         "away": "rgba(255, 255, 255, 1.0)"
        }
       },
-      "leagueId": 937879,
-      "leagueName": "Ekstraklasa",
-      "leagueRoundName": "12",
-      "parentLeagueId": 196,
-      "countryCode": "POL",
+      "leagueId": 71,
+      "leagueName": "Super Lig",
+      "leagueRoundName": "9",
+      "parentLeagueId": 71,
+      "countryCode": "TUR",
       "homeTeam": {
-       "name": "Śląsk Wrocław",
-       "id": 8025
+       "name": "Beşiktaş",
+       "id": 10188
       },
       "awayTeam": {
-       "name": "Wieczysta Kraków",
-       "id": 1286895
+       "name": "Başakşehir",
+       "id": 1933
       },
       "coverageLevel": "lower",
-      "matchTimeUTC": "Sun, Oct 25, 2026, 11:15 UTC",
-      "matchTimeUTCDate": "2026-10-25T11:15:00.000Z",
+      "matchTimeUTC": "Mon, Oct 26, 2026, 16:00 UTC",
+      "matchTimeUTCDate": "2026-10-26T16:00:00.000Z",
       "started": false,
       "finished": false,
       "gender": "male"
@@ -3157,22 +1083,22 @@
      "header": {
       "teams": [
        {
-        "name": "Śląsk Wrocław",
-        "id": 8025,
+        "name": "Beşiktaş",
+        "id": 10188,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8025_small.png",
-        "pageUrl": "/teams/8025/overview/slask-wrocaw"
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/10188_small.png",
+        "pageUrl": "/teams/10188/overview/besiktas"
        },
        {
-        "name": "Wieczysta Kraków",
-        "id": 1286895,
+        "name": "Başakşehir",
+        "id": 1933,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/1286895_small.png",
-        "pageUrl": "/teams/1286895/overview/wieczysta-krakow"
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/1933_small.png",
+        "pageUrl": "/teams/1933/overview/basaksehir"
        }
       ],
       "status": {
-       "utcTime": "2026-10-25T11:15:00.000Z",
+       "utcTime": "2026-10-26T16:00:00.000Z",
        "numberOfHomeRedCards": 0,
        "numberOfAwayRedCards": 0,
        "halfs": {},
@@ -3189,385 +1115,2227 @@
    }
   },
   {
-   "nasz": "Fortuna Sittard – Excelsior",
-   "event_id": "f168373343a58c07d02f40538d04b404",
-   "start": "2026-10-25 12:15",
-   "fotmob_id": "5781780",
-   "fotmob": "Fortuna Sittard – Excelsior",
+   "nasz": "Çaykur Rizespor – Trabzonspor",
+   "event_id": "e1c9aa56abe5e911eb57403d78376270",
+   "start": "2026-10-26 17:00",
+   "fotmob_id": "5904779",
+   "fotmob": "Rizespor – Trabzonspor",
+   "zgodnosc": 0.97,
+   "odwrocone": false,
+   "url": null,
+   "szczegoly": {
+    "requests": [
+     {
+      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5904779",
+      "kod": 200,
+      "typ": "application/json; charset=utf-8",
+      "rozmiar": 50292,
+      "ms": 36
+     }
+    ],
+    "dane": {
+     "lineup_klucze": [
+      "matchId",
+      "lineupType",
+      "source",
+      "availableFilters",
+      "homeTeam",
+      "awayTeam"
+     ],
+     "lineup_typ": "lastStarting11",
+     "homeTeam": {
+      "formacja": "4-1-4-1",
+      "ocena": null,
+      "klucze": [
+       "id",
+       "name",
+       "formation",
+       "starters",
+       "coach",
+       "subs",
+       "unavailable",
+       "averageStarterAge",
+       "totalStarterMarketValue",
+       "lastMatch"
+      ],
+      "wyjsciowi": [
+       {
+        "id": 873566,
+        "age": 26,
+        "name": "Yahia Fofana",
+        "positionId": 11,
+        "usualPlayingPositionId": 0,
+        "shirtNumber": "75",
+        "countryName": "Ivory Coast",
+        "countryCode": "CIV",
+        "horizontalLayout": {
+         "x": 0.1,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.1,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 6212394,
+        "performance": {
+         "seasonAssists": 1,
+         "seasonRating": 6.95
+        },
+        "firstName": "Yahia",
+        "lastName": "Fofana",
+        "nationalTeamId": 6709,
+        "rankings": null
+       },
+       {
+        "id": 1183742,
+        "age": 26,
+        "name": "Mithat Pala",
+        "positionId": 32,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "54",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.875,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.125,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 2011670,
+        "performance": {
+         "seasonAssists": 2,
+         "seasonRating": 7.27
+        },
+        "firstName": "Mithat",
+        "lastName": "Pala",
+        "nationalTeamId": 6595,
+        "rankings": null
+       },
+       {
+        "id": 1603757,
+        "age": 21,
+        "name": "Siaka Bakayoko",
+        "positionId": 34,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "21",
+        "countryName": "France",
+        "countryCode": "FRA",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.625,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.375,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 2789075,
+        "performance": {
+         "seasonRating": 6.32
+        },
+        "firstName": "Siaka",
+        "lastName": "Bakayoko",
+        "nationalTeamId": 6723,
+        "rankings": null
+       },
+       {
+        "id": 884272,
+        "age": 27,
+        "name": "Modibo Sagnan",
+        "positionId": 36,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "93",
+        "countryName": "Mali",
+        "countryCode": "MLI",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.375,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.625,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 1488645,
+        "performance": {
+         "seasonRating": 6.98
+        },
+        "firstName": "Modibo",
+        "lastName": "Sagnan",
+        "nationalTeamId": 5815,
+        "rankings": null
+       },
+       {
+        "id": 1559202,
+        "age": 22,
+        "name": "Zakaria Ariss",
+        "positionId": 38,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "17",
+        "countryName": "France",
+        "countryCode": "FRA",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.125,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.875,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 1912461,
+        "performance": {
+         "seasonRating": 6.59
+        },
+        "firstName": "Zakaria",
+        "lastName": "Ariss",
+        "nationalTeamId": 6723,
+        "rankings": null
+       },
+       {
+        "id": 449999,
+        "age": 31,
+        "name": "Taylan Antalyalı",
+        "positionId": 65,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "14",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 325160,
+        "performance": {
+         "seasonRating": 6.99
+        },
+        "firstName": "Taylan",
+        "lastName": "Antalyalı",
+        "nationalTeamId": 6595,
+        "rankings": null
+       },
+       {
+        "id": 1211804,
+        "age": 22,
+        "name": "Adedire Awokoya Mebude",
+        "positionId": 82,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "11",
+        "countryName": "Scotland",
+        "countryCode": "SCO",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.875,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.125,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "performance": {
+         "seasonRating": 6.79
+        },
+        "firstName": "Adedire Awokoya",
+        "lastName": "Mebude",
+        "nationalTeamId": 8498,
+        "rankings": null
+       },
+       {
+        "id": 1042086,
+        "age": 28,
+        "name": "Ibrahim Olawoyin",
+        "positionId": 84,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "10",
+        "countryName": "Nigeria",
+        "countryCode": "NGA",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.625,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.375,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 1222786,
+        "performance": {
+         "seasonGoals": 1,
+         "seasonRating": 7.08
+        },
+        "firstName": "Ibrahim",
+        "lastName": "Olawoyin",
+        "nationalTeamId": 6346,
+        "rankings": null
+       },
+       {
+        "id": 613262,
+        "age": 30,
+        "name": "Qazim Laçi",
+        "positionId": 86,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "20",
+        "countryName": "Albania",
+        "countryCode": "ALB",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.375,
+         "height": 0.25,
+         "width": 0.193
+        },
+        "verticalLayout": {
+         "x": 0.625,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 1782205,
+        "performance": {
+         "seasonGoals": 2,
+         "seasonRating": 7.44
+        },
+        "firstName": "Qazim",
+        "lastName": "Laçi",
+        "nationalTeamId": 10024,
+        "rankings": null
+       },
+       {
+        "id": 890266,
+        "age": 26,
+        "name": "Valentin Mihăilă",
+        "positionId": 88,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "7",
+        "countryName": "Romania",
+        "countryCode": "ROU",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.125,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.875,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 2421462,
+        "performance": {
+         "seasonRating": 6.12
+        },
+        "firstName": "Valentin",
+        "lastName": "Mihăilă",
+        "nationalTeamId": 9730,
+        "rankings": null
+       },
+       {
+        "id": 447367,
+        "age": 32,
+        "name": "Ali Sowe",
+        "positionId": 115,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "9",
+        "countryName": "The Gambia",
+        "countryCode": "GAM",
+        "horizontalLayout": {
+         "x": 0.89,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.212
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.89,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 1358701,
+        "performance": {
+         "seasonGoals": 2,
+         "seasonRating": 6.73
+        },
+        "firstName": "Ali",
+        "lastName": "Sowe",
+        "nationalTeamId": 5979,
+        "rankings": null
+       }
+      ],
+      "lawka_ile": 10,
+      "nieobecni": [
+       {
+        "id": 887139,
+        "age": 26,
+        "name": "Ahmed Kutucu",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "marketValue": 2044116,
+        "unavailability": {
+         "injuryId": 69,
+         "type": "injury",
+         "expectedReturn": "Early November 2026"
+        },
+        "performance": {
+         "seasonRating": 6.86
+        },
+        "firstName": "Ahmed",
+        "lastName": "Kutucu",
+        "nationalTeamId": 6595
+       },
+       {
+        "id": 940086,
+        "age": 25,
+        "name": "Can Bozdoğan",
+        "countryName": "Germany",
+        "countryCode": "GER",
+        "marketValue": 1188435,
+        "unavailability": {
+         "injuryId": 30,
+         "type": "injury",
+         "expectedReturn": "Mid November 2026"
+        },
+        "performance": {
+         "seasonAssists": 1,
+         "seasonRating": 6.65
+        },
+        "firstName": "Can",
+        "lastName": "Bozdoğan",
+        "nationalTeamId": 8570
+       },
+       {
+        "id": 863118,
+        "age": 26,
+        "name": "Attila Mocsi",
+        "countryName": "Hungary",
+        "countryCode": "HUN",
+        "marketValue": 1248573,
+        "unavailability": {
+         "injuryId": 101,
+         "type": "injury",
+         "expectedReturn": "Doubtful"
+        },
+        "performance": {
+         "seasonRating": 7
+        },
+        "firstName": "Attila",
+        "lastName": "Mocsi",
+        "nationalTeamId": 8565
+       },
+       {
+        "id": 1135987,
+        "age": 27,
+        "name": "Khusniddin Alikulov",
+        "countryName": "Uzbekistan",
+        "countryCode": "UZB",
+        "marketValue": 638058,
+        "unavailability": {
+         "injuryId": 76,
+         "type": "injury",
+         "expectedReturn": "Early November 2026"
+        },
+        "firstName": "Khusniddin",
+        "lastName": "Alikulov",
+        "nationalTeamId": 8700
+       }
+      ],
+      "trener": {
+       "id": 1381547,
+       "age": 51,
+       "name": "Recep Uçar",
+       "countryName": "Turkiye",
+       "countryCode": "TUR",
+       "firstName": "Recep",
+       "lastName": "Uçar",
+       "nationalTeamId": 6595,
+       "primaryTeamId": 2166,
+       "primaryTeamName": "Rizespor",
+       "usualPlayingPositionId": null,
+       "isCoach": true
+      }
+     },
+     "awayTeam": {
+      "formacja": "4-3-3",
+      "ocena": null,
+      "klucze": [
+       "id",
+       "name",
+       "formation",
+       "starters",
+       "coach",
+       "subs",
+       "unavailable",
+       "averageStarterAge",
+       "totalStarterMarketValue",
+       "lastMatch"
+      ],
+      "wyjsciowi": [
+       {
+        "id": 611491,
+        "age": 30,
+        "name": "André Onana",
+        "positionId": 11,
+        "usualPlayingPositionId": 0,
+        "shirtNumber": "24",
+        "countryName": "Cameroon",
+        "countryCode": "CMR",
+        "horizontalLayout": {
+         "x": 0.1,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.2
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.1,
+         "height": 0.2,
+         "width": 1
+        },
+        "marketValue": 8882009,
+        "performance": {
+         "seasonRating": 7.91
+        },
+        "firstName": "André",
+        "lastName": "Onana",
+        "nationalTeamId": 6629,
+        "rankings": null
+       },
+       {
+        "id": 718867,
+        "age": 30,
+        "name": "Melih Kabasakal",
+        "positionId": 32,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "57",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "horizontalLayout": {
+         "x": 0.357,
+         "y": 0.875,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.125,
+         "y": 0.357,
+         "height": 0.2,
+         "width": 0.25
+        },
+        "marketValue": 489995,
+        "performance": {
+         "seasonRating": 6.59
+        },
+        "firstName": "Melih",
+        "lastName": "Kabasakal",
+        "nationalTeamId": 6595,
+        "rankings": null
+       },
+       {
+        "id": 424380,
+        "age": 32,
+        "name": "Samet Akaydin",
+        "positionId": 34,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "4",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "horizontalLayout": {
+         "x": 0.357,
+         "y": 0.625,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.375,
+         "y": 0.357,
+         "height": 0.2,
+         "width": 0.25
+        },
+        "marketValue": 872912,
+        "firstName": "Samet",
+        "lastName": "Akaydin",
+        "nationalTeamId": 6595,
+        "rankings": null
+       },
+       {
+        "id": 1107951,
+        "age": 26,
+        "name": "Cenk Özkacar",
+        "positionId": 36,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "39",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "horizontalLayout": {
+         "x": 0.357,
+         "y": 0.375,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.625,
+         "y": 0.357,
+         "height": 0.2,
+         "width": 0.25
+        },
+        "marketValue": 2879040,
+        "performance": {
+         "seasonRating": 6.32
+        },
+        "firstName": "Cenk",
+        "lastName": "Özkacar",
+        "nationalTeamId": 6595,
+        "rankings": null
+       },
+       {
+        "id": 1441786,
+        "age": 24,
+        "name": "Sidny Lopes Cabral",
+        "positionId": 38,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "55",
+        "countryName": "Cape Verde",
+        "countryCode": "CPV",
+        "horizontalLayout": {
+         "x": 0.357,
+         "y": 0.125,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.875,
+         "y": 0.357,
+         "height": 0.2,
+         "width": 0.25
+        },
+        "marketValue": 2789122,
+        "performance": {
+         "seasonRating": 6.59
+        },
+        "firstName": "Sidny Lopes",
+        "lastName": "Cabral",
+        "nationalTeamId": 5888,
+        "rankings": null
+       },
+       {
+        "id": 1244808,
+        "age": 26,
+        "name": "Tim Jabol-Folcarelli",
+        "positionId": 73,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "26",
+        "countryName": "France",
+        "countryCode": "FRA",
+        "horizontalLayout": {
+         "x": 0.613,
+         "y": 0.79,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.21,
+         "y": 0.613,
+         "height": 0.2,
+         "width": 0.29
+        },
+        "marketValue": 6434776,
+        "performance": {
+         "seasonRating": 6.27
+        },
+        "firstName": "Tim",
+        "lastName": "Jabol-Folcarelli",
+        "nationalTeamId": 6723,
+        "rankings": null
+       },
+       {
+        "id": 1078729,
+        "age": 26,
+        "name": "Batista Mendy",
+        "positionId": 75,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "3",
+        "countryName": "France",
+        "countryCode": "FRA",
+        "horizontalLayout": {
+         "x": 0.613,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.613,
+         "height": 0.2,
+         "width": 0.29
+        },
+        "marketValue": 5806503,
+        "firstName": "Batista",
+        "lastName": "Mendy",
+        "nationalTeamId": 6723,
+        "rankings": null
+       },
+       {
+        "id": 1174002,
+        "age": 24,
+        "name": "Benjamin Bouchouari",
+        "positionId": 77,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "8",
+        "countryName": "Morocco",
+        "countryCode": "MAR",
+        "horizontalLayout": {
+         "x": 0.613,
+         "y": 0.21,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.79,
+         "y": 0.613,
+         "height": 0.2,
+         "width": 0.29
+        },
+        "marketValue": 2789469,
+        "performance": {
+         "seasonRating": 7.41
+        },
+        "firstName": "Benjamin",
+        "lastName": "Bouchouari",
+        "nationalTeamId": 6262,
+        "rankings": null
+       },
+       {
+        "id": 292462,
+        "age": 34,
+        "name": "Mohamed Salah",
+        "positionId": 103,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "10",
+        "countryName": "Egypt",
+        "countryCode": "EGY",
+        "horizontalLayout": {
+         "x": 0.87,
+         "y": 0.79,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.21,
+         "y": 0.87,
+         "height": 0.2,
+         "width": 0.29
+        },
+        "marketValue": 25590340,
+        "performance": {
+         "seasonGoals": 8,
+         "seasonAssists": 3,
+         "seasonRating": 8.12
+        },
+        "firstName": "Mohamed",
+        "lastName": "Salah",
+        "nationalTeamId": 10255,
+        "rankings": null
+       },
+       {
+        "id": 1374500,
+        "age": 22,
+        "name": "Franculino",
+        "positionId": 105,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "9",
+        "countryName": "Guinea-Bissau",
+        "countryCode": "GNB",
+        "horizontalLayout": {
+         "x": 0.87,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.87,
+         "height": 0.2,
+         "width": 0.29
+        },
+        "marketValue": 17839155,
+        "performance": {
+         "seasonGoals": 2,
+         "seasonAssists": 2,
+         "seasonRating": 7.38
+        },
+        "firstName": "",
+        "lastName": "Franculino",
+        "nationalTeamId": 230700,
+        "rankings": null
+       },
+       {
+        "id": 1793475,
+        "age": 22,
+        "name": "Noah Saviolo",
+        "positionId": 107,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "70",
+        "countryName": "Portugal",
+        "countryCode": "POR",
+        "horizontalLayout": {
+         "x": 0.87,
+         "y": 0.21,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.79,
+         "y": 0.87,
+         "height": 0.2,
+         "width": 0.29
+        },
+        "marketValue": 2565303,
+        "performance": {
+         "seasonGoals": 2,
+         "seasonRating": 6.75
+        },
+        "firstName": "Noah",
+        "lastName": "Saviolo",
+        "nationalTeamId": 8361,
+        "rankings": null
+       }
+      ],
+      "lawka_ile": 11,
+      "nieobecni": [
+       {
+        "id": 889717,
+        "age": 29,
+        "name": "Mustafa Eskihellaç",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "marketValue": 1994035,
+        "unavailability": {
+         "injuryId": 87,
+         "type": "injury",
+         "expectedReturn": "Doubtful"
+        },
+        "performance": {
+         "seasonAssists": 2,
+         "seasonRating": 7.6
+        },
+        "firstName": "Mustafa",
+        "lastName": "Eskihellaç",
+        "nationalTeamId": 6595
+       },
+       {
+        "id": 1037491,
+        "age": 24,
+        "name": "Arseniy Batagov",
+        "countryName": "Ukraine",
+        "countryCode": "UKR",
+        "marketValue": 11287536,
+        "unavailability": {
+         "injuryId": 42,
+         "type": "injury",
+         "expectedReturn": "Mid November 2026"
+        },
+        "firstName": "Arseniy",
+        "lastName": "Batagov",
+        "nationalTeamId": 6718
+       },
+       {
+        "id": 412357,
+        "age": 32,
+        "name": "Paul Onuachu",
+        "countryName": "Nigeria",
+        "countryCode": "NGA",
+        "marketValue": 4313633,
+        "unavailability": {
+         "injuryId": 87,
+         "type": "injury",
+         "expectedReturn": "Early November 2026"
+        },
+        "performance": {
+         "seasonGoals": 2,
+         "seasonRating": 6.61
+        },
+        "firstName": "Paul",
+        "lastName": "Onuachu",
+        "nationalTeamId": 6346
+       },
+       {
+        "id": 459658,
+        "age": 33,
+        "name": "Ruslan Malinovsky",
+        "countryName": "Ukraine",
+        "countryCode": "UKR",
+        "marketValue": 1599645,
+        "unavailability": {
+         "injuryId": 14,
+         "type": "injury",
+         "expectedReturn": "Late November 2026"
+        },
+        "performance": {
+         "seasonRating": 7.09
+        },
+        "firstName": "Ruslan",
+        "lastName": "Malinovsky",
+        "nationalTeamId": 6718
+       },
+       {
+        "id": 214339,
+        "age": 32,
+        "name": "Okay Yokuşlu",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "marketValue": 568700,
+        "unavailability": {
+         "injuryId": 140,
+         "type": "injury",
+         "expectedReturn": "Late December 2026"
+        },
+        "firstName": "Okay",
+        "lastName": "Yokuşlu",
+        "nationalTeamId": 6595
+       }
+      ],
+      "trener": {
+       "id": 5343,
+       "age": 53,
+       "name": "Thomas Reis",
+       "countryName": "Germany",
+       "countryCode": "GER",
+       "firstName": "Thomas",
+       "lastName": "Reis",
+       "nationalTeamId": 8570,
+       "primaryTeamId": 9752,
+       "primaryTeamName": "Trabzonspor",
+       "usualPlayingPositionId": null,
+       "isCoach": true
+      }
+     },
+     "matchFacts_klucze": [
+      "matchId",
+      "highlights",
+      "playerOfTheMatch",
+      "events",
+      "infoBox",
+      "teamForm",
+      "poll",
+      "topPlayers",
+      "insights",
+      "topScorers",
+      "countryCode",
+      "QAData",
+      "matchInsightsConfig"
+     ],
+     "infoBox": {
+      "legInfo": null,
+      "Match Date": {
+       "utcTime": "2026-10-26T16:00:00.000Z",
+       "isDateCorrect": true
+      },
+      "Tournament": {
+       "id": 71,
+       "parentLeagueId": 71,
+       "link": "/leagues/71/overview/super-lig",
+       "leagueName": "Super Lig",
+       "roundName": "9",
+       "round": "9"
+      },
+      "Stadium": {
+       "name": "Çaykur Didi Stadyumu",
+       "city": "Rize",
+       "country": "Türkiye",
+       "lat": 41.042041481,
+       "long": 40.573303699,
+       "capacity": 15558,
+       "surface": "grass"
+      },
+      "Referee": {
+       "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/tur.png",
+       "text": "Halil Umut Meler",
+       "countryCode": "TUR",
+       "country": "Türkiye",
+       "id": 1001074881,
+       "leagueId": 71,
+       "leagueName": "Süper Lig",
+       "stats": [
+        {
+         "type": "matches",
+         "value": 36,
+         "valueType": "total"
+        },
+        {
+         "type": "yellowCards",
+         "value": 4.36,
+         "valueType": "perMatch",
+         "average": 4.68,
+         "total": 157,
+         "averageType": "average",
+         "fillPercentage": 44.03,
+         "averagePercentage": 50
+        },
+        {
+         "type": "redCards",
+         "value": 6,
+         "valueType": "total"
+        },
+        {
+         "type": "unknown",
+         "value": 4,
+         "valueType": "total"
+        },
+        {
+         "type": "penalties",
+         "value": 16,
+         "valueType": "total"
+        },
+        {
+         "type": "fouls",
+         "value": 26,
+         "valueType": "perMatch",
+         "average": 26.2,
+         "total": 884,
+         "averageType": "average",
+         "fillPercentage": 48.98,
+         "averagePercentage": 50
+        }
+       ]
+      },
+      "Attendance": null
+     },
+     "content_klucze": [
+      "matchFacts",
+      "liveticker",
+      "superlive",
+      "buzz",
+      "stats",
+      "playerStats",
+      "shotmap",
+      "weather",
+      "lineup",
+      "hasPlayoff",
+      "table",
+      "h2h",
+      "momentum"
+     ],
+     "general": {
+      "matchId": "5904779",
+      "matchName": "Rizespor-vs-Trabzonspor_Mon, Oct 26, 2026, 16:00 UTC",
+      "matchRound": "9",
+      "teamColors": {
+       "darkMode": {
+        "home": "#3c4f9c",
+        "away": "#9e2736"
+       },
+       "lightMode": {
+        "home": "#002D73",
+        "away": "#6e2330"
+       },
+       "fontDarkMode": {
+        "home": "rgba(255, 255, 255, 1.0)",
+        "away": "rgba(255, 255, 255, 1.0)"
+       },
+       "fontLightMode": {
+        "home": "rgba(255, 255, 255, 1.0)",
+        "away": "rgba(255, 255, 255, 1.0)"
+       }
+      },
+      "leagueId": 71,
+      "leagueName": "Super Lig",
+      "leagueRoundName": "9",
+      "parentLeagueId": 71,
+      "countryCode": "TUR",
+      "homeTeam": {
+       "name": "Rizespor",
+       "id": 2166
+      },
+      "awayTeam": {
+       "name": "Trabzonspor",
+       "id": 9752
+      },
+      "coverageLevel": "lower",
+      "matchTimeUTC": "Mon, Oct 26, 2026, 16:00 UTC",
+      "matchTimeUTCDate": "2026-10-26T16:00:00.000Z",
+      "started": false,
+      "finished": false,
+      "gender": "male"
+     },
+     "header": {
+      "teams": [
+       {
+        "name": "Rizespor",
+        "id": 2166,
+        "score": 0,
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/2166_small.png",
+        "pageUrl": "/teams/2166/overview/rizespor"
+       },
+       {
+        "name": "Trabzonspor",
+        "id": 9752,
+        "score": 0,
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/9752_small.png",
+        "pageUrl": "/teams/9752/overview/trabzonspor"
+       }
+      ],
+      "status": {
+       "utcTime": "2026-10-26T16:00:00.000Z",
+       "numberOfHomeRedCards": 0,
+       "numberOfAwayRedCards": 0,
+       "halfs": {},
+       "started": false,
+       "cancelled": false,
+       "finished": false
+      },
+      "events": null
+     },
+     "tabela_jest": true,
+     "h2h_jest": true
+    },
+    "skad": "requests"
+   }
+  },
+  {
+   "nasz": "Galatasaray – Fenerbahce",
+   "event_id": "a05d15a5f230d25da72b18dc92084f8f",
+   "start": "2026-10-26 19:30",
+   "fotmob_id": "5904782",
+   "fotmob": "Galatasaray – Fenerbahçe",
+   "zgodnosc": 1.0,
+   "odwrocone": false,
+   "url": null,
+   "szczegoly": {
+    "requests": [
+     {
+      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5904782",
+      "kod": 200,
+      "typ": "application/json; charset=utf-8",
+      "rozmiar": 58740,
+      "ms": 35
+     }
+    ],
+    "dane": {
+     "lineup_klucze": [
+      "matchId",
+      "lineupType",
+      "source",
+      "availableFilters",
+      "homeTeam",
+      "awayTeam"
+     ],
+     "lineup_typ": "lastStarting11",
+     "homeTeam": {
+      "formacja": "4-2-3-1",
+      "ocena": null,
+      "klucze": [
+       "id",
+       "name",
+       "formation",
+       "starters",
+       "coach",
+       "subs",
+       "unavailable",
+       "averageStarterAge",
+       "totalStarterMarketValue",
+       "lastMatch"
+      ],
+      "wyjsciowi": [
+       {
+        "id": 603669,
+        "age": 30,
+        "name": "Uğurcan Çakir",
+        "positionId": 11,
+        "usualPlayingPositionId": 0,
+        "shirtNumber": "1",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "horizontalLayout": {
+         "x": 0.1,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.1,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 18410155,
+        "performance": {
+         "seasonRating": 7.02
+        },
+        "firstName": "Uğurcan",
+        "lastName": "Çakir",
+        "nationalTeamId": 6595,
+        "rankings": null
+       },
+       {
+        "id": 583601,
+        "age": 29,
+        "name": "Roland Sallai",
+        "positionId": 32,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "7",
+        "countryName": "Hungary",
+        "countryCode": "HUN",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.875,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.125,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 12532217,
+        "performance": {
+         "seasonGoals": 1,
+         "seasonRating": 7.34
+        },
+        "firstName": "Roland",
+        "lastName": "Sallai",
+        "nationalTeamId": 8565,
+        "rankings": null
+       },
+       {
+        "id": 643533,
+        "age": 30,
+        "name": "Davinson Sánchez",
+        "positionId": 34,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "6",
+        "countryName": "Colombia",
+        "countryCode": "COL",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.625,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.375,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 18504821,
+        "performance": {
+         "seasonGoals": 1,
+         "seasonRating": 6.92
+        },
+        "firstName": "Davinson",
+        "lastName": "Sánchez",
+        "nationalTeamId": 8258,
+        "rankings": null
+       },
+       {
+        "id": 291399,
+        "age": 32,
+        "name": "Abdülkerim Bardakci",
+        "positionId": 36,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "42",
+        "isCaptain": true,
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.375,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.625,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 3500746,
+        "performance": {
+         "seasonGoals": 2,
+         "seasonRating": 7.03
+        },
+        "firstName": "Abdülkerim",
+        "lastName": "Bardakci",
+        "nationalTeamId": 6595,
+        "rankings": null
+       },
+       {
+        "id": 906945,
+        "age": 27,
+        "name": "Ismail Jakobs",
+        "positionId": 38,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "4",
+        "countryName": "Senegal",
+        "countryCode": "SEN",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.125,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.875,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 5305118,
+        "performance": {
+         "seasonAssists": 1,
+         "seasonRating": 6.86
+        },
+        "firstName": "Ismail",
+        "lastName": "Jakobs",
+        "nationalTeamId": 6395,
+        "rankings": null
+       },
+       {
+        "id": 592909,
+        "age": 30,
+        "name": "Lucas Torreira",
+        "positionId": 64,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "34",
+        "countryName": "Uruguay",
+        "countryCode": "URU",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.7,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.3,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.4
+        },
+        "marketValue": 7385333,
+        "performance": {
+         "seasonGoals": 1,
+         "seasonAssists": 2,
+         "seasonRating": 7.41
+        },
+        "firstName": "Lucas",
+        "lastName": "Torreira",
+        "nationalTeamId": 5796,
+        "rankings": null
+       },
+       {
+        "id": 902710,
+        "age": 27,
+        "name": "Gabriel Sara",
+        "positionId": 66,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "8",
+        "countryName": "Brazil",
+        "countryCode": "BRA",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.3,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.7,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.4
+        },
+        "marketValue": 24628648,
+        "performance": {
+         "seasonGoals": 2,
+         "seasonAssists": 2,
+         "seasonRating": 7.99
+        },
+        "firstName": "Gabriel",
+        "lastName": "Sara",
+        "nationalTeamId": 8256,
+        "rankings": null
+       },
+       {
+        "id": 845991,
+        "age": 26,
+        "name": "Yunus Akgün",
+        "positionId": 83,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "11",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.837,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.162,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.325
+        },
+        "marketValue": 19148055,
+        "performance": {
+         "seasonGoals": 1,
+         "seasonRating": 7.49
+        },
+        "firstName": "Yunus",
+        "lastName": "Akgün",
+        "nationalTeamId": 6595,
+        "rankings": null
+       },
+       {
+        "id": 1504343,
+        "age": 21,
+        "name": "Aleksey Batrakov",
+        "positionId": 85,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "83",
+        "countryName": "Russia",
+        "countryCode": "RUS",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.337
+        },
+        "marketValue": 34308494,
+        "performance": {
+         "seasonAssists": 2,
+         "seasonRating": 7.18
+        },
+        "firstName": "Aleksey",
+        "lastName": "Batrakov",
+        "nationalTeamId": 8713,
+        "rankings": null
+       },
+       {
+        "id": 890232,
+        "age": 26,
+        "name": "Barış Alper Yılmaz",
+        "positionId": 87,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "53",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.163,
+         "height": 0.25,
+         "width": 0.193
+        },
+        "verticalLayout": {
+         "x": 0.837,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.325
+        },
+        "marketValue": 28739891,
+        "performance": {
+         "seasonGoals": 1,
+         "seasonRating": 6.9
+        },
+        "firstName": "Barış Alper",
+        "lastName": "Yılmaz",
+        "nationalTeamId": 6595,
+        "rankings": null
+       },
+       {
+        "id": 687681,
+        "age": 27,
+        "name": "Victor Osimhen",
+        "positionId": 115,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "45",
+        "countryName": "Nigeria",
+        "countryCode": "NGA",
+        "horizontalLayout": {
+         "x": 0.87,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.87,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 74320814,
+        "performance": {
+         "seasonGoals": 6,
+         "seasonAssists": 3,
+         "seasonRating": 8.23
+        },
+        "firstName": "Victor",
+        "lastName": "Osimhen",
+        "nationalTeamId": 6346,
+        "rankings": null
+       }
+      ],
+      "lawka_ile": 12,
+      "nieobecni": [],
+      "trener": {
+       "id": 39781,
+       "age": 53,
+       "name": "Okan Buruk",
+       "countryName": "Turkiye",
+       "countryCode": "TUR",
+       "firstName": "Okan",
+       "lastName": "Buruk",
+       "nationalTeamId": 6595,
+       "primaryTeamId": 8637,
+       "primaryTeamName": "Galatasaray",
+       "usualPlayingPositionId": null,
+       "isCoach": true
+      }
+     },
+     "awayTeam": {
+      "formacja": "4-2-3-1",
+      "ocena": null,
+      "klucze": [
+       "id",
+       "name",
+       "formation",
+       "starters",
+       "coach",
+       "subs",
+       "unavailable",
+       "averageStarterAge",
+       "totalStarterMarketValue",
+       "lastMatch"
+      ],
+      "wyjsciowi": [
+       {
+        "id": 363364,
+        "age": 33,
+        "name": "Ederson",
+        "positionId": 11,
+        "usualPlayingPositionId": 0,
+        "shirtNumber": "31",
+        "countryName": "Brazil",
+        "countryCode": "BRA",
+        "horizontalLayout": {
+         "x": 0.1,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.1,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 8477238,
+        "performance": {
+         "seasonRating": 7.66
+        },
+        "firstName": "",
+        "lastName": "Ederson",
+        "nationalTeamId": 8256,
+        "rankings": null
+       },
+       {
+        "id": 470834,
+        "age": 32,
+        "name": "Nélson Semedo",
+        "positionId": 32,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "27",
+        "countryName": "Portugal",
+        "countryCode": "POR",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.875,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.125,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 2607189,
+        "performance": {
+         "seasonRating": 6.97
+        },
+        "firstName": "Nélson",
+        "lastName": "Semedo",
+        "nationalTeamId": 8361,
+        "rankings": null
+       },
+       {
+        "id": 309328,
+        "age": 31,
+        "name": "Milan Škriniar",
+        "positionId": 34,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "37",
+        "isCaptain": true,
+        "countryName": "Slovakia",
+        "countryCode": "SVK",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.625,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.375,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 7878218,
+        "performance": {
+         "seasonGoals": 1,
+         "seasonRating": 7.36
+        },
+        "firstName": "Milan",
+        "lastName": "Škriniar",
+        "nationalTeamId": 8497,
+        "rankings": null
+       },
+       {
+        "id": 417068,
+        "age": 31,
+        "name": "Nathan Aké",
+        "positionId": 36,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "15",
+        "countryName": "Netherlands",
+        "countryCode": "NED",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.375,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.625,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 10206126,
+        "performance": {
+         "seasonRating": 6.81
+        },
+        "firstName": "Nathan",
+        "lastName": "Aké",
+        "nationalTeamId": 6708,
+        "rankings": null
+       },
+       {
+        "id": 1113704,
+        "age": 24,
+        "name": "Archie Brown",
+        "positionId": 38,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "3",
+        "countryName": "England",
+        "countryCode": "ENG",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.125,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.875,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 13255503,
+        "performance": {
+         "seasonAssists": 1,
+         "seasonRating": 7.17
+        },
+        "firstName": "Archie",
+        "lastName": "Brown",
+        "nationalTeamId": 8491,
+        "rankings": null
+       },
+       {
+        "id": 319300,
+        "age": 35,
+        "name": "N'Golo Kanté",
+        "positionId": 64,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "91",
+        "countryName": "France",
+        "countryCode": "FRA",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.7,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.3,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.4
+        },
+        "marketValue": 2040150,
+        "performance": {
+         "seasonRating": 7.29
+        },
+        "firstName": "N'Golo",
+        "lastName": "Kanté",
+        "nationalTeamId": 6723,
+        "rankings": null
+       },
+       {
+        "id": 800609,
+        "age": 27,
+        "name": "Mattéo Guendouzi",
+        "positionId": 66,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "6",
+        "countryName": "France",
+        "countryCode": "FRA",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.3,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.7,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.4
+        },
+        "marketValue": 25102776,
+        "performance": {
+         "seasonGoals": 1,
+         "seasonRating": 7.13
+        },
+        "firstName": "Mattéo",
+        "lastName": "Guendouzi",
+        "nationalTeamId": 6723,
+        "rankings": null
+       },
+       {
+        "id": 1092015,
+        "age": 25,
+        "name": "Oğuz Aydın",
+        "positionId": 83,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "70",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.837,
+         "height": 0.25,
+         "width": 0.193
+        },
+        "verticalLayout": {
+         "x": 0.162,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.325
+        },
+        "marketValue": 6232626,
+        "performance": {
+         "seasonGoals": 2,
+         "seasonAssists": 3,
+         "seasonRating": 7.21
+        },
+        "firstName": "Oğuz",
+        "lastName": "Aydın",
+        "nationalTeamId": 6595,
+        "rankings": null
+       },
+       {
+        "id": 950473,
+        "age": 25,
+        "name": "Mason Greenwood",
+        "positionId": 85,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "11",
+        "countryName": "England",
+        "countryCode": "ENG",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.337
+        },
+        "marketValue": 59881115,
+        "performance": {
+         "seasonGoals": 4,
+         "seasonAssists": 2,
+         "seasonRating": 7.54
+        },
+        "firstName": "Mason",
+        "lastName": "Greenwood",
+        "nationalTeamId": 8491,
+        "rankings": null
+       },
+       {
+        "id": 1117570,
+        "age": 28,
+        "name": "Kerem Aktürkoglu",
+        "positionId": 87,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "7",
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.163,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.837,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.325
+        },
+        "marketValue": 21678767,
+        "performance": {
+         "seasonGoals": 1,
+         "seasonAssists": 3,
+         "seasonRating": 7.22
+        },
+        "firstName": "Kerem",
+        "lastName": "Aktürkoglu",
+        "nationalTeamId": 6595,
+        "rankings": null
+       },
+       {
+        "id": 517052,
+        "age": 32,
+        "name": "Vedat Muriqi",
+        "positionId": 115,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "19",
+        "countryName": "Kosovo",
+        "countryCode": "KVX",
+        "horizontalLayout": {
+         "x": 0.87,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.87,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 3786895,
+        "performance": {
+         "seasonGoals": 7,
+         "seasonAssists": 1,
+         "seasonRating": 7.35
+        },
+        "firstName": "Vedat",
+        "lastName": "Muriqi",
+        "nationalTeamId": 430156,
+        "rankings": null
+       }
+      ],
+      "lawka_ile": 11,
+      "nieobecni": [
+       {
+        "id": 417068,
+        "age": 31,
+        "name": "Nathan Aké",
+        "countryName": "Netherlands",
+        "countryCode": "NED",
+        "marketValue": 10206126,
+        "unavailability": {
+         "injuryId": 42,
+         "type": "injury",
+         "expectedReturn": "Mid November 2026"
+        },
+        "performance": {
+         "seasonRating": 6.81
+        },
+        "firstName": "Nathan",
+        "lastName": "Aké",
+        "nationalTeamId": 6708
+       },
+       {
+        "id": 1537000,
+        "age": 18,
+        "name": "Amara Diouf",
+        "countryName": "Senegal",
+        "countryCode": "SEN",
+        "marketValue": 1387101,
+        "unavailability": {
+         "injuryId": 87,
+         "type": "injury",
+         "expectedReturn": "Doubtful"
+        },
+        "firstName": "Amara",
+        "lastName": "Diouf",
+        "nationalTeamId": 6395
+       },
+       {
+        "id": 1174351,
+        "age": 25,
+        "name": "Jayden Oosterwolde",
+        "positionId": 1000,
+        "countryName": "Netherlands",
+        "countryCode": "NED",
+        "marketValue": 19048541,
+        "unavailability": {
+         "injuryId": 73,
+         "type": "injury",
+         "expectedReturn": "Unknown"
+        },
+        "firstName": "Jayden",
+        "lastName": "Oosterwolde",
+        "nationalTeamId": 6708
+       },
+       {
+        "id": 904098,
+        "age": 27,
+        "name": "Mert Müldür",
+        "positionId": 1000,
+        "countryName": "Turkiye",
+        "countryCode": "TUR",
+        "marketValue": 4032524,
+        "unavailability": {
+         "injuryId": 70,
+         "type": "injury",
+         "expectedReturn": "Mid December 2026"
+        },
+        "performance": {
+         "seasonRating": 6.97
+        },
+        "firstName": "Mert",
+        "lastName": "Müldür",
+        "nationalTeamId": 6595
+       },
+       {
+        "id": 498033,
+        "age": 30,
+        "name": "Marco Asensio",
+        "positionId": 1000,
+        "countryName": "Spain",
+        "countryCode": "ESP",
+        "marketValue": 11921778,
+        "unavailability": {
+         "injuryId": 14,
+         "type": "injury",
+         "expectedReturn": "Early January 2027"
+        },
+        "performance": {
+         "seasonGoals": 2,
+         "seasonRating": 7.59
+        },
+        "firstName": "Marco",
+        "lastName": "Asensio",
+        "nationalTeamId": 6720
+       }
+      ],
+      "trener": {
+       "id": 574952,
+       "age": 65,
+       "name": "İsmail Kartal",
+       "countryName": "Turkiye",
+       "countryCode": "TUR",
+       "firstName": "İsmail",
+       "lastName": "Kartal",
+       "nationalTeamId": 6595,
+       "primaryTeamId": 8695,
+       "primaryTeamName": "Fenerbahçe",
+       "usualPlayingPositionId": null,
+       "isCoach": true
+      }
+     },
+     "matchFacts_klucze": [
+      "matchId",
+      "highlights",
+      "playerOfTheMatch",
+      "events",
+      "infoBox",
+      "teamForm",
+      "poll",
+      "topPlayers",
+      "insights",
+      "topScorers",
+      "countryCode",
+      "QAData"
+     ],
+     "infoBox": {
+      "legInfo": null,
+      "Match Date": {
+       "utcTime": "2026-10-26T18:30:00.000Z",
+       "isDateCorrect": true
+      },
+      "Tournament": {
+       "id": 71,
+       "parentLeagueId": 71,
+       "link": "/leagues/71/overview/super-lig",
+       "leagueName": "Super Lig",
+       "roundName": "9",
+       "round": "9"
+      },
+      "Stadium": {
+       "name": "RAMS Park",
+       "city": "İstanbul",
+       "country": "Türkiye",
+       "lat": 41.10339059,
+       "long": 28.991063833,
+       "capacity": 53798,
+       "surface": "grass"
+      },
+      "Referee": {
+       "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/tur.png",
+       "text": "Atilla Karaoğlan",
+       "countryCode": "TUR",
+       "country": "Türkiye",
+       "id": 1001079141,
+       "leagueId": 71,
+       "leagueName": "Süper Lig",
+       "stats": [
+        {
+         "type": "matches",
+         "value": 37,
+         "valueType": "total"
+        },
+        {
+         "type": "yellowCards",
+         "value": 5.51,
+         "valueType": "perMatch",
+         "average": 4.68,
+         "total": 204,
+         "averageType": "above",
+         "fillPercentage": 65.52,
+         "averagePercentage": 50
+        },
+        {
+         "type": "redCards",
+         "value": 6,
+         "valueType": "total"
+        },
+        {
+         "type": "unknown",
+         "value": 4,
+         "valueType": "total"
+        },
+        {
+         "type": "penalties",
+         "value": 17,
+         "valueType": "total"
+        },
+        {
+         "type": "fouls",
+         "value": 26.2,
+         "valueType": "perMatch",
+         "average": 26.2,
+         "total": 917,
+         "averageType": "average",
+         "fillPercentage": 50.01,
+         "averagePercentage": 50
+        }
+       ]
+      },
+      "Attendance": null
+     },
+     "content_klucze": [
+      "matchFacts",
+      "liveticker",
+      "superlive",
+      "buzz",
+      "stats",
+      "playerStats",
+      "shotmap",
+      "weather",
+      "lineup",
+      "hasPlayoff",
+      "table",
+      "h2h",
+      "momentum"
+     ],
+     "general": {
+      "matchId": "5904782",
+      "matchName": "Galatasaray-vs-Fenerbahçe_Mon, Oct 26, 2026, 18:30 UTC",
+      "matchRound": "9",
+      "teamColors": {
+       "darkMode": {
+        "home": "#a11d40",
+        "away": "#FFED00"
+       },
+       "lightMode": {
+        "home": "#8D072A",
+        "away": "#002D72"
+       },
+       "fontDarkMode": {
+        "home": "rgba(255, 255, 255, 1.0)",
+        "away": "rgba(29, 29, 29, 1.0)"
+       },
+       "fontLightMode": {
+        "home": "rgba(255, 255, 255, 1.0)",
+        "away": "rgba(255, 255, 255, 1.0)"
+       }
+      },
+      "leagueId": 71,
+      "leagueName": "Super Lig",
+      "leagueRoundName": "9",
+      "parentLeagueId": 71,
+      "countryCode": "TUR",
+      "homeTeam": {
+       "name": "Galatasaray",
+       "id": 8637
+      },
+      "awayTeam": {
+       "name": "Fenerbahçe",
+       "id": 8695
+      },
+      "coverageLevel": "lower",
+      "matchTimeUTC": "Mon, Oct 26, 2026, 18:30 UTC",
+      "matchTimeUTCDate": "2026-10-26T18:30:00.000Z",
+      "started": false,
+      "finished": false,
+      "gender": "male"
+     },
+     "header": {
+      "teams": [
+       {
+        "name": "Galatasaray",
+        "id": 8637,
+        "score": 0,
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8637_small.png",
+        "pageUrl": "/teams/8637/overview/galatasaray"
+       },
+       {
+        "name": "Fenerbahçe",
+        "id": 8695,
+        "score": 0,
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8695_small.png",
+        "pageUrl": "/teams/8695/overview/fenerbahce"
+       }
+      ],
+      "status": {
+       "utcTime": "2026-10-26T18:30:00.000Z",
+       "numberOfHomeRedCards": 0,
+       "numberOfAwayRedCards": 0,
+       "halfs": {},
+       "started": false,
+       "cancelled": false,
+       "finished": false
+      },
+      "events": null
+     },
+     "tabela_jest": true,
+     "h2h_jest": true
+    },
+    "skad": "requests"
+   }
+  },
+  {
+   "nasz": "Paris Saint Germain – Lyon",
+   "event_id": "8664b2167f22c59026d86615421463b1",
+   "start": "2026-10-26 20:30",
+   "fotmob_id": "5802972",
+   "fotmob": "Paris Saint-Germain – Lyon",
    "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null
   },
   {
-   "nasz": "Inter Milan – Fiorentina",
-   "event_id": "c9b6c7048d8dc33dae618f67f462f67a",
-   "start": "2026-10-25 12:30",
-   "fotmob_id": "5749714",
-   "fotmob": "Inter – Fiorentina",
+   "nasz": "Sevilla – CA Osasuna",
+   "event_id": "85e464708d03287f24590e1478aeca31",
+   "start": "2026-10-26 21:00",
+   "fotmob_id": "5868109",
+   "fotmob": "Sevilla – Osasuna",
+   "zgodnosc": 1.0,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "Union Santa Fe – Estudiantes",
+   "event_id": "641e3cd84dcb88e2b9e0a95cc498e7c8",
+   "start": "2026-10-26 23:00",
+   "fotmob_id": "1000019593",
+   "fotmob": "Unión – Estudiantes",
    "zgodnosc": 0.953,
    "odwrocone": false,
    "url": null
   },
   {
-   "nasz": "Hibernian – Celtic",
-   "event_id": "49cc50062dfcc31e4491b76d20c376cc",
-   "start": "2026-10-25 13:00",
-   "fotmob_id": "5793954",
-   "fotmob": "Hibernian – Celtic",
+   "nasz": "Coritiba – Grêmio",
+   "event_id": "51f2cea4f466d0df8335ff12dab72dd4",
+   "start": "2026-10-26 23:30",
+   "fotmob_id": "5103681",
+   "fotmob": "Coritiba – Grêmio",
    "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null
   },
   {
-   "nasz": "Holstein Kiel – Dynamo Dresden",
-   "event_id": "14b43b5876894fa2800e9b8864950164",
-   "start": "2026-10-25 13:30",
-   "fotmob_id": "5881704",
-   "fotmob": "Holstein Kiel – Dynamo Dresden",
-   "zgodnosc": 1.0,
+   "nasz": "Flamengo – Atletico Mineiro",
+   "event_id": "9d5238c50f04d24ae92e556a438e188e",
+   "start": "2026-10-27 00:00",
+   "fotmob_id": "5103674",
+   "fotmob": "Flamengo – Atlético-MG",
+   "zgodnosc": 0.741,
    "odwrocone": false,
    "url": null
-  },
-  {
-   "nasz": "Eintracht Braunschweig – Hannover 96",
-   "event_id": "b4595027453fc80a92c26ec524965f2c",
-   "start": "2026-10-25 13:30",
-   "fotmob_id": "5881700",
-   "fotmob": "Eintracht Braunschweig – Hannover 96",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "VfL Osnabrück – Greuther Fürth",
-   "event_id": "0ffd859fd9710a95340c10d2b584ea6a",
-   "start": "2026-10-25 13:30",
-   "fotmob_id": "5881707",
-   "fotmob": "VfL Osnabrück – Greuther Fürth",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Genk – Standard Liege",
-   "event_id": "769c9b815d9b0dd4cd6d7cc2b8c038b5",
-   "start": "2026-10-25 13:30",
-   "fotmob_id": "5811784",
-   "fotmob": "Genk – Standard Liège",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Athletic Bilbao – Getafe",
-   "event_id": "9c4254cba9944a839b421db27260504d",
-   "start": "2026-10-25 14:00",
-   "fotmob_id": "5868102",
-   "fotmob": "Athletic Club – Getafe",
-   "zgodnosc": 0.97,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Torku Konyaspor – Genclerbirligi SK",
-   "event_id": "99d0a781893c9d0640e334eec0d7c941",
-   "start": "2026-10-25 14:00",
-   "fotmob_id": "5904781",
-   "fotmob": "Konyaspor – Gençlerbirliği",
-   "zgodnosc": 0.975,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "PSV Eindhoven – Feyenoord",
-   "event_id": "9b70765a6abd2b34bae75afa9d3acedb",
-   "start": "2026-10-25 14:30",
-   "fotmob_id": "5781783",
-   "fotmob": "PSV Eindhoven – Feyenoord",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "NEC Nijmegen – Groningen",
-   "event_id": "c655584661b81e424d8979da8b040c46",
-   "start": "2026-10-25 14:30",
-   "fotmob_id": "5781777",
-   "fotmob": "NEC Nijmegen – FC Groningen",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Jagiellonia Białystok – Wisła Płock",
-   "event_id": "d9313796a9a62b27ced7530e0788f6dc",
-   "start": "2026-10-25 14:45",
-   "fotmob_id": "5804013",
-   "fotmob": "Jagiellonia Białystok – Wisła Płock",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Hull City – Brentford",
-   "event_id": "69493b5ebb84f24ab1d6023a30ee89f0",
-   "start": "2026-10-25 15:00",
-   "fotmob_id": "5795490",
-   "fotmob": "Hull City – Brentford",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Manchester United – Bournemouth",
-   "event_id": "33fb7467b23c91d57dc976d9ab05ea97",
-   "start": "2026-10-25 15:00",
-   "fotmob_id": "5795493",
-   "fotmob": "Manchester United – AFC Bournemouth",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Liverpool – Brighton and Hove Albion",
-   "event_id": "290ba8cd3f3a2e9252effca673bf5549",
-   "start": "2026-10-25 15:00",
-   "fotmob_id": "5795492",
-   "fotmob": "Liverpool – Brighton & Hove Albion",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Crystal Palace – Newcastle United",
-   "event_id": "fe235b26408c477368c40672a4488694",
-   "start": "2026-10-25 15:00",
-   "fotmob_id": "5795489",
-   "fotmob": "Crystal Palace – Newcastle United",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Atalanta BC – Frosinone",
-   "event_id": "63aa6e3f679ee4c68de5b4bd8d3361bb",
-   "start": "2026-10-25 15:00",
-   "fotmob_id": "5749710",
-   "fotmob": "Atalanta – Frosinone",
-   "zgodnosc": 0.984,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Genoa – Venezia",
-   "event_id": "95cfaecfe96bb7ced1fb6af974a4110b",
-   "start": "2026-10-25 15:00",
-   "fotmob_id": "5749713",
-   "fotmob": "Genoa – Venezia",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "AS Monaco – Lille",
-   "event_id": "c177a3c900d7febf9870ca8de90a9e35",
-   "start": "2026-10-25 15:00",
-   "fotmob_id": "5802969",
-   "fotmob": "Monaco – Lille",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Motherwell – Hearts",
-   "event_id": "407bec2230563a6460ed26377fbd692a",
-   "start": "2026-10-25 15:00",
-   "fotmob_id": "5793955",
-   "fotmob": "Motherwell – Heart of Midlothian",
-   "zgodnosc": 0.945,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "TSG Hoffenheim – Bayer Leverkusen",
-   "event_id": "2fd479cbb110c8f057e363bb06195f2b",
-   "start": "2026-10-25 15:30",
-   "fotmob_id": "5881201",
-   "fotmob": "Hoffenheim – Bayer Leverkusen",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Club Brugge – Sint Truiden",
-   "event_id": "28a93d3bb767e8adc100b84725814d34",
-   "start": "2026-10-25 16:00",
-   "fotmob_id": "5811783",
-   "fotmob": "Club Brugge – St.Truiden",
-   "zgodnosc": 0.909,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Celta Vigo – Real Betis",
-   "event_id": "2013e3955186ebe5258e85eb741a7553",
-   "start": "2026-10-25 16:15",
-   "fotmob_id": "5868104",
-   "fotmob": "Celta Vigo – Real Betis",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Estoril – Moreirense FC",
-   "event_id": "399511b408ef714458e62100cac3fb16",
-   "start": "2026-10-25 16:30",
-   "fotmob_id": "5887656",
-   "fotmob": "Estoril – Moreirense",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Sparta Rotterdam – Ajax",
-   "event_id": "6a5709e9c094b7f5d089026af10fb820",
-   "start": "2026-10-25 16:45",
-   "fotmob_id": "5781778",
-   "fotmob": "Sparta Rotterdam – Ajax",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Goztepe – Çorum FK",
-   "event_id": "000c8712b61f7ecec007f08d3ecad35b",
-   "start": "2026-10-25 17:00",
-   "fotmob_id": "5904780",
-   "fotmob": "Göztepe – Çorum FK",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Angers – Lorient",
-   "event_id": "1a83b5ebabe7cb572ae6e029b3149c42",
-   "start": "2026-10-25 17:15",
-   "fotmob_id": "5802964",
-   "fotmob": "Angers – Lorient",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Auxerre – Le Mans FC",
-   "event_id": "8eab078a37a63df32ffa443302a2a7ba",
-   "start": "2026-10-25 17:15",
-   "fotmob_id": "5802965",
-   "fotmob": "Auxerre – Le Mans",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Marseille – Le Havre",
-   "event_id": "fcc34b753fc61a0cc0e11d7cb0a0c36b",
-   "start": "2026-10-25 17:15",
-   "fotmob_id": "5802968",
-   "fotmob": "Marseille – Le Havre",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Rennes – Strasbourg",
-   "event_id": "31dcb6d13ed240fc4a5c7a696149967e",
-   "start": "2026-10-25 17:15",
-   "fotmob_id": "5802970",
-   "fotmob": "Rennes – Strasbourg",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Toulouse – Troyes",
-   "event_id": "18e4425261f7dd6b245f82056d424411",
-   "start": "2026-10-25 17:15",
-   "fotmob_id": "5802971",
-   "fotmob": "Toulouse – Troyes",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Legia Warszawa – Lech Poznań",
-   "event_id": "1b5fac1f4112d8fc65467176c5d5d0cd",
-   "start": "2026-10-25 17:30",
-   "fotmob_id": "5804015",
-   "fotmob": "Legia Warszawa – Lech Poznań",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Sunderland – Leeds United",
-   "event_id": "e82f6b60fa41b82c8510f5b67ce61849",
-   "start": "2026-10-25 17:30",
-   "fotmob_id": "5795494",
-   "fotmob": "Sunderland – Leeds United",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "SC Freiburg – Bayern Munich",
-   "event_id": "f2bd909f25eea6b4ce42d2f52275e5c4",
-   "start": "2026-10-25 17:30",
-   "fotmob_id": "5881200",
-   "fotmob": "Freiburg – Bayern München",
-   "zgodnosc": 0.733,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Lecce – Juventus",
-   "event_id": "63af660d4d0d52f8ac7685172ef939c4",
-   "start": "2026-10-25 18:00",
-   "fotmob_id": "5749716",
-   "fotmob": "Lecce – Juventus",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Real Sociedad – Levante",
-   "event_id": "3cb8660cd2375b60e81144a7572cfb89",
-   "start": "2026-10-25 18:30",
-   "fotmob_id": "5868108",
-   "fotmob": "Real Sociedad – Levante",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Gent – Anderlecht",
-   "event_id": "851ffb3bcb733e33e0b7dc1dcc2beac6",
-   "start": "2026-10-25 18:30",
-   "fotmob_id": "5811785",
-   "fotmob": "Gent – Anderlecht",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  "… (+10)"
+  }
  ],
  "niedopasowane": [
-  "Barracas Central – Estudiantes de Río Cuarto 2026-10-26 01:30",
-  "Central Córdoba – Velez Sarsfield BA 2026-10-26 01:30",
-  "Querétaro – Cruz Azul 2026-10-26 02:00",
-  "América – Pachuca 2026-10-26 02:05",
-  "Tijuana – Santos Laguna 2026-10-26 04:10"
+  "Instituto de Córdoba – Deportivo Riestra 2026-10-27 01:15"
  ],
  "requests_dziala": true,
- "meczow": 524,
- "sekund": 3
+ "meczow": 117,
+ "sekund": 1
 }
