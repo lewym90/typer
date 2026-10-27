@@ -5,283 +5,203 @@
    "url": "https://www.transfermarkt.com/",
    "kod": 200,
    "typ": "text/html; charset=UTF-8",
-   "rozmiar": 444377,
-   "ms": 189
+   "rozmiar": 291655,
+   "ms": 188
   }
  ],
  "druzyny": [
   {
-   "nasza": "Besiktas JK",
+   "nasza": "Sassuolo",
    "szukaj": {
-    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Besiktas+JK",
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Sassuolo",
+    "kod": null,
+    "blad": "ReadTimeout: HTTPSConnectionPool(host='www.transfermarkt.com', port=443): Read timed out. (read timeout=20)"
+   },
+   "szukaj_przegladarka": {
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Sassuolo",
     "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 107553,
-    "ms": 194
+    "adres_koncowy": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Sassuolo",
+    "tytul": "Search result | Transfermarkt",
+    "naglowki_zapytan": []
    },
    "klub": {
-    "slug": "besiktas-istanbul",
-    "id": "114"
+    "slug": "us-sassuolo",
+    "id": "6574"
    },
    "kontuzje": {
-    "url": "https://www.transfermarkt.com/besiktas-istanbul/sperrenundverletzungen/verein/114",
+    "url": "https://www.transfermarkt.com/us-sassuolo/sperrenundverletzungen/verein/6574",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 107252,
-    "ms": 87,
-    "wierszy": 5,
-    "zawodnicy": [
-     "Fabio Miretti",
-     "Orkun Kökçü",
-     "Ümit Akdağ",
-     "Orkun Kökçü",
-     "Emirhan Topçu"
-    ],
-    "powody": []
-   },
-   "kadra": {
-    "url": "https://www.transfermarkt.com/besiktas-istanbul/kader/verein/114/plus/1",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 186751,
-    "ms": 365,
-    "wartosci": [
-     "€10.00m",
-     "€2.00m",
-     "€100k",
-     "€14.00m",
-     "€9.00m",
-     "€8.00m",
-     "€8.00m",
-     "€5.00m",
-     "€12.00m",
-     "€7.00m",
-     "€7.00m",
-     "€5.00m",
-     "€6.00m",
-     "€6.00m",
-     "€2.00m",
-     "€28.00m",
-     "€15.00m",
-     "€12.00m",
-     "€18.00m",
-     "€7.00m",
-     "€22.00m",
-     "€7.00m",
-     "€2.50m",
-     "€800k",
-     "€32.00m",
-     "€15.00m",
-     "€8.00m",
-     "€5.00m",
-     "€100k"
-    ],
-    "zawodnicy": []
-   }
-  },
-  {
-   "nasza": "Basaksehir",
-   "szukaj": {
-    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Basaksehir",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 97989,
-    "ms": 174
-   },
-   "klub": {
-    "slug": "istanbul-basaksehir-fk",
-    "id": "6890"
-   },
-   "kontuzje": {
-    "url": "https://www.transfermarkt.com/istanbul-basaksehir-fk/sperrenundverletzungen/verein/6890",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 105235,
-    "ms": 148,
+    "rozmiar": 103217,
+    "ms": 285,
     "wierszy": 3,
     "zawodnicy": [
-     "Christopher Operi",
-     "Olivier Kemen",
-     "Umut Güneş"
+     "Fedde Leysen",
+     "Daniel Boloca",
+     "Ismaël Koné"
     ],
     "powody": []
    },
    "kadra": {
-    "url": "https://www.transfermarkt.com/istanbul-basaksehir-fk/kader/verein/6890/plus/1",
+    "url": "https://www.transfermarkt.com/us-sassuolo/kader/verein/6574/plus/1",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 166118,
-    "ms": 334,
+    "rozmiar": 168870,
+    "ms": 373,
     "wartosci": [
-     "€3.50m",
-     "€1.50m",
-     "€50k",
-     "€7.00m",
-     "€4.00m",
-     "€1.50m",
-     "€1.00m",
-     "€50k",
+     "€7.50m",
      "€3.00m",
-     "€2.50m",
-     "€1.80m",
      "€400k",
-     "€200k",
-     "€2.50m",
-     "€150k",
-     "€3.00m",
-     "€2.00m",
-     "€1.00m",
+     "€14.00m",
      "€7.00m",
+     "€3.00m",
+     "€2.80m",
+     "€1.20m",
+     "€5.00m",
+     "€4.50m",
      "€2.00m",
      "€5.00m",
+     "€5.00m",
+     "€2.50m",
+     "€400k",
+     "€7.50m",
+     "€6.00m",
      "€4.00m",
-     "€100k",
-     "€8.00m",
+     "€1.60m",
+     "€800k",
+     "€25.00m",
+     "€15.00m",
+     "€10.00m",
+     "€15.00m",
+     "€19.00m",
+     "€9.00m",
+     "€10.00m",
      "€7.00m",
-     "€1.50m",
-     "€1.50m",
-     "€900k"
+     "€1.60m",
+     "€15.00m"
     ],
     "zawodnicy": []
    }
   },
   {
-   "nasza": "Çaykur Rizespor",
+   "nasza": "Lazio",
    "szukaj": {
-    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Çaykur+Rizespor",
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Lazio",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 90029,
-    "ms": 138
+    "rozmiar": 106286,
+    "ms": 130
    },
    "klub": {
-    "slug": "caykur-rizespor",
-    "id": "126"
+    "slug": "vereinslos",
+    "id": "515"
    },
    "kontuzje": {
-    "url": "https://www.transfermarkt.com/caykur-rizespor/sperrenundverletzungen/verein/126",
+    "url": "https://www.transfermarkt.com/vereinslos/sperrenundverletzungen/verein/515",
+    "kod": null,
+    "blad": "ReadTimeout: HTTPSConnectionPool(host='www.transfermarkt.com', port=443): Read timed out. (read timeout=20)"
+   },
+   "kadra": {
+    "url": "https://www.transfermarkt.com/vereinslos/kader/verein/515/plus/1",
+    "kod": null,
+    "blad": "ReadTimeout: HTTPSConnectionPool(host='www.transfermarkt.com', port=443): Read timed out. (read timeout=20)"
+   }
+  },
+  {
+   "nasza": "Torino",
+   "szukaj": {
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Torino",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 104021,
-    "ms": 84,
-    "wierszy": 5,
-    "zawodnicy": [
-     "Khusniddin Alikulov",
-     "Ahmed Kutucu",
-     "Attila Mocsi",
-     "Modibo Sagnan",
-     "Mithat Pala"
-    ],
+    "rozmiar": 133129,
+    "ms": 447
+   },
+   "klub": {
+    "slug": "-tm",
+    "id": "4023"
+   },
+   "kontuzje": {
+    "url": "https://www.transfermarkt.com/-tm/sperrenundverletzungen/verein/4023",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 291655,
+    "ms": 96,
+    "wierszy": 0,
+    "zawodnicy": [],
     "powody": []
    },
    "kadra": {
-    "url": "https://www.transfermarkt.com/caykur-rizespor/kader/verein/126/plus/1",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 168534,
-    "ms": 501,
-    "wartosci": [
-     "€6.00m",
-     "€800k",
-     "€150k",
-     "€2.50m",
-     "€2.00m",
-     "€2.00m",
-     "€1.20m",
-     "€1.00m",
-     "€2.00m",
-     "€600k",
-     "€4.00m",
-     "€3.00m",
-     "€700k",
-     "€2.50m",
-     "€2.00m",
-     "€2.00m",
-     "€1.00m",
-     "€50k",
-     "€1.20m",
-     "€3.50m",
-     "€3.00m",
-     "€1.20m",
-     "€1.50m",
-     "€1.50m",
-     "€3.00m",
-     "€1.00m",
-     "€150k"
-    ],
-    "zawodnicy": []
+    "url": "https://www.transfermarkt.com/-tm/kader/verein/4023/plus/1",
+    "kod": null,
+    "blad": "ReadTimeout: HTTPSConnectionPool(host='www.transfermarkt.com', port=443): Read timed out. (read timeout=20)"
    }
   },
   {
-   "nasza": "Trabzonspor",
+   "nasza": "Como",
    "szukaj": {
-    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Trabzonspor",
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Como",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 97516,
-    "ms": 161
+    "rozmiar": 143477,
+    "ms": 1809
    },
    "klub": {
-    "slug": "trabzonspor",
-    "id": "449"
+    "slug": "atalanta-bergamo",
+    "id": "800"
    },
    "kontuzje": {
-    "url": "https://www.transfermarkt.com/trabzonspor/sperrenundverletzungen/verein/449",
+    "url": "https://www.transfermarkt.com/atalanta-bergamo/sperrenundverletzungen/verein/800",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 108641,
-    "ms": 98,
+    "rozmiar": 107607,
+    "ms": 18850,
     "wierszy": 6,
     "zawodnicy": [
-     "Okay Yokuşlu",
-     "Arseniy Batagov",
-     "Ruslan Malinovskyi",
-     "Cihan Çanak",
-     "Onuralp Çevikkan",
-     "Chibuike Nwaiwu"
+     "Isak Hien",
+     "Kamaldeen Sulemana",
+     "Odilon Kossounou",
+     "Thomas Pompei",
+     "Sead Kolasinac",
+     "Giacomo Raspadori"
     ],
     "powody": []
    },
    "kadra": {
-    "url": "https://www.transfermarkt.com/trabzonspor/kader/verein/449/plus/1",
+    "url": "https://www.transfermarkt.com/atalanta-bergamo/kader/verein/800/plus/1",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 177875,
-    "ms": 556,
+    "rozmiar": 169325,
+    "ms": 133,
     "wartosci": [
-     "€8.00m",
+     "€30.00m",
      "€800k",
-     "€500k",
-     "€18.00m",
-     "€10.00m",
-     "€3.00m",
-     "€1.00m",
-     "€400k",
-     "€10.00m",
-     "€4.00m",
-     "€12.00m",
-     "€8.00m",
-     "€5.00m",
-     "€1.00m",
-     "€800k",
-     "€7.00m",
-     "€3.50m",
-     "€2.00m",
-     "€1.50m",
-     "€11.00m",
-     "€15.00m",
-     "€12.00m",
-     "€400k",
-     "€17.00m",
-     "€1.80m",
+     "€250k",
+     "€38.00m",
      "€22.00m",
+     "€18.00m",
+     "€15.00m",
+     "€4.00m",
+     "€1.50m",
+     "€20.00m",
+     "€15.00m",
+     "€3.50m",
+     "€12.00m",
+     "€40.00m",
+     "€12.00m",
      "€6.00m",
-     "€2.20m",
-     "€400k"
+     "€20.00m",
+     "€35.00m",
+     "€16.00m",
+     "€13.00m",
+     "€33.00m",
+     "€17.00m",
+     "€22.00m",
+     "€30.00m",
+     "€25.00m"
     ],
     "zawodnicy": []
    }
   }
  ],
- "sekund": 3
+ "sekund": 152
 }
