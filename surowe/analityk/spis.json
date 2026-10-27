@@ -1,14 +1,14 @@
 {
- "czas": "2026-10-26 08:00 UTC",
+ "czas": "2026-10-27 08:00 UTC",
  "wersja": "analityk-1",
  "nasze": {
-  "pilka": 9,
-  "tenis": 14,
+  "pilka": 4,
+  "tenis": 16,
   "walki": 0
  },
  "zrodla": {
   "ufcstats": {
-   "sekund": 7,
+   "sekund": 6,
    "blad": null,
    "start": [
     200,
@@ -20,16 +20,16 @@
    "zawodnicy_ze_statystykami": 0
   },
   "sofascore": {
-   "sekund": 7,
+   "sekund": 9,
    "blad": null,
    "tryb": null,
    "pilka": {
     "dopasowane": 0,
-    "niedopasowane": 9
+    "niedopasowane": 4
    },
    "tenis": {
     "dopasowane": 0,
-    "niedopasowane": 14
+    "niedopasowane": 16
    },
    "walki": {
     "dopasowane": 0,
@@ -40,9 +40,9 @@
    "sekund": 1,
    "blad": null,
    "requests": true,
-   "meczow": 117,
-   "dopasowane": 8,
-   "niedopasowane": 1,
+   "meczow": 226,
+   "dopasowane": 4,
+   "niedopasowane": 0,
    "szczegoly": [
     "requests",
     "requests",
@@ -50,29 +50,29 @@
    ]
   },
   "transfermarkt": {
-   "sekund": 3,
+   "sekund": 152,
    "blad": null,
    "start": [
     200
    ],
    "kluby": [
     [
-     "besiktas-istanbul",
-     200,
-     5
-    ],
-    [
-     "istanbul-basaksehir-fk",
+     "us-sassuolo",
      200,
      3
     ],
     [
-     "caykur-rizespor",
-     200,
-     5
+     "vereinslos",
+     null,
+     null
     ],
     [
-     "trabzonspor",
+     "-tm",
+     200,
+     0
+    ],
+    [
+     "atalanta-bergamo",
      200,
      6
     ]
@@ -81,5 +81,5 @@
  },
  "ip": "188.68.247.201",
  "przegladarka": "ok",
- "sekund": 27
+ "sekund": 177
 }
