@@ -1,14 +1,14 @@
 {
- "czas": "2026-10-27 08:00 UTC",
+ "czas": "2026-10-28 08:00 UTC",
  "wersja": "analityk-1",
  "nasze": {
-  "pilka": 4,
-  "tenis": 16,
-  "walki": 0
+  "pilka": 31,
+  "tenis": 17,
+  "walki": 2
  },
  "zrodla": {
   "ufcstats": {
-   "sekund": 6,
+   "sekund": 7,
    "blad": null,
    "start": [
     200,
@@ -20,29 +20,29 @@
    "zawodnicy_ze_statystykami": 0
   },
   "sofascore": {
-   "sekund": 9,
+   "sekund": 7,
    "blad": null,
    "tryb": null,
    "pilka": {
     "dopasowane": 0,
-    "niedopasowane": 4
+    "niedopasowane": 31
    },
    "tenis": {
     "dopasowane": 0,
-    "niedopasowane": 16
+    "niedopasowane": 17
    },
    "walki": {
     "dopasowane": 0,
-    "niedopasowane": 0
+    "niedopasowane": 2
    }
   },
   "fotmob": {
    "sekund": 1,
    "blad": null,
    "requests": true,
-   "meczow": 226,
-   "dopasowane": 4,
-   "niedopasowane": 0,
+   "meczow": 272,
+   "dopasowane": 19,
+   "niedopasowane": 12,
    "szczegoly": [
     "requests",
     "requests",
@@ -50,36 +50,36 @@
    ]
   },
   "transfermarkt": {
-   "sekund": 152,
+   "sekund": 3,
    "blad": null,
    "start": [
     200
    ],
    "kluby": [
     [
-     "us-sassuolo",
+     "ac-mailand",
+     200,
+     8
+    ],
+    [
+     "ca-chacarita-juniors",
      200,
      3
     ],
     [
-     "vereinslos",
-     null,
-     null
-    ],
-    [
-     "-tm",
+     "miami-dade-fc",
      200,
      0
     ],
     [
-     "atalanta-bergamo",
+     "inter-mailand",
      200,
-     6
+     3
     ]
    ]
   }
  },
  "ip": "188.68.247.201",
  "przegladarka": "ok",
- "sekund": 177
+ "sekund": 27
 }
