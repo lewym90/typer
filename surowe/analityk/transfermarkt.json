@@ -5,203 +5,238 @@
    "url": "https://www.transfermarkt.com/",
    "kod": 200,
    "typ": "text/html; charset=UTF-8",
-   "rozmiar": 291655,
-   "ms": 188
+   "rozmiar": 290672,
+   "ms": 194
   }
  ],
  "druzyny": [
   {
-   "nasza": "Sassuolo",
+   "nasza": "AC Milan",
    "szukaj": {
-    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Sassuolo",
-    "kod": null,
-    "blad": "ReadTimeout: HTTPSConnectionPool(host='www.transfermarkt.com', port=443): Read timed out. (read timeout=20)"
-   },
-   "szukaj_przegladarka": {
-    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Sassuolo",
-    "kod": 200,
-    "adres_koncowy": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Sassuolo",
-    "tytul": "Search result | Transfermarkt",
-    "naglowki_zapytan": []
-   },
-   "klub": {
-    "slug": "us-sassuolo",
-    "id": "6574"
-   },
-   "kontuzje": {
-    "url": "https://www.transfermarkt.com/us-sassuolo/sperrenundverletzungen/verein/6574",
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=AC+Milan",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 103217,
-    "ms": 285,
-    "wierszy": 3,
+    "rozmiar": 103157,
+    "ms": 181
+   },
+   "klub": {
+    "slug": "ac-mailand",
+    "id": "5"
+   },
+   "kontuzje": {
+    "url": "https://www.transfermarkt.com/ac-mailand/sperrenundverletzungen/verein/5",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 110113,
+    "ms": 116,
+    "wierszy": 8,
     "zawodnicy": [
-     "Fedde Leysen",
-     "Daniel Boloca",
-     "Ismaël Koné"
+     "Alexis Saelemaekers",
+     "Matteo Gabbia",
+     "Pietro Terracciano",
+     "Ruben Loftus-Cheek",
+     "Samuel Chukwueze",
+     "Diego Moreira",
+     "Mario Gila",
+     "Adrien Rabiot"
     ],
     "powody": []
    },
    "kadra": {
-    "url": "https://www.transfermarkt.com/us-sassuolo/kader/verein/6574/plus/1",
+    "url": "https://www.transfermarkt.com/ac-mailand/kader/verein/5/plus/1",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 168870,
-    "ms": 373,
+    "rozmiar": 184547,
+    "ms": 426,
     "wartosci": [
-     "€7.50m",
-     "€3.00m",
-     "€400k",
-     "€14.00m",
-     "€7.00m",
-     "€3.00m",
-     "€2.80m",
-     "€1.20m",
-     "€5.00m",
-     "€4.50m",
-     "€2.00m",
-     "€5.00m",
-     "€5.00m",
-     "€2.50m",
-     "€400k",
-     "€7.50m",
-     "€6.00m",
-     "€4.00m",
-     "€1.60m",
-     "€800k",
-     "€25.00m",
-     "€15.00m",
-     "€10.00m",
-     "€15.00m",
-     "€19.00m",
-     "€9.00m",
-     "€10.00m",
-     "€7.00m",
-     "€1.60m",
-     "€15.00m"
+     "€20M",
+     "€2.0M",
+     "€900K",
+     "€40M",
+     "€30M",
+     "€25M",
+     "€17M",
+     "€10M",
+     "€4.5M",
+     "€2.0M",
+     "€800K",
+     "€22M",
+     "€12M",
+     "€22M",
+     "€18M",
+     "€18M",
+     "€10M",
+     "€8.5M",
+     "€4.0M",
+     "€3.5M",
+     "€18M",
+     "€45M",
+     "€20M",
+     "€35M",
+     "€30M",
+     "€20M",
+     "€50M",
+     "€15M"
     ],
     "zawodnicy": []
    }
   },
   {
-   "nasza": "Lazio",
+   "nasza": "Bologna",
    "szukaj": {
-    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Lazio",
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Bologna",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 106286,
-    "ms": 130
+    "rozmiar": 120922,
+    "ms": 272
    },
    "klub": {
-    "slug": "vereinslos",
-    "id": "515"
+    "slug": "ca-chacarita-juniors",
+    "id": "2154"
    },
    "kontuzje": {
-    "url": "https://www.transfermarkt.com/vereinslos/sperrenundverletzungen/verein/515",
-    "kod": null,
-    "blad": "ReadTimeout: HTTPSConnectionPool(host='www.transfermarkt.com', port=443): Read timed out. (read timeout=20)"
+    "url": "https://www.transfermarkt.com/ca-chacarita-juniors/sperrenundverletzungen/verein/2154",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 102212,
+    "ms": 149,
+    "wierszy": 3,
+    "zawodnicy": [
+     "Luciano Perdomo",
+     "Alexis Domínguez",
+     "Mario Sanabria"
+    ],
+    "powody": []
    },
    "kadra": {
-    "url": "https://www.transfermarkt.com/vereinslos/kader/verein/515/plus/1",
-    "kod": null,
-    "blad": "ReadTimeout: HTTPSConnectionPool(host='www.transfermarkt.com', port=443): Read timed out. (read timeout=20)"
+    "url": "https://www.transfermarkt.com/ca-chacarita-juniors/kader/verein/2154/plus/1",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 153133,
+    "ms": 358,
+    "wartosci": [
+     "€150K",
+     "€10K",
+     "€100K",
+     "€100K",
+     "€50K",
+     "€10K",
+     "€10K",
+     "€100K",
+     "€75K",
+     "€75K",
+     "€25K",
+     "€200K",
+     "€75K",
+     "€150K",
+     "€25K",
+     "€400K",
+     "€10K",
+     "€2.2M",
+     "€25K",
+     "€150K",
+     "€100K",
+     "€300K",
+     "€10K"
+    ],
+    "zawodnicy": []
    }
   },
   {
-   "nasza": "Torino",
+   "nasza": "Venezia",
    "szukaj": {
-    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Torino",
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Venezia",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 133129,
-    "ms": 447
+    "rozmiar": 115873,
+    "ms": 314
    },
    "klub": {
-    "slug": "-tm",
-    "id": "4023"
+    "slug": "miami-dade-fc",
+    "id": "46373"
    },
    "kontuzje": {
-    "url": "https://www.transfermarkt.com/-tm/sperrenundverletzungen/verein/4023",
+    "url": "https://www.transfermarkt.com/miami-dade-fc/sperrenundverletzungen/verein/46373",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 291655,
-    "ms": 96,
+    "rozmiar": 93937,
+    "ms": 87,
     "wierszy": 0,
     "zawodnicy": [],
     "powody": []
    },
    "kadra": {
-    "url": "https://www.transfermarkt.com/-tm/kader/verein/4023/plus/1",
-    "kod": null,
-    "blad": "ReadTimeout: HTTPSConnectionPool(host='www.transfermarkt.com', port=443): Read timed out. (read timeout=20)"
+    "url": "https://www.transfermarkt.com/miami-dade-fc/kader/verein/46373/plus/1",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 103983,
+    "ms": 186,
+    "wartosci": [],
+    "zawodnicy": []
    }
   },
   {
-   "nasza": "Como",
+   "nasza": "Inter Milan",
    "szukaj": {
-    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Como",
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Inter+Milan",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 143477,
-    "ms": 1809
+    "rozmiar": 97775,
+    "ms": 188
    },
    "klub": {
-    "slug": "atalanta-bergamo",
-    "id": "800"
+    "slug": "inter-mailand",
+    "id": "46"
    },
    "kontuzje": {
-    "url": "https://www.transfermarkt.com/atalanta-bergamo/sperrenundverletzungen/verein/800",
+    "url": "https://www.transfermarkt.com/inter-mailand/sperrenundverletzungen/verein/46",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 107607,
-    "ms": 18850,
-    "wierszy": 6,
+    "rozmiar": 105355,
+    "ms": 102,
+    "wierszy": 3,
     "zawodnicy": [
-     "Isak Hien",
-     "Kamaldeen Sulemana",
-     "Odilon Kossounou",
-     "Thomas Pompei",
-     "Sead Kolasinac",
-     "Giacomo Raspadori"
+     "Lautaro Martínez",
+     "Benjamin Pavard",
+     "Luis Henrique"
     ],
     "powody": []
    },
    "kadra": {
-    "url": "https://www.transfermarkt.com/atalanta-bergamo/kader/verein/800/plus/1",
+    "url": "https://www.transfermarkt.com/inter-mailand/kader/verein/46/plus/1",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 169325,
-    "ms": 133,
+    "rozmiar": 172202,
+    "ms": 364,
     "wartosci": [
-     "€30.00m",
-     "€800k",
-     "€250k",
-     "€38.00m",
-     "€22.00m",
-     "€18.00m",
-     "€15.00m",
-     "€4.00m",
-     "€1.50m",
-     "€20.00m",
-     "€15.00m",
-     "€3.50m",
-     "€12.00m",
-     "€40.00m",
-     "€12.00m",
-     "€6.00m",
-     "€20.00m",
-     "€35.00m",
-     "€16.00m",
-     "€13.00m",
-     "€33.00m",
-     "€17.00m",
-     "€22.00m",
-     "€30.00m",
-     "€25.00m"
+     "€10M",
+     "€3.0M",
+     "€300K",
+     "€65M",
+     "€50M",
+     "€17M",
+     "€12M",
+     "€12M",
+     "€50M",
+     "€23M",
+     "€35M",
+     "€32M",
+     "€16M",
+     "€50M",
+     "€45M",
+     "€35M",
+     "€30M",
+     "€10M",
+     "€3.0M",
+     "€20M",
+     "€85M",
+     "€50M",
+     "€50M",
+     "€35M"
     ],
     "zawodnicy": []
    }
   }
  ],
- "sekund": 152
+ "sekund": 3
 }
