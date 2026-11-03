@@ -5,264 +5,288 @@
    "url": "https://www.transfermarkt.com/",
    "kod": 200,
    "typ": "text/html; charset=UTF-8",
-   "rozmiar": 289706,
-   "ms": 211
+   "rozmiar": 291381,
+   "ms": 192
   }
  ],
  "druzyny": [
   {
-   "nasza": "Zagłębie Lubin",
+   "nasza": "Galatasaray",
    "szukaj": {
-    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Zagłębie+Lubin",
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Galatasaray",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 91344,
+    "rozmiar": 98040,
+    "ms": 99
+   },
+   "klub": {
+    "slug": "galatasaray-istanbul",
+    "id": "141"
+   },
+   "kontuzje": {
+    "url": "https://www.transfermarkt.com/galatasaray-istanbul/sperrenundverletzungen/verein/141",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 106139,
+    "ms": 139,
+    "wierszy": 3,
+    "zawodnicy": [
+     "Roland Sallai",
+     "Davinson Sánchez",
+     "Rafael Leão"
+    ],
+    "powody": []
+   },
+   "kadra": {
+    "url": "https://www.transfermarkt.com/galatasaray-istanbul/kader/verein/141/plus/1",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 190677,
+    "ms": 353,
+    "wartosci": [
+     "€13.00M",
+     "€2.00M",
+     "€200.0K",
+     "€18.00M",
+     "€16.00M",
+     "€5.50M",
+     "€1.00M",
+     "€1.00M",
+     "€8.00M",
+     "€5.00M",
+     "€2.50M",
+     "€20.00M",
+     "€12.00M",
+     "€22.00M",
+     "€9.00M",
+     "€3.50M",
+     "€700.0K",
+     "€27.00M",
+     "€6.00M",
+     "€1.50M",
+     "€28.00M",
+     "€40.00M",
+     "€30.00M",
+     "€1.00M",
+     "€18.00M",
+     "€15.00M",
+     "€500.0K",
+     "€65.00M",
+     "€10.00M",
+     "€100.0K"
+    ],
+    "zawodnicy": []
+   }
+  },
+  {
+   "nasza": "VfB Stuttgart",
+   "szukaj": {
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=VfB+Stuttgart",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 96562,
+    "ms": 166
+   },
+   "klub": {
+    "slug": "vfb-stuttgart",
+    "id": "79"
+   },
+   "kontuzje": {
+    "url": "https://www.transfermarkt.com/vfb-stuttgart/sperrenundverletzungen/verein/79",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 112464,
+    "ms": 100,
+    "wierszy": 9,
+    "zawodnicy": [
+     "Dan-Axel Zagadou",
+     "Justin Diehl",
+     "Josha Vagnoman",
+     "Leo Sauer",
+     "Angelo Stiller",
+     "Dan-Axel Zagadou",
+     "Stefan Drljaca",
+     "Leonidas Stergiou",
+     "Justin Diehl"
+    ],
+    "powody": []
+   },
+   "kadra": {
+    "url": "https://www.transfermarkt.com/vfb-stuttgart/kader/verein/79/plus/1",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 180868,
+    "ms": 380,
+    "wartosci": [
+     "€10.00M",
+     "€1.00M",
+     "€300.0K",
+     "€300.0K",
+     "€35.00M",
+     "€25.00M",
+     "€15.00M",
+     "€10.00M",
+     "€3.00M",
+     "€2.00M",
+     "€18.00M",
+     "€12.00M",
+     "€9.00M",
+     "€2.00M",
+     "€45.00M",
+     "€5.00M",
+     "€10.00M",
+     "€4.00M",
+     "€3.50M",
+     "€750.0K",
+     "€35.00M",
+     "€1.40M",
+     "€15.00M",
+     "€12.00M",
+     "€1.20M",
+     "€40.00M",
+     "€15.00M",
+     "€25.00M",
+     "€22.00M",
+     "€22.00M"
+    ],
+    "zawodnicy": []
+   }
+  },
+  {
+   "nasza": "Shakhtar Donetsk",
+   "szukaj": {
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Shakhtar+Donetsk",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 94643,
     "ms": 172
    },
    "klub": {
-    "slug": "zaglebie-lubin",
-    "id": "168"
+    "slug": "shakhtar-donetsk",
+    "id": "660"
    },
    "kontuzje": {
-    "url": "https://www.transfermarkt.com/zaglebie-lubin/sperrenundverletzungen/verein/168",
+    "url": "https://www.transfermarkt.com/shakhtar-donetsk/sperrenundverletzungen/verein/660",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 101360,
-    "ms": 106,
-    "wierszy": 2,
+    "rozmiar": 105917,
+    "ms": 92,
+    "wierszy": 3,
     "zawodnicy": [
-     "Mateusz Grzybek",
-     "David Colina"
+     "Eguinaldo",
+     "Pedrinho",
+     "Alisson"
     ],
     "powody": []
    },
    "kadra": {
-    "url": "https://www.transfermarkt.com/zaglebie-lubin/kader/verein/168/plus/1",
+    "url": "https://www.transfermarkt.com/shakhtar-donetsk/kader/verein/660/plus/1",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 164984,
-    "ms": 665,
+    "rozmiar": 183330,
+    "ms": 430,
     "wartosci": [
-     "€225K",
-     "€200K",
-     "€25K",
-     "€800K",
-     "€600K",
-     "€500K",
-     "€200K",
-     "€1.5M",
-     "€700K",
-     "€600K",
-     "€250K",
-     "€800K",
-     "€400K",
-     "€350K",
-     "€350K",
-     "€25K",
-     "€650K",
-     "€7.0M",
-     "€350K",
-     "€350K",
-     "€350K",
-     "€250K",
-     "€75K",
-     "€500K",
-     "€500K",
-     "€300K",
-     "€300K"
+     "€8.00M",
+     "€1.50M",
+     "€400.0K",
+     "€100.0K",
+     "€12.00M",
+     "€8.00M",
+     "€4.00M",
+     "€2.50M",
+     "€1.50M",
+     "€8.00M",
+     "€2.50M",
+     "€300.0K",
+     "€6.00M",
+     "€1.00M",
+     "€12.00M",
+     "€4.00M",
+     "€2.50M",
+     "€500.0K",
+     "€11.00M",
+     "€7.00M",
+     "€7.00M",
+     "€5.00M",
+     "€4.00M",
+     "€3.00M",
+     "€13.00M",
+     "€12.00M",
+     "€10.00M",
+     "€7.00M",
+     "€7.00M",
+     "€4.00M"
     ],
     "zawodnicy": []
    }
   },
   {
-   "nasza": "Korona Kielce",
+   "nasza": "Sporting Lisbon",
    "szukaj": {
-    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Korona+Kielce",
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Sporting+Lisbon",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 92302,
-    "ms": 102
+    "rozmiar": 86413,
+    "ms": 453
    },
    "klub": {
-    "slug": "korona-kielce",
-    "id": "6110"
+    "slug": "sporting-lissabon",
+    "id": "336"
    },
    "kontuzje": {
-    "url": "https://www.transfermarkt.com/korona-kielce/sperrenundverletzungen/verein/6110",
+    "url": "https://www.transfermarkt.com/sporting-lissabon/sperrenundverletzungen/verein/336",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 100358,
-    "ms": 293,
-    "wierszy": 2,
+    "rozmiar": 105774,
+    "ms": 101,
+    "wierszy": 3,
     "zawodnicy": [
-     "Ondrej Lingr",
-     "Wiktor Długosz"
+     "Nuno Santos",
+     "Luis Suárez",
+     "Maxi Araújo"
     ],
     "powody": []
    },
    "kadra": {
-    "url": "https://www.transfermarkt.com/korona-kielce/kader/verein/6110/plus/1",
+    "url": "https://www.transfermarkt.com/sporting-lissabon/kader/verein/336/plus/1",
     "kod": 200,
     "typ": "text/html; charset=UTF-8",
-    "rozmiar": 158195,
-    "ms": 381,
+    "rozmiar": 179044,
+    "ms": 399,
     "wartosci": [
-     "€2.0M",
-     "€300K",
-     "€800K",
-     "€700K",
-     "€450K",
-     "€300K",
-     "€550K",
-     "€300K",
-     "€300K",
-     "€1.0M",
-     "€300K",
-     "€300K",
-     "€3.5M",
-     "€1.5M",
-     "€150K",
-     "€600K",
-     "€400K",
-     "€50K",
-     "€1.5M",
-     "€500K",
-     "€4.0M",
-     "€3.0M",
-     "€500K",
-     "€450K",
-     "€500K",
-     "€350K"
-    ],
-    "zawodnicy": []
-   }
-  },
-  {
-   "nasza": "Radomiak Radom",
-   "szukaj": {
-    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Radomiak+Radom",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 89872,
-    "ms": 141
-   },
-   "klub": {
-    "slug": "radomiak-radom",
-    "id": "7154"
-   },
-   "kontuzje": {
-    "url": "https://www.transfermarkt.com/radomiak-radom/sperrenundverletzungen/verein/7154",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 98947,
-    "ms": 440,
-    "wierszy": 1,
-    "zawodnicy": [
-     "Mateusz Cichocki"
-    ],
-    "powody": []
-   },
-   "kadra": {
-    "url": "https://www.transfermarkt.com/radomiak-radom/kader/verein/7154/plus/1",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 162531,
-    "ms": 438,
-    "wartosci": [
-     "€600K",
-     "€200K",
-     "€25K",
-     "€600K",
-     "€350K",
-     "€300K",
-     "€200K",
-     "€100K",
-     "€400K",
-     "€25K",
-     "€1.2M",
-     "€350K",
-     "€350K",
-     "€300K",
-     "€300K",
-     "€25K",
-     "€800K",
-     "€400K",
-     "€250K",
-     "€200K",
-     "€500K",
-     "€450K",
-     "€400K",
-     "€350K",
-     "€50K",
-     "€1.5M",
-     "€400K",
-     "€300K"
-    ],
-    "zawodnicy": []
-   }
-  },
-  {
-   "nasza": "Śląsk Wrocław",
-   "szukaj": {
-    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Śląsk+Wrocław",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 91302,
-    "ms": 233
-   },
-   "klub": {
-    "slug": "slask-wroclaw",
-    "id": "759"
-   },
-   "kontuzje": {
-    "url": "https://www.transfermarkt.com/slask-wroclaw/sperrenundverletzungen/verein/759",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 102410,
-    "ms": 124,
-    "wierszy": 2,
-    "zawodnicy": [
-     "Michał Mokrzycki",
-     "Marc Llinares"
-    ],
-    "powody": []
-   },
-   "kadra": {
-    "url": "https://www.transfermarkt.com/slask-wroclaw/kader/verein/759/plus/1",
-    "kod": 200,
-    "typ": "text/html; charset=UTF-8",
-    "rozmiar": 165772,
-    "ms": 412,
-    "wartosci": [
-     "€300K",
-     "€100K",
-     "€500K",
-     "€400K",
-     "€350K",
-     "€300K",
-     "€200K",
-     "€150K",
-     "€800K",
-     "€500K",
-     "€350K",
-     "€350K",
-     "€150K",
-     "€100K",
-     "€1.0M",
-     "€500K",
-     "€350K",
-     "€1.2M",
-     "€600K",
-     "€500K",
-     "€300K",
-     "€800K",
-     "€500K",
-     "€400K",
-     "€300K"
+     "€5.00M",
+     "€4.00M",
+     "€1.50M",
+     "€35.00M",
+     "€25.00M",
+     "€20.00M",
+     "€17.00M",
+     "€40.00M",
+     "€4.00M",
+     "€2.00M",
+     "€1.50M",
+     "€20.00M",
+     "€6.00M",
+     "€2.50M",
+     "€25.00M",
+     "€7.00M",
+     "€20.00M",
+     "€15.00M",
+     "€3.00M",
+     "€1.20M",
+     "€30.00M",
+     "€15.00M",
+     "€15.00M",
+     "€2.00M",
+     "€35.00M",
+     "€12.00M",
+     "€30.00M",
+     "€16.00M",
+     "€4.00M"
     ],
     "zawodnicy": []
    }
   }
  ],
- "sekund": 4
+ "sekund": 3
 }
