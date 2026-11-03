@@ -1,6 +1,6 @@
 {
- "czas": "2026-11-02 14:00 UTC",
- "tryb": "popoludnie",
+ "czas": "2026-11-03 07:15 UTC",
+ "tryb": "rano",
  "sporty": [
   [
    "ufo:sprt:01",
@@ -35,20 +35,12 @@
    "Szachy"
   ],
   [
-   "ufo:sprt:0v",
-   "Squash"
-  ],
-  [
    "ufo:sprt:0w",
    "Hokej"
   ],
   [
    "ufo:sprt:07",
    "Rugby"
-  ],
-  [
-   "ufo:sprt:29",
-   "Wyścigi konne"
   ],
   [
    "ufo:sprt:0x",
@@ -79,12 +71,20 @@
    "Zakłady Specjalne"
   ],
   [
+   "ufo:sprt:35",
+   "eHokej"
+  ],
+  [
    "ufo:sprt:1v",
    "MISTRZOWSKI BOOST"
   ],
   [
    "ufo:sprt:19",
    "Sporty walki"
+  ],
+  [
+   "ufo:sprt:2a",
+   "F1"
   ],
   [
    "ufo:sprt:2c",
@@ -131,10 +131,6 @@
    "Siatkówka"
   ],
   [
-   "ufo:sprt:0o",
-   "Piłka wodna"
-  ],
-  [
    "ufo:sprt:00",
    "Piłka nożna"
   ]
@@ -146,6 +142,7 @@
   "tenis": "ufo:sprt:0x",
   "pilka_reczna": "ufo:sprt:0y",
   "sporty walki": "ufo:sprt:19",
+  "f1": "ufo:sprt:2a",
   "koszykowka": "ufo:sprt:0i",
   "siatkowka": "ufo:sprt:0m",
   "pilka": "ufo:sprt:00"
@@ -153,21 +150,23 @@
  "bledy": [
   "turnieje ufo:sprt:01 today: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:01 tomorrow: Expecting value: line 1 column 1 (char 0)",
-  "turnieje ufo:sprt:0q today: Expecting value: line 1 column 1 (char 0)",
+  "turnieje ufo:sprt:0q tomorrow: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:19 today: Expecting value: line 1 column 1 (char 0)",
-  "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)"
+  "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)",
+  "turnieje ufo:sprt:2a today: Expecting value: line 1 column 1 (char 0)",
+  "turnieje ufo:sprt:2a tomorrow: Expecting value: line 1 column 1 (char 0)"
  ],
- "turniejow": 199,
- "meczow_fortuny": 985,
+ "turniejow": 194,
+ "meczow_fortuny": 966,
  "inne_sporty": {
-  "koszykowka": 160,
-  "hokej": 8,
-  "siatkowka": 11,
-  "pilka_reczna": 1,
-  "baseball": 1
+  "koszykowka": 74,
+  "baseball": 1,
+  "siatkowka": 24,
+  "pilka_reczna": 3,
+  "hokej": 15
  },
- "w_ofercie_24h": 599,
- "odczytane": 594,
- "rynkow": 45428,
- "sekund": 166
+ "w_ofercie_24h": 695,
+ "odczytane": 674,
+ "rynkow": 34980,
+ "sekund": 184
 }
