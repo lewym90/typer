@@ -4,7 +4,7 @@ Program codziennie rano sam liczy typy (Value w Betclic, 5 najpewniejszych, dzie
 a aplikacja na telefonie pokazuje wyniki i pozwala przeanalizować dowolny mecz.
 
 ## Instalacja (z telefonu)
-Cała aplikacja mieści się w jednym pliku: `.github/workflows/typer.yml`.
+Aplikacja to pliki w tym repozytorium; `.github/workflows/typer.yml` tylko ją uruchamia.
 1. Sekret `ODDS_API_KEY` (Settings → Secrets and variables → Actions). Opcjonalnie: `BSD_API_KEY` (sports.bzzoiro.com – nieobecni zawodnicy i składy, za darmo), `BIGBALLS_KEY` (bigballsdata.com – kontuzje w 5 ligach i MLS), `GEMINI_API_KEY` (aistudio.google.com – raport przedmeczowy po polsku pisany przez AI). `API_FOOTBALL_KEY` działa tylko w planie płatnym – wtedy dodaj zmienną `API_FOOTBALL_PRO=1`.
 2. Settings → Pages → Source: **GitHub Actions**.
 3. Add file → Create new file → `.github/workflows/typer.yml` → wklej zawartość → Commit.
@@ -14,7 +14,7 @@ Typy liczą się same codziennie ok. 7:10 (wiadomość na Telegram ok. 8:00; dob
 Opcjonalnie sekret `TELEGRAM_TOKEN` (bot z @BotFather) – powiadomienia; wyślij botowi /start.
 
 Typy liczą się same codziennie ok. 7:10. Ręcznie: Actions → Typer → Run workflow.
-Aktualizacja programu = podmiana pliku `typer.yml` na nowy.
+Aktualizacja programu = zapis zmian w repozytorium (od wersji 64 `typer.yml` nie zawiera już kopii plików).
 
 ## Wszystkie dyscypliny (od wersji 6)
 Zakładki Value i Pewne wybierają najlepsze typy ze wszystkich sportów (`typer/wspolne.py`, `docs/data/glowne.json`). Zakładka 🏟️ Sporty: każda dyscyplina ma Pewne, Value, Analizę i Dziennik.
@@ -30,8 +30,7 @@ Zakładka „🎾 Tenis·MMA”: typy z kursów Pinnacle/Betfair (mecze bez nich
 - `docs/index.html` – aplikacja
 - `docs/grafika/` – grafiki aplikacji (zwykłe pliki w repo)
 - `typer/centrum.py` – przejrzystość, historia prognoz i kursów, alerty, raport dzienny
-- `narzedzia/pakuj.py` – po każdej zmianie w `typer/` albo `docs/index.html` pakuje je do `typer.yml`; bez tego workflow nadpisze zmiany
-- `.github/workflows/typer.yml` – instalator i harmonogram (zawiera wszystkie pliki)
+- `.github/workflows/typer.yml` – harmonogram
 
 ## Plan płatny The Odds API (opcjonalnie)
 Settings → Secrets and variables → Actions → zakładka Variables → „New repository variable”:
