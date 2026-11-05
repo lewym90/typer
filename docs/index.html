@@ -255,8 +255,8 @@ footer{font-size:12px;color:var(--faint);margin:28px 4px 0;line-height:1.55}
   --loss:#FF4B3E; --loss-bg:rgba(255,75,62,.14); --red:#FF2E2A; --gold:#E7B65C; --info:#8AB4FF;
   --num:"Archivo","Figtree",system-ui,sans-serif;
 }
-body{background:#060608 url(grafika/tlo.webp) top center/100% auto no-repeat fixed}
-body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(90% 34% at 12% 0,rgba(255,70,30,.20),transparent 70%),radial-gradient(80% 30% at 92% 2%,rgba(255,140,30,.15),transparent 70%)}
+body{background:#060608}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(rgba(6,6,8,.35),rgba(6,6,8,.72)),url(grafika/tlo.webp) top center/cover no-repeat}
 .wrap{padding:0 14px 170px}
 header{position:sticky;top:0;z-index:7;align-items:center;padding:calc(10px + env(safe-area-inset-top,0px)) 2px 10px;margin:0 -14px;padding-left:12px;padding-right:12px;background:linear-gradient(#060608 62%,rgba(6,6,8,0))}
 .gora{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:4px;width:100%}
@@ -274,7 +274,7 @@ header{position:sticky;top:0;z-index:7;align-items:center;padding:calc(10px + en
 .sporty2{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:10px 0 12px}
 .sporty2 button{min-height:78px;padding:7px 2px 6px;background:linear-gradient(180deg,#1b1b21,#101014);border:1px solid var(--line2);border-radius:13px;color:var(--text);font-size:12px;font-weight:600;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer}
 .sporty2 button.on{border-color:var(--red);box-shadow:0 0 0 1px var(--red),0 0 18px rgba(255,46,42,.35);background:linear-gradient(180deg,#3a0d0c,#190808)}
-.sporty2 img{width:36px;height:36px;object-fit:contain;mix-blend-mode:screen}
+.sporty2 img{width:38px;height:38px;object-fit:contain}
 .sporty2 .sk{font-size:26px;line-height:36px}
 .modul{display:grid;grid-template-columns:50px 1fr 18px;gap:11px;align-items:center;width:100%;text-align:left;padding:11px 13px;margin:0 0 8px;border-radius:15px;cursor:pointer;color:var(--text);border:1px solid var(--line2);background:linear-gradient(95deg,rgba(255,255,255,.07),rgba(255,255,255,.015) 55%)}
 .modul.zl{border-color:rgba(231,182,92,.7);background:linear-gradient(95deg,rgba(231,182,92,.28),rgba(231,182,92,.03) 62%)}
@@ -399,7 +399,7 @@ async function laduj(){
   S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null; S.status = st.value || null; S.inne = inn.value || null; S.glowne = gl.value || null;
 }
 
-const WERSJA_APLIKACJI = 65;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
+const WERSJA_APLIKACJI = 66;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
 /* ---------- model (ten sam co w Pythonie) ---------- */
 const MAXG = 10;
 function pois(l){ const out = [Math.exp(-l)]; for(let k=1;k<=MAXG;k++) out.push(out[k-1]*l/k); return out; }
@@ -1727,7 +1727,7 @@ const SEKCJE_P = {hero:'Grafika i sporty', moduly:'Pewne, Value, Kupon, Analiza'
 const kolPulpitu = () => { const o = store.get('pulpitKol', null) || Object.keys(SEKCJE_P); return [...o.filter(k => SEKCJE_P[k]), ...Object.keys(SEKCJE_P).filter(k => !o.includes(k))]; };
 function sekHero(){
   const tl = [['pilka','s-pilka.webp','⚽','Piłka nożna',''],['tenis','s-tenis.webp','🎾','Tenis',''],['walki','s-mma.webp','🥊','MMA','mma'],['walki','s-ksw.webp','🥋','KSW','ksw'],['walki','s-boks.webp','🥊','Boks','boks']];
-  return `<div class="hero2">${IMG('hero.webp')}<div class="h">Liczby zamiast przeczucia<small>${esc(String((S.dzis||{}).data || '').split('-').reverse().join('.'))} · odświeżono ${esc(String((S.dzis||{}).wygenerowano || '').slice(11))}</small></div></div>
+  return `<div class="hero2">${IMG('hero.webp')}<div class="h"><small>${esc(String((S.dzis||{}).data || '').split('-').reverse().join('.'))} · odświeżono ${esc(String((S.dzis||{}).wygenerowano || '').slice(11))}</small></div></div>
   <div class="sporty2">${tl.map(([k, im, em, n, f]) => `<button data-go="sporty" data-k="sport:${k}" data-k2="walkiF:${f}">${IMG(im, '')}<span class="sk" style="display:none">${em}</span>${n}</button>`).join('')}</div>`;
 }
 function sekModuly(){
@@ -1810,6 +1810,10 @@ function agenciHtml(m){ const p = proKarty(m); if(!p) return '';
   const ag = (k, im, em, n, tx) => `<div class="agent a${k}">${IMG(im, n)}<div class="pz" style="display:none">${em}</div><div><b>${n}</b><p>${esc(tx)}</p></div><span>✓</span></div>`;
   let h = ag(1, 'analityk.webp', '🗿', 'Analityk', s ? `Na ślepo: ${Object.entries(s).map(([k, v]) => `${k} ${pct(v)}`).join(' · ')}` : 'Analiza bez kursów.') + ag(2, 'adwokat.webp', '😈', 'Adwokat diabła', b || 'Scenariusz niespodzianki i argumenty przeciw.') + ag(3, 'sedzia.webp', '⚖️', 'Sędzia', p.powod || 'Ocena z kursami i werdykt.');
   const w = werdyktKarty(m); if(w) h += `<div class="werd ${w}"><small>Werdykt końcowy</small><b>${({zgoda:'AI POPIERA', ryzyko:'RYZYKO', odradza:'AI ODRADZA'})[w] || esc(w)}</b></div>`;
+  const oc = (aiKarty(m) || {}).szansa_koncowa ?? (p.szanse && Math.max(...Object.values(p.szanse)));
+  if(oc != null) h += `<div class="pan gr"><div class="pp"><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span>Ocena typu</span><b style="color:var(--win)">${pct(oc)}</b></div><div class="pbar"><i style="width:${(oc * 100).toFixed(0)}%;background:var(--win)"></i></div></div></div>`;
+  const tb = m.klucz ? m : m.najpewniejszy; if(tb && tb.kurs_uczciwy){ const best = (kursyLista(tb)[0] || [])[1], st = best ? Math.round(Math.min(BANK * kelly(tb.szansa, best), BANK * LIM().stawka / 100)) : 0;
+    h += `<div class="pan"><div class="pp"><b>Budżet i stawki</b><div class="row3"><span>Budżet</span><span class="r">${num(BANK, 0)} zł</span></div><div class="row3" style="border:0"><span>Stawka (1/4 Kelly'ego)</span><span class="r"><b>${st} zł</b> ${st ? '' : '(brak przewagi)'}</span></div></div></div>`; }
   const au = p.audyt; if(au) h += `<div class="pan"><div class="pp"><b>Audytor</b><p class="note">Jakość danych: ${esc(au.jakosc)} · faktów ze źródłem: ${au.fakty} · pobrano ${esc(au.czas)}</p>${[...(au.uwagi || []), ...(au.braki || [])].map(x => `<span class="chipr s">${esc(x)}</span>`).join('')}</div></div>`;
   return h; }
 function historiaPrognozy(m, sp){ const w = ((CEN || {}).prognozy || {})[m.event_id + '|najpewniejszy']; if(!w) return '<p class="note">Historia zacznie się od następnego liczenia typów.</p>';
@@ -1827,11 +1831,14 @@ function widokKartyMeczu(){
   if(z === 'ai'){
     h += szans; if(m.xg_gosp != null) h += `<div class="row3"><span>Oczekiwane gole (xG)</span><span class="r">${num(m.xg_gosp)} – ${num(m.xg_gosc)}</span></div>`;
     if(pil && Array.isArray(m.wyniki) && m.wyniki.length) h += `<div class="tyt">Najbardziej prawdopodobne wyniki</div><div class="szb">${m.wyniki.slice(0, 3).map(w => `<div><span>${esc(w.wynik)}</span><b>${pct(w.szansa, 1)}</b></div>`).join('')}</div>`;
-    h += `<div class="tyt">Analityk AI</div>` + (agenciHtml(m) || aiPelny(m, sp) || `<div class="empty">Brak analizy AI dla tego meczu. Darmowy limit idzie najpierw na typy dnia.</div>`);
+    const ma = agenciHtml(m) || (aiKarty(m) ? aiPelny(m, sp) : ''), zam = (S.aiZam || {})[m.event_id];
+    h += `<div class="tyt">Analityk AI</div>` + (ma || (zam ? aiReczna(sp, {a: A, b: B, rozgrywki: m.liga || m.turniej || '', start: m.start, typ: t && t.zaklad ? {zaklad: t.zaklad, szansa: t.szansa} : null, szanse: pil ? m.szanse : undefined, szansa_a: m.szansa_a, szansa_b: m.szansa_b}, pil ? {gospodarz: A, gosc: B} : m) : `<button class="btn" data-aizam="${esc(m.event_id)}">Zamów analizę AI</button>`));
   } else if(z === 'prog') h += t ? kartaTypu(sp, m, 0) : `<div class="empty">Dla tego meczu nie ma typu.</div>`;
   else if(z === 'sk') h += `<div class="pan"><div class="pp" style="display:flex;flex-direction:column;gap:10px">${pil ? (przedmeczoweHTML(m.przedmeczowe, m) + (m.raport ? raportHTML(m.raport, m) : '')) || '<p class="note">Składy pojawią się ok. godzinę przed meczem.</p>' : szczegolyInne(m, sp)}</div></div>`;
   else if(z === 'fo'){ const ai = aiKarty(m) || {}, pr = proKarty(m) || {}; h += `<div class="pan"><div class="pp">${ai.forma ? `<p><b>Forma.</b> ${esc(ai.forma)}</p>` : ''}${ai.styl ? `<p><b>Styl.</b> ${esc(ai.styl)}</p>` : ''}${(pr.scenariusze || []).map(s => `<p class="note">${esc(s.nazwa || s.tytul || '')} ${s.procent ? s.procent + '%' : ''}: ${esc(s.opis || s.przebieg || '')}</p>`).join('')}${ai.forma || ai.styl || pr.scenariusze ? '' : '<p class="note">Brak opisu formy dla tego meczu.</p>'}</div></div>`; }
-  else if(z === 'ku'){ const [, e] = t ? wpisKursu(m.event_id, t) : [null, null]; h += `<div class="pan"><div class="pp">${t ? kafelkiBuk(t) : ''}<div class="tyt">Ruch najlepszego kursu</div>${wykresKursu(e)}</div></div>` + (t ? alertKursuBtn(m.event_id, t) : ''); }
+  else if(z === 'ku'){ const [, e] = t ? wpisKursu(m.event_id, t) : [null, null]; const dod = ((CEN || {}).dodatkowe || {})[m.event_id];
+    h += `<div class="pan"><div class="pp">${t ? kafelkiBuk(t) : ''}<div class="tyt">Ruch najlepszego kursu</div>${wykresKursu(e)}</div></div>` + (t ? alertKursuBtn(m.event_id, t) : '') +
+      (pil ? `<div class="tyt">Rożne, kartki, strzały</div><div class="pan"><div class="pp">${dod ? Object.entries(dod).map(([r, l]) => `<b>${esc(r)}</b>${l.map(x => `<div class="row3"><span>${esc(x.rynek)}</span><span class="r">${x.wyniki.map(([a, p]) => `${esc(a)} ${pct(p)}`).join(' · ')}</span></div>`).join('')}`).join('') : '<p class="note">Szanse z kursów Fortuny bez marży. Pojawią się przy następnym odczycie oferty, jeśli bukmacher wystawia te rynki.</p>'}</div></div>` : ''); }
   else h += `<div class="pan"><div class="pp">${historiaPrognozy(m, sp)}</div></div>`;
   return h;
 }
@@ -1874,8 +1881,12 @@ function widokPrzejrzystosc(){ const c = CEN; if(!c) return '<div class="empty">
    <section class="sekcja"><h2 style="margin-top:0">Dyscypliny i poziomy</h2>${tabM(wierszM('Piłka', c.sporty.pilka) + wierszM('Tenis', c.sporty.tenis) + wierszM('Walki', c.sporty.walki) + wierszM('Najpewniejszy', c.poziomy.najpewniejszy) + wierszM('Wyższy kurs', c.poziomy.lepszy_kurs) + wierszM('Ryzykowny', c.poziomy.ryzykowny) + wierszM('Value', v))}<p class="note">Value: CLV ${v.clv == null ? '–' : sgn(v.clv)}. ROI po podatku ${v.roi_podatek == null ? '–' : sgn(v.roi_podatek)}, przedział skuteczności ${wil(v)}.</p></section>
    <section class="sekcja"><h2 style="margin-top:0">Kalibracja</h2>${wykresKalibracji(c.kalibracja_wszystkie)}</section>
    <section class="sekcja"><h2 style="margin-top:0">Historia metodologii</h2>${c.metodologia.map(m => `<div class="row3"><span>${esc(m.zmiana)}</span><span class="r">${esc(m.data)}</span></div>`).join('')}</section>`; }
+function sekcjaTestow(t){ if(!t || !(t.regul || []).length) return ''; const k = x => x.n ? `${pct(x.s)}<br><small>${x.roi == null ? '–' : sgn(x.roi)} · ${x.n}</small>` : '–';
+  const w = t.tygodnie || [], W = 320, H = 90, xx = i => 6 + i * (W - 12) / Math.max(1, w.length - 1), yy = v => H - 6 - (v - .5) / .5 * (H - 12), lin = f => w.map((a, i) => xx(i).toFixed(1) + ',' + yy(Math.max(.5, f(a))).toFixed(1)).join(' ');
+  return `<section class="sekcja"><h2 style="margin-top:0">Testy historyczne</h2><p class="note">Każda reguła osobno na starszej i nowszej połowie dziennika (od ${esc(t.granica)}). Liczy się tylko to, co trzyma się w obu.</p><table class="tab2"><tr><th>Reguła</th><th>Starsza</th><th>Nowsza</th></tr>${t.regul.map(r => `<tr><td style="font-family:var(--body)">${esc(r.nazwa)}</td><td>${k(r.starsza)}</td><td>${k(r.nowsza)}</td></tr>`).join('')}</table>
+  ${w.length > 1 ? `<div class="tyt">Tydzień po tygodniu</div><svg class="spark" style="height:90px" viewBox="0 0 ${W} ${H}" role="img" aria-label="Skuteczność typów dnia tygodniami"><polyline fill="none" stroke="#3BE06F" stroke-width="2.5" points="${lin(a => a.weszlo)}"/><polyline fill="none" stroke="#A7A4A0" stroke-width="1.5" stroke-dasharray="4 4" points="${lin(a => a.przew)}"/></svg><p class="note">Zielona: weszło. Szara: przewidywane. Skala od 50% do 100%.</p>` : ''}</section>`; }
 function widokLab(){ const c = CEN; if(!c) return '<div class="empty">Dane pojawią się po najbliższym uruchomieniu programu.</div>'; const a = c.ai || {}, d = c.dryf;
-  return `<section class="sekcja"><h2 style="margin-top:0">Model Lab</h2><p class="note">Piłka, tenis i walki liczone są osobno, a szanse pochodzą z rynku. Tu widać, czy program i AI dokładają coś do rynku.</p>${tabM(wierszM('AI popiera', a.zgoda) + wierszM('AI: ryzyko', a.ryzyko) + wierszM('AI odradza', a.odradza))}<p class="note">${d ? `Dryf: Brier ${num(d.brier_30, 3)} w 30 dni, wcześniej ${num(d.brier_wczesniej, 3)}.` : 'Dryf: za mało danych.'}</p></section>` + sekcjaAnalityka() + sekcjaWpadek() +
+  return `<section class="sekcja"><h2 style="margin-top:0">Model Lab</h2><p class="note">Piłka, tenis i walki liczone są osobno, a szanse pochodzą z rynku. Tu widać, czy program i AI dokładają coś do rynku.</p>${tabM(wierszM('AI popiera', a.zgoda) + wierszM('AI: ryzyko', a.ryzyko) + wierszM('AI odradza', a.odradza))}<p class="note">${d ? `Dryf: Brier ${num(d.brier_30, 3)} w 30 dni, wcześniej ${num(d.brier_wczesniej, 3)}.` : 'Dryf: za mało danych.'}</p></section>` + sekcjaTestow(c.testy) + sekcjaAnalityka() + sekcjaWpadek() +
    `<section class="sekcja"><h2 style="margin-top:0">Segmenty do obserwacji</h2><p class="note">To nie są typy. Program tylko sprawdza, czy wynik utrzyma się na żywo.</p>${(c.segmenty || []).map(s => `<div class="row3"><span>${esc(s.kategoria)} · kurs ${esc(s.przedzial)} · ${s.n} kursów</span><span class="r">${sgn(s.roi)}</span></div>`).join('') || '<p class="note">Brak segmentów spełniających progi.</p>'}</section>` + sekcjaArchiwum(); }
 function widokRynek(){ const r = (CEN || {}).ruchy || []; return `<section class="sekcja"><h2 style="margin-top:0">Ruchy kursów</h2><p class="note">Zmiana najlepszego polskiego kursu od pierwszego odczytu. Duży ruch nie oznacza pewnej informacji o wyniku.</p>${r.length ? r.map(x => `<div class="row3"><span>${esc(x.mecz)}<br><small class="muted">${esc(x.zaklad)} · ${x.odczytow} odczytów</small></span><span class="r">${num(x.od)} → ${num(x.do)}<br><b class="${x.zmiana >= 0 ? 'pos' : 'neg'}">${sgn(x.zmiana)}</b></span></div>`).join('') : '<p class="note">Brak ruchów. Lista zapełnia się w ciągu dnia.</p>'}</section>`; }
 function widokLudzie(){ if(!PAMIEC){ g2('pamiec_ludzi.json').then(p => { PAMIEC = p || {}; renderuj(); }); return '<p class="note">Ładuję…</p>'; }
@@ -1906,7 +1917,7 @@ const KAT_A = [['value','Nowe Value'],['zmiana','Zmiana przed meczem'],['utrata'
 function widokAlerty(){ const u = (CEN || {}).ustawienia_alertow || {}, k = store.get('alertyL', null) || {k: u.kategorie || {}, od: u.od ?? 8, do: u.do ?? 23, p: u.prog_spadku ?? 5};
   return `<h2 style="margin-top:0">Alert Center</h2>${alarmy().map(kartaAlarmu).join('')}${KAT_A.map(([a, n]) => `<label class="prz">${n}<input type="checkbox" data-al="${a}" ${k.k[a] === false ? '' : 'checked'}></label>`).join('')}
   <div class="row"><div><label>Od godziny</label><input id="alOd" type="number" min="0" max="23" value="${k.od}"></div><div><label>Do godziny</label><input id="alDo" type="number" min="1" max="24" value="${k.do}"></div><div><label>Spadek szansy (pkt)</label><input id="alP" type="number" min="1" max="30" value="${k.p}"></div></div>
-  <button class="btn" id="alZap">Zapisz w Telegramie</button><p class="note">Otworzy się bot. Dotknij Start, a ustawienia zaczną działać przy następnym przebiegu programu (do 30 minut).</p>`; }
+  <button class="btn" id="alZap">Zapisz w Telegramie</button><p class="note">Otworzy się bot. Dotknij Start, a ustawienia zaczną działać przy następnym przebiegu programu (do 30 minut). Rozliczenia są domyślnie wyłączone.</p>`; }
 function zapiszAlerty(){ const k = {}, bit = KAT_A.map(([a]) => { const c = document.querySelector(`[data-al="${a}"]`).checked; k[a] = c; return c ? 1 : 0; }).join(''); const od = +$('#alOd').value, doo = +$('#alDo').value, p = +$('#alP').value;
   store.set('alertyL', {k, od, do: doo, p}); const bot = ((S.status || {}).telegram || {}).bot; if(bot) window.open(`https://t.me/${bot}?start=al_${bit}_${od}_${doo}_${p}`, '_blank'); }
 const KLUCZE_K = ['bankroll','zaklady','limity','pulpitKol','podatekBuk','alertyL'];
@@ -1927,6 +1938,7 @@ document.addEventListener('click', e => {
   if(g){ for(const a of ['k','k2']){ const v = g.dataset[a]; if(v){ const i = v.indexOf(':'); store.set(v.slice(0, i), v.slice(i + 1) || null); } } S.tab = g.dataset.go; store.set('tab', S.tab); document.querySelectorAll('.sheet').forEach(s => s.classList.remove('open')); renderuj(); return; }
   const m = e.target.closest('[data-mecz]');
   if(m){ const [sp, id] = m.dataset.mecz.split('|'); S.powrot = S.tab === 'mecz' ? S.powrot : S.tab; S.mecz = {sp, id}; S.tab = 'mecz'; store.set('mzak', 'ai'); document.querySelectorAll('.sheet').forEach(s => s.classList.remove('open')); renderuj(); return; }
+  const az = e.target.closest('[data-aizam]'); if(az){ S.aiZam = Object.assign(S.aiZam || {}, {[az.dataset.aizam]: 1}); renderuj(); return; }
   if(e.target.closest('[data-wstecz]')){ S.tab = S.powrot || 'pulpit'; renderuj(); return; }
   const z = e.target.closest('[data-z]');
   if(z){ const [id, a] = z.dataset.z.split(':'); let l = ZAK(); l = a === 'x' ? l.filter(x => String(x.id) !== id) : l.map(x => String(x.id) === id ? Object.assign(x, {st: a}) : x); zapiszZakl(l); renderuj(); return; }

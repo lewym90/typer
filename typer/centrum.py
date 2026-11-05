@@ -4,7 +4,7 @@
  • historia kursów (historia_kursow.json): kurs każdego typu u każdego bukmachera przy każdym odczycie (wykres, ruchy rynku),
  • segmenty do obserwacji, alerty kursowe, ustawienia alertów z Telegrama, raport dzienny.
 Błąd tutaj nie dotyka reszty programu (osobny krok workflow)."""
-import csv, datetime as dt, hashlib, json, math, os, re, sys, time
+import csv, datetime as dt, difflib, glob, gzip, hashlib, json, math, os, re, sys, time
 from zoneinfo import ZoneInfo
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import requests
@@ -24,7 +24,7 @@ METODOLOGIA = [
     ('wersja 63', 'AI na darmowym kluczu Gemini: bez wyszukiwania Google, tylko dane zebrane przez program.'),
     ('wersja 64', 'Skuteczność w aplikacji liczona z dziennika zamiast z testów historycznych.')]
 OPISY_KAT = ('value', 'zmiana', 'utrata', 'sklad', 'kontuzja', 'prognoza', 'start', 'gol', 'koniec', 'rozliczenie', 'raport')
-DOMYSLNE = dict(kategorie={k: True for k in OPISY_KAT}, od=8, do=23, prog_spadku=5, kursy=[], wlasciciel=None, tg_ost=0)
+DOMYSLNE = dict(kategorie={k: k != 'rozliczenie' for k in OPISY_KAT}, od=8, do=23, prog_spadku=5, kursy=[], wlasciciel=None, tg_ost=0)
 
 
 def teraz(): return dt.datetime.now(TZ)
@@ -65,7 +65,7 @@ def rekordy():
         z = fl(x.get('zysk_na_1zl'))
         if z is None or not x.get('wynik'): continue
         out.append(dict(sport='pilka', rodzaj='value', poziom='value', nizsza=False, data=str(x.get('start'))[:10], szansa=fl(x.get('szansa')),
-                        traf=1.0 if z > 0 else 0.0, kurs=z + 1 if z > 0 else (fl(x.get('kurs_pl_rano')) or fl(x.get('kurs_betclic'))), ai='',
+                        traf=1.0 if z > 0 else 0.0, kurs=z + 1 if z > 0 else (fl(x.get('kurs_pl_rano')) or fl(x.get('kurs_betclic'))), ai='', ev=fl(x.get('EV')),
                         clv=(fl(x.get('kurs_pl_rano')) / fl(x.get('kurs_pl_zamk')) - 1) if fl(x.get('kurs_pl_rano')) and fl(x.get('kurs_pl_zamk')) else None))
     return [r for r in out if r['szansa'] is not None]
 
@@ -116,6 +116,65 @@ def przejrzystosc():
                 opublikowane=len(wszystkie), rozliczone=len(R), metodologia=[dict(data=a, zmiana=b) for a, b in METODOLOGIA])
 
 
+def testy():
+    """Testy historyczne na dzienniku: każda reguła liczona osobno na starszej i nowszej połowie okresu.
+    Nowsza połowa jest próbą poza dopasowaniem: wynik, który trzyma się tylko w jednej połowie, nie jest dowodem."""
+    R = rekordy(); dnia = [r for r in R if r['rodzaj'] == 'pewne' and r['poziom'] == 'najpewniejszy' and not r['nizsza']]; val = [r for r in R if r['rodzaj'] == 'value']
+    daty = sorted({r['data'] for r in dnia + val})
+    if len(daty) < 8: return dict(regul=[], tygodnie=[])
+    sr = daty[len(daty) // 2]
+    def wiersz(n, G):
+        a, b = [r for r in G if r['data'] < sr], [r for r in G if r['data'] >= sr]
+        ma, mb = miary(a), miary(b)
+        return dict(nazwa=n, starsza=dict(n=ma['n'], s=ma.get('skutecznosc'), roi=ma.get('roi')), nowsza=dict(n=mb['n'], s=mb.get('skutecznosc'), roi=mb.get('roi')))
+    reg = [wiersz(f'Typy dnia od {p}%', [r for r in dnia if r['szansa'] >= p / 100]) for p in (70, 75, 80, 85)]
+    reg += [wiersz(f'Typy dnia: kurs od {k:.2f}'.replace('.', ','), [r for r in dnia if (r['kurs'] or 0) >= k]) for k in (1.25, 1.4)]
+    reg += [wiersz(f'Value: przewaga od {p}%', [r for r in val if (r.get('ev') or 0) >= p / 100]) for p in (3, 5, 7, 10)]
+    reg += [wiersz('Value: kurs do 1,90', [r for r in val if r['kurs'] and r['kurs'] <= 1.9]), wiersz('Value: kurs powyżej 1,90', [r for r in val if r['kurs'] and r['kurs'] > 1.9])]
+    tyg = {}
+    for r in dnia:
+        y, w, _ = dt.date.fromisoformat(r['data']).isocalendar(); tyg.setdefault(f'{y}-{w:02d}', []).append(r)
+    return dict(granica=sr, regul=[x for x in reg if x['starsza']['n'] + x['nowsza']['n'] >= 10],
+                tygodnie=[dict(t=k, n=len(v), weszlo=round(sum(r['traf'] for r in v) / len(v), 4), przew=round(sum(r['szansa'] for r in v) / len(v), 4)) for k, v in sorted(tyg.items())][-12:])
+
+
+def _nazwa(n): return re.sub(r'[^a-z0-9 ]', '', wyc_(n))
+def wyc_(n):
+    import unicodedata
+    return unicodedata.normalize('NFKD', str(n or '').lower().replace('ł', 'l')).encode('ascii', 'ignore').decode()
+
+def rynki_dodatkowe(dz):
+    """Rożne, kartki i strzały: uczciwe szanse z kursów Fortuny (zbierane z oferty), bez marży. Bez kursów nic nie pokazujemy."""
+    pliki = sorted(glob.glob(os.path.join(KAT, 'archiwum', 'kursy', teraz().strftime('%Y-%m-%d') + '_*.json.gz')))
+    mecze = []
+    for p in pliki:
+        if 'superbet' in p: continue
+        try: mecze += [m for m in json.load(gzip.open(p, 'rt', encoding='utf-8')).get('mecze', []) if m.get('x')]
+        except Exception as e: print('rynki dodatkowe:', e)
+    out = {}
+    for m in (dz.get('mecze') or []) + (dz.get('pewne') or []):
+        eid = str(m.get('event_id'))
+        if eid in out or not m.get('start'): continue
+        naj = None
+        for f in mecze:
+            # czas Fortuny jest w UTC, typów w czasie polskim: dopuszczamy obie strefy
+            try: rozn = abs((dt.datetime.strptime(f['t'], '%Y-%m-%d %H:%M') - dt.datetime.strptime(str(m['start'])[:16], '%Y-%m-%d %H:%M')).total_seconds()) / 60
+            except Exception: continue
+            if min(abs(rozn - h * 60) for h in (0, 1, 2)) > 20: continue
+            w = difflib.SequenceMatcher(None, _nazwa(m.get('gospodarz')), _nazwa(f['h'])).ratio() + difflib.SequenceMatcher(None, _nazwa(m.get('gosc')), _nazwa(f['a'])).ratio()
+            if w >= 1.2 and (not naj or w > naj[0]): naj = (w, f)
+        if not naj: continue
+        grupy = {}
+        for nazwa, wyn in naj[1]['x']:
+            if len(wyn) < 2 or len(wyn) > 3: continue
+            s = sum(1 / k for _, k in wyn); fair = [[a, round(1 / k / s, 3)] for a, k in wyn]
+            rod = 'Rzuty rożne' if re.search(r'roż', nazwa.lower()) else 'Kartki' if re.search(r'kart[ke]', nazwa.lower()) else 'Strzały'
+            grupy.setdefault(rod, []).append((abs(fair[0][1] - .5), dict(rynek=nazwa, wyniki=fair)))
+        wyn = {r: [x[1] for x in sorted(v, key=lambda t: t[0])[:3]] for r, v in grupy.items()}
+        if wyn: out[eid] = wyn
+    return out
+
+
 # ---------------------------------------------------------------- bieżące typy
 def biezace(dz, inne):
     """[(sport, event_id, mecz, start, poziom, klucz, zaklad, szansa, kurs_uczciwy, werdykt, kursy_pl)]"""
@@ -145,6 +204,8 @@ def biezace(dz, inne):
 
 KOL = ['czas', 'zdarzenie', 'sport', 'event_id', 'mecz', 'start', 'poziom', 'klucz', 'zaklad', 'szansa', 'kurs_uczciwy', 'werdykt', 'najlepszy_kurs']
 
+NOWE_PROGNOZY = []
+
 def historia_prognoz(typy):
     """Plik tylko dopisywany: pierwszy wpis to prognoza z chwili publikacji, kolejne to korekty. Starych wierszy nie zmieniamy."""
     ost, nowy = {}, not os.path.exists(P_PROGNOZ)
@@ -157,6 +218,7 @@ def historia_prognoz(typy):
         w = dict(czas=cz, zdarzenie='pierwotna' if not b else 'korekta', sport=t['sp'], event_id=t['eid'], mecz=t['mecz'], start=t['start'], poziom=t['poz'], klucz=t['klucz'],
                  zaklad=t['zaklad'], szansa=round(float(t['szansa']), 4), kurs_uczciwy=t['uczciwy'], werdykt=t['w'], najlepszy_kurs=max(kursy) if kursy else '')
         if not b or abs(float(b['szansa']) - float(t['szansa'])) >= 0.01 or (t['w'] and b['werdykt'] != t['w']): wyn.append(w)
+    NOWE_PROGNOZY[:] = wyn
     if wyn:
         with open(P_PROGNOZ, 'a', encoding='utf-8', newline='') as f:
             z = csv.DictWriter(f, fieldnames=KOL)
@@ -252,6 +314,20 @@ def alerty_kursowe(al, h):
     return al
 
 
+def alerty_wydarzen(al, cen):
+    """Nowe Value w ciągu dnia i rozliczenia. Rano wszystkie Value i tak idą w głównej wiadomości, więc alert działa od 9:00."""
+    kat = al.get('kategorie') or {}; g = teraz().hour; w_godz = int(al.get('od', 8)) <= g < int(al.get('do', 23))
+    st = wczytaj('centrum_stan.json')
+    nowe = [x for x in NOWE_PROGNOZY if x['poziom'] == 'value' and x['zdarzenie'] == 'pierwotna']
+    if nowe and kat.get('value', True) and w_godz and g >= 9:
+        tg.wyslij('💰 <b>Nowe Value</b>\n' + '\n'.join(f"{x['mecz']}: {x['zaklad']}, najlepszy kurs {x['najlepszy_kurs']}" for x in nowe[:6]))
+    n, poprz = cen['rozliczone'], st.get('rozliczone')
+    if poprz is not None and n > poprz and kat.get('rozliczenie', False) and w_godz:
+        d = miary([r for r in rekordy() if r['data'] == teraz().strftime('%Y-%m-%d') and r['rodzaj'] == 'pewne' and r['poziom'] == 'najpewniejszy'])
+        tg.wyslij(f"✅ Rozliczono {n - poprz} typów." + (f" Typy dnia dziś: {d['trafione']} z {d['n']}." if d.get('n') else ''))
+    st['rozliczone'] = n; zapisz(os.path.join(KAT, 'centrum_stan.json'), st)
+
+
 # ---------------------------------------------------------------- raport dzienny
 def raport(dz, gl, cen, al):
     t = teraz(); dzien = t.strftime('%Y-%m-%d')
@@ -290,6 +366,8 @@ def main():
     cen = przejrzystosc()
     cen.update(czas=teraz().strftime('%Y-%m-%d %H:%M'), ruchy=ruchy(h), segmenty=segmenty(), prognozy=prognozy_dzis(typy),
                kursy={k: v for k, v in h.items() if str(v.get('s')) >= teraz().strftime('%Y-%m-%d')})
+    cen['testy'] = testy(); cen['dodatkowe'] = rynki_dodatkowe(dz)
+    alerty_wydarzen(al, cen)
     cen['ustawienia_alertow'] = {k: al.get(k) for k in ('kategorie', 'od', 'do', 'prog_spadku', 'kursy')}
     cen['raport'] = raport(dz, gl, cen, al)
     zapisz(P_CENTRUM, cen)

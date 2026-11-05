@@ -683,6 +683,13 @@ def poziom_alarmu(powody):
     if 'szansa typu dnia spadła' in t or 'brak' in t or 'rotacj' in t: return 'ostrzezenie'
     return 'informacja'
 
+def kategoria_alarmu(p_):
+    t = str(p_).lower()
+    if 'przewag' in t: return 'utrata'
+    if 'spadła' in t or 'odradza' in t: return 'prognoza'
+    if 'rotacj' in t or 'zmian' in t or 'skład' in t: return 'sklad'
+    return 'kontuzja'
+
 def dlaczego_alarm(powody):
     """Dlaczego zmiana ma znaczenie – jedno zdanie do alarmu."""
     t = ' '.join(str(p) for p in powody).lower()
@@ -833,7 +840,8 @@ def zapowiedzi(d):
             if wstrz: _alarm_do_dziennika(sp, eid, powody)
             if sp == 'pilka': pilka_zmiana = True
             else: inne_zmiana = True
-        if powody and tg.alert_dozwolony('zmiana') and tg.wyslij_dlugi(tekst_zapowiedzi(sp, m, wart, minut, powody)): zap['wyslane'].append(klucz); wyslane += 1
+        pw_tg = [p_ for p_ in powody if tg.alert_dozwolony(kategoria_alarmu(p_))] if tg.alert_dozwolony('zmiana') else []
+        if pw_tg and tg.wyslij_dlugi(tekst_zapowiedzi(sp, m, wart, minut, pw_tg)): zap['wyslane'].append(klucz); wyslane += 1
     if inne_zmiana:
         with open(os.path.join(OUT, sporty.PLIK_JSON), 'w', encoding='utf-8') as f:
             json.dump(inne, f, ensure_ascii=False, default=lambda o: float(o) if isinstance(o, (np.floating, np.integer)) else str(o))

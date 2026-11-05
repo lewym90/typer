@@ -82,7 +82,9 @@ def _czytaj(V, s, mecze, limit_s, diag):
         if sp not in ('pilka', 'tenis'):    # wersja 46: walki i nowe dyscypliny – do repozytorium także surowe rynki (najważniejsze 40)
             r40 = _surowe(rynki)[:40]
             if r40: norm.append(dict(wsp, k=k or {}, r=r40))
-        elif k: norm.append(dict(wsp, k=k))
+        elif k:
+            x = [r for r in _surowe(rynki) if re.search(r'rożn|rzut.{0,6}roż|kart[ke]|strzał|strzal', r[0].lower()) and not re.search(r'zawodnik|połow|polow|minut', r[0].lower())][:14]
+            norm.append(dict(wsp, k=k, **({'x': x} if x else {})))     # wersja 66: rożne, kartki i strzały do karty meczu
         sur.append(dict(wsp, r=_surowe(rynki)))
         time.sleep(0.12)
     return norm, sur
