@@ -1912,8 +1912,8 @@ function zapiszAlerty(){ const k = {}, bit = KAT_A.map(([a]) => { const c = docu
 const KLUCZE_K = ['bankroll','zaklady','limity','pulpitKol','podatekBuk','alertyL'];
 const kodKopii = () => { let k = store.get('kodKopii', null); if(!k){ k = Array.from(crypto.getRandomValues(new Uint8Array(12))).map(b => b.toString(16).padStart(2, '0')).join(''); store.set('kodKopii', k); } return k; };
 let _kt = null;
-function kopia(){ clearTimeout(_kt); _kt = setTimeout(() => { const o = {}; KLUCZE_K.forEach(k => o[k] = store.get(k, null)); fetch(`${AI_URL}/dane/${kodKopii()}`, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(o)}).catch(() => {}); }, 800); }
-async function przywroc(kod){ const r = await fetch(`${AI_URL}/dane/${kod}`); if(!r.ok) throw new Error('brak'); const o = await r.json(); KLUCZE_K.forEach(k => { if(o[k] != null) store.set(k, o[k]); }); store.set('kodKopii', kod); BANK = store.get('bankroll', BANK); }
+function kopia(){ clearTimeout(_kt); _kt = setTimeout(() => { const o = {}; KLUCZE_K.forEach(k => o[k] = store.get(k, null)); fetch(`${AI_URL}/typer-kopia/${kodKopii()}`, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(o)}).catch(() => {}); }, 800); }
+async function przywroc(kod){ const r = await fetch(`${AI_URL}/typer-kopia/${kod}`); if(!r.ok) throw new Error('brak'); const o = await r.json(); KLUCZE_K.forEach(k => { if(o[k] != null) store.set(k, o[k]); }); store.set('kodKopii', kod); BANK = store.get('bankroll', BANK); }
 const PODB = () => store.get('podatekBuk', {});
 const zPodatkiem = (buk, k) => PODB()[buk] ? k * .88 : k;
 function widokUstawien2(){ const b = PODB(); return `<h2>Podatek</h2><p class="note">Zaznacz bukmacherów, u których płacisz 12%. Program odejmie go z przewagi Value.</p>${['STS','Fortuna','Superbet','Betclic PL'].map(n => `<label class="prz">${n}<input type="checkbox" data-pod="${n}" ${b[n] ? 'checked' : ''}></label>`).join('')}

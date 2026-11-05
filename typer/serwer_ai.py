@@ -157,7 +157,7 @@ class H(BaseHTTPRequestHandler):
             return self._json(200, dict(ok=True, wersja=WERSJA, klucz=bool(ai_raport.KLUCZ), reczne_dzis=_licz_reczne(), limit_dzienny=RECZNE_DZIENNIE,
                                         koszt_miesiac_zl=round(ai_raport.koszt_miesiac(), 2), budzet_zl=ai_raport.BUDZET_ZL,
                                         pro=dict(analityk_ai.STAN, reczne_dzis=_dzis_pro['n'], limit_dzienny=RECZNE_PRO_DZIENNIE) if analityk_ai else None))
-        if self.path.startswith('/dane/'):
+        if self.path.startswith('/typer-kopia/'):
             p = plik_danych(self.path)
             if not p: return self._json(400, {'blad': 'zły kod'})
             try: return self._json(200, json.load(open(p, encoding='utf-8')))
@@ -165,7 +165,7 @@ class H(BaseHTTPRequestHandler):
         self._json(404, {'blad': 'nie ma'})
 
     def do_POST(self):
-        if self.path.startswith('/dane/'):
+        if self.path.startswith('/typer-kopia/'):
             o = self.headers.get('Origin') or ''
             p = plik_danych(self.path)
             if not p or (o not in DOZWOLONE and not o.startswith('http://localhost')): return self._json(403, {'blad': 'niedozwolone'})
