@@ -55,7 +55,7 @@ def znajdz_bsd(dom, gosc, start):
     """start: 'YYYY-MM-DD HH:MM' (czas polski). Zwraca słownik meczu BSD albo None."""
     if not BSD_KEY: return None
     STAN['bsd']['szukane'] += 1
-    t0 = pd.Timestamp(start).tz_localize('Europe/Warsaw')
+    t0 = pd.Timestamp(start).tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward')
     najl, wynik = 0, None
     for e in _mecze_bsd(t0.strftime('%Y-%m-%d')):
         h, a = _nazwa(e.get('home_team')), _nazwa(e.get('away_team'))

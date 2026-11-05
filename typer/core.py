@@ -472,7 +472,7 @@ def ev_zakladu(M, rynek, strona, linia, kurs):
 
 def clv_zakladu(r):
     """💎 CLV: czy Twój kurs Betclic był lepszy niż uczciwy kurs Pinnacle/Betfair tuż przed meczem (plan płatny)."""
-    t = (pd.Timestamp(r.start).tz_localize('Europe/Warsaw') - pd.Timedelta(minutes=5)).tz_convert('UTC')
+    t = (pd.Timestamp(r.start).tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward') - pd.Timedelta(minutes=5)).tz_convert('UTC')
     h = api(f"historical/sports/{r.liga}/events/{r.event_id}/odds", regions='eu', markets='h2h,totals',
             oddsFormat='decimal', date=t.strftime('%Y-%m-%dT%H:%M:%SZ'))
     ev = (h.get('data') if isinstance(h, dict) else None) or {}

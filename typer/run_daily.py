@@ -212,7 +212,8 @@ def typy_na_dzis():
             typ = ((rr[t['z']][1] + (f" ({rr[t['z']][2]})" if rr[t['z']][2] else '')), t['p']) if t else None
             fm = analityk._fm_mecz.get((x.get('analityk') or {}).get('fotmob_id'))
             rynek = {k: float(mk[k]) for k in ('1', 'X', '2')}
-            a = analityk_ai.analiza_pilka(x['home'], x['away'], pl(x['home']), pl(x['away']), NAZWY_LIG.get(x['sport_key'], ''), x['start'], fm, rynek, typ, lista)
+            a = analityk_ai.analiza_pilka(x['home'], x['away'], pl(x['home']), pl(x['away']), NAZWY_LIG.get(x['sport_key'], ''), x['start'], fm, rynek, typ, lista,
+                                          naglowki=[n['tytul'] for v in ((x.get('raport') or {}).get('naglowki') or {}).values() for n in v])
             if not a: continue
             r_ = x.setdefault('raport', {}) or {}; x['raport'] = r_
             r_['pro'] = {k: v for k, v in a.items() if k != 'kroki'}; r_['werdykt'] = 'zgoda' if a['werdykt'] == 'mocna_zgoda' else a['werdykt']
@@ -284,7 +285,7 @@ def zapisz_pewne(nowe):
     d = wczytaj_pewne(); n = pd.DataFrame(nowe)
     if len(d) and len(n):
         dzien_nowych = wspolne.dzien_str()
-        stare = {(str(a), b): (wspolne.dzien_str(pd.Timestamp(t).tz_localize('Europe/Warsaw')) if str(t) not in ('', 'nan') else '',
+        stare = {(str(a), b): (wspolne.dzien_str(pd.Timestamp(t).tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward')) if str(t) not in ('', 'nan') else '',
                                str(k), (pd.isna(w) or str(w) == '') and pd.isna(tr))
                  for a, b, t, k, w, tr in zip(d.event_id, d.poziom, d.data_zapisu, d.klucz, d.wynik, d.trafiony)}
         wolno = wspolne.mozna_podmienic_typy(); zastap, zostaw = set(), []
@@ -437,7 +438,7 @@ def sprawdz_przed_meczem(d):
     teraz = pd.Timestamp.now(tz='Europe/Warsaw')
     P_, V = wczytaj_pewne(), wczytaj_dziennik(); zmiana = False
     for m in _mecze_dnia(d):
-        start = pd.Timestamp(m['start']).tz_localize('Europe/Warsaw'); minut = (start - teraz).total_seconds() / 60
+        start = pd.Timestamp(m['start']).tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward'); minut = (start - teraz).total_seconds() / 60
         diag = dict(mecz=pl_mecz(m['mecz']), minut=round(minut))
         # 0) raport AI odświeżany 35–150 min przed meczem (tylko mecze z Pewnych) – trafia do zapowiedzi ok. godzinę przed meczem
         r = m.get('raport')
@@ -585,7 +586,11 @@ def uzupelnij_ai(d, inne, limit=12):
         for v in s.get('value', []):
             eid = str(v.get('event_id'))
             if eid in mm: dodaj((sp, eid, 'value', v.get('klucz') or v.get('zaklad')), sp, mm[eid], v)
-    for k, (sp, ctx, karty) in grupy.items():
+    poz = {}                                          # kolejka AI: po kolei typ dnia z każdej dyscypliny, potem Value, potem reszta
+    def _kol(k):
+        p = poz.get((k[0], k[2]), 0); poz[(k[0], k[2])] = p + 1
+        return (0 if k[2] == 'pewne' else 1, p)
+    for k, (sp, ctx, karty) in sorted(grupy.items(), key=lambda kv: _kol(kv[0])):
         rodzaj = k[2]
         try:
             if pd.Timestamp(karty[0]['start'] if karty[0].get('start') else ctx['start']) <= teraz: continue   # mecz już trwa / zakończony
@@ -793,7 +798,7 @@ def zapowiedzi(d):
     for (sp, eid), (m, wart) in mecze.items():
         klucz = f'{sp}:{eid}'
         if klucz in zap['wyslane']: continue
-        minut = (pd.Timestamp(m['start']).tz_localize('Europe/Warsaw') - teraz).total_seconds() / 60
+        minut = (pd.Timestamp(m['start']).tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward') - teraz).total_seconds() / 60
         if not (OKNO_ALARMU[0] <= minut <= OKNO_ALARMU[1]): continue
         r0 = m.get('raport') or {}; w0, o0 = r0.get('werdykt'), r0.get('ostrzezenie')
         if sp != 'pilka':
@@ -829,7 +834,7 @@ def odzyskaj(plik, dobry):
     dz = wspolne.dzien_str()
     nag = {'Accept': 'application/vnd.github+json', **({'Authorization': f'Bearer {tok}'} if tok else {})}
     try:
-        od = (pd.Timestamp(dz).tz_localize('Europe/Warsaw')).tz_convert('UTC').strftime('%Y-%m-%dT%H:%M:%SZ')
+        od = (pd.Timestamp(dz).tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward')).tz_convert('UTC').strftime('%Y-%m-%dT%H:%M:%SZ')
         r = requests.get(f'https://api.github.com/repos/{repo}/commits', params=dict(path=f'docs/data/{plik}', since=od, per_page=60), headers=nag, timeout=30)
         for c in r.json() if r.status_code == 200 else []:
             try:
@@ -1344,7 +1349,7 @@ if __name__ == '__main__':
         # wersja 53: GitHub gubi zaplanowane uruchomienia (04.10: od 22:45 do 12:00 tylko jedno, bez porannych typów) – każde zapisanie
         # kursów przez polski serwer (co ~20–30 min, niezawodny zegar) działa jak „bicie serca”: brak dzisiejszych typów po 7:00 → pełne
         # liczenie; ostatnie sprawdzenie starsze niż 25 min → lekkie sprawdzenie (rozliczenia, alarmy); inaczej tylko dopisanie kursów.
-        try: _ost = pd.Timestamp(json.load(open(os.path.join(OUT, 'status.json'))).get('ostatnie_uruchomienie')).tz_localize('Europe/Warsaw')
+        try: _ost = pd.Timestamp(json.load(open(os.path.join(OUT, 'status.json'))).get('ostatnie_uruchomienie')).tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward')
         except Exception: _ost = None
         if 7 <= teraz.hour < 23 and not dzis_gotowe: pelne = True; print('Bicie serca: brak dzisiejszych typów – pełne liczenie.')
         elif _ost is None or (teraz - _ost) >= pd.Timedelta(minutes=25): pelne = False; print('Bicie serca: lekkie sprawdzenie.')

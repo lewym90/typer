@@ -604,7 +604,7 @@ def _sciezki(m):
     return ['mma/ufc', 'mma/pfl', 'mma/bellator'] if m.get('dyscyplina') == 'MMA' else ['mma/ufc']   # boks: zapasowo Odds API
 
 def znajdz_espn(m):
-    t = pd.Timestamp(m['start']).tz_localize('Europe/Warsaw').tz_convert('America/New_York')
+    t = pd.Timestamp(m['start']).tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward').tz_convert('America/New_York')
     for s in _sciezki(m):
         for dd in (0, -1, 1):
             for x in espn_dzien(s, (t + pd.Timedelta(days=dd)).strftime('%Y%m%d')):

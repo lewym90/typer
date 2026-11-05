@@ -1,4 +1,4 @@
-"""Analityk AI (wersja 35) – Gemini Pro w trzech osobnych krokach, bez przytakiwania i bez konfabulacji.
+"""Analityk AI (wersja 35; wersja 63 – darmowy Gemini) – trzy osobnych krokach, bez przytakiwania i bez konfabulacji.
  1) ANALITYK NA ŚLEPO – nie widzi kursów ani naszego typu; dostaje teczkę meczu (FotMob: składy, braki z wartościami, sędzia,
     forma, tabela, H2H, pogoda) i szuka w Google; zwraca fakty ze źródłami, własne szanse, 3 scenariusze z wynikiem.
  2) ADWOKAT DIABŁA – osobne wywołanie: rozbija analizę z kroku 1 (najmocniejsze argumenty przeciw, przeoczenia, przesadna pewność,
@@ -7,7 +7,7 @@
     i własny typ Analityka (z listy zakładów – także outsider, remis, dokładny wynik).
 Kontrola faktów przez program: fakt bez źródła → usunięty; nazwisko zawodnika spoza kadry z FotMob → fakt odrzucony.
 Każda analiza trafia do dziennika docs/data/typy_analityk.csv (rozliczany: trafność szans AI vs rynek, typ Analityka po kursie rynku).
-Budżet: AI_PRO_BUDZET_ZL (domyślnie 150 zł/mies.), dzienny limit = reszta budżetu / dni do końca miesiąca."""
+Darmowy plan: bez wyszukiwania Google, maks. 8 meczów dziennie, modele od najmocniejszego do wyczerpania limitu."""
 import os, re, json, time, datetime as dt
 import numpy as np, pandas as pd, requests
 
@@ -17,7 +17,7 @@ BUDZET_ZL = float(os.environ.get('AI_PRO_BUDZET_ZL') or 170)   # wariant A: Pro 
 # Cennik Gemini 3.1 Pro (10.2026): wejście 2,00 / wyjście z „myśleniem” 12,00 USD za 1 mln tokenów; wyszukiwanie Google: 5 000 zapytań/mies.
 # gratis (wspólne dla Gemini 3.x), potem 14 USD/1000 – liczymy ostrożnie 0,05 zł za krok z wyszukiwaniem.
 CENA_WE, CENA_WY, USD_PLN, SZUKANIE_ZL = 2.0, 12.0, 3.75, 0.05
-MAKS_MECZOW_DZIENNIE = 12
+MAKS_MECZOW_DZIENNIE = 8    # darmowy plan: jedna analiza to 3 zapytania
 OUT = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
 PLIK_LICZNIKA = os.path.join(OUT, 'analityk_ai_licznik.json')
 PLIK_DZIENNIKA = os.path.join(OUT, 'typy_analityk.csv')
@@ -104,26 +104,6 @@ def do_pamieci(sport, event_id, a):
     except Exception: pass
 
 
-# ------------------------------------------------------------------ model Pro
-def model_pro():
-    if 'm' in _modele: return _modele['m']
-    nazwy = []
-    try:
-        j = requests.get('https://generativelanguage.googleapis.com/v1beta/models', params={'pageSize': 200}, timeout=30,
-                         headers={'x-goog-api-key': KLUCZ}).json()
-        for m in j.get('models', []):
-            n = m.get('name', '').replace('models/', '')
-            if 'generateContent' in (m.get('supportedGenerationMethods') or []) and re.search(r'gemini-[\d.]+-pro', n) \
-                    and not re.search(r'image|tts|audio|live|embed|vision|customtools|computer', n): nazwy.append(n)
-    except Exception as e: _blad(f'lista modeli: {e}')
-    def ranga(n):
-        w = re.search(r'gemini-([\d.]+)', n); wer = float(w.group(1)) if w else 0
-        return (-wer, 'preview' in n, 'exp' in n, len(n))
-    nazwy = sorted(set(nazwy), key=ranga) or ['gemini-2.5-pro']
-    _modele['m'] = nazwy[:3]; STAN['model'] = nazwy[0]
-    return _modele['m']
-
-
 def _json(txt):
     """Wersja 41: naprawa składni (lokalnie, potem tanim modelem) – opłacony krok Pro nie przepada przez przecinek."""
     import ai_raport
@@ -132,35 +112,21 @@ def _json(txt):
     return d
 
 
-def zapytaj(tekst, szukaj=True):
-    """(dane JSON, źródła z wyszukiwania) albo (None, [])."""
+BEZ_INTERNETU = ('WAŻNE: nie masz dostępu do internetu. Opieraj się wyłącznie na teczce i nagłówkach. Jako źródło każdego faktu wpisuj „teczka”. '
+                 'Czego nie ma w teczce, tego nie wiesz – wpisz to do „niewiadome”.\n')
+
+def zapytaj(tekst, szukaj=False):
+    """(dane JSON, []) albo (None, []). Idzie modelami od najmocniejszego (ai_raport._pytaj)."""
     import ai_raport
-    if ai_raport._BLOK_RUN['stop'] or (ai_raport.blokada() and ai_raport._minut_od(ai_raport.blokada().get('ostatnia_proba')) < ai_raport.PONOW_PO_MIN): return None, []
-    for m in model_pro():
-        body = {'contents': [{'parts': [{'text': tekst}]}],
-                'generationConfig': {'temperature': 0.3, 'maxOutputTokens': 20000}}
-        if szukaj: body['tools'] = [{'google_search': {}}]
-        else: body['generationConfig']['responseMimeType'] = 'application/json'
-        try: r = requests.post(URL.format(m=m), json=body, timeout=240, headers={'x-goog-api-key': KLUCZ})
-        except Exception as e: _blad(f'{m}: {e}'); continue
-        if r.status_code in (401, 402):                  # wersja 61: rozliczenia/klucz – koniec prób w tym uruchomieniu
-            _blad(f'{m}: HTTP {r.status_code} ' + re.sub(r'\s+', ' ', r.text)[:160]); ai_raport.ustaw_blokade(r.status_code, r.text); return None, []
-        if r.status_code != 200:
-            opis = re.sub(r'\s+', ' ', r.text)[:200]; _blad(f'{m}: HTTP {r.status_code} {opis}')
-            if r.status_code in (400, 403) and szukaj: szukaj = False; continue
-            continue
-        j = r.json(); c = (j.get('candidates') or [{}])[0]; u = j.get('usageMetadata') or {}
-        we = u.get('promptTokenCount', 0) + u.get('toolUsePromptTokenCount', 0); wy = u.get('candidatesTokenCount', 0) + u.get('thoughtsTokenCount', 0)
-        _dodaj_koszt((we * CENA_WE + wy * CENA_WY) / 1e6 * USD_PLN + (SZUKANIE_ZL if szukaj else 0))
-        STAN['kroki'] += 1; STAN['model'] = m
-        txt = ''.join(p.get('text', '') for p in (c.get('content') or {}).get('parts', []))
-        zr = [dict(tytul=(ch.get('web') or {}).get('title', ''), link=(ch.get('web') or {}).get('uri', ''))
-              for ch in ((c.get('groundingMetadata') or {}).get('groundingChunks') or []) if (ch.get('web') or {}).get('uri')]
-        try: return _json(txt), zr
-        except Exception:
-            _blad(f"{m}: nieczytelny JSON mimo naprawy ({len(txt)} znaków, {c.get('finishReason')}): {txt[:100]}")
-            return None, []          # bez powtarzania kroku innym modelem (podwójny koszt)
-    return None, []
+    if ai_raport.zostalo_analiz() <= 0: return None, []
+    tekst = BEZ_INTERNETU + re.sub(r'Sprawdź w Google[^.]*\.', 'Sprawdź każde ważne twierdzenie względem teczki.', tekst).replace('szukaj w Google', 'oprzyj się na teczce')
+    txt, m = ai_raport._pytaj(tekst, temperatura=0.3, maks=20000, jako_json=True, timeout=240)
+    if not txt: return None, []
+    STAN['kroki'] += 1; STAN['model'] = m
+    try: return _json(txt), []
+    except Exception:
+        _blad(f'{m}: nieczytelny JSON mimo naprawy ({len(txt)} znaków): {txt[:100]}')
+        return None, []
 
 
 # ------------------------------------------------------------------ teczka meczu (piłka – FotMob)
@@ -303,6 +269,26 @@ def _sprawdz_fakty(fakty, nazwiska, druzyny):
     return ok
 
 
+def audyt(a, teczka, sz_ai=None, sz_rynek=None):
+    """Audytor (reguły, bez AI): jakość danych, braki i nieuzasadniona pewność. Każda analiza pokazuje wynik wprost."""
+    t = str(teczka or ''); braki = []
+    if 'brak danych FotMob' in t: braki.append('brak danych FotMob')
+    if 'agłówki' not in t and 'naglowki' not in t: braki.append('brak nagłówków z ostatnich dni')
+    fakty = len((a or {}).get('fakty') or [])
+    if fakty < 3: braki.append('mało potwierdzonych faktów')
+    braki += [str(x)[:90] for x in ((a or {}).get('niewiadome') or [])[:4]]
+    roznica = None
+    try:
+        wsp = [k for k in (sz_ai or {}) if k in (sz_rynek or {})]
+        if wsp: roznica = round(max(abs(float(sz_ai[k]) - float(sz_rynek[k])) for k in wsp), 3)
+    except Exception: pass
+    uwagi = []
+    if roznica is not None and roznica >= 0.12 and fakty < 5: uwagi.append(f'AI odbiega od rynku o {roznica * 100:.0f} pkt przy małej liczbie faktów')
+    poziom = 'niska' if len(braki) >= 3 or uwagi else 'srednia' if braki else 'dobra'
+    return dict(jakosc=poziom, braki=braki[:6], uwagi=uwagi, fakty=fakty, roznica_rynek=roznica,
+                czas=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m-%d %H:%M'))
+
+
 def _szanse(d):
     try:
         s = {k: float((d or {}).get(k)) for k in ('1', 'X', '2')}
@@ -395,19 +381,22 @@ def _u25_z_kubelkow(g):
 
 
 # ------------------------------------------------------------------ analiza meczu piłki
-def analiza_pilka(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, fm, rynek, typ, lista):
+def analiza_pilka(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, fm, rynek, typ, lista, naglowki=None):
     """rynek: {'1','X','2'} szanse z kursów; typ: (opis, szansa) albo None; lista: {klucz: (opis, szansa rynku)}."""
     if not mozna(): return None
     teczka, nazwiska = teczka_pilka(fm)
     kiedy = pd.Timestamp(start).strftime('%d.%m.%Y %H:%M')
-    wsp = dict(mecz=f'{dom_pl} – {gosc_pl}', rozgrywki=rozgrywki, kiedy=kiedy, zasady=ZASADY, teczka=teczka or 'brak danych FotMob')
+    teczka = (teczka or 'brak danych FotMob') + ('\nNagłówki z ostatnich dni: ' + ' | '.join(naglowki[:10]) if naglowki else '')
+    wsp = dict(mecz=f'{dom_pl} – {gosc_pl}', rozgrywki=rozgrywki, kiedy=kiedy, zasady=ZASADY, teczka=teczka)
     a, zr1 = zapytaj(KROK1.format(dom=f'{dom_pl} ({dom})', gosc=f'{gosc_pl} ({gosc})', **wsp))
     if not a: return None
     a['fakty'] = _sprawdz_fakty(a.get('fakty'), nazwiska, (dom, gosc, dom_pl, gosc_pl))
     r, zr2 = zapytaj(KROK2.format(analiza=json.dumps(a, ensure_ascii=False)[:9000], **wsp))
     if r: r['przeoczone'] = _sprawdz_fakty(r.get('przeoczone'), nazwiska, (dom, gosc, dom_pl, gosc_pl))
     _dodaj_koszt(0, mecz=1); STAN['analiz'] += 1
-    return sedzia(dict(a=a, r=r, zr=[x for x in zr1 + zr2], nazwiska=sorted(nazwiska)[:400], wsp=wsp, dom_pl=dom_pl, gosc_pl=gosc_pl), rynek, typ, lista)
+    w = sedzia(dict(a=a, r=r, zr=[x for x in zr1 + zr2], nazwiska=sorted(nazwiska)[:400], wsp=wsp, dom_pl=dom_pl, gosc_pl=gosc_pl), rynek, typ, lista)
+    if w: w['audyt'] = audyt(a, teczka, w.get('szanse'), rynek)
+    return w
 
 
 def sedzia(kroki, rynek, typ, lista):
@@ -633,6 +622,8 @@ def analiza_inne(m, lista=None):
         lista = {'A': (f"wygra {m['a']}", float(m['szansa_a'])), 'B': (f"wygra {m['b']}", 1 - float(m['szansa_a']))}
     tecz = {k: m.get(k) for k in ('turniej', 'dyscyplina', 'bo', 'kategoria', 'rundy', 'wta') if m.get(k) is not None}
     if (m.get('analityk') or {}).get('powody'): tecz['czynniki_programu'] = m['analityk']['powody']
+    ngl = [str(x.get('tytul') if isinstance(x, dict) else x) for v in (m.get('naglowki') or {}).values() for x in (v or [])]
+    if ngl: tecz['naglowki'] = ngl[:10]
     teczka = json.dumps(tecz, ensure_ascii=False)
     kiedy = f"{m.get('dzien', '')} {m.get('godzina', '')}".strip() or str(m.get('start', ''))
     wsp = dict(co=co, a=m['a'], b=m['b'], turniej=m.get('turniej', ''), kiedy=kiedy, zasady=ZASADY, teczka=teczka, kogo=kogo)
@@ -648,6 +639,7 @@ def analiza_inne(m, lista=None):
                                      recenzja=json.dumps(r or {}, ensure_ascii=False)[:6000], **wsp), szukaj=False)
     _dodaj_koszt(0, mecz=1); STAN['analiz'] += 1
     if not s: return None
+    _audyt = audyt(a, teczka)
     w = str(s.get('werdykt') or '').lower().strip()
     if w not in ('mocna_zgoda', 'zgoda', 'ryzyko', 'odradza'): w = 'ryzyko'
     za, przeciw = [str(x)[:260] for x in (s.get('za') or [])][:4], [str(x)[:260] for x in (s.get('przeciw') or [])][:4]
@@ -667,7 +659,7 @@ def analiza_inne(m, lista=None):
     except Exception: pass
     kl = typ_po_korekcie(kor) or 'brak'
     uz = str(ta.get('uzasadnienie') or '')[:260] if kl == kl_ai else ''
-    return dict(model=STAN['model'], werdykt=w, powod=str(s.get('powod') or '')[:260], podsumowanie=str(s.get('podsumowanie') or '')[:900],
+    return dict(audyt=_audyt, model=STAN['model'], werdykt=w, powod=str(s.get('powod') or '')[:260], podsumowanie=str(s.get('podsumowanie') or '')[:900],
                 za=za, przeciw=przeciw, szanse_ab=sz, szanse_na_slepo_ab=_szanse_ab(a.get('szanse')), szanse_adwokat_ab=_szanse_ab((r or {}).get('szanse')),
                 scenariusze=[dict(opis=str(x.get('opis'))[:220], wynik=str(x.get('wynik'))[:60], szansa=x.get('szansa'))
                              for x in (a.get('scenariusze') or []) if isinstance(x, dict)][:3],

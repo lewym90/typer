@@ -76,7 +76,7 @@ def _podobne(a, b):
 
 def fotmob_szukaj(home, away, start):
     """(id FotMob, odwrócone) dla naszego meczu (start: Timestamp z czasem Warszawy)."""
-    t = pd.Timestamp(start); t_utc = t.tz_convert('UTC') if t.tzinfo else t.tz_localize('Europe/Warsaw').tz_convert('UTC')
+    t = pd.Timestamp(start); t_utc = t.tz_convert('UTC') if t.tzinfo else t.tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward').tz_convert('UTC')
     best = None
     for d in {t.strftime('%Y%m%d'), (t - pd.Timedelta(days=1)).strftime('%Y%m%d')}:
         for mid, h, a, tt in fotmob_dzien(d):

@@ -70,13 +70,10 @@ def ocen(teraz=None):
                                  tekst=(b.get('opis') or 'Google odrzuca zapytania.') + ' Dopóki to trwa, typy dnia pokazują się bez oceny AI.'))
     except Exception as e: print('zdrowie – AI:', e)
     g = st.get('gemini') or {}
-    if ai.get('dziala') and godz >= 10 and (dzis.get('pewne') or []) and not g.get('analiz_dzis') and not g.get('z_pamieci') \
-            and (g.get('koszt_miesiac_zl') or 0) < (g.get('budzet_zl') or 1e9) and g.get('klucz'):
+    if g.get('limit_dzienny'): ai['limit_dzienny'] = True            # koniec darmowego limitu to normalny stan, nie awaria: bez alarmu
+    elif ai.get('dziala') and godz >= 10 and (dzis.get('pewne') or []) and not g.get('analiz_dzis') and not g.get('z_pamieci') and g.get('klucz'):
         problemy.append(dict(id='ai_zero', poziom='uwaga', tytul='Dziś nie wykonano żadnej analizy AI',
-                             tekst='Klucz jest, budżet jest, a analiz brak – sprawdź w Ustawieniach błędy Gemini.'))
-    if (g.get('koszt_miesiac_zl') or 0) >= (g.get('budzet_zl') or 1e9) > 0 and ai.get('dziala'):
-        problemy.append(dict(id='ai_budzet', poziom='uwaga', tytul='Wyczerpany miesięczny budżet AI w programie',
-                             tekst=f"Wydano {g.get('koszt_miesiac_zl')} zł z {g.get('budzet_zl')} zł – podnieś AI_BUDZET_ZL albo poczekaj do 1. dnia miesiąca."))
+                             tekst='Klucz jest, limit jest, a analiz brak – sprawdź w Ustawieniach błędy Gemini.'))
     # --- kursy bukmacherów przy typach dnia
     pok = pokrycie_kursow(dzis, inne, teraz)
     for b, p in pok.items():

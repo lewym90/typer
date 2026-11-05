@@ -38,7 +38,7 @@ def analiza_pro(z, sp, a, b, typ_t, start):
     d = time.strftime('%Y-%m-%d')
     if _dzis_pro['data'] != d: _dzis_pro.update(data=d, n=0)
     if _dzis_pro['n'] >= RECZNE_PRO_DZIENNIE: return 429, {'blad': f'Dzisiejszy limit analiz Pro ({RECZNE_PRO_DZIENNIE}) wyczerpany.'}
-    if not analityk_ai.mozna(): return 429, {'blad': 'Wyczerpany budżet analiz Pro na dziś albo w tym miesiącu.'}
+    if not analityk_ai.mozna(): return 429, {'blad': 'Darmowy limit analiz Pro na dziś się skończył. Odnowi się ok. 9:00.'}
     with _blokada:
         if sp == 'pilka':
             sz = z.get('szanse') or {}
@@ -99,7 +99,7 @@ def analiza(z):
     if _licz_reczne() >= RECZNE_DZIENNIE: return 429, {'blad': f'Dzisiejszy limit analiz ręcznych ({RECZNE_DZIENNIE}) wyczerpany.'}
     if ai_raport.zostalo_analiz() <= 0:
         b = ai_raport.blokada()
-        return (503, {'blad': b.get('opis') or 'AI wstrzymane (konto Google).'}) if b else (429, {'blad': 'Wyczerpany miesięczny budżet analiz AI.'})
+        return (503, {'blad': b.get('opis') or 'AI wstrzymane (konto Google).'}) if b else (429, {'blad': 'Darmowy limit AI na dziś się skończył. Odnowi się ok. 9:00.'})
     with _blokada:
         if sp == 'pilka':
             sz = z.get('szanse') or {}

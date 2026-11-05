@@ -1,5 +1,5 @@
-"""Raport i ocena typu po polsku pisane przez AI (Google Gemini, plan płatny Tier 1 – wyszukiwanie Google w cenie do limitu).
-Model sam szuka wiadomości w Google (grounding); gdy wyszukiwanie jest niedostępne, dostaje to, co zebrał program
+"""Raport i ocena typu po polsku pisane przez AI (Google Gemini, darmowy plan – bez wyszukiwania Google).
+Model dostaje to, co zebrał program
 (nieobecni z BSD/Big Balls, zapowiedź BSD, nagłówki) i tylko to streszcza. Bez klucza GEMINI_API_KEY moduł nic nie robi."""
 import os, re, json, time, requests
 import pandas as pd
@@ -15,7 +15,7 @@ BUDZET_ZL = float(os.environ.get('AI_BUDZET_ZL') or 85)   # miesięczny limit ko
 # Wyszukiwanie Google: w planie płatnym 1 500 zapytań dziennie bez opłat (używamy dużo mniej).
 CENY = {'lite': (0.10, 0.40), 'flash': (0.50, 3.00)}
 USD_PLN = 3.75
-AI_PILKA, AI_INNE = 20, 15   # podział przy pełnym liczeniu; resztę uzupełnia „uzupelnij_ai” przy każdym sprawdzeniu
+AI_PILKA, AI_INNE = 6, 6   # darmowy plan: rano typy dnia z każdej dyscypliny po równo; podział przy pełnym liczeniu; resztę uzupełnia „uzupelnij_ai” przy każdym sprawdzeniu
 WAZNOSC_H = 8                # raport z pamięci podręcznej jest używany ponownie przez 8 h (ten sam mecz i ten sam typ)
 STAN = dict(klucz=bool(KLUCZ), zapytania=0, dzis=0, analiz_dzis=0, udane=0, z_pamieci=0, koszt_miesiac_zl=0.0, budzet_zl=BUDZET_ZL,
             model=None, wyszukiwanie=None, werdykty={}, bledy=[])
@@ -26,7 +26,7 @@ PLIK_PAMIECI = os.path.join(_KAT, 'ai_pamiec.json')
 PLIK_BLOKADY = os.path.join(_KAT, 'ai_blokada.json')
 PONOW_PO_MIN = 45            # po błędzie rozliczeń/klucza: jedna próba na uruchomienie, nie częściej niż co 45 min
 _BLOK_RUN = {'stop': False}  # w tym uruchomieniu Google odrzucił zapytanie (402/401) – dalej nie pytamy
-OPISY_BLOKADY = {402: 'Skończyły się przedpłacone środki na koncie Google AI Studio (błąd 402). Doładuj konto (najlepiej włącz automatyczne doładowanie) – program wznowi analizy sam.',
+OPISY_BLOKADY = {402: 'Klucz Gemini należy do projektu z płatnościami bez środków (błąd 402). Wpisz darmowy klucz z projektu bez rozliczeń – program wznowi analizy sam.',
                  401: 'Google odrzuca klucz GEMINI_API_KEY (błąd 401) – sprawdź klucz w sekretach GitHuba i na koncie Google AI Studio.'}
 
 def blokada():
@@ -103,7 +103,7 @@ def zostalo_analiz():
     if _BLOK_RUN['stop']: return 0
     b = blokada()
     if b and _minut_od(b.get('ostatnia_proba')) < PONOW_PO_MIN: return 0      # AI wstrzymane – bez zapytań, do następnej próby
-    if koszt_miesiac() >= BUDZET_ZL: return 0
+    if not KLUCZ or not dostepne_modele(): STAN['limit_dzienny'] = bool(KLUCZ); return 0      # dzienny limit wszystkich modeli: czekamy do odnowienia
     return max(0, MAKS_ANALIZ - analiz_dzis())
 
 def _koszt(model, usage):
@@ -138,7 +138,7 @@ def do_pamieci(k, ai):
     except Exception: pass
 
 _zly = set()            # modele, które odpowiedziały błędem limitu / brakiem – pomijamy do końca uruchomienia
-_szukanie = {'ok': True}   # False, gdy Google odrzuca wyszukiwanie (400/403) – wtedy tylko streszczanie
+_szukanie = {'ok': False}   # darmowy plan: bez wyszukiwania Google
 
 def _blad(t):
     t = str(t)[:180]; print('AI:', t)
@@ -227,7 +227,6 @@ def pilnuj_werdyktu(w, szukal, zrodla, d):
     """Ocena typu tylko na podstawie źródeł: bez wyszukiwania i bez źródeł – brak oceny; „odradza” bez źródła
     albo oparte na plotce („podobno”) – najwyżej „ryzyko”."""
     if not w: return None
-    if not szukal and not zrodla: return None          # AI pisało tylko z nagłówków – nie wystawia oceny typu
     if w == 'odradza' and (not zrodla or 'podobno' in str(d.get('powod') or '').lower()): return 'ryzyko'
     return w
 
@@ -297,21 +296,10 @@ NAPRAW = ('Poniższy tekst miał być jednym obiektem JSON, ale ma błędy skła
 def _napraw_modelem(t):
     """Ostatnia próba: najtańszy model (Flash-Lite, tryb JSON, bez wyszukiwania) poprawia składnię. Koszt ułamka grosza."""
     if not KLUCZ or not t or _licznik() >= MAKS_DZIENNIE or _BLOK_RUN['stop']: return None
-    lista = modele(); lite = [m for m in lista if 'lite' in m] or lista
-    for m in lite[:2]:
-        body = {'contents': [{'parts': [{'text': NAPRAW + t[:30000]}]}],
-                'generationConfig': {'temperature': 0, 'maxOutputTokens': 12000, 'responseMimeType': 'application/json'}}
-        try:
-            _licznik(1); r = requests.post(URL.format(m=m), json=body, timeout=120, headers={'x-goog-api-key': KLUCZ})
-            if r.status_code in (401, 402): _licznik(-1); ustaw_blokade(r.status_code, r.text); _blad(f'naprawa JSON {m}: HTTP {r.status_code}'); return None
-            if r.status_code != 200: _blad(f'naprawa JSON {m}: HTTP {r.status_code}'); continue
-            j = r.json(); c = (j.get('candidates') or [{}])[0]
-            try: koszt_miesiac(_koszt(m, j.get('usageMetadata') or {}))
-            except Exception: pass
-            d = _parsuj(''.join(p.get('text', '') for p in (c.get('content') or {}).get('parts', [])))
-            if d: STAN['naprawione_modelem'] = STAN.get('naprawione_modelem', 0) + 1; return d
-        except Exception as e: _blad(f'naprawa JSON {m}: {e}')
-    return None
+    txt, _ = _pytaj(NAPRAW + t[:30000], temperatura=0, jako_json=True, timeout=120)
+    d = _parsuj(txt) if txt else None
+    if d: STAN['naprawione_modelem'] = STAN.get('naprawione_modelem', 0) + 1
+    return d
 
 def _wyciagnij_json(t, napraw=True):
     """Obiekt JSON z odpowiedzi modelu; przy błędach składni naprawa lokalna, potem modelem (wersja 41 – nie tracimy opłaconych analiz)."""
@@ -320,10 +308,37 @@ def _wyciagnij_json(t, napraw=True):
     return d
 
 _modele = {}
-_bez_szukania = set()   # modele, którym skończył się limit wyszukiwania Google
 _proby = {}             # ponowienia po błędzie 503 (przeciążenie)
+PLIK_LIMITOW = os.path.join(_KAT, 'ai_limity.json')
+_chwilowo = {}          # model -> czas, do kiedy omijać go w tym uruchomieniu (limit na minutę)
+
+def _dzien_google():
+    """Dzienne limity darmowego planu odnawiają się o północy czasu pacyficznego."""
+    return pd.Timestamp.now(tz='America/Los_Angeles').strftime('%Y-%m-%d')
+
+def _limity():
+    try: d = json.load(open(PLIK_LIMITOW))
+    except Exception: d = {}
+    if d.get('dzien') != _dzien_google(): d = dict(dzien=_dzien_google(), wyczerpane={}, udane={})
+    return d
+
+def _zapisz_limity(d):
+    try:
+        os.makedirs(os.path.dirname(PLIK_LIMITOW), exist_ok=True); json.dump(d, open(PLIK_LIMITOW, 'w', encoding='utf-8'), ensure_ascii=False)
+    except Exception: pass
+
+def _oznacz_wyczerpany(m, powod):
+    d = _limity(); d['wyczerpane'][m] = str(powod)[:120]; _zapisz_limity(d); STAN['wyczerpane'] = sorted(d['wyczerpane'])
+
+def _ranga_modelu(n):
+    """Najmocniejszy pierwszy: nowsza generacja przed starszą, w niej Pro → Flash → Flash-Lite, wersje stabilne przed „preview”."""
+    w = re.search(r'gemini-(\d+(?:\.\d+)?)', n); wer = float(w.group(1)) if w else 0
+    rodzina = 2 if 'lite' in n else 1 if 'flash' in n else 0
+    return (-wer, rodzina, 'preview' in n, 'latest' in n, n)
+
 def modele():
-    """Lista modeli dostępnych dla Twojego klucza (Google zmienia nazwy i wycofuje stare) – najpierw Flash, potem Flash-Lite."""
+    """Wszystkie modele tekstowe dostępne dla klucza, od najmocniejszego. Google zmienia nazwy – lista jest pobierana, nie wpisana na stałe.
+    Model bez darmowego limitu odpada sam przy pierwszym zapytaniu (429/403) i do końca doby idziemy do następnego."""
     if 'lista' in _modele: return _modele['lista']
     nazwy = []
     try:
@@ -331,59 +346,70 @@ def modele():
                          headers={'x-goog-api-key': KLUCZ}).json()
         for m in j.get('models', []):
             n = m.get('name', '').replace('models/', '')
-            if 'generateContent' not in (m.get('supportedGenerationMethods') or []): continue
-            if 'flash' not in n or re.search(r'image|tts|audio|live|embed|thinking|exp|customtools', n): continue
+            if 'generateContent' not in (m.get('supportedGenerationMethods') or []) or not n.startswith('gemini-'): continue
+            if re.search(r'image|tts|audio|live|embed|transcribe|translate|thinking|exp|customtools|computer|robotics|vision|omni|banana', n): continue
             nazwy.append(n)
     except Exception as e: _blad(f'lista modeli: {e}')
-    def ranga(n):   # plan płatny: Flash (najlepsza analiza) przed Flash-Lite; stabilne przed "preview"; nowsze przed starszymi
-        w = re.search(r'(\d+(?:\.\d+)?)', n); wer = float(w.group(1)) if w else 0
-        return ('lite' in n, 'preview' in n, 'latest' in n, 'omni' in n, -wer, n)
-    lista = sorted(set(nazwy), key=ranga) or MODELE
-    flash = [n for n in lista if 'lite' not in n][:3]; lite = [n for n in lista if 'lite' in n][:2]
-    _modele['lista'] = flash + lite; STAN['modele'] = _modele['lista']
+    _modele['lista'] = sorted(set(nazwy), key=_ranga_modelu) or MODELE
+    STAN['modele'] = _modele['lista']
     return _modele['lista']
 
-def _zapytaj(tekst_szukaj, tekst_bez):
-    """Pyta kolejne modele. Limit (429) przy wyszukiwaniu Google = spróbuj tego samego modelu bez wyszukiwania."""
-    if _BLOK_RUN['stop']: return None, [], False
-    for m in modele():
-        if m in _zly: continue
-        for z_szukaniem in ((True, False) if _szukanie['ok'] and m not in _bez_szukania else (False,)):
-            body = {'contents': [{'parts': [{'text': tekst_szukaj if z_szukaniem else tekst_bez}]}],
-                    'generationConfig': {'temperature': 0.2, 'maxOutputTokens': 12000}}
-            if z_szukaniem: body['tools'] = [{'google_search': {}}]
+def dostepne_modele():
+    wyc = _limity()['wyczerpane']; t = time.time()
+    return [m for m in modele() if m not in wyc and _chwilowo.get(m, 0) <= t]
+
+def _opoznienie_429(r):
+    """(limit dzienny?, sekundy oczekiwania) z odpowiedzi 429."""
+    dzienny, sek = False, None
+    try:
+        for d in (r.json().get('error') or {}).get('details') or []:
+            for v in d.get('violations') or []:
+                q = str(v.get('quotaId') or '') + str(v.get('quotaMetric') or '')
+                if re.search(r'perday|per_day|daily', q, re.I) or str(v.get('quotaValue')) == '0': dzienny = True
+            if d.get('retryDelay'): sek = float(re.sub(r'[^0-9.]', '', str(d['retryDelay'])) or 0)
+    except Exception: pass
+    return dzienny, sek
+
+def _pytaj(tekst, temperatura=0.2, maks=12000, jako_json=False, timeout=150):
+    """(tekst, model) albo (None, None). Idzie modelami od najmocniejszego; wyczerpany limit to normalny stan, nie awaria."""
+    if _BLOK_RUN['stop'] or not KLUCZ: return None, None
+    cfg = {'temperature': temperatura, 'maxOutputTokens': maks}
+    if jako_json: cfg['responseMimeType'] = 'application/json'
+    body = {'contents': [{'parts': [{'text': tekst}]}], 'generationConfig': cfg}
+    for m in dostepne_modele():
+        for proba in range(3):
             try:
                 STAN['zapytania'] += 1; _licznik(1)
-                r = requests.post(URL.format(m=m), json=body, timeout=150, headers={'x-goog-api-key': KLUCZ})
-            except Exception as e: _blad(f'{m}: {e}'); continue
-            if r.status_code in (401, 402):            # wersja 61: rozliczenia/klucz – ponawianie innym modelem nic nie da i zjada limit zapytań
+                r = requests.post(URL.format(m=m), json=body, timeout=timeout, headers={'x-goog-api-key': KLUCZ})
+            except Exception as e: _blad(f'{m}: {e}'); break
+            if r.status_code in (401, 402):            # zły klucz albo projekt rozliczeniowy bez środków – inny model nic nie da
                 _licznik(-1); _blad(f'{m}: HTTP {r.status_code} {re.sub(chr(10), " ", r.text)[:200]}'); ustaw_blokade(r.status_code, r.text)
-                return None, [], False
+                return None, None
             if r.status_code == 200:
-                if blokada(): zdejmij_blokade()           # Google znów odpowiada (np. doładowano konto)
+                if blokada(): zdejmij_blokade()
                 j = r.json(); c = (j.get('candidates') or [{}])[0]
-                try: koszt_miesiac(_koszt(m, j.get('usageMetadata') or {}))
-                except Exception: pass
                 txt = ''.join(p.get('text', '') for p in (c.get('content') or {}).get('parts', []))
-                zr = []
-                for ch in ((c.get('groundingMetadata') or {}).get('groundingChunks') or []):
-                    w = ch.get('web') or {}
-                    if w.get('uri'): zr.append(dict(tytul=w.get('title') or w['uri'][:40], link=w['uri']))
-                STAN['model'] = m; STAN['wyszukiwanie'] = z_szukaniem
-                time.sleep(1)
-                return txt, zr, z_szukaniem
-            opis = re.sub(r'\s+', ' ', r.text)[:260]
-            _blad(f'{m}{" +Google" if z_szukaniem else ""}: HTTP {r.status_code} {opis}')
-            if r.status_code in (500, 503) and not z_szukaniem and _proby.get(m, 0) < 2:   # przeciążenie – chwilowe
-                _proby[m] = _proby.get(m, 0) + 1; time.sleep(15); return _zapytaj(tekst_szukaj, tekst_bez)
-            if z_szukaniem and r.status_code in (400, 403, 429):
-                _bez_szukania.add(m); _szukanie['odmowy'] = _szukanie.get('odmowy', 0) + 1
-                if r.status_code != 429 or _szukanie['odmowy'] >= 2: _szukanie['ok'] = False   # darmowy plan bez wyszukiwania Google
-                time.sleep(3); continue          # ten sam model bez wyszukiwania
-            if r.status_code in (404, 403, 429, 500, 503): _zly.add(m)
-            if r.status_code == 429: time.sleep(3)
+                if not txt.strip(): _blad(f'{m}: pusta odpowiedź ({c.get("finishReason")})'); break
+                d = _limity(); d['udane'][m] = d['udane'].get(m, 0) + 1; _zapisz_limity(d)
+                STAN['model'] = m; time.sleep(1)
+                return txt, m
+            if r.status_code == 429:
+                _licznik(-1); dzienny, sek = _opoznienie_429(r)
+                if dzienny: _oznacz_wyczerpany(m, 'limit dzienny'); break
+                if proba < 2 and (sek or 20) <= 65: time.sleep((sek or 20) + 1); continue
+                _chwilowo[m] = time.time() + 120; break      # limit na minutę nie puszcza – w tej chwili następny model
+            if r.status_code == 400: _blad(f'{m}: HTTP 400 {re.sub(chr(10), " ", r.text)[:160]}'); break
+            if r.status_code in (403, 404): _licznik(-1); _oznacz_wyczerpany(m, f'niedostępny (HTTP {r.status_code})'); break
+            _blad(f'{m}: HTTP {r.status_code} {re.sub(chr(10), " ", r.text)[:200]}')
+            if r.status_code in (500, 503) and proba < 1: time.sleep(15); continue
             break
-    return None, [], False
+    if not dostepne_modele(): STAN['limit_dzienny'] = True
+    return None, None
+
+def _zapytaj(tekst_szukaj, tekst_bez):
+    """Darmowy plan nie ma wyszukiwania Google: AI pracuje na tym, co zebrał program (składy, braki, nagłówki, pamięć ludzi)."""
+    txt, _ = _pytaj(tekst_bez)
+    return txt, [], False
 
 def _trzy(x):
     """{'1','X','2'} znormalizowane albo None (wersja 44 – dziennik szans Flash)."""
@@ -404,7 +430,7 @@ def raport_ai(dom, gosc, dom_pl, gosc_pl, rozgrywki, start, braki=None, zapowied
     if not wymus:
         z = z_pamieci(kp)
         if z: return z
-    if not KLUCZ or _licznik() >= MAKS_DZIENNIE or zostalo_analiz() <= 0: return None
+    if not KLUCZ or zostalo_analiz() <= 0: return None
     kiedy = pd.Timestamp(start).strftime('%d.%m.%Y, %H:%M') if start is not None else 'najbliższy mecz tych drużyn (data nieznana)'
     szukaj_txt = ('Wyszukaj w Google najnowsze wiadomości o obu drużynach (konferencje trenerów, składy, kontuzje)'
                   + (' – koniecznie w polskich źródłach (Sport.pl, TVP Sport, Meczyki, WP SportoweFakty, Przegląd Sportowy, Interia)' if polski else

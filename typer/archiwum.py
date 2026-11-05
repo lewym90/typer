@@ -169,7 +169,7 @@ def wyniki_dnia(dzien):
 def wynik_meczu(gosp, gosc, start, _cache={}):
     """Wersja 50: wynik meczu dziennika (nazwy z The Odds API, start – czas polski 'YYYY-MM-DD HH:MM') z FotMob/Flashscore –
     za darmo, zamiast 2 kredytów na ligę. (gole gosp., gole gości) albo None."""
-    try: t = pd.Timestamp(str(start)[:16]).tz_localize('Europe/Warsaw').tz_convert('UTC')
+    try: t = pd.Timestamp(str(start)[:16]).tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward').tz_convert('UTC')
     except Exception: return None
     dzien = t.tz_convert('Europe/Warsaw').strftime('%Y-%m-%d')
     if dzien not in _cache:

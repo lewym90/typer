@@ -106,7 +106,7 @@ def podob(a, b):
 def _mecze_espn(sport_key, start):
     slug = ESPN.get(sport_key)
     if not slug: return slug, []
-    data = pd.Timestamp(start).tz_localize('Europe/Warsaw').tz_convert('America/New_York').strftime('%Y%m%d')
+    data = pd.Timestamp(start).tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward').tz_convert('America/New_York').strftime('%Y%m%d')
     k = (slug, data)
     if k not in _cache:
         try: j = requests.get(f'https://site.api.espn.com/apis/site/v2/sports/soccer/{slug}/scoreboard', params={'dates': data}, timeout=20).json()
@@ -125,7 +125,7 @@ def _mecze_espn(sport_key, start):
 def znajdz_espn(sport_key, dom, gosc, start):
     """Mecz ESPN pasujący do naszego: obie nazwy podobne, albo jedna bardzo podobna i ta sama godzina rozpoczęcia."""
     slug, lista = _mecze_espn(sport_key, start)
-    t0 = pd.Timestamp(start).tz_localize('Europe/Warsaw')
+    t0 = pd.Timestamp(start).tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward')
     najl, out = 0, None
     for m in lista:
         a, b = podob(dom, m['dom']), podob(gosc, m['gosc'])
@@ -171,7 +171,7 @@ def sklady_espn(sport_key, dom, gosc, start):
     xi = _starterzy(slug, m['id'])
     if not xi: return None
     out = {'gosp': xi.get(str(m['dom_id']), []), 'gosc': xi.get(str(m['gosc_id']), []), 'zmiany': {}, 'zrodlo': 'ESPN'}
-    t0 = pd.Timestamp(m['start']) if m.get('start') else pd.Timestamp(start).tz_localize('Europe/Warsaw')
+    t0 = pd.Timestamp(m['start']) if m.get('start') else pd.Timestamp(start).tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward')
     for strona, tid in (('gosp', m['dom_id']), ('gosc', m['gosc_id'])):
         if not out[strona]: continue
         prev = _poprzedni_mecz(slug, tid, t0)

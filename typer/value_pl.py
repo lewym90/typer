@@ -35,7 +35,7 @@ ROZB = dict(n=0, przyklady=[])
 def _teraz(): return pd.Timestamp.now(tz='Europe/Warsaw')
 
 def _rozpoczety(m):
-    try: return pd.Timestamp(m['start']).tz_localize('Europe/Warsaw') <= _teraz()
+    try: return pd.Timestamp(m['start']).tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward') <= _teraz()
     except Exception: return False
 
 def _najlepszy(zrodla, klucz):

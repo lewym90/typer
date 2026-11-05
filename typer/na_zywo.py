@@ -157,7 +157,7 @@ def tablica(slug, data_ny):
     return out
 
 def data_ny(start_pl):
-    return pd.Timestamp(start_pl).tz_localize('Europe/Warsaw').tz_convert('America/New_York').strftime('%Y%m%d')
+    return pd.Timestamp(start_pl).tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward').tz_convert('America/New_York').strftime('%Y%m%d')
 
 def espn_meczu(m):
     """Stan meczu w ESPN (dopasowanie nazw jak w programie; obserwowane – po id)."""
@@ -321,7 +321,7 @@ def obieg(stan, sl, pierwszy):
         e = espn_meczu(m)
         s = stan['mecze'].setdefault(k, dict(start=m['start'], stan='pre', hg=None, ag=None, gole=0))
         if not e:
-            if pd.Timestamp(m['start']).tz_localize('Europe/Warsaw') > teraz() - pd.Timedelta(hours=2.5): aktywne.append(k)
+            if pd.Timestamp(m['start']).tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward') > teraz() - pd.Timedelta(hours=2.5): aktywne.append(k)
             continue
         if e['stan'] != 'post': aktywne.append(k)
         # mecz zakończył się, zanim strażnik go zobaczył – tylko wynik końcowy, bez odtwarzania goli
@@ -382,8 +382,8 @@ def main():
                 stan['podsumowanie'] = dzis; zapisz_stan(stan, commit=True, opis='Podsumowanie dnia')
         # kiedy kończyć: nic nie trwa i najbliższy start za ponad 75 min (lekkie sprawdzenie uruchomi strażnika ponownie)
         trwa = [k for k in aktywne if stan['mecze'].get(k, {}).get('stan') == 'in']
-        przyszle = [pd.Timestamp(sl[k]['start']).tz_localize('Europe/Warsaw') for k in aktywne if k in sl and stan['mecze'].get(k, {}).get('stan') == 'pre']
-        przyszle += [pd.Timestamp(t).tz_localize('Europe/Warsaw') for t in przyszle_i]
+        przyszle = [pd.Timestamp(sl[k]['start']).tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward') for k in aktywne if k in sl and stan['mecze'].get(k, {}).get('stan') == 'pre']
+        przyszle += [pd.Timestamp(t).tz_localize('Europe/Warsaw', ambiguous=True, nonexistent='shift_forward') for t in przyszle_i]
         najblizszy = min(przyszle) if przyszle else None
         if not trwa and not trwa_i and (najblizszy is None or najblizszy > teraz() + pd.Timedelta(minutes=75)):
             # w nocy harmonogram GitHuba nie działa – strażnik czeka sam na nocne mecze tej doby (do 6:00, walki do 9:00)
