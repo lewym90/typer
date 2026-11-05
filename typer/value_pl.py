@@ -19,7 +19,11 @@ MIN_EV = 0.05
 MIN_EV_DLUGI = 0.07
 KURS_DLUGI = 1.90
 MAX_EV = 0.25
-KURS_MIN, KURS_MAX = 1.30, 2.60
+KURS_MIN, KURS_MAX = 1.30, 2.60        # zakres zapisywany w dzienniku
+# Wersja 67 – dziennik Value (840 typów): kurs 1,50–1,90 → +7,6% (obie połowy okresu: +6,4% i +9,0%), reszta → −0,5% i −13,2%.
+# Pokazujemy i rozsyłamy tylko ten przedział. Pozostałe typy są zapisywane jako obserwacja, żeby sprawdzać regułę na nowych meczach.
+POKAZ_MIN, POKAZ_MAX = 1.50, 1.90
+def w_pasmie(kurs): return POKAZ_MIN <= float(kurs) <= POKAZ_MAX
 NA_MECZ = 2
 # Wersja 41 – bezpiecznik rozbieżności: gdy nasza szansa jest o ponad 15% (względnie) wyższa niż szansa z mediany kursów
 # 4 polskich bukmacherów (z odjętą typową marżą ~5%), to prawie zawsze błąd przeliczenia, a nie okazja – np. przy wielkim
@@ -73,7 +77,7 @@ def value_pilka(dzis, kursy, vps, KP):
             if e > MAX_EV: odrzucone += 1; continue
             if rozbiezne(p, kk): ROZB['n'] += 1; ROZB['przyklady'].append(f"{m['gospodarz']} – {m['gosc']}: {z} {p:.0%} vs kurs {np.median(list(kk.values())):.2f}"); continue
             kand.append((e, z, p, nazwa, opis, b, kurs, kk))
-        for e, z, p, nazwa, opis, b, kurs, kk in sorted(kand, key=lambda x: -x[0])[:NA_MECZ]:
+        for e, z, p, nazwa, opis, b, kurs, kk in sorted(kand, key=lambda x: (not w_pasmie(x[6]), -x[0]))[:NA_MECZ]:
             pola = {k: v for k, v in m.items() if k not in ('klucz', 'zaklad', 'opis', 'kursy_pl', 'kursy_odczyt', 'kursy_czas', 'szansa', 'kurs_uczciwy',
                                                           'kurs_min', 'kurs_betclic', 'ev', 'werdykt', 'raport', 'lepszy_kurs', 'ryzykowny', 'nizsza_pewnosc')}
             # raport meczu (nieobecni, zapowiedź, nagłówki) BEZ oceny AI – ta dotyczy typu z Pewnych; Value dostaje własną ocenę swojego zakładu
@@ -127,13 +131,14 @@ def licz(kursy, vps):
             nowe, odrz = value_pilka(dzis, kursy, vps, KP)
             _przenies_ai(dzis.get('value') or [], nowe)
             ids = {str(v['event_id']) for v in stare}
-            dzis['value'] = stare + [v for v in nowe if str(v['event_id']) not in ids]
+            dzis['value'] = stare + [v for v in nowe if str(v['event_id']) not in ids and w_pasmie(v['kurs'])]
             diag['pilka'] = len(dzis['value']); diag['odrzucone_podejrzane'] += odrz
             _zapisz(p, dzis)
             wiersze = [dict(data_zapisu=_teraz().strftime('%Y-%m-%d %H:%M'), event_id=v['event_id'], liga=v.get('sport_key'), start=v['start'],
                             mecz=v['mecz'], gospodarz=v['gospodarz'], gosc=v['gosc'], zaklad=v['zaklad'], rynek='klucz', strona=v['klucz'], linia=0,
                             kurs_betclic=v['kurs'], bukmacher=v['bukmacher'], kurs_uczciwy=round(1 / v['szansa'], 3), szansa=round(v['szansa'], 3),
-                            EV=v['ev'], stawka_sugerowana=round(core.BANKROLL * core.kelly(v['szansa'], v['kurs']), 0), wynik='', zysk_na_1zl=np.nan)
+                            EV=v['ev'], stawka_sugerowana=round(core.BANKROLL * core.kelly(v['szansa'], v['kurs']), 0), wynik='', zysk_na_1zl=np.nan,
+                            obserwacja=0 if w_pasmie(v['kurs']) else 1)
                        for v in nowe]
             if wiersze: core.zapisz_value(wiersze)   # dziennik: pierwszy kurs, przy którym pojawiła się Value
     except FileNotFoundError: pass
@@ -149,12 +154,14 @@ def licz(kursy, vps):
                     if m.get('rynek_pl'): continue                       # KSW – Value z rynku PL liczona w sporty.py
                     if _rozpoczety(m): m['value'] = [v for v in m.get('value') or [] if v.get('bukmacher')]; continue
                     poprzednie = m.get('value') or []
-                    m['value'] = value_duel(m, kursy, vps, KP, sp) if _ostry(m.get('zrodlo')) else []
+                    wsz = value_duel(m, kursy, vps, KP, sp) if _ostry(m.get('zrodlo')) else []
+                    m['value'] = [v for v in wsz if w_pasmie(v['kurs'])]
                     _przenies_ai(poprzednie, m['value'])
-                    for v in m['value']:
+                    for v in wsz:
                         wiersze.append(dict(data=dzien, sport=sp, dyscyplina=m.get('dyscyplina'), sport_key=m.get('sport_key'), turniej=m.get('turniej'),
                                             event_id=m['event_id'], start=m['start'], a=m['a'], b=m['b'], bo=m.get('bo'), ai=sporty.werdykt(m) or '',
-                                            rodzaj='value', poziom='value', klucz=v['klucz'], zaklad=v['zaklad'], szansa=v['szansa'], kurs=v['kurs'], nizsza=False))
+                                            rodzaj='value' if w_pasmie(v['kurs']) else 'value_obs', poziom='value' if w_pasmie(v['kurs']) else 'value_obs',
+                                            klucz=v['klucz'], zaklad=v['zaklad'], szansa=v['szansa'], kurs=v['kurs'], nizsza=False))
                 s['value'] = [dict(v, **{k: m[k] for k in ('mecz', 'a', 'b', 'turniej', 'godzina', 'dzien', 'start', 'event_id', 'dyscyplina', 'sport', 'zrodlo') if k in m})
                               for m in s.get('mecze') or [] for v in m.get('value') or []]
                 diag[sp] = len(s['value'])

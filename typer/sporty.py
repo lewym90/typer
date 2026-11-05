@@ -231,8 +231,7 @@ def lista_pewnych(mecze):
     kol = sorted(mecze, key=popularnosc)
     for m in mecze: m.pop('nizsza_pewnosc', None)
     kand = [m for m in kol[:PEWNE_Z_ILU] if m.get('najpewniejszy')]
-    odradzane = [m for m in kand if werdykt(m) == 'odradza' and m['najpewniejszy']['szansa'] >= core.PEWNE_MIN_SZANSA]
-    kand = [m for m in kand if werdykt(m) != 'odradza']
+    odradzane = []         # wersja 67: AI nie usuwa typów, tylko ostrzega
     mocne = sorted([m for m in kand if m['najpewniejszy']['szansa'] >= core.PEWNE_MIN_SZANSA],
                    key=lambda m: (werdykt(m) == 'ryzyko', -m['najpewniejszy']['szansa']))
     wyb = mocne[:PEWNE_ILE]

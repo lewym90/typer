@@ -399,7 +399,7 @@ async function laduj(){
   S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null; S.status = st.value || null; S.inne = inn.value || null; S.glowne = gl.value || null;
 }
 
-const WERSJA_APLIKACJI = 66;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
+const WERSJA_APLIKACJI = 67;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
 /* ---------- model (ten sam co w Pythonie) ---------- */
 const MAXG = 10;
 function pois(l){ const out = [Math.exp(-l)]; for(let k=1;k<=MAXG;k++) out.push(out[k-1]*l/k); return out; }
@@ -766,7 +766,7 @@ function valueSportu(sp){ return sp === 'pilka' ? ((S.dzis||{}).value || []) : (
 /* ---------- PIŁKA: karty ---------- */
 const kartaPewna = (sp, m, nr) => sp === 'pilka' ? kartaPewnaPilka(m, nr) : kartaInne(m, nr, sp);
 const kartaValue = (sp, v) => sp === 'pilka' ? kartaValuePilka(v) : kartaValueInne(v, sp);
-const OPIS_VALUE = `<p class="note" style="margin:4px">Value = najlepszy kurs polskich bukmacherów (STS, Fortuna, Superbet, Betclic) co najmniej 5% wyższy od uczciwego kursu z Pinnacle/Betfair (przy kursie powyżej 1,90 – 7%). Liczona od razu po pobraniu kursów (rano przed wiadomością i przy każdym odświeżeniu). Testy: przewagę dawało granie po <b style="color:var(--text)">najlepszym kursie</b> spośród wielu bukmacherów (piłka +5,6% na 3 188 zakładach, tenis +5,9% na 4 343). Podatek 12% zjada taką przewagę, więc w Ustawieniach zaznaczysz, u kogo go płacisz.</p>`;
+const OPIS_VALUE = `<p class="note" style="margin:4px">Value = najlepszy kurs polskich bukmacherów (STS, Fortuna, Superbet, Betclic) co najmniej 5% wyższy od uczciwego kursu z Pinnacle/Betfair, przy kursie 1,50–1,90. W tym przedziale dziennik ma najlepsze wyniki, ale to nie jest dowód trwałej przewagi. Liczona od razu po pobraniu kursów (rano przed wiadomością i przy każdym odświeżeniu). Testy: przewagę dawało granie po <b style="color:var(--text)">najlepszym kursie</b> spośród wielu bukmacherów (piłka +5,6% na 3 188 zakładach, tenis +5,9% na 4 343). Podatek 12% zjada taką przewagę, więc w Ustawieniach zaznaczysz, u kogo go płacisz.</p>`;
 
 /* ---------- NOWY WYGLĄD: wspólne klocki kart ---------- */
 const NAZWA_KR = {pilka:'Piłka', tenis:'Tenis', walki:'Walki'};

@@ -118,7 +118,7 @@ def wybierz(dzis, inne):
     kand = list(_pewne_pilka(dzis))
     for sp in ('tenis', 'walki'): kand += list(_pewne_inne(inne, sp))
     ksw_ok = bool((inne or {}).get('ksw_do_glownych'))
-    kand = [k for k in kand if k['werdykt'] != 'odradza' and (ksw_ok or not k['ksw'])]
+    kand = [k for k in kand if ksw_ok or not k['ksw']]   # wersja 67: „odradza” nie usuwa typu, tylko spada na koniec kolejki
     # wersja 52: rano najpierw typy SPRAWDZONE przez AI bez wątpliwości („zgoda”, bez realnej drogi do porażki), potem niesprawdzone,
     # na końcu „ryzyko” – brak oceny nie może wyglądać jak „bez wątpliwości”
     rang = lambda k: 0 if k['werdykt'] == 'zgoda' else (1 if not k['werdykt'] or k['werdykt'] == 'niepelna' else 2)

@@ -22,7 +22,9 @@ METODOLOGIA = [
     ('wersja 33', 'Dziennik liczy zysk od najlepszego polskiego kursu z rana.'),
     ('wersja 57–59', 'Value: przewaga min. 5%, kurs 1,30–2,60; powyżej 1,90 przewaga min. 7%.'),
     ('wersja 63', 'AI na darmowym kluczu Gemini: bez wyszukiwania Google, tylko dane zebrane przez program.'),
-    ('wersja 64', 'Skuteczność w aplikacji liczona z dziennika zamiast z testów historycznych.')]
+    ('wersja 64', 'Skuteczność w aplikacji liczona z dziennika zamiast z testów historycznych.'),
+    ('wersja 67', 'Value pokazywane tylko przy kursach 1,50–1,90, reszta zapisywana jako obserwacja.'),
+    ('wersja 67', 'AI nie usuwa typów z Pewnych, tylko ostrzega.')]
 OPISY_KAT = ('value', 'zmiana', 'utrata', 'sklad', 'kontuzja', 'prognoza', 'start', 'gol', 'koniec', 'rozliczenie', 'raport')
 DOMYSLNE = dict(kategorie={k: k != 'rozliczenie' for k in OPISY_KAT}, od=8, do=23, prog_spadku=5, kursy=[], wlasciciel=None, tg_ost=0)
 
@@ -64,7 +66,8 @@ def rekordy():
     for x in wiersze('typy_value.csv'):
         z = fl(x.get('zysk_na_1zl'))
         if z is None or not x.get('wynik'): continue
-        out.append(dict(sport='pilka', rodzaj='value', poziom='value', nizsza=False, data=str(x.get('start'))[:10], szansa=fl(x.get('szansa')),
+        obs = str(x.get('obserwacja') or '') in ('1', '1.0')
+        out.append(dict(sport='pilka', rodzaj='value_obs' if obs else 'value', poziom='value', nizsza=False, data=str(x.get('start'))[:10], szansa=fl(x.get('szansa')),
                         traf=1.0 if z > 0 else 0.0, kurs=z + 1 if z > 0 else (fl(x.get('kurs_pl_rano')) or fl(x.get('kurs_betclic'))), ai='', ev=fl(x.get('EV')),
                         clv=(fl(x.get('kurs_pl_rano')) / fl(x.get('kurs_pl_zamk')) - 1) if fl(x.get('kurs_pl_rano')) and fl(x.get('kurs_pl_zamk')) else None))
     return [r for r in out if r['szansa'] is not None]
@@ -130,6 +133,8 @@ def testy():
     reg = [wiersz(f'Typy dnia od {p}%', [r for r in dnia if r['szansa'] >= p / 100]) for p in (70, 75, 80, 85)]
     reg += [wiersz(f'Typy dnia: kurs od {k:.2f}'.replace('.', ','), [r for r in dnia if (r['kurs'] or 0) >= k]) for k in (1.25, 1.4)]
     reg += [wiersz(f'Value: przewaga od {p}%', [r for r in val if (r.get('ev') or 0) >= p / 100]) for p in (3, 5, 7, 10)]
+    obs = [r for r in R if r['rodzaj'] == 'value_obs']
+    reg += [wiersz('Value: kurs 1,50–1,90', [r for r in val if r['kurs'] and 1.5 <= r['kurs'] <= 1.9]), wiersz('Value: obserwacja poza 1,50–1,90', [r for r in val + obs if r['kurs'] and not 1.5 <= r['kurs'] <= 1.9])]
     reg += [wiersz('Value: kurs do 1,90', [r for r in val if r['kurs'] and r['kurs'] <= 1.9]), wiersz('Value: kurs powyżej 1,90', [r for r in val if r['kurs'] and r['kurs'] > 1.9])]
     tyg = {}
     for r in dnia:

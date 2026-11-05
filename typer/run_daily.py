@@ -228,9 +228,8 @@ def typy_na_dzis():
     wybrane, uzyte, odradzane = [], set(), []
     for t in wszystkie:
         mid = (t['x']['home'], t['x']['away'])
-        if werd(t['x']) == 'odradza':
-            if mid not in uzyte and t['p'] >= PEWNE_MIN_SZANSA and len(odradzane) < 5: odradzane.append(t); uzyte.add(mid)
-    for dopuszczalne in (('zgoda', None), ('ryzyko',)):
+        pass     # wersja 67: AI nie usuwa typów (dziennik: odradzane 72%, popierane 75%) – typ zostaje na liście z ostrzeżeniem
+    for dopuszczalne in (('zgoda', None), ('ryzyko',), ('odradza',)):
         for t in wszystkie:
             mid = (t['x']['home'], t['x']['away'])
             if werd(t['x']) not in dopuszczalne: continue
@@ -238,7 +237,7 @@ def typy_na_dzis():
     for t in wszystkie:   # dopełnienie do 5 typami poniżej progu (oznaczone, liczone w dzienniku osobno)
         if len(wybrane) >= PEWNE_ILE_TYPOW: break
         mid = (t['x']['home'], t['x']['away'])
-        if t['p'] >= 0.55 and mid not in uzyte and werd(t['x']) != 'odradza': wybrane.append(t); uzyte.add(mid)
+        if t['p'] >= 0.55 and mid not in uzyte: wybrane.append(t); uzyte.add(mid)
     pewne, do_dziennika = [], []
     def wiersz(x, poziom, typ, lista, nizsza):
         return dict(data_zapisu=pd.Timestamp.now(tz='Europe/Warsaw').strftime('%Y-%m-%d %H:%M'),
@@ -402,7 +401,7 @@ def stat_pewne(d):
                   nizsza=_grupa(R[(R.poziom == 'najpewniejszy') & R.nizsza]))
     N = R_all[R_all.poziom == 'najpewniejszy']
     ai = dict(zgoda=_grupa(N[(N.ai == 'zgoda') & (N.lista == 'pewne')]), ryzyko=_grupa(N[(N.ai == 'ryzyko') & (N.lista == 'pewne')]),
-              odradza=_grupa(N[N.lista == 'odradzane']), bez_oceny=_grupa(N[(N.ai == '') & (N.lista == 'pewne')]))
+              odradza=_grupa(N[(N.lista == 'odradzane') | (N.ai == 'odradza')]), bez_oceny=_grupa(N[(N.ai == '') & (N.lista == 'pewne')]))
     ligi = R.groupby('kraj').agg(n=('trafiony', 'size'), przewidywane=('szansa', 'mean'), weszlo=('trafiony', 'mean'))
     ligi = ligi[ligi.n >= 10].round(3).reset_index().to_dict('records')
     ostrz = R.groupby('ostrzezenie').agg(n=('trafiony', 'size'), przewidywane=('szansa', 'mean'), weszlo=('trafiony', 'mean')).round(3)
@@ -1327,6 +1326,7 @@ def eksport_modeli():
 def eksport_dziennika():
     d = wczytaj_dziennik()
     if not len(d): return dict(statystyki=None, typy=[])
+    if 'obserwacja' in d: d = d[d.obserwacja.fillna(0).astype(float) != 1]      # wersja 67: obserwacje poza kursami 1,50–1,90 nie liczą się do wyników Value
     R = d[d.zysk_na_1zl.notna()]
     st = dict(zapisanych=len(d), rozliczonych=len(R), czeka=len(d) - len(R))
     if len(R):
