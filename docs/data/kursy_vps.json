@@ -1,10 +1,10 @@
 {
- "czas": "2026-11-05 07:08 UTC",
+ "czas": "2026-11-05 07:11 UTC",
  "wersja": "czytnik-3",
  "bukmacherzy": {
   "fortuna": {
    "ok": true,
-   "dopasowane": 45
+   "dopasowane": 43
   },
   "sts": {
    "ok": true,
@@ -12,7 +12,7 @@
   },
   "betclic": {
    "ok": true,
-   "dopasowane": 46
+   "dopasowane": 45
   }
  },
  "mecze": {
@@ -6337,10 +6337,678 @@
     "id": "1260155805134848",
     "nazwa": "Levski Sofia - Jagiellonia Białystok",
     "zgodnosc": 0.99,
-    "kursy": {},
-    "pelna": false,
-    "rynkow": 0,
-    "oferta": {}
+    "kursy": {
+     "1": 1.94,
+     "X": 3.35,
+     "2": 3.48,
+     "1X": 1.27,
+     "12": 1.27,
+     "X2": 1.72,
+     "Over 0.5": 1.03,
+     "Under 0.5": 7.5,
+     "Over 1.5": 1.24,
+     "Under 1.5": 3.42,
+     "Over 2.5": 1.78,
+     "Under 2.5": 1.86,
+     "Over 3.5": 2.87,
+     "Under 3.5": 1.33,
+     "Over 4.5": 5.0,
+     "Under 4.5": 1.11,
+     "Over 5.5": 7.75,
+     "Under 5.5": 1.03,
+     "BTTS Tak": 1.68,
+     "BTTS Nie": 1.98,
+     "H o0.5": 1.2,
+     "H o1.5": 1.97,
+     "H o2.5": 4.15,
+     "H o3.5": 8.0,
+     "H o4.5": 11.75,
+     "A o0.5": 1.39,
+     "A o1.5": 2.83,
+     "A o2.5": 8.0,
+     "A o3.5": 11.25,
+     "H -4.5": 26.0,
+     "H -3.5": 16.25,
+     "H -2.5": 8.25,
+     "H -1.5": 3.58,
+     "A -1.5": 7.5,
+     "A -2.5": 26.0,
+     "A -3.5": 30.0
+    },
+    "pelna": true,
+    "rynkow": 13,
+    "oferta": {
+     "Wynik meczu (z wyłączeniem dogrywki)": [
+      [
+       "Levski Sofia",
+       1.94
+      ],
+      [
+       "Remis",
+       3.35
+      ],
+      [
+       "Jagiellonia Białystok",
+       3.48
+      ]
+     ],
+     "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
+      [
+       "Levski Sofia",
+       1.88
+      ],
+      [
+       "Jagiellonia Białystok",
+       3.27
+      ]
+     ],
+     "Wynik meczu - Xtra Wygrana": [
+      [
+       "Levski Sofia",
+       1.62
+      ],
+      [
+       "Jagiellonia Białystok",
+       2.82
+      ]
+     ],
+     "Podwójna Szansa": [
+      [
+       "Levski Sofia lub remis",
+       1.27
+      ],
+      [
+       "Levski Sofia lub Jagiellonia Białystok",
+       1.27
+      ],
+      [
+       "Remis lub Jagiellonia Białystok",
+       1.72
+      ]
+     ],
+     "Gole Powyżej/Poniżej": [
+      [
+       "Powyżej 0,5",
+       1.03
+      ],
+      [
+       "Poniżej 0,5",
+       7.5
+      ],
+      [
+       "Powyżej 1,5",
+       1.24
+      ],
+      [
+       "Poniżej 1,5",
+       3.42
+      ],
+      [
+       "Powyżej 2,5",
+       1.78
+      ],
+      [
+       "Poniżej 2,5",
+       1.86
+      ],
+      [
+       "Powyżej 3,5",
+       2.87
+      ],
+      [
+       "Poniżej 3,5",
+       1.33
+      ],
+      [
+       "Powyżej 4,5",
+       5.0
+      ],
+      [
+       "Poniżej 4,5",
+       1.11
+      ],
+      [
+       "Powyżej 5,5",
+       7.75
+      ],
+      [
+       "Poniżej 5,5",
+       1.03
+      ]
+     ],
+     "Oba zespoły strzelą gola": [
+      [
+       "Tak",
+       1.68
+      ],
+      [
+       "Nie",
+       1.98
+      ]
+     ],
+     "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
+      [
+       "Tak",
+       1.4
+      ],
+      [
+       "Nie",
+       2.7
+      ]
+     ],
+     "Którykolwiek zawodnik strzeli gola": [
+      [
+       "Mus. Sangare / S. Stoyanchov",
+       1.65
+      ],
+      [
+       "Mus. Sangare / J. Perea",
+       1.66
+      ],
+      [
+       "E. Bala / Mus. Sangare",
+       1.74
+      ],
+      [
+       "Reinaldo / Mus. Sangare",
+       1.74
+      ],
+      [
+       "J. Perea / S. Stoyanchov",
+       1.77
+      ],
+      [
+       "A. Oko-Flex / Mus. Sangare",
+       1.77
+      ],
+      [
+       "Mus. Sangare / Y. Sylla",
+       1.8
+      ],
+      [
+       "Mus. Sangare / D. Kusso",
+       1.81
+      ],
+      [
+       "Mus. Sangare / Dimitris Rallis",
+       1.82
+      ],
+      [
+       "N. Prelec / Mus. Sangare",
+       1.83
+      ],
+      [
+       "J. Imaz / Mus. Sangare",
+       1.85
+      ],
+      [
+       "Reinaldo / S. Stoyanchov",
+       1.87
+      ],
+      [
+       "E. Bala / S. Stoyanchov",
+       1.87
+      ],
+      [
+       "E. Bala / J. Perea",
+       1.88
+      ],
+      [
+       "Reinaldo / J. Perea",
+       1.88
+      ],
+      [
+       "M. Soula / Mus. Sangare",
+       1.91
+      ],
+      [
+       "A. Oko-Flex / S. Stoyanchov",
+       1.91
+      ],
+      [
+       "A. Oko-Flex / J. Perea",
+       1.92
+      ],
+      [
+       "Y. Sylla / S. Stoyanchov",
+       1.94
+      ],
+      [
+       "Y. Sylla / J. Perea",
+       1.96
+      ],
+      [
+       "D. Kusso / S. Stoyanchov",
+       1.96
+      ],
+      [
+       "E. Bala / Reinaldo",
+       1.97
+      ],
+      [
+       "Mus. Sangare / J. Agbonifo",
+       1.98
+      ],
+      [
+       "Mus. Sangare / O. Sow",
+       1.98
+      ],
+      [
+       "Dimitris Rallis  / S. Stoyanchov",
+       1.98
+      ],
+      [
+       "J. Perea / D. Kusso",
+       1.98
+      ],
+      [
+       "N. Prelec / J. Perea",
+       2.0
+      ],
+      [
+       "N. Prelec / S. Stoyanchov",
+       2.0
+      ],
+      [
+       "J. Perea / Dimitris Rallis",
+       2.0
+      ],
+      [
+       "J. Imaz / S. Stoyanchov",
+       2.0
+      ]
+     ],
+     "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
+      [
+       "E. Bala / Mus. Sangare",
+       1.39
+      ],
+      [
+       "Reinaldo / Mus. Sangare",
+       1.41
+      ],
+      [
+       "Mus. Sangare / J. Perea",
+       1.42
+      ],
+      [
+       "E. Bala / J. Perea",
+       1.46
+      ],
+      [
+       "A. Oko-Flex / Mus. Sangare",
+       1.46
+      ],
+      [
+       "Reinaldo / E. Bala",
+       1.47
+      ],
+      [
+       "D. Kusso / Mus. Sangare",
+       1.47
+      ],
+      [
+       "Mus. Sangare / M. Soula",
+       1.49
+      ],
+      [
+       "Reinaldo / J. Perea",
+       1.49
+      ],
+      [
+       "J. Imaz / Mus. Sangare",
+       1.51
+      ],
+      [
+       "Y. Sylla / Mus. Sangare",
+       1.51
+      ],
+      [
+       "A. Oko-Flex / E. Bala",
+       1.52
+      ],
+      [
+       "E. Bala / D. Kusso",
+       1.54
+      ],
+      [
+       "A. Oko-Flex / Reinaldo",
+       1.54
+      ],
+      [
+       "Mus. Sangare / Dimitris Rallis",
+       1.55
+      ],
+      [
+       "N. Prelec / Mus. Sangare",
+       1.55
+      ],
+      [
+       "A. Oko-Flex / J. Perea",
+       1.55
+      ],
+      [
+       "Reinaldo / D. Kusso",
+       1.55
+      ],
+      [
+       "D. Kusso / J. Perea",
+       1.56
+      ],
+      [
+       "E. Bala / M. Soula",
+       1.57
+      ],
+      [
+       "O. Sow / Mus. Sangare",
+       1.58
+      ],
+      [
+       "E. Bala / Y. Sylla",
+       1.58
+      ],
+      [
+       "J. Imaz / E. Bala",
+       1.58
+      ],
+      [
+       "J. Agbonifo / Mus. Sangare",
+       1.58
+      ],
+      [
+       "Serginho / Mus. Sangare",
+       1.59
+      ],
+      [
+       "Reinaldo / M. Soula",
+       1.59
+      ],
+      [
+       "S. Lozano / Mus. Sangare",
+       1.6
+      ],
+      [
+       "J. Perea / M. Soula",
+       1.6
+      ],
+      [
+       "Mus. Sangare / K. Szmyt",
+       1.6
+      ],
+      [
+       "J. Imaz / Reinaldo",
+       1.61
+      ]
+     ],
+     "Liczba goli - Levski Sofia": [
+      [
+       "Powyżej 0,5",
+       1.2
+      ],
+      [
+       "Poniżej 0,5",
+       4.2
+      ],
+      [
+       "Powyżej 1,5",
+       1.97
+      ],
+      [
+       "Poniżej 1,5",
+       1.75
+      ],
+      [
+       "Powyżej 2,5",
+       4.15
+      ],
+      [
+       "Poniżej 2,5",
+       1.21
+      ],
+      [
+       "Powyżej 3,5",
+       8.0
+      ],
+      [
+       "Poniżej 3,5",
+       1.05
+      ],
+      [
+       "Powyżej 4,5",
+       11.75
+      ],
+      [
+       "Poniżej 4,5",
+       1.01
+      ]
+     ],
+     "Liczba goli - Jagiellonia Białystok": [
+      [
+       "Powyżej 0,5",
+       1.39
+      ],
+      [
+       "Poniżej 0,5",
+       2.75
+      ],
+      [
+       "Powyżej 1,5",
+       2.83
+      ],
+      [
+       "Poniżej 1,5",
+       1.37
+      ],
+      [
+       "Powyżej 2,5",
+       8.0
+      ],
+      [
+       "Poniżej 2,5",
+       1.08
+      ],
+      [
+       "Powyżej 3,5",
+       11.25
+      ],
+      [
+       "Poniżej 3,5",
+       1.01
+      ]
+     ],
+     "Handicap": [
+      [
+       "Levski Sofia (-4)",
+       26.0
+      ],
+      [
+       "Remis (Levski Sofia -4)",
+       11.0
+      ],
+      [
+       "Jagiellonia Białystok (+4)",
+       1.01
+      ],
+      [
+       "Levski Sofia (-3)",
+       16.25
+      ],
+      [
+       "Remis (Levski Sofia -3)",
+       8.75
+      ],
+      [
+       "Jagiellonia Białystok (+3)",
+       1.06
+      ],
+      [
+       "Levski Sofia (-2)",
+       8.25
+      ],
+      [
+       "Remis (Levski Sofia -2)",
+       5.9
+      ],
+      [
+       "Jagiellonia Białystok (+2)",
+       1.24
+      ],
+      [
+       "Levski Sofia (-1)",
+       3.58
+      ],
+      [
+       "Remis (Levski Sofia -1)",
+       3.88
+      ],
+      [
+       "Jagiellonia Białystok (+1)",
+       1.72
+      ],
+      [
+       "Levski Sofia (+1)",
+       1.27
+      ],
+      [
+       "Remis (Levski Sofia +1)",
+       5.25
+      ],
+      [
+       "Jagiellonia Białystok (-1)",
+       7.5
+      ],
+      [
+       "Levski Sofia (+2)",
+       1.06
+      ],
+      [
+       "Remis (Levski Sofia +2)",
+       11.5
+      ],
+      [
+       "Jagiellonia Białystok (-2)",
+       26.0
+      ],
+      [
+       "Levski Sofia (+3)",
+       1.01
+      ],
+      [
+       "Remis (Levski Sofia +3)",
+       10.5
+      ],
+      [
+       "Jagiellonia Białystok (-3)",
+       30.0
+      ]
+     ],
+     "Dokładny wynik": [
+      [
+       "1 - 0",
+       6.75
+      ],
+      [
+       "0 - 0",
+       11.25
+      ],
+      [
+       "0 - 1",
+       9.5
+      ],
+      [
+       "2 - 0",
+       8.25
+      ],
+      [
+       "1 - 1",
+       5.4
+      ],
+      [
+       "0 - 2",
+       16.25
+      ],
+      [
+       "2 - 1",
+       7.5
+      ],
+      [
+       "2 - 2",
+       11.25
+      ],
+      [
+       "1 - 2",
+       10.25
+      ],
+      [
+       "3 - 0",
+       15.25
+      ],
+      [
+       "3 - 3",
+       55.0
+      ],
+      [
+       "0 - 3",
+       43.0
+      ],
+      [
+       "3 - 1",
+       13.5
+      ],
+      [
+       "4 - 4",
+       500.0
+      ],
+      [
+       "1 - 3",
+       27.0
+      ],
+      [
+       "3 - 2",
+       24.0
+      ],
+      [
+       "Inny",
+       23.0
+      ],
+      [
+       "2 - 3",
+       33.0
+      ],
+      [
+       "4 - 0",
+       38.0
+      ],
+      [
+       "0 - 4",
+       150.0
+      ],
+      [
+       "4 - 1",
+       33.0
+      ],
+      [
+       "1 - 4",
+       95.0
+      ],
+      [
+       "4 - 2",
+       60.0
+      ],
+      [
+       "2 - 4",
+       110.0
+      ],
+      [
+       "4 - 3",
+       150.0
+      ],
+      [
+       "3 - 4",
+       225.0
+      ]
+     ]
+    }
    }
   },
   "c91f4c9744f6ca502b7986a564e858df": {
@@ -28455,780 +29123,6 @@
     }
    }
   },
-  "dc1e2520503a3d74cb2b80eb20cb4432": {
-   "fortuna": {
-    "id": "ufo:mtch:1xg-018",
-    "nazwa": "CZ Belgrad - Inter Escaldes",
-    "zgodnosc": 0.62,
-    "kursy": {
-     "2": 25.0,
-     "X": 10.5,
-     "1": 1.06,
-     "X2": 5.1,
-     "12": 1.03,
-     "1X": 1.01,
-     "H -4.5": 4.2,
-     "H o5.5": 5.8,
-     "A o1.5": 7.8,
-     "X & o4.5": 100.0,
-     "2 & u4.5": 30.0,
-     "2 & o4.5": 100.0,
-     "1 & u4.5": 1.53,
-     "1 & o4.5": 2.38,
-     "X & u4.5": 12.0,
-     "H o1.5": 1.12,
-     "BTTS Tak": 2.42,
-     "BTTS Nie": 1.45,
-     "H o3.5": 2.08,
-     "X & u3.5": 14.0,
-     "1 & o3.5": 1.66,
-     "1 & u3.5": 2.12,
-     "2 & o3.5": 100.0,
-     "2 & u3.5": 35.0,
-     "X & o3.5": 50.0,
-     "A o0.5": 2.41,
-     "H o2.5": 1.43,
-     "H -2.5": 1.68,
-     "1 & o2.5": 1.26,
-     "1 & u2.5": 3.7,
-     "2 & o2.5": 50.0,
-     "2 & u2.5": 50.0,
-     "X & o2.5": 45.0,
-     "X & u2.5": 13.0,
-     "H o4.5": 3.4,
-     "H -1.5": 1.26,
-     "1 & u1.5": 7.8,
-     "1 & o1.5": 1.1,
-     "2 & u1.5": 50.0,
-     "2 & o1.5": 35.0,
-     "X & u1.5": 25.0,
-     "X & o1.5": 13.0,
-     "H -3.5": 2.55,
-     "BTTS & o2.5": 2.6
-    },
-    "pelna": true
-   }
-  },
-  "fdfe43b1709a68218ab42934f7355032": {
-   "fortuna": {
-    "id": "ufo:mtch:1xg-01n",
-    "nazwa": "Univ.Craiova - Egnatia",
-    "zgodnosc": 0.97,
-    "kursy": {
-     "2": 6.9,
-     "X": 4.6,
-     "1": 1.4,
-     "12": 1.21,
-     "X2": 2.43,
-     "1X": 1.1,
-     "H -2.5": 3.7,
-     "H o4.5": 8.2,
-     "H o3.5": 4.6,
-     "A o1.5": 4.2,
-     "BTTS Tak": 1.86,
-     "BTTS Nie": 1.74,
-     "A o0.5": 1.69,
-     "1 & u2.5": 3.5,
-     "1 & o2.5": 1.96,
-     "X & u2.5": 5.4,
-     "X & o2.5": 17.0,
-     "2 & u2.5": 13.0,
-     "2 & o2.5": 12.0,
-     "H o2.5": 2.48,
-     "H o0.5": 1.09,
-     "H -1.5": 2.11,
-     "X & u3.5": 5.4,
-     "1 & o3.5": 3.2,
-     "2 & u3.5": 8.0,
-     "X & o3.5": 17.0,
-     "2 & o3.5": 29.0,
-     "1 & u3.5": 2.07,
-     "BTTS & o2.5": 2.27,
-     "X & u4.5": 4.3,
-     "1 & o4.5": 5.4,
-     "2 & u4.5": 7.0,
-     "X & o4.5": 90.0,
-     "2 & o4.5": 45.0,
-     "1 & u4.5": 1.66,
-     "1 & u1.5": 6.8,
-     "1 & o1.5": 1.57,
-     "X & u1.5": 13.0,
-     "X & o1.5": 5.6,
-     "2 & u1.5": 18.0,
-     "2 & o1.5": 9.2,
-     "H o1.5": 1.49
-    },
-    "pelna": true
-   },
-   "betclic": {
-    "id": "1260196057870346",
-    "nazwa": "CS Universitatea Craiova - KF Egnatia Rrogozhine",
-    "zgodnosc": 0.96,
-    "kursy": {
-     "1": 1.38,
-     "X": 4.55,
-     "2": 6.75,
-     "1X": 1.09,
-     "12": 1.16,
-     "X2": 2.77,
-     "Over 0.5": 1.02,
-     "Under 0.5": 8.25,
-     "Over 1.5": 1.19,
-     "Under 1.5": 3.83,
-     "Over 2.5": 1.63,
-     "Under 2.5": 2.05,
-     "Over 3.5": 2.55,
-     "Under 3.5": 1.41,
-     "Over 4.5": 4.3,
-     "Under 4.5": 1.15,
-     "Over 5.5": 7.0,
-     "Under 5.5": 1.05,
-     "BTTS Tak": 1.88,
-     "BTTS Nie": 1.76,
-     "H o0.5": 1.09,
-     "H o1.5": 1.48,
-     "H o2.5": 2.5,
-     "H o3.5": 4.5,
-     "H o4.5": 7.75,
-     "A o0.5": 1.68,
-     "A o1.5": 4.1,
-     "A o2.5": 17.75,
-     "H -5.5": 23.0,
-     "H -4.5": 14.75,
-     "H -3.5": 7.5,
-     "H -2.5": 3.73,
-     "H -1.5": 2.07,
-     "A -1.5": 16.75,
-     "A -2.5": 100.0
-    },
-    "pelna": true,
-    "rynkow": 13,
-    "oferta": {
-     "Wynik meczu (z wyłączeniem dogrywki)": [
-      [
-       "CS Universitatea Craiova",
-       1.38
-      ],
-      [
-       "Remis",
-       4.55
-      ],
-      [
-       "KF Egnatia Rrogozhine",
-       6.75
-      ]
-     ],
-     "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
-      [
-       "CS Universitatea Craiova",
-       1.36
-      ],
-      [
-       "KF Egnatia Rrogozhine",
-       6.1
-      ]
-     ],
-     "Wynik meczu - Xtra Wygrana": [
-      [
-       "CS Universitatea Craiova",
-       1.2
-      ],
-      [
-       "KF Egnatia Rrogozhine",
-       6.0
-      ]
-     ],
-     "Podwójna Szansa": [
-      [
-       "CS Universitatea Craiova lub remis",
-       1.09
-      ],
-      [
-       "Universitatea Craiova lub KF Egnatia Rrogozhine",
-       1.16
-      ],
-      [
-       "Remis lub KF Egnatia Rrogozhine",
-       2.77
-      ]
-     ],
-     "Gole Powyżej/Poniżej": [
-      [
-       "Powyżej 0,5",
-       1.02
-      ],
-      [
-       "Poniżej 0,5",
-       8.25
-      ],
-      [
-       "Powyżej 1,5",
-       1.19
-      ],
-      [
-       "Poniżej 1,5",
-       3.83
-      ],
-      [
-       "Powyżej 2,5",
-       1.63
-      ],
-      [
-       "Poniżej 2,5",
-       2.05
-      ],
-      [
-       "Powyżej 3,5",
-       2.55
-      ],
-      [
-       "Poniżej 3,5",
-       1.41
-      ],
-      [
-       "Powyżej 4,5",
-       4.3
-      ],
-      [
-       "Poniżej 4,5",
-       1.15
-      ],
-      [
-       "Powyżej 5,5",
-       7.0
-      ],
-      [
-       "Poniżej 5,5",
-       1.05
-      ]
-     ],
-     "Oba zespoły strzelą gola": [
-      [
-       "Tak",
-       1.88
-      ],
-      [
-       "Nie",
-       1.76
-      ]
-     ],
-     "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
-      [
-       "Tak",
-       1.4
-      ],
-      [
-       "Nie",
-       2.65
-      ]
-     ],
-     "Którykolwiek zawodnik strzeli gola": [
-      [
-       "A. Al Hamlawi / S. Nsimba",
-       1.4
-      ],
-      [
-       "A. Al Hamlawi / S. Elisor",
-       1.43
-      ],
-      [
-       "M. Etim / A. Al Hamlawi",
-       1.49
-      ],
-      [
-       "S. Baiaram / A. Al Hamlawi",
-       1.49
-      ],
-      [
-       "S. Elisor / S. Nsimba",
-       1.5
-      ],
-      [
-       "H. Tavares / A. Al Hamlawi",
-       1.58
-      ],
-      [
-       "M. Etim / S. Nsimba",
-       1.58
-      ],
-      [
-       "S. Baiaram / S. Nsimba",
-       1.58
-      ],
-      [
-       "M. Etim / S. Elisor",
-       1.61
-      ],
-      [
-       "S. Baiaram / S. Elisor",
-       1.61
-      ],
-      [
-       "A. Al Hamlawi / L. Basceanu",
-       1.62
-      ],
-      [
-       "A. Al Hamlawi / D. Matei",
-       1.66
-      ],
-      [
-       "H. Tavares / S. Nsimba",
-       1.69
-      ],
-      [
-       "A. Cicaldau / A. Al Hamlawi",
-       1.7
-      ],
-      [
-       "I. Gruda / A. Al Hamlawi",
-       1.7
-      ],
-      [
-       "M. Etim / S. Baiaram",
-       1.7
-      ],
-      [
-       "A. Albanese / A. Al Hamlawi",
-       1.73
-      ],
-      [
-       "H. Tavares / S. Elisor",
-       1.74
-      ],
-      [
-       "J. Montenegro / A. Al Hamlawi",
-       1.74
-      ],
-      [
-       "A. Al Hamlawi / D. Hoxha",
-       1.74
-      ],
-      [
-       "S. Nsimba / L. Basceanu",
-       1.75
-      ],
-      [
-       "S. Elisor / L. Basceanu",
-       1.8
-      ],
-      [
-       "S. Nsimba / D. Matei",
-       1.8
-      ],
-      [
-       "A. Cicaldau / S. Nsimba",
-       1.85
-      ],
-      [
-       "I. Gruda / S. Nsimba",
-       1.85
-      ],
-      [
-       "K. Loukili / A. Al Hamlawi",
-       1.85
-      ],
-      [
-       "H. Tavares / M. Etim",
-       1.86
-      ],
-      [
-       "S. Elisor / D. Matei",
-       1.86
-      ],
-      [
-       "H. Tavares / S. Baiaram",
-       1.86
-      ],
-      [
-       "A. Al Hamlawi / I. Diabaté",
-       1.88
-      ]
-     ],
-     "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
-      [
-       "A. Al Hamlawi / S. Nsimba",
-       1.19
-      ],
-      [
-       "A. Al Hamlawi / S. Elisor",
-       1.21
-      ],
-      [
-       "A. Al Hamlawi / S. Baiaram",
-       1.22
-      ],
-      [
-       "A. Al Hamlawi / M. Etim",
-       1.22
-      ],
-      [
-       "S. Elisor / S. Nsimba",
-       1.23
-      ],
-      [
-       "S. Baiaram / S. Nsimba",
-       1.25
-      ],
-      [
-       "S. Nsimba / M. Etim",
-       1.25
-      ],
-      [
-       "S. Baiaram / M. Etim",
-       1.27
-      ],
-      [
-       "S. Elisor / M. Etim",
-       1.27
-      ],
-      [
-       "S. Baiaram / S. Elisor",
-       1.27
-      ],
-      [
-       "A. Al Hamlawi / L. Basceanu",
-       1.3
-      ],
-      [
-       "A. Al Hamlawi / H. Tavares",
-       1.3
-      ],
-      [
-       "S. Nsimba / H. Tavares",
-       1.33
-      ],
-      [
-       "S. Nsimba / L. Basceanu",
-       1.33
-      ],
-      [
-       "A. Al Hamlawi / D. Matei",
-       1.34
-      ],
-      [
-       "A. Al Hamlawi / A. Cicaldau",
-       1.35
-      ],
-      [
-       "S. Elisor / L. Basceanu",
-       1.37
-      ],
-      [
-       "S. Elisor / H. Tavares",
-       1.37
-      ],
-      [
-       "D. Matei / S. Nsimba",
-       1.37
-      ],
-      [
-       "S. Nsimba / A. Cicaldau",
-       1.38
-      ],
-      [
-       "S. Baiaram / H. Tavares",
-       1.39
-      ],
-      [
-       "S. Baiaram / L. Basceanu",
-       1.39
-      ],
-      [
-       "L. Basceanu / M. Etim",
-       1.39
-      ],
-      [
-       "M. Etim / H. Tavares",
-       1.39
-      ],
-      [
-       "A. Al Hamlawi / I. Gruda",
-       1.4
-      ],
-      [
-       "A. Al Hamlawi / J. Montenegro",
-       1.4
-      ],
-      [
-       "D. Matei / S. Elisor",
-       1.41
-      ],
-      [
-       "S. Elisor / A. Cicaldau",
-       1.42
-      ],
-      [
-       "A. Al Hamlawi / D. Hoxha",
-       1.43
-      ],
-      [
-       "A. Al Hamlawi / A. Albanese",
-       1.43
-      ]
-     ],
-     "Liczba goli - CS Universitatea Craiova": [
-      [
-       "Powyżej 0,5",
-       1.09
-      ],
-      [
-       "Poniżej 0,5",
-       7.0
-      ],
-      [
-       "Powyżej 1,5",
-       1.48
-      ],
-      [
-       "Poniżej 1,5",
-       2.35
-      ],
-      [
-       "Powyżej 2,5",
-       2.5
-      ],
-      [
-       "Poniżej 2,5",
-       1.45
-      ],
-      [
-       "Powyżej 3,5",
-       4.5
-      ],
-      [
-       "Poniżej 3,5",
-       1.14
-      ],
-      [
-       "Powyżej 4,5",
-       7.75
-      ],
-      [
-       "Poniżej 4,5",
-       1.03
-      ]
-     ],
-     "Liczba goli - KF Egnatia Rrogozhine": [
-      [
-       "Powyżej 0,5",
-       1.68
-      ],
-      [
-       "Poniżej 0,5",
-       1.98
-      ],
-      [
-       "Powyżej 1,5",
-       4.1
-      ],
-      [
-       "Poniżej 1,5",
-       1.17
-      ],
-      [
-       "Powyżej 2,5",
-       17.75
-      ],
-      [
-       "Poniżej 2,5",
-       1.02
-      ]
-     ],
-     "Handicap": [
-      [
-       "CS Universitatea Craiova (-5)",
-       23.0
-      ],
-      [
-       "Remis (CS Universitatea Craiova -5)",
-       11.5
-      ],
-      [
-       "KF Egnatia Rrogozhine (+5)",
-       1.01
-      ],
-      [
-       "CS Universitatea Craiova (-4)",
-       14.75
-      ],
-      [
-       "Remis (CS Universitatea Craiova -4)",
-       9.0
-      ],
-      [
-       "KF Egnatia Rrogozhine (+4)",
-       1.06
-      ],
-      [
-       "CS Universitatea Craiova (-3)",
-       7.5
-      ],
-      [
-       "Remis (CS Universitatea Craiova -3)",
-       6.0
-      ],
-      [
-       "KF Egnatia Rrogozhine (+3)",
-       1.22
-      ],
-      [
-       "CS Universitatea Craiova (-2)",
-       3.73
-      ],
-      [
-       "Remis (CS Universitatea Craiova -2)",
-       4.15
-      ],
-      [
-       "KF Egnatia Rrogozhine (+2)",
-       1.64
-      ],
-      [
-       "CS Universitatea Craiova (-1)",
-       2.07
-      ],
-      [
-       "Remis (CS Universitatea Craiova -1)",
-       3.63
-      ],
-      [
-       "KF Egnatia Rrogozhine (+1)",
-       2.77
-      ],
-      [
-       "CS Universitatea Craiova (+1)",
-       1.09
-      ],
-      [
-       "Remis (CS Universitatea Craiova +1)",
-       9.0
-      ],
-      [
-       "KF Egnatia Rrogozhine (-1)",
-       16.75
-      ],
-      [
-       "CS Universitatea Craiova (+2)",
-       1.01
-      ],
-      [
-       "Remis (CS Universitatea Craiova +2)",
-       28.0
-      ],
-      [
-       "KF Egnatia Rrogozhine (-2)",
-       100.0
-      ]
-     ],
-     "Dokładny wynik": [
-      [
-       "1 - 0",
-       6.0
-      ],
-      [
-       "0 - 0",
-       14.5
-      ],
-      [
-       "0 - 1",
-       15.5
-      ],
-      [
-       "2 - 0",
-       5.6
-      ],
-      [
-       "1 - 1",
-       7.25
-      ],
-      [
-       "0 - 2",
-       38.0
-      ],
-      [
-       "2 - 1",
-       7.0
-      ],
-      [
-       "2 - 2",
-       17.0
-      ],
-      [
-       "1 - 2",
-       18.25
-      ],
-      [
-       "3 - 0",
-       7.75
-      ],
-      [
-       "3 - 3",
-       90.0
-      ],
-      [
-       "0 - 3",
-       140.0
-      ],
-      [
-       "3 - 1",
-       9.75
-      ],
-      [
-       "4 - 4",
-       800.0
-      ],
-      [
-       "1 - 3",
-       70.0
-      ],
-      [
-       "3 - 2",
-       24.0
-      ],
-      [
-       "Inny",
-       10.0
-      ],
-      [
-       "2 - 3",
-       65.0
-      ],
-      [
-       "4 - 0",
-       14.25
-      ],
-      [
-       "0 - 4",
-       700.0
-      ],
-      [
-       "4 - 1",
-       18.0
-      ],
-      [
-       "1 - 4",
-       350.0
-      ],
-      [
-       "4 - 2",
-       45.0
-      ],
-      [
-       "2 - 4",
-       325.0
-      ],
-      [
-       "4 - 3",
-       175.0
-      ],
-      [
-       "3 - 4",
-       450.0
-      ]
-     ]
-    }
-   }
-  },
   "c50815d0a3cbc7dfe6b9f3a737ce4836": {
    "sts": {
     "id": "f3397680",
@@ -30816,7 +30710,7 @@
   "bledy": [
    "turnieje ufo:sprt:01 today: Expecting value: line 1 column 1 (char 0)"
   ],
-  "nasze_mecze": 47,
+  "nasze_mecze": 45,
   "sporty": [
    [
     "ufo:sprt:01",
@@ -30977,9 +30871,9 @@
    "sporty walki": "ufo:sprt:19",
    "pilka": "ufo:sprt:00"
   },
-  "turniejow": 184,
-  "meczow_fortuny": 1035,
-  "pelna_oferta": 45,
+  "turniejow": 186,
+  "meczow_fortuny": 1032,
+  "pelna_oferta": 43,
   "niedopasowane": [
    "pilka: Lillestrom – Viktoria Plzeň",
    "pilka: Atalanta BC – FC Kairat"
@@ -31837,39 +31731,37 @@
   },
   "sts": {
    "bledy": [],
-   "meczow_sts": 1859,
+   "meczow_sts": 1860,
    "sporty": {
     "1": 1329,
-    "3": 367,
+    "3": 368,
     "166": 88,
     "19": 75
    },
    "niedopasowane": [
-    "pilka: Bayer Leverkusen – Marseille",
-    "pilka: Red Star Belgrade – Inter Club d'Escaldes",
-    "pilka: Universitatea Craiova – KF Egnatia"
+    "pilka: Bayer Leverkusen – Marseille"
    ],
-   "szczegoly_ramek": 44,
+   "szczegoly_ramek": 51,
    "szczegoly_odpowiedzi": "44 z 44",
    "szczegoly_tematy": {
-    "f_f3397682_pl": 1,
     "f_f3397691_pl": 1,
     "f_f3397681_pl": 1,
+    "f_f3397682_pl": 3,
     "f_f3397688_pl": 1,
     "f_f3397695_pl": 1,
     "f_f3397689_pl": 1,
     "f_f3397680_pl": 1,
-    "f_f3397678_pl": 1,
+    "f_f3397678_pl": 3,
     "f_f3397683_pl": 1,
-    "f_f3397687_pl": 1,
-    "f_f3397697_pl": 1,
     "f_f3397699_pl": 1,
-    "f_f3397693_pl": 1,
+    "f_f3397697_pl": 1,
+    "f_f3397687_pl": 1,
     "f_f3397698_pl": 1,
     "f_f3397694_pl": 1,
-    "f_f3397740_pl": 1,
-    "f_f3397739_pl": 1,
+    "f_f3397693_pl": 3,
     "f_f3397696_pl": 1,
+    "f_f3397739_pl": 1,
+    "f_f3397740_pl": 1,
     "f_f3397735_pl": 1,
     "f_f3397752_pl": 1
    },
@@ -32054,16 +31946,19 @@
      "1m76142892": 1
     },
     "Hijikata Rinky - Etcheverry Tomas Martin": {
+     "16m65704": 3,
      "17m5e2bbedf30e": 26,
      "1m76142894": 1
     },
     "Borges Nuno - Buse Ignacio": {
+     "16m65706": 3,
      "17ma35d6cd60be": 26,
      "1m76142886": 1
     },
     "Struff Jan-Lennard - Ruud Casper": {
      "17m280a0081601": 26,
-     "1m76142884": 1
+     "1m76142884": 1,
+     "16m65707": 3
     },
     "Berrettini Matteo - Alcaraz Carlos": {
      "17m73c88c08c0a": 26,
@@ -32813,12 +32708,10 @@
   },
   "betclic": {
    "bledy": [],
-   "niedopasowane": [
-    "pilka: Red Star Belgrade – Inter Club d'Escaldes (2026-11-05 18:45)"
-   ],
-   "stron": 54,
-   "dopasowane": 46,
-   "nasze_mecze": 47,
+   "niedopasowane": [],
+   "stron": 52,
+   "dopasowane": 45,
+   "nasze_mecze": 45,
    "rynki_przyklad": {
     "pilka": {
      "Real Sociedad - Lyon": [
@@ -32876,10 +32769,10 @@
      ]
     }
    },
-   "sekund": 47,
+   "sekund": 43,
    "z_kursami": 45
   }
  },
  "lista": "540119a0a69f",
- "sekund": 131
+ "sekund": 128
 }
