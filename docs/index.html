@@ -8,12 +8,13 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Typer">
-<meta name="theme-color" content="#0D1014">
+<meta name="theme-color" content="#060608">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="apple-touch-icon" href="ikona-typer-t-180.png?v=64">
+<link rel="icon" href="ikona-typer-t-64.png?v=64">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,500..800;1,62..125,500..800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0D1014; --surface:#151A20; --sunk:#1C222A; --line:#232A33; --line2:#262D37; --text:#ECEFF3; --text2:#C9CFD7; --muted:#A3ACB8; --faint:#8D97A4;
@@ -247,39 +248,129 @@ footer{font-size:12px;color:var(--faint);margin:28px 4px 0;line-height:1.55}
 .oc .p2{display:flex;gap:3px;height:6px;margin-top:6px} .oc .p2 div{flex:1;background:var(--line2);overflow:hidden;display:flex}
 .oc .p2 div:first-child{border-radius:99px 0 0 99px;justify-content:flex-end} .oc .p2 div:last-child{border-radius:0 99px 99px 0}
 .oc .p2 i{display:block;height:100%} .oc .p2 div:first-child i{background:var(--text)} .oc .p2 div:last-child i{background:var(--warn)}
+/* ===== WYGLĄD 2026: czerń, czerwień i złoto ===== */
+:root{
+  --bg:#060608; --surface:#101014; --sunk:#18181E; --line:#26262E; --line2:#33333D; --text:#F6F4F0; --text2:#D2CFCA; --muted:#A7A4A0; --faint:#8C8A87;
+  --accent:#F2B544; --accent-bg:rgba(242,181,68,.12); --win:#3BE06F; --win-bg:rgba(59,224,111,.13); --warn:#FF9F2E; --warn-bg:rgba(255,159,46,.14);
+  --loss:#FF4B3E; --loss-bg:rgba(255,75,62,.14); --red:#FF2E2A; --gold:#E7B65C; --info:#8AB4FF;
+  --num:"Archivo","Figtree",system-ui,sans-serif;
+}
+body{background:#060608 url(grafika/tlo.webp) top center/100% auto no-repeat fixed}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(90% 34% at 12% 0,rgba(255,70,30,.20),transparent 70%),radial-gradient(80% 30% at 92% 2%,rgba(255,140,30,.15),transparent 70%)}
+.wrap{padding:0 14px 170px}
+header{position:sticky;top:0;z-index:7;align-items:center;padding:calc(10px + env(safe-area-inset-top,0px)) 2px 10px;margin:0 -14px;padding-left:12px;padding-right:12px;background:linear-gradient(#060608 62%,rgba(6,6,8,0))}
+.gora{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:4px;width:100%}
+.ikb{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;border:0;background:none;color:var(--text);position:relative;cursor:pointer;padding:0}
+.ikb svg{width:25px;height:25px}
+.ikb .kr{position:absolute;top:8px;right:9px;width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 8px var(--red)}
+.logo{display:flex;align-items:center;justify-content:center;gap:9px;min-width:0}
+.logo img{width:38px;height:38px;object-fit:contain;border-radius:10px;mix-blend-mode:screen}
+.logo b{font:italic 800 28px/1 var(--num);font-stretch:112%;letter-spacing:.015em;color:#F4F2EE;background:linear-gradient(180deg,#fff 18%,#C9C5BF 58%,#fff 92%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero2{position:relative;height:172px;margin:0 -14px;overflow:hidden;background:linear-gradient(115deg,#1a0303,#3b0808 42%,#0b0b12 60%,#1a0a02);}
+.hero2 img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero2::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,#060608)}
+.hero2 .h{position:absolute;left:16px;bottom:14px;z-index:1;font:italic 800 21px/1.12 var(--num);font-stretch:108%;text-shadow:0 2px 12px #000;max-width:80%}
+.hero2 .h small{display:block;font:500 13px var(--body);color:var(--text2);margin-top:5px;font-style:normal}
+.sporty2{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:10px 0 12px}
+.sporty2 button{min-height:78px;padding:7px 2px 6px;background:linear-gradient(180deg,#1b1b21,#101014);border:1px solid var(--line2);border-radius:13px;color:var(--text);font-size:12px;font-weight:600;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer}
+.sporty2 button.on{border-color:var(--red);box-shadow:0 0 0 1px var(--red),0 0 18px rgba(255,46,42,.35);background:linear-gradient(180deg,#3a0d0c,#190808)}
+.sporty2 img{width:36px;height:36px;object-fit:contain;mix-blend-mode:screen}
+.sporty2 .sk{font-size:26px;line-height:36px}
+.modul{display:grid;grid-template-columns:50px 1fr 18px;gap:11px;align-items:center;width:100%;text-align:left;padding:11px 13px;margin:0 0 8px;border-radius:15px;cursor:pointer;color:var(--text);border:1px solid var(--line2);background:linear-gradient(95deg,rgba(255,255,255,.07),rgba(255,255,255,.015) 55%)}
+.modul.zl{border-color:rgba(231,182,92,.7);background:linear-gradient(95deg,rgba(231,182,92,.28),rgba(231,182,92,.03) 62%)}
+.modul.cz{border-color:rgba(255,62,50,.65);background:linear-gradient(95deg,rgba(255,62,50,.26),rgba(255,62,50,.03) 62%)}
+.modul.po{border-color:rgba(255,120,40,.65);background:linear-gradient(95deg,rgba(255,120,40,.26),rgba(255,120,40,.03) 62%)}
+.modul svg.g{width:42px;height:42px}
+.modul b{display:block;font:800 16px/1.2 var(--num);font-stretch:96%;text-transform:uppercase;letter-spacing:.01em}
+.modul span{display:block;font-size:12.5px;color:var(--text2);margin-top:3px;line-height:1.3}
+.modul i{font-style:normal;color:var(--text2);font-size:22px;text-align:right}
+.tyt{display:flex;align-items:center;justify-content:space-between;margin:16px 2px 8px;font:700 16px var(--body)}
+.tyt a,.tyt button{font-size:13px;font-weight:500;color:var(--text2);background:none;border:0;cursor:pointer;text-decoration:none;padding:0}
+.livb{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:7px;background:var(--red);color:#fff;font:800 11px var(--num);letter-spacing:.05em;vertical-align:2px}
+.lrow{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line);font-size:14.5px;font-weight:600}
+.lrow:last-child{border:0} .lrow b{font:700 15px var(--num);background:#23232b;padding:3px 10px;border-radius:8px} .lrow em{font:600 13px var(--num);color:var(--gold);font-style:normal;min-width:34px;text-align:right}
+.pan{background:linear-gradient(180deg,rgba(24,24,30,.94),rgba(14,14,18,.94));border:1px solid var(--line2);border-radius:16px;margin-bottom:10px;overflow:hidden}
+.pan.zl{border-color:rgba(231,182,92,.55)} .pan.gr{border-color:rgba(59,224,111,.5);box-shadow:inset 0 0 40px rgba(59,224,111,.08)}
+.pan .pp{padding:13px 14px}
+.liczby{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center}
+.liczby span{display:block;font-size:11.5px;color:var(--text2)} .liczby b{display:block;font:800 19px/1.25 var(--num);color:var(--win);margin-top:3px} .liczby b.neg{color:var(--loss)} .liczby b.neu{color:var(--text)}
+nav{background:linear-gradient(rgba(10,10,13,.92),#060608);border-top:1px solid var(--line2);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+nav button{color:var(--text2);font-size:12px;border-radius:14px;margin:6px 3px}
+nav button[aria-selected="true"]{color:#fff;background:linear-gradient(180deg,#F03A2F,#A80F0F);box-shadow:0 0 18px rgba(255,46,42,.5)}
+.bet,.sekcja,.lv,.empty,.hero,.skut{background:linear-gradient(180deg,rgba(24,24,30,.95),rgba(13,13,17,.95));border-color:var(--line2)}
+.btn{background:linear-gradient(180deg,#F03A2F,#B31212);color:#fff;box-shadow:0 0 16px rgba(255,46,42,.35)}
+.seg button.on{background:linear-gradient(180deg,#F03A2F,#B31212);color:#fff;border-color:#F03A2F}
+.chips button.on{background:#F6F4F0;color:#0a0a0c}
+.seg2{display:flex;gap:6px;overflow-x:auto;margin:6px -2px 12px;padding-bottom:3px;scrollbar-width:none}
+.seg2 button{flex:0 0 auto;min-height:40px;padding:0 14px;border-radius:11px;border:1px solid var(--line2);background:#15151a;color:var(--text2);font-weight:600;font-size:14px;cursor:pointer}
+.seg2 button.on{background:linear-gradient(180deg,#F03A2F,#B31212);color:#fff;border-color:#F03A2F}
+.mhead{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;margin:2px -4px 4px}
+.mhead h2{margin:0;text-align:center;font:700 20px var(--body)}
+.liga{text-align:center;color:var(--text2);font-size:13.5px;margin-bottom:10px}
+.vs{display:grid;grid-template-columns:1fr 54px 1fr;align-items:start;text-align:center;gap:6px;margin-bottom:12px}
+.vs .h{display:flex;flex-direction:column;align-items:center;gap:7px;font-weight:600;font-size:14.5px;line-height:1.2}
+.vs .inic{width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:800 22px var(--num);background:radial-gradient(circle at 35% 25%,#3b3b45,#14141a);border:2px solid var(--gold);color:var(--gold)}
+.vs .s{font:800 21px var(--num);color:var(--text2);margin-top:16px} .vs small{display:block;font:500 12px var(--body);color:var(--muted);margin-top:6px}
+.szb{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:8px}
+.szb div{text-align:center;padding:9px 4px;border:1px solid var(--line2);border-radius:12px;background:#15151a}
+.szb div.on{border-color:var(--win);box-shadow:0 0 14px rgba(59,224,111,.35);background:linear-gradient(180deg,#0f2d18,#0c1a10)}
+.szb span{display:block;font-size:12.5px;color:var(--text2)} .szb b{display:block;font:800 19px/1.3 var(--num)}
+.pasek{display:flex;height:6px;border-radius:9px;overflow:hidden;gap:2px;margin:10px 0}
+.agent{display:grid;grid-template-columns:64px 1fr 26px;gap:11px;align-items:center;padding:10px 12px;border-radius:15px;margin-bottom:8px;border:1px solid var(--line2);background:linear-gradient(95deg,#191920,#101014)}
+.agent.a1{border-color:rgba(59,224,111,.45);background:linear-gradient(95deg,rgba(25,90,50,.5),#101014 70%)}
+.agent.a2{border-color:rgba(255,62,50,.5);background:linear-gradient(95deg,rgba(120,20,20,.55),#101014 70%)}
+.agent.a3{border-color:rgba(231,182,92,.45);background:linear-gradient(95deg,rgba(90,75,45,.5),#101014 70%)}
+.agent img,.agent .pz{width:64px;height:64px;border-radius:11px;object-fit:cover;background:#1f1f27;display:flex;align-items:center;justify-content:center;font-size:30px}
+.agent b{font:700 16px var(--body)} .agent p{margin:3px 0 0;font-size:12.5px;color:var(--text2);line-height:1.35}
+.werd{text-align:center;padding:12px;border-radius:15px;border:1px solid var(--line2);margin:6px 0 10px}
+.werd.zgoda{border-color:var(--win);background:linear-gradient(180deg,rgba(25,90,50,.55),rgba(12,26,16,.8))}
+.werd.ryzyko{border-color:var(--warn);background:linear-gradient(180deg,rgba(110,70,10,.5),rgba(26,18,8,.8))}
+.werd.odradza{border-color:var(--loss);background:linear-gradient(180deg,rgba(120,20,20,.55),rgba(26,10,10,.8))}
+.werd b{display:block;font:800 22px var(--num)} .werd small{color:var(--text2);font-size:13px}
+.chipr{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:999px;font-size:12.5px;font-weight:600;background:#1e1e25;color:var(--text2);margin:0 5px 5px 0}
+.chipr.d{color:var(--win);background:var(--win-bg)} .chipr.s{color:var(--warn);background:var(--warn-bg)} .chipr.n{color:var(--loss);background:var(--loss-bg)}
+.otw{display:block;width:100%;margin:2px 0 10px;min-height:42px;border-radius:12px;background:#1b1b22;border:1px solid var(--line2);color:var(--text);font-weight:600;cursor:pointer}
+.spark{display:block;width:100%;height:58px}
+.tab2{width:100%;border-collapse:collapse;font-size:13.5px} .tab2 th{font-weight:500;color:var(--muted);text-align:right;padding:6px 4px} .tab2 th:first-child,.tab2 td:first-child{text-align:left} .tab2 td{padding:8px 4px;border-top:1px solid var(--line);text-align:right;font-family:var(--num)}
+.alert{padding:10px 12px;border-radius:12px;margin-bottom:8px;font-size:13.5px;border-left:4px solid var(--info);background:#16161c} .alert.krytyczny{border-color:var(--red)} .alert.ostrzezenie{border-color:var(--warn)} .alert b{display:block;font-size:14px}
+.prz{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.prz input[type=checkbox]{width:22px;height:22px;accent-color:#F03A2F}
+.menu button{display:block;width:100%;text-align:left;padding:14px 4px;background:none;border:0;border-bottom:1px solid var(--line);color:var(--text);font-size:16px;font-weight:600;cursor:pointer}
+.szuk{width:100%;min-height:46px;padding:0 14px;border-radius:12px;border:1px solid var(--line2);background:#15151a}
+@media (min-width:1100px){.hero2{margin:0;border-radius:18px}#view>.pan,#view>.modul,#view>.tyt,#view>.sporty2,#view>.hero2{grid-column:1/-1}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <h1>Typer</h1>
-    <div style="display:flex;align-items:flex-end">
-      <div class="meta" id="meta">…</div>
-      <button class="gear" id="openSettings" aria-label="Ustawienia"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
-    </div>
-  </header>
+  <header><div class="gora">
+    <button class="ikb" id="otwMenu" aria-label="Menu"></button>
+    <div class="logo"><img src="grafika/lew.webp" alt="" onerror="this.src='ikona-typer-t-64.png';this.style.mixBlendMode='normal';this.onerror=null"><b>TYPER</b></div>
+    <div style="display:flex"><button class="ikb" id="otwSzuk" aria-label="Szukaj"></button><button class="ikb" id="otwAl" aria-label="Alert Center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1112 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10 20a2 2 0 004 0"/></svg><span class="kr" id="alKr" hidden></span></button><button id="openSettings" hidden aria-hidden="true"></button></div>
+  </div></header>
   <div id="demo"></div>
   <main id="view"></main>
   <footer>Tylko dla osób pełnoletnich. Program liczy prawdopodobieństwa – nie daje pewnych typów. Graj tylko kwotami, których stratę możesz spokojnie przyjąć. Pomoc przy problemach z hazardem: 801 889 880.</footer>
 </div>
 
 <nav><div class="in" role="tablist">
-  <button role="tab" data-tab="live"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>Na żywo</button>
-  <button role="tab" data-tab="pewne"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>Pewne</button>
-  <button role="tab" data-tab="value"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16l5-5 4 4 7-7"/><path d="M15 8h5v5"/></svg>Value</button>
-  <button role="tab" data-tab="sporty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Sporty</button>
-  <button role="tab" data-tab="dziennik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg>Dziennik</button>
+  <button role="tab" data-tab="pulpit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>Pulpit</button>
+  <button role="tab" data-tab="typy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 12l6-6"/></svg>Typy</button>
+  <button role="tab" data-tab="analiza"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.6-4.6"/></svg>Analiza</button>
+  <button role="tab" data-tab="kupon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>Kupon</button>
+  <button role="tab" data-tab="dziennik"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21v-7M12 21V9M19 21V4"/></svg>Dziennik</button>
 </div></nav>
 
 <div class="kbar" id="kbar"><button id="kopen"></button></div>
-<div class="sheet" id="kupon"><div class="card" id="kcard"></div></div>
+<div class="sheet" id="menu"><div class="card" id="mcard"></div></div>
+<div class="sheet" id="szukaj"><div class="card"><input class="szuk" id="szukQ" placeholder="Szukaj meczu, drużyny, zawodnika" autocomplete="off"><div id="szukW" style="margin-top:10px"></div></div></div>
 <div class="sheet" id="settings"><div class="card">
   <h2 style="margin-top:0">Ustawienia</h2>
   <div class="stan" id="wersjaApp"></div>
   <label for="bankroll">Twój budżet na zakłady (zł)</label>
   <input type="number" id="bankroll" inputmode="numeric" min="0" step="50">
-  <p class="note">Z budżetu liczone są sugerowane stawki (ostrożne 1/4 Kelly'ego, maks. 2% budżetu na typ). Zapisuje się tylko na tym telefonie.</p>
+  <p class="note">Z budżetu liczone są sugerowane stawki (ostrożne 1/4 Kelly'ego, maks. 2% budżetu na typ). Zapisuje się w telefonie i w kopii na serwerze.</p>
   <button class="btn" id="saveSettings">Zapisz</button>
+  <div id="ust2"></div>
   <h2>Stan programu</h2><div class="stan" id="stan"></div>
 </div></div>
 
@@ -287,7 +378,7 @@ footer{font-size:12px;color:var(--faint);margin:28px 4px 0;line-height:1.55}
 <script>
 "use strict";
 /* ---------- dane ---------- */
-const S = {dzis:null, modele:null, dziennik:null, demo:false, tab:'value'};
+const S = {dzis:null, modele:null, dziennik:null, demo:false, tab:'pulpit'};
 const store = {
   get(k, d){ try{ const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); }catch(e){ return d; } },
   set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
@@ -304,11 +395,11 @@ async function laduj(){
   if (osadz){ const d = JSON.parse(osadz); Object.assign(S, d); S.demo = !!d.demo; return; }
   const get = async f => { const r = await fetch('data/' + f + '?t=' + Date.now()); if(!r.ok) throw new Error(f); return r.json(); };
   const [a, b, c, k, st, inn, gl, zd] = await Promise.allSettled([get('dzis.json'), get('modele.json'), get('dziennik.json'), get('kalibracja.json'), get('status.json'), get('inne.json'), get('glowne.json'), get('zdrowie.json')]);
-  S.zdrowie = zd.value || null;
+  S.zdrowie = zd.value || null; CEN = await g2('centrum.json');
   S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null; S.status = st.value || null; S.inne = inn.value || null; S.glowne = gl.value || null;
 }
 
-const WERSJA_APLIKACJI = 62;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
+const WERSJA_APLIKACJI = 64;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
 /* ---------- model (ten sam co w Pythonie) ---------- */
 const MAXG = 10;
 function pois(l){ const out = [Math.exp(-l)]; for(let k=1;k<=MAXG;k++) out.push(out[k-1]*l/k); return out; }
@@ -418,7 +509,7 @@ function poziomTypu(t, ikona, tytul, klasa, mecz){
   const bk = kk.length ? ' · ' + kk.map(([n, k]) => `${esc(n)}: ${k === naj && kk.length > 1 ? `<b>${num(k)}</b> ⭐` : `<b>${num(k)}</b>`}`).join(' · ')
     + ` ${naj*t.szansa >= 1 ? '✅' : '(poniżej uczciwego)'}` : '';
   return `<div class="tier ${klasa||''}"><div class="lbl2"><span>${ikona} ${tytul}</span></div>
-    <div class="row2"><div class="name">${esc(P(t.zaklad))}${mecz ? kupBtn({event_id: mecz.event_id, mecz: mecz.mecz, zaklad: P(t.zaklad), szansa: t.szansa}) : ''}${t.opis?`<small>${esc(P(t.opis))}</small>`:''}</div><div class="pp">${pct(t.szansa)}</div></div>
+    <div class="row2"><div class="name">${esc(P(t.zaklad))}${mecz ? kupBtn({event_id: mecz.event_id, mecz: mecz.mecz, zaklad: P(t.zaklad), szansa: t.szansa, klucz: t.klucz}) : ''}${t.opis?`<small>${esc(P(t.opis))}</small>`:''}</div><div class="pp">${pct(t.szansa)}</div></div>
     <div class="k">Kurs uczciwy <b>${num(t.kurs_uczciwy)}</b> – graj przy kursie ≥ ${num(t.kurs_uczciwy)} (min. ${num(t.kurs_min)})${bk}</div></div>`;
 }
 function obrazMeczu(t){
@@ -664,18 +755,18 @@ function chipy(klucz, zWszystkimi){
   const opc = (zWszystkimi ? [['wszystkie','','Wszystkie']] : []).concat(SPORTY);
   return `<div class="chips">${opc.map(([k, ik, n]) => `<button data-set="${klucz}:${k}" class="${v === k ? 'on' : ''}">${ik ? DOT(k) : ''}${esc(zWszystkimi && k !== 'wszystkie' ? ({pilka:'Piłka', tenis:'Tenis', walki:'Walki'}[k] || n) : n)}</button>`).join('')}</div>`;
 }
-function meczeSportu(sp){ return sp === 'pilka' ? ((S.dzis||{}).mecze || []) : (((S.inne||{})[sp]||{}).mecze || []); }
+function meczeSportu(sp){ return sp === 'pilka' ? ((S.dzis||{}).mecze || []) : (((S.inne||{})[sp]||{}).mecze || []).filter(filtrWalk); }
 function pewneSportu(sp){
   if(sp === 'pilka') return ((S.dzis||{}).pewne || []);
   const s = (S.inne||{})[sp] || {}, byid = Object.fromEntries((s.mecze||[]).map(m => [m.event_id, m]));
-  return (s.pewne || []).map(i => byid[i]).filter(Boolean);
+  return (s.pewne || []).map(i => byid[i]).filter(Boolean).filter(filtrWalk);
 }
-function valueSportu(sp){ return sp === 'pilka' ? ((S.dzis||{}).value || []) : (((S.inne||{})[sp]||{}).value || []); }
+function valueSportu(sp){ return sp === 'pilka' ? ((S.dzis||{}).value || []) : (((S.inne||{})[sp]||{}).value || []).filter(filtrWalk); }
 
 /* ---------- PIŁKA: karty ---------- */
 const kartaPewna = (sp, m, nr) => sp === 'pilka' ? kartaPewnaPilka(m, nr) : kartaInne(m, nr, sp);
 const kartaValue = (sp, v) => sp === 'pilka' ? kartaValuePilka(v) : kartaValueInne(v, sp);
-const OPIS_VALUE = `<p class="note" style="margin:4px">Value = najlepszy kurs polskich bukmacherów (STS, Fortuna, Superbet, Betclic) co najmniej 3% wyższy od uczciwego kursu z Pinnacle/Betfair. Liczona od razu po pobraniu kursów (rano przed wiadomością i przy każdym odświeżeniu). Testy: przewagę dawało granie po <b style="color:var(--text)">najlepszym kursie</b> spośród wielu bukmacherów (piłka +5,6% na 3 188 zakładach, tenis +5,9% na 4 343). Podatek 12% od stawki zjada taką przewagę – value ma sens głównie przy grze bez podatku.</p>`;
+const OPIS_VALUE = `<p class="note" style="margin:4px">Value = najlepszy kurs polskich bukmacherów (STS, Fortuna, Superbet, Betclic) co najmniej 5% wyższy od uczciwego kursu z Pinnacle/Betfair (przy kursie powyżej 1,90 – 7%). Liczona od razu po pobraniu kursów (rano przed wiadomością i przy każdym odświeżeniu). Testy: przewagę dawało granie po <b style="color:var(--text)">najlepszym kursie</b> spośród wielu bukmacherów (piłka +5,6% na 3 188 zakładach, tenis +5,9% na 4 343). Podatek 12% zjada taką przewagę, więc w Ustawieniach zaznaczysz, u kogo go płacisz.</p>`;
 
 /* ---------- NOWY WYGLĄD: wspólne klocki kart ---------- */
 const NAZWA_KR = {pilka:'Piłka', tenis:'Tenis', walki:'Walki'};
@@ -846,8 +937,8 @@ function kartaTypu(sp, m, nr){
   const kiedy = (pil ? '' : (m.dzien + ' ')) + m.godzina;
   const A = pil ? plN(m.gospodarz) : m.a, B = pil ? plN(m.gosc) : m.b;
   const tt = pil ? t : Object.assign({}, t);
-  let h = `<article class="bet${werdyktKarty(m) === 'odradza' ? ' odr' : ''}">${naglowekKarty(sp, gdzie, kiedy, A, B)}${typBox(tt, nr, pm)}`;
-  if(m.alarm && m.alarm.wstrzymaj) h += `<div class="flag" style="color:var(--neg,#d33);font-weight:700;white-space:normal">⛔ Alarm przed meczem (${esc(m.alarm.czas || '')}) – nie graj tego typu: ${esc((m.alarm.powody || []).join(' · '))}</div>`;   // wersja 51
+  let h = `<article class="bet${werdyktKarty(m) === 'odradza' ? ' odr' : ''}">${naglowekKarty(sp, gdzie, kiedy, A, B)}${typBox(tt, nr, pm)}${chipyTypu(sp, m, t)}${S.tab === 'mecz' ? '' : `<button class="otw" data-mecz="${sp}|${esc(m.event_id)}">Otwórz analizę meczu ›</button>`}`;
+  if(m.alarm) h += kartaAlarmu({sp, m, a: m.alarm});   // wersja 51
   { const ai = ((m.raport || {}).ai) || {};   // wersja 54: jedna szansa po analizie (drogi do porażki zważone), ryzyko tylko gdy obniżyło werdykt
     if(ai.szansa_koncowa != null) h += `<p class="note">🧠 Po analizie AI: <b>${pct(ai.szansa_koncowa)}</b>${ai.szansa_rynek ? ` · z kursów ${pct(ai.szansa_rynek)}` : ''}</p>`;
     const dr = (ai.drogi || []).filter(x => (x.procent || 0) >= 15);
@@ -869,14 +960,17 @@ function kartaValueOgolna(sp, v, mecz){
   const zrodlo = v.bukmacher ? NAZWA_BUK(v.bukmacher) : 'Betclic FR';     // kurs, od którego wyliczono przewagę Value
   if(!kk.find(x => x[0] === zrodlo)) kk.push([zrodlo, +v.kurs]);
   kk.sort((a, b) => b[1] - a[1]);
-  const best = kk.length ? kk[0] : [zrodlo, v.kurs], stawka = Math.round(BANK * kelly(v.szansa, best[1])), ev = v.szansa * best[1] - 1;
+  const best = kk.length ? kk[0] : [zrodlo, v.kurs], ev = v.szansa * zPodatkiem(best[0], best[1]) - 1, wg = wiarygodnosc(Object.assign({}, v, {ev}));
+  const st0 = ev <= 0 || wg.n < 60 || ekspozycja().st >= ekspozycja().maksD, stawka = st0 ? 0 : Math.round(Math.min(BANK * kelly(v.szansa, zPodatkiem(best[0], best[1])), BANK * LIM().stawka / 100));
   const zak = pil ? plTxt(v.zaklad, v) : v.zaklad;
   let h = `<article class="bet">${naglowekKarty(sp, esc(pil ? v.liga : v.turniej), (pil ? '' : v.dzien + ' ') + v.godzina, pil ? plN(v.gospodarz) : v.a, pil ? plN(v.gosc) : v.b)}
-    <div style="font:700 17px/1.3 var(--body)">${esc(zak)}${kupBtn({event_id: v.event_id, mecz: v.mecz, zaklad: zak + ' @ ' + num(best[1]), szansa: v.szansa})}${v.opis ? `<small style="display:block;font-weight:500;font-size:13px;color:var(--muted)">${esc(pil ? plTxt(v.opis, v) : v.opis)}</small>` : ''}</div>
+    <div style="font:700 17px/1.3 var(--body)">${esc(zak)}${kupBtn({event_id: v.event_id, mecz: v.mecz, zaklad: zak + ' @ ' + num(best[1]), szansa: v.szansa, klucz: v.klucz})}${v.opis ? `<small style="display:block;font-weight:500;font-size:13px;color:var(--muted)">${esc(pil ? plTxt(v.opis, v) : v.opis)}</small>` : ''}</div>
     <div class="grid3"><div class="bk best" style="min-height:62px"><span>${esc(best[0])}</span><b style="font-size:20px">${num(best[1])}</b></div>
       <div class="bk" style="min-height:62px"><span>uczciwy</span><b style="font-size:20px">${num(v.kurs_uczciwy)}</b></div>
       <div class="bk" style="min-height:62px"><span>przewaga</span><b style="font-size:20px;color:var(--win)">${sgn(ev)}</b></div></div>
-    <div class="top"><span>szansa ${pct(v.szansa)} · stawka ${stawka} zł · szukaj ≥ ${num(v.kurs_szukaj || v.kurs_uczciwy*1.02)}</span>${v.rynek_pl ? '<span class="chipv brak" style="height:24px;font-size:12px">rynek PL – mniej pewne</span>' : ''}</div>`;
+    <div class="top"><span>szansa ${pct(v.szansa)} · stawka ${stawka} zł · szukaj ≥ ${num(v.kurs_szukaj || v.kurs_uczciwy*1.02)}</span>${v.rynek_pl ? '<span class="chipv brak" style="height:24px;font-size:12px">rynek PL – mniej pewne</span>' : ''}</div>
+    <div><span class="chipr ${wg.n >= 80 ? 'd' : wg.n >= 60 ? 's' : 'n'}">Wiarygodność: ${wg.opis}</span><span class="chipr">Min. kurs ${num(v.kurs_uczciwy)}</span>${st0 ? '<span class="chipr n">Stawka 0</span>' : ''}</div><p class="note">${esc(wg.zrodlo)}${wg.pow.length ? ' Uwaga: ' + esc(wg.pow.join(', ')) + '.' : ''}</p>
+    ${(([, e]) => e ? `<div>${wykresKursu(e)}</div>` : '')(wpisKursu(v.event_id, v))}${alertKursuBtn(v.event_id, v)}<button class="otw" data-mecz="${sp}|${esc(v.event_id)}">Otwórz analizę meczu ›</button>`;
   h += kafelkiBuk(Object.assign({}, v, {kursy_pl: Object.assign({[v.bukmacher || 'Betclic FR']: v.kurs}, v.kursy_pl || {})}));
   // Ocena AI karty Value dotyczy WŁASNEGO zakładu Value (nie typu z Pewnych tego meczu); dopóki jej nie ma – informacja
   const wlasna = (v.raport || {}).dla_value ? v : Object.assign({}, v, {werdykt: null, raport: Object.assign({}, v.raport || {}, {ai: null, werdykt: null})});
@@ -913,7 +1007,7 @@ function widokPewne(){
   const f = store.get('flt', 'wszystkie');
   let h = chipy('flt', true);
   const g = sumaGlownych('30');
-  if(g.n) h += `<div class="skut"><b>${pct(g.t / g.n)}</b><div><span>Skuteczność typów dnia</span><span>ostatnie 30 dni · ${g.t} z ${g.n} weszło · przewidywane ${pct(g.pr)}</span></div></div>`;
+  if(g.n) h += `<div class="skut"><b>${pct(g.t / g.n)}</b><div><span>Skuteczność typów dnia</span><span>ostatnie 30 dni · ${g.t} z ${g.n} weszło · przewidywane ${pct(g.pr)}${wil(SK()) ? ' · przedział ' + wil(SK()) : ''}</span></div></div>`;
   const kp = f === 'wszystkie' && S.glowne && S.glowne.kupon;   // wersja 52: kupon dnia
   if(kp) h += `<section class="sekcja"><h2>🎫 Kupon dnia</h2><p class="note">Typy sprawdzone rano przez AI – szanse już po zważeniu ryzyk.</p>` +
     kp.typy.map(t => { const [g_, o_] = String(t.mecz || '').split(' – '); const pil = t.sport === 'pilka';   // wersja 56: nazwy po polsku
@@ -925,7 +1019,8 @@ function widokPewne(){
   if(!lista.length) h += `<div class="empty">Dziś brak typów${f === 'wszystkie' ? '' : ' w tej dyscyplinie'}. Lista pojawia się codziennie ok. 8:00.</div>`;
   else h += lista.map(([sp, m], i) => kartaPewna(sp, m, i + 1)).join('');
   h += sekcjaOdradzane(odradzaneWszystkie().filter(([sp]) => f === 'wszystkie' || sp === f));
-  return h + `<p class="note" style="margin:4px">Typ dnia to najpewniejszy zakład meczu (od 70%). Szanse z kursów Pinnacle i giełdy Betfair (KSW – z polskich bukmacherów); AI sprawdza każdy typ w aktualnych wiadomościach. Testy na 328 257 spotkaniach: typy od 70% wchodzą ok. 78 razy na 100.</p>`;
+  const rz = (CEN || {}).skutecznosc || {};
+  return h + `<p class="note" style="margin:4px">Typ dnia to najpewniejszy zakład meczu (od 70%). Szanse z kursów Pinnacle i giełdy Betfair (KSW – z polskich bukmacherów); AI ocenia typy na danych zebranych przez program.${rz.n ? ` Dziennik: ${rz.trafione} z ${rz.n} typów weszło (${pct(rz.skutecznosc, 1)}, przedział ${wil(rz)}).` : ''}</p>`;
 }
 function sekcjaWpadek(){
   // wersja 39: sekcja zwłok – czego program nie zauważył przy wpadkach typów dnia
@@ -1040,7 +1135,7 @@ function widokValue(){
   let h = chipy('flt', true) + `<p class="lead">Kurs bukmachera wyższy od uczciwego (wyliczonego z Pinnacle i giełdy Betfair, w KSW – ze średniej polskich bukmacherów). Na dłuższą metę tylko takie zakłady mogą zarabiać, ale każdy pojedynczy może przegrać.</p>`;
   if(S.dzis && S.dzis.blad) h += `<div class="banner">${esc(S.dzis.blad)}</div>`;
   let lista;
-  if(f === 'wszystkie'){ const g = glowneListy(); lista = g ? g.val : SPORTY.flatMap(([sp]) => valueSportu(sp).map(v => [sp, v])).sort((a,b) => b[1].ev - a[1].ev); }
+  if(f === 'wszystkie'){ const g = glowneListy(); lista = (g ? g.val.slice() : SPORTY.flatMap(([sp]) => valueSportu(sp).map(v => [sp, v]))).sort((a,b) => (b[1].ev || 0) - (a[1].ev || 0)); }
   else lista = valueSportu(f).map(v => [f, v]);
   if(!lista.length) return h + `<div class="empty">Dziś brak zakładów value${f === 'wszystkie' ? '' : ' w tej dyscyplinie'}. To normalne – w większości dni bukmacher wycenia mecze poprawnie.</div>`;
   return h + lista.map(([sp, v]) => kartaValue(sp, v)).join('') + OPIS_VALUE;
@@ -1177,7 +1272,7 @@ function aiReczna(sp, zap, karta){
   setTimeout(async () => {
     if(zap_ && Date.now() - zap_.t < 6 * 3600e3) return pokaz(zap_.ai);
     const el = document.getElementById(id); if(!el) return;
-    el.innerHTML = `<h2>Analiza AI</h2><div class="aiw"><p class="note">⏳ AI sprawdza najnowsze wiadomości o meczu (kontuzje, składy, forma) i ocenia typ – zwykle 20–60 sekund…</p></div>`;
+    el.innerHTML = `<h2>Analiza AI</h2><div class="aiw"><p class="note">⏳ AI analizuje dane zebrane przez program i ocenia typ – zwykle 20–60 sekund…</p></div>`;
     try {
       const r = await fetch(AI_URL + '/analiza', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(Object.assign({sport: sp}, zap))});
       const j = await r.json().catch(() => ({}));
@@ -1473,7 +1568,7 @@ function demoLive(){
 function startLive(){
   stopLive();
   if(S.demo) return;
-  const tick = async () => { const lsp = store.get('liveSp', 'pilka'); try { if(lsp !== 'pilka'){ try { await pobierzLiveInne(lsp); } catch(e){ LIVE2.blad = e.message; } } else await pobierzLive(); if(!LIVE.obsT || Date.now() - LIVE.obsT > 120000){ LIVE.obsT = Date.now(); await pobierzObs(); LIVE.obsCzas = Date.now() - 27e5; } } catch(e){ LIVE.blad = e.message; } if(S.tab === 'live') { const y = window.scrollY; $('#view').innerHTML = widokLive(); window.scrollTo(0, y); } };
+  const tick = async () => { const lsp = store.get('liveSp', 'pilka'); try { if(lsp !== 'pilka'){ try { await pobierzLiveInne(lsp); } catch(e){ LIVE2.blad = e.message; } } else await pobierzLive(); if(!LIVE.obsT || Date.now() - LIVE.obsT > 120000){ LIVE.obsT = Date.now(); await pobierzObs(); LIVE.obsCzas = Date.now() - 27e5; } } catch(e){ LIVE.blad = e.message; } if(S.tab === 'pulpit'){ S._odsw = true; renderuj(); } if(S.tab === 'live') { const y = window.scrollY; $('#view').innerHTML = widokLive(); window.scrollTo(0, y); } };
   tick(); LIVE.timer = setInterval(tick, 30000);
 }
 function stopLive(){ if(LIVE.timer){ clearInterval(LIVE.timer); LIVE.timer = null; } }
@@ -1500,22 +1595,17 @@ function kupBtn(obj){
   const on = KUP.wybrane.some(x => x.id === id);
   return `<button class="kbtn${on ? ' on' : ''}" data-kid="${esc(id)}">${on ? '✓ w kuponie' : '+ kupon'}</button>`;
 }
-function kupPodsumowanie(){
-  const w = KUP.wybrane; if(!w.length) return null;
-  const p = w.reduce((a, x) => a * x.szansa, 1); const mecze = new Set(w.map(x => x.event_id || x.mecz));
-  return {p, kurs: 1/p, n: w.length, powiazane: mecze.size < w.length};
-}
 function odswiezKupon(){
   const s = kupPodsumowanie(), bar = $('#kbar');
   if(!s){ bar.classList.remove('on'); return; }
-  bar.classList.add('on'); $('#kopen').textContent = `🧾 Kupon: ${s.n} ${s.n === 1 ? 'typ' : 'typy'} · szansa ${pct(s.p)} · kurs uczciwy ${num(s.kurs)}  ›`;
+  bar.classList.toggle('on', S.tab !== 'kupon'); $('#kopen').textContent = `🧾 Kupon: ${s.n} ${s.n === 1 ? 'typ' : 'typy'} · szansa ${pct(s.p)} · kurs uczciwy ${num(s.kurs)}  ›`;
 }
 function widokKuponu(){
   const s = kupPodsumowanie(); const kk = store.get('kuponKurs', ''), st = store.get('kuponStawka', 10);
   if(!s) return `<h2 style="margin-top:0">Kupon</h2><div class="empty">Kupon jest pusty. Dodawaj typy przyciskiem „+ kupon”.</div>`;
   let h = `<h2 style="margin-top:0">Kupon (${s.n})</h2><ul class="klist">` + KUP.wybrane.map(x => `<li><span><b>${esc(plMecz(x.mecz))}</b><br>${esc(x.zaklad)}</span><span>${pct(x.szansa)}</span><button data-kdel="${esc(x.id)}" aria-label="Usuń">✕</button></li>`).join('') + `</ul>`;
   h += `<div class="grid"><div class="cell"><b>${pct(s.p)}</b><span>szansa całego kuponu</span></div><div class="cell"><b>${num(s.kurs)}</b><span>kurs uczciwy</span></div><div class="cell"><b>${Math.round(1/s.p*10)/10}</b><span>wchodzi ~1 na tyle razy</span></div></div>`;
-  if(s.powiazane) h += `<p class="note warn">Kilka typów z tego samego meczu – są od siebie zależne, więc szansa jest tylko przybliżona (bukmacherzy często nie pozwalają ich łączyć).</p>`;
+  if(s.powiazane) h += `<p class="note warn">Kilka typów z tego samego meczu. ${s.dokladna ? 'Szansa uwzględnia zależność między nimi.' : 'Tych zakładów nie da się policzyć dokładnie, więc szansa jest przybliżona.'} Bukmacherzy często nie pozwalają ich łączyć.</p>`;
   h += `<div class="row"><div><label for="kkurs">Kurs kuponu u bukmachera</label><input type="number" inputmode="decimal" step="0.01" id="kkurs" value="${esc(kk)}" placeholder="np. 2,93"></div>
         <div><label for="kst">Stawka (zł)</label><input type="number" inputmode="decimal" id="kst" value="${esc(st)}"></div></div><div id="kwyn"></div>
         <p class="note">Marża bukmachera mnoży się przy każdym typie – w testach 2024–2026 kupony z 5 typów traciły średnio ok. 13%, z 2 typów ok. 11%.</p>
@@ -1535,11 +1625,11 @@ document.addEventListener('click', e => {
     if(i >= 0) KUP.wybrane.splice(i, 1); else if(KUP.opcje[id]) KUP.wybrane.push(KUP.opcje[id]);
     store.set('kupon', KUP.wybrane); b.classList.toggle('on', i < 0); b.textContent = i < 0 ? '✓ w kuponie' : '+ kupon'; odswiezKupon(); return; }
   const d = e.target.closest('[data-kdel]');
-  if(d){ KUP.wybrane = KUP.wybrane.filter(x => x.id !== d.dataset.kdel); store.set('kupon', KUP.wybrane); $('#kcard').innerHTML = widokKuponu(); podepnijKupon(); odswiezKupon(); renderuj(); }
+  if(d){ KUP.wybrane = KUP.wybrane.filter(x => x.id !== d.dataset.kdel); store.set('kupon', KUP.wybrane); odswiezKupon(); renderuj(); }
 });
 function podepnijKupon(){
   const k = $('#kkurs'); if(k){ k.oninput = kuponWynik; $('#kst').oninput = kuponWynik; kuponWynik(); }
-  const c = $('#kclear'); if(c) c.onclick = () => { KUP.wybrane = []; store.set('kupon', []); $('#kupon').classList.remove('open'); odswiezKupon(); renderuj(); };
+  const c = $('#kclear'); if(c) c.onclick = () => { KUP.wybrane = []; store.set('kupon', []); odswiezKupon(); renderuj(); };
 }
 /* ---------- stan programu ---------- */
 function widokWersji(){   // wersja 42: czy wgrana jest najnowsza wersja (strona i obliczenia)
@@ -1605,35 +1695,284 @@ function powodBrakuAI(){
 }
 
 /* ---------- nawigacja ---------- */
+/* ===== WERSJA 64: Pulpit, karta meczu, Kupon, Przejrzystość, Alert Center, Budżet ===== */
+const g2 = f => fetch('data/' + f + '?t=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null);
+const IKO = {
+  menu:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>',
+  lupa:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.6-4.6"/></svg>',
+  wst:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>'};
+const GRAD = (id, a, b) => `<defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs>`;
+const IK_M = {
+  pewne:`<svg class="g" viewBox="0 0 48 48">${GRAD('gz','#FFE08A','#B8842E')}<path d="M24 4l16 6v12c0 11-7 18-16 22C15 40 8 33 8 22V10z" fill="url(#gz)"/><path d="M16 24l6 6 11-12" fill="none" stroke="#2a1c05" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  value:`<svg class="g" viewBox="0 0 48 48">${GRAD('gc','#FF6A55','#C4140F')}<rect x="6" y="28" width="8" height="14" rx="2" fill="url(#gc)"/><rect x="18" y="20" width="8" height="22" rx="2" fill="url(#gc)"/><rect x="30" y="10" width="8" height="32" rx="2" fill="url(#gc)"/></svg>`,
+  kupon:`<svg class="g" viewBox="0 0 48 48">${GRAD('gp','#FFB06A','#E2470F')}<path d="M24 6l18 9-18 9-18-9z" fill="url(#gp)"/><path d="M6 24l18 9 18-9M6 33l18 9 18-9" fill="none" stroke="url(#gp)" stroke-width="4" stroke-linejoin="round"/></svg>`,
+  analiza:`<svg class="g" viewBox="0 0 48 48">${GRAD('gs','#FFD27A','#D88A1E')}<circle cx="21" cy="21" r="13" fill="none" stroke="url(#gs)" stroke-width="5"/><path d="M31 31l11 11" stroke="url(#gs)" stroke-width="6" stroke-linecap="round"/></svg>`};
+const IMG = (src, alt, cls) => `<img src="grafika/${src}" alt="${alt || ''}" ${cls ? `class="${cls}"` : ''} loading="lazy" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display=''">`;
+const dalej = '<i>›</i>';
+let CEN = null, PAMIEC = null;
+const wyc = t => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const filtrWalk = m => { const f = S.walkiF; if(!f) return true; const t = `${m.turniej || ''} ${m.dyscyplina || ''} ${m.sport_key || ''}`.toLowerCase();
+  if(f === 'ksw') return /ksw/.test(t); if(f === 'boks') return /boks|box/.test(t); return !/boks|box|ksw/.test(t); };
+const wszystkieKarty = () => { const o = [], byl = new Set();
+  for(const [sp] of SPORTY) for(const m of [...pewneSportu(sp), ...meczeSportu(sp), ...valueSportu(sp)]){ const k = sp + '|' + (m.event_id || m.mecz); if(!byl.has(k)){ byl.add(k); o.push([sp, m]); } }
+  return o; };
+const nazwy = (sp, m) => sp === 'pilka' ? [plN(m.gospodarz), plN(m.gosc)] : [m.a, m.b];
+const alarmy = () => wszystkieKarty().filter(([, m]) => m.alarm).map(([sp, m]) => ({sp, m, a: m.alarm}));
+const startPrzyszly = m => !m.start || String(m.start) > new Date(Date.now() - new Date().getTimezoneOffset()*6e4).toISOString().slice(0, 16).replace('T', ' ');
+const wil = x => x && x.przedzial && x.przedzial[0] != null ? `${pct(x.przedzial[0])}–${pct(x.przedzial[1])}` : '';
+const SK = () => (CEN || {}).skutecznosc_30 || {};
+
+/* ---------- Pulpit ---------- */
+const SEKCJE_P = {hero:'Grafika i sporty', moduly:'Pewne, Value, Kupon, Analiza', alerty:'Alerty', live:'Na żywo', dziennik:'Dziennik', kondycja:'Kondycja programu', raport:'Raport dnia'};
+const kolPulpitu = () => { const o = store.get('pulpitKol', null) || Object.keys(SEKCJE_P); return [...o.filter(k => SEKCJE_P[k]), ...Object.keys(SEKCJE_P).filter(k => !o.includes(k))]; };
+function sekHero(){
+  const tl = [['pilka','s-pilka.webp','⚽','Piłka nożna',''],['tenis','s-tenis.webp','🎾','Tenis',''],['walki','s-mma.webp','🥊','MMA','mma'],['walki','s-ksw.webp','🥋','KSW','ksw'],['walki','s-boks.webp','🥊','Boks','boks']];
+  return `<div class="hero2">${IMG('hero.webp')}<div class="h">Liczby zamiast przeczucia<small>${esc(String((S.dzis||{}).data || '').split('-').reverse().join('.'))} · odświeżono ${esc(String((S.dzis||{}).wygenerowano || '').slice(11))}</small></div></div>
+  <div class="sporty2">${tl.map(([k, im, em, n, f]) => `<button data-go="sporty" data-k="sport:${k}" data-k2="walkiF:${f}">${IMG(im, '')}<span class="sk" style="display:none">${em}</span>${n}</button>`).join('')}</div>`;
+}
+function sekModuly(){
+  const gl = glowneListy() || {pew:[], val:[]}, sk = SK(), kp = (S.glowne || {}).kupon;
+  const maxV = gl.val.reduce((a, [, v]) => Math.max(a, v.ev || 0), 0);
+  let h = '';
+  const rada = dzisNieGraj(gl); if(rada) h += `<div class="alert"><b>Dziś bez gry</b>${esc(rada)}</div>`;
+  h += `<button class="modul zl" data-go="pewne">${IK_M.pewne}<div><b>Pewne – najpewniejsze typy dnia</b><span>${sk.n ? `Skuteczność 30 dni: ${pct(sk.skutecznosc)} (${sk.trafione} z ${sk.n})` : `Dziś typów: ${gl.pew.length}`}</span></div>${dalej}</button>
+  <button class="modul cz" data-go="value">${IK_M.value}<div><b>Value – zakłady z przewagą</b><span>Wykryte okazje: ${gl.val.length}${maxV ? ` · Największa przewaga: ${sgn(maxV)}` : ''}</span></div>${dalej}</button>
+  <button class="modul po" data-go="kupon">${IK_M.kupon}<div><b>Kupon dnia</b><span>${kp ? `Kurs łączny: ${kp.kurs ? num(kp.kurs) : '–'} · Szansa: ${pct(kp.szansa)}` : 'Dziś bez kuponu dnia · ułóż własny'}</span></div>${dalej}</button>
+  <button class="modul" data-go="analiza">${IK_M.analiza}<div><b>Analiza dowolnego meczu</b><span>Wybierz mecz, sprawdź szanse i typy</span></div>${dalej}</button>`;
+  return h;
+}
+function dzisNieGraj(gl){
+  if(!S.glowne || S.glowne.data !== dzisData()) return null;
+  const mocne = gl.pew.filter(([sp, m]) => { const t = sp === 'pilka' ? m : m.najpewniejszy; return t && t.szansa >= .7 && !m.nizsza_pewnosc; });
+  return !mocne.length && !gl.val.length ? 'Nic dziś nie spełnia progów: brak typu od 70% i brak Value. Odpuszczenie to też dobra decyzja.' : null;
+}
+function kartaAlarmu({sp, m, a}){ const [A, B] = nazwy(sp, m), poz = a.poziom || 'ostrzezenie';
+  return `<div class="alert ${poz}" data-mecz="${sp}|${esc(m.event_id)}"><b>${({krytyczny:'Krytyczny', ostrzezenie:'Ostrzeżenie', informacja:'Informacja'})[poz]} · ${esc(A)} – ${esc(B)} · ${esc(a.czas || '')}</b>${esc((a.powody || []).join(' · '))}${a.dlaczego ? `<br><span class="muted">${esc(a.dlaczego)}</span>` : ''}</div>`; }
+function sekAlerty(){ const z = bannerZdrowia(), l = alarmy(); if(!l.length && !z) return ''; return `<div class="tyt">Alerty</div>${z}${l.slice(0, 4).map(kartaAlarmu).join('')}`; }
+function sekLive(){
+  const tr = LIVE.mecze.filter(m => m.stan === 'in');
+  const dzis = LIVE.mecze.filter(m => m.stan === 'pre').slice(0, 3);
+  const w = m => `<div class="lrow"><span>${esc(plN(m.dom))} – ${esc(plN(m.gosc))}</span><b>${m.stan === 'in' ? `${m.hg} : ${m.ag}` : new Date(m.start).toLocaleTimeString('pl-PL', {hour:'2-digit', minute:'2-digit'})}</b><em>${m.stan === 'in' ? esc(m.minuta) : ''}</em></div>`;
+  const l = tr.length ? tr.slice(0, 4) : dzis; 
+  return `<div class="tyt"><span>Na żywo (${tr.length})${tr.length ? '<span class="livb">LIVE</span>' : ''}</span><button data-go="live">Wszystkie ›</button></div><div class="pan">${l.length ? l.map(w).join('') : `<div class="pp note">${LIVE.czas ? 'Teraz nic nie trwa.' : 'Ładuję wyniki…'}</div>`}</div>`;
+}
+function sekDziennik(){
+  const s = SK(); if(!s.n) return '';
+  const v = (CEN || {}).value_30 || {};
+  const c = x => x == null ? 'neu' : x >= 0 ? '' : 'neg';
+  return `<div class="tyt"><span>Dziennik <small class="muted" style="font-weight:500">(ostatnie 30 dni, typy dnia)</small></span><button data-go="dziennik">Więcej ›</button></div>
+  <div class="pan zl"><div class="pp liczby"><div><span>Skuteczność</span><b>${pct(s.skutecznosc, 1)}</b></div><div><span>ROI</span><b class="${c(s.roi)}">${s.roi == null ? '–' : sgn(s.roi)}</b></div><div><span>Zysk (10 zł/typ)</span><b class="${c(s.zysk_10zl)}">${s.zysk_10zl == null ? '–' : (s.zysk_10zl >= 0 ? '+' : '') + Math.round(s.zysk_10zl) + ' zł'}</b></div><div><span>CLV Value</span><b class="${c(v.clv)}">${v.clv == null ? '–' : sgn(v.clv)}</b></div></div></div>`;
+}
+function sekKondycja(){
+  const c = CEN; if(!c) return ''; const d = c.dryf, a = ((S.zdrowie || {}).ai) || {}, g = (S.status || {}).gemini || {};
+  const aiT = a.dziala === false ? 'wstrzymane' : g.limit_dzienny ? 'limit na dziś wyczerpany' : g.model ? 'działa' : 'czeka na dane';
+  return `<div class="tyt">Kondycja programu</div><div class="pan"><div class="pp"><div class="row3"><span>Rozliczonych typów</span><span class="r">${c.rozliczone} z ${c.opublikowane}</span></div>
+   <div class="row3"><span>Trafność prognoz (Brier, 30 dni)</span><span class="r">${SK().brier != null ? num(SK().brier, 3) : '–'}${d ? ` (${d.zmiana <= 0 ? 'lepiej' : 'gorzej'} niż wcześniej)` : ''}</span></div><div class="row3" style="border:0"><span>AI</span><span class="r">${esc(aiT)}</span></div></div></div>`;
+}
+function sekRaport(){ const r = (CEN || {}).raport; return r && r.tekst ? `<div class="tyt">Raport dnia</div><div class="pan"><div class="pp note" style="white-space:pre-line;color:var(--text2)">${esc(r.tekst)}</div></div>` : ''; }
+function widokPulpit(){ const m = {hero:sekHero, moduly:sekModuly, alerty:sekAlerty, live:sekLive, dziennik:sekDziennik, kondycja:sekKondycja, raport:sekRaport}; return kolPulpitu().map(k => m[k]()).join(''); }
+
+/* ---------- Typy i Analiza ---------- */
+function widokTypy(){ const t = S.tab === 'value' ? 'value' : 'pewne';
+  return `<div class="seg"><button data-go="pewne" class="${t === 'pewne' ? 'on' : ''}">Pewne</button><button data-go="value" class="${t === 'value' ? 'on' : ''}">Value</button></div>` + (t === 'pewne' ? widokPewne() : widokValue()); }
+function widokAnaliza(){
+  const sp = store.get('anSp', 'pilka'); const dz = meczeSportu(sp).slice(0, 12);
+  let h = `<div class="seg2">${SPORTY.map(([k, , n]) => `<button data-set="anSp:${k}" class="${k === sp ? 'on' : ''}">${esc(n)}</button>`).join('')}</div>`;
+  if(dz.length) h += `<div class="tyt">Dzisiejsze mecze</div><div class="pan">${dz.map(m => { const [A, B] = nazwy(sp, m); return `<div class="lrow" data-mecz="${sp}|${esc(m.event_id)}" style="cursor:pointer"><span>${esc(A)} – ${esc(B)}</span><b>${esc(m.godzina || '')}</b><em>›</em></div>`; }).join('')}</div>`;
+  return h + (sp === 'pilka' ? widokMecz() : widokAnalizaInne(sp));
+}
+function szukajWynik(q){ const t = wyc(q); if(t.length < 2) return '<p class="note">Wpisz co najmniej 2 litery.</p>';
+  const w = wszystkieKarty().filter(([sp, m]) => wyc(nazwy(sp, m).join(' ') + ' ' + (m.mecz || '') + ' ' + (m.liga || m.turniej || '')).includes(t)).slice(0, 20);
+  return w.length ? w.map(([sp, m]) => { const [A, B] = nazwy(sp, m); return `<div class="lrow" data-mecz="${sp}|${esc(m.event_id)}" style="cursor:pointer"><span>${esc(A)} – ${esc(B)}<br><small class="muted" style="font-weight:400">${esc(m.liga || m.turniej || '')}</small></span><b>${esc(m.godzina || '')}</b><em>›</em></div>`; }).join('') : '<p class="note">Nic nie znalazłem wśród dzisiejszych wydarzeń.</p>'; }
+
+/* ---------- Karta meczu ---------- */
+function znajdzKarte(sp, id){ return [...pewneSportu(sp), ...meczeSportu(sp), ...valueSportu(sp)].find(m => String(m.event_id) === String(id)); }
+const inic = n => esc(String(n || '?').split(/\s+/).filter(Boolean).map(x => x[0]).slice(0, 2).join('').toUpperCase());
+function jakoscDanych(m, sp){ const pro = proKarty(m), au = pro && pro.audyt; const r = m.raport || {}, ai = aiKarty(m);
+  if(au) return au.jakosc; let n = 0; if(sp === 'pilka' ? (r.braki || m.przedmeczowe) : (m.naglowki && (m.naglowki.a || []).length)) n++; if(ai) n++; if(m.zrodlo && /pinnacle|betfair/i.test(m.zrodlo)) n++; return n >= 3 ? 'dobra' : n === 2 ? 'srednia' : 'niska'; }
+function ryzykoTypu(p){ return p >= .75 ? ['d', 'Ryzyko niższe'] : p >= .6 ? ['s', 'Ryzyko średnie'] : ['n', 'Ryzyko wysokie']; }
+function chipyTypu(sp, m, t){ const j = jakoscDanych(m, sp), r = ryzykoTypu(t.szansa), mk = 1 / t.szansa;
+  return `<div><span class="chipr ${r[0]}">${r[1]}</span><span class="chipr ${j === 'dobra' ? 'd' : j === 'srednia' ? 's' : 'n'}">Dane: ${({dobra:'dobre', srednia:'średnie', niska:'słabe'})[j]}</span><span class="chipr">Min. kurs ${num(mk)}</span></div>`; }
+function wykresKursu(e){ if(!e || e.p.length < 2) return '<p class="note">Wykres pojawi się po drugim odczycie kursu.</p>';
+  const v = e.p.map(p => Math.max(...Object.values(p[1]))), lo = Math.min(...v), hi = Math.max(...v), W = 320, H = 58, x = i => 4 + i * (W - 8) / (v.length - 1), y = a => hi === lo ? H / 2 : H - 6 - (a - lo) * (H - 12) / (hi - lo);
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" role="img" aria-label="Ruch najlepszego kursu"><polyline fill="none" stroke="#F2B544" stroke-width="2.5" points="${v.map((a, i) => x(i).toFixed(1) + ',' + y(a).toFixed(1)).join(' ')}"/></svg><div class="top"><span>${esc(e.p[0][0])}: ${num(v[0])}</span><span>teraz: <b>${num(v[v.length - 1])}</b></span></div>`; }
+const wpisKursu = (eid, t) => Object.entries((CEN || {}).kursy || {}).find(([, e]) => String(e.e) === String(eid) && (e.kl === String(t.klucz) || e.z === t.zaklad)) || [null, null];
+function alertKursuBtn(eid, t){ const bot = ((S.status || {}).telegram || {}).bot, [id] = wpisKursu(eid, t); if(!bot || !id) return ''; const k = Math.round((t.kurs_szukaj || t.kurs_uczciwy * 1.05 || t.kurs || 2) * 100);
+  return `<a class="otw" style="text-align:center;line-height:42px;text-decoration:none" href="https://t.me/${esc(bot)}?start=ka_${id}_${k}" target="_blank" rel="noopener">🎯 Alert na kurs ${num(k / 100)}</a>`; }
+function wiarygodnosc(v){ let n = 0, pow = []; const buk = Object.keys(v.kursy_pl || {}).length, ev = v.ev || 0, k = +v.kurs || 0;
+  if(/pinnacle|betfair/i.test(v.zrodlo || '')){ n += 40; } else pow.push('uczciwy kurs nie z Pinnacle/Betfair');
+  if(ev <= .15){ n += 20; } else pow.push('duża przewaga bywa błędem odczytu');
+  if(k && k <= 1.9){ n += 20; } else pow.push('kurs powyżej 1,90');
+  if(buk >= 2){ n += 20; } else pow.push('kurs tylko u jednego bukmachera');
+  return {n, pow, opis: n >= 80 ? 'wysoka' : n >= 60 ? 'średnia' : 'niska', zrodlo: n >= 60 ? 'Różnica wygląda na błąd rynku.' : 'Różnica może wynikać z niepewności danych.'}; }
+function agenciHtml(m){ const p = proKarty(m); if(!p) return '';
+  const a = (p.za || [])[0], b = (p.przeciw || [])[0], s = p.szanse_na_slepo;
+  const ag = (k, im, em, n, tx) => `<div class="agent a${k}">${IMG(im, n)}<div class="pz" style="display:none">${em}</div><div><b>${n}</b><p>${esc(tx)}</p></div><span>✓</span></div>`;
+  let h = ag(1, 'analityk.webp', '🗿', 'Analityk', s ? `Na ślepo: ${Object.entries(s).map(([k, v]) => `${k} ${pct(v)}`).join(' · ')}` : 'Analiza bez kursów.') + ag(2, 'adwokat.webp', '😈', 'Adwokat diabła', b || 'Scenariusz niespodzianki i argumenty przeciw.') + ag(3, 'sedzia.webp', '⚖️', 'Sędzia', p.powod || 'Ocena z kursami i werdykt.');
+  const w = werdyktKarty(m); if(w) h += `<div class="werd ${w}"><small>Werdykt końcowy</small><b>${({zgoda:'AI POPIERA', ryzyko:'RYZYKO', odradza:'AI ODRADZA'})[w] || esc(w)}</b></div>`;
+  const au = p.audyt; if(au) h += `<div class="pan"><div class="pp"><b>Audytor</b><p class="note">Jakość danych: ${esc(au.jakosc)} · faktów ze źródłem: ${au.fakty} · pobrano ${esc(au.czas)}</p>${[...(au.uwagi || []), ...(au.braki || [])].map(x => `<span class="chipr s">${esc(x)}</span>`).join('')}</div></div>`;
+  return h; }
+function historiaPrognozy(m, sp){ const w = ((CEN || {}).prognozy || {})[m.event_id + '|najpewniejszy']; if(!w) return '<p class="note">Historia zacznie się od następnego liczenia typów.</p>';
+  return `<table class="tab2"><tr><th>Kiedy</th><th>Szansa</th><th>AI</th></tr>${w.map((x, i) => `<tr><td>${esc(x.c)}${i ? '' : ' (pierwotna)'}</td><td>${pct(x.s, 1)}</td><td>${esc(x.w || '–')}</td></tr>`).join('')}</table>`; }
+function widokKartyMeczu(){
+  const {sp, id} = S.mecz || {}, m = znajdzKarte(sp, id); if(!m){ S.tab = 'pulpit'; return widokPulpit(); }
+  const [A, B] = nazwy(sp, m), pil = sp === 'pilka', t = pil ? (m.klucz ? m : (m.najpewniejszy || m)) : m.najpewniejszy, z = store.get('mzak', 'ai');
+  const sz = pil ? (m.szanse ? [['1', m.szanse['1']], ['X', m.szanse.X], ['2', m.szanse['2']]] : []) : [[A, m.szansa_a], [B, m.szansa_b]];
+  const mx = Math.max(0, ...sz.map(x => x[1] || 0));
+  let h = `<div class="mhead"><button class="ikb" data-wstecz aria-label="Wstecz">${IKO.wst}</button><h2>Analiza meczu</h2><span></span></div><div class="liga">${esc(m.liga || m.turniej || '')}</div>
+   <div class="vs"><div class="h"><div class="inic">${inic(A)}</div>${esc(A)}</div><div class="s">VS<small>${esc(m.dzien ? m.dzien + ' ' : '')}${esc(m.godzina || '')}</small></div><div class="h"><div class="inic">${inic(B)}</div>${esc(B)}</div></div>
+   <div class="seg2">${[['ai','Analiza AI'],['prog','Prognoza'],['sk','Składy'],['fo','Forma'],['ku','Kursy'],['hi','Historia']].map(([k, n]) => `<button data-set="mzak:${k}" class="${z === k ? 'on' : ''}">${n}</button>`).join('')}</div>`;
+  const szans = sz.length ? `<div class="tyt" style="margin-top:4px">Szanse na wynik (bez marży)</div><div class="szb">${sz.map(([k, v]) => `<div class="${v === mx ? 'on' : ''}"><span>${esc(pil ? k : k.split(' ').pop())}</span><b>${v != null ? pct(v, 1) : '–'}</b></div>`).join('')}</div>
+    <div class="pasek">${sz.map(([, v], i) => `<i style="flex:${v || 0};background:${['#3BE06F','#E9E6DF','#FF3E8A'][i]}"></i>`).join('')}</div>` : '';
+  if(z === 'ai'){
+    h += szans; if(m.xg_gosp != null) h += `<div class="row3"><span>Oczekiwane gole (xG)</span><span class="r">${num(m.xg_gosp)} – ${num(m.xg_gosc)}</span></div>`;
+    if(pil && Array.isArray(m.wyniki) && m.wyniki.length) h += `<div class="tyt">Najbardziej prawdopodobne wyniki</div><div class="szb">${m.wyniki.slice(0, 3).map(w => `<div><span>${esc(w.wynik)}</span><b>${pct(w.szansa, 1)}</b></div>`).join('')}</div>`;
+    h += `<div class="tyt">Analityk AI</div>` + (agenciHtml(m) || aiPelny(m, sp) || `<div class="empty">Brak analizy AI dla tego meczu. Darmowy limit idzie najpierw na typy dnia.</div>`);
+  } else if(z === 'prog') h += t ? kartaTypu(sp, m, 0) : `<div class="empty">Dla tego meczu nie ma typu.</div>`;
+  else if(z === 'sk') h += `<div class="pan"><div class="pp" style="display:flex;flex-direction:column;gap:10px">${pil ? (przedmeczoweHTML(m.przedmeczowe, m) + (m.raport ? raportHTML(m.raport, m) : '')) || '<p class="note">Składy pojawią się ok. godzinę przed meczem.</p>' : szczegolyInne(m, sp)}</div></div>`;
+  else if(z === 'fo'){ const ai = aiKarty(m) || {}, pr = proKarty(m) || {}; h += `<div class="pan"><div class="pp">${ai.forma ? `<p><b>Forma.</b> ${esc(ai.forma)}</p>` : ''}${ai.styl ? `<p><b>Styl.</b> ${esc(ai.styl)}</p>` : ''}${(pr.scenariusze || []).map(s => `<p class="note">${esc(s.nazwa || s.tytul || '')} ${s.procent ? s.procent + '%' : ''}: ${esc(s.opis || s.przebieg || '')}</p>`).join('')}${ai.forma || ai.styl || pr.scenariusze ? '' : '<p class="note">Brak opisu formy dla tego meczu.</p>'}</div></div>`; }
+  else if(z === 'ku'){ const [, e] = t ? wpisKursu(m.event_id, t) : [null, null]; h += `<div class="pan"><div class="pp">${t ? kafelkiBuk(t) : ''}<div class="tyt">Ruch najlepszego kursu</div>${wykresKursu(e)}</div></div>` + (t ? alertKursuBtn(m.event_id, t) : ''); }
+  else h += `<div class="pan"><div class="pp">${historiaPrognozy(m, sp)}</div></div>`;
+  return h;
+}
+
+/* ---------- Kupon ---------- */
+function maskaK(k){ const s = String(k); const ov = s.match(/^(Over|Powyżej)\s*([\d.,]+)/i), un = s.match(/^(Under|Poniżej)\s*([\d.,]+)/i);
+  if(ov){ const l = parseFloat(ov[2].replace(',', '.')); return (i, j) => i + j > l; } if(un){ const l = parseFloat(un[2].replace(',', '.')); return (i, j) => i + j < l; }
+  return ({'1':(i,j)=>i>j,'X':(i,j)=>i===j,'2':(i,j)=>i<j,'1X':(i,j)=>i>=j,'X2':(i,j)=>i<=j,'12':(i,j)=>i!==j,'BTTS Tak':(i,j)=>i>0&&j>0,'BTTS Nie':(i,j)=>!(i>0&&j>0)})[s] || null; }
+function szansaGrupy(gr){ if(gr.length === 1) return {p: gr[0].szansa, dokladna: true};
+  const m = znajdzKarte('pilka', gr[0].event_id), lam = m && m.analiza && m.analiza.lam, ma = gr.map(x => maskaK(x.klucz));
+  if(lam && ma.every(Boolean)){ const M = macierz(lam[0], lam[1], -0.05, 0); let p = 0, s = 0; M.forEach((w, i) => w.forEach((v, j) => { s += v; if(ma.every(f => f(i, j))) p += v; })); return {p: p / s, dokladna: true}; }
+  return {p: Math.min(...gr.map(x => x.szansa)) * .85, dokladna: false}; }
+function kupPodsumowanie(lista){ const w = lista || KUP.wybrane; if(!w.length) return null; const gr = {}; w.forEach(x => (gr[x.event_id || x.mecz] = gr[x.event_id || x.mecz] || []).push(x));
+  const cz = Object.values(gr).map(szansaGrupy), p = cz.reduce((a, c) => a * c.p, 1);
+  return {p, kurs: 1 / p, n: w.length, powiazane: Object.keys(gr).length < w.length, dokladna: cz.every(c => c.dokladna)}; }
+function symKupon(p, k, st){ return {w: st * k - st, s: -st, ev: st * (p * k - 1)}; }
+function kuponRozszerzenie(){ const s = kupPodsumowanie(); if(!s || s.n < 2) return ''; const kk = parseFloat(String(store.get('kuponKurs', '')).replace(',', '.')), st = store.get('kuponStawka', 10);
+  const warianty = KUP.wybrane.map((x, i) => { const r = kupPodsumowanie(KUP.wybrane.filter((_, j) => j !== i)); return [x, r]; }).sort((a, b) => b[1].p - a[1].p).slice(0, 3);
+  const pp = KUP.wybrane.reduce((a, x) => a + x.szansa, 0) / s.n, naj = 1 - KUP.wybrane.reduce((a, x) => a * (1 - x.szansa), 1);
+  const rynki = {}; KUP.wybrane.forEach(x => { if(x.klucz) rynki[x.klucz] = (rynki[x.klucz] || 0) + 1; }); const pow = Object.entries(rynki).filter(([, n]) => n >= 3);
+  const ryz = s.p >= .5 ? ['d','niskie'] : s.p >= .25 ? ['s','średnie'] : ['n','wysokie'];
+  return `<div class="tyt">Ryzyko i porównanie</div><div class="pan"><div class="pp"><span class="chipr ${ryz[0]}">Ryzyko kumulacji: ${ryz[1]}</span>${s.dokladna ? '' : '<span class="chipr s">Szansa przybliżona</span>'}
+   <table class="tab2"><tr><th></th><th>Kupon</th><th>Pojedyncze</th></tr><tr><td>Wchodzi</td><td>${pct(s.p, 1)}</td><td>śr. ${pct(pp)} na typ</td></tr><tr><td>Choć jeden typ</td><td>–</td><td>${pct(naj, 1)}</td></tr>${kk > 1 ? `<tr><td>Zysk przy wygranej</td><td>+${num(st * (kk - 1))} zł</td><td>zależy od kursów</td></tr><tr><td>Strata</td><td>−${num(st)} zł</td><td>do −${num(st)} zł</td></tr>` : ''}</table>
+   ${pow.length ? `<p class="note warn">Powtarza się ten sam rodzaj zakładu (${pow.map(([k, n]) => `${esc(k)} × ${n}`).join(', ')}).</p>` : ''}</div></div>
+   <div class="tyt">Warianty</div><div class="pan">${warianty.map(([x, r]) => `<div class="lrow"><span>Bez: ${esc(x.zaklad)}</span><b>${pct(r.p, 1)}</b><em>${num(r.kurs)}</em></div>`).join('')}</div>`; }
+function widokKuponTab(){ const kp = (S.glowne || {}).kupon; let h = '';
+  if(kp) h += `<section class="sekcja"><h2 style="margin-top:0">Kupon dnia</h2>${kp.typy.map(t => `<div class="wiersz"><div class="g"><span>${esc(t.sport === 'pilka' ? plMecz(t.mecz || '') : (t.mecz || ''))}</span><b>${pct(t.szansa)}</b></div><div class="d"><span>${esc(t.zaklad || '')}</span></div></div>`).join('')}<div class="wiersz"><div class="g"><span>Szansa całego kuponu</span><b>${pct(kp.szansa)}</b></div></div></section>`;
+  return h + `<div id="kcard">${widokKuponu()}</div>${kuponRozszerzenie()}`; }
+
+/* ---------- Dziennik: Przejrzystość, Model Lab, Rynek, Ludzie ---------- */
+function wykresKalibracji(k){ if(!k || !k.length) return '<p class="note">Za mało danych na wykres.</p>'; const S2 = 260, x = v => 30 + v * (S2 - 40), y = v => S2 - 24 - v * (S2 - 40);
+  return `<svg viewBox="0 0 ${S2} ${S2}" style="width:100%;max-width:300px;display:block;margin:auto" role="img" aria-label="Kalibracja"><line x1="${x(0)}" y1="${y(0)}" x2="${x(1)}" y2="${y(1)}" stroke="#55555f" stroke-dasharray="4 4"/><line x1="${x(0)}" y1="${y(0)}" x2="${x(1)}" y2="${y(0)}" stroke="#55555f"/><line x1="${x(0)}" y1="${y(0)}" x2="${x(0)}" y2="${y(1)}" stroke="#55555f"/>
+   ${k.map(p => `<circle cx="${x(p.przewidywane).toFixed(1)}" cy="${y(p.weszlo).toFixed(1)}" r="${Math.min(12, 3 + Math.sqrt(p.n) / 3).toFixed(1)}" fill="#F2B544" fill-opacity=".85"/>`).join('')}<text x="${x(.5)}" y="${S2 - 4}" fill="#A7A4A0" font-size="11" text-anchor="middle">przewidywana szansa</text><text transform="translate(11 ${y(.5)}) rotate(-90)" fill="#A7A4A0" font-size="11" text-anchor="middle">faktycznie weszło</text></svg><p class="note">Im bliżej przekątnej, tym lepiej program ocenia swoje szanse.</p>`; }
+const wierszM = (n, x) => x && x.n ? `<tr><td>${n}</td><td>${x.n}</td><td>${pct(x.skutecznosc, 1)}</td><td>${x.roi == null ? '–' : sgn(x.roi)}</td><td>${num(x.brier, 3)}</td></tr>` : '';
+const tabM = w => `<table class="tab2"><tr><th></th><th>Typów</th><th>Weszło</th><th>ROI</th><th>Brier</th></tr>${w}</table>`;
+function widokPrzejrzystosc(){ const c = CEN; if(!c) return '<div class="empty">Dane pojawią się po najbliższym uruchomieniu programu.</div>'; const s = c.skutecznosc, v = c.value;
+  return `<section class="sekcja"><h2 style="margin-top:0">Rzeczywista skuteczność</h2><p class="note">Typy dnia od ${esc(s.od_do ? s.od_do[0] : '')} do ${esc(s.od_do ? s.od_do[1] : '')}: <b>${s.trafione} z ${s.n}</b> (${pct(s.skutecznosc, 1)}), przedział niepewności ${wil(s)}. Przewidywane ${pct(s.przewidywane, 1)}. Średni kurs ${s.sredni_kurs ? num(s.sredni_kurs) : '–'}.</p>
+   <div class="liczby" style="margin:8px 0"><div><span>ROI</span><b class="${(s.roi || 0) >= 0 ? '' : 'neg'}">${s.roi == null ? '–' : sgn(s.roi)}</b></div><div><span>Po podatku</span><b class="${(s.roi_podatek || 0) >= 0 ? '' : 'neg'}">${s.roi_podatek == null ? '–' : sgn(s.roi_podatek)}</b></div><div><span>Brier</span><b class="neu">${num(s.brier, 3)}</b></div><div><span>Log loss</span><b class="neu">${num(s.logloss, 3)}</b></div></div>
+   <p class="note">Opublikowano ${c.opublikowane} typów, rozliczono ${c.rozliczone}. To prognozy programu, a nie Twoje zakłady.</p></section>
+   <section class="sekcja"><h2 style="margin-top:0">Dyscypliny i poziomy</h2>${tabM(wierszM('Piłka', c.sporty.pilka) + wierszM('Tenis', c.sporty.tenis) + wierszM('Walki', c.sporty.walki) + wierszM('Najpewniejszy', c.poziomy.najpewniejszy) + wierszM('Wyższy kurs', c.poziomy.lepszy_kurs) + wierszM('Ryzykowny', c.poziomy.ryzykowny) + wierszM('Value', v))}<p class="note">Value: CLV ${v.clv == null ? '–' : sgn(v.clv)}. ROI po podatku ${v.roi_podatek == null ? '–' : sgn(v.roi_podatek)}, przedział skuteczności ${wil(v)}.</p></section>
+   <section class="sekcja"><h2 style="margin-top:0">Kalibracja</h2>${wykresKalibracji(c.kalibracja_wszystkie)}</section>
+   <section class="sekcja"><h2 style="margin-top:0">Historia metodologii</h2>${c.metodologia.map(m => `<div class="row3"><span>${esc(m.zmiana)}</span><span class="r">${esc(m.data)}</span></div>`).join('')}</section>`; }
+function widokLab(){ const c = CEN; if(!c) return '<div class="empty">Dane pojawią się po najbliższym uruchomieniu programu.</div>'; const a = c.ai || {}, d = c.dryf;
+  return `<section class="sekcja"><h2 style="margin-top:0">Model Lab</h2><p class="note">Piłka, tenis i walki liczone są osobno, a szanse pochodzą z rynku. Tu widać, czy program i AI dokładają coś do rynku.</p>${tabM(wierszM('AI popiera', a.zgoda) + wierszM('AI: ryzyko', a.ryzyko) + wierszM('AI odradza', a.odradza))}<p class="note">${d ? `Dryf: Brier ${num(d.brier_30, 3)} w 30 dni, wcześniej ${num(d.brier_wczesniej, 3)}.` : 'Dryf: za mało danych.'}</p></section>` + sekcjaAnalityka() + sekcjaWpadek() +
+   `<section class="sekcja"><h2 style="margin-top:0">Segmenty do obserwacji</h2><p class="note">To nie są typy. Program tylko sprawdza, czy wynik utrzyma się na żywo.</p>${(c.segmenty || []).map(s => `<div class="row3"><span>${esc(s.kategoria)} · kurs ${esc(s.przedzial)} · ${s.n} kursów</span><span class="r">${sgn(s.roi)}</span></div>`).join('') || '<p class="note">Brak segmentów spełniających progi.</p>'}</section>` + sekcjaArchiwum(); }
+function widokRynek(){ const r = (CEN || {}).ruchy || []; return `<section class="sekcja"><h2 style="margin-top:0">Ruchy kursów</h2><p class="note">Zmiana najlepszego polskiego kursu od pierwszego odczytu. Duży ruch nie oznacza pewnej informacji o wyniku.</p>${r.length ? r.map(x => `<div class="row3"><span>${esc(x.mecz)}<br><small class="muted">${esc(x.zaklad)} · ${x.odczytow} odczytów</small></span><span class="r">${num(x.od)} → ${num(x.do)}<br><b class="${x.zmiana >= 0 ? 'pos' : 'neg'}">${sgn(x.zmiana)}</b></span></div>`).join('') : '<p class="note">Brak ruchów. Lista zapełnia się w ciągu dnia.</p>'}</section>`; }
+function widokLudzie(){ if(!PAMIEC){ g2('pamiec_ludzi.json').then(p => { PAMIEC = p || {}; renderuj(); }); return '<p class="note">Ładuję…</p>'; }
+  const q = wyc(store.get('ludzieQ', '')), l = Object.values(PAMIEC).filter(x => !q || wyc(x.nazwa).includes(q)).sort((a, b) => (b.wpisy.at(-1)?.data || '').localeCompare(a.wpisy.at(-1)?.data || '')).slice(0, 30);
+  return `<section class="sekcja"><h2 style="margin-top:0">Pamięć zawodników i drużyn</h2><input class="szuk" id="ludzieQ" placeholder="Szukaj nazwiska lub drużyny" value="${esc(store.get('ludzieQ', ''))}">${l.map(x => `<details class="rap"><summary>${esc(x.nazwa)} (${x.wpisy.length})</summary>${x.wpisy.slice().reverse().map(w => `<p class="note"><b>${esc(w.data)}</b> · ${esc(w.zrodlo)}<br>${esc(w.tekst)}</p>`).join('')}</details>`).join('')}</section>`; }
+
+/* ---------- Budżet i własne zakłady ---------- */
+const LIM = () => store.get('limity', {dzien: 5, strata: 10, stawka: 2});
+const ZAK = () => store.get('zaklady', []);
+function zapiszZakl(z){ store.set('zaklady', z); kopia(); }
+function statZakl(){ const z = ZAK(), r = z.filter(x => x.st !== 'czeka'); const zy = r.reduce((a, x) => a + (x.st === 'w' ? x.s * (x.k - 1) : -x.s), 0), st = r.reduce((a, x) => a + x.s, 0), w = r.filter(x => x.st === 'w').length; return {n: r.length, w, zy, roi: st ? zy / st : null, czeka: z.length - r.length}; }
+function ekspozycja(){ const d = dzisData(), z = ZAK(), dzis = z.filter(x => x.d === d), lim = LIM(); const st = dzis.reduce((a, x) => a + x.s, 0), str = dzis.filter(x => x.st === 'p').reduce((a, x) => a + x.s, 0) - dzis.filter(x => x.st === 'w').reduce((a, x) => a + x.s * (x.k - 1), 0); return {st, str, maksD: BANK * lim.dzien / 100, maksS: BANK * lim.strata / 100}; }
+function symulacja(p, k, f, n = 200, prob = 1500){ let ob = 0, kon = []; for(let i = 0; i < prob; i++){ let b = 1, sz = 1, dd = 0; for(let j = 0; j < n; j++){ const s = b * f; b += Math.random() < p ? s * (k - 1) : -s; sz = Math.max(sz, b); dd = Math.max(dd, 1 - b / sz); } if(dd >= .2) ob++; kon.push(b); } kon.sort((a, b) => a - b); return {ob: ob / prob, med: kon[prob >> 1], zly: kon[prob * .1 | 0], dobry: kon[prob * .9 | 0]}; }
+function widokBudzet(){ const lim = LIM(), e = ekspozycja(), s = statZakl(), v = ((CEN || {}).value || {}), p = v.skutecznosc || .55, k = v.sredni_kurs || 1.9, f = Math.min(lim.stawka / 100, Math.max(0, ((p * k - 1) / (k - 1)) * .25)) ;
+  const sim = symulacja(p, k, f || .005);
+  return `<section class="sekcja"><h2 style="margin-top:0">Budżet</h2><div class="row3"><span>Budżet</span><span class="r"><b>${num(BANK, 0)} zł</b></span></div><div class="row3"><span>Dziś postawione</span><span class="r ${e.st > e.maksD ? 'neg' : ''}">${num(e.st)} z ${num(e.maksD)} zł</span></div><div class="row3"><span>Dziś strata</span><span class="r ${e.str > e.maksS ? 'neg' : ''}">${num(Math.max(0, e.str))} z ${num(e.maksS)} zł</span></div>
+   ${e.st > e.maksD || e.str > e.maksS ? '<p class="note warn">Limit przekroczony. Program radzi stawkę 0 do jutra.</p>' : ''}
+   <div class="row"><div><label>Limit dzienny %</label><input id="limD" type="number" value="${lim.dzien}"></div><div><label>Limit strat %</label><input id="limS" type="number" value="${lim.strata}"></div><div><label>Maks. na typ %</label><input id="limT" type="number" value="${lim.stawka}" step="0.5"></div></div></section>
+   <section class="sekcja"><h2 style="margin-top:0">Symulacja obsunięcia</h2><p class="note">200 zakładów, ${pct(p)} trafień, kurs ${num(k)}, stawka ${pct(f, 1)} budżetu, na danych Value z dziennika.</p><div class="row3"><span>Szansa obsunięcia o 20%</span><span class="r">${pct(sim.ob)}</span></div><div class="row3"><span>Mediana końcowego budżetu</span><span class="r">${num(BANK * sim.med, 0)} zł</span></div><div class="row3"><span>Słaby i dobry scenariusz</span><span class="r">${num(BANK * sim.zly, 0)} – ${num(BANK * sim.dobry, 0)} zł</span></div><p class="note">Stawka 1/4 Kelly'ego nie chroni budżetu, gdy szansa jest źle oszacowana.</p></section>
+   <section class="sekcja"><h2 style="margin-top:0">Moje zakłady</h2><p class="note">Osobno od typów programu. Rozliczonych ${s.n}, wygranych ${s.w}${s.roi != null ? `, wynik ${s.zy >= 0 ? '+' : ''}${num(s.zy)} zł (ROI ${sgn(s.roi)})` : ''}.</p>
+   <div class="row"><div><label>Zakład</label><input id="zN" placeholder="np. Arsenal wygra"></div></div><div class="row"><div><label>Kurs</label><input id="zK" type="number" step="0.01" inputmode="decimal"></div><div><label>Stawka zł</label><input id="zS" type="number" inputmode="decimal"></div></div><button class="btn" id="zDod">Dodaj zakład</button>
+   ${ZAK().slice().reverse().slice(0, 30).map(x => `<div class="row3"><span>${esc(x.n)}<br><small class="muted">${esc(x.d)} · ${num(x.s)} zł @ ${num(x.k)}</small></span><span class="r">${x.st === 'czeka' ? `<button class="kbtn" data-z="${x.id}:w">Wygrany</button> <button class="kbtn" data-z="${x.id}:p">Przegrany</button>` : x.st === 'w' ? '<b class="pos">wygrany</b>' : '<b class="neg">przegrany</b>'} <button class="kbtn" data-z="${x.id}:x">✕</button></span></div>`).join('')}</section>`; }
+function widokDziennikTab(){ const t = store.get('dzSub', 'wyn'); const O = [['wyn','Wyniki'],['prz','Przejrzystość'],['lab','Model Lab'],['ryn','Rynek'],['lud','Zawodnicy'],['bud','Budżet']];
+  return `<div class="seg2">${O.map(([k, n]) => `<button data-set="dzSub:${k}" class="${t === k ? 'on' : ''}">${n}</button>`).join('')}</div>` + ({wyn:widokDziennik, prz:widokPrzejrzystosc, lab:widokLab, ryn:widokRynek, lud:widokLudzie, bud:widokBudzet}[t])(); }
+
+/* ---------- Alert Center, kopia, menu ---------- */
+const KAT_A = [['value','Nowe Value'],['zmiana','Zmiana przed meczem'],['utrata','Utrata przewagi'],['sklad','Zmiana składu'],['kontuzja','Kontuzja'],['prognoza','Zmiana prognozy'],['start','Rozpoczęcie meczu'],['gol','Gol'],['koniec','Koniec meczu'],['rozliczenie','Rozliczenie'],['raport','Raport dzienny']];
+function widokAlerty(){ const u = (CEN || {}).ustawienia_alertow || {}, k = store.get('alertyL', null) || {k: u.kategorie || {}, od: u.od ?? 8, do: u.do ?? 23, p: u.prog_spadku ?? 5};
+  return `<h2 style="margin-top:0">Alert Center</h2>${alarmy().map(kartaAlarmu).join('')}${KAT_A.map(([a, n]) => `<label class="prz">${n}<input type="checkbox" data-al="${a}" ${k.k[a] === false ? '' : 'checked'}></label>`).join('')}
+  <div class="row"><div><label>Od godziny</label><input id="alOd" type="number" min="0" max="23" value="${k.od}"></div><div><label>Do godziny</label><input id="alDo" type="number" min="1" max="24" value="${k.do}"></div><div><label>Spadek szansy (pkt)</label><input id="alP" type="number" min="1" max="30" value="${k.p}"></div></div>
+  <button class="btn" id="alZap">Zapisz w Telegramie</button><p class="note">Otworzy się bot. Dotknij Start, a ustawienia zaczną działać przy następnym przebiegu programu (do 30 minut).</p>`; }
+function zapiszAlerty(){ const k = {}, bit = KAT_A.map(([a]) => { const c = document.querySelector(`[data-al="${a}"]`).checked; k[a] = c; return c ? 1 : 0; }).join(''); const od = +$('#alOd').value, doo = +$('#alDo').value, p = +$('#alP').value;
+  store.set('alertyL', {k, od, do: doo, p}); const bot = ((S.status || {}).telegram || {}).bot; if(bot) window.open(`https://t.me/${bot}?start=al_${bit}_${od}_${doo}_${p}`, '_blank'); }
+const KLUCZE_K = ['bankroll','zaklady','limity','pulpitKol','podatekBuk','alertyL'];
+const kodKopii = () => { let k = store.get('kodKopii', null); if(!k){ k = Array.from(crypto.getRandomValues(new Uint8Array(12))).map(b => b.toString(16).padStart(2, '0')).join(''); store.set('kodKopii', k); } return k; };
+let _kt = null;
+function kopia(){ clearTimeout(_kt); _kt = setTimeout(() => { const o = {}; KLUCZE_K.forEach(k => o[k] = store.get(k, null)); fetch(`${AI_URL}/dane/${kodKopii()}`, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(o)}).catch(() => {}); }, 800); }
+async function przywroc(kod){ const r = await fetch(`${AI_URL}/dane/${kod}`); if(!r.ok) throw new Error('brak'); const o = await r.json(); KLUCZE_K.forEach(k => { if(o[k] != null) store.set(k, o[k]); }); store.set('kodKopii', kod); BANK = store.get('bankroll', BANK); }
+const PODB = () => store.get('podatekBuk', {});
+const zPodatkiem = (buk, k) => PODB()[buk] ? k * .88 : k;
+function widokUstawien2(){ const b = PODB(); return `<h2>Podatek</h2><p class="note">Zaznacz bukmacherów, u których płacisz 12%. Program odejmie go z przewagi Value.</p>${['STS','Fortuna','Superbet','Betclic PL'].map(n => `<label class="prz">${n}<input type="checkbox" data-pod="${n}" ${b[n] ? 'checked' : ''}></label>`).join('')}
+  <h2>Pulpit</h2>${kolPulpitu().map((k, i) => `<div class="prz"><span>${esc(SEKCJE_P[k])}</span><span><button class="kbtn" data-pk="${i}:-1" aria-label="W górę">↑</button> <button class="kbtn" data-pk="${i}:1" aria-label="W dół">↓</button></span></div>`).join('')}
+  <h2>Kopia ustawień</h2><p class="note">Budżet, zakłady i układ Pulpitu zapisują się na Twoim serwerze pod tym kodem. Przepisz go przed usunięciem aplikacji.</p><input class="szuk" readonly value="${kodKopii()}"><label>Przywróć z kodu</label><input class="szuk" id="kodP"><button class="btn" id="kodB">Przywróć</button>`; }
+function otworzMenu(){ $('#mcard').innerHTML = `<div class="menu"><button data-go="live">Na żywo</button><button data-go="sporty" data-k="sport:">Wszystkie sporty</button><button id="mAl">Alert Center</button><button data-go="dziennik" data-k="dzSub:bud">Budżet i moje zakłady</button><button data-go="dziennik" data-k="dzSub:prz">Przejrzystość</button><button id="mUst">Ustawienia</button></div>`; $('#menu').classList.add('open');
+  $('#mAl').onclick = () => { $('#menu').classList.remove('open'); otworzAlerty(); }; $('#mUst').onclick = () => { $('#menu').classList.remove('open'); $('#openSettings').click(); }; }
+function otworzAlerty(){ $('#mcard').innerHTML = widokAlerty(); $('#menu').classList.add('open'); $('#alZap').onclick = zapiszAlerty; }
+document.addEventListener('click', e => {
+  const g = e.target.closest('[data-go]');
+  if(g){ for(const a of ['k','k2']){ const v = g.dataset[a]; if(v){ const i = v.indexOf(':'); store.set(v.slice(0, i), v.slice(i + 1) || null); } } S.tab = g.dataset.go; store.set('tab', S.tab); document.querySelectorAll('.sheet').forEach(s => s.classList.remove('open')); renderuj(); return; }
+  const m = e.target.closest('[data-mecz]');
+  if(m){ const [sp, id] = m.dataset.mecz.split('|'); S.powrot = S.tab === 'mecz' ? S.powrot : S.tab; S.mecz = {sp, id}; S.tab = 'mecz'; store.set('mzak', 'ai'); document.querySelectorAll('.sheet').forEach(s => s.classList.remove('open')); renderuj(); return; }
+  if(e.target.closest('[data-wstecz]')){ S.tab = S.powrot || 'pulpit'; renderuj(); return; }
+  const z = e.target.closest('[data-z]');
+  if(z){ const [id, a] = z.dataset.z.split(':'); let l = ZAK(); l = a === 'x' ? l.filter(x => String(x.id) !== id) : l.map(x => String(x.id) === id ? Object.assign(x, {st: a}) : x); zapiszZakl(l); renderuj(); return; }
+  const p = e.target.closest('[data-pk]');
+  if(p){ const [i, d] = p.dataset.pk.split(':').map(Number), o = kolPulpitu(), j = i + d; if(j >= 0 && j < o.length){ [o[i], o[j]] = [o[j], o[i]]; store.set('pulpitKol', o); kopia(); $('#ust2').innerHTML = widokUstawien2(); podepnijUst(); } return; }
+  if(e.target.id === 'zDod'){ const n = $('#zN').value.trim(), k = parseFloat($('#zK').value), s = parseFloat($('#zS').value); if(n && k > 1 && s > 0){ zapiszZakl([...ZAK(), {id: Date.now(), n, k, s, d: dzisData(), st: 'czeka'}]); renderuj(); } return; }
+});
+document.addEventListener('change', e => { const t = e.target;
+  if(t.dataset && t.dataset.pod){ const b = PODB(); b[t.dataset.pod] = t.checked; store.set('podatekBuk', b); kopia(); renderuj(); }
+  if(['limD','limS','limT'].includes(t.id)){ store.set('limity', {dzien: +$('#limD').value, strata: +$('#limS').value, stawka: +$('#limT').value}); kopia(); renderuj(); } });
+document.addEventListener('input', e => { if(e.target.id === 'ludzieQ'){ store.set('ludzieQ', e.target.value); const pos = e.target.selectionStart; renderuj(); const q = $('#ludzieQ'); if(q){ q.focus(); q.setSelectionRange(pos, pos); } } if(e.target.id === 'szukQ') $('#szukW').innerHTML = szukajWynik(e.target.value); });
+function podepnijUst(){ const b = $('#kodB'); if(b) b.onclick = async () => { try{ await przywroc($('#kodP').value.trim()); b.textContent = 'Przywrócono'; renderuj(); }catch(e){ b.textContent = 'Nie znalazłem kopii'; } }; }
 function renderuj(){
-  if(!['live','value','pewne','sporty','dziennik'].includes(S.tab)) S.tab = 'sporty';
-  const v = ({live:widokLive, value:widokValue, pewne:widokPewne, sporty:widokSporty, dziennik:widokDziennik}[S.tab])();
-  if(S.tab === 'live') { if(!LIVE.timer) startLive(); } else stopLive();
-  $('#view').innerHTML = (S.tab === 'live' ? '' : bannerZdrowia()) + v;
-  document.querySelectorAll('nav button').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === S.tab));
-  podepnijAnalize();
+  const WID = {pulpit:widokPulpit, pewne:widokTypy, value:widokTypy, typy:widokTypy, analiza:widokAnaliza, kupon:widokKuponTab, dziennik:widokDziennikTab, live:widokLive, sporty:widokSporty, mecz:widokKartyMeczu};
+  if(!WID[S.tab]) S.tab = 'pulpit'; if(S.tab === 'typy') S.tab = 'pewne';
+  S.walkiF = S.tab === 'sporty' ? store.get('walkiF', null) : null;
+  const pz = window.scrollY, odsw = S._odsw; S._odsw = false;
+  const v = WID[S.tab]();
+  if(S.tab === 'live' || S.tab === 'pulpit'){ if(!LIVE.timer) startLive(); } else stopLive();
+  $('#view').innerHTML = (['live','pulpit','mecz'].includes(S.tab) ? '' : bannerZdrowia()) + v;
+  const NAV = {pewne:'typy', value:'typy', live:'pulpit', sporty:'pulpit', mecz:'pulpit'}[S.tab] || S.tab;
+  document.querySelectorAll('nav button').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === NAV));
+  podepnijAnalize(); podepnijKupon(); odswiezKupon();
+  if($('#alKr')) $('#alKr').hidden = !alarmy().length;
   if($('#licz') && $('#liga') && S.modele){
     $('#licz').onclick = licz;
     $('#liga').onchange = () => { const st = store.get('mecz', {}); store.set('mecz', {...st, liga: $('#liga').value, g:'', a:''}); renderuj(); };
     const st = store.get('mecz', {}); if(st.g && st.a) licz();
   }
-  window.scrollTo(0, 0);
+  window.scrollTo(0, odsw ? pz : 0);
 }
-document.querySelectorAll('nav button').forEach(b => b.onclick = () => { if(b.dataset.tab === 'sporty' && S.tab === 'sporty') store.set('sport', null); S.tab = b.dataset.tab; store.set('tab', S.tab); renderuj(); });
+document.querySelectorAll('nav button').forEach(b => b.onclick = () => { S.tab = b.dataset.tab === 'typy' ? (S.tab === 'value' ? 'value' : 'pewne') : b.dataset.tab; store.set('tab', S.tab); renderuj(); });
 document.addEventListener('click', e => { const b = e.target.closest('[data-set]'); if(!b) return;
   const i = b.dataset.set.indexOf(':'), k = b.dataset.set.slice(0, i), v = b.dataset.set.slice(i + 1);
   store.set(k, v || null); if(k === 'liveSp'){ stopLive(); LIVE2.czas = null; } renderuj(); });
-$('#openSettings').onclick = () => { $('#bankroll').value = BANK; $('#wersjaApp').innerHTML = widokWersji(); $('#stan').innerHTML = widokStanu(); $('#settings').classList.add('open'); };
-$('#kopen').onclick = () => { $('#kcard').innerHTML = widokKuponu(); podepnijKupon(); $('#kupon').classList.add('open'); };
-$('#kupon').onclick = e => { if(e.target.id === 'kupon') $('#kupon').classList.remove('open'); };
+$('#openSettings').onclick = () => { $('#bankroll').value = BANK; $('#wersjaApp').innerHTML = widokWersji(); $('#stan').innerHTML = widokStanu(); $('#ust2').innerHTML = widokUstawien2(); podepnijUst(); $('#settings').classList.add('open'); };
+$('#kopen').onclick = () => { S.tab = 'kupon'; renderuj(); };
+$('#otwMenu').innerHTML = IKO.menu; $('#otwSzuk').innerHTML = IKO.lupa; $('#otwMenu').onclick = otworzMenu; $('#otwAl').onclick = otworzAlerty;
+$('#otwSzuk').onclick = () => { $('#szukaj').classList.add('open'); $('#szukQ').value = ''; $('#szukW').innerHTML = ''; $('#szukQ').focus(); };
+for(const id of ['menu', 'szukaj']) $('#' + id).onclick = e => { if(e.target.id === id) $('#' + id).classList.remove('open'); };
 $('#settings').onclick = e => { if(e.target.id === 'settings') $('#settings').classList.remove('open'); };
-$('#saveSettings').onclick = () => { const v = parseFloat($('#bankroll').value); if(v >= 0){ BANK = v; store.set('bankroll', v); } $('#settings').classList.remove('open'); renderuj(); };
+$('#saveSettings').onclick = () => { const v = parseFloat($('#bankroll').value); if(v >= 0){ BANK = v; store.set('bankroll', v); kopia(); } $('#settings').classList.remove('open'); renderuj(); };
 
 (async () => {
   try{ await laduj(); }catch(e){}
-  S.tab = store.get('tab', 'pewne');
-  const dz = S.dzis;
-  $('#meta').innerHTML = dz ? `${esc(String(dz.data).split('-').reverse().join('.'))}<br>odświeżono ${esc(String(dz.wygenerowano).slice(11))}` : 'brak danych';
+  S.tab = 'pulpit';
   if(S.demo) $('#demo').innerHTML = `<div class="banner">Wersja pokazowa: prawdziwy model i analiza meczu, ale kursy i dziennik są przykładowe. Po uruchomieniu na GitHubie pojawią się prawdziwe typy na dziś.</div>`;
   renderuj(); odswiezKupon();
 })();

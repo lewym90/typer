@@ -21,6 +21,19 @@ def _chat_id():
     except Exception as e: STAN_TG['ostatni_blad'] = str(e)
     return None
 
+def alert_dozwolony(kat):
+    """Ustawienia z Alert Center (docs/data/alerty.json): kategoria i godziny powiadomień. Brak pliku = wszystko włączone."""
+    try: a = json.load(open(os.path.join(DANE_DIR, 'alerty.json'), encoding='utf-8'))
+    except Exception: return True
+    if not (a.get('kategorie') or {}).get(kat, True): return False
+    if kat in ('gol', 'start', 'koniec'): return True          # wydarzenia meczu przychodzą wtedy, gdy się dzieją
+    try:
+        from zoneinfo import ZoneInfo
+        import datetime as _dt
+        g = _dt.datetime.now(ZoneInfo('Europe/Warsaw')).hour
+        return int(a.get('od', 0)) <= g < int(a.get('do', 24))
+    except Exception: return True
+
 def wyslij(tekst):
     if not TOKEN: return False
     cid = _chat_id(); STAN_TG['chat'] = bool(cid)

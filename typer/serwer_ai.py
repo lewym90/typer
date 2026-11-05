@@ -3,7 +3,7 @@ POST /analiza  {sport: pilka|tenis|walki, a, b, rozgrywki, start?, typ: {zaklad,
 GET  /zdrowie  → stan (limit, koszt w miesiącu)
 Ten sam moduł AI co w programie (ai_raport / sporty), ten sam raport. Klucz Gemini w zmiennej GEMINI_API_KEY (plik /opt/typer/gemini_key).
 Limity: AI_BUDZET_ZL (domyślnie 15 zł/mies. na analizy ręczne) i RECZNE_DZIENNIE (domyślnie 40)."""
-import os, sys, json, time, threading, traceback
+import os, re, sys, json, time, threading, traceback
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -128,6 +128,13 @@ def analiza(z):
     return 200, {'ai': ai}
 
 
+def plik_danych(sciezka):
+    """Kopia zapasowa ustawień telefonu: budżet, własne zakłady, układ Pulpitu. Dostęp tylko z długim kodem z aplikacji."""
+    kod = sciezka.split('?')[0].rsplit('/', 1)[-1]
+    if not re.fullmatch(r'[a-z0-9]{16,40}', kod): return None
+    return os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dane_uzytkownika', kod + '.json')
+
+
 class H(BaseHTTPRequestHandler):
     def _cors(self):
         o = self.headers.get('Origin') or ''
@@ -150,9 +157,25 @@ class H(BaseHTTPRequestHandler):
             return self._json(200, dict(ok=True, wersja=WERSJA, klucz=bool(ai_raport.KLUCZ), reczne_dzis=_licz_reczne(), limit_dzienny=RECZNE_DZIENNIE,
                                         koszt_miesiac_zl=round(ai_raport.koszt_miesiac(), 2), budzet_zl=ai_raport.BUDZET_ZL,
                                         pro=dict(analityk_ai.STAN, reczne_dzis=_dzis_pro['n'], limit_dzienny=RECZNE_PRO_DZIENNIE) if analityk_ai else None))
+        if self.path.startswith('/dane/'):
+            p = plik_danych(self.path)
+            if not p: return self._json(400, {'blad': 'zły kod'})
+            try: return self._json(200, json.load(open(p, encoding='utf-8')))
+            except Exception: return self._json(404, {'blad': 'brak kopii'})
         self._json(404, {'blad': 'nie ma'})
 
     def do_POST(self):
+        if self.path.startswith('/dane/'):
+            o = self.headers.get('Origin') or ''
+            p = plik_danych(self.path)
+            if not p or (o not in DOZWOLONE and not o.startswith('http://localhost')): return self._json(403, {'blad': 'niedozwolone'})
+            n = int(self.headers.get('Content-Length') or 0)
+            if n > 300000: return self._json(413, {'blad': 'za dużo danych'})
+            try:
+                z = json.loads(self.rfile.read(n) or b'{}'); os.makedirs(os.path.dirname(p), exist_ok=True)
+                json.dump(z, open(p, 'w', encoding='utf-8'), ensure_ascii=False)
+                return self._json(200, {'ok': True})
+            except Exception as e: return self._json(500, {'blad': str(e)[:120]})
         if not self.path.startswith('/analiza'): return self._json(404, {'blad': 'nie ma'})
         o = self.headers.get('Origin') or ''
         if o and o not in DOZWOLONE and not o.startswith('http://localhost'): return self._json(403, {'blad': 'niedozwolone źródło'})

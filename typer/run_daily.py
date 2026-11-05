@@ -677,6 +677,20 @@ def _linia_szansy(ik, nazwa, stara, nowa, t=None):
         txt += f" → <b>{tg.pct(nowa)}</b>" if abs(nowa - stara) >= 0.005 else ' (bez zmian)'
     return txt
 
+def poziom_alarmu(powody):
+    t = ' '.join(str(p) for p in powody).lower()
+    if 'ai teraz odradza' in t or 'straciła przewagę' in t or 'bez przewagi' in t: return 'krytyczny'
+    if 'szansa typu dnia spadła' in t or 'brak' in t or 'rotacj' in t: return 'ostrzezenie'
+    return 'informacja'
+
+def dlaczego_alarm(powody):
+    """Dlaczego zmiana ma znaczenie – jedno zdanie do alarmu."""
+    t = ' '.join(str(p) for p in powody).lower()
+    if 'spadła' in t: return 'Rynek wycenia ten typ gorzej niż rano, więc pierwotna szansa jest nieaktualna.'
+    if 'przewag' in t: return 'Kurs nie jest już wyższy od uczciwego, więc znika powód, dla którego to było Value.'
+    if 'odradza' in t: return 'Nowe dane obniżyły ocenę AI. Na razie to wskazówka: nie ma dowodu, że AI skutecznie odsiewa wpadki.'
+    return 'Zmiana składu może przesunąć szanse, ale rynek zwykle szybko ją wycenia.'
+
 def tekst_zapowiedzi(sp, m, wartosci, minut, powody=None):
     """Jedna wiadomość: typy ze świeżą szansą, kursy, składy (piłka), werdykt i analiza AI, braki, ostrzeżenia.
     Od wersji 33 wysyłana tylko jako ALARM – gdy przed meczem zmieniło się coś ważnego (powody na górze)."""
@@ -687,7 +701,11 @@ def tekst_zapowiedzi(sp, m, wartosci, minut, powody=None):
         lin = [f"⏰ <b>Za ok. {int(round(minut / 5) * 5)} min</b> · {ik} <b>{esc_(_nazwa_meczu(sp, m))}</b> · {m['godzina']}"]
     if gdzie: lin.append(f"<i>{esc_(gdzie)}</i>")
     for p_ in powody or []: lin.append(f"⚠️ <b>{esc_(p_)}</b>")
-    if powody and any(not str(p_).startswith('Value') for p_ in powody): lin.append('⛔ <b>Rada: nie graj tego typu dnia</b> (alarm przed meczem – zapisany w dzienniku)')   # wersja 51
+    if powody:
+        poz = poziom_alarmu(powody)
+        lin.insert(1, {'krytyczny': '🔴 <b>KRYTYCZNY</b>', 'ostrzezenie': '🟠 <b>OSTRZEŻENIE</b>', 'informacja': '🔵 <b>INFORMACJA</b>'}[poz])
+        lin.append('ℹ️ ' + esc_(dlaczego_alarm(powody)))
+        if poz == 'krytyczny': lin.append('<b>Sprawdź ten typ przed grą.</b> Podstawa rekomendacji mogła zniknąć (zapisane w dzienniku).')
     lin.append('')
     if sp == 'pilka':
         pm = m.get('przedmeczowe') or {}; ruch = (pm.get('kursy') or {}).get('ruch', {})
@@ -723,7 +741,9 @@ def tekst_zapowiedzi(sp, m, wartosci, minut, powody=None):
     if raport: lin += [''] + raport
     return '\n'.join(lin)
 
-PROG_SPADKU = 0.05            # alarm, gdy szansa typu dnia spadła przed meczem o ≥5 pkt
+PROG_SPADKU = 0.05            # alarm, gdy szansa typu dnia spadła przed meczem o ≥5 pkt (zmienia się w Alert Center)
+try: PROG_SPADKU = float(json.load(open(os.path.join(OUT, 'alerty.json'), encoding='utf-8')).get('prog_spadku', 5)) / 100
+except Exception: pass
 OKNO_ALARMU = (10, 75)        # minut przed startem: przeliczenie (tenis/walki raz) i ocena zmian
 
 def powody_alarmu(sp, m, wart, werdykt_przed=None, ostrz_przed=None):
@@ -809,11 +829,11 @@ def zapowiedzi(d):
         zap['przeliczone'][klucz] = dict(czas=teraz.strftime('%H:%M'), minut=round(minut), alarm=bool(powody), powody=powody[:4])
         if powody:                               # wersja 51: alarm = typ wstrzymany (karta, Telegram) i znacznik w dzienniku
             wstrz = wart.get('pewne') and any(not str(p_).startswith('Value') for p_ in powody)
-            m['alarm'] = dict(czas=teraz.strftime('%H:%M'), powody=[str(p_)[:160] for p_ in powody[:3]], wstrzymaj=bool(wstrz))
+            m['alarm'] = dict(czas=teraz.strftime('%H:%M'), powody=[str(p_)[:160] for p_ in powody[:3]], wstrzymaj=bool(wstrz), poziom=poziom_alarmu(powody), dlaczego=dlaczego_alarm(powody))
             if wstrz: _alarm_do_dziennika(sp, eid, powody)
             if sp == 'pilka': pilka_zmiana = True
             else: inne_zmiana = True
-        if powody and tg.wyslij_dlugi(tekst_zapowiedzi(sp, m, wart, minut, powody)): zap['wyslane'].append(klucz); wyslane += 1
+        if powody and tg.alert_dozwolony('zmiana') and tg.wyslij_dlugi(tekst_zapowiedzi(sp, m, wart, minut, powody)): zap['wyslane'].append(klucz); wyslane += 1
     if inne_zmiana:
         with open(os.path.join(OUT, sporty.PLIK_JSON), 'w', encoding='utf-8') as f:
             json.dump(inne, f, ensure_ascii=False, default=lambda o: float(o) if isinstance(o, (np.floating, np.integer)) else str(o))

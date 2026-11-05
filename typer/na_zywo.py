@@ -215,6 +215,7 @@ def komendy(stan):
             lista = [f"• {o['mecz']} ({o['start'][11:16]})" for o in stan['obserwowane']] or ['brak']
             tg.wyslij_do(chat, '🔔 Obserwowane mecze:\n' + '\n'.join(lista)); continue
         arg = txt.split(' ', 1)[1]
+        if arg[:3] in ('al_', 'ka_', 'kx_'): continue          # ustawienia alertów obsługuje centrum.py
         try: akcja, slug, eid = arg[0], arg[2:].rsplit('_', 1)[0].replace('-', '.'), arg.rsplit('_', 1)[1]
         except Exception: continue
         if akcja == 'x':
@@ -345,7 +346,7 @@ def obieg(stan, sl, pierwszy):
                 lin = [f"⚽ {znak(m)}{linia_wyniku(m, e)} ({czas}{kto})"] + blok_typow(m, e)
             else:
                 lin = [f"🚫 {znak(m)}Gol anulowany – {linia_wyniku(m, e)}"] + blok_typow(m, e)
-            tg.wyslij('\n'.join(lin))
+            if tg.alert_dozwolony('gol'): tg.wyslij('\n'.join(lin))
             s['hg'], s['ag'], s['gole'] = e['hg'], e['ag'], len(e['gole'])
         # koniec
         if e['stan'] == 'post' and s['stan'] != 'post':
@@ -353,8 +354,8 @@ def obieg(stan, sl, pierwszy):
             if nie_rozegrany(e): s['hg'] = s['ag'] = None
             else: s['hg'], s['ag'] = e['hg'], e['ag']
             if e['hg'] is not None or nie_rozegrany(e): konce.append(blok_konca(m, e))
-    if starty: tg.wyslij('▶️ <b>Rozpoczęły się:</b>\n' + '\n'.join(starty))
-    if konce: tg.wyslij('🏁 <b>Koniec meczu</b>\n\n' + '\n\n'.join(konce))
+    if starty and tg.alert_dozwolony('start'): tg.wyslij('▶️ <b>Rozpoczęły się:</b>\n' + '\n'.join(starty))
+    if konce and tg.alert_dozwolony('koniec'): tg.wyslij('🏁 <b>Koniec meczu</b>\n\n' + '\n\n'.join(konce))
     return aktywne
 
 def main():

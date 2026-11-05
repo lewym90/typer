@@ -28,6 +28,9 @@ Zakładka „🎾 Tenis·MMA”: typy z kursów Pinnacle/Betfair (mecze bez nich
 - `typer/core.py` – model, pobieranie danych, kursy, dziennik
 - `typer/run_daily.py` – codzienne uruchomienie, zapis do `docs/data/`
 - `docs/index.html` – aplikacja
+- `docs/grafika/` – grafiki aplikacji (zwykłe pliki w repo)
+- `typer/centrum.py` – przejrzystość, historia prognoz i kursów, alerty, raport dzienny
+- `narzedzia/pakuj.py` – po każdej zmianie w `typer/` albo `docs/index.html` pakuje je do `typer.yml`; bez tego workflow nadpisze zmiany
 - `.github/workflows/typer.yml` – instalator i harmonogram (zawiera wszystkie pliki)
 
 ## Plan płatny The Odds API (opcjonalnie)
