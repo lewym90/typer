@@ -399,7 +399,7 @@ async function laduj(){
   S.dzis = a.value || null; S.modele = b.value || null; S.dziennik = c.value || null; S.kal = k.value || null; S.status = st.value || null; S.inne = inn.value || null; S.glowne = gl.value || null;
 }
 
-const WERSJA_APLIKACJI = 67;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
+const WERSJA_APLIKACJI = 68;   // wersja 42: numer wersji w Ustawieniach (zmieniać razem z core.WERSJA)
 /* ---------- model (ten sam co w Pythonie) ---------- */
 const MAXG = 10;
 function pois(l){ const out = [Math.exp(-l)]; for(let k=1;k<=MAXG;k++) out.push(out[k-1]*l/k); return out; }
@@ -1016,7 +1016,8 @@ function widokPewne(){
   let lista;
   if(f === 'wszystkie'){ const gl = glowneListy(); lista = gl ? gl.pew : pewneSportu('pilka').map(m => ['pilka', m]); }
   else lista = pewneSportu(f).map(m => [f, m]);
-  if(!lista.length) h += `<div class="empty">Dziś brak typów${f === 'wszystkie' ? '' : ' w tej dyscyplinie'}. Lista pojawia się codziennie ok. 8:00.</div>`;
+  const pustyDzien = S.dzis && S.dzis.data === dzisData() && !(S.dzis.mecze || []).length && !SPORTY.some(([sp]) => sp !== 'pilka' && meczeSportu(sp).length);
+  if(!lista.length) h += `<div class="empty">${pustyDzien ? 'Dziś nie gra żadna z obserwowanych lig ani turniejów z kursami Pinnacle/Betfair, więc nie ma z czego wybrać typów. To normalne w spokojne dni i w przerwach na reprezentacje.' : `Dziś brak typów${f === 'wszystkie' ? '' : ' w tej dyscyplinie'}. Lista pojawia się codziennie ok. 8:00.`}</div>`;
   else h += lista.map(([sp, m], i) => kartaPewna(sp, m, i + 1)).join('');
   h += sekcjaOdradzane(odradzaneWszystkie().filter(([sp]) => f === 'wszystkie' || sp === f));
   const rz = (CEN || {}).skutecznosc || {};

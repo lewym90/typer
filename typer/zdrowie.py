@@ -94,7 +94,13 @@ def ocen(teraz=None):
                                  tekst=f'Ostatni odczyt sprzed {wiek_h:.0f} h – sprawdź serwer (cron, token GitHub).'))
         elif 8 <= godz < 23 and wiek_h > 3:
             problemy.append(dict(id='vps_wolny', poziom='uwaga', tytul='Kursy z polskiego serwera są nieświeże', tekst=f'Ostatni odczyt sprzed {wiek_h:.1f} h.'))
-        nasze = (vps.get('diag') or {}).get('nasze_mecze') or 0
+        # wersja 68: liczymy tylko mecze z listy, które w chwili odczytu jeszcze się nie zaczęły. Po rozegraniu meczów bukmacherzy
+        # zdejmują je z oferty, więc „0 dopasowanych” przy samych zakończonych meczach to nie awaria (fałszywy alarm 09.11).
+        try:
+            lv = json.load(open(os.path.join(KAT, 'lista_vps.json'), encoding='utf-8')).get('mecze') or []
+            chwila = czas.astimezone(ZoneInfo('Europe/Warsaw')).strftime('%Y-%m-%d %H:%M')
+            nasze = sum(1 for x in lv if str(x[4]) > chwila)
+        except Exception: nasze = (vps.get('diag') or {}).get('nasze_mecze') or 0
         for kl, nazwa in (('fortuna', 'Fortuna'), ('sts', 'STS'), ('betclic', 'Betclic PL')):
             d = (vps.get('bukmacherzy') or {}).get(kl) or {}
             if nasze >= 6 and d.get('dopasowane', 0) == 0:
