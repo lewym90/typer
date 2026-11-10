@@ -135,6 +135,29 @@ def plik_danych(sciezka):
     return os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dane_uzytkownika', kod + '.json')
 
 
+# Wersja 69: analiza w tle. Darmowy Gemini potrafi odpowiadać kilka minut (limity na minutę, przejścia między modelami),
+# a telefon zrywa tak długie połączenie („Load failed”). POST z zadanie=1 zwraca od razu numer, a aplikacja pyta GET /analiza/<numer>.
+_zadania, _zad_lock = {}, threading.Lock()
+
+def _klucz_zadania(z):
+    return json.dumps({k: z.get(k) for k in ('sport', 'pro', 'a', 'b', 'typ', 'start')}, sort_keys=True, ensure_ascii=False)
+
+def zlec(z):
+    k = _klucz_zadania(z); teraz = time.time()
+    with _zad_lock:
+        for i, v in list(_zadania.items()):
+            if teraz - v['t'] > 3 * 3600: _zadania.pop(i, None)
+        for i, v in _zadania.items():          # to samo zapytanie (np. ponowione po zamknięciu aplikacji) – ten sam numer
+            if v['k'] == k and (v['stan'] == 'trwa' or (v['stan'] == 'gotowe' and v['kod'] == 200)): return i
+        i = os.urandom(8).hex(); _zadania[i] = dict(k=k, t=teraz, stan='trwa', kod=None, wyn=None)
+    def praca():
+        try: kod, wyn = analiza(z)
+        except Exception as e: traceback.print_exc(); kod, wyn = 500, {'blad': f'Błąd serwera: {e}'[:200]}
+        with _zad_lock: _zadania[i].update(stan='gotowe', kod=kod, wyn=wyn)
+    threading.Thread(target=praca, daemon=True).start()
+    return i
+
+
 class H(BaseHTTPRequestHandler):
     def _cors(self):
         o = self.headers.get('Origin') or ''
@@ -157,6 +180,11 @@ class H(BaseHTTPRequestHandler):
             return self._json(200, dict(ok=True, wersja=WERSJA, klucz=bool(ai_raport.KLUCZ), reczne_dzis=_licz_reczne(), limit_dzienny=RECZNE_DZIENNIE,
                                         koszt_miesiac_zl=round(ai_raport.koszt_miesiac(), 2), budzet_zl=ai_raport.BUDZET_ZL,
                                         pro=dict(analityk_ai.STAN, reczne_dzis=_dzis_pro['n'], limit_dzienny=RECZNE_PRO_DZIENNIE) if analityk_ai else None))
+        if self.path.startswith('/analiza/'):
+            v = _zadania.get(self.path.split('?')[0].rsplit('/', 1)[-1])
+            if not v: return self._json(404, {'blad': 'Nie ma takiego zadania (serwer mógł się zrestartować). Spróbuj ponownie.'})
+            if v['stan'] == 'trwa': return self._json(202, {'stan': 'trwa', 'sekund': int(time.time() - v['t'])})
+            return self._json(v['kod'], v['wyn'])
         if self.path.startswith('/typer-kopia/'):
             p = plik_danych(self.path)
             if not p: return self._json(400, {'blad': 'zły kod'})
@@ -182,7 +210,8 @@ class H(BaseHTTPRequestHandler):
         try:
             n = min(int(self.headers.get('Content-Length') or 0), 20000)
             z = json.loads(self.rfile.read(n) or b'{}')
-            kod, wyn = analiza(z)
+            if z.get('zadanie'): kod, wyn = 202, {'zadanie': zlec(z)}
+            else: kod, wyn = analiza(z)
         except Exception as e:
             traceback.print_exc(); kod, wyn = 500, {'blad': f'Błąd serwera: {e}'[:200]}
         self._json(kod, wyn)
