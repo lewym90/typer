@@ -1,5 +1,5 @@
 {
- "czas": "2026-11-11 09:51 UTC",
+ "czas": "2026-11-11 11:42 UTC",
  "wersja": "czytnik-3",
  "bukmacherzy": {
   "fortuna": {
@@ -52,7 +52,7 @@
      "A 2:1": 4.4,
      "B 2:1": 3.7,
      "B 2:0": 2.75,
-     "Ponad 2.5 seta": 2.15,
+     "Ponad 2.5 seta": 2.1,
      "Poniżej 2.5 seta": 1.7
     },
     "pelna": true
@@ -84,7 +84,7 @@
     "kursy": {
      "A": 1.9,
      "B": 1.9,
-     "A -1.5": 3.2,
+     "A -1.5": 3.3,
      "B min. 1 set": 1.33,
      "A min. 1 set": 1.33,
      "B -1.5": 3.3,
@@ -309,7 +309,8 @@
   "bledy": [
    "turnieje ufo:sprt:01 today: Expecting value: line 1 column 1 (char 0)",
    "turnieje ufo:sprt:19 today: Expecting value: line 1 column 1 (char 0)",
-   "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)"
+   "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)",
+   "mecze ufo:tour:0x-5s0: Expecting value: line 1 column 1 (char 0)"
   ],
   "nasze_mecze": 2,
   "sporty": [
@@ -376,6 +377,10 @@
    [
     "ufo:sprt:13",
     "Zakłady Specjalne"
+   ],
+   [
+    "ufo:sprt:35",
+    "eHokej"
    ],
    [
     "ufo:sprt:1v",
@@ -460,8 +465,8 @@
    "sporty walki": "ufo:sprt:19",
    "pilka": "ufo:sprt:00"
   },
-  "turniejow": 143,
-  "meczow_fortuny": 660,
+  "turniejow": 149,
+  "meczow_fortuny": 644,
   "pelna_oferta": 2,
   "rynki_nazwy": {
    "tenis": {
@@ -654,20 +659,20 @@
      "Nie"
     ],
     "Mecz: Andreeva M. - liczba podwójnych błędów": [
-     "- 3.5",
-     "+ 3.5"
-    ],
-    "Mecz: Andreeva M. - liczba asów": [
-     "+ 2.5",
-     "- 2.5"
-    ],
-    "Mecz: Sabalenka A. - liczba podwójnych błędów": [
      "- 4.5",
      "+ 4.5"
     ],
     "Mecz: Sabalenka A. - liczba asów": [
-     "- 2.5",
-     "+ 2.5"
+     "- 3.5",
+     "+ 3.5"
+    ],
+    "Mecz: Andreeva M. - liczba asów": [
+     "+ 3.5",
+     "- 3.5"
+    ],
+    "Mecz: Sabalenka A. - liczba podwójnych błędów": [
+     "- 4.5",
+     "+ 4.5"
     ],
     "Mecz: Sabalenka A. - liczba gemów": [
      "+ 11.5",
@@ -705,18 +710,18 @@
   },
   "sts": {
    "bledy": [],
-   "meczow_sts": 1695,
+   "meczow_sts": 1711,
    "sporty": {
-    "1": 1140,
-    "3": 440,
+    "1": 1163,
+    "3": 433,
     "166": 63,
     "19": 52
    },
    "szczegoly_ramek": 2,
    "szczegoly_odpowiedzi": "2 z 2",
    "szczegoly_tematy": {
-    "f_f3790710_pl": 1,
-    "f_f3790711_pl": 1
+    "f_f3790711_pl": 1,
+    "f_f3790710_pl": 1
    },
    "szczegoly_meczow": {
     "Svitolina Elina - Muchova Karolina": {
@@ -771,7 +776,7 @@
       "1. set - dokładny wynik | 259:6:3=7.6"
      ],
      "479 Liczba setów": [
-      "Liczba setów | 12:+2.5=2.15",
+      "Liczba setów | 12:+2.5=2.1",
       "Liczba setów | 13:-2.5=1.7"
      ],
      "1959 Liczba podwójnych błędów": [
@@ -812,7 +817,7 @@
       "1. zawodnik - liczba gemów | 13:-12.5=1.65"
      ],
      "274 2. zawodnik - liczba gemów": [
-      "2. zawodnik - liczba gemów | 12:+13.5=2.7",
+      "2. zawodnik - liczba gemów | 12:+13.5=2.75",
       "2. zawodnik - liczba gemów | 13:-13.5=1.42",
       "2. zawodnik - liczba gemów | 12:+11.5=1.3",
       "2. zawodnik - liczba gemów | 13:-11.5=3.3",
@@ -866,7 +871,7 @@
       "Zwycięzca meczu - SuperOferta | 5:2=1.7"
      ],
      "1957 Wysokie kursy": [
-      "Svitolina wygra i powyżej 21.5 gemów w meczu | 1:Tak=3.6"
+      "Svitolina wygra i powyżej 21.5 gemów w meczu | 1:Tak=3.9"
      ],
      "1958 Liczba asów": [
       "Liczba asów | 12:+5.5=1.85",
@@ -923,13 +928,13 @@
       "Zwycięzca meczu | 5:2=1.9"
      ],
      "265 Sety - handicap": [
-      "Sety - handicap | 925:1 (-1.5)=3.2",
+      "Sety - handicap | 925:1 (-1.5)=3.3",
       "Sety - handicap | 926:2 (+1.5)=1.33",
       "Sety - handicap | 925:1 (+1.5)=1.33",
       "Sety - handicap | 926:2 (-1.5)=3.3"
      ],
      "277 Będzie set do zera": [
-      "Będzie set do zera | 26:tak=8.4",
+      "Będzie set do zera | 26:tak=8.6",
       "Będzie set do zera | 27:nie=1.05"
      ],
      "285 Dokładny wynik": [
@@ -953,10 +958,10 @@
       "1. set - będzie tie-break | 27:nie=1.11"
      ],
      "302 Set - dokładny wynik": [
-      "1. set - dokładny wynik | 256:6:0=24",
+      "1. set - dokładny wynik | 256:6:0=25",
       "1. set - dokładny wynik | 257:6:1=11",
       "1. set - dokładny wynik | 258:6:2=10",
-      "1. set - dokładny wynik | 259:6:3=5.6"
+      "1. set - dokładny wynik | 259:6:3=5.8"
      ],
      "479 Liczba setów": [
       "Liczba setów | 12:+2.5=2.1",
@@ -971,7 +976,8 @@
       "Liczba przełamanych serwisów | 13:-8.5=1.65"
      ],
      "1967 Liczba tie-breaków": [
-      "Liczba tie-breaków | 12:+1.5=15",
+      "Liczba tie-breaków | 12:+1.5=13",
+      "Liczba tie-breaków | 13:-1.5=1.01",
       "Liczba tie-breaków | 12:+0.5=3",
       "Liczba tie-breaków | 13:-0.5=1.33"
      ],
@@ -986,8 +992,8 @@
      "268 Liczba gemów": [
       "Liczba gemów | 12:+24.5=2.15",
       "Liczba gemów | 13:-24.5=1.65",
-      "Liczba gemów | 12:+19.5=1.42",
-      "Liczba gemów | 13:-19.5=2.8",
+      "Liczba gemów | 12:+19.5=1.4",
+      "Liczba gemów | 13:-19.5=2.9",
       "Liczba gemów | 12:+21.5=1.7",
       "Liczba gemów | 13:-21.5=2.1"
      ],
@@ -1023,7 +1029,7 @@
       "1. set - liczba gemów | 12:+12.5=6.4",
       "1. set - liczba gemów | 13:-12.5=1.11",
       "1. set - liczba gemów | 12:+9.5=2",
-      "1. set - liczba gemów | 13:-9.5=1.75",
+      "1. set - liczba gemów | 13:-9.5=1.8",
       "1. set - liczba gemów | 12:+8.5=1.37",
       "1. set - liczba gemów | 13:-8.5=3"
      ],
@@ -1050,8 +1056,8 @@
       "Zwycięzca i liczba gemów | 317:2 i -21.5=4"
      ],
      "1956 Zwycięzca meczu - SuperOferta": [
-      "Zwycięzca meczu - SuperOferta | 4:1=1.9",
-      "Zwycięzca meczu - SuperOferta | 5:2=2"
+      "Zwycięzca meczu - SuperOferta | 4:1=1.95",
+      "Zwycięzca meczu - SuperOferta | 5:2=1.95"
      ],
      "1957 Wysokie kursy": [
       "Powyżej 2.5 seta | 1:Tak=2.25"
@@ -1100,9 +1106,9 @@
      ],
      "2314 2. zawodnik - 1. gem serwisowy - dokładny wynik": [
       "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=7.2",
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=4.8",
+      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=4.9",
       "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3323:wygra do 30=4.4",
-      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3324:wygra do 40=4.7"
+      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3324:wygra do 40=4.8"
      ]
     }
    },
@@ -1122,10 +1128,10 @@
    "dopasowane": 0,
    "nasze_mecze": 2,
    "rynki_przyklad": {},
-   "sekund": 2,
+   "sekund": 1,
    "z_kursami": 0
   }
  },
  "lista": "9aa2f5494984",
- "sekund": 46
+ "sekund": 48
 }
