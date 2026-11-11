@@ -1,21 +1,104 @@
 {
- "czas": "2026-11-11 06:00 UTC",
+ "czas": "2026-11-11 06:09 UTC",
  "wersja": "czytnik-3",
  "bukmacherzy": {
   "fortuna": {
-   "ok": false,
-   "dopasowane": 0
+   "ok": true,
+   "dopasowane": 2
   },
   "sts": {
    "ok": true,
-   "dopasowane": 0
+   "dopasowane": 2
   },
   "betclic": {
    "ok": true,
    "dopasowane": 0
   }
  },
- "mecze": {},
+ "mecze": {
+  "d87ade1e56f0c96e3b28b59dea344837": {
+   "fortuna": {
+    "id": "ufo:mtch:1xm-0vl",
+    "nazwa": "Svitolina E. - Muchova K.",
+    "zgodnosc": 0.96,
+    "kursy": {
+     "A": 2.19,
+     "B": 1.65,
+     "A min. 1 set": 1.48,
+     "B -1.5": 2.46,
+     "B min. 1 set": 1.28,
+     "B 2:0": 2.43,
+     "A 2:1": 4.9,
+     "B 2:1": 4.1,
+     "A 2:0": 3.45,
+     "A -1.5": 3.45,
+     "Ponad 2.5 seta": 2.01,
+     "Poniżej 2.5 seta": 1.69
+    },
+    "pelna": true
+   },
+   "sts": {
+    "id": "f3790710",
+    "nazwa": "Svitolina Elina - Muchova Karolina",
+    "zgodnosc": 0.95,
+    "kursy": {
+     "A": 2.25,
+     "B": 1.65,
+     "A -1.5": 4.2,
+     "B min. 1 set": 1.22,
+     "A min. 1 set": 1.42,
+     "B -1.5": 2.75,
+     "A 2:0": 4.2,
+     "A 2:1": 4.1,
+     "B 2:1": 3.7,
+     "B 2:0": 2.75,
+     "Ponad 2.5 seta": 2.0,
+     "Poniżej 2.5 seta": 1.7
+    },
+    "pelna": true
+   }
+  },
+  "d1549c8585e649677db3579affc1da2e": {
+   "fortuna": {
+    "id": "ufo:mtch:1xm-0vm",
+    "nazwa": "Sabalenka A. - Andreeva M.",
+    "zgodnosc": 0.97,
+    "kursy": {
+     "A": 1.87,
+     "B": 1.9,
+     "A -1.5": 2.85,
+     "B min. 1 set": 1.37,
+     "B 2:0": 2.9,
+     "B -1.5": 2.9,
+     "A 2:1": 4.4,
+     "B 2:1": 4.4,
+     "A 2:0": 2.85,
+     "A min. 1 set": 1.37
+    },
+    "pelna": true
+   },
+   "sts": {
+    "id": "f3790711",
+    "nazwa": "Sabalenka Aryna - Andreeva Mirra",
+    "zgodnosc": 0.96,
+    "kursy": {
+     "A": 1.8,
+     "B": 2.0,
+     "A -1.5": 3.0,
+     "B min. 1 set": 1.37,
+     "A min. 1 set": 1.3,
+     "B -1.5": 3.5,
+     "A 2:0": 3.0,
+     "A 2:1": 3.9,
+     "B 2:1": 4.1,
+     "B 2:0": 3.5,
+     "Ponad 2.5 seta": 2.1,
+     "Poniżej 2.5 seta": 1.7
+    },
+    "pelna": true
+   }
+  }
+ },
  "ksw": [
   {
    "a": "Bartosiński Adrian",
@@ -228,7 +311,7 @@
    "turnieje ufo:sprt:19 today: Expecting value: line 1 column 1 (char 0)",
    "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)"
   ],
-  "nasze_mecze": 6,
+  "nasze_mecze": 2,
   "sporty": [
    [
     "ufo:sprt:01",
@@ -275,6 +358,10 @@
     "Piłka ręczna"
    ],
    [
+    "ufo:sprt:1k",
+    "HIT DNIA"
+   ],
+   [
     "ufo:sprt:1p",
     "Polityka"
    ],
@@ -285,6 +372,10 @@
    [
     "ufo:sprt:13",
     "Zakłady Specjalne"
+   ],
+   [
+    "ufo:sprt:35",
+    "eHokej"
    ],
    [
     "ufo:sprt:1v",
@@ -370,35 +461,549 @@
    "pilka": "ufo:sprt:00"
   },
   "turniejow": 141,
-  "meczow_fortuny": 707,
-  "niedopasowane": [
-   "pilka: Central Córdoba – Lanus",
-   "pilka: Querétaro – Puebla",
-   "pilka: León – Guadalajara",
-   "walki: Brittany Sims – Shera Mae Patricio",
-   "walki: Irma Garcia – Nataly Delgado",
-   "walki: Skye Nicolson – Miyo Yoshida"
-  ],
-  "rynki_nazwy": {},
+  "meczow_fortuny": 706,
+  "pelna_oferta": 2,
+  "rynki_nazwy": {
+   "tenis": {
+    "Zwycięzca meczu (krecz=zwrot)": [
+     "1",
+     "2"
+    ],
+    "Zwycięzca meczu (zwrot jeżeli przegra 1:2 w setach)": [
+     "2",
+     "1"
+    ],
+    "Mecz: handicap setowy (krecz=zwrot)": [
+     "1 (+1.5)",
+     "2 (-1.5)"
+    ],
+    "Najpopularniejsze zakłady łączone": [
+     "Svitolina wygra  mecz , Muchova wygra set 1"
+    ],
+    "Mecz: Svitolina E. - liczba gemów": [
+     "+ 11.5",
+     "- 11.5"
+    ],
+    "Mecz: Muchova K. - liczba gemów": [
+     "+ 13.5",
+     "- 13.5"
+    ],
+    "Mecz: liczba gemów": [
+     "- 26.5",
+     "+ 26.5"
+    ],
+    "Mecz: Muchova K. - wygra co najmniej jeden set": [
+     "Nie",
+     "Tak"
+    ],
+    "Mecz: dokładny wynik": [
+     "0:2 ",
+     "2:1",
+     "1:2",
+     "2:0"
+    ],
+    "Mecz: handicap gemowy": [
+     "1 (+4.5)",
+     "2 (-4.5)"
+    ],
+    "1.set / zwycięzca meczu": [
+     "2/1",
+     "1/1",
+     "2/2",
+     "1/2"
+    ],
+    "1.set: handicap (gemy)": [
+     "2 (-1.5)",
+     "1 (+1.5)"
+    ],
+    "1.set: dokładny wynik": [
+     "6:4",
+     "2:6",
+     "3:6",
+     "0:6"
+    ],
+    "Mecz: Svitolina E. - wygra dokładnie jeden set": [
+     "Nie",
+     "Tak"
+    ],
+    "1.set": [
+     "1",
+     "2"
+    ],
+    "1.set: liczba gemów": [
+     "- 8.5",
+     "+ 8.5"
+    ],
+    "Mecz: będzie set do zera": [
+     "Nie",
+     "Tak"
+    ],
+    "Mecz: liczba setów (krecz=zwrot)": [
+     "+ 2.5",
+     "- 2.5"
+    ],
+    "Mecz: Muchova K. - wygra dokładnie jeden set": [
+     "Nie",
+     "Tak"
+    ],
+    "Mecz: Svitolina E. - wygra co najmniej jeden set": [
+     "Nie",
+     "Tak"
+    ],
+    "Mecz: Muchova K. - wygra swój pierwszy gem serwisowy": [
+     "Nie",
+     "Tak"
+    ],
+    "Mecz: będzie tiebreak": [
+     "Tak",
+     "Nie"
+    ],
+    "Mecz: Svitolina E. - wygra swój pierwszy gem serwisowy": [
+     "Tak",
+     "Nie"
+    ],
+    "Mecz: dokładna liczba setów (krecz=zwrot)": [
+     "3",
+     "2"
+    ],
+    "Mecz: Sabalenka A. - liczba gemów": [
+     "+ 11.5",
+     "- 11.5"
+    ],
+    "Mecz: Sabalenka A. - wygra dokładnie jeden set": [
+     "Tak",
+     "Nie"
+    ],
+    "Mecz: Andreeva M. - wygra co najmniej jeden set": [
+     "Tak",
+     "Nie"
+    ],
+    "Mecz: Andreeva M. - liczba gemów": [
+     "+ 12.5",
+     "- 12.5"
+    ],
+    "Mecz: Sabalenka A. - wygra swój pierwszy gem serwisowy": [
+     "Tak",
+     "Nie"
+    ],
+    "Mecz: Andreeva M. - wygra swój pierwszy gem serwisowy": [
+     "Tak",
+     "Nie"
+    ],
+    "Mecz: Andreeva M. - wygra dokładnie jeden set": [
+     "Nie",
+     "Tak"
+    ],
+    "Mecz: Sabalenka A. - wygra co najmniej jeden set": [
+     "Nie",
+     "Tak"
+    ]
+   }
+  },
   "sts": {
    "bledy": [],
-   "meczow_sts": 1702,
+   "meczow_sts": 1697,
    "sporty": {
-    "1": 1121,
-    "3": 466,
+    "1": 1122,
+    "3": 460,
     "166": 63,
     "19": 52
    },
-   "niedopasowane": [
-    "pilka: Central Córdoba – Lanus",
-    "pilka: Querétaro – Puebla",
-    "pilka: León – Guadalajara",
-    "walki: Brittany Sims – Shera Mae Patricio",
-    "walki: Irma Garcia – Nataly Delgado",
-    "walki: Skye Nicolson – Miyo Yoshida"
-   ],
-   "rynki_przyklad": {},
-   "z_wieloma_rynkami": 0
+   "szczegoly_ramek": 2,
+   "szczegoly_odpowiedzi": "2 z 2",
+   "szczegoly_tematy": {
+    "f_f3790711_pl": 1,
+    "f_f3790710_pl": 1
+   },
+   "szczegoly_meczow": {
+    "Svitolina Elina - Muchova Karolina": {
+     "16m66459": 11,
+     "17mc931bdc87ef": 26
+    },
+    "Sabalenka Aryna - Andreeva Mirra": {
+     "16m66460": 11,
+     "17mbebe0dfacfb": 26
+    }
+   },
+   "rynki_przyklad": {
+    "Svitolina Elina - Muchova Karolina": {
+     "259 Zwycięzca meczu": [
+      "Zwycięzca meczu | 4:1=2.25",
+      "Zwycięzca meczu | 5:2=1.65"
+     ],
+     "265 Sety - handicap": [
+      "Sety - handicap | 925:1 (-1.5)=4.2",
+      "Sety - handicap | 926:2 (+1.5)=1.22",
+      "Sety - handicap | 925:1 (+1.5)=1.42",
+      "Sety - handicap | 926:2 (-1.5)=2.75"
+     ],
+     "277 Będzie set do zera": [
+      "Będzie set do zera | 26:tak=8.2",
+      "Będzie set do zera | 27:nie=1.05"
+     ],
+     "285 Dokładny wynik": [
+      "Dokładny wynik | 1157:2:0=4.2",
+      "Dokładny wynik | 1158:2:1=4.1",
+      "Dokładny wynik | 1159:1:2=3.7",
+      "Dokładny wynik | 1160:0:2=2.75"
+     ],
+     "292 1. set / wynik końcowy": [
+      "1. set / wynik końcowy | 252:1 / 1=2.9",
+      "1. set / wynik końcowy | 253:2 / 1=7.4",
+      "1. set / wynik końcowy | 254:1 / 2=7",
+      "1. set / wynik końcowy | 255:2 / 2=1.9"
+     ],
+     "293 Set ": [
+      "1. set  | 4:1=2.15",
+      "1. set  | 5:2=1.65"
+     ],
+     "301 Set - będzie tie-break": [
+      "1. set - będzie tie-break | 26:tak=6.6",
+      "1. set - będzie tie-break | 27:nie=1.09"
+     ],
+     "302 Set - dokładny wynik": [
+      "1. set - dokładny wynik | 256:6:0=29",
+      "1. set - dokładny wynik | 257:6:1=15",
+      "1. set - dokładny wynik | 258:6:2=11",
+      "1. set - dokładny wynik | 259:6:3=8"
+     ],
+     "479 Liczba setów": [
+      "Liczba setów | 12:+2.5=2",
+      "Liczba setów | 13:-2.5=1.7"
+     ],
+     "1959 Liczba podwójnych błędów": [
+      "Liczba podwójnych błędów | 12:+5.5=1.85",
+      "Liczba podwójnych błędów | 13:-5.5=1.85"
+     ],
+     "1960 Liczba przełamanych serwisów": [
+      "Liczba przełamanych serwisów | 12:+8.5=1.75",
+      "Liczba przełamanych serwisów | 13:-8.5=1.95"
+     ],
+     "1967 Liczba tie-breaków": [
+      "Liczba tie-breaków | 12:+1.5=17",
+      "Liczba tie-breaków | 12:+0.5=3.3",
+      "Liczba tie-breaków | 13:-0.5=1.28"
+     ],
+     "262 Gemy - handicap": [
+      "Gemy - handicap | 925:1 (+2.5)=1.8",
+      "Gemy - handicap | 926:2 (-2.5)=1.9",
+      "Gemy - handicap | 925:1 (+3.5)=1.65",
+      "Gemy - handicap | 926:2 (-3.5)=2.2",
+      "Gemy - handicap | 925:1 (-0.5)=2.35",
+      "Gemy - handicap | 926:2 (+0.5)=1.55"
+     ],
+     "268 Liczba gemów": [
+      "Liczba gemów | 12:+24.5=2.1",
+      "Liczba gemów | 13:-24.5=1.7",
+      "Liczba gemów | 12:+19.5=1.42",
+      "Liczba gemów | 13:-19.5=2.8",
+      "Liczba gemów | 12:+21.5=1.65",
+      "Liczba gemów | 13:-21.5=2.15"
+     ],
+     "271 1. zawodnik - liczba gemów": [
+      "1. zawodnik - liczba gemów | 12:+13.5=3",
+      "1. zawodnik - liczba gemów | 13:-13.5=1.35",
+      "1. zawodnik - liczba gemów | 12:+11.5=1.55",
+      "1. zawodnik - liczba gemów | 13:-11.5=2.3",
+      "1. zawodnik - liczba gemów | 12:+12.5=2.15",
+      "1. zawodnik - liczba gemów | 13:-12.5=1.65"
+     ],
+     "274 2. zawodnik - liczba gemów": [
+      "2. zawodnik - liczba gemów | 12:+13.5=2.7",
+      "2. zawodnik - liczba gemów | 13:-13.5=1.42",
+      "2. zawodnik - liczba gemów | 12:+11.5=1.28",
+      "2. zawodnik - liczba gemów | 13:-11.5=3.4",
+      "2. zawodnik - liczba gemów | 12:+12.5=1.9",
+      "2. zawodnik - liczba gemów | 13:-12.5=1.8"
+     ],
+     "275 1. zawodnik - wygra co najmniej seta": [
+      "1. zawodnik - wygra co najmniej seta | 26:tak=1.42",
+      "1. zawodnik - wygra co najmniej seta | 27:nie=2.75"
+     ],
+     "276 2. zawodnik - wygra co najmniej seta": [
+      "2. zawodnik - wygra co najmniej seta | 26:tak=1.22",
+      "2. zawodnik - wygra co najmniej seta | 27:nie=4.2"
+     ],
+     "282 Suma gemów": [
+      "Suma gemów | 24:nieparzysta=1.9",
+      "Suma gemów | 25:parzysta=1.85"
+     ],
+     "299 Set - liczba gemów": [
+      "1. set - liczba gemów | 12:+12.5=6.6",
+      "1. set - liczba gemów | 13:-12.5=1.1",
+      "1. set - liczba gemów | 12:+9.5=2",
+      "1. set - liczba gemów | 13:-9.5=1.75",
+      "1. set - liczba gemów | 12:+8.5=1.4",
+      "1. set - liczba gemów | 13:-8.5=2.9"
+     ],
+     "300 Set - suma gemów": [
+      "1. set - suma gemów | 24:nieparzysta=2.1",
+      "1. set - suma gemów | 25:parzysta=1.65"
+     ],
+     "1016 1. zawodnik - wygra dokładnie 1 seta": [
+      "1. zawodnik - wygra dokładnie 1 seta | 26:tak=3.8",
+      "1. zawodnik - wygra dokładnie 1 seta | 27:nie=1.27"
+     ],
+     "1017 2. zawodnik - wygra dokładnie 1 seta": [
+      "2. zawodnik - wygra dokładnie 1 seta | 26:tak=4.2",
+      "2. zawodnik - wygra dokładnie 1 seta | 27:nie=1.23"
+     ],
+     "1186 Zwycięzca i liczba gemów": [
+      "Zwycięzca i liczba gemów | 314:1 i +24.5=4.1",
+      "Zwycięzca i liczba gemów | 315:2 i +24.5=3.8",
+      "Zwycięzca i liczba gemów | 316:1 i -24.5=4",
+      "Zwycięzca i liczba gemów | 317:2 i -24.5=2.6",
+      "Zwycięzca i liczba gemów | 314:1 i +21.5=3.3",
+      "Zwycięzca i liczba gemów | 315:2 i +21.5=2.95",
+      "Zwycięzca i liczba gemów | 316:1 i -21.5=5",
+      "Zwycięzca i liczba gemów | 317:2 i -21.5=3.2"
+     ],
+     "1956 Zwycięzca meczu - SuperOferta": [
+      "Zwycięzca meczu - SuperOferta | 4:1=2.35",
+      "Zwycięzca meczu - SuperOferta | 5:2=1.7"
+     ],
+     "1957 Wysokie kursy": [
+      "Svitolina wygra i powyżej 21.5 gemów w meczu | 1:Tak=3.7"
+     ],
+     "1958 Liczba asów": [
+      "Liczba asów | 12:+5.5=1.85",
+      "Liczba asów | 13:-5.5=1.85"
+     ],
+     "1961 1. zawodnik - liczba asów": [
+      "1. zawodnik - liczba asów | 12:+2.5=2.1",
+      "1. zawodnik - liczba asów | 13:-2.5=1.65"
+     ],
+     "1962 2. zawodnik - liczba asów": [
+      "2. zawodnik - liczba asów | 12:+2.5=1.55",
+      "2. zawodnik - liczba asów | 13:-2.5=2.25"
+     ],
+     "1963 1. zawodnik - liczba podwójnych błędów": [
+      "1. zawodnik - liczba podwójnych błędów | 12:+3.5=2.25",
+      "1. zawodnik - liczba podwójnych błędów | 13:-3.5=1.55"
+     ],
+     "1964 2. zawodnik - liczba podwójnych błędów": [
+      "2. zawodnik - liczba podwójnych błędów | 12:+2.5=2.1",
+      "2. zawodnik - liczba podwójnych błędów | 13:-2.5=1.65"
+     ],
+     "1965 1. zawodnik - liczba przełamanych serwisów": [
+      "1. zawodnik - liczba przełamanych serwisów | 12:+4.5=1.95",
+      "1. zawodnik - liczba przełamanych serwisów | 13:-4.5=1.75"
+     ],
+     "1966 2. zawodnik - liczba przełamanych serwisów": [
+      "2. zawodnik - liczba przełamanych serwisów | 12:+4.5=1.55",
+      "2. zawodnik - liczba przełamanych serwisów | 13:-4.5=2.25"
+     ],
+     "2311 1. zawodnik - 1. gem serwisowy - zwycięzca": [
+      "1. zawodnik - 1. gem serwisowy - zwycięzca | 4:1=1.55",
+      "1. zawodnik - 1. gem serwisowy - zwycięzca | 5:2=2.25"
+     ],
+     "2312 2. zawodnik - 1. gem serwisowy - zwycięzca": [
+      "2. zawodnik - 1. gem serwisowy - zwycięzca | 4:1=2.55",
+      "2. zawodnik - 1. gem serwisowy - zwycięzca | 5:2=1.45"
+     ],
+     "2313 1. zawodnik - 1. gem serwisowy - dokładny wynik": [
+      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=8.2",
+      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=5",
+      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3323:wygra do 30=4.7",
+      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3324:wygra do 40=5"
+     ],
+     "2314 2. zawodnik - 1. gem serwisowy - dokładny wynik": [
+      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=7.2",
+      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=4.8",
+      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3323:wygra do 30=4.4",
+      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3324:wygra do 40=4.7"
+     ]
+    },
+    "Sabalenka Aryna - Andreeva Mirra": {
+     "259 Zwycięzca meczu": [
+      "Zwycięzca meczu | 4:1=1.8",
+      "Zwycięzca meczu | 5:2=2"
+     ],
+     "265 Sety - handicap": [
+      "Sety - handicap | 925:1 (-1.5)=3",
+      "Sety - handicap | 926:2 (+1.5)=1.37",
+      "Sety - handicap | 925:1 (+1.5)=1.3",
+      "Sety - handicap | 926:2 (-1.5)=3.5"
+     ],
+     "277 Będzie set do zera": [
+      "Będzie set do zera | 26:tak=9.2",
+      "Będzie set do zera | 27:nie=1.04"
+     ],
+     "285 Dokładny wynik": [
+      "Dokładny wynik | 1157:2:0=3",
+      "Dokładny wynik | 1158:2:1=3.9",
+      "Dokładny wynik | 1159:1:2=4.1",
+      "Dokładny wynik | 1160:0:2=3.5"
+     ],
+     "292 1. set / wynik końcowy": [
+      "1. set / wynik końcowy | 252:1 / 1=2.25",
+      "1. set / wynik końcowy | 253:2 / 1=6.6",
+      "1. set / wynik końcowy | 254:1 / 2=7.2",
+      "1. set / wynik końcowy | 255:2 / 2=2.5"
+     ],
+     "293 Set ": [
+      "1. set  | 4:1=1.8",
+      "1. set  | 5:2=1.9"
+     ],
+     "301 Set - będzie tie-break": [
+      "1. set - będzie tie-break | 26:tak=6.2",
+      "1. set - będzie tie-break | 27:nie=1.11"
+     ],
+     "302 Set - dokładny wynik": [
+      "1. set - dokładny wynik | 256:6:0=26",
+      "1. set - dokładny wynik | 257:6:1=11",
+      "1. set - dokładny wynik | 258:6:2=9.6",
+      "1. set - dokładny wynik | 259:6:3=5.6"
+     ],
+     "479 Liczba setów": [
+      "Liczba setów | 12:+2.5=2.1",
+      "Liczba setów | 13:-2.5=1.7"
+     ],
+     "1959 Liczba podwójnych błędów": [
+      "Liczba podwójnych błędów | 12:+6.5=1.95",
+      "Liczba podwójnych błędów | 13:-6.5=1.75"
+     ],
+     "1960 Liczba przełamanych serwisów": [
+      "Liczba przełamanych serwisów | 12:+8.5=2.1",
+      "Liczba przełamanych serwisów | 13:-8.5=1.65"
+     ],
+     "1967 Liczba tie-breaków": [
+      "Liczba tie-breaków | 12:+1.5=14",
+      "Liczba tie-breaków | 12:+0.5=2.95",
+      "Liczba tie-breaków | 13:-0.5=1.35"
+     ],
+     "262 Gemy - handicap": [
+      "Gemy - handicap | 925:1 (+2.5)=1.5",
+      "Gemy - handicap | 926:2 (-2.5)=2.55",
+      "Gemy - handicap | 925:1 (-0.5)=1.85",
+      "Gemy - handicap | 926:2 (+0.5)=1.9",
+      "Gemy - handicap | 925:1 (-3.5)=2.55",
+      "Gemy - handicap | 926:2 (+3.5)=1.5"
+     ],
+     "268 Liczba gemów": [
+      "Liczba gemów | 12:+24.5=2.1",
+      "Liczba gemów | 13:-24.5=1.7",
+      "Liczba gemów | 12:+19.5=1.4",
+      "Liczba gemów | 13:-19.5=2.9",
+      "Liczba gemów | 12:+21.5=1.65",
+      "Liczba gemów | 13:-21.5=2.15"
+     ],
+     "271 1. zawodnik - liczba gemów": [
+      "1. zawodnik - liczba gemów | 12:+13.5=2.7",
+      "1. zawodnik - liczba gemów | 13:-13.5=1.42",
+      "1. zawodnik - liczba gemów | 12:+11.5=1.37",
+      "1. zawodnik - liczba gemów | 13:-11.5=2.95",
+      "1. zawodnik - liczba gemów | 12:+12.5=1.9",
+      "1. zawodnik - liczba gemów | 13:-12.5=1.75"
+     ],
+     "274 2. zawodnik - liczba gemów": [
+      "2. zawodnik - liczba gemów | 12:+13.5=2.9",
+      "2. zawodnik - liczba gemów | 13:-13.5=1.37",
+      "2. zawodnik - liczba gemów | 12:+11.5=1.47",
+      "2. zawodnik - liczba gemów | 13:-11.5=2.55",
+      "2. zawodnik - liczba gemów | 12:+12.5=2",
+      "2. zawodnik - liczba gemów | 13:-12.5=1.7"
+     ],
+     "275 1. zawodnik - wygra co najmniej seta": [
+      "1. zawodnik - wygra co najmniej seta | 26:tak=1.3",
+      "1. zawodnik - wygra co najmniej seta | 27:nie=3.5"
+     ],
+     "276 2. zawodnik - wygra co najmniej seta": [
+      "2. zawodnik - wygra co najmniej seta | 26:tak=1.37",
+      "2. zawodnik - wygra co najmniej seta | 27:nie=3"
+     ],
+     "282 Suma gemów": [
+      "Suma gemów | 24:nieparzysta=1.85",
+      "Suma gemów | 25:parzysta=1.85"
+     ],
+     "299 Set - liczba gemów": [
+      "1. set - liczba gemów | 12:+12.5=6.4",
+      "1. set - liczba gemów | 13:-12.5=1.11",
+      "1. set - liczba gemów | 12:+9.5=1.9",
+      "1. set - liczba gemów | 13:-9.5=1.8",
+      "1. set - liczba gemów | 12:+8.5=1.35",
+      "1. set - liczba gemów | 13:-8.5=3.1"
+     ],
+     "300 Set - suma gemów": [
+      "1. set - suma gemów | 24:nieparzysta=2",
+      "1. set - suma gemów | 25:parzysta=1.75"
+     ],
+     "1016 1. zawodnik - wygra dokładnie 1 seta": [
+      "1. zawodnik - wygra dokładnie 1 seta | 26:tak=4.3",
+      "1. zawodnik - wygra dokładnie 1 seta | 27:nie=1.22"
+     ],
+     "1017 2. zawodnik - wygra dokładnie 1 seta": [
+      "2. zawodnik - wygra dokładnie 1 seta | 26:tak=3.9",
+      "2. zawodnik - wygra dokładnie 1 seta | 27:nie=1.25"
+     ],
+     "1186 Zwycięzca i liczba gemów": [
+      "Zwycięzca i liczba gemów | 314:1 i +24.5=3.8",
+      "Zwycięzca i liczba gemów | 315:2 i +24.5=4",
+      "Zwycięzca i liczba gemów | 316:1 i -24.5=2.95",
+      "Zwycięzca i liczba gemów | 317:2 i -24.5=3.4",
+      "Zwycięzca i liczba gemów | 314:1 i +21.5=3.1",
+      "Zwycięzca i liczba gemów | 315:2 i +21.5=3.1",
+      "Zwycięzca i liczba gemów | 316:1 i -21.5=3.6",
+      "Zwycięzca i liczba gemów | 317:2 i -21.5=4.3"
+     ],
+     "1956 Zwycięzca meczu - SuperOferta": [
+      "Zwycięzca meczu - SuperOferta | 4:1=1.85",
+      "Zwycięzca meczu - SuperOferta | 5:2=2.1"
+     ],
+     "1957 Wysokie kursy": [
+      "Powyżej 2.5 seta | 1:Tak=2.3"
+     ],
+     "1958 Liczba asów": [
+      "Liczba asów | 12:+7.5=1.95",
+      "Liczba asów | 13:-7.5=1.75"
+     ],
+     "1961 1. zawodnik - liczba asów": [
+      "1. zawodnik - liczba asów | 12:+3.5=1.75",
+      "1. zawodnik - liczba asów | 13:-3.5=1.95"
+     ],
+     "1962 2. zawodnik - liczba asów": [
+      "2. zawodnik - liczba asów | 12:+3.5=1.95",
+      "2. zawodnik - liczba asów | 13:-3.5=1.75"
+     ],
+     "1963 1. zawodnik - liczba podwójnych błędów": [
+      "1. zawodnik - liczba podwójnych błędów | 12:+2.5=1.65",
+      "1. zawodnik - liczba podwójnych błędów | 13:-2.5=2.1"
+     ],
+     "1964 2. zawodnik - liczba podwójnych błędów": [
+      "2. zawodnik - liczba podwójnych błędów | 12:+3.5=2",
+      "2. zawodnik - liczba podwójnych błędów | 13:-3.5=1.7"
+     ],
+     "1965 1. zawodnik - liczba przełamanych serwisów": [
+      "1. zawodnik - liczba przełamanych serwisów | 12:+4.5=2.1",
+      "1. zawodnik - liczba przełamanych serwisów | 13:-4.5=1.65"
+     ],
+     "1966 2. zawodnik - liczba przełamanych serwisów": [
+      "2. zawodnik - liczba przełamanych serwisów | 12:+4.5=2.1",
+      "2. zawodnik - liczba przełamanych serwisów | 13:-4.5=1.65"
+     ],
+     "2311 1. zawodnik - 1. gem serwisowy - zwycięzca": [
+      "1. zawodnik - 1. gem serwisowy - zwycięzca | 4:1=1.35",
+      "1. zawodnik - 1. gem serwisowy - zwycięzca | 5:2=2.9"
+     ],
+     "2312 2. zawodnik - 1. gem serwisowy - zwycięzca": [
+      "2. zawodnik - 1. gem serwisowy - zwycięzca | 4:1=2.65",
+      "2. zawodnik - 1. gem serwisowy - zwycięzca | 5:2=1.42"
+     ],
+     "2313 1. zawodnik - 1. gem serwisowy - dokładny wynik": [
+      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=6.4",
+      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=4.3",
+      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3323:wygra do 30=4.2",
+      "1. zawodnik - 1. gem serwisowy - dokładny wynik | 3324:wygra do 40=4.9"
+     ],
+     "2314 2. zawodnik - 1. gem serwisowy - dokładny wynik": [
+      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3321:wygra do zera=7.2",
+      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3322:wygra do 15=4.8",
+      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3323:wygra do 30=4.4",
+      "2. zawodnik - 1. gem serwisowy - dokładny wynik | 3324:wygra do 40=4.8"
+     ]
+    }
+   },
+   "z_wieloma_rynkami": 2
   },
   "ksw": {
    "fortuna": 0,
@@ -407,21 +1012,17 @@
   "betclic": {
    "bledy": [],
    "niedopasowane": [
-    "pilka: Central Córdoba – Lanus (2026-11-08 23:30)",
-    "pilka: Querétaro – Puebla (2026-11-09 01:00)",
-    "pilka: León – Guadalajara (2026-11-09 03:10)",
-    "walki: Brittany Sims – Shera Mae Patricio (2026-11-09 00:00)",
-    "walki: Irma Garcia – Nataly Delgado (2026-11-09 03:05)",
-    "walki: Skye Nicolson – Miyo Yoshida (2026-11-09 03:45)"
+    "tenis: Elina Svitolina – Karolina Muchova (2026-11-11 21:00)",
+    "tenis: Aryna Sabalenka – Mirra Andreeva (2026-11-11 22:10)"
    ],
-   "stron": 6,
+   "stron": 2,
    "dopasowane": 0,
-   "nasze_mecze": 6,
+   "nasze_mecze": 2,
    "rynki_przyklad": {},
-   "sekund": 4,
+   "sekund": 1,
    "z_kursami": 0
   }
  },
- "lista": "92ae99c7e755",
- "sekund": 41
+ "lista": "9aa2f5494984",
+ "sekund": 45
 }
