@@ -5,10 +5,229 @@
    "url": "https://www.transfermarkt.com/",
    "kod": 200,
    "typ": "text/html; charset=UTF-8",
-   "rozmiar": 291506,
-   "ms": 187
+   "rozmiar": 291206,
+   "ms": 186
   }
  ],
- "druzyny": [],
- "sekund": 0
+ "druzyny": [
+  {
+   "nasza": "Armenia",
+   "szukaj": {
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Armenia",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 113246,
+    "ms": 289
+   },
+   "klub": {
+    "slug": "-tm",
+    "id": "4023"
+   },
+   "kontuzje": {
+    "url": "https://www.transfermarkt.com/-tm/sperrenundverletzungen/verein/4023",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 291206,
+    "ms": 92,
+    "wierszy": 0,
+    "zawodnicy": [],
+    "powody": []
+   },
+   "kadra": {
+    "url": "https://www.transfermarkt.com/-tm/kader/verein/4023/plus/1",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 291206,
+    "ms": 93,
+    "wartosci": [],
+    "zawodnicy": []
+   }
+  },
+  {
+   "nasza": "Cyprus",
+   "szukaj": {
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Cyprus",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 103616,
+    "ms": 163
+   },
+   "klub": {
+    "slug": "zypern",
+    "id": "3668"
+   },
+   "kontuzje": {
+    "url": "https://www.transfermarkt.com/zypern/sperrenundverletzungen/verein/3668",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 98970,
+    "ms": 143,
+    "wierszy": 2,
+    "zawodnicy": [
+     "Andronikos Kakoullis",
+     "Andronikos Kakoullis"
+    ],
+    "powody": []
+   },
+   "kadra": {
+    "url": "https://www.transfermarkt.com/zypern/kader/verein/3668/plus/1",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 148775,
+    "ms": 254,
+    "wartosci": [
+     "€250.0K",
+     "€150.0K",
+     "€50.0K",
+     "€1.00M",
+     "€900.0K",
+     "€550.0K",
+     "€350.0K",
+     "€600.0K",
+     "€550.0K",
+     "€1.50M",
+     "€500.0K",
+     "€500.0K",
+     "€200.0K",
+     "€1.30M",
+     "€1.20M",
+     "€1.20M",
+     "€750.0K",
+     "€275.0K",
+     "€800.0K",
+     "€6.00M",
+     "€2.00M",
+     "€550.0K",
+     "€200.0K",
+     "€2.50M",
+     "€650.0K",
+     "€325.0K",
+     "€325.0K"
+    ],
+    "zawodnicy": []
+   }
+  },
+  {
+   "nasza": "Turkey",
+   "szukaj": {
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Turkey",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 98874,
+    "ms": 154
+   },
+   "klub": {
+    "slug": "turkei",
+    "id": "3381"
+   },
+   "kontuzje": {
+    "url": "https://www.transfermarkt.com/turkei/sperrenundverletzungen/verein/3381",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 97158,
+    "ms": 78,
+    "wierszy": 0,
+    "zawodnicy": [],
+    "powody": []
+   },
+   "kadra": {
+    "url": "https://www.transfermarkt.com/turkei/kader/verein/3381/plus/1",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 153512,
+    "ms": 193,
+    "wartosci": [
+     "€13.00M",
+     "€12.00M",
+     "€4.00M",
+     "€1.00M",
+     "€15.00M",
+     "€12.00M",
+     "€9.00M",
+     "€6.00M",
+     "€5.50M",
+     "€40.00M",
+     "€5.00M",
+     "€4.00M",
+     "€14.00M",
+     "€16.00M",
+     "€15.00M",
+     "€6.00M",
+     "€28.00M",
+     "€100.00M",
+     "€45.00M",
+     "€30.00M",
+     "€9.00M",
+     "€7.00M",
+     "€18.00M",
+     "€10.00M",
+     "€7.00M"
+    ],
+    "zawodnicy": []
+   }
+  },
+  {
+   "nasza": "Belgium",
+   "szukaj": {
+    "url": "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query=Belgium",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 108899,
+    "ms": 161
+   },
+   "klub": {
+    "slug": "belgien",
+    "id": "3382"
+   },
+   "kontuzje": {
+    "url": "https://www.transfermarkt.com/belgien/sperrenundverletzungen/verein/3382",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 98698,
+    "ms": 84,
+    "wierszy": 1,
+    "zawodnicy": [
+     "Romelu Lukaku"
+    ],
+    "powody": []
+   },
+   "kadra": {
+    "url": "https://www.transfermarkt.com/belgien/kader/verein/3382/plus/1",
+    "kod": 200,
+    "typ": "text/html; charset=UTF-8",
+    "rozmiar": 161215,
+    "ms": 216,
+    "wartosci": [
+     "€35.00M",
+     "€25.00M",
+     "€15.00M",
+     "€5.00M",
+     "€25.00M",
+     "€15.00M",
+     "€7.00M",
+     "€2.80M",
+     "€30.00M",
+     "€27.00M",
+     "€13.00M",
+     "€8.00M",
+     "€25.00M",
+     "€20.00M",
+     "€15.00M",
+     "€40.00M",
+     "€45.00M",
+     "€35.00M",
+     "€8.00M",
+     "€5.00M",
+     "€75.00M",
+     "€40.00M",
+     "€18.00M",
+     "€15.00M",
+     "€10.00M",
+     "€6.00M"
+    ],
+    "zawodnicy": []
+   }
+  }
+ ],
+ "sekund": 2
 }
