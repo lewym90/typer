@@ -1,126 +1,22 @@
 {
- "czas": "2026-11-13 01:54 UTC",
+ "czas": "2026-11-13 06:00 UTC",
  "wersja": "czytnik-3",
  "bukmacherzy": {
   "fortuna": {
    "ok": true,
-   "dopasowane": 1
+   "dopasowane": 0
   },
   "sts": {
    "ok": true,
-   "dopasowane": 1
+   "dopasowane": 0
   },
   "betclic": {
    "ok": true,
-   "dopasowane": 1
+   "dopasowane": 0
   }
  },
- "mecze": {
-  "a0f8c50195dacc45840a8db86f731618": {
-   "fortuna": {
-    "id": "ufo:mtch:1xo-01z",
-    "nazwa": "Orobio, Jhon - Cedeno, Hendri",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "A": 1.07,
-     "B": 6.8
-    },
-    "pelna": true
-   },
-   "sts": {
-    "id": "f3649322",
-    "nazwa": "Orobio Jhon - Cedeno Hendri",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "A": 1.07,
-     "B": 6.75
-    },
-    "pelna": true
-   },
-   "betclic": {
-    "id": "1251744984076288",
-    "nazwa": "Jhon Orobio - Hendri Cedeno",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "A": 1.07,
-     "B": 6.75,
-     "A przed czasem": 1.4,
-     "A na punkty": 4.0,
-     "B przed czasem": 11.0,
-     "B na punkty": 19.0,
-     "Pełny dystans": 3.25,
-     "Przed czasem": 1.26
-    },
-    "pelna": true,
-    "rynkow": 5,
-    "oferta": {
-     "Zwycięzca walki": [
-      [
-       "Jhon Orobio",
-       1.07
-      ],
-      [
-       "Hendri Cedeno",
-       6.75
-      ]
-     ],
-     "Metoda zwycięstwa Jhon Orobio": [
-      [
-       "KO/ TKO/ DQ",
-       1.4
-      ],
-      [
-       "Decyzja",
-       4.0
-      ]
-     ],
-     "Metoda zwycięstwa Hendri Cedeno": [
-      [
-       "KO/ TKO/ DQ",
-       11.0
-      ],
-      [
-       "Decyzja",
-       19.0
-      ]
-     ],
-     "Pełen dystans": [
-      [
-       "Tak",
-       3.25
-      ],
-      [
-       "Nie",
-       1.26
-      ]
-     ],
-     "Metoda zwycięstwa": [
-      [
-       "KO, TKO lub DQ",
-       1.26
-      ],
-      [
-       "Decyzja",
-       3.25
-      ]
-     ]
-    }
-   }
-  }
- },
+ "mecze": {},
  "ksw": [
-  {
-   "a": "Bartosiński Adrian",
-   "b": "Łopaczyk Tymoteusz",
-   "t": "2026-11-21T22:00:00+00:00",
-   "gala": "KSW 123",
-   "kursy": {
-    "sts": {
-     "A": 1.12,
-     "B": 6.25
-    }
-   }
-  },
   {
    "a": "Mircea Valeriu",
    "b": "Held Marcin",
@@ -383,6 +279,10 @@
     "Zakłady Specjalne"
    ],
    [
+    "ufo:sprt:35",
+    "eHokej"
+   ],
+   [
     "ufo:sprt:1v",
     "MISTRZOWSKI BOOST"
    ],
@@ -465,8 +365,8 @@
    "sporty walki": "ufo:sprt:19",
    "pilka": "ufo:sprt:00"
   },
-  "turniejow": 174,
-  "meczow_fortuny": 770,
+  "turniejow": 181,
+  "meczow_fortuny": 805,
   "niedopasowane": [
    "pilka: Montenegro – Latvia",
    "pilka: Italy – France",
@@ -476,44 +376,18 @@
    "pilka: San Marino – Belarus",
    "tenis: Marta Kostyuk – Coco Gauff",
    "tenis: Jessica Pegula – Linda Noskova",
-   "walki: Steven Butler – Erik Bazinyan"
+   "walki: Steven Butler – Erik Bazinyan",
+   "walki: Jhon Orobio – Hendri Cedeno"
   ],
-  "pelna_oferta": 1,
-  "rynki_nazwy": {
-   "walki": {
-    "Zwycięzca walki": [
-     "1",
-     "2"
-    ],
-    "Wynik walki": [
-     "1",
-     "Remis",
-     "2"
-    ],
-    "Liczba rund (0.5 oznacza połowę czasu kolejnej rundy)": [
-     "Więcej niż 6.5",
-     "Mniej niż 6.5"
-    ],
-    "Zwycięzca walki / Metoda zwycięstwa": [
-     "1 / KO lub TKO lub DQ",
-     "2 / KO lub TKO lub DQ",
-     "2 / Decyzja",
-     "1 / Decyzja"
-    ],
-    "Walka zakończy się na punkty lub przez techniczną decyzję": [
-     "Tak",
-     "Nie"
-    ]
-   }
-  },
+  "rynki_nazwy": {},
   "sts": {
    "bledy": [],
-   "meczow_sts": 1776,
+   "meczow_sts": 1830,
    "sporty": {
-    "1": 1382,
-    "3": 225,
-    "166": 85,
-    "19": 84
+    "1": 1435,
+    "3": 228,
+    "166": 84,
+    "19": 83
    },
    "niedopasowane": [
     "pilka: Montenegro – Latvia",
@@ -524,46 +398,15 @@
     "pilka: San Marino – Belarus",
     "tenis: Marta Kostyuk – Coco Gauff",
     "tenis: Jessica Pegula – Linda Noskova",
-    "walki: Steven Butler – Erik Bazinyan"
+    "walki: Steven Butler – Erik Bazinyan",
+    "walki: Jhon Orobio – Hendri Cedeno"
    ],
-   "szczegoly_ramek": 1,
-   "szczegoly_odpowiedzi": "1 z 1",
-   "szczegoly_tematy": {
-    "f_f3649322_pl": 1
-   },
-   "szczegoly_meczow": {
-    "Orobio Jhon - Cedeno Hendri": {
-     "16m66320": 3,
-     "1m75582916": 1
-    }
-   },
-   "rynki_przyklad": {
-    "Orobio Jhon - Cedeno Hendri": {
-     "25 Liczba rund": [
-      "Liczba rund | 12:+6.5=1.85",
-      "Liczba rund | 13:-6.5=1.85"
-     ],
-     "259 Zwycięzca walki": [
-      "Zwycięzca walki | 4:1=1.07",
-      "Zwycięzca walki | 5:2=6.75"
-     ],
-     "1068 Metoda zwycięstwa": [
-      "Metoda zwycięstwa | 1734:1. zawodnik - KO/TKO/DSQ lub poddanie=1.7",
-      "Metoda zwycięstwa | 1735:1. zawodnik - na punkty=2.65",
-      "Metoda zwycięstwa | 1736:X=20",
-      "Metoda zwycięstwa | 1737:2. zawodnik - KO/TKO/DSQ lub poddanie=13"
-     ],
-     "1070 Walka potrwa pełen dystans": [
-      "Walka potrwa pełen dystans | 26:tak=2.25",
-      "Walka potrwa pełen dystans | 27:nie=1.55"
-     ]
-    }
-   },
+   "rynki_przyklad": {},
    "z_wieloma_rynkami": 0
   },
   "ksw": {
    "fortuna": 0,
-   "razem": 17
+   "razem": 16
   },
   "betclic": {
    "bledy": [],
@@ -576,26 +419,17 @@
     "pilka: San Marino – Belarus (2026-11-12 20:45)",
     "tenis: Marta Kostyuk – Coco Gauff (2026-11-12 21:00)",
     "tenis: Jessica Pegula – Linda Noskova (2026-11-12 22:30)",
-    "walki: Steven Butler – Erik Bazinyan (2026-11-13 03:30)"
+    "walki: Steven Butler – Erik Bazinyan (2026-11-13 03:30)",
+    "walki: Jhon Orobio – Hendri Cedeno (2026-11-13 04:00)"
    ],
-   "stron": 11,
-   "dopasowane": 1,
+   "stron": 10,
+   "dopasowane": 0,
    "nasze_mecze": 10,
-   "rynki_przyklad": {
-    "walki": {
-     "Jhon Orobio - Hendri Cedeno": [
-      "Metoda zwycięstwa",
-      "Metoda zwycięstwa Hendri Cedeno",
-      "Metoda zwycięstwa Jhon Orobio",
-      "Pełen dystans",
-      "Zwycięzca walki"
-     ]
-    }
-   },
+   "rynki_przyklad": {},
    "sekund": 7,
-   "z_kursami": 1
+   "z_kursami": 0
   }
  },
  "lista": "d272e6297655",
- "sekund": 58
+ "sekund": 54
 }
