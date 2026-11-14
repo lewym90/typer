@@ -2,48 +2,48 @@
  "zrodlo": "FotMob",
  "proby": [
   {
-   "url": "https://www.fotmob.com/api/data/matches?date=20261113&timezone=Europe%2FWarsaw&ccode3=POL",
+   "url": "https://www.fotmob.com/api/data/matches?date=20261114&timezone=Europe%2FWarsaw&ccode3=POL",
    "kod": 200,
    "typ": "application/json; charset=utf-8",
-   "rozmiar": 49086,
-   "ms": 275,
-   "mecze": 90
+   "rozmiar": 154294,
+   "ms": 361,
+   "mecze": 316
   },
   {
-   "url": "https://www.fotmob.com/api/matches?date=20261113&timezone=Europe%2FWarsaw&ccode3=POL",
+   "url": "https://www.fotmob.com/api/matches?date=20261114&timezone=Europe%2FWarsaw&ccode3=POL",
    "kod": 404,
    "typ": "",
    "rozmiar": 0,
-   "ms": 25,
+   "ms": 10,
    "poczatek": ""
   },
   {
-   "url": "https://www.fotmob.com/api/data/matches?date=20261113",
+   "url": "https://www.fotmob.com/api/data/matches?date=20261114",
    "kod": 200,
    "typ": "application/json; charset=utf-8",
-   "rozmiar": 46348,
-   "ms": 36,
-   "mecze": 92
+   "rozmiar": 157367,
+   "ms": 14,
+   "mecze": 325
   }
  ],
  "dopasowane": [
   {
-   "nasz": "Moldova – Kazakhstan",
-   "event_id": "cc1ca0aea8a9aa6ad2e1537834fe0d04",
-   "start": "2026-11-13 18:00",
-   "fotmob_id": "5181941",
-   "fotmob": "Moldova – Kazakhstan",
+   "nasz": "Kosovo – Israel",
+   "event_id": "244d7d2e6f3f8529af59270040b7ec7a",
+   "start": "2026-11-14 15:00",
+   "fotmob_id": "5181820",
+   "fotmob": "Kosovo – Israel",
    "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null,
    "szczegoly": {
     "requests": [
      {
-      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5181941",
+      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5181820",
       "kod": 200,
       "typ": "application/json; charset=utf-8",
-      "rozmiar": 20818,
-      "ms": 78
+      "rozmiar": 27594,
+      "ms": 34
      }
     ],
     "dane": {
@@ -55,68 +55,706 @@
       "homeTeam",
       "awayTeam"
      ],
-     "lineup_typ": "unavailable",
+     "lineup_typ": "predicted",
      "homeTeam": {
-      "formacja": "",
-      "ocena": null,
-      "klucze": [
-       "id",
-       "name",
-       "formation",
-       "starters"
-      ],
-      "wyjsciowi": [],
-      "lawka_ile": 0,
-      "nieobecni": null,
-      "trener": null
-     },
-     "awayTeam": {
-      "formacja": "",
+      "formacja": "3-4-2-1",
       "ocena": null,
       "klucze": [
        "id",
        "name",
        "formation",
        "starters",
-       "unavailable"
+       "coach",
+       "averageStarterAge",
+       "totalStarterMarketValue"
       ],
-      "wyjsciowi": [],
-      "lawka_ile": 0,
-      "nieobecni": [
+      "wyjsciowi": [
        {
-        "id": 489579,
-        "age": 36,
-        "name": "Sergiy Malyi",
-        "countryName": "Kazakhstan",
-        "countryCode": "KAZ",
-        "marketValue": 79405,
-        "unavailability": {
-         "type": "suspension",
-         "expectedReturn": "Mid November 2026",
-         "expectedReturnDate": "2026-11-13T18:00:00Z"
+        "id": 1053716,
+        "age": 26,
+        "name": "Amir Saipi",
+        "positionId": 11,
+        "usualPlayingPositionId": 0,
+        "shirtNumber": "16",
+        "countryName": "Kosovo",
+        "countryCode": "KVX",
+        "primaryTeamId": 10279,
+        "primaryTeamName": "Castellón",
+        "horizontalLayout": {
+         "x": 0.1,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
         },
-        "firstName": "Sergiy",
-        "lastName": "Malyi",
-        "nationalTeamId": 8265
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.1,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 1289209,
+        "firstName": "Amir",
+        "lastName": "Saipi",
+        "nationalTeamId": 430156,
+        "rankings": null
        },
        {
-        "id": 1684584,
-        "age": 18,
-        "name": "Dastan Satpaev",
-        "countryName": "Kazakhstan",
-        "countryCode": "KAZ",
-        "marketValue": 10158241,
-        "unavailability": {
-         "injuryId": 87,
-         "type": "injury",
-         "expectedReturn": "Late November 2026"
+        "id": 1067805,
+        "age": 27,
+        "name": "Lumbardh Dellova",
+        "positionId": 33,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "5",
+        "countryName": "Kosovo",
+        "countryCode": "KVX",
+        "primaryTeamId": 96498,
+        "primaryTeamName": "Amed Sportif",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.79,
+         "height": 0.25,
+         "width": 0.192
         },
-        "firstName": "Dastan",
-        "lastName": "Satpaev",
-        "nationalTeamId": 8265
+        "verticalLayout": {
+         "x": 0.21,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.29
+        },
+        "marketValue": 1427462,
+        "firstName": "Lumbardh",
+        "lastName": "Dellova",
+        "nationalTeamId": 430156,
+        "rankings": null
+       },
+       {
+        "id": 1373723,
+        "age": 26,
+        "name": "Ilir Krasniqi",
+        "positionId": 35,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "4",
+        "countryName": "Kosovo",
+        "countryCode": "KVX",
+        "primaryTeamId": 1181312,
+        "primaryTeamName": "Polissya Zhytomyr",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.29
+        },
+        "marketValue": 889431,
+        "firstName": "Ilir",
+        "lastName": "Krasniqi",
+        "nationalTeamId": 430156,
+        "rankings": null
+       },
+       {
+        "id": 1768687,
+        "age": 24,
+        "name": "Ron Raçi",
+        "positionId": 37,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "2",
+        "countryName": "Kosovo",
+        "countryCode": "KVX",
+        "primaryTeamId": 10154,
+        "primaryTeamName": "Hajduk Split",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.21,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.79,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.29
+        },
+        "marketValue": 314111,
+        "firstName": "Ron",
+        "lastName": "Raçi",
+        "nationalTeamId": 430156,
+        "rankings": null
+       },
+       {
+        "id": 560945,
+        "age": 31,
+        "name": "Mërgim Vojvoda",
+        "positionId": 62,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "15",
+        "countryName": "Kosovo",
+        "countryCode": "KVX",
+        "primaryTeamId": 8600,
+        "primaryTeamName": "Udinese",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.875,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.125,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 1920207,
+        "firstName": "Mërgim",
+        "lastName": "Vojvoda",
+        "nationalTeamId": 430156,
+        "rankings": null
+       },
+       {
+        "id": 1478148,
+        "age": 22,
+        "name": "Leon Avdullahu",
+        "positionId": 64,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "23",
+        "countryName": "Kosovo",
+        "countryCode": "KVX",
+        "primaryTeamId": 8226,
+        "primaryTeamName": "Hoffenheim",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.625,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.375,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 37491021,
+        "firstName": "Leon",
+        "lastName": "Avdullahu",
+        "nationalTeamId": 430156,
+        "rankings": null
+       },
+       {
+        "id": 1190351,
+        "age": 24,
+        "name": "Veldin Hodža",
+        "positionId": 66,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "20",
+        "countryName": "Kosovo",
+        "countryCode": "KVX",
+        "primaryTeamId": 8683,
+        "primaryTeamName": "Rubin Kazan",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.375,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.625,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 4173566,
+        "firstName": "Veldin",
+        "lastName": "Hodža",
+        "nationalTeamId": 430156,
+        "rankings": null
+       },
+       {
+        "id": 1729818,
+        "age": 21,
+        "name": "Dion Gallapeni",
+        "positionId": 68,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "13",
+        "countryName": "Kosovo",
+        "countryCode": "KVX",
+        "primaryTeamId": 8243,
+        "primaryTeamName": "Wisła Płock",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.125,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.875,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 4007160,
+        "firstName": "Dion",
+        "lastName": "Gallapeni",
+        "nationalTeamId": 430156,
+        "rankings": null
+       },
+       {
+        "id": 862616,
+        "age": 27,
+        "name": "Edon Zhegrova",
+        "positionId": 84,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "10",
+        "countryName": "Kosovo",
+        "countryCode": "KVX",
+        "primaryTeamId": 9885,
+        "primaryTeamName": "Juventus",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.7,
+         "height": 0.25,
+         "width": 0.193
+        },
+        "verticalLayout": {
+         "x": 0.3,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.4
+        },
+        "marketValue": 11135441,
+        "firstName": "Edon",
+        "lastName": "Zhegrova",
+        "nationalTeamId": 430156,
+        "rankings": null
+       },
+       {
+        "id": 1382371,
+        "age": 25,
+        "name": "Baton Zabërgja",
+        "positionId": 86,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "14",
+        "countryName": "Kosovo",
+        "countryCode": "KVX",
+        "primaryTeamId": 949030,
+        "primaryTeamName": "FC Kharkiv",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.3,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.7,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.4
+        },
+        "marketValue": 1154889,
+        "firstName": "Baton",
+        "lastName": "Zabërgja",
+        "nationalTeamId": 430156,
+        "rankings": null
+       },
+       {
+        "id": 517052,
+        "age": 32,
+        "name": "Vedat Muriqi",
+        "positionId": 105,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "18",
+        "countryName": "Kosovo",
+        "countryCode": "KVX",
+        "primaryTeamId": 8695,
+        "primaryTeamName": "Fenerbahçe",
+        "horizontalLayout": {
+         "x": 0.87,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.87,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 5308462,
+        "firstName": "Vedat",
+        "lastName": "Muriqi",
+        "nationalTeamId": 430156,
+        "rankings": null
        }
       ],
-      "trener": null
+      "lawka_ile": 0,
+      "nieobecni": null,
+      "trener": {
+       "id": 191700,
+       "age": 60,
+       "name": "Franco Foda",
+       "countryName": "Germany",
+       "countryCode": "GER",
+       "firstName": "Franco",
+       "lastName": "Foda",
+       "nationalTeamId": 8570,
+       "primaryTeamId": 430156,
+       "primaryTeamName": "Kosovo",
+       "usualPlayingPositionId": null,
+       "isCoach": true
+      }
+     },
+     "awayTeam": {
+      "formacja": "3-4-2-1",
+      "ocena": null,
+      "klucze": [
+       "id",
+       "name",
+       "formation",
+       "starters",
+       "coach",
+       "averageStarterAge",
+       "totalStarterMarketValue"
+      ],
+      "wyjsciowi": [
+       {
+        "id": 1187774,
+        "age": 28,
+        "name": "Assaf Tzur",
+        "positionId": 11,
+        "usualPlayingPositionId": 0,
+        "shirtNumber": "23",
+        "countryName": "Israel",
+        "countryCode": "ISR",
+        "primaryTeamId": 10181,
+        "primaryTeamName": "Hapoel Tel Aviv",
+        "horizontalLayout": {
+         "x": 0.1,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.1,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 542818,
+        "firstName": "Assaf",
+        "lastName": "Tzur",
+        "nationalTeamId": 8567,
+        "rankings": null
+       },
+       {
+        "id": 1477873,
+        "age": 22,
+        "name": "Ilay Feingold",
+        "positionId": 33,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "17",
+        "countryName": "Israel",
+        "countryCode": "ISR",
+        "primaryTeamId": 6580,
+        "primaryTeamName": "New England Revolution",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.79,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.21,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.29
+        },
+        "marketValue": 2286499,
+        "firstName": "Ilay",
+        "lastName": "Feingold",
+        "nationalTeamId": 8567,
+        "rankings": null
+       },
+       {
+        "id": 899188,
+        "age": 29,
+        "name": "Idan Nachmias",
+        "positionId": 35,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "5",
+        "countryName": "Israel",
+        "countryCode": "ISR",
+        "primaryTeamId": 9754,
+        "primaryTeamName": "Hapoel Beer Sheva",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.29
+        },
+        "marketValue": 460949,
+        "firstName": "Idan",
+        "lastName": "Nachmias",
+        "nationalTeamId": 8567,
+        "rankings": null
+       },
+       {
+        "id": 1687592,
+        "age": 21,
+        "name": "Nikita Stoinov",
+        "positionId": 37,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "13",
+        "countryName": "Israel",
+        "countryCode": "ISR",
+        "primaryTeamId": 10271,
+        "primaryTeamName": "Dinamo București",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.21,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.79,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.29
+        },
+        "marketValue": 1846712,
+        "firstName": "Nikita",
+        "lastName": "Stoinov",
+        "nationalTeamId": 8567,
+        "rankings": null
+       },
+       {
+        "id": 1091975,
+        "age": 25,
+        "name": "Liel Abada",
+        "positionId": 62,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "20",
+        "countryName": "Israel",
+        "countryCode": "ISR",
+        "primaryTeamId": 1323940,
+        "primaryTeamName": "Charlotte FC",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.875,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.125,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 2360919,
+        "firstName": "Liel",
+        "lastName": "Abada",
+        "nationalTeamId": 8567,
+        "rankings": null
+       },
+       {
+        "id": 1319182,
+        "age": 24,
+        "name": "Ethane Azoulay",
+        "positionId": 64,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "21",
+        "countryName": "Israel",
+        "countryCode": "ISR",
+        "primaryTeamId": 10185,
+        "primaryTeamName": "Maccabi Haifa",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.625,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.375,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 1632642,
+        "firstName": "Ethane",
+        "lastName": "Azoulay",
+        "nationalTeamId": 8567,
+        "rankings": null
+       },
+       {
+        "id": 1612237,
+        "age": 21,
+        "name": "Yarin Levi",
+        "positionId": 66,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "12",
+        "countryName": "Israel",
+        "countryCode": "ISR",
+        "primaryTeamId": 10185,
+        "primaryTeamName": "Maccabi Haifa",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.375,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.625,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 2030377,
+        "firstName": "Yarin",
+        "lastName": "Levi",
+        "nationalTeamId": 8567,
+        "rankings": null
+       },
+       {
+        "id": 1337914,
+        "age": 23,
+        "name": "Roy Revivo",
+        "positionId": 68,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "3",
+        "countryName": "Israel",
+        "countryCode": "ISR",
+        "primaryTeamId": 10268,
+        "primaryTeamName": "Elche",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.125,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.875,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 5338132,
+        "firstName": "Roy",
+        "lastName": "Revivo",
+        "nationalTeamId": 8567,
+        "rankings": null
+       },
+       {
+        "id": 580694,
+        "age": 31,
+        "name": "Dor Peretz",
+        "positionId": 84,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "8",
+        "countryName": "Israel",
+        "countryCode": "ISR",
+        "primaryTeamId": 7855,
+        "primaryTeamName": "Maccabi Tel Aviv",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.7,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.3,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.4
+        },
+        "marketValue": 1129072,
+        "firstName": "Dor",
+        "lastName": "Peretz",
+        "nationalTeamId": 8567,
+        "rankings": null
+       },
+       {
+        "id": 1337911,
+        "age": 22,
+        "name": "Oscar Gloukh",
+        "positionId": 86,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "11",
+        "countryName": "Israel",
+        "countryCode": "ISR",
+        "primaryTeamId": 8593,
+        "primaryTeamName": "Ajax",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.3,
+         "height": 0.25,
+         "width": 0.193
+        },
+        "verticalLayout": {
+         "x": 0.7,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.4
+        },
+        "marketValue": 17032733,
+        "firstName": "Oscar",
+        "lastName": "Gloukh",
+        "nationalTeamId": 8567,
+        "rankings": null
+       },
+       {
+        "id": 1177306,
+        "age": 23,
+        "name": "Dor Turgeman",
+        "positionId": 105,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "19",
+        "countryName": "Israel",
+        "countryCode": "ISR",
+        "primaryTeamId": 6580,
+        "primaryTeamName": "New England Revolution",
+        "horizontalLayout": {
+         "x": 0.87,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.87,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 5629270,
+        "firstName": "Dor",
+        "lastName": "Turgeman",
+        "nationalTeamId": 8567,
+        "rankings": null
+       }
+      ],
+      "lawka_ile": 0,
+      "nieobecni": null,
+      "trener": {
+       "id": 762686,
+       "age": 55,
+       "name": "Ran Ben Shimon",
+       "countryName": "Israel",
+       "countryCode": "ISR",
+       "firstName": "Ran",
+       "lastName": "Ben Shimon",
+       "nationalTeamId": 8567,
+       "primaryTeamId": 8567,
+       "primaryTeamName": "Israel",
+       "usualPlayingPositionId": null,
+       "isCoach": true
+      }
      },
      "matchFacts_klucze": [
       "matchId",
@@ -127,7 +765,6 @@
       "teamForm",
       "poll",
       "topPlayers",
-      "insights",
       "topScorers",
       "countryCode",
       "QAData"
@@ -135,53 +772,53 @@
      "infoBox": {
       "legInfo": null,
       "Match Date": {
-       "utcTime": "2026-11-13T17:00:00.000Z",
+       "utcTime": "2026-11-14T14:00:00.000Z",
        "isDateCorrect": true
       },
       "Tournament": {
-       "id": 920751,
-       "parentLeagueId": 9808,
-       "link": "/leagues/9808/overview/uefa-nations-league-c-grp-3",
-       "leagueName": "UEFA Nations League C Grp. 3",
+       "id": 920747,
+       "parentLeagueId": 9807,
+       "link": "/leagues/9807/overview/uefa-nations-league-b-grp-3",
+       "leagueName": "UEFA Nations League B Grp. 3",
        "roundName": "5",
        "round": "5"
       },
       "Stadium": {
-       "name": "Stadionul Zimbru",
-       "city": "Chișinău",
-       "country": "Moldova",
-       "lat": 46.980321893,
-       "long": 28.867891431,
-       "capacity": 10104,
+       "name": "Stadiumi Fadil Vokrri",
+       "city": "Prishtinë (Pristina)",
+       "country": "Kosovo",
+       "lat": 42.662872539,
+       "long": 21.157050133,
+       "capacity": 13500,
        "surface": "grass"
       },
       "Referee": {
-       "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/ita.png",
-       "text": "Andrea Colombo",
-       "countryCode": "ITA",
-       "country": "Italy",
-       "id": 1001071417,
-       "leagueId": 55,
-       "leagueName": "Serie A",
+       "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/svk.png",
+       "text": "Ivan Kružliak",
+       "countryCode": "SVK",
+       "country": "Slovakia",
+       "id": 1001075982,
+       "leagueId": 176,
+       "leagueName": "1. liga",
        "stats": [
         {
          "type": "matches",
-         "value": 30,
+         "value": 31,
          "valueType": "total"
         },
         {
          "type": "yellowCards",
-         "value": 4.37,
+         "value": 5.16,
          "valueType": "perMatch",
-         "average": 3.68,
-         "total": 131,
+         "average": 4.22,
+         "total": 160,
          "averageType": "above",
-         "fillPercentage": 59.28,
+         "fillPercentage": 67.33,
          "averagePercentage": 50
         },
         {
          "type": "redCards",
-         "value": 1,
+         "value": 5,
          "valueType": "total"
         },
         {
@@ -191,17 +828,17 @@
         },
         {
          "type": "penalties",
-         "value": 5,
+         "value": 16,
          "valueType": "total"
         },
         {
          "type": "fouls",
-         "value": 26.75,
+         "value": 28.59,
          "valueType": "perMatch",
-         "average": 24.77,
-         "total": 749,
+         "average": 25.94,
+         "total": 829,
          "averageType": "above",
-         "fillPercentage": 62.71,
+         "fillPercentage": 65.67,
          "averagePercentage": 50
         }
        ]
@@ -224,43 +861,43 @@
       "momentum"
      ],
      "general": {
-      "matchId": "5181941",
-      "matchName": "Moldova-vs-Kazakhstan_Fri, Nov 13, 2026, 17:00 UTC",
+      "matchId": "5181820",
+      "matchName": "Kosovo-vs-Israel_Sat, Nov 14, 2026, 14:00 UTC",
       "matchRound": "5",
       "teamColors": {
        "darkMode": {
-        "home": "#0154A4",
-        "away": "#F5CF0A"
+        "home": "#2048A0",
+        "away": "#5ab0d2"
        },
        "lightMode": {
-        "home": "#0154A4",
-        "away": "#d9a000"
+        "home": "#2048A0",
+        "away": "#5ab0d2"
        },
        "fontDarkMode": {
         "home": "rgba(255, 255, 255, 1.0)",
-        "away": "rgba(29, 29, 29, 1.0)"
+        "away": "rgba(255, 255, 255, 1.0)"
        },
        "fontLightMode": {
         "home": "rgba(255, 255, 255, 1.0)",
         "away": "rgba(255, 255, 255, 1.0)"
        }
       },
-      "leagueId": 920751,
-      "leagueName": "UEFA Nations League C Grp. 3",
+      "leagueId": 920747,
+      "leagueName": "UEFA Nations League B Grp. 3",
       "leagueRoundName": "5",
-      "parentLeagueId": 9808,
+      "parentLeagueId": 9807,
       "countryCode": "INT",
       "homeTeam": {
-       "name": "Moldova",
-       "id": 5794
+       "name": "Kosovo",
+       "id": 430156
       },
       "awayTeam": {
-       "name": "Kazakhstan",
-       "id": 8265
+       "name": "Israel",
+       "id": 8567
       },
       "coverageLevel": "lower",
-      "matchTimeUTC": "Fri, Nov 13, 2026, 17:00 UTC",
-      "matchTimeUTCDate": "2026-11-13T17:00:00.000Z",
+      "matchTimeUTC": "Sat, Nov 14, 2026, 14:00 UTC",
+      "matchTimeUTCDate": "2026-11-14T14:00:00.000Z",
       "started": false,
       "finished": false,
       "gender": "male"
@@ -268,24 +905,24 @@
      "header": {
       "teams": [
        {
-        "name": "Moldova",
-        "id": 5794,
+        "name": "Kosovo",
+        "id": 430156,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/5794_small.png",
-        "pageUrl": "/teams/5794/overview/moldova",
-        "fifaRank": 158
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/430156_small.png",
+        "pageUrl": "/teams/430156/overview/kosovo",
+        "fifaRank": 76
        },
        {
-        "name": "Kazakhstan",
-        "id": 8265,
+        "name": "Israel",
+        "id": 8567,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8265_small.png",
-        "pageUrl": "/teams/8265/overview/kazakhstan",
-        "fifaRank": 117
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8567_small.png",
+        "pageUrl": "/teams/8567/overview/israel",
+        "fifaRank": 77
        }
       ],
       "status": {
-       "utcTime": "2026-11-13T17:00:00.000Z",
+       "utcTime": "2026-11-14T14:00:00.000Z",
        "numberOfHomeRedCards": 0,
        "numberOfAwayRedCards": 0,
        "halfs": {},
@@ -302,44 +939,753 @@
    }
   },
   {
-   "nasz": "Bulgaria – Iceland",
-   "event_id": "b53069411f63a0d3aed21fa84d225faf",
-   "start": "2026-11-13 20:45",
-   "fotmob_id": "5181957",
-   "fotmob": "Bulgaria – Iceland",
+   "nasz": "Georgia – Hungary",
+   "event_id": "d548fa34308b91eb158670eb18e1deae",
+   "start": "2026-11-14 18:00",
+   "fotmob_id": "5181808",
+   "fotmob": "Georgia – Hungary",
    "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null,
    "szczegoly": {
     "requests": [
      {
-      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5181957",
+      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5181808",
       "kod": 200,
       "typ": "application/json; charset=utf-8",
-      "rozmiar": 16090,
-      "ms": 78
+      "rozmiar": 26501,
+      "ms": 87
      }
     ],
     "dane": {
-     "lineup_klucze": [],
-     "lineup_typ": null,
+     "lineup_klucze": [
+      "matchId",
+      "lineupType",
+      "source",
+      "availableFilters",
+      "homeTeam",
+      "awayTeam"
+     ],
+     "lineup_typ": "predicted",
      "homeTeam": {
-      "formacja": null,
+      "formacja": "4-3-3",
       "ocena": null,
-      "klucze": [],
-      "wyjsciowi": null,
+      "klucze": [
+       "id",
+       "name",
+       "formation",
+       "starters",
+       "coach",
+       "unavailable",
+       "averageStarterAge",
+       "totalStarterMarketValue"
+      ],
+      "wyjsciowi": [
+       {
+        "id": 948800,
+        "age": 26,
+        "name": "Giorgi Mamardashvili",
+        "positionId": 11,
+        "usualPlayingPositionId": 0,
+        "shirtNumber": "1",
+        "countryName": "Georgia",
+        "countryCode": "GEO",
+        "primaryTeamId": 8650,
+        "primaryTeamName": "Liverpool",
+        "horizontalLayout": {
+         "x": 0.1,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.2
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.1,
+         "height": 0.2,
+         "width": 1
+        },
+        "marketValue": 36159106,
+        "firstName": "Giorgi",
+        "lastName": "Mamardashvili",
+        "nationalTeamId": 8268,
+        "rankings": null
+       },
+       {
+        "id": 463993,
+        "age": 31,
+        "name": "Otar Kakabadze",
+        "positionId": 32,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "2",
+        "countryName": "Georgia",
+        "countryCode": "GEO",
+        "primaryTeamId": 2186,
+        "primaryTeamName": "Cracovia",
+        "horizontalLayout": {
+         "x": 0.357,
+         "y": 0.875,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.125,
+         "y": 0.357,
+         "height": 0.2,
+         "width": 0.25
+        },
+        "marketValue": 323826,
+        "firstName": "Otar",
+        "lastName": "Kakabadze",
+        "nationalTeamId": 8268,
+        "rankings": null
+       },
+       {
+        "id": 1507697,
+        "age": 22,
+        "name": "Saba Goglichidze",
+        "positionId": 34,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "5",
+        "countryName": "Georgia",
+        "countryCode": "GEO",
+        "primaryTeamId": 6504,
+        "primaryTeamName": "Monza",
+        "horizontalLayout": {
+         "x": 0.357,
+         "y": 0.625,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.375,
+         "y": 0.357,
+         "height": 0.2,
+         "width": 0.25
+        },
+        "marketValue": 5341413,
+        "firstName": "Saba",
+        "lastName": "Goglichidze",
+        "nationalTeamId": 8268,
+        "rankings": null
+       },
+       {
+        "id": 784175,
+        "age": 28,
+        "name": "Luka Lochoshvili",
+        "positionId": 36,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "4",
+        "countryName": "Georgia",
+        "countryCode": "GEO",
+        "primaryTeamId": 8722,
+        "primaryTeamName": "1. FC Köln",
+        "horizontalLayout": {
+         "x": 0.357,
+         "y": 0.375,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.625,
+         "y": 0.357,
+         "height": 0.2,
+         "width": 0.25
+        },
+        "marketValue": 2526708,
+        "firstName": "Luka",
+        "lastName": "Lochoshvili",
+        "nationalTeamId": 8268,
+        "rankings": null
+       },
+       {
+        "id": 1067263,
+        "age": 24,
+        "name": "Irakli Azarovi",
+        "positionId": 38,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "16",
+        "countryName": "Georgia",
+        "countryCode": "GEO",
+        "primaryTeamId": 9728,
+        "primaryTeamName": "Shakhtar Donetsk",
+        "horizontalLayout": {
+         "x": 0.357,
+         "y": 0.125,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.875,
+         "y": 0.357,
+         "height": 0.2,
+         "width": 0.25
+        },
+        "marketValue": 1953329,
+        "firstName": "Irakli",
+        "lastName": "Azarovi",
+        "nationalTeamId": 8268,
+        "rankings": null
+       },
+       {
+        "id": 1176843,
+        "age": 25,
+        "name": "Anzor Mekvabishvili",
+        "positionId": 73,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "14",
+        "countryName": "Georgia",
+        "countryCode": "GEO",
+        "primaryTeamId": 6397,
+        "primaryTeamName": "Chicago Fire FC",
+        "horizontalLayout": {
+         "x": 0.613,
+         "y": 0.79,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.21,
+         "y": 0.613,
+         "height": 0.2,
+         "width": 0.29
+        },
+        "marketValue": 1786590,
+        "firstName": "Anzor",
+        "lastName": "Mekvabishvili",
+        "nationalTeamId": 8268,
+        "rankings": null
+       },
+       {
+        "id": 1434603,
+        "age": 22,
+        "name": "Irakli Yegoian",
+        "positionId": 75,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "18",
+        "countryName": "Georgia",
+        "countryCode": "GEO",
+        "primaryTeamId": 10218,
+        "primaryTeamName": "Excelsior",
+        "horizontalLayout": {
+         "x": 0.613,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.613,
+         "height": 0.2,
+         "width": 0.29
+        },
+        "marketValue": 3823649,
+        "firstName": "Irakli",
+        "lastName": "Yegoian",
+        "nationalTeamId": 8268,
+        "rankings": null
+       },
+       {
+        "id": 837847,
+        "age": 27,
+        "name": "Giorgi Chakvetadze",
+        "positionId": 77,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "10",
+        "countryName": "Georgia",
+        "countryCode": "GEO",
+        "primaryTeamId": 8600,
+        "primaryTeamName": "Udinese",
+        "horizontalLayout": {
+         "x": 0.613,
+         "y": 0.21,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.79,
+         "y": 0.613,
+         "height": 0.2,
+         "width": 0.29
+        },
+        "marketValue": 3256106,
+        "firstName": "Giorgi",
+        "lastName": "Chakvetadze",
+        "nationalTeamId": 8268,
+        "rankings": null
+       },
+       {
+        "id": 939061,
+        "age": 25,
+        "name": "Giorgi Tsitaishvili",
+        "positionId": 103,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "19",
+        "countryName": "Georgia",
+        "countryCode": "GEO",
+        "primaryTeamId": 8370,
+        "primaryTeamName": "Rayo Vallecano",
+        "horizontalLayout": {
+         "x": 0.87,
+         "y": 0.79,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.21,
+         "y": 0.87,
+         "height": 0.2,
+         "width": 0.29
+        },
+        "marketValue": 2274165,
+        "firstName": "Giorgi",
+        "lastName": "Tsitaishvili",
+        "nationalTeamId": 8268,
+        "rankings": null
+       },
+       {
+        "id": 1117069,
+        "age": 26,
+        "name": "Georges Mikautadze",
+        "positionId": 105,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "22",
+        "countryName": "Georgia",
+        "countryCode": "GEO",
+        "primaryTeamId": 10205,
+        "primaryTeamName": "Villarreal",
+        "horizontalLayout": {
+         "x": 0.87,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.87,
+         "height": 0.2,
+         "width": 0.29
+        },
+        "marketValue": 40454538,
+        "firstName": "Georges",
+        "lastName": "Mikautadze",
+        "nationalTeamId": 8268,
+        "rankings": null
+       },
+       {
+        "id": 966146,
+        "age": 25,
+        "name": "Zuriko Davitashvili",
+        "positionId": 107,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "9",
+        "countryName": "Georgia",
+        "countryCode": "GEO",
+        "primaryTeamId": 9853,
+        "primaryTeamName": "Saint-Étienne",
+        "horizontalLayout": {
+         "x": 0.87,
+         "y": 0.21,
+         "height": 0.25,
+         "width": 0.257
+        },
+        "verticalLayout": {
+         "x": 0.79,
+         "y": 0.87,
+         "height": 0.2,
+         "width": 0.29
+        },
+        "marketValue": 12015100,
+        "firstName": "Zuriko",
+        "lastName": "Davitashvili",
+        "nationalTeamId": 8268,
+        "rankings": null
+       }
+      ],
       "lawka_ile": 0,
-      "nieobecni": null,
-      "trener": null
+      "nieobecni": [
+       {
+        "id": 953958,
+        "age": 27,
+        "name": "Giorgi Kochorashvili",
+        "positionId": 1100,
+        "countryName": "Georgia",
+        "countryCode": "GEO",
+        "primaryTeamId": 8302,
+        "primaryTeamName": "Sevilla",
+        "marketValue": 2488967,
+        "unavailability": {
+         "type": "suspension",
+         "expectedReturn": "Mid November 2026",
+         "expectedReturnDate": "2026-11-14T18:00:00Z"
+        },
+        "firstName": "Giorgi",
+        "lastName": "Kochorashvili",
+        "nationalTeamId": 8268
+       }
+      ],
+      "trener": {
+       "id": 14797,
+       "age": 45,
+       "name": "Ramaz Svanadze",
+       "countryName": "Georgia",
+       "countryCode": "GEO",
+       "firstName": "Ramaz",
+       "lastName": "Svanadze",
+       "nationalTeamId": 8268,
+       "primaryTeamId": 8268,
+       "primaryTeamName": "Georgia",
+       "usualPlayingPositionId": null,
+       "isCoach": true
+      }
      },
      "awayTeam": {
-      "formacja": null,
+      "formacja": "4-2-3-1",
       "ocena": null,
-      "klucze": [],
-      "wyjsciowi": null,
+      "klucze": [
+       "id",
+       "name",
+       "formation",
+       "starters",
+       "coach",
+       "averageStarterAge",
+       "totalStarterMarketValue"
+      ],
+      "wyjsciowi": [
+       {
+        "id": 861001,
+        "age": 29,
+        "name": "Balázs Tóth",
+        "positionId": 11,
+        "usualPlayingPositionId": 0,
+        "shirtNumber": "1",
+        "countryName": "Hungary",
+        "countryCode": "HUN",
+        "primaryTeamId": 8655,
+        "primaryTeamName": "Blackburn Rovers",
+        "horizontalLayout": {
+         "x": 0.1,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.1,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 692653,
+        "firstName": "Balázs",
+        "lastName": "Tóth",
+        "nationalTeamId": 8565,
+        "rankings": null
+       },
+       {
+        "id": 888904,
+        "age": 26,
+        "name": "Bendegúz Bolla",
+        "positionId": 32,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "14",
+        "countryName": "Hungary",
+        "countryCode": "HUN",
+        "primaryTeamId": 10015,
+        "primaryTeamName": "Rapid Wien",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.875,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.125,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 1528984,
+        "firstName": "Bendegúz",
+        "lastName": "Bolla",
+        "nationalTeamId": 8565,
+        "rankings": null
+       },
+       {
+        "id": 278856,
+        "age": 34,
+        "name": "Willi Orbán",
+        "positionId": 34,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "6",
+        "countryName": "Hungary",
+        "countryCode": "HUN",
+        "primaryTeamId": 178475,
+        "primaryTeamName": "RB Leipzig",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.625,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.375,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 2348647,
+        "firstName": "Willi",
+        "lastName": "Orbán",
+        "nationalTeamId": 8565,
+        "rankings": null
+       },
+       {
+        "id": 1436365,
+        "age": 23,
+        "name": "Márk Csinger",
+        "positionId": 36,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "3",
+        "countryName": "Hungary",
+        "countryCode": "HUN",
+        "primaryTeamId": 8674,
+        "primaryTeamName": "FC Groningen",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.375,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.625,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 1154943,
+        "firstName": "Márk",
+        "lastName": "Csinger",
+        "nationalTeamId": 8565,
+        "rankings": null
+       },
+       {
+        "id": 1195281,
+        "age": 23,
+        "name": "Miloš Kerkez",
+        "positionId": 38,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "11",
+        "countryName": "Hungary",
+        "countryCode": "HUN",
+        "primaryTeamId": 8650,
+        "primaryTeamName": "Liverpool",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.125,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.875,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 48147769,
+        "firstName": "Miloš",
+        "lastName": "Kerkez",
+        "nationalTeamId": 8565,
+        "rankings": null
+       },
+       {
+        "id": 836726,
+        "age": 27,
+        "name": "András Schäfer",
+        "positionId": 64,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "13",
+        "countryName": "Hungary",
+        "countryCode": "HUN",
+        "primaryTeamId": 8149,
+        "primaryTeamName": "Union Berlin",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.7,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.3,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.4
+        },
+        "marketValue": 2146919,
+        "firstName": "András",
+        "lastName": "Schäfer",
+        "nationalTeamId": 8565,
+        "rankings": null
+       },
+       {
+        "id": 1197823,
+        "age": 24,
+        "name": "Milán Vitális",
+        "positionId": 66,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "8",
+        "countryName": "Hungary",
+        "countryCode": "HUN",
+        "primaryTeamId": 8563,
+        "primaryTeamName": "AEK Athens",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.3,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.7,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.4
+        },
+        "marketValue": 1728510,
+        "firstName": "Milán",
+        "lastName": "Vitális",
+        "nationalTeamId": 8565,
+        "rankings": null
+       },
+       {
+        "id": 1188420,
+        "age": 23,
+        "name": "Damir Redzic",
+        "positionId": 83,
+        "usualPlayingPositionId": 3,
+        "countryName": "Hungary",
+        "countryCode": "HUN",
+        "primaryTeamId": 10013,
+        "primaryTeamName": "Salzburg",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.837,
+         "height": 0.25,
+         "width": 0.193
+        },
+        "verticalLayout": {
+         "x": 0.162,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.325
+        },
+        "marketValue": 2575023,
+        "firstName": "Damir",
+        "lastName": "Redzic",
+        "nationalTeamId": 8565,
+        "rankings": null
+       },
+       {
+        "id": 846005,
+        "age": 26,
+        "name": "Dominik Szoboszlai",
+        "positionId": 85,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "10",
+        "countryName": "Hungary",
+        "countryCode": "HUN",
+        "primaryTeamId": 8650,
+        "primaryTeamName": "Liverpool",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.337
+        },
+        "marketValue": 104503407,
+        "firstName": "Dominik",
+        "lastName": "Szoboszlai",
+        "nationalTeamId": 8565,
+        "rankings": null
+       },
+       {
+        "id": 583601,
+        "age": 29,
+        "name": "Roland Sallai",
+        "positionId": 87,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "20",
+        "countryName": "Hungary",
+        "countryCode": "HUN",
+        "primaryTeamId": 8637,
+        "primaryTeamName": "Galatasaray",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.163,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.837,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.325
+        },
+        "marketValue": 11436478,
+        "firstName": "Roland",
+        "lastName": "Sallai",
+        "nationalTeamId": 8565,
+        "rankings": null
+       },
+       {
+        "id": 796504,
+        "age": 32,
+        "name": "Barnabás Varga",
+        "positionId": 115,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "19",
+        "countryName": "Hungary",
+        "countryCode": "HUN",
+        "primaryTeamId": 8563,
+        "primaryTeamName": "AEK Athens",
+        "horizontalLayout": {
+         "x": 0.87,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.87,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 2132278,
+        "firstName": "Barnabás",
+        "lastName": "Varga",
+        "nationalTeamId": 8565,
+        "rankings": null
+       }
+      ],
       "lawka_ile": 0,
       "nieobecni": null,
-      "trener": null
+      "trener": {
+       "id": 385164,
+       "age": 62,
+       "name": "Marco Rossi",
+       "countryName": "Italy",
+       "countryCode": "ITA",
+       "firstName": "Marco",
+       "lastName": "Rossi",
+       "nationalTeamId": 8204,
+       "primaryTeamId": 8565,
+       "primaryTeamName": "Hungary",
+       "usualPlayingPositionId": null,
+       "isCoach": true
+      }
      },
      "matchFacts_klucze": [
       "matchId",
@@ -350,80 +1696,80 @@
       "teamForm",
       "poll",
       "topPlayers",
-      "topScorers",
+      "insights",
       "countryCode",
       "QAData"
      ],
      "infoBox": {
       "legInfo": null,
       "Match Date": {
-       "utcTime": "2026-11-13T19:45:00.000Z",
+       "utcTime": "2026-11-14T17:00:00.000Z",
        "isDateCorrect": true
       },
       "Tournament": {
-       "id": 920752,
-       "parentLeagueId": 9808,
-       "link": "/leagues/9808/overview/uefa-nations-league-c-grp-4",
-       "leagueName": "UEFA Nations League C Grp. 4",
+       "id": 920746,
+       "parentLeagueId": 9807,
+       "link": "/leagues/9807/overview/uefa-nations-league-b-grp-2",
+       "leagueName": "UEFA Nations League B Grp. 2",
        "roundName": "5",
        "round": "5"
       },
       "Stadium": {
-       "name": "Stadion Hristo Botev",
-       "city": "Plovdiv",
-       "country": "Bulgaria",
-       "lat": 42.13989523,
-       "long": 24.764449596,
-       "capacity": 22000,
+       "name": "Mikheil Meskhis sakhelobis Stadioni",
+       "city": "Tbilisi",
+       "country": "Georgia",
+       "lat": 41.709809402,
+       "long": 44.746182561,
+       "capacity": 25453,
        "surface": "grass"
       },
       "Referee": {
-       "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/ger.png",
-       "text": "Florian Badstübner",
-       "countryCode": "GER",
-       "country": "Germany",
-       "id": 1001077125,
-       "leagueId": 54,
-       "leagueName": "Bundesliga",
+       "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/cze.png",
+       "text": "Ondřej Berka",
+       "countryCode": "CZE",
+       "country": "Czech Republic",
+       "id": 1001076872,
+       "leagueId": 122,
+       "leagueName": "1. Liga",
        "stats": [
         {
          "type": "matches",
-         "value": 29,
+         "value": 42,
          "valueType": "total"
         },
         {
          "type": "yellowCards",
-         "value": 2.48,
+         "value": 3.36,
          "valueType": "perMatch",
          "average": 3.77,
-         "total": 72,
+         "total": 141,
          "averageType": "below",
-         "fillPercentage": 7.02,
+         "fillPercentage": 39.42,
          "averagePercentage": 50
         },
         {
          "type": "redCards",
-         "value": 3,
+         "value": 5,
          "valueType": "total"
         },
         {
          "type": "unknown",
-         "value": 0,
+         "value": 3,
          "valueType": "total"
         },
         {
          "type": "penalties",
-         "value": 6,
+         "value": 7,
          "valueType": "total"
         },
         {
          "type": "fouls",
-         "value": 21.07,
+         "value": 25.88,
          "valueType": "perMatch",
-         "average": 21.15,
-         "total": 611,
+         "average": 25.38,
+         "total": 1061,
          "averageType": "average",
-         "fillPercentage": 48.81,
+         "fillPercentage": 55.73,
          "averagePercentage": 50
         }
        ]
@@ -446,17 +1792,17 @@
       "momentum"
      ],
      "general": {
-      "matchId": "5181957",
-      "matchName": "Bulgaria-vs-Iceland_Fri, Nov 13, 2026, 19:45 UTC",
+      "matchId": "5181808",
+      "matchName": "Georgia-vs-Hungary_Sat, Nov 14, 2026, 17:00 UTC",
       "matchRound": "5",
       "teamColors": {
        "darkMode": {
-        "home": "#feffff",
-        "away": "#3567AA"
+        "home": "#ffffff",
+        "away": "#CB1B30"
        },
        "lightMode": {
-        "home": "#D61933",
-        "away": "#3567AA"
+        "home": "#cf2631",
+        "away": "#379A68"
        },
        "fontDarkMode": {
         "home": "rgba(29, 29, 29, 1.0)",
@@ -467,22 +1813,22 @@
         "away": "rgba(255, 255, 255, 1.0)"
        }
       },
-      "leagueId": 920752,
-      "leagueName": "UEFA Nations League C Grp. 4",
+      "leagueId": 920746,
+      "leagueName": "UEFA Nations League B Grp. 2",
       "leagueRoundName": "5",
-      "parentLeagueId": 9808,
+      "parentLeagueId": 9807,
       "countryCode": "INT",
       "homeTeam": {
-       "name": "Bulgaria",
-       "id": 10150
+       "name": "Georgia",
+       "id": 8268
       },
       "awayTeam": {
-       "name": "Iceland",
-       "id": 8536
+       "name": "Hungary",
+       "id": 8565
       },
       "coverageLevel": "lower",
-      "matchTimeUTC": "Fri, Nov 13, 2026, 19:45 UTC",
-      "matchTimeUTCDate": "2026-11-13T19:45:00.000Z",
+      "matchTimeUTC": "Sat, Nov 14, 2026, 17:00 UTC",
+      "matchTimeUTCDate": "2026-11-14T17:00:00.000Z",
       "started": false,
       "finished": false,
       "gender": "male"
@@ -490,24 +1836,24 @@
      "header": {
       "teams": [
        {
-        "name": "Bulgaria",
-        "id": 10150,
+        "name": "Georgia",
+        "id": 8268,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/10150_small.png",
-        "pageUrl": "/teams/10150/overview/bulgaria",
-        "fifaRank": 90
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8268_small.png",
+        "pageUrl": "/teams/8268/overview/georgia",
+        "fifaRank": 74
        },
        {
-        "name": "Iceland",
-        "id": 8536,
+        "name": "Hungary",
+        "id": 8565,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8536_small.png",
-        "pageUrl": "/teams/8536/overview/iceland",
-        "fifaRank": 73
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8565_small.png",
+        "pageUrl": "/teams/8565/overview/hungary",
+        "fifaRank": 38
        }
       ],
       "status": {
-       "utcTime": "2026-11-13T19:45:00.000Z",
+       "utcTime": "2026-11-14T17:00:00.000Z",
        "numberOfHomeRedCards": 0,
        "numberOfAwayRedCards": 0,
        "halfs": {},
@@ -524,22 +1870,22 @@
    }
   },
   {
-   "nasz": "Andorra – Gibraltar",
-   "event_id": "6eecb0b534f8cda6254b8a0884289e16",
-   "start": "2026-11-13 20:45",
-   "fotmob_id": "5181878",
-   "fotmob": "Andorra – Gibraltar",
+   "nasz": "Norway – Wales",
+   "event_id": "8d67c473dbea0c85b30eefee4bca53d9",
+   "start": "2026-11-14 18:00",
+   "fotmob_id": "5181869",
+   "fotmob": "Norway – Wales",
    "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null,
    "szczegoly": {
     "requests": [
      {
-      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5181878",
+      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5181869",
       "kod": 200,
       "typ": "application/json; charset=utf-8",
-      "rozmiar": 19212,
-      "ms": 36
+      "rozmiar": 34805,
+      "ms": 32
      }
     ],
     "dane": {
@@ -551,52 +1897,764 @@
       "homeTeam",
       "awayTeam"
      ],
-     "lineup_typ": "unavailable",
+     "lineup_typ": "predicted",
      "homeTeam": {
-      "formacja": "",
-      "ocena": null,
-      "klucze": [
-       "id",
-       "name",
-       "formation",
-       "starters"
-      ],
-      "wyjsciowi": [],
-      "lawka_ile": 0,
-      "nieobecni": null,
-      "trener": null
-     },
-     "awayTeam": {
-      "formacja": "",
+      "formacja": "4-2-3-1",
       "ocena": null,
       "klucze": [
        "id",
        "name",
        "formation",
        "starters",
-       "unavailable"
+       "coach",
+       "unavailable",
+       "averageStarterAge",
+       "totalStarterMarketValue"
       ],
-      "wyjsciowi": [],
+      "wyjsciowi": [
+       {
+        "id": 631757,
+        "age": 29,
+        "name": "Egil Selvik",
+        "positionId": 11,
+        "usualPlayingPositionId": 0,
+        "shirtNumber": "13",
+        "countryName": "Norway",
+        "countryCode": "NOR",
+        "primaryTeamId": 8521,
+        "primaryTeamName": "Brest",
+        "horizontalLayout": {
+         "x": 0.1,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.1,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 1215316,
+        "firstName": "Egil",
+        "lastName": "Selvik",
+        "nationalTeamId": 8492,
+        "rankings": null
+       },
+       {
+        "id": 659272,
+        "age": 28,
+        "name": "Julian Ryerson",
+        "positionId": 32,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "14",
+        "countryName": "Norway",
+        "countryCode": "NOR",
+        "primaryTeamId": 9789,
+        "primaryTeamName": "Borussia Dortmund",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.875,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.125,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 19941942,
+        "firstName": "Julian",
+        "lastName": "Ryerson",
+        "nationalTeamId": 8492,
+        "rankings": null
+       },
+       {
+        "id": 552718,
+        "age": 28,
+        "name": "Kristoffer Ajer",
+        "positionId": 34,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "3",
+        "countryName": "Norway",
+        "countryCode": "NOR",
+        "primaryTeamId": 9937,
+        "primaryTeamName": "Brentford",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.625,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.375,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 26739276,
+        "firstName": "Kristoffer",
+        "lastName": "Ajer",
+        "nationalTeamId": 8492,
+        "rankings": null
+       },
+       {
+        "id": 935550,
+        "age": 27,
+        "name": "Torbjørn Heggem",
+        "positionId": 36,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "17",
+        "countryName": "Norway",
+        "countryCode": "NOR",
+        "primaryTeamId": 9857,
+        "primaryTeamName": "Bologna",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.375,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.625,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 16057840,
+        "firstName": "Torbjørn",
+        "lastName": "Heggem",
+        "nationalTeamId": 8492,
+        "rankings": null
+       },
+       {
+        "id": 1049679,
+        "age": 24,
+        "name": "David Møller Wolfe",
+        "positionId": 38,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "5",
+        "countryName": "Norway",
+        "countryCode": "NOR",
+        "primaryTeamId": 9790,
+        "primaryTeamName": "Hamburger SV",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.125,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.875,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 14665418,
+        "firstName": "David Møller",
+        "lastName": "Wolfe",
+        "nationalTeamId": 8492,
+        "rankings": null
+       },
+       {
+        "id": 530635,
+        "age": 28,
+        "name": "Patrick Berg",
+        "positionId": 64,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "6",
+        "countryName": "Norway",
+        "countryCode": "NOR",
+        "primaryTeamId": 8402,
+        "primaryTeamName": "Bodø/Glimt",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.7,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.3,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.4
+        },
+        "marketValue": 10792412,
+        "firstName": "Patrick",
+        "lastName": "Berg",
+        "nationalTeamId": 8492,
+        "rankings": null
+       },
+       {
+        "id": 540963,
+        "age": 28,
+        "name": "Sander Berge",
+        "positionId": 66,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "8",
+        "countryName": "Norway",
+        "countryCode": "NOR",
+        "primaryTeamId": 9879,
+        "primaryTeamName": "Fulham",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.3,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.7,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.4
+        },
+        "marketValue": 25722183,
+        "firstName": "Sander",
+        "lastName": "Berge",
+        "nationalTeamId": 8492,
+        "rankings": null
+       },
+       {
+        "id": 1113790,
+        "age": 23,
+        "name": "Oscar Bobb",
+        "positionId": 83,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "22",
+        "countryName": "Norway",
+        "countryCode": "NOR",
+        "primaryTeamId": 9879,
+        "primaryTeamName": "Fulham",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.837,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.162,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.325
+        },
+        "marketValue": 36480266,
+        "firstName": "Oscar",
+        "lastName": "Bobb",
+        "nationalTeamId": 8492,
+        "rankings": null
+       },
+       {
+        "id": 534670,
+        "age": 27,
+        "name": "Martin Ødegaard",
+        "positionId": 85,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "10",
+        "countryName": "Norway",
+        "countryCode": "NOR",
+        "primaryTeamId": 9825,
+        "primaryTeamName": "Arsenal",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.337
+        },
+        "marketValue": 67049446,
+        "firstName": "Martin",
+        "lastName": "Ødegaard",
+        "nationalTeamId": 8492,
+        "rankings": null
+       },
+       {
+        "id": 1248482,
+        "age": 21,
+        "name": "Antonio Nusa",
+        "positionId": 87,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "20",
+        "countryName": "Norway",
+        "countryCode": "NOR",
+        "primaryTeamId": 178475,
+        "primaryTeamName": "RB Leipzig",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.163,
+         "height": 0.25,
+         "width": 0.193
+        },
+        "verticalLayout": {
+         "x": 0.837,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.325
+        },
+        "marketValue": 48737437,
+        "firstName": "Antonio",
+        "lastName": "Nusa",
+        "nationalTeamId": 8492,
+        "rankings": null
+       },
+       {
+        "id": 737066,
+        "age": 26,
+        "name": "Erling Haaland",
+        "positionId": 115,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "9",
+        "countryName": "Norway",
+        "countryCode": "NOR",
+        "primaryTeamId": 8456,
+        "primaryTeamName": "Manchester City",
+        "horizontalLayout": {
+         "x": 0.87,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.87,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 159349200,
+        "firstName": "Erling",
+        "lastName": "Haaland",
+        "nationalTeamId": 8492,
+        "rankings": null
+       }
+      ],
       "lawka_ile": 0,
       "nieobecni": [
        {
-        "id": 833690,
+        "id": 1127585,
+        "age": 25,
+        "name": "Sondre Klingen Langås",
+        "countryName": "Norway",
+        "countryCode": "NOR",
+        "marketValue": 6093865,
+        "unavailability": {
+         "injuryId": 47,
+         "type": "injury",
+         "expectedReturn": "Early January 2027"
+        },
+        "firstName": "Sondre Klingen",
+        "lastName": "Langås",
+        "nationalTeamId": 8492
+       }
+      ],
+      "trener": {
+       "id": 78638,
+       "age": 58,
+       "name": "Ståle Solbakken",
+       "countryName": "Norway",
+       "countryCode": "NOR",
+       "firstName": "Ståle",
+       "lastName": "Solbakken",
+       "nationalTeamId": 8492,
+       "primaryTeamId": 8492,
+       "primaryTeamName": "Norway",
+       "usualPlayingPositionId": null,
+       "isCoach": true
+      }
+     },
+     "awayTeam": {
+      "formacja": "4-2-3-1",
+      "ocena": null,
+      "klucze": [
+       "id",
+       "name",
+       "formation",
+       "starters",
+       "coach",
+       "unavailable",
+       "averageStarterAge",
+       "totalStarterMarketValue"
+      ],
+      "wyjsciowi": [
+       {
+        "id": 163604,
+        "age": 36,
+        "name": "Karl Darlow",
+        "positionId": 11,
+        "usualPlayingPositionId": 0,
+        "shirtNumber": "1",
+        "countryName": "Wales",
+        "countryCode": "WAL",
+        "primaryTeamId": 10260,
+        "primaryTeamName": "Manchester United",
+        "horizontalLayout": {
+         "x": 0.1,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.1,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 888336,
+        "firstName": "Karl",
+        "lastName": "Darlow",
+        "nationalTeamId": 5790,
+        "rankings": null
+       },
+       {
+        "id": 484878,
+        "age": 31,
+        "name": "Connor Roberts",
+        "positionId": 32,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "14",
+        "countryName": "Wales",
+        "countryCode": "WAL",
+        "primaryTeamId": 8191,
+        "primaryTeamName": "Burnley",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.875,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.125,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 827457,
+        "firstName": "Connor",
+        "lastName": "Roberts",
+        "nationalTeamId": 5790,
+        "rankings": null
+       },
+       {
+        "id": 717174,
         "age": 29,
-        "name": "Graeme Torrilla",
-        "countryName": "Gibraltar",
-        "countryCode": "GIB",
-        "marketValue": 111828,
+        "name": "Joe Rodon",
+        "positionId": 34,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "6",
+        "countryName": "Wales",
+        "countryCode": "WAL",
+        "primaryTeamId": 8463,
+        "primaryTeamName": "Leeds United",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.625,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.375,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 20033359,
+        "firstName": "Joe",
+        "lastName": "Rodon",
+        "nationalTeamId": 5790,
+        "rankings": null
+       },
+       {
+        "id": 276121,
+        "age": 33,
+        "name": "Ben Davies",
+        "positionId": 36,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "4",
+        "countryName": "Wales",
+        "countryCode": "WAL",
+        "primaryTeamId": 8586,
+        "primaryTeamName": "Tottenham Hotspur",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.375,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.625,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 1889256,
+        "firstName": "Ben",
+        "lastName": "Davies",
+        "nationalTeamId": 5790,
+        "rankings": null
+       },
+       {
+        "id": 1078788,
+        "age": 25,
+        "name": "Neco Williams",
+        "positionId": 38,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "3",
+        "countryName": "Wales",
+        "countryCode": "WAL",
+        "primaryTeamId": 10203,
+        "primaryTeamName": "Nottingham Forest",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.125,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.875,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 41523047,
+        "firstName": "Neco",
+        "lastName": "Williams",
+        "nationalTeamId": 5790,
+        "rankings": null
+       },
+       {
+        "id": 780432,
+        "age": 26,
+        "name": "Ethan Ampadu",
+        "positionId": 64,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "5",
+        "countryName": "Wales",
+        "countryCode": "WAL",
+        "primaryTeamId": 8463,
+        "primaryTeamName": "Leeds United",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.7,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.3,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.4
+        },
+        "marketValue": 44016311,
+        "firstName": "Ethan",
+        "lastName": "Ampadu",
+        "nationalTeamId": 5790,
+        "rankings": null
+       },
+       {
+        "id": 489335,
+        "age": 31,
+        "name": "Josh Sheehan",
+        "positionId": 66,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "22",
+        "countryName": "Wales",
+        "countryCode": "WAL",
+        "primaryTeamId": 8559,
+        "primaryTeamName": "Bolton Wanderers",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.3,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.7,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.4
+        },
+        "marketValue": 521732,
+        "firstName": "Josh",
+        "lastName": "Sheehan",
+        "nationalTeamId": 5790,
+        "rankings": null
+       },
+       {
+        "id": 1076756,
+        "age": 25,
+        "name": "Brennan Johnson",
+        "positionId": 83,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "11",
+        "countryName": "Wales",
+        "countryCode": "WAL",
+        "primaryTeamId": 8668,
+        "primaryTeamName": "Everton",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.837,
+         "height": 0.25,
+         "width": 0.193
+        },
+        "verticalLayout": {
+         "x": 0.162,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.325
+        },
+        "marketValue": 27624610,
+        "firstName": "Brennan",
+        "lastName": "Johnson",
+        "nationalTeamId": 5790,
+        "rankings": null
+       },
+       {
+        "id": 494417,
+        "age": 29,
+        "name": "Harry Wilson",
+        "positionId": 85,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "8",
+        "countryName": "Wales",
+        "countryCode": "WAL",
+        "primaryTeamId": 8463,
+        "primaryTeamName": "Leeds United",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.337
+        },
+        "marketValue": 23283948,
+        "firstName": "Harry",
+        "lastName": "Wilson",
+        "nationalTeamId": 5790,
+        "rankings": null
+       },
+       {
+        "id": 717176,
+        "age": 29,
+        "name": "Daniel James",
+        "positionId": 87,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "20",
+        "countryName": "Wales",
+        "countryCode": "WAL",
+        "primaryTeamId": 8463,
+        "primaryTeamName": "Leeds United",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.163,
+         "height": 0.25,
+         "width": 0.385
+        },
+        "verticalLayout": {
+         "x": 0.837,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.325
+        },
+        "marketValue": 11789560,
+        "firstName": "Daniel",
+        "lastName": "James",
+        "nationalTeamId": 5790,
+        "rankings": null
+       },
+       {
+        "id": 1364042,
+        "age": 21,
+        "name": "Lewis Koumas",
+        "positionId": 115,
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "9",
+        "countryName": "Wales",
+        "countryCode": "WAL",
+        "primaryTeamId": 8650,
+        "primaryTeamName": "Liverpool",
+        "horizontalLayout": {
+         "x": 0.87,
+         "y": 0.5,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.5,
+         "y": 0.87,
+         "height": 0.192,
+         "width": 1
+        },
+        "marketValue": 13084687,
+        "firstName": "Lewis",
+        "lastName": "Koumas",
+        "nationalTeamId": 5790,
+        "rankings": null
+       }
+      ],
+      "lawka_ile": 0,
+      "nieobecni": [
+       {
+        "id": 948555,
+        "age": 26,
+        "name": "Ben Cabango",
+        "positionId": 1100,
+        "countryName": "Wales",
+        "countryCode": "WAL",
+        "primaryTeamId": 10003,
+        "primaryTeamName": "Swansea City",
+        "marketValue": 9637020,
         "unavailability": {
          "type": "suspension",
          "expectedReturn": "Mid November 2026",
-         "expectedReturnDate": "2026-11-13T20:45:00Z"
+         "expectedReturnDate": "2026-11-14T18:00:00Z"
         },
-        "firstName": "Graeme",
-        "lastName": "Torrilla",
-        "nationalTeamId": 507764
+        "firstName": "Ben",
+        "lastName": "Cabango",
+        "nationalTeamId": 5790
+       },
+       {
+        "id": 812982,
+        "age": 27,
+        "name": "Sorba Thomas",
+        "positionId": 1100,
+        "countryName": "Wales",
+        "countryCode": "WAL",
+        "primaryTeamId": 8667,
+        "primaryTeamName": "Hull City",
+        "marketValue": 16231554,
+        "unavailability": {
+         "type": "suspension",
+         "expectedReturn": "Mid November 2026",
+         "expectedReturnDate": "2026-11-14T18:00:00Z"
+        },
+        "firstName": "Sorba",
+        "lastName": "Thomas",
+        "nationalTeamId": 5790
        }
       ],
-      "trener": null
+      "trener": {
+       "id": 33781,
+       "age": 47,
+       "name": "Craig Bellamy",
+       "countryName": "Wales",
+       "countryCode": "WAL",
+       "firstName": "Craig",
+       "lastName": "Bellamy",
+       "nationalTeamId": 5790,
+       "primaryTeamId": 5790,
+       "primaryTeamName": "Wales",
+       "usualPlayingPositionId": null,
+       "isCoach": true
+      }
      },
      "matchFacts_klucze": [
       "matchId",
@@ -610,82 +2668,39 @@
       "insights",
       "topScorers",
       "countryCode",
+      "preReview",
       "QAData",
       "matchInsightsConfig"
      ],
      "infoBox": {
       "legInfo": null,
       "Match Date": {
-       "utcTime": "2026-11-13T19:45:00.000Z",
+       "utcTime": "2026-11-14T17:00:00.000Z",
        "isDateCorrect": true
       },
       "Tournament": {
-       "id": 920754,
-       "parentLeagueId": 9809,
-       "link": "/leagues/9809/overview/uefa-nations-league-d-grp-1",
-       "leagueName": "UEFA Nations League D Grp. 1",
+       "id": 920742,
+       "parentLeagueId": 9806,
+       "link": "/leagues/9806/overview/uefa-nations-league-grp-4",
+       "leagueName": "UEFA Nations League A Grp. 4",
        "roundName": "5",
        "round": "5"
       },
       "Stadium": {
-       "name": "Estadi de la FAF d'Encamp",
-       "city": "Encamp",
-       "country": "Andorra",
-       "lat": 42.53348092,
-       "long": 1.57592938,
-       "capacity": 5500,
+       "name": "Ullevaal Stadion",
+       "city": "Oslo",
+       "country": "Norway",
+       "lat": 59.94919756,
+       "long": 10.734243393,
+       "capacity": 27182,
        "surface": "grass"
       },
       "Referee": {
-       "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/irl.png",
-       "text": "Robert Hennessy",
-       "countryCode": "IRL",
-       "country": "Ireland",
-       "id": 1001076351,
-       "leagueId": 126,
-       "leagueName": "Premier Division",
-       "stats": [
-        {
-         "type": "matches",
-         "value": 45,
-         "valueType": "total"
-        },
-        {
-         "type": "yellowCards",
-         "value": 4.47,
-         "valueType": "perMatch",
-         "average": 4.7,
-         "total": 201,
-         "averageType": "average",
-         "fillPercentage": 40.82,
-         "averagePercentage": 50
-        },
-        {
-         "type": "redCards",
-         "value": 7,
-         "valueType": "total"
-        },
-        {
-         "type": "unknown",
-         "value": 4,
-         "valueType": "total"
-        },
-        {
-         "type": "penalties",
-         "value": 15,
-         "valueType": "total"
-        },
-        {
-         "type": "fouls",
-         "value": 23.98,
-         "valueType": "perMatch",
-         "average": 22.31,
-         "total": 1079,
-         "averageType": "above",
-         "fillPercentage": 72.81,
-         "averagePercentage": 50
-        }
-       ]
+       "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/ukr.png",
+       "text": "Oleksiy Derevinskyi",
+       "countryCode": "UKR",
+       "country": "Ukraine",
+       "id": 1001076743
       },
       "Attendance": null
      },
@@ -705,17 +2720,17 @@
       "momentum"
      ],
      "general": {
-      "matchId": "5181878",
-      "matchName": "Andorra-vs-Gibraltar_Fri, Nov 13, 2026, 19:45 UTC",
+      "matchId": "5181869",
+      "matchName": "Norway-vs-Wales_Sat, Nov 14, 2026, 17:00 UTC",
       "matchRound": "5",
       "teamColors": {
        "darkMode": {
-        "home": "#ea4230",
-        "away": "#feffff"
+        "home": "#b53032",
+        "away": "#ffffff"
        },
        "lightMode": {
-        "home": "#ea4230",
-        "away": "#000000"
+        "home": "#b53032",
+        "away": "#108878"
        },
        "fontDarkMode": {
         "home": "rgba(255, 255, 255, 1.0)",
@@ -726,22 +2741,22 @@
         "away": "rgba(255, 255, 255, 1.0)"
        }
       },
-      "leagueId": 920754,
-      "leagueName": "UEFA Nations League D Grp. 1",
+      "leagueId": 920742,
+      "leagueName": "UEFA Nations League A Grp. 4",
       "leagueRoundName": "5",
-      "parentLeagueId": 9809,
+      "parentLeagueId": 9806,
       "countryCode": "INT",
       "homeTeam": {
-       "name": "Andorra",
-       "id": 10045
+       "name": "Norway",
+       "id": 8492
       },
       "awayTeam": {
-       "name": "Gibraltar",
-       "id": 507764
+       "name": "Wales",
+       "id": 5790
       },
       "coverageLevel": "lower",
-      "matchTimeUTC": "Fri, Nov 13, 2026, 19:45 UTC",
-      "matchTimeUTCDate": "2026-11-13T19:45:00.000Z",
+      "matchTimeUTC": "Sat, Nov 14, 2026, 17:00 UTC",
+      "matchTimeUTCDate": "2026-11-14T17:00:00.000Z",
       "started": false,
       "finished": false,
       "gender": "male"
@@ -749,24 +2764,24 @@
      "header": {
       "teams": [
        {
-        "name": "Andorra",
-        "id": 10045,
+        "name": "Norway",
+        "id": 8492,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/10045_small.png",
-        "pageUrl": "/teams/10045/overview/andorra",
-        "fifaRank": 175
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8492_small.png",
+        "pageUrl": "/teams/8492/overview/norway",
+        "fifaRank": 19
        },
        {
-        "name": "Gibraltar",
-        "id": 507764,
+        "name": "Wales",
+        "id": 5790,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/507764_small.png",
-        "pageUrl": "/teams/507764/overview/gibraltar",
-        "fifaRank": 201
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/5790_small.png",
+        "pageUrl": "/teams/5790/overview/wales",
+        "fifaRank": 39
        }
       ],
       "status": {
-       "utcTime": "2026-11-13T19:45:00.000Z",
+       "utcTime": "2026-11-14T17:00:00.000Z",
        "numberOfHomeRedCards": 0,
        "numberOfAwayRedCards": 0,
        "halfs": {},
@@ -783,71 +2798,91 @@
    }
   },
   {
-   "nasz": "Luxembourg – Estonia",
-   "event_id": "eef1c96c424e42b66f49b7ec3bef1a5c",
-   "start": "2026-11-13 20:45",
-   "fotmob_id": "5181958",
-   "fotmob": "Luxembourg – Estonia",
+   "nasz": "Romania – Poland",
+   "event_id": "3ce5eabe80d52d3ed6056b6c141bbea8",
+   "start": "2026-11-14 20:45",
+   "fotmob_id": "5181845",
+   "fotmob": "Romania – Poland",
    "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null
   },
   {
-   "nasz": "Serbia – Germany",
-   "event_id": "d0ee3d2f44cf592797f6ecae8de62edd",
-   "start": "2026-11-13 20:45",
-   "fotmob_id": "5181834",
-   "fotmob": "Serbia – Germany",
+   "nasz": "Austria – Iceland",
+   "event_id": "30b32c194d8c2ae2bc5a209be5df44a9",
+   "start": "2026-11-14 20:45",
+   "fotmob_id": "5181821",
+   "fotmob": "Austria – Ireland",
+   "zgodnosc": 0.857,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "Austria – Republic of Ireland",
+   "event_id": "c745f84500717bc671c4cd864624cca8",
+   "start": "2026-11-14 20:45",
+   "fotmob_id": "5181821",
+   "fotmob": "Austria – Ireland",
+   "zgodnosc": 0.961,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "Sweden – Bosnia & Herzegovina",
+   "event_id": "2b646127cc6cb400abc663c5a458f1db",
+   "start": "2026-11-14 20:45",
+   "fotmob_id": "5181846",
+   "fotmob": "Sweden – Bosnia and Herzegovina",
    "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null
   },
   {
-   "nasz": "Netherlands – Greece",
-   "event_id": "0010d3b2b15a2b8cb04053b0b1407cc5",
-   "start": "2026-11-13 20:45",
-   "fotmob_id": "5181833",
-   "fotmob": "Netherlands – Greece",
+   "nasz": "Portugal – Denmark",
+   "event_id": "159554f486f93d1d8d4213c570117a0e",
+   "start": "2026-11-14 20:45",
+   "fotmob_id": "5181870",
+   "fotmob": "Portugal – Denmark",
    "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null
   },
   {
-   "nasz": "Liechtenstein – Azerbaijan",
-   "event_id": "9529ee7ca79126460eb063f53187f321",
-   "start": "2026-11-13 20:45",
-   "fotmob_id": "5181884",
-   "fotmob": "Liechtenstein – Azerbaijan",
+   "nasz": "Northern Ireland – Ukraine",
+   "event_id": "432a7eb09df939bf1e15a3e183f8494f",
+   "start": "2026-11-14 20:45",
+   "fotmob_id": "5181809",
+   "fotmob": "Northern Ireland – Ukraine",
    "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null
   },
   {
-   "nasz": "Slovakia – Faroe Islands",
-   "event_id": "a2b1b42a452df659cc5d0d242d8f98be",
-   "start": "2026-11-13 20:45",
-   "fotmob_id": "5181942",
-   "fotmob": "Slovakia – Faroe Islands",
+   "nasz": "Mirassol – Atletico Mineiro",
+   "event_id": "60e79364c168ad0ad22c0cffc02be8a9",
+   "start": "2026-11-14 22:30",
+   "fotmob_id": "5103708",
+   "fotmob": "Mirassol – Atlético-MG",
+   "zgodnosc": 0.741,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "Querétaro – Monterrey",
+   "event_id": "0380db9fc7de24aed0c27138c02467e5",
+   "start": "2026-11-15 00:00",
+   "fotmob_id": "1000014556",
+   "fotmob": "Querétaro FC – Monterrey",
    "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null
   },
   {
-   "nasz": "Scotland – North Macedonia",
-   "event_id": "199940cd0d3a9c7ad93be4063cb2df93",
-   "start": "2026-11-13 20:45",
-   "fotmob_id": "5181784",
-   "fotmob": "Scotland – North Macedonia",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Slovenia – Switzerland",
-   "event_id": "af4d45ae5e37dc2a0e146d2a9e9a926d",
-   "start": "2026-11-13 20:45",
-   "fotmob_id": "5181785",
-   "fotmob": "Slovenia – Switzerland",
+   "nasz": "Chapecoense – Vasco da Gama",
+   "event_id": "8fafa425728aa8e7d2c23956ba4c2553",
+   "start": "2026-11-15 00:30",
+   "fotmob_id": "5103573",
+   "fotmob": "Chapecoense – Vasco da Gama",
    "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null
@@ -855,6 +2890,6 @@
  ],
  "niedopasowane": [],
  "requests_dziala": true,
- "meczow": 92,
+ "meczow": 325,
  "sekund": 1
 }
