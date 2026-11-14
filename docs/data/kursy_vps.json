@@ -1,5 +1,5 @@
 {
- "czas": "2026-11-13 23:25 UTC",
+ "czas": "2026-11-14 00:07 UTC",
  "wersja": "czytnik-3",
  "bukmacherzy": {
   "fortuna": {
@@ -8,7 +8,7 @@
   },
   "sts": {
    "ok": true,
-   "dopasowane": 4
+   "dopasowane": 3
   },
   "betclic": {
    "ok": true,
@@ -22,8 +22,8 @@
     "nazwa": "Flores, Elijah - Salgado A.M.",
     "zgodnosc": 0.95,
     "kursy": {
-     "A": 1.23,
-     "B": 3.75
+     "A": 1.2,
+     "B": 4.1
     },
     "pelna": true
    },
@@ -32,8 +32,8 @@
     "nazwa": "Flores Elijah - Salgado Axl Melendez",
     "zgodnosc": 0.95,
     "kursy": {
-     "A": 1.19,
-     "B": 4.2
+     "A": 1.15,
+     "B": 4.7
     },
     "pelna": true
    },
@@ -42,8 +42,8 @@
     "nazwa": "Elijah Flores - Axl Melendez Salgado",
     "zgodnosc": 1.0,
     "kursy": {
-     "A": 1.28,
-     "B": 3.28
+     "A": 1.23,
+     "B": 3.63
     },
     "pelna": true,
     "rynkow": 1,
@@ -51,11 +51,11 @@
      "Zwycięzca walki": [
       [
        "Elijah Flores",
-       1.28
+       1.23
       ],
       [
        "Axl Melendez Salgado",
-       3.28
+       3.63
       ]
      ]
     }
@@ -67,8 +67,8 @@
     "nazwa": "Aguilar Delgadillo, Ruben Eduardo - Schramm, Guido Emmanuel",
     "zgodnosc": 0.95,
     "kursy": {
-     "A": 1.05,
-     "B": 8.0
+     "A": 1.04,
+     "B": 8.4
     },
     "pelna": true
    },
@@ -77,8 +77,8 @@
     "nazwa": "Aguilar Delgadillo Ruben Eduardo - Schramm Guido Emmanuel",
     "zgodnosc": 0.95,
     "kursy": {
-     "A": 1.05,
-     "B": 8.0
+     "A": 1.04,
+     "B": 8.4
     },
     "pelna": true
    },
@@ -87,8 +87,8 @@
     "nazwa": "Ruben Eduardo Aguilar - Guido Schramm",
     "zgodnosc": 0.97,
     "kursy": {
-     "A": 1.05,
-     "B": 8.0,
+     "A": 1.04,
+     "B": 8.5,
      "A przed czasem": 1.25,
      "A na punkty": 4.5,
      "B przed czasem": 15.0,
@@ -102,11 +102,11 @@
      "Zwycięzca walki": [
       [
        "Ruben Eduardo Aguilar",
-       1.05
+       1.04
       ],
       [
        "Guido Schramm",
-       8.0
+       8.5
       ]
      ],
      "Metoda zwycięstwa Ruben Eduardo Aguilar": [
@@ -241,18 +241,6 @@
       ]
      ]
     }
-   }
-  },
-  "29a6e4e35a3b385e9666473ad68f2084": {
-   "sts": {
-    "id": "f3800798",
-    "nazwa": "Sabalenka Aryna - Svitolina Elina",
-    "zgodnosc": 0.96,
-    "kursy": {
-     "A": 15.0,
-     "A 2:1": 18.0
-    },
-    "pelna": true
    }
   }
  },
@@ -621,7 +609,7 @@
    "sporty walki": "ufo:sprt:19",
    "pilka": "ufo:sprt:00"
   },
-  "turniejow": 235,
+  "turniejow": 231,
   "meczow_fortuny": 942,
   "niedopasowane": [
    "pilka: Slovakia – Faroe Islands",
@@ -668,12 +656,12 @@
   },
   "sts": {
    "bledy": [],
-   "meczow_sts": 2109,
+   "meczow_sts": 2099,
    "sporty": {
-    "1": 1798,
-    "3": 143,
+    "1": 1799,
+    "3": 136,
     "166": 80,
-    "19": 88
+    "19": 84
    },
    "niedopasowane": [
     "pilka: Slovakia – Faroe Islands",
@@ -686,21 +674,18 @@
     "pilka: Luxembourg – Estonia",
     "pilka: Scotland – North Macedonia",
     "tenis: Mirra Andreeva – Karolina Muchova",
+    "tenis: Aryna Sabalenka – Elina Svitolina",
     "walki: Joao Paulo Silva – Gabriel Vinicius",
     "walki: Natalia Alves – Raiane Vinuto"
    ],
-   "szczegoly_ramek": 4,
-   "szczegoly_odpowiedzi": "4 z 4",
+   "szczegoly_ramek": 3,
+   "szczegoly_odpowiedzi": "3 z 3",
    "szczegoly_tematy": {
-    "f_f3801714_pl": 1,
-    "f_f3800798_pl": 1,
     "f_f3801712_pl": 1,
+    "f_f3801714_pl": 1,
     "f_f3801711_pl": 1
    },
    "szczegoly_meczow": {
-    "Sabalenka Aryna - Svitolina Elina": {
-     "18mb5f0e4c0eaf": 24
-    },
     "Flores Elijah - Salgado Axl Melendez": {
      "16m66598": 3,
      "1m76709200": 1
@@ -715,134 +700,14 @@
     }
    },
    "rynki_przyklad": {
-    "Sabalenka Aryna - Svitolina Elina": {
-     "259 Zwycięzca meczu": [
-      "Zwycięzca meczu | 4:1=15"
-     ],
-     "285 Dokładny wynik": [
-      "Dokładny wynik | 1158:2:1=18"
-     ],
-     "301 Set - będzie tie-break": [
-      "3. set - będzie tie-break | 26:tak=20"
-     ],
-     "302 Set - dokładny wynik": [
-      "3. set - dokładny wynik | 261:7:5=38",
-      "3. set - dokładny wynik | 262:7:6=50",
-      "3. set - dokładny wynik | 264:1:6=1.23",
-      "3. set - dokładny wynik | 265:2:6=13"
-     ],
-     "305 ": [
-      "3. set - 8. gem | 4:=1.43",
-      "3. set - 8. gem | 5:=2.6",
-      "3. set - 7. gem | 4:=2.22",
-      "3. set - 7. gem | 5:=1.58"
-     ],
-     "306 ": [
-      "3. set - 8. gem - dokładna liczba punktów | 270:=22",
-      "3. set - 8. gem - dokładna liczba punktów | 271:=15",
-      "3. set - 8. gem - dokładna liczba punktów | 272:=14",
-      "3. set - 8. gem - dokładna liczba punktów | 273:=13"
-     ],
-     "307 ": [
-      "3. set - 8. gem - będzie równowaga | 26:=3",
-      "3. set - 8. gem - będzie równowaga | 27:=1.34"
-     ],
-     "308 ": [
-      "3. set - 8. gem - suma punktów | 24:=12",
-      "3. set - 8. gem - suma punktów | 25:=5.6"
-     ],
-     "309 ": [
-      "3. set - 8. gem - dokładny wynik | 274:=20",
-      "3. set - 8. gem - dokładny wynik | 275:=15",
-      "3. set - 8. gem - dokładny wynik | 276:=15",
-      "3. set - 8. gem - dokładny wynik | 277:=15"
-     ],
-     "312 ": [
-      "3. set - 8. gem - pierwsze 2 punkty | 1:=2.85",
-      "3. set - 8. gem - pierwsze 2 punkty | 2:=1.98",
-      "3. set - 8. gem - pierwsze 2 punkty | 3:=4.3"
-     ],
-     "313 ": [
-      "3. set - 7. gem - 13. punkt | 4:=1.98",
-      "3. set - 7. gem - 13. punkt | 5:=1.73"
-     ],
-     "1018 ": [
-      "1. zawodnik - wygra dokładnie 2 sety | 26:=15"
-     ],
-     "1019 ": [
-      "2. zawodnik - wygra dokładnie 2 sety | 27:=15"
-     ],
-     "1967 Liczba tie-breaków": [
-      "Liczba tie-breaków | 12:+0.5=20"
-     ],
-     "262 Gemy - handicap": [
-      "Gemy - handicap | 925:1 (+2.5)=11",
-      "Gemy - handicap | 926:2 (-2.5)=1.01",
-      "Gemy - handicap | 925:1 (+3.5)=6",
-      "Gemy - handicap | 926:2 (-3.5)=1.09",
-      "Gemy - handicap | 925:1 (+4.5)=4.2",
-      "Gemy - handicap | 926:2 (-4.5)=1.18"
-     ],
-     "268 Liczba gemów": [
-      "Liczba gemów | 12:+28.5=12",
-      "Liczba gemów | 13:-28.5=1.01",
-      "Liczba gemów | 12:+25.5=4.2",
-      "Liczba gemów | 13:-25.5=1.18",
-      "Liczba gemów | 12:+27.5=11",
-      "Liczba gemów | 13:-27.5=1.01"
-     ],
-     "271 1. zawodnik - liczba gemów": [
-      "1. zawodnik - liczba gemów | 12:+10.5=4.2",
-      "1. zawodnik - liczba gemów | 13:-10.5=1.18",
-      "1. zawodnik - liczba gemów | 12:+11.5=6",
-      "1. zawodnik - liczba gemów | 13:-11.5=1.09"
-     ],
-     "274 2. zawodnik - liczba gemów": [
-      "2. zawodnik - liczba gemów | 13:-14.5=20",
-      "2. zawodnik - liczba gemów | 12:+15.5=23"
-     ],
-     "282 Suma gemów": [
-      "Suma gemów | 24:nieparzysta=1.07",
-      "Suma gemów | 25:parzysta=6.6"
-     ],
-     "296 Set - gemy - handicap": [
-      "3. set - gemy - handicap | 925:1 (+3.5)=6",
-      "3. set - gemy - handicap | 926:2 (-3.5)=1.09",
-      "3. set - gemy - handicap | 925:1 (+4.5)=4.2",
-      "3. set - gemy - handicap | 926:2 (-4.5)=1.18"
-     ],
-     "299 Set - liczba gemów": [
-      "3. set - liczba gemów | 12:+9.5=11",
-      "3. set - liczba gemów | 13:-9.5=1.01",
-      "3. set - liczba gemów | 12:+7.5=4.2",
-      "3. set - liczba gemów | 13:-7.5=1.18",
-      "3. set - liczba gemów | 12:+8.5=6",
-      "3. set - liczba gemów | 13:-8.5=1.09"
-     ],
-     "1016 1. zawodnik - wygra dokładnie 1 seta": [
-      "1. zawodnik - wygra dokładnie 1 seta | 27:nie=15"
-     ],
-     "1017 2. zawodnik - wygra dokładnie 1 seta": [
-      "2. zawodnik - wygra dokładnie 1 seta | 26:tak=15"
-     ],
-     "1186 Zwycięzca i liczba gemów": [
-      "Zwycięzca i liczba gemów | 314:1 i +24.5=17",
-      "Zwycięzca i liczba gemów | 314:1 i +25.5=17",
-      "Zwycięzca i liczba gemów | 315:2 i +25.5=5",
-      "Zwycięzca i liczba gemów | 317:2 i -25.5=1.19",
-      "Zwycięzca i liczba gemów | 314:1 i +27.5=17",
-      "Zwycięzca i liczba gemów | 315:2 i +27.5=17",
-      "Zwycięzca i liczba gemów | 317:2 i -27.5=1.03"
-     ]
-    },
     "Flores Elijah - Salgado Axl Melendez": {
      "25 Liczba rund": [
       "Liczba rund | 12:+6.5=1.2",
       "Liczba rund | 13:-6.5=4"
      ],
      "259 Zwycięzca walki": [
-      "Zwycięzca walki | 4:1=1.19",
-      "Zwycięzca walki | 5:2=4.2"
+      "Zwycięzca walki | 4:1=1.15",
+      "Zwycięzca walki | 5:2=4.7"
      ],
      "1068 Metoda zwycięstwa": [
       "Metoda zwycięstwa | 1734:1. zawodnik - KO/TKO/DSQ lub poddanie=4",
@@ -861,8 +726,8 @@
       "Liczba rund | 13:-5.5=1.7"
      ],
      "259 Zwycięzca walki": [
-      "Zwycięzca walki | 4:1=1.05",
-      "Zwycięzca walki | 5:2=8"
+      "Zwycięzca walki | 4:1=1.04",
+      "Zwycięzca walki | 5:2=8.4"
      ],
      "1068 Metoda zwycięstwa": [
       "Metoda zwycięstwa | 1734:1. zawodnik - KO/TKO/DSQ lub poddanie=1.27",
@@ -873,6 +738,26 @@
      "1070 Walka potrwa pełen dystans": [
       "Walka potrwa pełen dystans | 26:tak=3.75",
       "Walka potrwa pełen dystans | 27:nie=1.22"
+     ]
+    },
+    "Flores Bryan - Nunez Espinosa Jose Raul": {
+     "25 Liczba rund": [
+      "Liczba rund | 12:+8.5=1.25",
+      "Liczba rund | 13:-8.5=3.5"
+     ],
+     "259 Zwycięzca walki": [
+      "Zwycięzca walki | 4:1=1.53",
+      "Zwycięzca walki | 5:2=2.35"
+     ],
+     "1068 Metoda zwycięstwa": [
+      "Metoda zwycięstwa | 1734:1. zawodnik - KO/TKO/DSQ lub poddanie=4.5",
+      "Metoda zwycięstwa | 1735:1. zawodnik - na punkty=2.5",
+      "Metoda zwycięstwa | 1736:X=15",
+      "Metoda zwycięstwa | 1737:2. zawodnik - KO/TKO/DSQ lub poddanie=8"
+     ],
+     "1070 Walka potrwa pełen dystans": [
+      "Walka potrwa pełen dystans | 26:tak=1.3",
+      "Walka potrwa pełen dystans | 27:nie=3.2"
      ]
     }
    },
@@ -921,5 +806,5 @@
   }
  },
  "lista": "09dba0ed8f9a",
- "sekund": 75
+ "sekund": 74
 }
