@@ -1,14 +1,14 @@
 {
- "czas": "2026-11-15 02:13 UTC",
+ "czas": "2026-11-15 02:55 UTC",
  "wersja": "czytnik-3",
  "bukmacherzy": {
   "fortuna": {
    "ok": true,
-   "dopasowane": 6
+   "dopasowane": 5
   },
   "sts": {
    "ok": true,
-   "dopasowane": 6
+   "dopasowane": 5
   },
   "betclic": {
    "ok": true,
@@ -16,30 +16,6 @@
   }
  },
  "mecze": {
-  "0f6cfcb1868371108dac702977aa052a": {
-   "fortuna": {
-    "id": "ufo:mtch:1wv-03r",
-    "nazwa": "Hasan, Bilal - Gurule, Luis",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "B": 1.08,
-     "A": 7.6,
-     "Pełny dystans": 6.0,
-     "Przed czasem": 1.09
-    },
-    "pelna": true
-   },
-   "sts": {
-    "id": "f3810988",
-    "nazwa": "Hasan, Bilal - Gurule, Luis",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "B": 1.08,
-     "A": 7.4
-    },
-    "pelna": true
-   }
-  },
   "e9a551c8ba460e64b3c48d7036c732a7": {
    "fortuna": {
     "id": "ufo:mtch:1xp-04b",
@@ -1412,8 +1388,8 @@
     "nazwa": "Gane Ciryl - Hokit Josh",
     "zgodnosc": 0.95,
     "kursy": {
-     "A": 1.45,
-     "B": 2.7
+     "A": 1.44,
+     "B": 2.75
     },
     "pelna": true
    },
@@ -2184,8 +2160,8 @@
    "sporty walki": "ufo:sprt:19",
    "pilka": "ufo:sprt:00"
   },
-  "turniejow": 186,
-  "meczow_fortuny": 651,
+  "turniejow": 188,
+  "meczow_fortuny": 664,
   "niedopasowane": [
    "pilka: Romania – Poland",
    "pilka: Austria – Iceland",
@@ -2222,26 +2198,50 @@
    "walki: Donte Johnson – Cesar Almeida",
    "walki: Jim Miller – Terrance Mckinney",
    "walki: David Adeleye – Alexander Flores",
-   "walki: Drew Dober – Chris Duncan"
+   "walki: Drew Dober – Chris Duncan",
+   "walki: Luis Gurule – Bilal Hasan"
   ],
-  "pelna_oferta": 6,
+  "pelna_oferta": 5,
   "rynki_nazwy": {
    "walki": {
     "Zwycięzca walki": [
+     "2",
+     "1"
+    ],
+    "Wynik walki": [
      "1",
+     "Remis",
      "2"
     ],
     "Liczba rund (0.5 oznacza połowę czasu kolejnej rundy)": [
-     "Mniej niż 1.5",
-     "Więcej niż 1.5"
+     "Więcej niż 9.5",
+     "Mniej niż 9.5"
+    ],
+    "Zwycięzca walki / Metoda zwycięstwa": [
+     "2 / KO lub TKO lub DQ",
+     "2 / Decyzja",
+     "1 / Decyzja",
+     "Remis"
+    ],
+    "Walka zakończy się na punkty lub przez techniczną decyzję": [
+     "Nie",
+     "Tak"
     ],
     "Liczba rozpoczętych rund": [
-     "Więcej niż 1.5",
-     "Mniej niż 1.5"
+     "Więcej niż 2.5",
+     "Mniej niż 2.5"
+    ],
+    "Najpopularniejsze zakłady łączone": [
+     "C. Borralho wygra walkę, Walka potrwa  powyżej 2.5 Rundy , Powyżej 128.5 significant strikes in the match"
     ],
     "Zwycięży całą walkę w 1.rundzie lub 2.rundzie": [
      "2",
      "1"
+    ],
+    "Sposób zakończenia walki": [
+     "KO/TKO/DQ",
+     "Poddanie",
+     "Decyzja"
     ],
     "Zwycięży całą walkę w 3.rundzie lub decyzją": [
      "2",
@@ -2252,47 +2252,24 @@
      "1.runda",
      "2.runda"
     ],
-    "Zwycięzca walki / Metoda zwycięstwa (Podwójna Szansa)": [
-     "2/Poddanie lub Decyzja",
-     "1/KO lub Decyzja",
-     "2/KO lub Decyzja",
-     "1/KO lub Poddanie"
-    ],
     "Walka zakończy się w przeciągu 60 sekund od rozpoczęcia 1.rundy": [
      "Tak"
     ],
-    "Sposób zakończenia walki": [
-     "KO/TKO/DQ",
-     "Poddanie",
-     "Decyzja"
-    ],
-    "Zwycięzca walki / Metoda zwycięstwa": [
+    "Zwycięzca walki / Metoda zwycięstwa (Podwójna Szansa)": [
+     "2/Poddanie lub Decyzja",
+     "1/KO lub Decyzja",
      "Remis",
-     "1.zawodnik wygra na punkty",
-     "1.zawodnik wygra przez poddanie",
-     "1.zawodnik wygra przez KO/TKO/DQ"
+     "1/Poddanie lub Decyzja"
     ],
-    "Wynik walki": [
-     "Remis",
-     "1",
-     "2"
+    "Zwycięzca walki / Runda zakończenia walki": [
+     "1/1.runda",
+     "1/2.runda",
+     "1/3.runda",
+     "1/Decyzja"
     ],
     "Walka potrwa pełen dystans": [
      "Tak",
      "Nie"
-    ],
-    "Zwycięzca walki / Runda zakończenia walki": [
-     "2/2.runda",
-     "Remis",
-     "2/1.runda",
-     "1/3.runda"
-    ],
-    "Walka zakończy się na punkty lub przez techniczną decyzję": [
-     "Nie",
-     "Tak"
-    ],
-    "Najpopularniejsze zakłady łączone": [
-     "C. Borralho wygra walkę, Walka potrwa  powyżej 2.5 Rundy , Powyżej 128.5 significant strikes in the match"
     ],
     "Runda zakończenia walki (walka 5-rundowa)": [
      "3.runda",
@@ -2312,12 +2289,12 @@
   },
   "sts": {
    "bledy": [],
-   "meczow_sts": 1711,
+   "meczow_sts": 1712,
    "sporty": {
-    "1": 1373,
-    "3": 242,
-    "166": 50,
-    "19": 46
+    "1": 1369,
+    "3": 249,
+    "166": 49,
+    "19": 45
    },
    "niedopasowane": [
     "pilka: Romania – Poland",
@@ -2355,23 +2332,19 @@
     "walki: Donte Johnson – Cesar Almeida",
     "walki: Jim Miller – Terrance Mckinney",
     "walki: David Adeleye – Alexander Flores",
-    "walki: Drew Dober – Chris Duncan"
+    "walki: Drew Dober – Chris Duncan",
+    "walki: Luis Gurule – Bilal Hasan"
    ],
-   "szczegoly_ramek": 6,
-   "szczegoly_odpowiedzi": "6 z 6",
+   "szczegoly_ramek": 5,
+   "szczegoly_odpowiedzi": "5 z 5",
    "szczegoly_tematy": {
-    "f_f3810988_pl": 1,
-    "f_f3811001_pl": 1,
-    "f_f3683428_pl": 1,
     "f_f3811002_pl": 1,
+    "f_f3683428_pl": 1,
+    "f_f3811001_pl": 1,
     "f_f3811003_pl": 1,
     "f_f3649325_pl": 1
    },
    "szczegoly_meczow": {
-    "Hasan, Bilal - Gurule, Luis": {
-     "10m910368": 5,
-     "1m74915880": 6
-    },
     "Olascuaga Anthony - Martinez Yuberjen": {
      "16m66695": 3,
      "1m75834440": 3
@@ -2390,50 +2363,6 @@
     }
    },
    "rynki_przyklad": {
-    "Hasan, Bilal - Gurule, Luis": {
-     "25 Liczba rund": [
-      "Liczba rund | 12:+1.5=2.45",
-      "Liczba rund | 13:-1.5=1.48"
-     ],
-     "259 Zwycięzca walki": [
-      "Zwycięzca walki | 4:1=1.08",
-      "Zwycięzca walki | 5:2=7.4"
-     ],
-     "1069 Metoda zwycięstwa": [
-      "Metoda zwycięstwa | 1705:1. zawodnik - KO/TKO lub DSQ=1.24",
-      "Metoda zwycięstwa | 1706:1. zawodnik - poddanie=10",
-      "Metoda zwycięstwa | 1707:1. zawodnik - na punkty=7.1",
-      "Metoda zwycięstwa | 1708:X=50"
-     ],
-     "1070 Walka potrwa pełen dystans": [
-      "Walka potrwa pełen dystans | 26:tak=5.9",
-      "Walka potrwa pełen dystans | 27:nie=1.1"
-     ],
-     "1072 Zwycięzca walki - runda": [
-      "Zwycięzca walki - runda | 1712:1. zawodnik - 1. runda=2.2",
-      "Zwycięzca walki - runda | 1713:1. zawodnik - 2. runda=3.2",
-      "Zwycięzca walki - runda | 1714:1. zawodnik - 3. runda=7.25",
-      "Zwycięzca walki - runda | 1715:1. zawodnik - na punkty=7.1"
-     ],
-     "1261 Metoda zwycięstwa - podwójna szansa": [
-      "Metoda zwycięstwa - podwójna szansa | 1825:1. zawodnik - KO/TKO/DSQ lub poddanie=1.18",
-      "Metoda zwycięstwa - podwójna szansa | 1826:1. zawodnik - KO/TKO/DSQ lub na punkty=1.16",
-      "Metoda zwycięstwa - podwójna szansa | 1827:1. zawodnik - poddanie lub na punkty=4.9",
-      "Metoda zwycięstwa - podwójna szansa | 1828:X=50"
-     ],
-     "2019 ": [
-      "Zwycięstwo przez KO/TKO lub DSQ | 4:=1.27",
-      "Zwycięstwo przez KO/TKO lub DSQ | 5:=12"
-     ],
-     "2020 ": [
-      "Zwycięstwo przez decyzję | 4:=6.75",
-      "Zwycięstwo przez decyzję | 5:=25"
-     ],
-     "2021 ": [
-      "Zwycięstwo przez poddanie | 4:=11",
-      "Zwycięstwo przez poddanie | 5:=25"
-     ]
-    },
     "Olascuaga Anthony - Martinez Yuberjen": {
      "25 Liczba rund": [
       "Liczba rund | 12:+10.5=2.2",
@@ -2500,6 +2429,38 @@
       "Metoda zwycięstwa - podwójna szansa | 1826:1. zawodnik - KO/TKO/DSQ lub na punkty=1.95",
       "Metoda zwycięstwa - podwójna szansa | 1827:1. zawodnik - poddanie lub na punkty=1.85",
       "Metoda zwycięstwa - podwójna szansa | 1828:X=50"
+     ]
+    },
+    "Harrison Kayla - Nunes Amanda": {
+     "25 Liczba rund": [
+      "Liczba rund | 12:+3.5=1.92",
+      "Liczba rund | 13:-3.5=1.78"
+     ],
+     "259 Zwycięzca walki": [
+      "Zwycięzca walki | 4:1=1.6",
+      "Zwycięzca walki | 5:2=2.3"
+     ],
+     "1069 Metoda zwycięstwa": [
+      "Metoda zwycięstwa | 1705:1. zawodnik - KO/TKO lub DSQ=8",
+      "Metoda zwycięstwa | 1706:1. zawodnik - poddanie=3.1",
+      "Metoda zwycięstwa | 1707:1. zawodnik - na punkty=3.9",
+      "Metoda zwycięstwa | 1708:X=30"
+     ],
+     "1070 Walka potrwa pełen dystans": [
+      "Walka potrwa pełen dystans | 26:tak=2.5",
+      "Walka potrwa pełen dystans | 27:nie=1.46"
+     ],
+     "1073 Zwycięzca walki - runda": [
+      "Zwycięzca walki - runda | 1721:1. zawodnik - 1. runda=5.9",
+      "Zwycięzca walki - runda | 1722:1. zawodnik - 2. runda=8",
+      "Zwycięzca walki - runda | 1723:1. zawodnik - 3. runda=11",
+      "Zwycięzca walki - runda | 1724:1. zawodnik - 4. runda=16"
+     ],
+     "1261 Metoda zwycięstwa - podwójna szansa": [
+      "Metoda zwycięstwa - podwójna szansa | 1825:1. zawodnik - KO/TKO/DSQ lub poddanie=2.4",
+      "Metoda zwycięstwa - podwójna szansa | 1826:1. zawodnik - KO/TKO/DSQ lub na punkty=2.9",
+      "Metoda zwycięstwa - podwójna szansa | 1827:1. zawodnik - poddanie lub na punkty=1.92",
+      "Metoda zwycięstwa - podwójna szansa | 1828:X=30"
      ]
     }
    },
