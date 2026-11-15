@@ -1,370 +1,29 @@
 {
- "czas": "2026-11-15 00:07 UTC",
+ "czas": "2026-11-15 00:49 UTC",
  "wersja": "czytnik-3",
  "bukmacherzy": {
   "fortuna": {
    "ok": true,
-   "dopasowane": 10
+   "dopasowane": 8
   },
   "sts": {
    "ok": true,
-   "dopasowane": 12
+   "dopasowane": 10
   },
   "betclic": {
    "ok": true,
-   "dopasowane": 9
+   "dopasowane": 7
   }
  },
  "mecze": {
-  "dd9074fe98d83dd01a962ca4abe9b9d6": {
-   "fortuna": {
-    "id": "ufo:mtch:1xq-07u",
-    "nazwa": "Johnson, Donte - Almeida, Cesar",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "A": 1.43,
-     "B": 2.8,
-     "Przed czasem": 1.33,
-     "Pełny dystans": 2.95
-    },
-    "pelna": true
-   },
-   "sts": {
-    "id": "f3810984",
-    "nazwa": "Johnson, Donte - Almeida, Cesar",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "A": 1.42,
-     "B": 2.8
-    },
-    "pelna": true
-   }
-  },
-  "3b0d88061cf6613291e6ae4a608c9ca9": {
-   "fortuna": {
-    "id": "ufo:mtch:1xq-019",
-    "nazwa": "Miller, Jim - McKinney, Terrance",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "B": 1.45,
-     "A": 2.7,
-     "Przed czasem": 1.04,
-     "Pełny dystans": 7.8
-    },
-    "pelna": true
-   },
-   "sts": {
-    "id": "f3810985",
-    "nazwa": "Miller Jim - McKinney Terrance",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "A": 2.7,
-     "B": 1.45
-    },
-    "pelna": true
-   },
-   "betclic": {
-    "id": "1269890609610752",
-    "nazwa": "Jim Miller - Terrance McKinney",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "A": 2.73,
-     "B": 1.45,
-     "A przed czasem": 2.9,
-     "A na punkty": 18.0,
-     "B przed czasem": 1.52,
-     "B na punkty": 20.0,
-     "Pełny dystans": 8.25,
-     "Przed czasem": 1.03
-    },
-    "pelna": true,
-    "rynkow": 13,
-    "oferta": {
-     "Zwycięzca walki": [
-      [
-       "Jim Miller",
-       2.73
-      ],
-      [
-       "Terrance McKinney",
-       1.45
-      ]
-     ],
-     "Metoda zwycięstwa Jim Miller": [
-      [
-       "KO / TKO / Poddanie / DQ",
-       2.9
-      ],
-      [
-       "KO/ TKO/ DQ",
-       7.0
-      ],
-      [
-       "Poddanie",
-       4.0
-      ],
-      [
-       "Decyzja",
-       18.0
-      ],
-      [
-       "Poddanie lub Decyzja",
-       3.47
-      ],
-      [
-       "KO/TKO/DQ lub Decyzja",
-       5.4
-      ]
-     ],
-     "Metoda zwycięstwa Terrance McKinney": [
-      [
-       "KO / TKO / Poddanie / DQ",
-       1.52
-      ],
-      [
-       "KO/ TKO/ DQ",
-       2.25
-      ],
-      [
-       "Poddanie",
-       3.5
-      ],
-      [
-       "Decyzja",
-       20.0
-      ],
-      [
-       "Poddanie lub Decyzja",
-       3.15
-      ],
-      [
-       "KO/TKO/DQ lub Decyzja",
-       2.15
-      ]
-     ],
-     "Liczba rund (0.5 oznacza połowę czasu kolejnej rundy)": [
-      [
-       "Powyżej 1,5",
-       3.85
-      ],
-      [
-       "Poniżej 1,5",
-       1.21
-      ],
-      [
-       "Powyżej 2,5",
-       7.0
-      ],
-      [
-       "Poniżej 2,5",
-       1.05
-      ]
-     ],
-     "Wybierz metodę zwycięstwa": [
-      [
-       "KO/TKO/DQ lub Decyzja",
-       1.66
-      ],
-      [
-       "KO, TKO, DQ",
-       1.84
-      ],
-      [
-       "Poddanie",
-       2.02
-      ],
-      [
-       "Decyzja",
-       10.25
-      ],
-      [
-       "KO, TKO lub Poddanie",
-       1.01
-      ],
-      [
-       "Poddanie lub Decyzja",
-       1.8
-      ]
-     ],
-     "Walka zakończy się w 1 minucie": [
-      [
-       "Tak",
-       6.1
-      ]
-     ],
-     "Pełen dystans": [
-      [
-       "Tak",
-       8.25
-      ],
-      [
-       "Nie",
-       1.03
-      ]
-     ],
-     "Ilość rozpoczętych rund": [
-      [
-       "Runda 2 - Tak",
-       2.72
-      ],
-      [
-       "Runda 2 - Nie",
-       1.37
-      ],
-      [
-       "Runda 3 - Tak",
-       6.1
-      ],
-      [
-       "Runda 3 - Nie",
-       1.07
-      ]
-     ],
-     "Runda zakończenia walki Jim Miller": [
-      [
-       "Runda 1",
-       4.0
-      ],
-      [
-       "Runda 2",
-       10.0
-      ],
-      [
-       "Runda 3",
-       25.0
-      ],
-      [
-       "Decyzja",
-       18.0
-      ],
-      [
-       "Runda 3 - Decyzja",
-       11.5
-      ],
-      [
-       "Runda 1 - Round 2",
-       3.15
-      ]
-     ],
-     "Runda zakończenia walki Terrance McKinney": [
-      [
-       "Runda 1",
-       1.8
-      ],
-      [
-       "Runda 2",
-       8.0
-      ],
-      [
-       "Runda 3",
-       35.0
-      ],
-      [
-       "Decyzja",
-       20.0
-      ],
-      [
-       "Runda 3 - Decyzja",
-       14.25
-      ],
-      [
-       "Runda 1 - Round 2",
-       1.62
-      ]
-     ],
-     "Runda zakończenia walki": [
-      [
-       "Runda 1",
-       1.35
-      ],
-      [
-       "Runda 2",
-       4.5
-      ],
-      [
-       "Runda 3",
-       16.25
-      ],
-      [
-       "Decyzja",
-       10.25
-      ],
-      [
-       "Remis",
-       80.0
-      ],
-      [
-       "Runda 1 - 2",
-       1.05
-      ],
-      [
-       "Runda 3 - Decyzja",
-       6.4
-      ]
-     ],
-     "Zakłady na rundy & metoda zwycięstwa - Jim Miller": [
-      [
-       "Jim Miller Runda 1 KO/TKO/DQ",
-       10.5
-      ],
-      [
-       "Jim Miller Runda 2 KO/TKO/DQ",
-       26.0
-      ],
-      [
-       "Jim Miller Runda 3 KO/TKO/DQ",
-       65.0
-      ],
-      [
-       "Jim Miller Runda 1 Poddanie",
-       6.0
-      ],
-      [
-       "Jim Miller Runda 2 Poddanie",
-       15.0
-      ],
-      [
-       "Jim Miller Runda 3 Poddanie",
-       38.0
-      ]
-     ],
-     "Zakłady na rundy & metoda zwycięstwa - Terrance McKinney": [
-      [
-       "Terrance McKinney Runda 1 KO/TKO/DQ",
-       2.5
-      ],
-      [
-       "Terrance McKinney Runda 2 KO/TKO/DQ",
-       12.5
-      ],
-      [
-       "Terrance McKinney Runda 3 KO/TKO/DQ",
-       55.0
-      ],
-      [
-       "Terrance McKinney Runda 1 Poddanie",
-       4.0
-      ],
-      [
-       "Terrance McKinney Runda 2 Poddanie",
-       19.5
-      ],
-      [
-       "Terrance McKinney Runda 3 Poddanie",
-       85.0
-      ]
-     ]
-    }
-   }
-  },
   "c2878901dc9e7d7a3784b943b12cb281": {
    "fortuna": {
     "id": "ufo:mtch:1xq-044",
     "nazwa": "Adeleye, David - Flores, Alexander",
     "zgodnosc": 0.95,
     "kursy": {
-     "B": 7.6,
-     "A": 1.06
+     "B": 8.0,
+     "A": 1.05
     },
     "pelna": true
    },
@@ -373,8 +32,8 @@
     "nazwa": "Adeleye David - Flores Alexander",
     "zgodnosc": 0.95,
     "kursy": {
-     "A": 1.06,
-     "B": 8.4
+     "A": 1.05,
+     "B": 9.1
     },
     "pelna": true
    },
@@ -383,8 +42,8 @@
     "nazwa": "David Adeleye - Alexander Flores",
     "zgodnosc": 1.0,
     "kursy": {
-     "A": 1.06,
-     "B": 7.5,
+     "A": 1.05,
+     "B": 8.0,
      "A przed czasem": 1.22,
      "A na punkty": 5.5,
      "B przed czasem": 12.0,
@@ -398,11 +57,11 @@
      "Zwycięzca walki": [
       [
        "David Adeleye",
-       1.06
+       1.05
       ],
       [
        "Alexander Flores",
-       7.5
+       8.0
       ]
      ],
      "Metoda zwycięstwa David Adeleye": [
@@ -454,8 +113,8 @@
     "nazwa": "Dober, Drew - Duncan, Chris",
     "zgodnosc": 0.95,
     "kursy": {
-     "A": 2.55,
-     "B": 1.5,
+     "A": 2.5,
+     "B": 1.51,
      "Przed czasem": 1.27,
      "Pełny dystans": 3.3
     },
@@ -463,306 +122,13 @@
    },
    "sts": {
     "id": "f3810986",
-    "nazwa": "Dober Drew - Duncan Chris",
+    "nazwa": "Dober, Drew - Duncan, Chris",
     "zgodnosc": 0.95,
     "kursy": {
-     "A": 2.55,
-     "B": 1.5
+     "A": 2.5,
+     "B": 1.52
     },
     "pelna": true
-   },
-   "betclic": {
-    "id": "1269890435538947",
-    "nazwa": "Drew Dober - Chris Duncan",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "A": 2.48,
-     "B": 1.52,
-     "A przed czasem": 2.85,
-     "A na punkty": 11.0,
-     "B przed czasem": 1.85,
-     "B na punkty": 5.0,
-     "Pełny dystans": 3.8,
-     "Przed czasem": 1.21
-    },
-    "pelna": true,
-    "rynkow": 13,
-    "oferta": {
-     "Zwycięzca walki": [
-      [
-       "Drew Dober",
-       2.48
-      ],
-      [
-       "Chris Duncan",
-       1.52
-      ]
-     ],
-     "Metoda zwycięstwa Drew Dober": [
-      [
-       "KO / TKO / Poddanie / DQ",
-       2.85
-      ],
-      [
-       "KO/ TKO/ DQ",
-       2.9
-      ],
-      [
-       "Poddanie",
-       20.0
-      ],
-      [
-       "Decyzja",
-       11.0
-      ],
-      [
-       "Poddanie lub Decyzja",
-       8.0
-      ],
-      [
-       "KO/TKO/DQ lub Decyzja",
-       2.75
-      ]
-     ],
-     "Metoda zwycięstwa Chris Duncan": [
-      [
-       "KO / TKO / Poddanie / DQ",
-       1.85
-      ],
-      [
-       "KO/ TKO/ DQ",
-       3.5
-      ],
-      [
-       "Poddanie",
-       3.5
-      ],
-      [
-       "Decyzja",
-       5.0
-      ],
-      [
-       "Poddanie lub Decyzja",
-       2.18
-      ],
-      [
-       "KO/TKO/DQ lub Decyzja",
-       2.18
-      ]
-     ],
-     "Liczba rund (0.5 oznacza połowę czasu kolejnej rundy)": [
-      [
-       "Powyżej 1,5",
-       1.76
-      ],
-      [
-       "Poniżej 1,5",
-       1.93
-      ],
-      [
-       "Powyżej 2,5",
-       2.9
-      ],
-      [
-       "Poniżej 2,5",
-       1.34
-      ]
-     ],
-     "Wybierz metodę zwycięstwa": [
-      [
-       "KO/TKO/DQ lub Decyzja",
-       1.27
-      ],
-      [
-       "KO, TKO, DQ",
-       1.74
-      ],
-      [
-       "Poddanie",
-       3.22
-      ],
-      [
-       "Decyzja",
-       3.8
-      ],
-      [
-       "KO, TKO lub Poddanie",
-       1.21
-      ],
-      [
-       "Poddanie lub Decyzja",
-       1.9
-      ]
-     ],
-     "Walka zakończy się w 1 minucie": [
-      [
-       "Tak",
-       11.5
-      ]
-     ],
-     "Pełen dystans": [
-      [
-       "Tak",
-       3.8
-      ],
-      [
-       "Nie",
-       1.21
-      ]
-     ],
-     "Ilość rozpoczętych rund": [
-      [
-       "Runda 2 - Tak",
-       1.41
-      ],
-      [
-       "Runda 2 - Nie",
-       2.55
-      ],
-      [
-       "Runda 3 - Tak",
-       2.23
-      ],
-      [
-       "Runda 3 - Nie",
-       1.54
-      ]
-     ],
-     "Runda zakończenia walki Drew Dober": [
-      [
-       "Runda 1",
-       5.5
-      ],
-      [
-       "Runda 2",
-       8.5
-      ],
-      [
-       "Runda 3",
-       12.0
-      ],
-      [
-       "Decyzja",
-       12.0
-      ],
-      [
-       "Runda 3 - Decyzja",
-       6.6
-      ],
-      [
-       "Runda 1 - Round 2",
-       3.68
-      ]
-     ],
-     "Runda zakończenia walki Chris Duncan": [
-      [
-       "Runda 1",
-       4.0
-      ],
-      [
-       "Runda 2",
-       6.0
-      ],
-      [
-       "Runda 3",
-       8.0
-      ],
-      [
-       "Decyzja",
-       5.0
-      ],
-      [
-       "Runda 3 - Decyzja",
-       3.38
-      ],
-      [
-       "Runda 1 - Round 2",
-       2.63
-      ]
-     ],
-     "Runda zakończenia walki": [
-      [
-       "Runda 1",
-       2.55
-      ],
-      [
-       "Runda 2",
-       3.88
-      ],
-      [
-       "Runda 3",
-       5.25
-      ],
-      [
-       "Decyzja",
-       3.8
-      ],
-      [
-       "Remis",
-       80.0
-      ],
-      [
-       "Runda 1 - 2",
-       1.54
-      ],
-      [
-       "Runda 3 - Decyzja",
-       2.27
-      ]
-     ],
-     "Zakłady na rundy & metoda zwycięstwa - Drew Dober": [
-      [
-       "Drew Dober Runda 1 KO/TKO/DQ",
-       6.0
-      ],
-      [
-       "Drew Dober Runda 2 KO/TKO/DQ",
-       9.25
-      ],
-      [
-       "Drew Dober Runda 3 KO/TKO/DQ",
-       13.0
-      ],
-      [
-       "Drew Dober Runda 1 Poddanie",
-       40.0
-      ],
-      [
-       "Drew Dober Runda 2 Poddanie",
-       60.0
-      ],
-      [
-       "Drew Dober Runda 3 Poddanie",
-       85.0
-      ]
-     ],
-     "Zakłady na rundy & metoda zwycięstwa - Chris Duncan": [
-      [
-       "Chris Duncan Runda 1 KO/TKO/DQ",
-       7.5
-      ],
-      [
-       "Chris Duncan Runda 2 KO/TKO/DQ",
-       11.5
-      ],
-      [
-       "Chris Duncan Runda 3 KO/TKO/DQ",
-       15.25
-      ],
-      [
-       "Chris Duncan Runda 1 Poddanie",
-       7.5
-      ],
-      [
-       "Chris Duncan Runda 2 Poddanie",
-       11.5
-      ],
-      [
-       "Chris Duncan Runda 3 Poddanie",
-       15.25
-      ]
-     ]
-    }
    }
   },
   "0f6cfcb1868371108dac702977aa052a": {
@@ -2454,8 +1820,8 @@
     "nazwa": "Gane Ciryl - Hokit Josh",
     "zgodnosc": 0.95,
     "kursy": {
-     "A": 1.46,
-     "B": 2.65
+     "A": 1.45,
+     "B": 2.7
     },
     "pelna": true
    },
@@ -2867,47 +2233,38 @@
     "nazwa": "Queretaro FC - CF Monterrey",
     "zgodnosc": 1.0,
     "kursy": {
-     "1": 4.2,
-     "X": 2.29,
-     "2": 2.29,
-     "12": 1.45,
-     "X2": 1.17,
-     "1X": 1.5,
-     "A o0.5": 1.6,
-     "H o0.5": 2.2,
-     "A -1.5": 6.25,
-     "Over 1.5": 2.29,
-     "Under 1.5": 1.55,
-     "Over 0.5": 1.25,
-     "Under 0.5": 3.4,
-     "Over 3.5": 14.0,
-     "Under 3.5": 1.03,
-     "Over 2.5": 5.25,
-     "Under 2.5": 1.14,
-     "H o1.5": 5.5,
-     "H o2.5": 15.0,
-     "A o1.5": 3.9,
-     "A o2.5": 10.0,
-     "BTTS Tak": 3.6,
-     "BTTS Nie": 1.25,
-     "1 & u1.5": 6.5,
-     "1 & o1.5": 9.5,
-     "X & u1.5": 3.2,
-     "X & o1.5": 6.0,
-     "2 & u1.5": 3.9,
-     "2 & o1.5": 4.4,
-     "1 & u3.5": 4.09,
-     "1 & o3.5": 40.0,
-     "X & u3.5": 2.29,
-     "X & o3.5": 30.0,
-     "2 & u3.5": 2.29,
-     "2 & o3.5": 22.0,
-     "1 & u2.5": 5.0,
-     "1 & o2.5": 14.0,
-     "X & u2.5": 2.29,
-     "X & o2.5": 35.0,
-     "2 & u2.5": 2.8,
-     "2 & o2.5": 8.0
+     "1": 60.0,
+     "X": 14.0,
+     "2": 1.03,
+     "1X": 4.8,
+     "H o0.5": 8.0,
+     "A -2.5": 11.0,
+     "A -1.5": 2.5,
+     "Over 1.5": 2.2,
+     "Under 1.5": 1.6,
+     "Over 3.5": 25.0,
+     "Over 2.5": 9.0,
+     "Under 2.5": 1.06,
+     "A o1.5": 2.29,
+     "A o3.5": 15.0,
+     "A o2.5": 8.0,
+     "BTTS Tak": 10.0,
+     "BTTS Nie": 1.05,
+     "1 & o1.5": 60.0,
+     "X & o1.5": 14.0,
+     "2 & u1.5": 1.5,
+     "2 & o1.5": 2.2,
+     "1 & u3.5": 30.0,
+     "1 & o3.5": 70.0,
+     "X & u3.5": 14.0,
+     "X & o3.5": 60.0,
+     "2 & u3.5": 1.03,
+     "2 & o3.5": 18.0,
+     "1 & o2.5": 60.0,
+     "X & u2.5": 10.0,
+     "X & o2.5": 80.0,
+     "2 & u2.5": 1.08,
+     "2 & o2.5": 6.5
     },
     "pelna": true
    }
@@ -2918,52 +2275,47 @@
     "nazwa": "Chapecoense SC - CR Vasco da Gama",
     "zgodnosc": 0.99,
     "kursy": {
-     "1": 5.6,
-     "X": 3.35,
-     "2": 1.65,
-     "12": 1.33,
-     "X2": 1.14,
-     "1X": 2.22,
-     "A o0.5": 1.22,
-     "H o0.5": 1.9,
-     "A -2.5": 6.2,
-     "A -3.5": 14.0,
-     "H -1.5": 13.0,
-     "A -1.5": 2.95,
-     "Over 1.5": 1.43,
-     "Under 1.5": 2.6,
-     "Over 0.5": 1.08,
-     "Under 0.5": 6.6,
-     "Over 4.5": 10.0,
-     "Under 4.5": 1.03,
-     "Over 3.5": 5.0,
-     "Under 3.5": 1.14,
+     "1": 21.0,
+     "X": 6.0,
+     "2": 1.16,
+     "12": 1.13,
+     "1X": 5.0,
+     "H o0.5": 2.5,
+     "A -2.5": 4.8,
+     "A -3.5": 13.0,
+     "A -4.5": 29.0,
+     "A -1.5": 1.98,
+     "Over 1.5": 1.27,
+     "Under 1.5": 3.4,
+     "Over 4.5": 13.0,
+     "Under 4.5": 1.01,
+     "Over 3.5": 5.6,
+     "Under 3.5": 1.11,
      "Over 2.5": 2.37,
-     "Under 2.5": 1.52,
-     "H o1.5": 5.6,
-     "H o2.5": 16.0,
-     "A o1.5": 2.0,
-     "A o2.5": 4.3,
-     "BTTS Tak": 2.37,
-     "BTTS Nie": 1.52,
-     "1 & u1.5": 10.0,
-     "1 & o1.5": 9.0,
-     "X & u1.5": 6.5,
-     "X & o1.5": 5.25,
-     "2 & u1.5": 4.9,
-     "2 & o1.5": 2.2,
-     "1 & u3.5": 5.75,
-     "1 & o3.5": 30.0,
-     "X & u3.5": 3.4,
-     "X & o3.5": 18.0,
-     "2 & u3.5": 1.95,
+     "Under 2.5": 1.53,
+     "Over 5.5": 22.0,
+     "H o1.5": 10.0,
+     "H o2.5": 22.0,
+     "A o1.5": 1.53,
+     "A o3.5": 10.0,
+     "A o2.5": 3.8,
+     "BTTS Tak": 2.47,
+     "BTTS Nie": 1.48,
+     "1 & o1.5": 30.0,
+     "X & o1.5": 6.25,
+     "2 & u1.5": 2.9,
+     "2 & o1.5": 1.5,
+     "1 & u3.5": 22.0,
+     "1 & o3.5": 40.0,
+     "X & u3.5": 6.0,
+     "X & o3.5": 20.0,
+     "2 & u3.5": 1.25,
      "2 & o3.5": 6.75,
-     "1 & u2.5": 8.0,
-     "1 & o2.5": 12.0,
-     "X & u2.5": 3.5,
-     "X & o2.5": 18.0,
-     "2 & u2.5": 2.9,
-     "2 & o2.5": 3.1
+     "1 & o2.5": 30.0,
+     "X & u2.5": 6.0,
+     "X & o2.5": 20.0,
+     "2 & u2.5": 1.75,
+     "2 & o2.5": 2.5
     },
     "pelna": true
    }
@@ -3178,7 +2530,8 @@
  "diag": {
   "bledy": [
    "turnieje ufo:sprt:01 tomorrow: Expecting value: line 1 column 1 (char 0)",
-   "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)"
+   "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)",
+   "mecze ufo:tour:0c-01p: Expecting value: line 1 column 1 (char 0)"
   ],
   "nasze_mecze": 42,
   "sporty": [
@@ -3329,7 +2682,7 @@
    "sporty walki": "ufo:sprt:19",
    "pilka": "ufo:sprt:00"
   },
-  "turniejow": 191,
+  "turniejow": 192,
   "meczow_fortuny": 655,
   "niedopasowane": [
    "pilka: Romania – Poland",
@@ -3363,14 +2716,16 @@
    "walki: Zelfa Barrett – Gavin Gwynne",
    "walki: Viddal Riley – Seydi Coupe",
    "walki: Evan Elder – Samuel Sanches",
-   "walki: Jared Gordon – Melquizael Costa"
+   "walki: Jared Gordon – Melquizael Costa",
+   "walki: Donte Johnson – Cesar Almeida",
+   "walki: Jim Miller – Terrance Mckinney"
   ],
-  "pelna_oferta": 10,
+  "pelna_oferta": 8,
   "rynki_nazwy": {
    "walki": {
     "Zwycięzca walki": [
-     "1",
-     "2"
+     "2",
+     "1"
     ],
     "Liczba rund (0.5 oznacza połowę czasu kolejnej rundy)": [
      "Więcej niż 1.5",
@@ -3381,24 +2736,24 @@
      "Mniej niż 2.5"
     ],
     "Najpopularniejsze zakłady łączone": [
-     "D. Johnson wygra walkę przez KO/TKO/DQ w rundzie 3"
-    ],
-    "Zwycięzca walki / Metoda zwycięstwa (Podwójna Szansa)": [
-     "Remis",
-     "1/Poddanie lub Decyzja",
-     "1/KO lub Decyzja",
-     "2/Poddanie lub Decyzja"
+     "C. Duncan wygra walkę, Walka potrwa  powyżej 2.5 Rundy , Powyżej 154.5 significant strikes in the match"
     ],
     "Zwycięzca walki / Metoda zwycięstwa": [
+     "Remis",
      "1.zawodnik wygra przez KO/TKO/DQ",
-     "1.zawodnik wygra przez poddanie",
      "1.zawodnik wygra na punkty",
-     "Remis"
+     "1.zawodnik wygra przez poddanie"
+    ],
+    "Zwycięzca walki / Metoda zwycięstwa (Podwójna Szansa)": [
+     "2/Poddanie lub Decyzja",
+     "1/KO lub Poddanie",
+     "1/KO lub Decyzja",
+     "2/KO lub Poddanie"
     ],
     "Wynik walki": [
-     "1",
+     "2",
      "Remis",
-     "2"
+     "1"
     ],
     "Zwycięzca walki / Runda zakończenia walki": [
      "2/Decyzja",
@@ -3410,6 +2765,16 @@
      "Nie",
      "Tak"
     ],
+    "Sposób zakończenia walki": [
+     "KO/TKO/DQ",
+     "Poddanie",
+     "Decyzja"
+    ],
+    "Runda zakończenia walki (walka 3-rundowa)": [
+     "3.runda",
+     "1.runda",
+     "2.runda"
+    ],
     "Zwycięży całą walkę w 3.rundzie lub decyzją": [
      "2",
      "1"
@@ -3418,18 +2783,8 @@
      "2",
      "1"
     ],
-    "Runda zakończenia walki (walka 3-rundowa)": [
-     "3.runda",
-     "1.runda",
-     "2.runda"
-    ],
     "Walka zakończy się w przeciągu 60 sekund od rozpoczęcia 1.rundy": [
      "Tak"
-    ],
-    "Sposób zakończenia walki": [
-     "KO/TKO/DQ",
-     "Poddanie",
-     "Decyzja"
     ],
     "Walka zakończy się na punkty lub przez techniczną decyzję": [
      "Nie",
@@ -3453,11 +2808,11 @@
   },
   "sts": {
    "bledy": [],
-   "meczow_sts": 1686,
+   "meczow_sts": 1711,
    "sporty": {
-    "1": 1381,
-    "3": 204,
-    "166": 54,
+    "1": 1392,
+    "3": 220,
+    "166": 52,
     "19": 47
    },
    "niedopasowane": [
@@ -3490,43 +2845,36 @@
     "walki: Zelfa Barrett – Gavin Gwynne",
     "walki: Viddal Riley – Seydi Coupe",
     "walki: Evan Elder – Samuel Sanches",
-    "walki: Jared Gordon – Melquizael Costa"
+    "walki: Jared Gordon – Melquizael Costa",
+    "walki: Donte Johnson – Cesar Almeida",
+    "walki: Jim Miller – Terrance Mckinney"
    ],
-   "szczegoly_ramek": 14,
-   "szczegoly_odpowiedzi": "12 z 12",
+   "szczegoly_ramek": 12,
+   "szczegoly_odpowiedzi": "10 z 10",
    "szczegoly_tematy": {
-    "f_f3810984_pl": 1,
-    "f_f3473273_pl": 2,
-    "f_f3734591_pl": 2,
     "f_f3649324_pl": 1,
-    "f_f3810985_pl": 1,
-    "f_f3810986_pl": 1,
-    "f_f3811001_pl": 1,
-    "f_f3810988_pl": 1,
+    "f_f3734591_pl": 2,
+    "f_f3473273_pl": 2,
     "f_f3683428_pl": 1,
+    "f_f3810986_pl": 1,
+    "f_f3810988_pl": 1,
     "f_f3649325_pl": 1,
+    "f_f3811001_pl": 1,
     "f_f3811002_pl": 1,
     "f_f3811003_pl": 1
    },
    "szczegoly_meczow": {
     "Queretaro FC - CF Monterrey": {
-     "3m14409526": 33
+     "3m14409526": 26
     },
     "Chapecoense SC - CR Vasco da Gama": {
-     "3m14639460": 96
-    },
-    "Johnson, Donte - Almeida, Cesar": {
-     "10m910364": 5,
-     "1m76149608": 6
-    },
-    "Miller Jim - McKinney Terrance": {
-     "1m74915874": 6
+     "3m14639460": 57
     },
     "Adeleye David - Flores Alexander": {
      "16m66693": 3,
      "1m75573244": 1
     },
-    "Dober Drew - Duncan Chris": {
+    "Dober, Drew - Duncan, Chris": {
      "1m74915876": 6
     },
     "Hasan Bilal - Gurule Luis": {
@@ -3552,478 +2900,397 @@
    "rynki_przyklad": {
     "Queretaro FC - CF Monterrey": {
      "1 Mecz": [
-      "Mecz | 1:1=4.2",
-      "Mecz | 2:X=2.29",
-      "Mecz | 3:2=2.29"
+      "Mecz | 1:1=60",
+      "Mecz | 2:X=14",
+      "Mecz | 3:2=1.03"
      ],
      "7 ": [
-      "Wygra od stanu 0:0 | 1:=4.2",
-      "Wygra od stanu 0:0 | 2:=2.29",
-      "Wygra od stanu 0:0 | 3:=2.29"
+      "Wygra od stanu 0:1 | 1:=15",
+      "Wygra od stanu 0:1 | 2:=1.55",
+      "Wygra od stanu 0:1 | 3:=2.5"
      ],
      "8 Następny gol": [
-      "1. gol | 6:1=3.1",
-      "1. gol | 7:nikt=3.4",
-      "1. gol | 8:2=2"
+      "2. gol | 6:1=12",
+      "2. gol | 7:nikt=1.6",
+      "2. gol | 8:2=2.5"
      ],
      "10 Podwójna szansa": [
-      "Podwójna szansa | 10:12=1.45",
-      "Podwójna szansa | 11:X2=1.17",
-      "Podwójna szansa | 9:1X=1.5"
-     ],
-     "11 Zakład bez remisu": [
-      "Zakład bez remisu | 4:1=2.5",
-      "Zakład bez remisu | 5:2=1.4"
+      "Podwójna szansa | 9:1X=4.8"
      ],
      "14 Handicap 1X2": [
-      "Handicap 1X2 | 922:1 (2:0)=1.1",
-      "Handicap 1X2 | 923:X (2:0)=7",
-      "Handicap 1X2 | 924:2 (2:0)=16",
-      "Handicap 1X2 | 922:1 (1:0)=1.55",
-      "Handicap 1X2 | 923:X (1:0)=3.2",
-      "Handicap 1X2 | 924:2 (1:0)=6.25",
-      "Handicap 1X2 | 922:1 (0:1)=14",
-      "Handicap 1X2 | 923:X (0:1)=5"
+      "Handicap 1X2 | 922:1 (2:0)=1.45",
+      "Handicap 1X2 | 923:X (2:0)=3",
+      "Handicap 1X2 | 924:2 (2:0)=11",
+      "Handicap 1X2 | 922:1 (1:0)=15",
+      "Handicap 1X2 | 923:X (1:0)=1.55",
+      "Handicap 1X2 | 924:2 (1:0)=2.5"
      ],
      "22 Handicap": [
-      "Handicap | 925:1 (-0.5)=4.2",
-      "Handicap | 926:2 (+0.5)=1.19",
-      "Handicap | 925:1 (+0.5)=1.55",
-      "Handicap | 926:2 (-0.5)=2.29",
-      "Handicap | 925:1 (+1.5)=1.1",
-      "Handicap | 926:2 (-1.5)=6.25"
+      "Handicap | 925:1 (+2.5)=1.04",
+      "Handicap | 926:2 (-2.5)=11",
+      "Handicap | 925:1 (+1.5)=1.45",
+      "Handicap | 926:2 (-1.5)=2.5"
      ],
      "25 Liczba goli": [
-      "Liczba goli | 12:+1.5=2.29",
-      "Liczba goli | 13:-1.5=1.55",
-      "Liczba goli | 12:+0.5=1.25",
-      "Liczba goli | 13:-0.5=3.4",
-      "Liczba goli | 12:+3.5=14",
-      "Liczba goli | 13:-3.5=1.03"
+      "Liczba goli | 12:+1.5=2.2",
+      "Liczba goli | 13:-1.5=1.6",
+      "Liczba goli | 12:+3.5=25",
+      "Liczba goli | 12:+2.5=9",
+      "Liczba goli | 13:-2.5=1.06"
      ],
      "28 1. drużyna - liczba goli": [
-      "1. drużyna - liczba goli | 12:+1.5=5.5",
-      "1. drużyna - liczba goli | 13:-1.5=1.08",
-      "1. drużyna - liczba goli | 12:+0.5=2.2",
-      "1. drużyna - liczba goli | 13:-0.5=1.55",
-      "1. drużyna - liczba goli | 12:+2.5=15"
+      "1. drużyna - liczba goli | 12:+0.5=6",
+      "1. drużyna - liczba goli | 13:-0.5=1.05"
      ],
      "31 2. drużyna - liczba goli": [
-      "2. drużyna - liczba goli | 12:+1.5=3.9",
-      "2. drużyna - liczba goli | 13:-1.5=1.17",
-      "2. drużyna - liczba goli | 12:+0.5=1.6",
-      "2. drużyna - liczba goli | 13:-0.5=2.1",
-      "2. drużyna - liczba goli | 12:+2.5=10",
-      "2. drużyna - liczba goli | 13:-2.5=1.01"
+      "2. drużyna - liczba goli | 12:+1.5=2.29",
+      "2. drużyna - liczba goli | 13:-1.5=1.5",
+      "2. drużyna - liczba goli | 12:+3.5=15",
+      "2. drużyna - liczba goli | 12:+2.5=8",
+      "2. drużyna - liczba goli | 13:-2.5=1.03"
      ],
      "40 Suma goli": [
-      "Suma goli | 24:nieparzysta=1.9",
-      "Suma goli | 25:parzysta=1.7"
+      "Suma goli | 24:nieparzysta=1.4",
+      "Suma goli | 25:parzysta=2.5"
      ],
      "43 Obie drużyny - strzelą gola": [
-      "Obie drużyny - strzelą gola | 26:tak=3.6",
-      "Obie drużyny - strzelą gola | 27:nie=1.25"
+      "Obie drużyny - strzelą gola | 26:tak=10",
+      "Obie drużyny - strzelą gola | 27:nie=1.05"
      ],
      "49 Wynik końcowy i obie drużyny - strzelą gola": [
-      "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=16",
-      "Wynik końcowy i obie drużyny - strzelą gola | 29:1 i nie=4.8",
-      "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=5.75",
-      "Wynik końcowy i obie drużyny - strzelą gola | 31:X i nie=3.4"
+      "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=60",
+      "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=14",
+      "Wynik końcowy i obie drużyny - strzelą gola | 32:2 i tak=10",
+      "Wynik końcowy i obie drużyny - strzelą gola | 33:2 i nie=1.03"
      ],
      "51 Wynik końcowy i liczba goli": [
-      "Wynik końcowy i liczba goli | 235:1 i -1.5=6.5",
-      "Wynik końcowy i liczba goli | 236:1 i +1.5=9.5",
-      "Wynik końcowy i liczba goli | 237:X i -1.5=3.2",
-      "Wynik końcowy i liczba goli | 238:X i +1.5=6",
-      "Wynik końcowy i liczba goli | 235:1 i -3.5=4.09",
-      "Wynik końcowy i liczba goli | 236:1 i +3.5=40",
-      "Wynik końcowy i liczba goli | 237:X i -3.5=2.29",
-      "Wynik końcowy i liczba goli | 238:X i +3.5=30"
-     ],
-     "1059 ": [
-      "Zawodnik - strzeli co najmniej 2 gole | 372425329:Reyes, Diego=500",
-      "Zawodnik - strzeli co najmniej 2 gole | 372425330:Ocampos, L=40",
-      "Zawodnik - strzeli co najmniej 2 gole | 372425331:Villanueva, Carlos=500",
-      "Zawodnik - strzeli co najmniej 2 gole | 372425332:Pineda, Orbelin=100"
-     ],
-     "1060 ": [
-      "Zawodnik - strzeli co najmniej 3 gole | 372425176:Reyes, Diego=500",
-      "Zawodnik - strzeli co najmniej 3 gole | 372425177:Ocampos, L=300",
-      "Zawodnik - strzeli co najmniej 3 gole | 372425178:Villanueva, Carlos=500",
-      "Zawodnik - strzeli co najmniej 3 gole | 372425179:Pineda, Orbelin=500"
-     ],
-     "1224 2. drużyna - strzeli gola": [
-      "2. drużyna - strzeli gola | 26:tak=1.6",
-      "2. drużyna - strzeli gola | 27:nie=2.1"
+      "Wynik końcowy i liczba goli | 236:1 i +1.5=60",
+      "Wynik końcowy i liczba goli | 238:X i +1.5=14",
+      "Wynik końcowy i liczba goli | 239:2 i -1.5=1.5",
+      "Wynik końcowy i liczba goli | 240:2 i +1.5=2.2",
+      "Wynik końcowy i liczba goli | 235:1 i -3.5=30",
+      "Wynik końcowy i liczba goli | 236:1 i +3.5=70",
+      "Wynik końcowy i liczba goli | 237:X i -3.5=14",
+      "Wynik końcowy i liczba goli | 238:X i +3.5=60"
      ],
      "1229 1. drużyna - strzeli gola": [
-      "1. drużyna - strzeli gola | 26:tak=2.2",
-      "1. drużyna - strzeli gola | 27:nie=1.55"
+      "1. drużyna - strzeli gola | 26:tak=8",
+      "1. drużyna - strzeli gola | 27:nie=1.03"
      ],
      "1857 ": [
-      "Dokładna liczba goli | 372425395:0=3.4",
-      "Dokładna liczba goli | 372425396:1=2.5",
-      "Dokładna liczba goli | 372425397:2=3.4",
-      "Dokładna liczba goli | 372425398:3=6.75"
+      "Dokładna liczba goli | 372425396:1=1.6",
+      "Dokładna liczba goli | 372425397:2=2.4",
+      "Dokładna liczba goli | 372425398:3=7.5",
+      "Dokładna liczba goli | 372425399:4=30"
      ],
      "1858 ": [
-      "1. drużyna - dokładna liczba goli | 372425453:0=1.55",
-      "1. drużyna - dokładna liczba goli | 372425454:1=2.5",
-      "1. drużyna - dokładna liczba goli | 372425455:2=8",
-      "1. drużyna - dokładna liczba goli | 372425456:3=25"
+      "1. drużyna - dokładna liczba goli | 372425453:0=1.05",
+      "1. drużyna - dokładna liczba goli | 372425454:1=10",
+      "1. drużyna - dokładna liczba goli | 372425455:2=15"
      ],
      "1859 ": [
-      "2. drużyna - dokładna liczba goli | 372425459:0=2.1",
-      "2. drużyna - dokładna liczba goli | 372425460:1=2.29",
-      "2. drużyna - dokładna liczba goli | 372425461:2=4.8",
-      "2. drużyna - dokładna liczba goli | 372425462:3=14"
+      "2. drużyna - dokładna liczba goli | 372425460:1=1.5",
+      "2. drużyna - dokładna liczba goli | 372425461:2=2.5",
+      "2. drużyna - dokładna liczba goli | 372425462:3=9",
+      "2. drużyna - dokładna liczba goli | 372425463:4=30"
      ],
      "1860 ": [
-      "Liczba goli - przedziały | 372425261:0-1=1.55",
-      "Liczba goli - przedziały | 372425262:2-3=2.29",
-      "Liczba goli - przedziały | 372425263:4-5=11",
-      "Liczba goli - przedziały | 372425264:6-7=40"
-     ],
-     "1872 ": [
-      "1. drużyna - liczba goli - przedziały | 372425297:0-1=1.08",
-      "1. drużyna - liczba goli - przedziały | 372425298:2-3=8",
-      "1. drużyna - liczba goli - przedziały | 372425299:4-5=18",
-      "1. drużyna - liczba goli - przedziały | 372425300:6+=50"
+      "Liczba goli - przedziały | 372425261:0-1=1.6",
+      "Liczba goli - przedziały | 372425262:2-3=2.2",
+      "Liczba goli - przedziały | 372425263:4-5=22",
+      "Liczba goli - przedziały | 372425264:6-7=90"
      ],
      "1873 ": [
-      "2. drużyna - liczba goli - przedziały | 372425301:0-1=1.17",
-      "2. drużyna - liczba goli - przedziały | 372425302:2-3=3.9",
-      "2. drużyna - liczba goli - przedziały | 372425303:4-5=20",
-      "2. drużyna - liczba goli - przedziały | 372425304:6+=90"
-     ],
-     "52 Zawodnik - strzeli następnego gola": [
-      "Zawodnik - strzeli 1. gola | 372425305:Reyes, Diego=50",
-      "Zawodnik - strzeli 1. gola | 372425306:Ocampos, L=8.5",
-      "Zawodnik - strzeli 1. gola | 372425307:Villanueva, Carlos=40",
-      "Zawodnik - strzeli 1. gola | 372425308:Pineda, Orbelin=16"
-     ],
-     "54 Zawodnik - strzeli gola": [
-      "Zawodnik - strzeli gola | 372425149:Reyes, Diego=35",
-      "Zawodnik - strzeli gola | 372425150:Ocampos, L=5.5",
-      "Zawodnik - strzeli gola | 372425151:Villanueva, Carlos=30",
-      "Zawodnik - strzeli gola | 372425152:Pineda, Orbelin=10"
+      "2. drużyna - liczba goli - przedziały | 372425301:0-1=1.5",
+      "2. drużyna - liczba goli - przedziały | 372425302:2-3=2.29",
+      "2. drużyna - liczba goli - przedziały | 372425303:4-5=22",
+      "2. drużyna - liczba goli - przedziały | 372425304:6+=100"
      ],
      "102 2. połowa": [
-      "2. połowa | 1:1=4.2",
-      "2. połowa | 2:X=2.29",
-      "2. połowa | 3:2=2.29"
+      "2. połowa | 1:1=40",
+      "2. połowa | 2:X=14",
+      "2. połowa | 3:2=1.03"
      ],
      "104 2. połowa - podwójna szansa": [
-      "2. połowa - podwójna szansa | 10:12=1.5",
-      "2. połowa - podwójna szansa | 11:X2=1.18",
-      "2. połowa - podwójna szansa | 9:1X=1.5"
+      "2. połowa - podwójna szansa | 9:1X=5.5"
      ],
      "105 2. połowa - zakład bez remisu": [
-      "2. połowa - zakład bez remisu | 4:1=2.5",
-      "2. połowa - zakład bez remisu | 5:2=1.4"
+      "2. połowa - zakład bez remisu | 4:1=15"
      ],
      "112 2. połowa - liczba goli": [
-      "2. połowa - liczba goli | 12:+1.5=2.25",
-      "2. połowa - liczba goli | 13:-1.5=1.55",
-      "2. połowa - liczba goli | 12:+0.5=1.25",
-      "2. połowa - liczba goli | 13:-0.5=3.3"
+      "2. połowa - liczba goli | 12:+1.5=2.15",
+      "2. połowa - liczba goli | 13:-1.5=1.6",
+      "2. połowa - liczba goli | 12:+2.5=7.5",
+      "2. połowa - liczba goli | 13:-2.5=1.05"
      ],
      "121 2. połowa - obie drużyny - strzelą gola": [
-      "2. połowa - obie drużyny - strzelą gola | 26:tak=3.4",
-      "2. połowa - obie drużyny - strzelą gola | 27:nie=1.22"
+      "2. połowa - obie drużyny - strzelą gola | 26:tak=8",
+      "2. połowa - obie drużyny - strzelą gola | 27:nie=1.03"
      ],
      "228 Liczba rzutów rożnych": [
-      "Liczba rzutów rożnych | 12:+9.5=3.3",
-      "Liczba rzutów rożnych | 13:-9.5=1.3",
-      "Liczba rzutów rożnych | 12:+8.5=2.2",
-      "Liczba rzutów rożnych | 13:-8.5=1.6",
-      "Liczba rzutów rożnych | 12:+6.5=1.3",
-      "Liczba rzutów rożnych | 13:-6.5=3.3"
+      "Liczba rzutów rożnych | 12:+10.5=20",
+      "Liczba rzutów rożnych | 13:-10.5=1.01",
+      "Liczba rzutów rożnych | 12:+9.5=8",
+      "Liczba rzutów rożnych | 13:-9.5=1.08",
+      "Liczba rzutów rożnych | 12:+8.5=3.3",
+      "Liczba rzutów rożnych | 13:-8.5=1.3"
      ],
      "808 2. połowa - wynik i obie drużyny - strzelą gola": [
-      "2. połowa - wynik i obie drużyny - strzelą gola | 28:1 i tak=16",
-      "2. połowa - wynik i obie drużyny - strzelą gola | 29:1 i nie=4.9",
-      "2. połowa - wynik i obie drużyny - strzelą gola | 30:X i tak=6",
-      "2. połowa - wynik i obie drużyny - strzelą gola | 31:X i nie=3.3"
+      "2. połowa - wynik i obie drużyny - strzelą gola | 28:1 i tak=35",
+      "2. połowa - wynik i obie drużyny - strzelą gola | 30:X i tak=12",
+      "2. połowa - wynik i obie drużyny - strzelą gola | 32:2 i tak=13",
+      "2. połowa - wynik i obie drużyny - strzelą gola | 33:2 i nie=1.04"
      ]
     },
     "Chapecoense SC - CR Vasco da Gama": {
      "1 Mecz": [
-      "Mecz | 1:1=5.6",
-      "Mecz | 2:X=3.35",
-      "Mecz | 3:2=1.65"
+      "Mecz | 1:1=21",
+      "Mecz | 2:X=6",
+      "Mecz | 3:2=1.16"
      ],
      "7 ": [
-      "Wygra od stanu 0:0 | 1:=6.25",
-      "Wygra od stanu 0:0 | 2:=3.4",
-      "Wygra od stanu 0:0 | 3:=1.7"
+      "Wygra od stanu 0:1 | 1:=5.5",
+      "Wygra od stanu 0:1 | 2:=2.5",
+      "Wygra od stanu 0:1 | 3:=2.1"
      ],
      "8 Następny gol": [
-      "1. gol | 6:1=3.3",
-      "1. gol | 7:nikt=7.5",
-      "1. gol | 8:2=1.55"
+      "2. gol | 6:1=3.7",
+      "2. gol | 7:nikt=3.5",
+      "2. gol | 8:2=1.9"
      ],
      "10 Podwójna szansa": [
-      "Podwójna szansa | 10:12=1.33",
-      "Podwójna szansa | 11:X2=1.14",
-      "Podwójna szansa | 9:1X=2.22"
+      "Podwójna szansa | 10:12=1.13",
+      "Podwójna szansa | 9:1X=5"
      ],
      "11 Zakład bez remisu": [
-      "Zakład bez remisu | 4:1=4.1",
-      "Zakład bez remisu | 5:2=1.2"
+      "Zakład bez remisu | 4:1=16"
      ],
      "14 Handicap 1X2": [
-      "Handicap 1X2 | 922:1 (2:0)=1.38",
-      "Handicap 1X2 | 923:X (2:0)=4.9",
-      "Handicap 1X2 | 924:2 (2:0)=6.8",
-      "Handicap 1X2 | 922:1 (1:0)=2.22",
-      "Handicap 1X2 | 923:X (1:0)=3.3",
-      "Handicap 1X2 | 924:2 (1:0)=3.05",
-      "Handicap 1X2 | 922:1 (0:1)=15",
-      "Handicap 1X2 | 923:X (0:1)=7.6"
+      "Handicap 1X2 | 922:1 (2:0)=1.74",
+      "Handicap 1X2 | 923:X (2:0)=3.2",
+      "Handicap 1X2 | 924:2 (2:0)=5",
+      "Handicap 1X2 | 922:1 (3:0)=1.17",
+      "Handicap 1X2 | 923:X (3:0)=6.4",
+      "Handicap 1X2 | 924:2 (3:0)=16",
+      "Handicap 1X2 | 922:1 (1:0)=5",
+      "Handicap 1X2 | 923:X (1:0)=2.47"
      ],
      "22 Handicap": [
-      "Handicap | 925:1 (+2.5)=1.09",
-      "Handicap | 926:2 (-2.5)=6.2",
-      "Handicap | 926:2 (-3.5)=14",
-      "Handicap | 925:1 (-0.5)=5.4",
-      "Handicap | 926:2 (+0.5)=1.12"
+      "Handicap | 925:1 (+2.5)=1.15",
+      "Handicap | 926:2 (-2.5)=4.8",
+      "Handicap | 926:2 (-3.5)=13",
+      "Handicap | 925:1 (-0.5)=17"
      ],
      "25 Liczba goli": [
-      "Liczba goli | 12:+1.5=1.43",
-      "Liczba goli | 13:-1.5=2.6",
-      "Liczba goli | 12:+0.5=1.08",
-      "Liczba goli | 13:-0.5=6.6",
-      "Liczba goli | 12:+4.5=10",
-      "Liczba goli | 13:-4.5=1.03"
+      "Liczba goli | 12:+1.5=1.27",
+      "Liczba goli | 13:-1.5=3.4",
+      "Liczba goli | 12:+4.5=13",
+      "Liczba goli | 13:-4.5=1.01",
+      "Liczba goli | 12:+3.5=5.6",
+      "Liczba goli | 13:-3.5=1.11"
      ],
      "28 1. drużyna - liczba goli": [
-      "1. drużyna - liczba goli | 12:+1.5=5.6",
-      "1. drużyna - liczba goli | 13:-1.5=1.11",
-      "1. drużyna - liczba goli | 12:+0.5=1.89",
-      "1. drużyna - liczba goli | 13:-0.5=1.82",
-      "1. drużyna - liczba goli | 12:+2.5=16"
+      "1. drużyna - liczba goli | 12:+1.5=10",
+      "1. drużyna - liczba goli | 13:-1.5=1.03",
+      "1. drużyna - liczba goli | 12:+0.5=2.5",
+      "1. drużyna - liczba goli | 13:-0.5=1.48",
+      "1. drużyna - liczba goli | 12:+2.5=22"
      ],
      "31 2. drużyna - liczba goli": [
-      "2. drużyna - liczba goli | 12:+1.5=2",
-      "2. drużyna - liczba goli | 13:-1.5=1.73",
-      "2. drużyna - liczba goli | 12:+0.5=1.21",
-      "2. drużyna - liczba goli | 13:-0.5=4",
-      "2. drużyna - liczba goli | 12:+2.5=4.3",
-      "2. drużyna - liczba goli | 13:-2.5=1.19"
+      "2. drużyna - liczba goli | 12:+1.5=1.53",
+      "2. drużyna - liczba goli | 13:-1.5=2.35",
+      "2. drużyna - liczba goli | 12:+3.5=10",
+      "2. drużyna - liczba goli | 13:-3.5=1.03",
+      "2. drużyna - liczba goli | 12:+2.5=3.8",
+      "2. drużyna - liczba goli | 13:-2.5=1.23"
      ],
      "40 Suma goli": [
-      "Suma goli | 24:nieparzysta=1.9",
-      "Suma goli | 25:parzysta=1.8"
+      "Suma goli | 24:nieparzysta=1.75",
+      "Suma goli | 25:parzysta=1.95"
      ],
      "41 1. drużyna - suma goli": [
-      "1. drużyna - suma goli | 24:nieparzysta=2.4",
-      "1. drużyna - suma goli | 25:parzysta=1.5"
+      "1. drużyna - suma goli | 24:nieparzysta=3",
+      "1. drużyna - suma goli | 25:parzysta=1.35"
      ],
      "42 2. drużyna - suma goli": [
-      "2. drużyna - suma goli | 24:nieparzysta=1.95",
-      "2. drużyna - suma goli | 25:parzysta=1.75"
+      "2. drużyna - suma goli | 24:nieparzysta=1.6",
+      "2. drużyna - suma goli | 25:parzysta=2.2"
      ],
      "43 Obie drużyny - strzelą gola": [
-      "Obie drużyny - strzelą gola | 26:tak=2.37",
-      "Obie drużyny - strzelą gola | 27:nie=1.52"
-     ],
-     "45 ": [
-      "1. drużyna - zachowa czyste konto | 26:=4",
-      "1. drużyna - zachowa czyste konto | 27:=1.22"
+      "Obie drużyny - strzelą gola | 26:tak=2.47",
+      "Obie drużyny - strzelą gola | 27:nie=1.48"
      ],
      "46 ": [
-      "2. drużyna - zachowa czyste konto | 26:=1.8",
-      "2. drużyna - zachowa czyste konto | 27:=1.9"
+      "2. drużyna - zachowa czyste konto | 26:=1.5",
+      "2. drużyna - zachowa czyste konto | 27:=2.5"
      ],
      "49 Wynik końcowy i obie drużyny - strzelą gola": [
-      "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=13",
-      "Wynik końcowy i obie drużyny - strzelą gola | 29:1 i nie=7.5",
-      "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=5",
-      "Wynik końcowy i obie drużyny - strzelą gola | 31:X i nie=7.5"
+      "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=30",
+      "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=6.25",
+      "Wynik końcowy i obie drużyny - strzelą gola | 32:2 i tak=3.8",
+      "Wynik końcowy i obie drużyny - strzelą gola | 33:2 i nie=1.35"
      ],
      "50 Liczba goli i obie drużyny - strzelą gola": [
-      "Liczba goli i obie drużyny - strzelą gola | 34:+4.5 i tak=13",
+      "Liczba goli i obie drużyny - strzelą gola | 34:+4.5 i tak=20",
       "Liczba goli i obie drużyny - strzelą gola | 35:-4.5 i tak=2.7",
       "Liczba goli i obie drużyny - strzelą gola | 36:+4.5 i nie=50",
-      "Liczba goli i obie drużyny - strzelą gola | 37:-4.5 i nie=1.5",
-      "Liczba goli i obie drużyny - strzelą gola | 34:+3.5 i tak=6.25",
+      "Liczba goli i obie drużyny - strzelą gola | 37:-4.5 i nie=1.45",
+      "Liczba goli i obie drużyny - strzelą gola | 34:+3.5 i tak=8",
       "Liczba goli i obie drużyny - strzelą gola | 35:-3.5 i tak=3.4",
-      "Liczba goli i obie drużyny - strzelą gola | 36:+3.5 i nie=20",
-      "Liczba goli i obie drużyny - strzelą gola | 37:-3.5 i nie=1.6"
+      "Liczba goli i obie drużyny - strzelą gola | 36:+3.5 i nie=17",
+      "Liczba goli i obie drużyny - strzelą gola | 37:-3.5 i nie=1.5"
      ],
      "51 Wynik końcowy i liczba goli": [
-      "Wynik końcowy i liczba goli | 235:1 i -1.5=10",
-      "Wynik końcowy i liczba goli | 236:1 i +1.5=9",
-      "Wynik końcowy i liczba goli | 237:X i -1.5=6.5",
-      "Wynik końcowy i liczba goli | 238:X i +1.5=5.25",
-      "Wynik końcowy i liczba goli | 235:1 i -3.5=5.75",
-      "Wynik końcowy i liczba goli | 236:1 i +3.5=30",
-      "Wynik końcowy i liczba goli | 237:X i -3.5=3.4",
-      "Wynik końcowy i liczba goli | 238:X i +3.5=18"
-     ],
-     "72 ": [
-      "1. połowa - wygra od stanu 0:0 | 1:=9",
-      "1. połowa - wygra od stanu 0:0 | 2:=1.4",
-      "1. połowa - wygra od stanu 0:0 | 3:=3.8"
-     ],
-     "250 ": [
-      "1. połowa - 1. drużyna - liczba rzutów rożnych | 12:+3.5=5.9",
-      "1. połowa - 1. drużyna - liczba rzutów rożnych | 13:-3.5=1.09",
-      "1. połowa - 1. drużyna - liczba rzutów rożnych | 12:+2.5=2.4",
-      "1. połowa - 1. drużyna - liczba rzutów rożnych | 13:-2.5=1.48"
-     ],
-     "253 ": [
-      "1. połowa - 2. drużyna - liczba rzutów rożnych | 12:+4.5=11",
-      "1. połowa - 2. drużyna - liczba rzutów rożnych | 13:-4.5=1.01",
-      "1. połowa - 2. drużyna - liczba rzutów rożnych | 12:+3.5=4.7",
-      "1. połowa - 2. drużyna - liczba rzutów rożnych | 13:-3.5=1.14",
-      "1. połowa - 2. drużyna - liczba rzutów rożnych | 12:+2.5=1.86",
-      "1. połowa - 2. drużyna - liczba rzutów rożnych | 13:-2.5=1.81"
+      "Wynik końcowy i liczba goli | 236:1 i +1.5=30",
+      "Wynik końcowy i liczba goli | 238:X i +1.5=6.25",
+      "Wynik końcowy i liczba goli | 239:2 i -1.5=2.9",
+      "Wynik końcowy i liczba goli | 240:2 i +1.5=1.5",
+      "Wynik końcowy i liczba goli | 235:1 i -3.5=22",
+      "Wynik końcowy i liczba goli | 236:1 i +3.5=40",
+      "Wynik końcowy i liczba goli | 237:X i -3.5=6",
+      "Wynik końcowy i liczba goli | 238:X i +3.5=20"
      ],
      "811 Podwójna szansa i obie drużyny - strzelą gola": [
-      "Podwójna szansa i obie drużyny - strzelą gola | 929:1X i tak=4.5",
-      "Podwójna szansa i obie drużyny - strzelą gola | 930:1X i nie=4.2",
-      "Podwójna szansa i obie drużyny - strzelą gola | 931:12 i tak=4.09",
-      "Podwójna szansa i obie drużyny - strzelą gola | 932:12 i nie=1.95"
+      "Podwójna szansa i obie drużyny - strzelą gola | 929:1X i tak=5",
+      "Podwójna szansa i obie drużyny - strzelą gola | 931:12 i tak=4.3",
+      "Podwójna szansa i obie drużyny - strzelą gola | 932:12 i nie=1.5",
+      "Podwójna szansa i obie drużyny - strzelą gola | 933:X2 i tak=2.8"
      ],
      "812 Podwójna szansa i liczba goli": [
-      "Podwójna szansa i liczba goli | 935:1X i -1.5=4.8",
-      "Podwójna szansa i liczba goli | 936:12 i -1.5=4",
-      "Podwójna szansa i liczba goli | 937:X2 i -1.5=3.3",
-      "Podwójna szansa i liczba goli | 938:1X i +1.5=3.9",
-      "Podwójna szansa i liczba goli | 935:1X i -2.5=2.8",
-      "Podwójna szansa i liczba goli | 936:12 i -2.5=2.4",
-      "Podwójna szansa i liczba goli | 937:X2 i -2.5=1.8",
-      "Podwójna szansa i liczba goli | 938:1X i +2.5=10"
+      "Podwójna szansa i liczba goli | 936:12 i -1.5=3.5",
+      "Podwójna szansa i liczba goli | 937:X2 i -1.5=3.5",
+      "Podwójna szansa i liczba goli | 938:1X i +1.5=5.25",
+      "Podwójna szansa i liczba goli | 939:12 i +1.5=1.6",
+      "Podwójna szansa i liczba goli | 935:1X i -2.5=7.5",
+      "Podwójna szansa i liczba goli | 936:12 i -2.5=1.9",
+      "Podwójna szansa i liczba goli | 937:X2 i -2.5=1.55",
+      "Podwójna szansa i liczba goli | 938:1X i +2.5=16"
      ],
      "1034 ": [
-      "Którakolwiek drużyna - wygra | 26:=1.33",
-      "Którakolwiek drużyna - wygra | 27:=3.45"
+      "Którakolwiek drużyna - wygra | 26:=1.13",
+      "Którakolwiek drużyna - wygra | 27:=6"
      ],
      "1059 ": [
-      "Zawodnik - strzeli co najmniej 2 gole | 372427700:Rodrigues Júnior, Jair=20",
-      "Zawodnik - strzeli co najmniej 2 gole | 372427701:Reijers de Oliveira, Camilo=40",
-      "Zawodnik - strzeli co najmniej 2 gole | 372427702:Giovanni Augusto=40",
-      "Zawodnik - strzeli co najmniej 2 gole | 372427703:Colidio, Facundo=17"
+      "Zawodnik - strzeli co najmniej 2 gole | 372427700:Rodrigues Júnior, Jair=35",
+      "Zawodnik - strzeli co najmniej 2 gole | 372427701:Reijers de Oliveira, Camilo=60",
+      "Zawodnik - strzeli co najmniej 2 gole | 372427702:Giovanni Augusto=50",
+      "Zawodnik - strzeli co najmniej 2 gole | 372427703:Colidio, Facundo=30"
      ],
      "1060 ": [
-      "Zawodnik - strzeli co najmniej 3 gole | 372427525:Rodrigues Júnior, Jair=90",
+      "Zawodnik - strzeli co najmniej 3 gole | 372427525:Rodrigues Júnior, Jair=150",
       "Zawodnik - strzeli co najmniej 3 gole | 372427526:Reijers de Oliveira, Camilo=200",
       "Zawodnik - strzeli co najmniej 3 gole | 372427527:Giovanni Augusto=200",
-      "Zawodnik - strzeli co najmniej 3 gole | 372427528:Colidio, Facundo=60"
-     ],
-     "1224 2. drużyna - strzeli gola": [
-      "2. drużyna - strzeli gola | 26:tak=1.22",
-      "2. drużyna - strzeli gola | 27:nie=4"
+      "Zawodnik - strzeli co najmniej 3 gole | 372427528:Colidio, Facundo=125"
      ],
      "1229 1. drużyna - strzeli gola": [
-      "1. drużyna - strzeli gola | 26:tak=1.9",
-      "1. drużyna - strzeli gola | 27:nie=1.8"
+      "1. drużyna - strzeli gola | 26:tak=2.5",
+      "1. drużyna - strzeli gola | 27:nie=1.45"
      ],
      "1281 ": [
-      "Wynik po 75 minutach | 1:=5.5",
-      "Wynik po 75 minutach | 2:=2.4",
-      "Wynik po 75 minutach | 3:=2",
-      "Wynik po 60 minutach | 1:=6.25",
-      "Wynik po 60 minutach | 2:=1.85",
-      "Wynik po 60 minutach | 3:=2.5"
+      "Wynik po 75 minutach | 1:=40",
+      "Wynik po 75 minutach | 2:=7",
+      "Wynik po 75 minutach | 3:=1.1",
+      "Wynik po 60 minutach | 1:=100",
+      "Wynik po 60 minutach | 2:=11"
      ],
      "1333 ": [
-      "1. drużyna - suma rzutów rożnych | 24:=1.85",
-      "1. drużyna - suma rzutów rożnych | 25:=1.85"
+      "1. drużyna - suma rzutów rożnych | 24:=1.65",
+      "1. drużyna - suma rzutów rożnych | 25:=2.1"
      ],
      "1334 ": [
-      "2. drużyna - suma rzutów rożnych | 24:=1.85",
-      "2. drużyna - suma rzutów rożnych | 25:=1.85"
-     ],
-     "1408 ": [
-      "Obie drużyny strzelą gola w obu połowach | 26:=25"
+      "2. drużyna - suma rzutów rożnych | 24:=1.8",
+      "2. drużyna - suma rzutów rożnych | 25:=1.9"
      ],
      "1857 ": [
-      "Dokładna liczba goli | 372427802:0=7.5",
-      "Dokładna liczba goli | 372427803:1=3.6",
-      "Dokładna liczba goli | 372427804:2=3.1",
-      "Dokładna liczba goli | 372427805:3=4"
+      "Dokładna liczba goli | 372427803:1=3.5",
+      "Dokładna liczba goli | 372427804:2=2.4",
+      "Dokładna liczba goli | 372427805:3=3.3",
+      "Dokładna liczba goli | 372427806:4=7.5"
      ],
      "1858 ": [
-      "1. drużyna - dokładna liczba goli | 372427973:0=1.8",
-      "1. drużyna - dokładna liczba goli | 372427974:1=2.4",
-      "1. drużyna - dokładna liczba goli | 372427975:2=6",
-      "1. drużyna - dokładna liczba goli | 372427976:3=18"
+      "1. drużyna - dokładna liczba goli | 372427973:0=1.5",
+      "1. drużyna - dokładna liczba goli | 372427974:1=2.5",
+      "1. drużyna - dokładna liczba goli | 372427975:2=8.5",
+      "1. drużyna - dokładna liczba goli | 372427976:3=25"
      ],
      "1859 ": [
-      "2. drużyna - dokładna liczba goli | 372427979:0=4",
-      "2. drużyna - dokładna liczba goli | 372427980:1=2.7",
-      "2. drużyna - dokładna liczba goli | 372427981:2=3.3",
-      "2. drużyna - dokładna liczba goli | 372427982:3=6.25"
+      "2. drużyna - dokładna liczba goli | 372427980:1=2.29",
+      "2. drużyna - dokładna liczba goli | 372427981:2=2.29",
+      "2. drużyna - dokładna liczba goli | 372427982:3=4.59",
+      "2. drużyna - dokładna liczba goli | 372427983:4=14"
      ],
      "1860 ": [
-      "Liczba goli - przedziały | 372427620:0-1=2.5",
-      "Liczba goli - przedziały | 372427621:2-3=1.85",
-      "Liczba goli - przedziały | 372427622:4-5=5.25",
-      "Liczba goli - przedziały | 372427623:6-7=25"
+      "Liczba goli - przedziały | 372427620:0-1=3.5",
+      "Liczba goli - przedziały | 372427621:2-3=1.5",
+      "Liczba goli - przedziały | 372427622:4-5=5.5",
+      "Liczba goli - przedziały | 372427623:6-7=40"
      ],
-     "1862 ": [
-      "1. połowa - dokładna liczba goli | 372427845:0=1.5",
-      "1. połowa - dokładna liczba goli | 372427846:1=2.6",
-      "1. połowa - dokładna liczba goli | 372427847:2=10",
-      "1. połowa - dokładna liczba goli | 372427848:3=35"
+     "1867 ": [
+      "Rzuty rożne - przedziały | 372427516:0-9=1.85",
+      "Rzuty rożne - przedziały | 372427517:10-11=2.6",
+      "Rzuty rożne - przedziały | 372427518:12+=4.4"
      ],
-     "1863 ": [
-      "1. połowa - 1. drużyna - dokładna liczba goli | 372427881:0=1.11",
-      "1. połowa - 1. drużyna - dokładna liczba goli | 372427882:1=6.5",
-      "1. połowa - 1. drużyna - dokładna liczba goli | 372427883:2=25"
+     "1868 ": [
+      "1. drużyna - rzuty rożne - przedziały | 372427936:3-4=1.75",
+      "1. drużyna - rzuty rożne - przedziały | 372427937:5-6=2.4",
+      "1. drużyna - rzuty rożne - przedziały | 372427938:7+=4.8"
      ],
-     "1864 ": [
-      "1. połowa - 2. drużyna - dokładna liczba goli | 372427885:0=1.3",
-      "1. połowa - 2. drużyna - dokładna liczba goli | 372427886:1=3.3",
-      "1. połowa - 2. drużyna - dokładna liczba goli | 372427887:2=18",
-      "1. połowa - 2. drużyna - dokładna liczba goli | 372427888:3=60"
+     "1869 ": [
+      "2. drużyna - rzuty rożne - przedziały | 372427932:3-4=2",
+      "2. drużyna - rzuty rożne - przedziały | 372427933:5-6=2",
+      "2. drużyna - rzuty rożne - przedziały | 372427934:7+=5"
+     ],
+     "1872 ": [
+      "1. drużyna - liczba goli - przedziały | 372427665:0-1=1.04",
+      "1. drużyna - liczba goli - przedziały | 372427666:2-3=12",
+      "1. drużyna - liczba goli - przedziały | 372427667:4-5=25",
+      "1. drużyna - liczba goli - przedziały | 372427668:6+=50"
+     ],
+     "1873 ": [
+      "2. drużyna - liczba goli - przedziały | 372427669:0-1=2.29",
+      "2. drużyna - liczba goli - przedziały | 372427670:2-3=1.6",
+      "2. drużyna - liczba goli - przedziały | 372427671:4-5=10",
+      "2. drużyna - liczba goli - przedziały | 372427672:6+=80"
+     ],
+     "52 Zawodnik - strzeli następnego gola": [
+      "Zawodnik - strzeli 2. gola | 372427673:Rodrigues Júnior, Jair=13",
+      "Zawodnik - strzeli 2. gola | 372427674:Reijers de Oliveira, Camilo=25",
+      "Zawodnik - strzeli 2. gola | 372427675:Giovanni Augusto=22",
+      "Zawodnik - strzeli 2. gola | 372427676:Colidio, Facundo=10"
+     ],
+     "54 Zawodnik - strzeli gola": [
+      "Zawodnik - strzeli gola | 372427495:Rodrigues Júnior, Jair=6.25",
+      "Zawodnik - strzeli gola | 372427496:Reijers de Oliveira, Camilo=11",
+      "Zawodnik - strzeli gola | 372427497:Giovanni Augusto=10",
+      "Zawodnik - strzeli gola | 372427498:Colidio, Facundo=5.25"
+     ],
+     "61 1. drużyna - wygra co najmniej jedną połowę": [
+      "1. drużyna - wygra co najmniej jedną połowę | 26:tak=5",
+      "1. drużyna - wygra co najmniej jedną połowę | 27:nie=1.15"
+     ],
+     "68 2. drużyna - strzeli gola w obu połowach": [
+      "2. drużyna - strzeli gola w obu połowach | 26:tak=1.55",
+      "2. drużyna - strzeli gola w obu połowach | 27:nie=2.29"
      ]
     },
-    "Johnson, Donte - Almeida, Cesar": {
+    "Adeleye David - Flores Alexander": {
      "25 Liczba rund": [
-      "Liczba rund | 12:+1.5=1.68",
-      "Liczba rund | 13:-1.5=2.08"
+      "Liczba rund | 12:+4.5=2.1",
+      "Liczba rund | 13:-4.5=1.65"
      ],
      "259 Zwycięzca walki": [
-      "Zwycięzca walki | 4:1=1.42",
-      "Zwycięzca walki | 5:2=2.8"
+      "Zwycięzca walki | 4:1=1.05",
+      "Zwycięzca walki | 5:2=9.1"
      ],
-     "1069 Metoda zwycięstwa": [
-      "Metoda zwycięstwa | 1705:1. zawodnik - KO/TKO lub DSQ=2.25",
-      "Metoda zwycięstwa | 1706:1. zawodnik - poddanie=9.4",
-      "Metoda zwycięstwa | 1707:1. zawodnik - na punkty=4",
-      "Metoda zwycięstwa | 1708:X=50"
+     "1068 Metoda zwycięstwa": [
+      "Metoda zwycięstwa | 1734:1. zawodnik - KO/TKO/DSQ lub poddanie=1.2",
+      "Metoda zwycięstwa | 1735:1. zawodnik - na punkty=5.5",
+      "Metoda zwycięstwa | 1736:X=20",
+      "Metoda zwycięstwa | 1737:2. zawodnik - KO/TKO/DSQ lub poddanie=12"
      ],
      "1070 Walka potrwa pełen dystans": [
-      "Walka potrwa pełen dystans | 26:tak=3",
-      "Walka potrwa pełen dystans | 27:nie=1.34"
-     ],
-     "1072 Zwycięzca walki - runda": [
-      "Zwycięzca walki - runda | 1712:1. zawodnik - 1. runda=4.5",
-      "Zwycięzca walki - runda | 1713:1. zawodnik - 2. runda=5",
-      "Zwycięzca walki - runda | 1714:1. zawodnik - 3. runda=8.25",
-      "Zwycięzca walki - runda | 1715:1. zawodnik - na punkty=4"
-     ],
-     "1261 Metoda zwycięstwa - podwójna szansa": [
-      "Metoda zwycięstwa - podwójna szansa | 1825:1. zawodnik - KO/TKO/DSQ lub poddanie=2",
-      "Metoda zwycięstwa - podwójna szansa | 1826:1. zawodnik - KO/TKO/DSQ lub na punkty=1.62",
-      "Metoda zwycięstwa - podwójna szansa | 1827:1. zawodnik - poddanie lub na punkty=3.1",
-      "Metoda zwycięstwa - podwójna szansa | 1828:X=50"
-     ],
-     "2019 ": [
-      "Zwycięstwo przez KO/TKO lub DSQ | 4:=2.5",
-      "Zwycięstwo przez KO/TKO lub DSQ | 5:=3.4"
-     ],
-     "2020 ": [
-      "Zwycięstwo przez decyzję | 4:=3.75",
-      "Zwycięstwo przez decyzję | 5:=9"
-     ],
-     "2021 ": [
-      "Zwycięstwo przez poddanie | 4:=11",
-      "Zwycięstwo przez poddanie | 5:=30"
+      "Walka potrwa pełen dystans | 26:tak=5.15",
+      "Walka potrwa pełen dystans | 27:nie=1.12"
      ]
     }
    },
@@ -4068,41 +3335,43 @@
     "walki: Viddal Riley – Seydi Coupe (2026-11-14 23:00)",
     "walki: Evan Elder – Samuel Sanches (2026-11-14 23:15)",
     "walki: Jared Gordon – Melquizael Costa (2026-11-15 00:45)",
-    "walki: Donte Johnson – Cesar Almeida (2026-11-15 01:15)"
+    "walki: Donte Johnson – Cesar Almeida (2026-11-15 01:15)",
+    "walki: Jim Miller – Terrance Mckinney (2026-11-15 01:45)",
+    "walki: Drew Dober – Chris Duncan (2026-11-15 02:15)"
    ],
-   "stron": 23,
-   "dopasowane": 9,
+   "stron": 21,
+   "dopasowane": 7,
    "nasze_mecze": 42,
    "rynki_przyklad": {
     "walki": {
-     "Jim Miller - Terrance McKinney": [
-      "Ilość rozpoczętych rund",
-      "Liczba rund (0.5 oznacza połowę czasu kolejnej rundy)",
-      "Metoda zwycięstwa Jim Miller",
-      "Metoda zwycięstwa Terrance McKinney",
-      "Pełen dystans",
-      "Runda zakończenia walki",
-      "Runda zakończenia walki Jim Miller",
-      "Runda zakończenia walki Terrance McKinney",
-      "Walka zakończy się w 1 minucie",
-      "Wybierz metodę zwycięstwa",
-      "Zakłady na rundy & metoda zwycięstwa - Jim Miller",
-      "Zakłady na rundy & metoda zwycięstwa - Terrance McKinney",
-      "Zwycięzca walki"
-     ],
      "David Adeleye - Alexander Flores": [
       "Metoda zwycięstwa",
       "Metoda zwycięstwa Alexander Flores",
       "Metoda zwycięstwa David Adeleye",
       "Pełen dystans",
       "Zwycięzca walki"
+     ],
+     "Bilal Hasan - Luis Gurule": [
+      "Ilość rozpoczętych rund",
+      "Liczba rund (0.5 oznacza połowę czasu kolejnej rundy)",
+      "Metoda zwycięstwa Bilal Hasan",
+      "Metoda zwycięstwa Luis Gurule",
+      "Pełen dystans",
+      "Runda zakończenia walki",
+      "Runda zakończenia walki Bilal Hasan",
+      "Runda zakończenia walki Luis Gurule",
+      "Walka zakończy się w 1 minucie",
+      "Wybierz metodę zwycięstwa",
+      "Zakłady na rundy & metoda zwycięstwa - Bilal Hasan",
+      "Zakłady na rundy & metoda zwycięstwa - Luis Gurule",
+      "Zwycięzca walki"
      ]
     }
    },
-   "sekund": 15,
-   "z_kursami": 9
+   "sekund": 14,
+   "z_kursami": 7
   }
  },
  "lista": "1b0aeffe2b68",
- "sekund": 75
+ "sekund": 74
 }
