@@ -1,14 +1,14 @@
 {
- "czas": "2026-11-14 08:00 UTC",
+ "czas": "2026-11-15 08:00 UTC",
  "wersja": "analityk-1",
  "nasze": {
-  "pilka": 12,
-  "tenis": 2,
-  "walki": 22
+  "pilka": 8,
+  "tenis": 3,
+  "walki": 0
  },
  "zrodla": {
   "ufcstats": {
-   "sekund": 6,
+   "sekund": 7,
    "blad": null,
    "start": [
     200,
@@ -20,28 +20,28 @@
    "zawodnicy_ze_statystykami": 0
   },
   "sofascore": {
-   "sekund": 7,
+   "sekund": 6,
    "blad": null,
    "tryb": null,
    "pilka": {
     "dopasowane": 0,
-    "niedopasowane": 12
+    "niedopasowane": 8
    },
    "tenis": {
     "dopasowane": 0,
-    "niedopasowane": 2
+    "niedopasowane": 3
    },
    "walki": {
     "dopasowane": 0,
-    "niedopasowane": 22
+    "niedopasowane": 0
    }
   },
   "fotmob": {
    "sekund": 1,
    "blad": null,
    "requests": true,
-   "meczow": 325,
-   "dopasowane": 12,
+   "meczow": 238,
+   "dopasowane": 8,
    "niedopasowane": 0,
    "szczegoly": [
     "requests",
@@ -50,36 +50,36 @@
    ]
   },
   "transfermarkt": {
-   "sekund": 2,
+   "sekund": 3,
    "blad": null,
    "start": [
     200
    ],
    "kluby": [
     [
-     "kosovo",
+     "unbekannt",
      200,
      0
     ],
     [
-     "manchester-city",
+     "-tm",
      200,
-     3
+     0
     ],
     [
-     "vereinslos",
+     "zypern",
      200,
-     50
+     2
     ],
     [
-     "ungarn",
+     "defensor-sc",
      200,
-     1
+     0
     ]
    ]
   }
  },
  "ip": "188.68.247.201",
  "przegladarka": "ok",
- "sekund": 24
+ "sekund": 25
 }
