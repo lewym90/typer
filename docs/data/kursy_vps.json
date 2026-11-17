@@ -1,10 +1,10 @@
 {
- "czas": "2026-11-17 18:54 UTC",
+ "czas": "2026-11-17 20:45 UTC",
  "wersja": "czytnik-3",
  "bukmacherzy": {
   "fortuna": {
-   "ok": true,
-   "dopasowane": 9
+   "ok": false,
+   "dopasowane": 0
   },
   "sts": {
    "ok": true,
@@ -12,6066 +12,362 @@
   },
   "betclic": {
    "ok": true,
-   "dopasowane": 8
+   "dopasowane": 0
   }
  },
  "mecze": {
   "3eb1d15a190bb1be8c32a020365dc7c2": {
-   "fortuna": {
-    "id": "ufo:mtch:1xs-01y",
-    "nazwa": "Bośnia i Herc. - Rumunia",
-    "zgodnosc": 0.98,
-    "kursy": {
-     "1": 2.0,
-     "2": 3.5,
-     "X": 3.6,
-     "12": 1.3,
-     "X2": 1.77,
-     "1X": 1.31,
-     "BTTS Tak": 1.59,
-     "BTTS Nie": 2.26,
-     "1 & u3.5": 2.9,
-     "1 & o3.5": 4.6,
-     "X & u3.5": 4.7,
-     "X & o3.5": 9.8,
-     "2 & u3.5": 4.6,
-     "2 & o3.5": 9.4,
-     "2 & o1.5": 4.0,
-     "2 & u1.5": 13.0,
-     "X & o1.5": 4.1,
-     "X & u1.5": 14.0,
-     "1 & o1.5": 2.22,
-     "1 & u1.5": 9.4,
-     "1 & u2.5": 5.2,
-     "1 & o2.5": 2.7,
-     "X & u2.5": 4.7,
-     "X & o2.5": 9.8,
-     "2 & u2.5": 8.2,
-     "2 & o2.5": 4.9,
-     "H -1.5": 3.45,
-     "BTTS & o2.5": 1.89
-    },
-    "pelna": true
-   },
    "sts": {
     "id": "f2414192",
     "nazwa": "Bośnia i Hercegowina - Rumunia",
     "zgodnosc": 1.0,
     "kursy": {
-     "1": 2.02,
-     "X": 3.9,
+     "1": 2.5,
+     "X": 2.65,
      "2": 3.5,
-     "12": 1.3,
-     "X2": 1.82,
+     "12": 1.51,
+     "X2": 1.55,
      "1X": 1.33,
-     "A o0.5": 1.35,
-     "H o0.5": 1.18,
-     "H -1.5": 3.6,
-     "Over 1.5": 1.22,
-     "Under 1.5": 4.3,
-     "Over 0.5": 1.04,
-     "Under 0.5": 14.0,
-     "Over 4.5": 4.9,
-     "Under 4.5": 1.19,
-     "Over 3.5": 2.7,
-     "Under 3.5": 1.48,
-     "Over 2.5": 1.68,
-     "Under 2.5": 2.2,
-     "Over 5.5": 9.5,
+     "H -1.5": 6.2,
+     "A -1.5": 9.8,
+     "Over 6.5": 21.0,
+     "Over 4.5": 4.0,
+     "Under 4.5": 1.24,
+     "Over 3.5": 1.97,
+     "Under 3.5": 1.83,
+     "Over 2.5": 1.21,
+     "Under 2.5": 4.3,
+     "Over 5.5": 9.4,
      "Under 5.5": 1.06,
-     "H o1.5": 1.85,
-     "H o4.5": 14.0,
-     "H o3.5": 8.0,
-     "H o2.5": 3.6,
-     "A o1.5": 2.6,
-     "A o4.5": 16.0,
-     "A o3.5": 17.0,
-     "A o2.5": 6.25,
-     "BTTS Tak": 1.62,
-     "BTTS Nie": 2.3,
-     "1 & u1.5": 9.75,
-     "1 & o1.5": 2.3,
-     "X & u1.5": 14.0,
-     "X & o1.5": 4.5,
-     "2 & u1.5": 13.5,
-     "2 & o1.5": 4.1,
-     "1 & u4.5": 2.4,
-     "1 & o4.5": 7.75,
-     "X & u4.5": 3.75,
-     "X & o4.5": 49.0,
-     "2 & u4.5": 3.9,
-     "2 & o4.5": 15.0,
-     "1 & u3.5": 3.0,
-     "1 & o3.5": 4.8,
-     "X & u3.5": 5.1,
-     "X & o3.5": 11.0,
-     "2 & u3.5": 4.7,
-     "2 & o3.5": 9.75,
-     "1 & u2.5": 5.4,
-     "1 & o2.5": 2.8,
-     "X & u2.5": 5.1,
-     "X & o2.5": 11.0,
-     "2 & u2.5": 8.4,
-     "2 & o2.5": 5.0
+     "H o1.5": 1.59,
+     "H o4.5": 26.0,
+     "H o3.5": 10.0,
+     "H o2.5": 3.85,
+     "H o5.5": 44.0,
+     "A o1.5": 1.84,
+     "A o4.5": 35.0,
+     "A o3.5": 16.0,
+     "A o2.5": 5.2,
+     "A o5.5": 50.0,
+     "1 & o2.5": 2.55,
+     "X & u2.5": 4.45,
+     "X & o2.5": 5.5,
+     "2 & o2.5": 3.55
     },
     "pelna": true
-   },
-   "betclic": {
-    "id": "1279659994001408",
-    "nazwa": "Bośnia i Hercegowina - Rumunia",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "1": 1.98,
-     "X": 3.6,
-     "2": 3.48,
-     "1X": 1.29,
-     "12": 1.27,
-     "X2": 1.76,
-     "Over 0.5": 1.03,
-     "Under 0.5": 9.5,
-     "Over 1.5": 1.19,
-     "Under 1.5": 4.15,
-     "Over 2.5": 1.64,
-     "Under 2.5": 2.13,
-     "Over 3.5": 2.53,
-     "Under 3.5": 1.46,
-     "Over 4.5": 4.4,
-     "Under 4.5": 1.17,
-     "Over 5.5": 7.5,
-     "Under 5.5": 1.06,
-     "BTTS Tak": 1.58,
-     "BTTS Nie": 2.25,
-     "H o0.5": 1.16,
-     "H o1.5": 1.8,
-     "H o2.5": 3.6,
-     "H o3.5": 6.6,
-     "H o4.5": 10.0,
-     "A o0.5": 1.32,
-     "A o1.5": 2.48,
-     "A o2.5": 6.6,
-     "A o3.5": 9.75,
-     "H -4.5": 28.0,
-     "H -3.5": 15.75,
-     "H -2.5": 7.25,
-     "H -1.5": 3.48,
-     "A -1.5": 7.25,
-     "A -2.5": 22.0,
-     "A -3.5": 33.0
-    },
-    "pelna": true,
-    "rynkow": 12,
-    "oferta": {
-     "Wynik meczu (z wyłączeniem dogrywki)": [
-      [
-       "Bośnia i Hercegowina",
-       1.98
-      ],
-      [
-       "Remis",
-       3.6
-      ],
-      [
-       "Rumunia",
-       3.48
-      ]
-     ],
-     "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
-      [
-       "Bośnia i Hercegowina",
-       1.9
-      ],
-      [
-       "Rumunia",
-       3.23
-      ]
-     ],
-     "Podwójna Szansa": [
-      [
-       "Bośnia i Hercegowina lub remis",
-       1.29
-      ],
-      [
-       "Bośnia i Hercegowina lub Rumunia",
-       1.27
-      ],
-      [
-       "Remis lub Rumunia",
-       1.76
-      ]
-     ],
-     "Gole Powyżej/Poniżej": [
-      [
-       "Powyżej 0,5",
-       1.03
-      ],
-      [
-       "Poniżej 0,5",
-       9.5
-      ],
-      [
-       "Powyżej 1,5",
-       1.19
-      ],
-      [
-       "Poniżej 1,5",
-       4.15
-      ],
-      [
-       "Powyżej 2,5",
-       1.64
-      ],
-      [
-       "Poniżej 2,5",
-       2.13
-      ],
-      [
-       "Powyżej 3,5",
-       2.53
-      ],
-      [
-       "Poniżej 3,5",
-       1.46
-      ],
-      [
-       "Powyżej 4,5",
-       4.4
-      ],
-      [
-       "Poniżej 4,5",
-       1.17
-      ],
-      [
-       "Powyżej 5,5",
-       7.5
-      ],
-      [
-       "Poniżej 5,5",
-       1.06
-      ]
-     ],
-     "Oba zespoły strzelą gola": [
-      [
-       "Tak",
-       1.58
-      ],
-      [
-       "Nie",
-       2.25
-      ]
-     ],
-     "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
-      [
-       "Tak",
-       1.5
-      ],
-      [
-       "Nie",
-       2.3
-      ]
-     ],
-     "Którykolwiek zawodnik strzeli gola": [
-      [
-       "H. Tabakovic / M. Deket",
-       1.69
-      ],
-      [
-       "H. Tabakovic / E. Demirovic",
-       1.7
-      ],
-      [
-       "E. Demirovic / M. Deket",
-       1.75
-      ],
-      [
-       "H. Tabakovic / S. Bazdar",
-       1.75
-      ],
-      [
-       "H. Tabakovic / D. Birligea",
-       1.77
-      ],
-      [
-       "E. Mahmic / H. Tabakovic",
-       1.79
-      ],
-      [
-       "M. Deket / S. Bazdar",
-       1.8
-      ],
-      [
-       "E. Demirovic / S. Bazdar",
-       1.81
-      ],
-      [
-       "D. Birligea / E. Demirovic",
-       1.83
-      ],
-      [
-       "D. Birligea / M. Deket",
-       1.83
-      ],
-      [
-       "E. Mahmic / E. Demirovic",
-       1.85
-      ],
-      [
-       "E. Mahmic / M. Deket",
-       1.85
-      ],
-      [
-       "H. Tabakovic / F. Coman",
-       1.86
-      ],
-      [
-       "H. Tabakovic / K. Alajbegovic",
-       1.88
-      ],
-      [
-       "H. Tabakovic / D. Man",
-       1.88
-      ],
-      [
-       "D. Birligea / S. Bazdar",
-       1.9
-      ],
-      [
-       "E. Mahmic / S. Bazdar",
-       1.92
-      ],
-      [
-       "E. Demirovic / F. Coman",
-       1.94
-      ],
-      [
-       "E. Mahmic / D. Birligea",
-       1.94
-      ],
-      [
-       "F. Coman / M. Deket",
-       1.94
-      ],
-      [
-       "E. Demirovic / K. Alajbegovic",
-       1.95
-      ],
-      [
-       "K. Alajbegovic / M. Deket",
-       1.95
-      ],
-      [
-       "D. Man / M. Deket",
-       1.95
-      ],
-      [
-       "E. Demirovic / D. Man",
-       1.96
-      ],
-      [
-       "H. Tabakovic / I. Stoica",
-       2.0
-      ],
-      [
-       "I. Hagi / H. Tabakovic",
-       2.02
-      ],
-      [
-       "F. Coman / S. Bazdar",
-       2.02
-      ],
-      [
-       "D. Man / S. Bazdar",
-       2.03
-      ],
-      [
-       "K. Alajbegovic / S. Bazdar",
-       2.03
-      ],
-      [
-       "D. Birligea / K. Alajbegovic",
-       2.05
-      ]
-     ],
-     "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
-      [
-       "E. Demirovic / H. Tabakovic",
-       1.35
-      ],
-      [
-       "Jovo Lukic / H. Tabakovic",
-       1.37
-      ],
-      [
-       "S. Bazdar / H. Tabakovic",
-       1.38
-      ],
-      [
-       "M. Deket / H. Tabakovic",
-       1.38
-      ],
-      [
-       "Jovo Lukic / E. Demirovic",
-       1.39
-      ],
-      [
-       "E. Demirovic / M. Deket",
-       1.4
-      ],
-      [
-       "E. Demirovic / S. Bazdar",
-       1.4
-      ],
-      [
-       "E. Mahmic / H. Tabakovic",
-       1.41
-      ],
-      [
-       "Jovo Lukic / M. Deket",
-       1.43
-      ],
-      [
-       "E. Demirovic / E. Mahmic",
-       1.43
-      ],
-      [
-       "Jovo Lukic / S. Bazdar",
-       1.43
-      ],
-      [
-       "M. Deket / S. Bazdar",
-       1.43
-      ],
-      [
-       "D. Birligea / H. Tabakovic",
-       1.43
-      ],
-      [
-       "D. Man / H. Tabakovic",
-       1.45
-      ],
-      [
-       "Jovo Lukic / E. Mahmic",
-       1.46
-      ],
-      [
-       "D. Birligea / E. Demirovic",
-       1.47
-      ],
-      [
-       "M. Deket / E. Mahmic",
-       1.47
-      ],
-      [
-       "E. Mahmic / S. Bazdar",
-       1.47
-      ],
-      [
-       "F. Coman / H. Tabakovic",
-       1.47
-      ],
-      [
-       "Jovo Lukic / D. Birligea",
-       1.49
-      ],
-      [
-       "E. Demirovic / D. Man",
-       1.49
-      ],
-      [
-       "R. Ilie / H. Tabakovic",
-       1.49
-      ],
-      [
-       "E. Demirovic / F. Coman",
-       1.51
-      ],
-      [
-       "D. Birligea / M. Deket",
-       1.51
-      ],
-      [
-       "D. Birligea / S. Bazdar",
-       1.51
-      ],
-      [
-       "I. Stoica / H. Tabakovic",
-       1.51
-      ],
-      [
-       "Jovo Lukic / D. Man",
-       1.52
-      ],
-      [
-       "Jovo Lukic / F. Coman",
-       1.53
-      ],
-      [
-       "E. Demirovic / R. Ilie",
-       1.53
-      ],
-      [
-       "E. Demirovic / I. Hagi",
-       1.53
-      ]
-     ],
-     "Liczba goli - Bośnia i Hercegowina": [
-      [
-       "Powyżej 0,5",
-       1.16
-      ],
-      [
-       "Poniżej 0,5",
-       4.95
-      ],
-      [
-       "Powyżej 1,5",
-       1.8
-      ],
-      [
-       "Poniżej 1,5",
-       1.88
-      ],
-      [
-       "Powyżej 2,5",
-       3.6
-      ],
-      [
-       "Poniżej 2,5",
-       1.26
-      ],
-      [
-       "Powyżej 3,5",
-       6.6
-      ],
-      [
-       "Poniżej 3,5",
-       1.06
-      ],
-      [
-       "Powyżej 4,5",
-       10.0
-      ],
-      [
-       "Poniżej 4,5",
-       1.01
-      ]
-     ],
-     "Liczba goli - Rumunia": [
-      [
-       "Powyżej 0,5",
-       1.32
-      ],
-      [
-       "Poniżej 0,5",
-       3.15
-      ],
-      [
-       "Powyżej 1,5",
-       2.48
-      ],
-      [
-       "Poniżej 1,5",
-       1.45
-      ],
-      [
-       "Powyżej 2,5",
-       6.6
-      ],
-      [
-       "Poniżej 2,5",
-       1.1
-      ],
-      [
-       "Powyżej 3,5",
-       9.75
-      ],
-      [
-       "Poniżej 3,5",
-       1.01
-      ]
-     ],
-     "Handicap": [
-      [
-       "Bośnia i Hercegowina (-4)",
-       28.0
-      ],
-      [
-       "Remis (Bośnia i Hercegowina -4)",
-       12.75
-      ],
-      [
-       "Rumunia (+4)",
-       1.01
-      ],
-      [
-       "Bośnia i Hercegowina (-3)",
-       15.75
-      ],
-      [
-       "Remis (Bośnia i Hercegowina -3)",
-       9.25
-      ],
-      [
-       "Rumunia (+3)",
-       1.08
-      ],
-      [
-       "Bośnia i Hercegowina (-2)",
-       7.25
-      ],
-      [
-       "Remis (Bośnia i Hercegowina -2)",
-       5.75
-      ],
-      [
-       "Rumunia (+2)",
-       1.27
-      ],
-      [
-       "Bośnia i Hercegowina (-1)",
-       3.48
-      ],
-      [
-       "Remis (Bośnia i Hercegowina -1)",
-       4.1
-      ],
-      [
-       "Rumunia (+1)",
-       1.76
-      ],
-      [
-       "Bośnia i Hercegowina (+1)",
-       1.29
-      ],
-      [
-       "Remis (Bośnia i Hercegowina +1)",
-       5.25
-      ],
-      [
-       "Rumunia (-1)",
-       7.25
-      ],
-      [
-       "Bośnia i Hercegowina (+2)",
-       1.08
-      ],
-      [
-       "Remis (Bośnia i Hercegowina +2)",
-       11.0
-      ],
-      [
-       "Rumunia (-2)",
-       22.0
-      ],
-      [
-       "Bośnia i Hercegowina (+3)",
-       1.01
-      ],
-      [
-       "Remis (Bośnia i Hercegowina +3)",
-       12.25
-      ],
-      [
-       "Rumunia (-3)",
-       33.0
-      ]
-     ],
-     "Dokładny wynik": [
-      [
-       "1 - 0",
-       9.5
-      ],
-      [
-       "0 - 0",
-       15.0
-      ],
-      [
-       "0 - 1",
-       13.0
-      ],
-      [
-       "2 - 0",
-       10.5
-      ],
-      [
-       "1 - 1",
-       6.5
-      ],
-      [
-       "0 - 2",
-       20.0
-      ],
-      [
-       "2 - 1",
-       8.5
-      ],
-      [
-       "2 - 2",
-       11.75
-      ],
-      [
-       "0 - 3",
-       48.0
-      ],
-      [
-       "3 - 0",
-       18.0
-      ],
-      [
-       "3 - 3",
-       48.0
-      ],
-      [
-       "0 - 4",
-       150.0
-      ],
-      [
-       "3 - 1",
-       14.5
-      ],
-      [
-       "4 - 4",
-       350.0
-      ],
-      [
-       "1 - 2",
-       11.5
-      ],
-      [
-       "3 - 2",
-       23.0
-      ],
-      [
-       "Inny",
-       19.0
-      ],
-      [
-       "1 - 3",
-       27.0
-      ],
-      [
-       "4 - 0",
-       40.0
-      ],
-      [
-       "1 - 4",
-       85.0
-      ],
-      [
-       "4 - 1",
-       33.0
-      ],
-      [
-       "2 - 3",
-       30.0
-      ],
-      [
-       "4 - 2",
-       50.0
-      ],
-      [
-       "2 - 4",
-       100.0
-      ],
-      [
-       "4 - 3",
-       125.0
-      ],
-      [
-       "3 - 4",
-       175.0
-      ]
-     ]
-    }
    }
   },
   "1a07e9080f042594bdb529ab932d680c": {
-   "fortuna": {
-    "id": "ufo:mtch:1xs-01w",
-    "nazwa": "Węgry - Irlandia Płn.",
-    "zgodnosc": 0.83,
-    "kursy": {
-     "2": 4.2,
-     "1": 1.96,
-     "X": 3.2,
-     "12": 1.34,
-     "X2": 1.76,
-     "1X": 1.23,
-     "BTTS Tak": 2.13,
-     "BTTS Nie": 1.61,
-     "BTTS & o2.5": 2.95,
-     "2 & o1.5": 6.2,
-     "2 & u1.5": 9.0,
-     "X & o1.5": 4.7,
-     "X & u1.5": 6.8,
-     "1 & o1.5": 2.55,
-     "1 & u1.5": 5.6,
-     "1 & u2.5": 3.4,
-     "1 & o2.5": 3.6,
-     "X & u2.5": 3.35,
-     "X & o2.5": 19.0,
-     "2 & u2.5": 6.4,
-     "2 & o2.5": 8.6,
-     "1 & o3.5": 7.8,
-     "X & u3.5": 3.3,
-     "X & o3.5": 18.0,
-     "2 & u3.5": 4.4,
-     "2 & o3.5": 24.0,
-     "1 & u3.5": 2.27,
-     "X & u4.5": 2.85,
-     "1 & o4.5": 16.0,
-     "2 & u4.5": 4.0,
-     "X & o4.5": 100.0,
-     "2 & o4.5": 45.0,
-     "1 & u4.5": 1.98,
-     "H -1.5": 3.75
-    },
-    "pelna": true
-   },
    "sts": {
     "id": "f2414172",
     "nazwa": "Węgry - Irlandia Północna",
     "zgodnosc": 1.0,
     "kursy": {
-     "1": 1.98,
-     "X": 3.4,
-     "2": 4.2,
-     "12": 1.35,
-     "X2": 1.85,
-     "1X": 1.26,
-     "A o0.5": 1.68,
-     "H o0.5": 1.3,
-     "H -1.5": 3.9,
-     "H -2.5": 9.25,
-     "Over 1.5": 1.5,
-     "Under 1.5": 2.6,
-     "Over 0.5": 1.1,
-     "Under 0.5": 7.1,
-     "Over 4.5": 10.0,
-     "Under 4.5": 1.05,
-     "Over 3.5": 4.9,
-     "Under 3.5": 1.18,
-     "Over 2.5": 2.5,
-     "Under 2.5": 1.54,
-     "Over 5.5": 25.0,
-     "Under 5.5": 1.01,
-     "H o1.5": 2.4,
-     "H o4.5": 16.0,
-     "H o3.5": 14.0,
-     "H o2.5": 5.5,
-     "A o1.5": 4.3,
-     "A o4.5": 17.0,
-     "A o3.5": 45.0,
-     "A o2.5": 14.0,
-     "BTTS Tak": 2.25,
-     "BTTS Nie": 1.65,
-     "1 & u1.5": 5.75,
-     "1 & o1.5": 2.65,
-     "X & u1.5": 7.1,
-     "X & o1.5": 5.1,
-     "2 & u1.5": 9.25,
-     "2 & o1.5": 6.4,
-     "1 & u4.5": 2.02,
-     "1 & o4.5": 17.0,
-     "X & u4.5": 3.1,
-     "X & o4.5": 100.0,
-     "2 & u4.5": 4.1,
-     "2 & o4.5": 47.0,
-     "1 & u3.5": 2.3,
-     "1 & o3.5": 8.1,
-     "X & u3.5": 3.6,
-     "X & o3.5": 20.0,
-     "2 & u3.5": 4.5,
-     "2 & o3.5": 24.0,
-     "1 & u2.5": 3.5,
-     "1 & o2.5": 3.7,
-     "X & u2.5": 3.6,
+     "1": 1.4,
+     "X": 4.0,
+     "2": 10.0,
+     "12": 1.26,
+     "X2": 3.05,
+     "1X": 1.06,
+     "A o0.5": 2.0,
+     "H -1.5": 3.1,
+     "H -2.5": 9.6,
+     "Over 1.5": 1.34,
+     "Under 1.5": 3.25,
+     "Over 4.5": 16.0,
+     "Under 4.5": 1.01,
+     "Over 3.5": 6.2,
+     "Under 3.5": 1.12,
+     "Over 2.5": 2.6,
+     "Under 2.5": 1.48,
+     "Over 5.5": 35.0,
+     "H o1.5": 2.02,
+     "H o4.5": 38.0,
+     "H o3.5": 19.0,
+     "H o2.5": 6.2,
+     "H o5.5": 55.0,
+     "A o1.5": 6.2,
+     "A o4.5": 55.0,
+     "A o3.5": 40.0,
+     "A o2.5": 19.0,
+     "BTTS Tak": 2.0,
+     "BTTS Nie": 1.8,
+     "1 & u2.5": 1.95,
+     "1 & o2.5": 3.55,
+     "X & u2.5": 4.4,
      "X & o2.5": 20.0,
-     "2 & u2.5": 6.6,
-     "2 & o2.5": 8.75
+     "2 & o2.5": 11.5
     },
     "pelna": true
-   },
-   "betclic": {
-    "id": "1277951102418944",
-    "nazwa": "Węgry - Irlandia Północna",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "1": 1.95,
-     "X": 3.22,
-     "2": 4.05,
-     "1X": 1.23,
-     "12": 1.32,
-     "X2": 1.79,
-     "Over 0.5": 1.09,
-     "Under 0.5": 6.25,
-     "Over 1.5": 1.46,
-     "Under 1.5": 2.55,
-     "Over 2.5": 2.4,
-     "Under 2.5": 1.51,
-     "Over 3.5": 4.4,
-     "Under 3.5": 1.17,
-     "Over 4.5": 8.0,
-     "Under 4.5": 1.05,
-     "Over 5.5": 35.0,
-     "Under 5.5": 1.01,
-     "BTTS Tak": 2.15,
-     "BTTS Nie": 1.63,
-     "H o0.5": 1.28,
-     "H o1.5": 2.3,
-     "H o2.5": 5.75,
-     "H o3.5": 9.0,
-     "H o4.5": 11.0,
-     "A o0.5": 1.63,
-     "A o1.5": 3.95,
-     "A o2.5": 16.0,
-     "A o3.5": 11.0,
-     "H -4.5": 35.0,
-     "H -3.5": 22.0,
-     "H -2.5": 9.5,
-     "H -1.5": 3.85,
-     "A -1.5": 10.75,
-     "A -2.5": 45.0,
-     "A -3.5": 48.0
-    },
-    "pelna": true,
-    "rynkow": 13,
-    "oferta": {
-     "Wynik meczu (z wyłączeniem dogrywki)": [
-      [
-       "Węgry",
-       1.95
-      ],
-      [
-       "Remis",
-       3.22
-      ],
-      [
-       "Irlandia Północna",
-       4.05
-      ]
-     ],
-     "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
-      [
-       "Węgry",
-       1.92
-      ],
-      [
-       "Irlandia Północna",
-       3.9
-      ]
-     ],
-     "Wynik meczu - Xtra Wygrana": [
-      [
-       "Węgry",
-       1.61
-      ],
-      [
-       "Irlandia Północna",
-       3.37
-      ]
-     ],
-     "Podwójna Szansa": [
-      [
-       "Węgry lub remis",
-       1.23
-      ],
-      [
-       "Węgry lub Irlandia Północna",
-       1.32
-      ],
-      [
-       "Remis lub Irlandia Północna",
-       1.79
-      ]
-     ],
-     "Gole Powyżej/Poniżej": [
-      [
-       "Powyżej 0,5",
-       1.09
-      ],
-      [
-       "Poniżej 0,5",
-       6.25
-      ],
-      [
-       "Powyżej 1,5",
-       1.46
-      ],
-      [
-       "Poniżej 1,5",
-       2.55
-      ],
-      [
-       "Powyżej 2,5",
-       2.4
-      ],
-      [
-       "Poniżej 2,5",
-       1.51
-      ],
-      [
-       "Powyżej 3,5",
-       4.4
-      ],
-      [
-       "Poniżej 3,5",
-       1.17
-      ],
-      [
-       "Powyżej 4,5",
-       8.0
-      ],
-      [
-       "Poniżej 4,5",
-       1.05
-      ],
-      [
-       "Powyżej 5,5",
-       35.0
-      ],
-      [
-       "Poniżej 5,5",
-       1.01
-      ]
-     ],
-     "Oba zespoły strzelą gola": [
-      [
-       "Tak",
-       2.15
-      ],
-      [
-       "Nie",
-       1.63
-      ]
-     ],
-     "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
-      [
-       "Tak",
-       1.75
-      ],
-      [
-       "Nie",
-       1.92
-      ]
-     ],
-     "Którykolwiek zawodnik strzeli gola": [
-      [
-       "D. Szoboszlai / A. Szendrei",
-       2.02
-      ],
-      [
-       "G. Jurek / A. Szendrei",
-       2.15
-      ],
-      [
-       "D. Szoboszlai / R. Sallai",
-       2.2
-      ],
-      [
-       "D. Szoboszlai / G. Jurek",
-       2.25
-      ],
-      [
-       "I. Price / A. Szendrei",
-       2.3
-      ],
-      [
-       "J. Magennis / A. Szendrei",
-       2.32
-      ],
-      [
-       "I. Price / D. Szoboszlai",
-       2.4
-      ],
-      [
-       "D. Szoboszlai / J. Magennis",
-       2.42
-      ],
-      [
-       "I. Price / R. Sallai",
-       2.55
-      ],
-      [
-       "K. Morrison / A. Szendrei",
-       2.6
-      ],
-      [
-       "I. Price / G. Jurek",
-       2.6
-      ],
-      [
-       "G. Jurek / J. Magennis",
-       2.63
-      ],
-      [
-       "D. Szoboszlai / K. Morrison",
-       2.73
-      ],
-      [
-       "I. Price / J. Magennis",
-       2.83
-      ],
-      [
-       "K. Morrison / R. Sallai",
-       2.97
-      ],
-      [
-       "K. Morrison / G. Jurek",
-       3.03
-      ],
-      [
-       "I. Price / K. Morrison",
-       3.35
-      ],
-      [
-       "K. Morrison / J. Magennis",
-       3.4
-      ]
-     ],
-     "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
-      [
-       "D. Szoboszlai / B. Varga",
-       1.45
-      ],
-      [
-       "G. Jurek / B. Varga",
-       1.51
-      ],
-      [
-       "D. Szoboszlai / G. Jurek",
-       1.52
-      ],
-      [
-       "A. Szendrei / B. Varga",
-       1.52
-      ],
-      [
-       "D. Szoboszlai / A. Szendrei",
-       1.53
-      ],
-      [
-       "A. Szendrei / G. Jurek",
-       1.59
-      ],
-      [
-       "D. Szoboszlai / R. Sallai",
-       1.62
-      ],
-      [
-       "R. Sallai / A. Szendrei",
-       1.7
-      ],
-      [
-       "J. Magennis / B. Varga",
-       1.72
-      ],
-      [
-       "B. Varga / C. Marshall",
-       1.72
-      ],
-      [
-       "I. Price / B. Varga",
-       1.72
-      ],
-      [
-       "D. Szoboszlai / I. Price",
-       1.73
-      ],
-      [
-       "D. Szoboszlai / J. Magennis",
-       1.73
-      ],
-      [
-       "D. Szoboszlai / C. Marshall",
-       1.73
-      ],
-      [
-       "K. Morrison / B. Varga",
-       1.75
-      ],
-      [
-       "E. Kenny / B. Varga",
-       1.76
-      ],
-      [
-       "D. Szoboszlai / K. Morrison",
-       1.77
-      ],
-      [
-       "E. Kenny / D. Szoboszlai",
-       1.79
-      ],
-      [
-       "I. Price / G. Jurek",
-       1.82
-      ],
-      [
-       "G. Jurek / J. Magennis",
-       1.82
-      ],
-      [
-       "G. Jurek / C. Marshall",
-       1.82
-      ],
-      [
-       "A. Szendrei / I. Price",
-       1.84
-      ],
-      [
-       "D. Szoboszlai / P. Smyth",
-       1.84
-      ],
-      [
-       "A. Szendrei / J. Magennis",
-       1.84
-      ],
-      [
-       "A. Szendrei / C. Marshall",
-       1.84
-      ],
-      [
-       "K. Morrison / G. Jurek",
-       1.89
-      ],
-      [
-       "K. Morrison / A. Szendrei",
-       1.91
-      ],
-      [
-       "E. Kenny / G. Jurek",
-       1.91
-      ],
-      [
-       "E. Kenny / A. Szendrei",
-       1.93
-      ],
-      [
-       "P. Smyth / G. Jurek",
-       1.96
-      ]
-     ],
-     "Liczba goli - Węgry": [
-      [
-       "Powyżej 0,5",
-       1.28
-      ],
-      [
-       "Poniżej 0,5",
-       3.42
-      ],
-      [
-       "Powyżej 1,5",
-       2.3
-      ],
-      [
-       "Poniżej 1,5",
-       1.53
-      ],
-      [
-       "Powyżej 2,5",
-       5.75
-      ],
-      [
-       "Poniżej 2,5",
-       1.13
-      ],
-      [
-       "Powyżej 3,5",
-       9.0
-      ],
-      [
-       "Poniżej 3,5",
-       1.02
-      ],
-      [
-       "Powyżej 4,5",
-       11.0
-      ],
-      [
-       "Poniżej 4,5",
-       1.01
-      ]
-     ],
-     "Liczba goli - Irlandia Północna": [
-      [
-       "Powyżej 0,5",
-       1.63
-      ],
-      [
-       "Poniżej 0,5",
-       2.1
-      ],
-      [
-       "Powyżej 1,5",
-       3.95
-      ],
-      [
-       "Poniżej 1,5",
-       1.2
-      ],
-      [
-       "Powyżej 2,5",
-       16.0
-      ],
-      [
-       "Poniżej 2,5",
-       1.02
-      ],
-      [
-       "Powyżej 3,5",
-       11.0
-      ],
-      [
-       "Poniżej 3,5",
-       1.01
-      ]
-     ],
-     "Handicap": [
-      [
-       "Węgry (-4)",
-       35.0
-      ],
-      [
-       "Remis (Węgry -4)",
-       12.75
-      ],
-      [
-       "Irlandia Północna (+4)",
-       1.01
-      ],
-      [
-       "Węgry (-3)",
-       22.0
-      ],
-      [
-       "Remis (Węgry -3)",
-       9.75
-      ],
-      [
-       "Irlandia Północna (+3)",
-       1.05
-      ],
-      [
-       "Węgry (-2)",
-       9.5
-      ],
-      [
-       "Remis (Węgry -2)",
-       5.75
-      ],
-      [
-       "Irlandia Północna (+2)",
-       1.23
-      ],
-      [
-       "Węgry (-1)",
-       3.85
-      ],
-      [
-       "Remis (Węgry -1)",
-       3.55
-      ],
-      [
-       "Irlandia Północna (+1)",
-       1.79
-      ],
-      [
-       "Węgry (+1)",
-       1.23
-      ],
-      [
-       "Remis (Węgry +1)",
-       5.4
-      ],
-      [
-       "Irlandia Północna (-1)",
-       10.75
-      ],
-      [
-       "Węgry (+2)",
-       1.04
-      ],
-      [
-       "Remis (Węgry +2)",
-       14.5
-      ],
-      [
-       "Irlandia Północna (-2)",
-       45.0
-      ],
-      [
-       "Węgry (+3)",
-       1.01
-      ],
-      [
-       "Remis (Węgry +3)",
-       12.0
-      ],
-      [
-       "Irlandia Północna (-3)",
-       48.0
-      ]
-     ],
-     "Dokładny wynik": [
-      [
-       "1 - 0",
-       5.6
-      ],
-      [
-       "0 - 0",
-       7.25
-      ],
-      [
-       "0 - 1",
-       8.75
-      ],
-      [
-       "2 - 0",
-       7.75
-      ],
-      [
-       "1 - 1",
-       5.9
-      ],
-      [
-       "0 - 2",
-       19.75
-      ],
-      [
-       "2 - 1",
-       9.0
-      ],
-      [
-       "2 - 2",
-       20.0
-      ],
-      [
-       "0 - 3",
-       70.0
-      ],
-      [
-       "3 - 0",
-       16.75
-      ],
-      [
-       "3 - 3",
-       150.0
-      ],
-      [
-       "0 - 4",
-       325.0
-      ],
-      [
-       "3 - 1",
-       19.75
-      ],
-      [
-       "4 - 4",
-       1000.0
-      ],
-      [
-       "1 - 2",
-       14.5
-      ],
-      [
-       "3 - 2",
-       48.0
-      ],
-      [
-       "Inny",
-       55.0
-      ],
-      [
-       "1 - 3",
-       50.0
-      ],
-      [
-       "4 - 1",
-       60.0
-      ],
-      [
-       "1 - 4",
-       250.0
-      ],
-      [
-       "4 - 2",
-       140.0
-      ],
-      [
-       "2 - 3",
-       75.0
-      ],
-      [
-       "4 - 3",
-       500.0
-      ],
-      [
-       "2 - 4",
-       350.0
-      ],
-      [
-       "4 - 0",
-       48.0
-      ],
-      [
-       "3 - 4",
-       800.0
-      ]
-     ]
-    }
    }
   },
   "91b890f5fd20440cb272721b8a89a33d": {
-   "fortuna": {
-    "id": "ufo:mtch:1xs-01z",
-    "nazwa": "Ukraina - Gruzja",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "2": 3.6,
-     "X": 3.15,
-     "1": 2.16,
-     "1X": 1.29,
-     "12": 1.35,
-     "X2": 1.64,
-     "BTTS Nie": 1.74,
-     "BTTS Tak": 1.93,
-     "1 & o2.5": 3.7,
-     "X & u2.5": 3.45,
-     "1 & u2.5": 3.95,
-     "2 & o2.5": 6.6,
-     "X & o2.5": 15.0,
-     "2 & u2.5": 6.0,
-     "X & o4.5": 100.0,
-     "X & u4.5": 2.85,
-     "1 & o4.5": 15.0,
-     "1 & u4.5": 2.22,
-     "2 & o4.5": 29.0,
-     "2 & u4.5": 3.5,
-     "BTTS & o2.5": 2.6,
-     "H -1.5": 4.2,
-     "X & o3.5": 15.0,
-     "X & u3.5": 3.4,
-     "1 & o3.5": 7.6,
-     "1 & u3.5": 2.55,
-     "2 & o3.5": 16.0,
-     "2 & u3.5": 3.95,
-     "1 & u1.5": 6.6,
-     "X & u1.5": 7.6,
-     "1 & o1.5": 2.75,
-     "2 & u1.5": 9.0,
-     "X & o1.5": 4.3,
-     "2 & o1.5": 4.9
-    },
-    "pelna": true
-   },
    "sts": {
     "id": "f2414524",
     "nazwa": "Ukraina - Gruzja",
     "zgodnosc": 1.0,
     "kursy": {
-     "1": 2.15,
-     "X": 3.25,
-     "2": 3.7,
-     "12": 1.37,
-     "X2": 1.72,
-     "1X": 1.3,
-     "A o0.5": 1.54,
-     "H o0.5": 1.3,
-     "H -1.5": 4.25,
-     "A -1.5": 9.1,
-     "Over 1.5": 1.43,
-     "Under 1.5": 2.85,
-     "Over 0.5": 1.09,
-     "Under 0.5": 7.75,
-     "Over 4.5": 8.6,
-     "Under 4.5": 1.07,
-     "Over 3.5": 4.25,
-     "Under 3.5": 1.23,
-     "Over 2.5": 2.3,
-     "Under 2.5": 1.62,
-     "Over 5.5": 20.0,
-     "Under 5.5": 1.02,
-     "H o1.5": 2.4,
-     "H o4.5": 16.0,
-     "H o3.5": 14.0,
-     "H o2.5": 5.5,
-     "A o1.5": 3.6,
-     "A o4.5": 17.0,
-     "A o3.5": 30.0,
-     "A o2.5": 10.0,
-     "BTTS Tak": 2.02,
-     "BTTS Nie": 1.8,
-     "1 & u1.5": 6.75,
-     "1 & o1.5": 2.75,
-     "X & u1.5": 7.75,
-     "X & o1.5": 4.6,
-     "2 & u1.5": 9.5,
-     "2 & o1.5": 5.25,
-     "1 & u4.5": 2.25,
-     "1 & o4.5": 15.0,
-     "X & u4.5": 3.0,
-     "X & o4.5": 100.0,
-     "2 & u4.5": 3.75,
-     "2 & o4.5": 32.0,
-     "1 & u3.5": 2.6,
-     "1 & o3.5": 7.9,
-     "X & u3.5": 3.6,
-     "X & o3.5": 16.0,
-     "2 & u3.5": 4.2,
-     "2 & o3.5": 17.0,
-     "1 & u2.5": 4.0,
-     "1 & o2.5": 3.75,
-     "X & u2.5": 3.6,
-     "X & o2.5": 16.0,
-     "2 & u2.5": 6.4,
-     "2 & o2.5": 7.0
+     "1": 1.43,
+     "X": 4.0,
+     "2": 9.4,
+     "12": 1.27,
+     "X2": 2.9,
+     "1X": 1.07,
+     "A o0.5": 1.87,
+     "H -1.5": 3.05,
+     "H -2.5": 9.0,
+     "Over 1.5": 1.28,
+     "Under 1.5": 3.6,
+     "Over 4.5": 13.0,
+     "Under 4.5": 1.02,
+     "Over 3.5": 5.4,
+     "Under 3.5": 1.15,
+     "Over 2.5": 2.35,
+     "Under 2.5": 1.58,
+     "Over 5.5": 30.0,
+     "H o1.5": 1.92,
+     "H o4.5": 37.0,
+     "H o3.5": 17.0,
+     "H o2.5": 5.6,
+     "H o5.5": 50.0,
+     "A o1.5": 5.4,
+     "A o4.5": 50.0,
+     "A o3.5": 37.0,
+     "A o2.5": 17.0,
+     "BTTS Tak": 1.87,
+     "BTTS Nie": 1.92,
+     "1 & u2.5": 2.1,
+     "1 & o2.5": 3.25,
+     "X & u2.5": 4.5,
+     "X & o2.5": 17.0,
+     "2 & o2.5": 10.0
     },
     "pelna": true
-   },
-   "betclic": {
-    "id": "1279423908159488",
-    "nazwa": "Ukraina - Gruzja",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "1": 2.12,
-     "X": 3.15,
-     "2": 3.58,
-     "1X": 1.28,
-     "12": 1.33,
-     "X2": 1.66,
-     "Over 0.5": 1.07,
-     "Under 0.5": 6.75,
-     "Over 1.5": 1.39,
-     "Under 1.5": 2.78,
-     "Over 2.5": 2.2,
-     "Under 2.5": 1.6,
-     "Over 3.5": 3.9,
-     "Under 3.5": 1.21,
-     "Over 4.5": 7.25,
-     "Under 4.5": 1.06,
-     "Over 5.5": 10.75,
-     "Under 5.5": 1.01,
-     "BTTS Tak": 1.95,
-     "BTTS Nie": 1.76,
-     "H o0.5": 1.28,
-     "H o1.5": 2.3,
-     "H o2.5": 5.75,
-     "H o3.5": 9.0,
-     "H o4.5": 11.0,
-     "A o0.5": 1.49,
-     "A o1.5": 3.3,
-     "A o2.5": 11.25,
-     "A o3.5": 10.75,
-     "H -4.5": 38.0,
-     "H -3.5": 23.0,
-     "H -2.5": 10.5,
-     "H -1.5": 4.2,
-     "A -1.5": 8.5,
-     "A -2.5": 30.0,
-     "A -3.5": 40.0
-    },
-    "pelna": true,
-    "rynkow": 12,
-    "oferta": {
-     "Wynik meczu (z wyłączeniem dogrywki)": [
-      [
-       "Ukraina",
-       2.12
-      ],
-      [
-       "Remis",
-       3.15
-      ],
-      [
-       "Gruzja",
-       3.58
-      ]
-     ],
-     "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
-      [
-       "Ukraina",
-       2.07
-      ],
-      [
-       "Gruzja",
-       3.43
-      ]
-     ],
-     "Wynik meczu - Xtra Wygrana": [
-      [
-       "Ukraina",
-       1.73
-      ],
-      [
-       "Gruzja",
-       2.9
-      ]
-     ],
-     "Podwójna Szansa": [
-      [
-       "Ukraina lub remis",
-       1.28
-      ],
-      [
-       "Ukraina lub Gruzja",
-       1.33
-      ],
-      [
-       "Remis lub Gruzja",
-       1.66
-      ]
-     ],
-     "Gole Powyżej/Poniżej": [
-      [
-       "Powyżej 0,5",
-       1.07
-      ],
-      [
-       "Poniżej 0,5",
-       6.75
-      ],
-      [
-       "Powyżej 1,5",
-       1.39
-      ],
-      [
-       "Poniżej 1,5",
-       2.78
-      ],
-      [
-       "Powyżej 2,5",
-       2.2
-      ],
-      [
-       "Poniżej 2,5",
-       1.6
-      ],
-      [
-       "Powyżej 3,5",
-       3.9
-      ],
-      [
-       "Poniżej 3,5",
-       1.21
-      ],
-      [
-       "Powyżej 4,5",
-       7.25
-      ],
-      [
-       "Poniżej 4,5",
-       1.06
-      ],
-      [
-       "Powyżej 5,5",
-       10.75
-      ],
-      [
-       "Poniżej 5,5",
-       1.01
-      ]
-     ],
-     "Oba zespoły strzelą gola": [
-      [
-       "Tak",
-       1.95
-      ],
-      [
-       "Nie",
-       1.76
-      ]
-     ],
-     "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
-      [
-       "Tak",
-       1.5
-      ],
-      [
-       "Nie",
-       2.35
-      ]
-     ],
-     "Którykolwiek zawodnik strzeli gola": [
-      [
-       "A. Dovbyk / R. Yaremchuk",
-       1.89
-      ],
-      [
-       "A. Dovbyk / V. Vanat",
-       1.91
-      ],
-      [
-       "R. Yaremchuk / V. Vanat",
-       1.95
-      ],
-      [
-       "A. Dovbyk / D. Sikan",
-       1.96
-      ],
-      [
-       "A. Dovbyk / I. Krasnopir",
-       1.98
-      ],
-      [
-       "A. Dovbyk / G. Mikautadze",
-       2.0
-      ],
-      [
-       "R. Yaremchuk / D. Sikan",
-       2.0
-      ],
-      [
-       "V. Vanat / D. Sikan",
-       2.02
-      ],
-      [
-       "R. Yaremchuk / I. Krasnopir",
-       2.03
-      ],
-      [
-       "R. Yaremchuk / G. Mikautadze",
-       2.05
-      ],
-      [
-       "V. Vanat / I. Krasnopir",
-       2.05
-      ],
-      [
-       "V. Vanat / G. Mikautadze",
-       2.07
-      ],
-      [
-       "I. Krasnopir / D. Sikan",
-       2.1
-      ],
-      [
-       "G. Mikautadze / D. Sikan",
-       2.12
-      ],
-      [
-       "G. Mikautadze / I. Krasnopir",
-       2.15
-      ],
-      [
-       "A. Dovbyk / B. Zivzivadze",
-       2.15
-      ],
-      [
-       "B. Zivzivadze / R. Yaremchuk",
-       2.22
-      ],
-      [
-       "A. Dovbyk / G. Guliashvili",
-       2.22
-      ],
-      [
-       "A. Dovbyk / G. Sudakov",
-       2.22
-      ],
-      [
-       "B. Zivzivadze / V. Vanat",
-       2.23
-      ],
-      [
-       "G. Sudakov / R. Yaremchuk",
-       2.27
-      ],
-      [
-       "R. Yaremchuk / G. Guliashvili",
-       2.28
-      ],
-      [
-       "V. Vanat / G. Guliashvili",
-       2.3
-      ],
-      [
-       "G. Sudakov / V. Vanat",
-       2.3
-      ],
-      [
-       "B. Zivzivadze / D. Sikan",
-       2.32
-      ],
-      [
-       "B. Zivzivadze / I. Krasnopir",
-       2.35
-      ],
-      [
-       "B. Zivzivadze / G. Mikautadze",
-       2.37
-      ],
-      [
-       "G. Guliashvili / D. Sikan",
-       2.38
-      ],
-      [
-       "G. Sudakov / D. Sikan",
-       2.38
-      ],
-      [
-       "A. Dovbyk / G. Kvernadze",
-       2.4
-      ]
-     ],
-     "Liczba goli - Ukraina": [
-      [
-       "Powyżej 0,5",
-       1.28
-      ],
-      [
-       "Poniżej 0,5",
-       3.43
-      ],
-      [
-       "Powyżej 1,5",
-       2.3
-      ],
-      [
-       "Poniżej 1,5",
-       1.52
-      ],
-      [
-       "Powyżej 2,5",
-       5.75
-      ],
-      [
-       "Poniżej 2,5",
-       1.13
-      ],
-      [
-       "Powyżej 3,5",
-       9.0
-      ],
-      [
-       "Poniżej 3,5",
-       1.02
-      ],
-      [
-       "Powyżej 4,5",
-       11.0
-      ],
-      [
-       "Poniżej 4,5",
-       1.01
-      ]
-     ],
-     "Liczba goli - Gruzja": [
-      [
-       "Powyżej 0,5",
-       1.49
-      ],
-      [
-       "Poniżej 0,5",
-       2.42
-      ],
-      [
-       "Powyżej 1,5",
-       3.3
-      ],
-      [
-       "Poniżej 1,5",
-       1.27
-      ],
-      [
-       "Powyżej 2,5",
-       11.25
-      ],
-      [
-       "Poniżej 2,5",
-       1.04
-      ],
-      [
-       "Powyżej 3,5",
-       10.75
-      ],
-      [
-       "Poniżej 3,5",
-       1.01
-      ]
-     ],
-     "Handicap": [
-      [
-       "Ukraina (-4)",
-       38.0
-      ],
-      [
-       "Remis (Ukraina -4)",
-       13.0
-      ],
-      [
-       "Gruzja (+4)",
-       1.01
-      ],
-      [
-       "Ukraina (-3)",
-       23.0
-      ],
-      [
-       "Remis (Ukraina -3)",
-       10.25
-      ],
-      [
-       "Gruzja (+3)",
-       1.04
-      ],
-      [
-       "Ukraina (-2)",
-       10.5
-      ],
-      [
-       "Remis (Ukraina -2)",
-       6.25
-      ],
-      [
-       "Gruzja (+2)",
-       1.2
-      ],
-      [
-       "Ukraina (-1)",
-       4.2
-      ],
-      [
-       "Remis (Ukraina -1)",
-       3.83
-      ],
-      [
-       "Gruzja (+1)",
-       1.66
-      ],
-      [
-       "Ukraina (+1)",
-       1.28
-      ],
-      [
-       "Remis (Ukraina +1)",
-       4.95
-      ],
-      [
-       "Gruzja (-1)",
-       8.5
-      ],
-      [
-       "Ukraina (+2)",
-       1.06
-      ],
-      [
-       "Remis (Ukraina +2)",
-       11.75
-      ],
-      [
-       "Gruzja (-2)",
-       30.0
-      ],
-      [
-       "Ukraina (+3)",
-       1.01
-      ],
-      [
-       "Remis (Ukraina +3)",
-       12.25
-      ],
-      [
-       "Gruzja (-3)",
-       40.0
-      ]
-     ],
-     "Dokładny wynik": [
-      [
-       "1 - 0",
-       6.5
-      ],
-      [
-       "0 - 0",
-       8.25
-      ],
-      [
-       "0 - 1",
-       9.0
-      ],
-      [
-       "2 - 0",
-       9.0
-      ],
-      [
-       "1 - 1",
-       5.6
-      ],
-      [
-       "0 - 2",
-       17.0
-      ],
-      [
-       "2 - 1",
-       9.0
-      ],
-      [
-       "2 - 2",
-       16.25
-      ],
-      [
-       "0 - 3",
-       50.0
-      ],
-      [
-       "3 - 0",
-       19.5
-      ],
-      [
-       "3 - 3",
-       110.0
-      ],
-      [
-       "0 - 4",
-       200.0
-      ],
-      [
-       "3 - 1",
-       19.75
-      ],
-      [
-       "4 - 4",
-       1000.0
-      ],
-      [
-       "1 - 2",
-       12.5
-      ],
-      [
-       "3 - 2",
-       40.0
-      ],
-      [
-       "Inny",
-       48.0
-      ],
-      [
-       "1 - 3",
-       38.0
-      ],
-      [
-       "4 - 0",
-       55.0
-      ],
-      [
-       "1 - 4",
-       150.0
-      ],
-      [
-       "4 - 1",
-       55.0
-      ],
-      [
-       "2 - 3",
-       55.0
-      ],
-      [
-       "4 - 2",
-       110.0
-      ],
-      [
-       "2 - 4",
-       225.0
-      ],
-      [
-       "4 - 3",
-       350.0
-      ],
-      [
-       "3 - 4",
-       500.0
-      ]
-     ]
-    }
    }
   },
   "a6c9b424fddccea76aab09880b69dd31": {
-   "fortuna": {
-    "id": "ufo:mtch:1xs-02d",
-    "nazwa": "Irlandia - Kosowo",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "1": 2.01,
-     "X": 3.2,
-     "2": 4.0,
-     "12": 1.34,
-     "X2": 1.72,
-     "1X": 1.24,
-     "BTTS Tak": 2.05,
-     "BTTS Nie": 1.65,
-     "BTTS & o2.5": 2.8,
-     "2 & o2.5": 7.8,
-     "2 & u2.5": 6.4,
-     "X & o2.5": 17.0,
-     "X & u2.5": 3.4,
-     "1 & o2.5": 3.55,
-     "1 & u2.5": 3.55,
-     "2 & u1.5": 9.2,
-     "X & o1.5": 4.6,
-     "X & u1.5": 7.2,
-     "1 & o1.5": 2.6,
-     "1 & u1.5": 5.8,
-     "2 & o1.5": 5.8,
-     "H -1.5": 3.85,
-     "1 & u3.5": 2.35,
-     "1 & o3.5": 7.6,
-     "X & u3.5": 3.35,
-     "X & o3.5": 17.0,
-     "2 & u3.5": 4.3,
-     "2 & o3.5": 21.0,
-     "1 & u4.5": 2.04,
-     "1 & o4.5": 15.0,
-     "X & u4.5": 2.85,
-     "X & o4.5": 100.0,
-     "2 & u4.5": 3.85,
-     "2 & o4.5": 40.0
-    },
-    "pelna": true
-   },
    "sts": {
     "id": "f2414489",
     "nazwa": "Irlandia - Kosowo",
     "zgodnosc": 1.0,
     "kursy": {
-     "1": 2.05,
-     "X": 3.25,
-     "2": 4.1,
-     "12": 1.37,
-     "X2": 1.8,
-     "1X": 1.26,
-     "A o0.5": 1.62,
-     "H o0.5": 1.3,
-     "H -1.5": 4.0,
-     "H -2.5": 9.5,
-     "Over 1.5": 1.47,
-     "Under 1.5": 2.7,
-     "Over 0.5": 1.1,
-     "Under 0.5": 7.25,
-     "Over 4.5": 9.4,
-     "Under 4.5": 1.06,
-     "Over 3.5": 4.6,
-     "Under 3.5": 1.2,
-     "Over 2.5": 2.45,
-     "Under 2.5": 1.57,
-     "Over 5.5": 22.0,
+     "1": 1.09,
+     "X": 9.8,
+     "2": 31.0,
+     "12": 1.07,
+     "X2": 8.2,
+     "A o0.5": 2.85,
+     "H -3.5": 6.6,
+     "H -1.5": 1.54,
+     "H -2.5": 2.85,
+     "Over 1.5": 1.17,
+     "Under 1.5": 5.0,
+     "Over 4.5": 7.6,
+     "Under 4.5": 1.08,
+     "Over 3.5": 3.45,
+     "Under 3.5": 1.31,
+     "Over 2.5": 1.79,
+     "Under 2.5": 2.0,
+     "Over 5.5": 17.0,
      "Under 5.5": 1.01,
-     "H o1.5": 2.3,
-     "H o4.5": 16.0,
-     "H o3.5": 13.0,
-     "H o2.5": 5.5,
-     "A o1.5": 4.0,
-     "A o4.5": 17.0,
-     "A o3.5": 40.0,
-     "A o2.5": 13.0,
-     "BTTS Tak": 2.15,
-     "BTTS Nie": 1.72,
-     "1 & u1.5": 6.1,
-     "1 & o1.5": 2.7,
-     "X & u1.5": 7.25,
-     "X & o1.5": 4.75,
-     "2 & u1.5": 9.6,
-     "2 & o1.5": 6.0,
-     "1 & u4.5": 2.12,
-     "1 & o4.5": 16.0,
-     "X & u4.5": 3.0,
-     "X & o4.5": 100.0,
-     "2 & u4.5": 4.0,
-     "2 & o4.5": 41.0,
-     "1 & u3.5": 2.45,
-     "1 & o3.5": 7.9,
-     "X & u3.5": 3.5,
-     "X & o3.5": 18.0,
-     "2 & u3.5": 4.5,
-     "2 & o3.5": 22.0,
-     "1 & u2.5": 3.7,
-     "1 & o2.5": 3.7,
-     "X & u2.5": 3.5,
-     "X & o2.5": 18.0,
-     "2 & u2.5": 6.75,
-     "2 & o2.5": 8.25
+     "H o1.5": 1.28,
+     "H o4.5": 12.0,
+     "H o3.5": 5.0,
+     "H o2.5": 2.27,
+     "H o5.5": 26.0,
+     "A o1.5": 11.0,
+     "A o4.5": 70.0,
+     "A o3.5": 50.0,
+     "A o2.5": 33.0,
+     "BTTS Tak": 2.85,
+     "BTTS Nie": 1.42,
+     "1 & u2.5": 2.1,
+     "1 & o2.5": 1.75,
+     "X & u2.5": 11.5,
+     "X & o2.5": 40.0,
+     "2 & o2.5": 45.0
     },
     "pelna": true
-   },
-   "betclic": {
-    "id": "1277918153023488",
-    "nazwa": "Irlandia - Kosowo",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "1": 1.98,
-     "X": 3.18,
-     "2": 4.0,
-     "1X": 1.23,
-     "12": 1.32,
-     "X2": 1.76,
-     "Over 0.5": 1.08,
-     "Under 0.5": 6.5,
-     "Over 1.5": 1.43,
-     "Under 1.5": 2.63,
-     "Over 2.5": 2.32,
-     "Under 2.5": 1.54,
-     "Over 3.5": 4.2,
-     "Under 3.5": 1.19,
-     "Over 4.5": 7.75,
-     "Under 4.5": 1.05,
-     "Over 5.5": 30.0,
-     "Under 5.5": 1.01,
-     "BTTS Tak": 2.07,
-     "BTTS Nie": 1.67,
-     "H o0.5": 1.27,
-     "H o1.5": 2.27,
-     "H o2.5": 5.5,
-     "H o3.5": 9.0,
-     "H o4.5": 11.0,
-     "A o0.5": 1.59,
-     "A o1.5": 3.78,
-     "A o2.5": 14.5,
-     "A o3.5": 11.0,
-     "H -4.5": 35.0,
-     "H -3.5": 21.0,
-     "H -2.5": 9.5,
-     "H -1.5": 3.88,
-     "A -1.5": 10.25,
-     "A -2.5": 43.0,
-     "A -3.5": 48.0
-    },
-    "pelna": true,
-    "rynkow": 13,
-    "oferta": {
-     "Wynik meczu (z wyłączeniem dogrywki)": [
-      [
-       "Irlandia",
-       1.98
-      ],
-      [
-       "Remis",
-       3.18
-      ],
-      [
-       "Kosowo",
-       4.0
-      ]
-     ],
-     "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
-      [
-       "Irlandia",
-       1.94
-      ],
-      [
-       "Kosowo",
-       3.83
-      ]
-     ],
-     "Wynik meczu - Xtra Wygrana": [
-      [
-       "Irlandia",
-       1.63
-      ],
-      [
-       "Kosowo",
-       3.3
-      ]
-     ],
-     "Podwójna Szansa": [
-      [
-       "Irlandia lub remis",
-       1.23
-      ],
-      [
-       "Irlandia lub Kosowo",
-       1.32
-      ],
-      [
-       "Remis lub Kosowo",
-       1.76
-      ]
-     ],
-     "Gole Powyżej/Poniżej": [
-      [
-       "Powyżej 0,5",
-       1.08
-      ],
-      [
-       "Poniżej 0,5",
-       6.5
-      ],
-      [
-       "Powyżej 1,5",
-       1.43
-      ],
-      [
-       "Poniżej 1,5",
-       2.63
-      ],
-      [
-       "Powyżej 2,5",
-       2.32
-      ],
-      [
-       "Poniżej 2,5",
-       1.54
-      ],
-      [
-       "Powyżej 3,5",
-       4.2
-      ],
-      [
-       "Poniżej 3,5",
-       1.19
-      ],
-      [
-       "Powyżej 4,5",
-       7.75
-      ],
-      [
-       "Poniżej 4,5",
-       1.05
-      ],
-      [
-       "Powyżej 5,5",
-       30.0
-      ],
-      [
-       "Poniżej 5,5",
-       1.01
-      ]
-     ],
-     "Oba zespoły strzelą gola": [
-      [
-       "Tak",
-       2.07
-      ],
-      [
-       "Nie",
-       1.67
-      ]
-     ],
-     "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
-      [
-       "Tak",
-       1.72
-      ],
-      [
-       "Nie",
-       1.98
-      ]
-     ],
-     "Którykolwiek zawodnik strzeli gola": [
-      [
-       "T. Parrott / V. Muriqi",
-       1.86
-      ],
-      [
-       "T. Parrott / A. Idah",
-       1.87
-      ],
-      [
-       "T. Parrott / J. Moylan",
-       1.89
-      ],
-      [
-       "T. Parrott / T. Cannon",
-       1.9
-      ],
-      [
-       "T. Parrott / Alb. Rrahmani",
-       2.02
-      ],
-      [
-       "T. Parrott / F. Azaz",
-       2.02
-      ],
-      [
-       "T. Parrott / F. Asllani",
-       2.03
-      ],
-      [
-       "T. Parrott / R. Vata",
-       2.05
-      ],
-      [
-       "A. Idah / V. Muriqi",
-       2.08
-      ],
-      [
-       "A. Idah / J. Moylan",
-       2.12
-      ],
-      [
-       "J. Moylan / V. Muriqi",
-       2.12
-      ],
-      [
-       "T. Cannon / A. Idah",
-       2.13
-      ],
-      [
-       "T. Cannon / V. Muriqi",
-       2.13
-      ],
-      [
-       "T. Cannon / J. Moylan",
-       2.17
-      ],
-      [
-       "T. Parrott / B. Zabergja",
-       2.22
-      ],
-      [
-       "T. Parrott / M. Rashica",
-       2.23
-      ],
-      [
-       "F. Azaz / A. Idah",
-       2.3
-      ],
-      [
-       "F. Azaz / V. Muriqi",
-       2.32
-      ],
-      [
-       "Alb. Rrahmani / V. Muriqi",
-       2.32
-      ],
-      [
-       "Alb. Rrahmani / A. Idah",
-       2.32
-      ],
-      [
-       "F. Asllani / A. Idah",
-       2.32
-      ],
-      [
-       "F. Asllani / V. Muriqi",
-       2.33
-      ],
-      [
-       "R. Vata / V. Muriqi",
-       2.35
-      ],
-      [
-       "A. Idah / R. Vata",
-       2.35
-      ],
-      [
-       "T. Cannon / Alb. Rrahmani",
-       2.37
-      ],
-      [
-       "T. Cannon / F. Azaz",
-       2.37
-      ],
-      [
-       "Alb. Rrahmani / J. Moylan",
-       2.37
-      ],
-      [
-       "F. Asllani / J. Moylan",
-       2.37
-      ],
-      [
-       "T. Cannon / F. Asllani",
-       2.38
-      ],
-      [
-       "R. Vata / J. Moylan",
-       2.4
-      ]
-     ],
-     "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
-      [
-       "T. Parrott / A. Idah",
-       1.52
-      ],
-      [
-       "T. Parrott / R. Vata",
-       1.55
-      ],
-      [
-       "T. Parrott / T. Cannon",
-       1.55
-      ],
-      [
-       "T. Parrott / J. Moylan",
-       1.55
-      ],
-      [
-       "F. Azaz / T. Parrott",
-       1.56
-      ],
-      [
-       "V. Muriqi / T. Parrott",
-       1.58
-      ],
-      [
-       "A. Idah / R. Vata",
-       1.62
-      ],
-      [
-       "A. Idah / T. Cannon",
-       1.62
-      ],
-      [
-       "A. Idah / J. Moylan",
-       1.62
-      ],
-      [
-       "F. Azaz / A. Idah",
-       1.63
-      ],
-      [
-       "V. Muriqi / A. Idah",
-       1.65
-      ],
-      [
-       "R. Vata / T. Cannon",
-       1.65
-      ],
-      [
-       "R. Vata / J. Moylan",
-       1.65
-      ],
-      [
-       "T. Cannon / J. Moylan",
-       1.65
-      ],
-      [
-       "Alb. Rrahmani / T. Parrott",
-       1.66
-      ],
-      [
-       "T. Parrott / F. Asllani",
-       1.66
-      ],
-      [
-       "F. Azaz / R. Vata",
-       1.67
-      ],
-      [
-       "F. Azaz / T. Cannon",
-       1.67
-      ],
-      [
-       "V. Muriqi / R. Vata",
-       1.69
-      ],
-      [
-       "V. Muriqi / T. Cannon",
-       1.69
-      ],
-      [
-       "V. Muriqi / J. Moylan",
-       1.69
-      ],
-      [
-       "V. Muriqi / F. Azaz",
-       1.7
-      ],
-      [
-       "T. Parrott / B. Zabergja",
-       1.73
-      ],
-      [
-       "M. Rashica / T. Parrott",
-       1.74
-      ],
-      [
-       "Alb. Rrahmani / A. Idah",
-       1.74
-      ],
-      [
-       "A. Idah / F. Asllani",
-       1.74
-      ],
-      [
-       "Alb. Rrahmani / R. Vata",
-       1.79
-      ],
-      [
-       "F. Asllani / R. Vata",
-       1.79
-      ],
-      [
-       "Alb. Rrahmani / T. Cannon",
-       1.79
-      ],
-      [
-       "F. Asllani / T. Cannon",
-       1.79
-      ]
-     ],
-     "Liczba goli - Irlandia": [
-      [
-       "Powyżej 0,5",
-       1.27
-      ],
-      [
-       "Poniżej 0,5",
-       3.48
-      ],
-      [
-       "Powyżej 1,5",
-       2.27
-      ],
-      [
-       "Poniżej 1,5",
-       1.54
-      ],
-      [
-       "Powyżej 2,5",
-       5.5
-      ],
-      [
-       "Poniżej 2,5",
-       1.13
-      ],
-      [
-       "Powyżej 3,5",
-       9.0
-      ],
-      [
-       "Poniżej 3,5",
-       1.02
-      ],
-      [
-       "Powyżej 4,5",
-       11.0
-      ],
-      [
-       "Poniżej 4,5",
-       1.01
-      ]
-     ],
-     "Liczba goli - Kosowo": [
-      [
-       "Powyżej 0,5",
-       1.59
-      ],
-      [
-       "Poniżej 0,5",
-       2.18
-      ],
-      [
-       "Powyżej 1,5",
-       3.78
-      ],
-      [
-       "Poniżej 1,5",
-       1.21
-      ],
-      [
-       "Powyżej 2,5",
-       14.5
-      ],
-      [
-       "Poniżej 2,5",
-       1.03
-      ],
-      [
-       "Powyżej 3,5",
-       11.0
-      ],
-      [
-       "Poniżej 3,5",
-       1.01
-      ]
-     ],
-     "Handicap": [
-      [
-       "Irlandia (-4)",
-       35.0
-      ],
-      [
-       "Remis (Irlandia -4)",
-       12.75
-      ],
-      [
-       "Kosowo (+4)",
-       1.01
-      ],
-      [
-       "Irlandia (-3)",
-       21.0
-      ],
-      [
-       "Remis (Irlandia -3)",
-       9.75
-      ],
-      [
-       "Kosowo (+3)",
-       1.05
-      ],
-      [
-       "Irlandia (-2)",
-       9.5
-      ],
-      [
-       "Remis (Irlandia -2)",
-       5.75
-      ],
-      [
-       "Kosowo (+2)",
-       1.23
-      ],
-      [
-       "Irlandia (-1)",
-       3.88
-      ],
-      [
-       "Remis (Irlandia -1)",
-       3.63
-      ],
-      [
-       "Kosowo (+1)",
-       1.76
-      ],
-      [
-       "Irlandia (+1)",
-       1.23
-      ],
-      [
-       "Remis (Irlandia +1)",
-       5.25
-      ],
-      [
-       "Kosowo (-1)",
-       10.25
-      ],
-      [
-       "Irlandia (+2)",
-       1.04
-      ],
-      [
-       "Remis (Irlandia +2)",
-       14.0
-      ],
-      [
-       "Kosowo (-2)",
-       43.0
-      ],
-      [
-       "Irlandia (+3)",
-       1.01
-      ],
-      [
-       "Remis (Irlandia +3)",
-       12.25
-      ],
-      [
-       "Kosowo (-3)",
-       48.0
-      ]
-     ],
-     "Dokładny wynik": [
-      [
-       "1 - 0",
-       5.9
-      ],
-      [
-       "0 - 0",
-       7.5
-      ],
-      [
-       "0 - 1",
-       9.0
-      ],
-      [
-       "2 - 0",
-       8.0
-      ],
-      [
-       "1 - 1",
-       5.75
-      ],
-      [
-       "0 - 2",
-       19.5
-      ],
-      [
-       "2 - 1",
-       9.0
-      ],
-      [
-       "2 - 2",
-       18.5
-      ],
-      [
-       "0 - 3",
-       65.0
-      ],
-      [
-       "3 - 0",
-       17.0
-      ],
-      [
-       "3 - 3",
-       140.0
-      ],
-      [
-       "0 - 4",
-       300.0
-      ],
-      [
-       "3 - 1",
-       19.25
-      ],
-      [
-       "4 - 4",
-       1000.0
-      ],
-      [
-       "1 - 2",
-       14.0
-      ],
-      [
-       "3 - 2",
-       43.0
-      ],
-      [
-       "Inny",
-       50.0
-      ],
-      [
-       "1 - 3",
-       48.0
-      ],
-      [
-       "4 - 0",
-       48.0
-      ],
-      [
-       "1 - 4",
-       225.0
-      ],
-      [
-       "4 - 1",
-       55.0
-      ],
-      [
-       "2 - 3",
-       70.0
-      ],
-      [
-       "4 - 2",
-       125.0
-      ],
-      [
-       "2 - 4",
-       300.0
-      ],
-      [
-       "4 - 3",
-       450.0
-      ],
-      [
-       "3 - 4",
-       700.0
-      ]
-     ]
-    }
    }
   },
   "e71a4a4fea03d00873c285c5b55a9864": {
-   "fortuna": {
-    "id": "ufo:mtch:1xs-022",
-    "nazwa": "Izrael - Austria",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "1": 3.85,
-     "X": 3.9,
-     "2": 1.83,
-     "X2": 1.25,
-     "1X": 1.86,
-     "12": 1.25,
-     "BTTS Nie": 2.3,
-     "BTTS Tak": 1.53,
-     "2 & u3.5": 2.85,
-     "X & o3.5": 9.6,
-     "2 & o3.5": 3.8,
-     "1 & u3.5": 5.2,
-     "X & u3.5": 5.2,
-     "1 & o3.5": 9.8,
-     "X & u1.5": 16.0,
-     "X & o1.5": 4.2,
-     "2 & u1.5": 10.0,
-     "2 & o1.5": 1.98,
-     "1 & u1.5": 15.0,
-     "1 & o1.5": 4.3,
-     "A -1.5": 3.05,
-     "2 & u4.5": 2.26,
-     "2 & o4.5": 5.8,
-     "X & u4.5": 3.75,
-     "X & o4.5": 40.0,
-     "1 & u4.5": 4.4,
-     "1 & o4.5": 15.0,
-     "BTTS & o2.5": 1.79,
-     "2 & u2.5": 5.2,
-     "X & o2.5": 9.6,
-     "2 & o2.5": 2.37,
-     "1 & u2.5": 9.8,
-     "X & u2.5": 5.2,
-     "1 & o2.5": 5.2
-    },
-    "pelna": true
-   },
    "sts": {
     "id": "f2414480",
     "nazwa": "Izrael - Austria",
     "zgodnosc": 1.0,
     "kursy": {
-     "1": 4.2,
-     "X": 4.0,
-     "2": 1.82,
-     "12": 1.28,
-     "X2": 1.25,
-     "1X": 2.02,
-     "A o0.5": 1.13,
-     "H o0.5": 1.37,
-     "A -2.5": 5.75,
-     "A -1.5": 3.0,
-     "Over 1.5": 1.18,
-     "Under 1.5": 4.9,
-     "Over 0.5": 1.03,
-     "Under 0.5": 16.0,
-     "Over 4.5": 4.25,
-     "Under 4.5": 1.23,
-     "Over 3.5": 2.4,
-     "Under 3.5": 1.57,
-     "Over 2.5": 1.58,
-     "Under 2.5": 2.4,
-     "Over 5.5": 7.9,
-     "Under 5.5": 1.09,
-     "H o1.5": 2.7,
-     "H o4.5": 16.0,
-     "H o3.5": 18.0,
-     "H o2.5": 6.75,
-     "A o1.5": 1.65,
-     "A o4.5": 12.0,
-     "A o3.5": 6.0,
-     "A o2.5": 3.0,
-     "BTTS Tak": 1.57,
-     "BTTS Nie": 2.4,
-     "1 & u1.5": 17.0,
-     "1 & o1.5": 4.8,
-     "X & u1.5": 16.0,
-     "X & o1.5": 4.4,
-     "2 & u1.5": 10.5,
-     "2 & o1.5": 2.0,
-     "1 & u4.5": 4.9,
-     "1 & o4.5": 17.0,
-     "X & u4.5": 3.9,
-     "X & o4.5": 42.0,
-     "2 & u4.5": 2.3,
-     "2 & o4.5": 6.0,
-     "1 & u3.5": 5.75,
-     "1 & o3.5": 11.0,
-     "X & u3.5": 5.4,
-     "X & o3.5": 10.0,
-     "2 & u3.5": 2.9,
-     "2 & o3.5": 3.8,
-     "1 & u2.5": 10.5,
-     "1 & o2.5": 5.9,
-     "X & u2.5": 5.4,
-     "X & o2.5": 10.0,
-     "2 & u2.5": 5.4,
-     "2 & o2.5": 2.4
+     "1": 2.27,
+     "X": 3.15,
+     "2": 3.35,
+     "12": 1.38,
+     "X2": 1.67,
+     "1X": 1.35,
+     "A o0.5": 1.28,
+     "H -1.5": 5.6,
+     "A -1.5": 7.8,
+     "Over 1.5": 1.13,
+     "Under 1.5": 5.9,
+     "Over 4.5": 6.4,
+     "Under 4.5": 1.11,
+     "Over 3.5": 3.05,
+     "Under 3.5": 1.37,
+     "Over 2.5": 1.67,
+     "Under 2.5": 2.17,
+     "Over 5.5": 14.0,
+     "Under 5.5": 1.02,
+     "H o1.5": 2.17,
+     "H o4.5": 43.0,
+     "H o3.5": 22.0,
+     "H o2.5": 7.2,
+     "H o5.5": 60.0,
+     "A o1.5": 2.32,
+     "A o4.5": 27.0,
+     "A o3.5": 13.0,
+     "A o2.5": 5.4,
+     "BTTS Tak": 1.28,
+     "BTTS Nie": 3.6,
+     "1 & u2.5": 3.8,
+     "1 & o2.5": 4.25,
+     "X & u2.5": 4.1,
+     "X & o2.5": 9.25,
+     "2 & o2.5": 3.35
     },
     "pelna": true
-   },
-   "betclic": {
-    "id": "1279660036980736",
-    "nazwa": "Izrael - Austria",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "1": 3.85,
-     "X": 3.88,
-     "2": 1.81,
-     "1X": 1.92,
-     "12": 1.24,
-     "X2": 1.25,
-     "Over 0.5": 1.02,
-     "Under 0.5": 10.0,
-     "Over 1.5": 1.16,
-     "Under 1.5": 4.6,
-     "Over 2.5": 1.54,
-     "Under 2.5": 2.33,
-     "Over 3.5": 2.3,
-     "Under 3.5": 1.55,
-     "Over 4.5": 3.88,
-     "Under 4.5": 1.22,
-     "Over 5.5": 6.6,
-     "Under 5.5": 1.08,
-     "BTTS Tak": 1.54,
-     "BTTS Nie": 2.33,
-     "H o0.5": 1.32,
-     "H o1.5": 2.5,
-     "H o2.5": 6.75,
-     "H o3.5": 9.75,
-     "A o0.5": 1.12,
-     "A o1.5": 1.64,
-     "A o2.5": 3.02,
-     "A o3.5": 5.6,
-     "A o4.5": 9.25,
-     "H -3.5": 33.0,
-     "H -2.5": 25.0,
-     "H -1.5": 8.25,
-     "A -1.5": 3.0,
-     "A -2.5": 5.9,
-     "A -3.5": 12.5,
-     "A -4.5": 24.0
-    },
-    "pelna": true,
-    "rynkow": 11,
-    "oferta": {
-     "Wynik meczu (z wyłączeniem dogrywki)": [
-      [
-       "Izrael",
-       3.85
-      ],
-      [
-       "Remis",
-       3.88
-      ],
-      [
-       "Austria",
-       1.81
-      ]
-     ],
-     "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
-      [
-       "Izrael",
-       3.53
-      ],
-      [
-       "Austria",
-       1.74
-      ]
-     ],
-     "Podwójna Szansa": [
-      [
-       "Izrael lub remis",
-       1.92
-      ],
-      [
-       "Izrael lub Austria",
-       1.24
-      ],
-      [
-       "Remis lub Austria",
-       1.25
-      ]
-     ],
-     "Gole Powyżej/Poniżej": [
-      [
-       "Powyżej 0,5",
-       1.02
-      ],
-      [
-       "Poniżej 0,5",
-       10.0
-      ],
-      [
-       "Powyżej 1,5",
-       1.16
-      ],
-      [
-       "Poniżej 1,5",
-       4.6
-      ],
-      [
-       "Powyżej 2,5",
-       1.54
-      ],
-      [
-       "Poniżej 2,5",
-       2.33
-      ],
-      [
-       "Powyżej 3,5",
-       2.3
-      ],
-      [
-       "Poniżej 3,5",
-       1.55
-      ],
-      [
-       "Powyżej 4,5",
-       3.88
-      ],
-      [
-       "Poniżej 4,5",
-       1.22
-      ],
-      [
-       "Powyżej 5,5",
-       6.6
-      ],
-      [
-       "Poniżej 5,5",
-       1.08
-      ]
-     ],
-     "Oba zespoły strzelą gola": [
-      [
-       "Tak",
-       1.54
-      ],
-      [
-       "Nie",
-       2.33
-      ]
-     ],
-     "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
-      [
-       "Tak",
-       1.33
-      ],
-      [
-       "Nie",
-       3.0
-      ]
-     ],
-     "Którykolwiek zawodnik strzeli gola": [
-      [
-       "S. Kalajdzic / M. Gregoritsch",
-       1.48
-      ],
-      [
-       "C. Adamu / M. Gregoritsch",
-       1.5
-      ],
-      [
-       "M. Gregoritsch / R. Florucz",
-       1.52
-      ],
-      [
-       "S. Kalajdzic / C. Adamu",
-       1.52
-      ],
-      [
-       "S. Kalajdzic / R. Florucz",
-       1.54
-      ],
-      [
-       "M. Gregoritsch / C. Lang",
-       1.55
-      ],
-      [
-       "C. Adamu / R. Florucz",
-       1.57
-      ],
-      [
-       "S. Kalajdzic / C. Lang",
-       1.57
-      ],
-      [
-       "M. Gregoritsch / C. Baumgartner",
-       1.59
-      ],
-      [
-       "C. Adamu / C. Lang",
-       1.6
-      ],
-      [
-       "S. Kalajdzic / C. Baumgartner",
-       1.61
-      ],
-      [
-       "C. Lang / R. Florucz",
-       1.62
-      ],
-      [
-       "C. Adamu / C. Baumgartner",
-       1.64
-      ],
-      [
-       "C. Baumgartner / R. Florucz",
-       1.66
-      ],
-      [
-       "C. Baumgartner / C. Lang",
-       1.69
-      ],
-      [
-       "M. Gregoritsch / I. Toklomati Jorno",
-       1.7
-      ],
-      [
-       "S. Kalajdzic / I. Toklomati Jorno",
-       1.73
-      ],
-      [
-       "D. Turgeman / M. Gregoritsch",
-       1.74
-      ],
-      [
-       "M. Gregoritsch / Y. Shua",
-       1.75
-      ],
-      [
-       "S. Kalajdzic / D. Turgeman",
-       1.77
-      ],
-      [
-       "S. Kalajdzic / Y. Shua",
-       1.78
-      ],
-      [
-       "C. Adamu / I. Toklomati Jorno",
-       1.78
-      ],
-      [
-       "I. Toklomati Jorno / R. Florucz",
-       1.8
-      ],
-      [
-       "L. Abada / M. Gregoritsch",
-       1.8
-      ],
-      [
-       "O. Gloukh / M. Gregoritsch",
-       1.81
-      ],
-      [
-       "D. Turgeman / C. Adamu",
-       1.82
-      ],
-      [
-       "C. Adamu / Y. Shua",
-       1.83
-      ],
-      [
-       "L. Abada / S. Kalajdzic",
-       1.83
-      ],
-      [
-       "I. Toklomati Jorno / C. Lang",
-       1.84
-      ],
-      [
-       "M. Gregoritsch / Z. Ahmed",
-       1.84
-      ]
-     ],
-     "Liczba goli - Izrael": [
-      [
-       "Powyżej 0,5",
-       1.32
-      ],
-      [
-       "Poniżej 0,5",
-       3.1
-      ],
-      [
-       "Powyżej 1,5",
-       2.5
-      ],
-      [
-       "Poniżej 1,5",
-       1.45
-      ],
-      [
-       "Powyżej 2,5",
-       6.75
-      ],
-      [
-       "Poniżej 2,5",
-       1.1
-      ],
-      [
-       "Powyżej 3,5",
-       9.75
-      ],
-      [
-       "Poniżej 3,5",
-       1.01
-      ]
-     ],
-     "Liczba goli - Austria": [
-      [
-       "Powyżej 0,5",
-       1.12
-      ],
-      [
-       "Poniżej 0,5",
-       5.9
-      ],
-      [
-       "Powyżej 1,5",
-       1.64
-      ],
-      [
-       "Poniżej 1,5",
-       2.08
-      ],
-      [
-       "Powyżej 2,5",
-       3.02
-      ],
-      [
-       "Poniżej 2,5",
-       1.34
-      ],
-      [
-       "Powyżej 3,5",
-       5.6
-      ],
-      [
-       "Poniżej 3,5",
-       1.1
-      ],
-      [
-       "Powyżej 4,5",
-       9.25
-      ],
-      [
-       "Poniżej 4,5",
-       1.02
-      ]
-     ],
-     "Handicap": [
-      [
-       "Izrael (-3)",
-       33.0
-      ],
-      [
-       "Remis (Izrael -3)",
-       12.75
-      ],
-      [
-       "Austria (+3)",
-       1.01
-      ],
-      [
-       "Izrael (-2)",
-       25.0
-      ],
-      [
-       "Remis (Izrael -2)",
-       12.25
-      ],
-      [
-       "Austria (+2)",
-       1.06
-      ],
-      [
-       "Izrael (-1)",
-       8.25
-      ],
-      [
-       "Remis (Izrael -1)",
-       5.75
-      ],
-      [
-       "Austria (+1)",
-       1.25
-      ],
-      [
-       "Izrael (+1)",
-       1.92
-      ],
-      [
-       "Remis (Izrael +1)",
-       4.05
-      ],
-      [
-       "Austria (-1)",
-       3.0
-      ],
-      [
-       "Izrael (+2)",
-       1.35
-      ],
-      [
-       "Remis (Izrael +2)",
-       5.25
-      ],
-      [
-       "Austria (-2)",
-       5.9
-      ],
-      [
-       "Izrael (+3)",
-       1.11
-      ],
-      [
-       "Remis (Izrael +3)",
-       8.25
-      ],
-      [
-       "Austria (-3)",
-       12.5
-      ],
-      [
-       "Izrael (+4)",
-       1.03
-      ],
-      [
-       "Remis (Izrael +4)",
-       12.0
-      ],
-      [
-       "Austria (-4)",
-       24.0
-      ]
-     ],
-     "Dokładny wynik": [
-      [
-       "1 - 0",
-       15.0
-      ],
-      [
-       "0 - 0",
-       18.0
-      ],
-      [
-       "0 - 1",
-       9.75
-      ],
-      [
-       "2 - 0",
-       24.0
-      ],
-      [
-       "1 - 1",
-       7.25
-      ],
-      [
-       "0 - 2",
-       10.25
-      ],
-      [
-       "2 - 1",
-       12.5
-      ],
-      [
-       "2 - 2",
-       12.0
-      ],
-      [
-       "0 - 3",
-       15.75
-      ],
-      [
-       "3 - 0",
-       55.0
-      ],
-      [
-       "3 - 3",
-       45.0
-      ],
-      [
-       "0 - 4",
-       33.0
-      ],
-      [
-       "3 - 1",
-       30.0
-      ],
-      [
-       "4 - 4",
-       300.0
-      ],
-      [
-       "1 - 2",
-       8.25
-      ],
-      [
-       "3 - 2",
-       30.0
-      ],
-      [
-       "Inny",
-       14.5
-      ],
-      [
-       "1 - 3",
-       12.75
-      ],
-      [
-       "4 - 0",
-       175.0
-      ],
-      [
-       "1 - 4",
-       26.0
-      ],
-      [
-       "4 - 1",
-       95.0
-      ],
-      [
-       "2 - 3",
-       20.0
-      ],
-      [
-       "4 - 2",
-       100.0
-      ],
-      [
-       "2 - 4",
-       43.0
-      ],
-      [
-       "4 - 3",
-       150.0
-      ],
-      [
-       "3 - 4",
-       100.0
-      ]
-     ]
-    }
    }
   },
   "770e80269ec2ffddc826bc50330c475b": {
-   "fortuna": {
-    "id": "ufo:mtch:1xs-01x",
-    "nazwa": "Dania - Norwegia",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "1": 2.53,
-     "2": 2.44,
-     "X": 3.9,
-     "1X": 1.53,
-     "12": 1.27,
-     "X2": 1.5,
-     "BTTS Nie": 2.71,
-     "BTTS Tak": 1.42,
-     "2 & u2.5": 7.8,
-     "X & o2.5": 8.0,
-     "X & u2.5": 5.8,
-     "1 & o2.5": 3.15,
-     "1 & u2.5": 8.0,
-     "2 & o2.5": 3.0,
-     "1 & u4.5": 3.2,
-     "1 & o4.5": 7.4,
-     "X & u4.5": 3.9,
-     "X & o4.5": 28.0,
-     "2 & u4.5": 3.1,
-     "2 & o4.5": 7.0,
-     "BTTS & o2.5": 1.6,
-     "2 & o3.5": 4.8,
-     "1 & u3.5": 4.1,
-     "1 & o3.5": 5.0,
-     "X & u3.5": 5.8,
-     "X & o3.5": 8.0,
-     "2 & u3.5": 3.95,
-     "A -1.5": 4.3,
-     "H -1.5": 4.5
-    },
-    "pelna": true
-   },
    "sts": {
     "id": "f2414182",
     "nazwa": "Dania - Norwegia",
     "zgodnosc": 1.0,
     "kursy": {
-     "1": 2.6,
-     "X": 4.0,
-     "2": 2.45,
-     "12": 1.28,
-     "X2": 1.53,
-     "1X": 1.58,
-     "A o0.5": 1.18,
-     "H o0.5": 1.19,
-     "H -1.5": 4.9,
-     "A -1.5": 4.5,
-     "Over 1.5": 1.14,
-     "Under 1.5": 5.6,
-     "Over 0.5": 1.02,
-     "Under 0.5": 21.0,
-     "Over 4.5": 3.6,
-     "Under 4.5": 1.3,
-     "Over 3.5": 2.15,
-     "Under 3.5": 1.7,
-     "Over 2.5": 1.47,
-     "Under 2.5": 2.7,
-     "Over 5.5": 6.4,
-     "Under 5.5": 1.12,
-     "H o1.5": 1.9,
-     "H o4.5": 14.0,
-     "H o3.5": 8.5,
-     "H o2.5": 3.8,
-     "A o1.5": 1.85,
-     "A o4.5": 14.0,
-     "A o3.5": 8.0,
-     "A o2.5": 3.6,
-     "BTTS Tak": 1.44,
-     "BTTS Nie": 2.8,
-     "1 & u1.5": 15.0,
-     "1 & o1.5": 2.8,
-     "X & u1.5": 21.0,
-     "X & o1.5": 4.3,
-     "2 & u1.5": 14.5,
-     "2 & o1.5": 2.65,
-     "1 & u4.5": 3.4,
-     "1 & o4.5": 7.9,
-     "X & u4.5": 4.1,
-     "X & o4.5": 30.0,
-     "2 & u4.5": 3.2,
-     "2 & o4.5": 7.4,
-     "1 & u3.5": 4.25,
-     "1 & o3.5": 5.25,
-     "X & u3.5": 6.25,
-     "X & o3.5": 8.5,
-     "2 & u3.5": 4.0,
-     "2 & o3.5": 4.9,
-     "1 & u2.5": 8.4,
-     "1 & o2.5": 3.3,
-     "X & u2.5": 6.25,
-     "X & o2.5": 8.5,
-     "2 & u2.5": 8.0,
-     "2 & o2.5": 3.1
+     "1": 1.78,
+     "X": 3.6,
+     "2": 4.6,
+     "12": 1.31,
+     "X2": 2.1,
+     "1X": 1.22,
+     "H -1.5": 3.55,
+     "H -2.5": 9.4,
+     "Over 6.5": 5.4,
+     "Under 6.5": 1.14,
+     "Over 4.5": 1.57,
+     "Under 4.5": 2.4,
+     "Over 3.5": 1.11,
+     "Under 3.5": 6.6,
+     "Over 7.5": 12.0,
+     "Under 7.5": 1.03,
+     "Over 5.5": 2.7,
+     "Under 5.5": 1.46,
+     "H o6.5": 46.0,
+     "H o4.5": 12.0,
+     "H o3.5": 4.2,
+     "H o2.5": 1.66,
+     "H o5.5": 29.0,
+     "A o1.5": 1.35,
+     "A o4.5": 16.0,
+     "A o3.5": 6.4,
+     "A o2.5": 2.6,
+     "A o5.5": 32.0
     },
     "pelna": true
-   },
-   "betclic": {
-    "id": "1279640478949376",
-    "nazwa": "Dania - Norwegia",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "1": 2.55,
-     "X": 3.9,
-     "2": 2.38,
-     "1X": 1.53,
-     "12": 1.25,
-     "X2": 1.49,
-     "Over 0.5": 1.01,
-     "Under 0.5": 10.75,
-     "Over 1.5": 1.12,
-     "Under 1.5": 5.25,
-     "Over 2.5": 1.43,
-     "Under 2.5": 2.62,
-     "Over 3.5": 2.07,
-     "Under 3.5": 1.68,
-     "Over 4.5": 3.35,
-     "Under 4.5": 1.28,
-     "Over 5.5": 5.6,
-     "Under 5.5": 1.11,
-     "BTTS Tak": 1.41,
-     "BTTS Nie": 2.68,
-     "H o0.5": 1.17,
-     "H o1.5": 1.85,
-     "H o2.5": 3.8,
-     "H o3.5": 7.0,
-     "H o4.5": 10.25,
-     "A o0.5": 1.16,
-     "A o1.5": 1.8,
-     "A o2.5": 3.63,
-     "A o3.5": 6.75,
-     "A o4.5": 10.0,
-     "H -3.5": 20.0,
-     "H -2.5": 10.5,
-     "H -1.5": 4.65,
-     "A -1.5": 4.35,
-     "A -2.5": 9.75,
-     "A -3.5": 19.0,
-     "A -4.5": 30.0
-    },
-    "pelna": true,
-    "rynkow": 14,
-    "oferta": {
-     "Wynik meczu (z wyłączeniem dogrywki)": [
-      [
-       "Dania",
-       2.55
-      ],
-      [
-       "Remis",
-       3.9
-      ],
-      [
-       "Norwegia",
-       2.38
-      ]
-     ],
-     "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
-      [
-       "Dania",
-       2.37
-      ],
-      [
-       "Norwegia",
-       2.22
-      ]
-     ],
-     "Wynik meczu - Xtra Wygrana": [
-      [
-       "Dania",
-       1.92
-      ],
-      [
-       "Norwegia",
-       1.83
-      ]
-     ],
-     "Ktora drużyna strzeli pierwszego gola?": [
-      [
-       "Więcej fauli w meczu - Norwegia",
-       1.58
-      ],
-      [
-       "Norwegia strzeli pierwszego gola w meczu",
-       1.87
-      ],
-      [
-       "Gol strzelony głową",
-       2.4
-      ],
-      [
-       "Erling Haaland i Rasmus Hojlund strzelą gola lub zaliczą asystę",
-       3.38
-      ]
-     ],
-     "Podwójna Szansa": [
-      [
-       "Dania lub remis",
-       1.53
-      ],
-      [
-       "Dania lub Norwegia",
-       1.25
-      ],
-      [
-       "Remis lub Norwegia",
-       1.49
-      ]
-     ],
-     "Gole Powyżej/Poniżej": [
-      [
-       "Powyżej 0,5",
-       1.01
-      ],
-      [
-       "Poniżej 0,5",
-       10.75
-      ],
-      [
-       "Powyżej 1,5",
-       1.12
-      ],
-      [
-       "Poniżej 1,5",
-       5.25
-      ],
-      [
-       "Powyżej 2,5",
-       1.43
-      ],
-      [
-       "Poniżej 2,5",
-       2.62
-      ],
-      [
-       "Powyżej 3,5",
-       2.07
-      ],
-      [
-       "Poniżej 3,5",
-       1.68
-      ],
-      [
-       "Powyżej 4,5",
-       3.35
-      ],
-      [
-       "Poniżej 4,5",
-       1.28
-      ],
-      [
-       "Powyżej 5,5",
-       5.6
-      ],
-      [
-       "Poniżej 5,5",
-       1.11
-      ]
-     ],
-     "Oba zespoły strzelą gola": [
-      [
-       "Tak",
-       1.41
-      ],
-      [
-       "Nie",
-       2.68
-      ]
-     ],
-     "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
-      [
-       "Tak",
-       1.28
-      ],
-      [
-       "Nie",
-       3.2
-      ]
-     ],
-     "Którykolwiek zawodnik strzeli gola": [
-      [
-       "E. Haaland / R. Hojlund",
-       1.39
-      ],
-      [
-       "E. Haaland / E. Botheim",
-       1.42
-      ],
-      [
-       "A. Sorloth / E. Haaland",
-       1.43
-      ],
-      [
-       "E. Haaland / W. Osula",
-       1.45
-      ],
-      [
-       "E. Haaland / G. Isaksen",
-       1.47
-      ],
-      [
-       "M. Daramy / E. Haaland",
-       1.51
-      ],
-      [
-       "E. Haaland / A. Skov Olsen",
-       1.51
-      ],
-      [
-       "A. Nusa / E. Haaland",
-       1.53
-      ],
-      [
-       "E. Haaland / O. Bobb",
-       1.55
-      ],
-      [
-       "M. Damsgaard / E. Haaland",
-       1.55
-      ],
-      [
-       "E. Haaland / H. Vetlesen",
-       1.57
-      ],
-      [
-       "A. Schjelderup / E. Haaland",
-       1.58
-      ],
-      [
-       "E. Haaland / T. Aasgaard",
-       1.59
-      ],
-      [
-       "E. Haaland / V. Froholdt",
-       1.59
-      ],
-      [
-       "E. Haaland / J. Lindstrom",
-       1.6
-      ],
-      [
-       "M. Ødegaard / E. Haaland",
-       1.63
-      ],
-      [
-       "P. Højbjerg / E. Haaland",
-       1.66
-      ],
-      [
-       "R. Hojlund / E. Botheim",
-       1.67
-      ],
-      [
-       "A. Sorloth / R. Hojlund",
-       1.7
-      ],
-      [
-       "P. Berg / E. Haaland",
-       1.7
-      ],
-      [
-       "J. Maehle / E. Haaland",
-       1.71
-      ],
-      [
-       "E. Haaland / Morten Hjulmand",
-       1.73
-      ],
-      [
-       "R. Hojlund / W. Osula",
-       1.73
-      ],
-      [
-       "E. Haaland / S. Berge",
-       1.73
-      ],
-      [
-       "A. Sorloth / E. Botheim",
-       1.75
-      ],
-      [
-       "E. Haaland / J. Ryerson",
-       1.77
-      ],
-      [
-       "G. Isaksen / R. Hojlund",
-       1.78
-      ],
-      [
-       "W. Osula / E. Botheim",
-       1.79
-      ],
-      [
-       "A. Sorloth / W. Osula",
-       1.8
-      ],
-      [
-       "G. Isaksen / E. Botheim",
-       1.84
-      ]
-     ],
-     "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
-      [
-       "A. Sorloth / E. Haaland",
-       1.23
-      ],
-      [
-       "E. Haaland / E. Botheim",
-       1.23
-      ],
-      [
-       "E. Haaland / R. Hojlund",
-       1.25
-      ],
-      [
-       "E. Haaland / W. Osula",
-       1.26
-      ],
-      [
-       "E. Haaland / M. Daramy",
-       1.27
-      ],
-      [
-       "A. Skov Olsen / E. Haaland",
-       1.27
-      ],
-      [
-       "E. Haaland / G. Isaksen",
-       1.27
-      ],
-      [
-       "A. Nusa / E. Haaland",
-       1.28
-      ],
-      [
-       "E. Haaland / M. Damsgaard",
-       1.29
-      ],
-      [
-       "E. Haaland / M. Ødegaard",
-       1.31
-      ],
-      [
-       "J. Lindstrom / E. Haaland",
-       1.33
-      ],
-      [
-       "O. Bobb / E. Haaland",
-       1.33
-      ],
-      [
-       "A. Schjelderup / E. Haaland",
-       1.33
-      ],
-      [
-       "E. Haaland / H. Vetlesen",
-       1.33
-      ],
-      [
-       "E. Haaland / V. Froholdt",
-       1.33
-      ],
-      [
-       "T. Aasgaard / E. Haaland",
-       1.35
-      ],
-      [
-       "A. Sorloth / E. Botheim",
-       1.36
-      ],
-      [
-       "A. Sorloth / R. Hojlund",
-       1.39
-      ],
-      [
-       "R. Hojlund / E. Botheim",
-       1.39
-      ],
-      [
-       "P. Højbjerg / E. Haaland",
-       1.4
-      ],
-      [
-       "A. Sorloth / W. Osula",
-       1.41
-      ],
-      [
-       "J. Ryerson / E. Haaland",
-       1.41
-      ],
-      [
-       "W. Osula / E. Botheim",
-       1.41
-      ],
-      [
-       "P. Berg / E. Haaland",
-       1.41
-      ],
-      [
-       "A. Skov Olsen / A. Sorloth",
-       1.43
-      ],
-      [
-       "A. Sorloth / M. Daramy",
-       1.43
-      ],
-      [
-       "A. Sorloth / G. Isaksen",
-       1.43
-      ],
-      [
-       "M. Daramy / E. Botheim",
-       1.43
-      ],
-      [
-       "G. Isaksen / E. Botheim",
-       1.43
-      ],
-      [
-       "A. Skov Olsen / E. Botheim",
-       1.43
-      ]
-     ],
-     "Liczba goli - Dania": [
-      [
-       "Powyżej 0,5",
-       1.17
-      ],
-      [
-       "Poniżej 0,5",
-       4.65
-      ],
-      [
-       "Powyżej 1,5",
-       1.85
-      ],
-      [
-       "Poniżej 1,5",
-       1.82
-      ],
-      [
-       "Powyżej 2,5",
-       3.8
-      ],
-      [
-       "Poniżej 2,5",
-       1.24
-      ],
-      [
-       "Powyżej 3,5",
-       7.0
-      ],
-      [
-       "Poniżej 3,5",
-       1.06
-      ],
-      [
-       "Powyżej 4,5",
-       10.25
-      ],
-      [
-       "Poniżej 4,5",
-       1.01
-      ]
-     ],
-     "Liczba goli - Norwegia": [
-      [
-       "Powyżej 0,5",
-       1.16
-      ],
-      [
-       "Poniżej 0,5",
-       4.9
-      ],
-      [
-       "Powyżej 1,5",
-       1.8
-      ],
-      [
-       "Poniżej 1,5",
-       1.87
-      ],
-      [
-       "Powyżej 2,5",
-       3.63
-      ],
-      [
-       "Poniżej 2,5",
-       1.26
-      ],
-      [
-       "Powyżej 3,5",
-       6.75
-      ],
-      [
-       "Poniżej 3,5",
-       1.06
-      ],
-      [
-       "Powyżej 4,5",
-       10.0
-      ],
-      [
-       "Poniżej 4,5",
-       1.01
-      ]
-     ],
-     "Handicap": [
-      [
-       "Dania (-3)",
-       20.0
-      ],
-      [
-       "Remis (Dania -3)",
-       10.75
-      ],
-      [
-       "Norwegia (+3)",
-       1.04
-      ],
-      [
-       "Dania (-2)",
-       10.5
-      ],
-      [
-       "Remis (Dania -2)",
-       7.5
-      ],
-      [
-       "Norwegia (+2)",
-       1.17
-      ],
-      [
-       "Dania (-1)",
-       4.65
-      ],
-      [
-       "Remis (Dania -1)",
-       4.7
-      ],
-      [
-       "Norwegia (+1)",
-       1.49
-      ],
-      [
-       "Dania (+1)",
-       1.53
-      ],
-      [
-       "Remis (Dania +1)",
-       4.6
-      ],
-      [
-       "Norwegia (-1)",
-       4.35
-      ],
-      [
-       "Dania (+2)",
-       1.19
-      ],
-      [
-       "Remis (Dania +2)",
-       7.0
-      ],
-      [
-       "Norwegia (-2)",
-       9.75
-      ],
-      [
-       "Dania (+3)",
-       1.05
-      ],
-      [
-       "Remis (Dania +3)",
-       10.5
-      ],
-      [
-       "Norwegia (-3)",
-       19.0
-      ],
-      [
-       "Dania (+4)",
-       1.01
-      ],
-      [
-       "Remis (Dania +4)",
-       13.5
-      ],
-      [
-       "Norwegia (-4)",
-       30.0
-      ]
-     ],
-     "Dokładny wynik": [
-      [
-       "1 - 0",
-       14.0
-      ],
-      [
-       "0 - 0",
-       23.0
-      ],
-      [
-       "0 - 1",
-       13.5
-      ],
-      [
-       "2 - 0",
-       16.75
-      ],
-      [
-       "1 - 1",
-       7.75
-      ],
-      [
-       "0 - 2",
-       15.75
-      ],
-      [
-       "2 - 1",
-       9.75
-      ],
-      [
-       "2 - 2",
-       10.5
-      ],
-      [
-       "0 - 3",
-       27.0
-      ],
-      [
-       "3 - 0",
-       30.0
-      ],
-      [
-       "3 - 3",
-       33.0
-      ],
-      [
-       "0 - 4",
-       65.0
-      ],
-      [
-       "3 - 1",
-       17.25
-      ],
-      [
-       "4 - 4",
-       175.0
-      ],
-      [
-       "1 - 2",
-       9.5
-      ],
-      [
-       "3 - 2",
-       20.0
-      ],
-      [
-       "Inny",
-       13.5
-      ],
-      [
-       "1 - 3",
-       16.25
-      ],
-      [
-       "4 - 0",
-       70.0
-      ],
-      [
-       "1 - 4",
-       38.0
-      ],
-      [
-       "4 - 1",
-       40.0
-      ],
-      [
-       "2 - 3",
-       19.5
-      ],
-      [
-       "4 - 2",
-       48.0
-      ],
-      [
-       "2 - 4",
-       45.0
-      ],
-      [
-       "4 - 3",
-       85.0
-      ],
-      [
-       "3 - 4",
-       80.0
-      ]
-     ]
-    }
    }
   },
   "aab74efad72e8096e774c7104189ff09": {
-   "fortuna": {
-    "id": "ufo:mtch:1xs-00k",
-    "nazwa": "Polska - Szwecja",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "1": 2.27,
-     "2": 2.83,
-     "X": 3.7,
-     "1X": 1.44,
-     "X2": 1.58,
-     "12": 1.29,
-     "BTTS Nie": 2.58,
-     "BTTS Tak": 1.46,
-     "1 & u2.5": 7.0,
-     "1 & o2.5": 2.95,
-     "2 & u2.5": 8.0,
-     "2 & o2.5": 3.55,
-     "X & u2.5": 5.2,
-     "X & o2.5": 8.2,
-     "X & u4.5": 3.65,
-     "1 & o4.5": 7.2,
-     "1 & u4.5": 2.85,
-     "2 & o4.5": 9.0,
-     "2 & u4.5": 3.35,
-     "X & o4.5": 30.0,
-     "H -1.5": 4.1,
-     "1 & u3.5": 3.6,
-     "1 & o3.5": 4.8,
-     "2 & u3.5": 4.2,
-     "2 & o3.5": 6.0,
-     "X & u3.5": 5.4,
-     "X & o3.5": 8.2,
-     "A -1.5": 5.2,
-     "BTTS & o2.5": 1.68
-    },
-    "pelna": true
-   },
    "sts": {
     "id": "f2414523",
     "nazwa": "Polska - Szwecja",
     "zgodnosc": 1.0,
     "kursy": {
-     "1": 2.4,
-     "X": 3.6,
-     "2": 2.9,
-     "12": 1.32,
-     "X2": 1.6,
-     "1X": 1.45,
-     "A o0.5": 1.24,
-     "H o0.5": 1.2,
-     "H -1.5": 4.4,
-     "A -1.5": 5.6,
-     "Over 1.5": 1.18,
-     "Under 1.5": 4.9,
-     "Over 0.5": 1.03,
-     "Under 0.5": 16.0,
-     "Over 4.5": 4.3,
-     "Under 4.5": 1.22,
-     "Over 3.5": 2.45,
-     "Under 3.5": 1.57,
-     "Over 2.5": 1.6,
-     "Under 2.5": 2.35,
-     "Over 5.5": 8.0,
+     "1": 2.55,
+     "X": 2.8,
+     "2": 3.15,
+     "12": 1.46,
+     "X2": 1.54,
+     "1X": 1.38,
+     "H -1.5": 6.2,
+     "A -1.5": 8.2,
+     "Over 6.5": 17.0,
+     "Under 6.5": 1.01,
+     "Over 4.5": 3.45,
+     "Under 4.5": 1.31,
+     "Over 3.5": 1.79,
+     "Under 3.5": 2.0,
+     "Over 2.5": 1.17,
+     "Under 2.5": 5.0,
+     "Over 5.5": 7.6,
      "Under 5.5": 1.08,
-     "H o1.5": 1.95,
-     "H o4.5": 14.0,
-     "H o3.5": 9.0,
-     "H o2.5": 3.9,
-     "A o1.5": 2.1,
-     "A o4.5": 15.0,
-     "A o3.5": 11.0,
-     "A o2.5": 4.7,
-     "BTTS Tak": 1.52,
-     "BTTS Nie": 2.55,
-     "1 & u1.5": 12.5,
-     "1 & o1.5": 2.65,
-     "X & u1.5": 16.0,
-     "X & o1.5": 4.0,
-     "2 & u1.5": 13.5,
-     "2 & o1.5": 3.2,
-     "1 & u4.5": 2.95,
-     "1 & o4.5": 8.4,
-     "X & u4.5": 3.6,
-     "X & o4.5": 35.0,
-     "2 & u4.5": 3.5,
-     "2 & o4.5": 10.5,
-     "1 & u3.5": 3.7,
-     "1 & o3.5": 5.4,
-     "X & u3.5": 5.1,
-     "X & o3.5": 8.75,
-     "2 & u3.5": 4.25,
-     "2 & o3.5": 6.75,
-     "1 & u2.5": 6.9,
-     "1 & o2.5": 3.2,
-     "X & u2.5": 5.1,
-     "X & o2.5": 8.75,
-     "2 & u2.5": 8.0,
-     "2 & o2.5": 3.9
+     "H o1.5": 1.54,
+     "H o4.5": 24.0,
+     "H o3.5": 9.8,
+     "H o2.5": 3.55,
+     "H o5.5": 42.0,
+     "A o1.5": 1.68,
+     "A o4.5": 30.0,
+     "A o3.5": 12.0,
+     "A o2.5": 4.3,
+     "A o5.5": 47.0,
+     "1 & o2.5": 2.6,
+     "X & u2.5": 5.3,
+     "X & o2.5": 5.2,
+     "2 & o2.5": 3.2
     },
     "pelna": true
-   },
-   "betclic": {
-    "id": "1279660054814720",
-    "nazwa": "Polska - Szwecja",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "1": 2.3,
-     "X": 3.73,
-     "2": 2.87,
-     "1X": 1.44,
-     "12": 1.27,
-     "X2": 1.63,
-     "Over 0.5": 1.02,
-     "Under 0.5": 12.0,
-     "Over 1.5": 1.18,
-     "Under 1.5": 4.75,
-     "Over 2.5": 1.58,
-     "Under 2.5": 2.35,
-     "Over 3.5": 2.4,
-     "Under 3.5": 1.55,
-     "Over 4.5": 4.15,
-     "Under 4.5": 1.22,
-     "Over 5.5": 7.5,
-     "Under 5.5": 1.08,
-     "BTTS Tak": 1.52,
-     "BTTS Nie": 2.48,
-     "H o0.5": 1.2,
-     "H o1.5": 1.92,
-     "H o2.5": 3.95,
-     "H o3.5": 8.25,
-     "H o4.5": 14.25,
-     "A o0.5": 1.25,
-     "A o1.5": 2.17,
-     "A o2.5": 4.9,
-     "A o3.5": 10.25,
-     "A o4.5": 15.75,
-     "H -4.5": 45.0,
-     "H -3.5": 23.0,
-     "H -2.5": 9.75,
-     "H -1.5": 4.35,
-     "A -1.5": 5.75,
-     "A -2.5": 14.0,
-     "A -3.5": 33.0
-    },
-    "pelna": true,
-    "rynkow": 14,
-    "oferta": {
-     "Wynik meczu (z wyłączeniem dogrywki)": [
-      [
-       "Polska",
-       2.3
-      ],
-      [
-       "Remis",
-       3.73
-      ],
-      [
-       "Szwecja",
-       2.87
-      ]
-     ],
-     "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
-      [
-       "Polska",
-       2.18
-      ],
-      [
-       "Szwecja",
-       2.68
-      ]
-     ],
-     "Wynik meczu - Xtra Wygrana": [
-      [
-       "Polska",
-       1.77
-      ],
-      [
-       "Szwecja",
-       2.15
-      ]
-     ],
-     "Gole 2. połowa": [
-      [
-       "Powyżej 1,5 goli w drugiej połowie meczu",
-       1.78
-      ],
-      [
-       "Nicola Zalewski strzeli gola lub zaliczy asystę",
-       2.15
-      ],
-      [
-       "Więcej kartek w meczu - Polska",
-       2.25
-      ],
-      [
-       "Szwecja strzeli gola w obu połowach meczu",
-       3.17
-      ]
-     ],
-     "Podwójna Szansa": [
-      [
-       "Polska lub remis",
-       1.44
-      ],
-      [
-       "Polska lub Szwecja",
-       1.27
-      ],
-      [
-       "Remis lub Szwecja",
-       1.63
-      ]
-     ],
-     "Gole Powyżej/Poniżej": [
-      [
-       "Powyżej 0,5",
-       1.02
-      ],
-      [
-       "Poniżej 0,5",
-       12.0
-      ],
-      [
-       "Powyżej 1,5",
-       1.18
-      ],
-      [
-       "Poniżej 1,5",
-       4.75
-      ],
-      [
-       "Powyżej 2,5",
-       1.58
-      ],
-      [
-       "Poniżej 2,5",
-       2.35
-      ],
-      [
-       "Powyżej 3,5",
-       2.4
-      ],
-      [
-       "Poniżej 3,5",
-       1.55
-      ],
-      [
-       "Powyżej 4,5",
-       4.15
-      ],
-      [
-       "Poniżej 4,5",
-       1.22
-      ],
-      [
-       "Powyżej 5,5",
-       7.5
-      ],
-      [
-       "Poniżej 5,5",
-       1.08
-      ]
-     ],
-     "Oba zespoły strzelą gola": [
-      [
-       "Tak",
-       1.52
-      ],
-      [
-       "Nie",
-       2.48
-      ]
-     ],
-     "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
-      [
-       "Tak",
-       1.33
-      ],
-      [
-       "Nie",
-       2.9
-      ]
-     ],
-     "Którykolwiek zawodnik strzeli gola": [
-      [
-       "V. Gyokeres / R. Lewandowski",
-       1.47
-      ],
-      [
-       "R. Lewandowski / A. Benedyczak",
-       1.49
-      ],
-      [
-       "A. Isak / R. Lewandowski",
-       1.5
-      ],
-      [
-       "M. Zukowski / R. Lewandowski",
-       1.5
-      ],
-      [
-       "K. Swiderski / R. Lewandowski",
-       1.61
-      ],
-      [
-       "V. Gyokeres / A. Benedyczak",
-       1.64
-      ],
-      [
-       "R. Lewandowski / D. Kulusevski",
-       1.66
-      ],
-      [
-       "R. Lewandowski / M. Regula",
-       1.66
-      ],
-      [
-       "V. Gyokeres / A. Isak",
-       1.66
-      ],
-      [
-       "V. Gyokeres / M. Zukowski",
-       1.66
-      ],
-      [
-       "A. Isak / A. Benedyczak",
-       1.67
-      ],
-      [
-       "M. Zukowski / A. Benedyczak",
-       1.67
-      ],
-      [
-       "A. Isak / M. Zukowski",
-       1.69
-      ],
-      [
-       "R. Lewandowski / A. Njie",
-       1.71
-      ],
-      [
-       "R. Lewandowski / K. Urbanski",
-       1.72
-      ],
-      [
-       "A. Elanga / R. Lewandowski",
-       1.73
-      ],
-      [
-       "S. Nanasi / R. Lewandowski",
-       1.75
-      ],
-      [
-       "S. Szymanski / R. Lewandowski",
-       1.76
-      ],
-      [
-       "N. Zalewski / R. Lewandowski",
-       1.77
-      ],
-      [
-       "A. Bernhardsson / R. Lewandowski",
-       1.8
-      ],
-      [
-       "K. Swiderski / V. Gyokeres",
-       1.83
-      ],
-      [
-       "Y. Ayari / R. Lewandowski",
-       1.85
-      ],
-      [
-       "K. Swiderski / A. Benedyczak",
-       1.86
-      ],
-      [
-       "K. Swiderski / A. Isak",
-       1.88
-      ],
-      [
-       "K. Swiderski / M. Zukowski",
-       1.88
-      ],
-      [
-       "V. Gyokeres / D. Kulusevski",
-       1.9
-      ],
-      [
-       "V. Gyokeres / M. Regula",
-       1.9
-      ],
-      [
-       "D. Kulusevski / A. Benedyczak",
-       1.93
-      ],
-      [
-       "M. Regula / A. Benedyczak",
-       1.93
-      ],
-      [
-       "A. Isak / D. Kulusevski",
-       1.95
-      ]
-     ],
-     "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
-      [
-       "R. Lewandowski / D. Kulusevski",
-       1.23
-      ],
-      [
-       "R. Lewandowski / V. Gyokeres",
-       1.25
-      ],
-      [
-       "R. Lewandowski / N. Zalewski",
-       1.26
-      ],
-      [
-       "R. Lewandowski / M. Zukowski",
-       1.27
-      ],
-      [
-       "R. Lewandowski / A. Benedyczak",
-       1.27
-      ],
-      [
-       "R. Lewandowski / A. Isak",
-       1.27
-      ],
-      [
-       "R. Lewandowski / K. Swiderski",
-       1.3
-      ],
-      [
-       "R. Lewandowski / M. Regula",
-       1.32
-      ],
-      [
-       "V. Gyokeres / D. Kulusevski",
-       1.32
-      ],
-      [
-       "N. Zalewski / D. Kulusevski",
-       1.33
-      ],
-      [
-       "M. Zukowski / D. Kulusevski",
-       1.34
-      ],
-      [
-       "A. Benedyczak / D. Kulusevski",
-       1.34
-      ],
-      [
-       "R. Lewandowski / S. Szymanski",
-       1.35
-      ],
-      [
-       "R. Lewandowski / A. Njie",
-       1.35
-      ],
-      [
-       "R. Lewandowski / S. Nanasi",
-       1.35
-      ],
-      [
-       "N. Zalewski / V. Gyokeres",
-       1.35
-      ],
-      [
-       "A. Isak / D. Kulusevski",
-       1.35
-      ],
-      [
-       "R. Lewandowski / A. Elanga",
-       1.36
-      ],
-      [
-       "R. Lewandowski / A. Bernhardsson",
-       1.36
-      ],
-      [
-       "M. Zukowski / V. Gyokeres",
-       1.36
-      ],
-      [
-       "A. Benedyczak / V. Gyokeres",
-       1.36
-      ],
-      [
-       "M. Zukowski / N. Zalewski",
-       1.37
-      ],
-      [
-       "A. Benedyczak / N. Zalewski",
-       1.37
-      ],
-      [
-       "V. Gyokeres / A. Isak",
-       1.37
-      ],
-      [
-       "K. Swiderski / D. Kulusevski",
-       1.38
-      ],
-      [
-       "R. Lewandowski / K. Urbanski",
-       1.39
-      ],
-      [
-       "M. Zukowski / A. Benedyczak",
-       1.39
-      ],
-      [
-       "N. Zalewski / A. Isak",
-       1.39
-      ],
-      [
-       "M. Zukowski / A. Isak",
-       1.4
-      ],
-      [
-       "A. Benedyczak / A. Isak",
-       1.4
-      ]
-     ],
-     "Liczba goli - Polska": [
-      [
-       "Powyżej 0,5",
-       1.2
-      ],
-      [
-       "Poniżej 0,5",
-       4.7
-      ],
-      [
-       "Powyżej 1,5",
-       1.92
-      ],
-      [
-       "Poniżej 1,5",
-       1.86
-      ],
-      [
-       "Powyżej 2,5",
-       3.95
-      ],
-      [
-       "Poniżej 2,5",
-       1.25
-      ],
-      [
-       "Powyżej 3,5",
-       8.25
-      ],
-      [
-       "Poniżej 3,5",
-       1.06
-      ],
-      [
-       "Powyżej 4,5",
-       14.25
-      ],
-      [
-       "Poniżej 4,5",
-       1.01
-      ]
-     ],
-     "Liczba goli - Szwecja": [
-      [
-       "Powyżej 0,5",
-       1.25
-      ],
-      [
-       "Poniżej 0,5",
-       3.95
-      ],
-      [
-       "Powyżej 1,5",
-       2.17
-      ],
-      [
-       "Poniżej 1,5",
-       1.67
-      ],
-      [
-       "Powyżej 2,5",
-       4.9
-      ],
-      [
-       "Poniżej 2,5",
-       1.18
-      ],
-      [
-       "Powyżej 3,5",
-       10.25
-      ],
-      [
-       "Poniżej 3,5",
-       1.04
-      ],
-      [
-       "Powyżej 4,5",
-       15.75
-      ],
-      [
-       "Poniżej 4,5",
-       1.01
-      ]
-     ],
-     "Handicap": [
-      [
-       "Polska (-4)",
-       45.0
-      ],
-      [
-       "Remis (Polska -4)",
-       19.5
-      ],
-      [
-       "Szwecja (+4)",
-       1.01
-      ],
-      [
-       "Polska (-3)",
-       23.0
-      ],
-      [
-       "Remis (Polska -3)",
-       12.5
-      ],
-      [
-       "Szwecja (+3)",
-       1.07
-      ],
-      [
-       "Polska (-2)",
-       9.75
-      ],
-      [
-       "Remis (Polska -2)",
-       7.0
-      ],
-      [
-       "Szwecja (+2)",
-       1.23
-      ],
-      [
-       "Polska (-1)",
-       4.35
-      ],
-      [
-       "Remis (Polska -1)",
-       4.6
-      ],
-      [
-       "Szwecja (+1)",
-       1.63
-      ],
-      [
-       "Polska (+1)",
-       1.44
-      ],
-      [
-       "Remis (Polska +1)",
-       5.1
-      ],
-      [
-       "Szwecja (-1)",
-       5.75
-      ],
-      [
-       "Polska (+2)",
-       1.15
-      ],
-      [
-       "Remis (Polska +2)",
-       8.5
-      ],
-      [
-       "Szwecja (-2)",
-       14.0
-      ],
-      [
-       "Polska (+3)",
-       1.04
-      ],
-      [
-       "Remis (Polska +3)",
-       15.25
-      ],
-      [
-       "Szwecja (-3)",
-       33.0
-      ]
-     ],
-     "Dokładny wynik": [
-      [
-       "1 - 0",
-       11.0
-      ],
-      [
-       "0 - 0",
-       17.75
-      ],
-      [
-       "0 - 1",
-       12.5
-      ],
-      [
-       "2 - 0",
-       13.25
-      ],
-      [
-       "1 - 1",
-       6.9
-      ],
-      [
-       "0 - 2",
-       16.75
-      ],
-      [
-       "2 - 1",
-       9.0
-      ],
-      [
-       "2 - 2",
-       11.0
-      ],
-      [
-       "0 - 3",
-       33.0
-      ],
-      [
-       "3 - 0",
-       24.0
-      ],
-      [
-       "3 - 3",
-       40.0
-      ],
-      [
-       "0 - 4",
-       90.0
-      ],
-      [
-       "3 - 1",
-       16.0
-      ],
-      [
-       "4 - 4",
-       250.0
-      ],
-      [
-       "1 - 2",
-       10.25
-      ],
-      [
-       "3 - 2",
-       22.0
-      ],
-      [
-       "Inny",
-       17.75
-      ],
-      [
-       "1 - 3",
-       20.0
-      ],
-      [
-       "4 - 0",
-       55.0
-      ],
-      [
-       "1 - 4",
-       55.0
-      ],
-      [
-       "4 - 1",
-       38.0
-      ],
-      [
-       "2 - 3",
-       24.0
-      ],
-      [
-       "4 - 2",
-       50.0
-      ],
-      [
-       "2 - 4",
-       65.0
-      ],
-      [
-       "4 - 3",
-       100.0
-      ],
-      [
-       "3 - 4",
-       125.0
-      ]
-     ]
-    }
    }
   },
   "955a201ba2266b8b6b0519e0265eb354": {
-   "fortuna": {
-    "id": "ufo:mtch:1xs-020",
-    "nazwa": "Walia - Portugalia",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "X": 5.2,
-     "2": 1.39,
-     "1": 6.8,
-     "12": 1.17,
-     "1X": 2.8,
-     "X2": 1.12,
-     "BTTS Tak": 1.68,
-     "BTTS Nie": 2.1,
-     "BTTS & o2.5": 1.87,
-     "A -1.5": 2.01,
-     "2 & u3.5": 2.39,
-     "2 & o3.5": 2.55,
-     "X & u3.5": 6.8,
-     "X & o3.5": 13.0,
-     "1 & u3.5": 8.6,
-     "1 & o3.5": 20.0,
-     "2 & u1.5": 9.0,
-     "X & o1.5": 5.4,
-     "2 & o1.5": 1.47,
-     "1 & u1.5": 22.0,
-     "X & u1.5": 20.0,
-     "1 & o1.5": 7.6,
-     "A -2.5": 3.35,
-     "2 & u2.5": 4.4,
-     "2 & o2.5": 1.73,
-     "X & u2.5": 6.8,
-     "X & o2.5": 13.0,
-     "1 & u2.5": 16.0,
-     "1 & o2.5": 9.4
-    },
-    "pelna": true
-   },
    "sts": {
     "id": "f2414483",
     "nazwa": "Walia - Portugalia",
     "zgodnosc": 1.0,
     "kursy": {
-     "1": 7.25,
-     "X": 5.4,
-     "2": 1.4,
-     "12": 1.18,
-     "X2": 1.12,
-     "1X": 3.0,
-     "A o0.5": 1.07,
-     "H o0.5": 1.56,
-     "A -2.5": 3.35,
-     "A -1.5": 2.02,
-     "Over 1.5": 1.15,
-     "Under 1.5": 5.6,
-     "Over 0.5": 1.02,
-     "Under 0.5": 20.0,
-     "Over 4.5": 3.6,
-     "Under 4.5": 1.3,
-     "Over 3.5": 2.2,
-     "Under 3.5": 1.7,
-     "Over 2.5": 1.48,
-     "Under 2.5": 2.7,
-     "Over 5.5": 6.6,
-     "Under 5.5": 1.11,
-     "H o1.5": 3.6,
-     "H o4.5": 17.0,
-     "H o3.5": 35.0,
-     "H o2.5": 11.0,
-     "A o1.5": 1.37,
-     "A o4.5": 7.5,
-     "A o3.5": 3.8,
-     "A o2.5": 2.1,
-     "BTTS Tak": 1.7,
-     "BTTS Nie": 2.15,
-     "1 & u1.5": 24.0,
-     "1 & o1.5": 8.4,
-     "X & u1.5": 20.0,
-     "X & o1.5": 6.0,
-     "2 & u1.5": 9.75,
-     "2 & o1.5": 1.5,
-     "1 & u4.5": 8.1,
-     "1 & o4.5": 32.0,
-     "X & u4.5": 5.1,
-     "X & o4.5": 60.0,
-     "2 & u4.5": 1.85,
-     "2 & o4.5": 4.1,
-     "1 & u3.5": 9.25,
-     "1 & o3.5": 21.0,
-     "X & u3.5": 7.1,
-     "X & o3.5": 14.0,
-     "2 & u3.5": 2.45,
-     "2 & o3.5": 2.65,
-     "1 & u2.5": 17.0,
-     "1 & o2.5": 10.0,
-     "X & u2.5": 7.1,
-     "X & o2.5": 14.0,
-     "2 & u2.5": 4.6,
-     "2 & o2.5": 1.77
+     "1": 6.0,
+     "X": 3.4,
+     "2": 1.67,
+     "12": 1.34,
+     "X2": 1.15,
+     "1X": 2.27,
+     "A -2.5": 6.6,
+     "A -1.5": 3.0,
+     "Over 8.5": 12.0,
+     "Under 8.5": 1.03,
+     "Over 6.5": 2.7,
+     "Under 6.5": 1.46,
+     "Over 4.5": 1.11,
+     "Under 4.5": 6.4,
+     "Over 7.5": 5.4,
+     "Under 7.5": 1.15,
+     "Over 5.5": 1.55,
+     "Under 5.5": 2.42,
+     "H o6.5": 55.0,
+     "H o4.5": 20.0,
+     "H o3.5": 6.4,
+     "H o2.5": 2.05,
+     "H o5.5": 41.0,
+     "A o6.5": 23.0,
+     "A o4.5": 4.6,
+     "A o3.5": 2.15,
+     "A o2.5": 1.25,
+     "A o5.5": 11.0
     },
     "pelna": true
-   },
-   "betclic": {
-    "id": "1279640356265984",
-    "nazwa": "Walia - Portugalia",
-    "zgodnosc": 1.0,
-    "kursy": {
-     "1": 6.75,
-     "X": 5.1,
-     "2": 1.37,
-     "1X": 2.92,
-     "12": 1.15,
-     "X2": 1.11,
-     "Over 0.5": 1.01,
-     "Under 0.5": 10.75,
-     "Over 1.5": 1.13,
-     "Under 1.5": 5.25,
-     "Over 2.5": 1.44,
-     "Under 2.5": 2.6,
-     "Over 3.5": 2.08,
-     "Under 3.5": 1.66,
-     "Over 4.5": 3.38,
-     "Under 4.5": 1.27,
-     "Over 5.5": 5.75,
-     "Under 5.5": 1.1,
-     "BTTS Tak": 1.67,
-     "BTTS Nie": 2.08,
-     "H o0.5": 1.52,
-     "H o1.5": 3.37,
-     "H o2.5": 11.75,
-     "H o3.5": 10.75,
-     "A o0.5": 1.06,
-     "A o1.5": 1.36,
-     "A o2.5": 2.12,
-     "A o3.5": 3.7,
-     "A o4.5": 6.6,
-     "H -2.5": 70.0,
-     "H -1.5": 15.75,
-     "A -1.5": 1.97,
-     "A -2.5": 3.35,
-     "A -3.5": 6.4,
-     "A -4.5": 12.75,
-     "A -5.5": 23.0
-    },
-    "pelna": true,
-    "rynkow": 14,
-    "oferta": {
-     "Wynik meczu (z wyłączeniem dogrywki)": [
-      [
-       "Walia",
-       6.75
-      ],
-      [
-       "Remis",
-       5.1
-      ],
-      [
-       "Portugalia",
-       1.37
-      ]
-     ],
-     "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)": [
-      [
-       "Walia",
-       5.9
-      ],
-      [
-       "Portugalia",
-       1.34
-      ]
-     ],
-     "Wynik meczu - Xtra Wygrana": [
-      [
-       "Walia",
-       5.5
-      ],
-      [
-       "Portugalia",
-       1.18
-      ]
-     ],
-     "Czyste konto- 2. połowa - Portugalia": [
-      [
-       "Portugalia zachowa czyste konto w drugiej połowie meczu",
-       1.58
-      ],
-      [
-       "Walia powyżej 14,5 odbiorów w meczu",
-       1.82
-      ],
-      [
-       "Bruno Fernandes powyżej 1,5 strzałów spoza pola karnego",
-       2.45
-      ],
-      [
-       "Powyżej 10,5 rzutów rożnych w meczu",
-       2.55
-      ]
-     ],
-     "Podwójna Szansa": [
-      [
-       "Walia lub remis",
-       2.92
-      ],
-      [
-       "Walia lub Portugalia",
-       1.15
-      ],
-      [
-       "Remis lub Portugalia",
-       1.11
-      ]
-     ],
-     "Gole Powyżej/Poniżej": [
-      [
-       "Powyżej 0,5",
-       1.01
-      ],
-      [
-       "Poniżej 0,5",
-       10.75
-      ],
-      [
-       "Powyżej 1,5",
-       1.13
-      ],
-      [
-       "Poniżej 1,5",
-       5.25
-      ],
-      [
-       "Powyżej 2,5",
-       1.44
-      ],
-      [
-       "Poniżej 2,5",
-       2.6
-      ],
-      [
-       "Powyżej 3,5",
-       2.08
-      ],
-      [
-       "Poniżej 3,5",
-       1.66
-      ],
-      [
-       "Powyżej 4,5",
-       3.38
-      ],
-      [
-       "Poniżej 4,5",
-       1.27
-      ],
-      [
-       "Powyżej 5,5",
-       5.75
-      ],
-      [
-       "Poniżej 5,5",
-       1.1
-      ]
-     ],
-     "Oba zespoły strzelą gola": [
-      [
-       "Tak",
-       1.67
-      ],
-      [
-       "Nie",
-       2.08
-      ]
-     ],
-     "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu": [
-      [
-       "Tak",
-       1.38
-      ],
-      [
-       "Nie",
-       2.75
-      ]
-     ],
-     "Którykolwiek zawodnik strzeli gola": [
-      [
-       "G. Ramos / J. Felix",
-       1.36
-      ],
-      [
-       "F. Silva / G. Ramos",
-       1.38
-      ],
-      [
-       "G. Ramos / B. Fernandes",
-       1.46
-      ],
-      [
-       "F. Trincao / G. Ramos",
-       1.46
-      ],
-      [
-       "F. Silva / J. Felix",
-       1.47
-      ],
-      [
-       "G. Ramos / G. Quenda",
-       1.48
-      ],
-      [
-       "G. Ramos / C. Forbs",
-       1.5
-      ],
-      [
-       "G. Ramos / Rod. Mora",
-       1.52
-      ],
-      [
-       "J. Felix / B. Fernandes",
-       1.56
-      ],
-      [
-       "F. Trincao / J. Felix",
-       1.56
-      ],
-      [
-       "P. Neto / G. Ramos",
-       1.59
-      ],
-      [
-       "F. Silva / B. Fernandes",
-       1.59
-      ],
-      [
-       "J. Felix / G. Quenda",
-       1.59
-      ],
-      [
-       "G. Ramos / A. Collins",
-       1.59
-      ],
-      [
-       "F. Silva / F. Trincao",
-       1.59
-      ],
-      [
-       "G. Ramos / H. Wilson",
-       1.6
-      ],
-      [
-       "C. Forbs / J. Felix",
-       1.62
-      ],
-      [
-       "F. Silva / G. Quenda",
-       1.63
-      ],
-      [
-       "J. Felix / Rod. Mora",
-       1.65
-      ],
-      [
-       "M. Harris / G. Ramos",
-       1.65
-      ],
-      [
-       "F. Silva / C. Forbs",
-       1.66
-      ],
-      [
-       "Vitinha F. / G. Ramos",
-       1.68
-      ],
-      [
-       "F. Silva / Rod. Mora",
-       1.69
-      ],
-      [
-       "G. Ramos / J. Neves",
-       1.69
-      ],
-      [
-       "F. Trincao / B. Fernandes",
-       1.7
-      ],
-      [
-       "G. Ramos / R. Neves",
-       1.71
-      ],
-      [
-       "D. Brooks / G. Ramos",
-       1.74
-      ],
-      [
-       "J. Felix / A. Collins",
-       1.74
-      ],
-      [
-       "B. Fernandes / G. Quenda",
-       1.75
-      ],
-      [
-       "F. Trincao / G. Quenda",
-       1.75
-      ]
-     ],
-     "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
-      [
-       "J. Felix / G. Ramos",
-       1.17
-      ],
-      [
-       "B. Fernandes / J. Felix",
-       1.18
-      ],
-      [
-       "B. Fernandes / G. Ramos",
-       1.18
-      ],
-      [
-       "J. Felix / F. Silva",
-       1.18
-      ],
-      [
-       "F. Silva / G. Ramos",
-       1.18
-      ],
-      [
-       "B. Fernandes / F. Silva",
-       1.19
-      ],
-      [
-       "J. Felix / F. Trincao",
-       1.19
-      ],
-      [
-       "G. Ramos / F. Trincao",
-       1.19
-      ],
-      [
-       "B. Fernandes / F. Trincao",
-       1.2
-      ],
-      [
-       "F. Silva / F. Trincao",
-       1.21
-      ],
-      [
-       "J. Felix / C. Forbs",
-       1.25
-      ],
-      [
-       "G. Ramos / C. Forbs",
-       1.25
-      ],
-      [
-       "J. Felix / G. Quenda",
-       1.25
-      ],
-      [
-       "G. Ramos / G. Quenda",
-       1.25
-      ],
-      [
-       "J. Felix / Rod. Mora",
-       1.26
-      ],
-      [
-       "B. Fernandes / C. Forbs",
-       1.26
-      ],
-      [
-       "B. Fernandes / G. Quenda",
-       1.26
-      ],
-      [
-       "J. Felix / P. Neto",
-       1.27
-      ],
-      [
-       "G. Ramos / Rod. Mora",
-       1.27
-      ],
-      [
-       "F. Silva / C. Forbs",
-       1.27
-      ],
-      [
-       "F. Silva / G. Quenda",
-       1.27
-      ],
-      [
-       "G. Ramos / P. Neto",
-       1.28
-      ],
-      [
-       "B. Fernandes / Rod. Mora",
-       1.28
-      ],
-      [
-       "F. Silva / Rod. Mora",
-       1.29
-      ],
-      [
-       "F. Trincao / C. Forbs",
-       1.29
-      ],
-      [
-       "F. Trincao / G. Quenda",
-       1.29
-      ],
-      [
-       "B. Fernandes / P. Neto",
-       1.29
-      ],
-      [
-       "F. Silva / P. Neto",
-       1.3
-      ],
-      [
-       "F. Trincao / Rod. Mora",
-       1.3
-      ],
-      [
-       "F. Trincao / P. Neto",
-       1.31
-      ]
-     ],
-     "Liczba goli - Walia": [
-      [
-       "Powyżej 0,5",
-       1.52
-      ],
-      [
-       "Poniżej 0,5",
-       2.35
-      ],
-      [
-       "Powyżej 1,5",
-       3.37
-      ],
-      [
-       "Poniżej 1,5",
-       1.26
-      ],
-      [
-       "Powyżej 2,5",
-       11.75
-      ],
-      [
-       "Poniżej 2,5",
-       1.04
-      ],
-      [
-       "Powyżej 3,5",
-       10.75
-      ],
-      [
-       "Poniżej 3,5",
-       1.01
-      ]
-     ],
-     "Liczba goli - Portugalia": [
-      [
-       "Powyżej 0,5",
-       1.06
-      ],
-      [
-       "Poniżej 0,5",
-       9.25
-      ],
-      [
-       "Powyżej 1,5",
-       1.36
-      ],
-      [
-       "Poniżej 1,5",
-       2.82
-      ],
-      [
-       "Powyżej 2,5",
-       2.12
-      ],
-      [
-       "Poniżej 2,5",
-       1.63
-      ],
-      [
-       "Powyżej 3,5",
-       3.7
-      ],
-      [
-       "Poniżej 3,5",
-       1.22
-      ],
-      [
-       "Powyżej 4,5",
-       6.6
-      ],
-      [
-       "Poniżej 4,5",
-       1.06
-      ]
-     ],
-     "Handicap": [
-      [
-       "Walia (-2)",
-       70.0
-      ],
-      [
-       "Remis (Walia -2)",
-       25.0
-      ],
-      [
-       "Portugalia (+2)",
-       1.02
-      ],
-      [
-       "Walia (-1)",
-       15.75
-      ],
-      [
-       "Remis (Walia -1)",
-       9.25
-      ],
-      [
-       "Portugalia (+1)",
-       1.11
-      ],
-      [
-       "Walia (+1)",
-       2.92
-      ],
-      [
-       "Remis (Walia +1)",
-       4.0
-      ],
-      [
-       "Portugalia (-1)",
-       1.97
-      ],
-      [
-       "Walia (+2)",
-       1.75
-      ],
-      [
-       "Remis (Walia +2)",
-       4.35
-      ],
-      [
-       "Portugalia (-2)",
-       3.35
-      ],
-      [
-       "Walia (+3)",
-       1.29
-      ],
-      [
-       "Remis (Walia +3)",
-       6.0
-      ],
-      [
-       "Portugalia (-3)",
-       6.4
-      ],
-      [
-       "Walia (+4)",
-       1.1
-      ],
-      [
-       "Remis (Walia +4)",
-       9.0
-      ],
-      [
-       "Portugalia (-4)",
-       12.75
-      ],
-      [
-       "Walia (+5)",
-       1.02
-      ],
-      [
-       "Remis (Walia +5)",
-       12.75
-      ],
-      [
-       "Portugalia (-5)",
-       23.0
-      ]
-     ],
-     "Dokładny wynik": [
-      [
-       "1 - 0",
-       23.0
-      ],
-      [
-       "0 - 0",
-       23.0
-      ],
-      [
-       "0 - 3",
-       9.75
-      ],
-      [
-       "2 - 0",
-       48.0
-      ],
-      [
-       "1 - 1",
-       9.75
-      ],
-      [
-       "0 - 4",
-       16.0
-      ],
-      [
-       "2 - 1",
-       20.0
-      ],
-      [
-       "2 - 2",
-       16.5
-      ],
-      [
-       "0 - 1",
-       9.5
-      ],
-      [
-       "3 - 0",
-       150.0
-      ],
-      [
-       "3 - 3",
-       65.0
-      ],
-      [
-       "0 - 2",
-       7.75
-      ],
-      [
-       "3 - 1",
-       60.0
-      ],
-      [
-       "4 - 4",
-       450.0
-      ],
-      [
-       "1 - 3",
-       10.0
-      ],
-      [
-       "3 - 2",
-       50.0
-      ],
-      [
-       "Inny",
-       7.75
-      ],
-      [
-       "1 - 4",
-       16.5
-      ],
-      [
-       "4 - 3",
-       275.0
-      ],
-      [
-       "1 - 2",
-       8.25
-      ],
-      [
-       "4 - 0",
-       600.0
-      ],
-      [
-       "2 - 3",
-       21.0
-      ],
-      [
-       "4 - 1",
-       250.0
-      ],
-      [
-       "2 - 4",
-       35.0
-      ],
-      [
-       "4 - 2",
-       225.0
-      ],
-      [
-       "3 - 4",
-       110.0
-      ]
-     ]
-    }
    }
   },
   "f0a6612a0e894025a58459b04ecd02c9": {
-   "fortuna": {
-    "id": "ufo:mtch:1xq-10n",
-    "nazwa": "Zverev A. - Shelton B.",
-    "zgodnosc": 0.95,
-    "kursy": {
-     "B": 2.56,
-     "A": 1.5,
-     "A -1.5": 2.39,
-     "B min. 1 set": 1.51,
-     "A 2:0": 2.35,
-     "A 2:1": 3.35,
-     "B 2:1": 4.9,
-     "B 2:0": 4.5,
-     "B -1.5": 4.5,
-     "Poniżej 2.5 seta": 1.63,
-     "Ponad 2.5 seta": 2.1,
-     "A min. 1 set": 1.19
-    },
-    "pelna": true
-   },
    "sts": {
     "id": "f3803298",
     "nazwa": "Zverev Alexander - Shelton Ben",
     "zgodnosc": 0.96,
     "kursy": {
-     "A": 1.47,
-     "B": 2.8,
-     "A -1.5": 2.2,
-     "B min. 1 set": 1.65,
-     "A min. 1 set": 1.17,
-     "B -1.5": 5.0,
-     "A 2:0": 2.2,
-     "A 2:1": 3.7,
-     "B 2:1": 5.0,
-     "B 2:0": 5.0,
-     "Ponad 2.5 seta": 2.25,
-     "Poniżej 2.5 seta": 1.6
+     "A": 1.09,
+     "B": 6.0,
+     "A -1.5": 1.43,
+     "B min. 1 set": 2.6,
+     "A 2:0": 1.46,
+     "A 2:1": 4.0,
+     "B 2:1": 6.4,
+     "Ponad 2.5 seta": 2.6,
+     "Poniżej 2.5 seta": 1.43
     },
     "pelna": true
    }
@@ -6286,8 +582,7 @@
  "diag": {
   "bledy": [
    "turnieje ufo:sprt:01 today: Expecting value: line 1 column 1 (char 0)",
-   "turnieje ufo:sprt:19 today: Expecting value: line 1 column 1 (char 0)",
-   "mecze ufo:tour:0x-6ra: Expecting value: line 1 column 1 (char 0)"
+   "turnieje ufo:sprt:19 today: Expecting value: line 1 column 1 (char 0)"
   ],
   "nasze_mecze": 9,
   "sporty": [
@@ -6338,10 +633,6 @@
    [
     "ufo:sprt:0y",
     "Piłka ręczna"
-   ],
-   [
-    "ufo:sprt:1k",
-    "HIT DNIA"
    ],
    [
     "ufo:sprt:1p",
@@ -6450,1525 +741,761 @@
    "sporty walki": "ufo:sprt:19",
    "pilka": "ufo:sprt:00"
   },
-  "turniejow": 130,
-  "meczow_fortuny": 601,
-  "pelna_oferta": 9,
-  "rynki_nazwy": {
-   "pilka": {
-    "Wynik meczu": [
-     "1",
-     "2",
-     "0"
-    ],
-    "Mecz: dwójtyp": [
-     "12",
-     "02",
-     "10"
-    ],
-    "Mecz: obie drużyny strzelą gola": [
-     "Tak",
-     "Nie"
-    ],
-    "SuperSub: Zawodnik i jego zmiennik - liczba fauli (reg.czas)(OPTA)": [
-     "3+",
-     "1+",
-     "2+"
-    ],
-    "Zawodnik - strzeli pierwszego lub ostatniego gola w meczu (OPTA)": [
-     "Tak"
-    ],
-    "SuperSub: Zawodnik lub jego zmiennik strzeli pierwszego gola dla Rumunia (OPTA)": [
-     "Tak"
-    ],
-    "SuperSub: Zawodnik i jego zmiennik - liczba strzałów (reg.czas)(OPTA)": [
-     "2+",
-     "3+",
-     "1+"
-    ],
-    "Zawodnik - liczba goli (OPTA)": [
-     "2+",
-     "3+",
-     "1+"
-    ],
-    "Zawodnik - liczba goli w 1.połowie (OPTA)": [
-     "1+"
-    ],
-    "Zawodnik - strzeli gola z pola karnego (0PTA)": [
-     "1+"
-    ],
-    "Zawodnik - liczba strzałów w światło bramki głową (OPTA)": [
-     "2+",
-     "1+"
-    ],
-    "SuperSub: Zawodnik i jego zmiennik - liczba strzałów w światło bramki (reg.czas)(OPTA)": [
-     "2+",
-     "1+",
-     "3+"
-    ],
-    "SuperSub: Zawodnik lub jego zmiennik otrzyma żółtą kartkę (reg.czas)": [
-     "Tak"
-    ],
-    "SuperSub: Zawodnik lub jego zmiennik strzeli ostatniego gola dla Bośnia i Herc. (OPTA)": [
-     "Tak"
-    ],
-    "Zawodnik - strzeli gola nogą (OPTA)": [
-     "1+"
-    ],
-    "Zawodnik - strzeli gola spoza pola karnego (OPTA)": [
-     "1+"
-    ],
-    "Zawodnik - strzeli pierwszego gola w meczu (OPTA)": [
-     "Tak"
-    ],
-    "SuperSub: Zawodnik lub jego zmiennik strzeli ostatniego gola dla Rumunia (OPTA)": [
-     "Tak"
-    ],
-    "Bośnia i Herc. - Zawodnik strzeli pierwszego gola w meczu (OPTA)": [
-     "Tak"
-    ],
-    "Zawodnik - liczba strzałów spoza pola karnego (OPTA)": [
-     "2+",
-     "1+"
-    ],
-    "Zawodnik - liczba strzałów z pola karnego (OPTA)": [
-     "1+",
-     "2+"
-    ],
-    "Zawodnik - liczba strzałów w światło bramki (OPTA)": [
-     "2+",
-     "1+"
-    ],
-    "Rumunia - Zawodnik strzeli pierwszego gola w meczu (OPTA)": [
-     "Tak"
-    ],
-    "Zawodnik - otrzyma Żółtą Kartkę (Nie liczy się: druga ŻK dla zawodnika, ŻK dla ławki, po meczu)": [
-     "1+"
-    ],
-    "SuperSub: Zawodnik lub jego zmiennik strzeli pierwszego gola w meczu (OPTA)": [
-     "Tak"
-    ],
-    "Zawodnik - liczba strzałów w światło bramki z pola karnego (OPTA)": [
-     "2+",
-     "1+"
-    ],
-    "Zawodnik - liczba strzałów (OPTA)": [
-     "2+",
-     "1+"
-    ],
-    "Zawodnik - liczba strzałów w światło bramki spoza pola karnego (OPTA)": [
-     "1+",
-     "2+"
-    ],
-    "Zawodnik - liczba strzałów w światło bramki nogą (OPTA)": [
-     "2+",
-     "1+"
-    ],
-    "Zawodnik - liczba fauli (OPTA)": [
-     "2+",
-     "1+",
-     "3+"
-    ],
-    "Rumunia - Zawodnik strzeli ostatniego gola w meczu (OPTA)": [
-     "Tak"
-    ],
-    "SuperSub: Zawodnik lub jego zmiennik strzeli gola (reg.czas)(OPTA)": [
-     "Tak"
-    ],
-    "Zawodnik - strzeli gola głową (OPTA)": [
-     "1+"
-    ],
-    "Zawodnik - strzeli ostatniego gola w meczu (OPTA)": [
-     "Tak"
-    ],
-    "Kiedy będzie strzelony 1. gol? (10-minutowe interwały)": [
-     "51-60",
-     "Nie padnie następny gol",
-     "31-40",
-     "41-50"
-    ],
-    "SuperSub: Zawodnik lub jego zmiennik strzeli pierwszego gola dla Bośnia i Herc. (OPTA)": [
-     "Tak"
-    ],
-    "Bośnia i Herc. - Zawodnik strzeli ostatniego gola w meczu (OPTA)": [
-     "Tak"
-    ],
-    "Mecz: Jedna z drużyn wygra mecz": [
-     "Nie",
-     "Tak"
-    ],
-    "1.połowa: liczba goli": [
-     "Mniej niż 2",
-     "Więcej niż 2"
-    ],
-    "2.połowa: Rumunia - liczba goli": [
-     "Więcej niż 1.5",
-     "Mniej niż 1.5"
-    ],
-    "2.połowa: liczba goli": [
-     "Mniej niż 2",
-     "Więcej niż 2"
-    ],
-    "Mecz: multiwynik": [
-     "1:0 2:0 3:0",
-     "2:1 3:1 4:1",
-     "0:4 0:5 0:6",
-     "4:0 5:0 6:0"
-    ],
-    "Mecz: wynik/różnica zwycięstwa": [
-     "2/o 2 gole",
-     "2/o 3+ gole",
-     "0",
-     "1/o 1 gol"
-    ],
-    "Mecz: liczba goli": [
-     "Mniej niż 5.5",
-     "Więcej niż 5.5"
-    ],
-    "1.połowa: bez remisu (remis = zwrot)": [
-     "1",
-     "2"
-    ],
-    "Mecz: Rumunia połowa z wiekszą liczbą goli": [
-     "2.",
-     "1.",
-     "="
-    ],
-    "1.połowa: handicap 0:2": [
-     "0",
-     "1",
-     "2"
-    ],
-    "1.połowa: Bośnia i Herc. - liczba goli ": [
-     "Więcej niż 0.5",
-     "Mniej niż 0.5"
-    ],
-    "Mecz: multigole": [
-     "4-5",
-     "1-3",
-     "4-6",
-     "1-4"
-    ],
-    "Mecz: Bośnia i Herc. - liczba goli": [
-     "Mniej niż 0.5",
-     "Więcej niż 0.5"
-    ],
-    "Mecz: Rumunia - multigole": [
-     "4+",
-     "Brak goli",
-     "1-3",
-     "2-3"
-    ],
-    "2.połowa: dwójtyp": [
-     "02",
-     "12",
-     "10"
-    ],
-    "2.połowa: Bośnia i Herc. - liczba goli": [
-     "Mniej niż 2.5",
-     "Więcej niż 2.5"
-    ],
-    "Mecz: Bośnia i Herc. - wygra obie połowy": [
-     "Nie",
-     "Tak"
-    ],
-    "Mecz: handicap 0:2": [
-     "1",
-     "0",
-     "2"
-    ],
-    "Mecz: handicap 1:0": [
-     "1",
-     "0",
-     "2"
-    ],
-    "2.połowa: wynik/obie drużyny strzelą gola w 2.połowie": [
-     "2/Nie",
-     "2/Tak",
-     "0/Nie",
-     "0/Tak"
-    ],
-    "1.połowa: wynik/obie drużyny strzelą gola w 1.połowie": [
-     "1/Nie",
-     "0/Tak",
-     "0/Nie",
-     "2/Tak"
-    ],
-    "1.połowa: obie drużyny strzelą gola": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: wynik/liczba goli": [
-     "1/- 3.5 ",
-     "1/+ 3.5 ",
-     "0/- 3.5 ",
-     "0/+ 3.5 "
-    ],
-    "1.połowa lub wynik meczu (podwójna szansa)": [
-     "2",
-     "1",
-     "remis"
-    ],
-    "Mecz: Rumunia - strzeli gola w obu połowach": [
-     "Tak",
-     "Nie"
-    ],
-    "1.połowa/2.połowa - Obie drużyny strzelą gola": [
-     "Tak/Tak",
-     "Nie/Tak",
-     "Nie/Nie",
-     "Tak/Nie"
-    ],
-    "Mecz: handicap": [
-     "2 (+0.5)",
-     "1 (-0.5)"
-    ],
-    "1.połowa: Rumunia - liczba goli ": [
-     "Mniej niż 1.5",
-     "Więcej niż 1.5"
-    ],
-    "Mecz: Bośnia i Herc. - wygra do zera": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: Bośnia i Herc. Liczba goli P/N": [
-     "Parz.",
-     "Niep."
-    ],
-    "Mecz: Rumunia Liczba goli P/N": [
-     "Parz.",
-     "Niep."
-    ],
-    "Mecz: Rumunia - wygra do zera": [
-     "Nie",
-     "Tak"
-    ],
-    "Mecz: bez remisu (remis = zwrot)": [
-     "1",
-     "2"
-    ],
-    "Mecz: liczba rzutów rożnych handicap": [
-     "2 (+0.5)",
-     "1 (-0.5)"
-    ],
-    "Mecz: Rumunia - dokładna liczba goli": [
-     "0",
-     "2",
-     "3+",
-     "1"
-    ],
-    "Mecz: Rumunia - przedział rzutów rożnych": [
-     "0-2",
-     "3-4",
-     "5-6",
-     "7+"
-    ],
-    "Mecz: Bośnia i Herc. - dokładna liczba goli": [
-     "3+",
-     "2",
-     "0",
-     "1"
-    ],
-    "Mecz: Rumunia wygra / powyżej 2.5 goli": [
-     "Nie (oba warunki nie zostaną spełnione)",
-     "Tak (przynajmniej 1 warunek zostanie spełniony)"
-    ],
-    "Mecz: Bośnia i Herc. - przedział rzutów rożnych": [
-     "7+",
-     "3-4",
-     "5-6",
-     "0-2"
-    ],
-    "2.połowa: handicap 0:2": [
-     "2",
-     "0",
-     "1"
-    ],
-    "Mecz: Bośnia i Herc. wygra / obie drużyny strzelą gola": [
-     "Tak (przynajmniej 1 warunek zostanie spełniony)",
-     "Nie (oba warunki nie zostaną spełnione)"
-    ],
-    "2.połowa: wynik/liczba goli w 2.połowie 1.5": [
-     "1/+",
-     "1/-",
-     "0/+",
-     "0/-"
-    ],
-    "Mecz: Bośnia i Herc. wygra / min. jedna z drużyn nie straci gola": [
-     "Tak (przynajmniej 1 warunek zostanie spełniony)",
-     "Nie (oba warunki nie zostaną spełnione)"
-    ],
-    "2.połowa: handicap 1:0": [
-     "1",
-     "2",
-     "0"
-    ],
-    "2.połowa: handicap": [
-     "1 (-1)",
-     "2 (+1)"
-    ],
-    "2.połowa: Bośnia i Herc. - nie straci gola": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: suma goli": [
-     "Niep.",
-     "Parz."
-    ],
-    "2.połowa: multigole": [
-     "Brak goli",
-     "1-2",
-     "1-3",
-     "2-3"
-    ],
-    "Mecz: Bośnia i Herc. wygra / poniżej 2.5 gola": [
-     "Tak (przynajmniej 1 warunek zostanie spełniony)",
-     "Nie (oba warunki nie zostaną spełnione)"
-    ],
-    "2.połowa: dwójtyp/obie drużyny strzelą gola w 2.połowie": [
-     "12/Tak",
-     "12/Nie",
-     "02/Tak",
-     "02/Nie"
-    ],
-    "Mecz: Remis / min. jedna z drużyn nie straci gola": [
-     "Tak (przynajmniej 1 warunek zostanie spełniony)",
-     "Nie (oba warunki nie zostaną spełnione)"
-    ],
-    "Mecz: Remis / powyżej 2.5 goli": [
-     "Nie (oba warunki nie zostaną spełnione)",
-     "Tak (przynajmniej 1 warunek zostanie spełniony)"
-    ],
-    "2.połowa: handicap 0:1": [
-     "2",
-     "0",
-     "1"
-    ],
-    "Mecz: dwójtyp/obie drużyny strzelą gola w 1.połowie": [
-     "02/Tak",
-     "02/Nie",
-     "10/Tak",
-     "10/Nie"
-    ],
-    "2.połowa: Rumunia - nie straci gola": [
-     "Tak",
-     "Nie"
-    ],
-    "2.połowa: dokładna liczba goli": [
-     "2+",
-     "0",
-     "1"
-    ],
-    "Mecz: Remis / obie drużyny strzelą gola": [
-     "Tak (przynajmniej 1 warunek zostanie spełniony)",
-     "Nie (oba warunki nie zostaną spełnione)"
-    ],
-    "Mecz: Rumunia wygra / obie drużyny strzelą gola": [
-     "Nie (oba warunki nie zostaną spełnione)",
-     "Tak (przynajmniej 1 warunek zostanie spełniony)"
-    ],
-    "Mecz: dwójtyp/obie drużyny strzelą gola": [
-     "12/Nie",
-     "12/Tak",
-     "02/Nie",
-     "02/Tak"
-    ],
-    "1.połowa: liczba rzutów rożnych": [
-     "Więcej niż 4.5",
-     "Mniej niż 4.5"
-    ],
-    "Mecz: 1.rzut rożny": [
-     "2",
-     "Nikt",
-     "1"
-    ],
-    "1.połowa: Bośnia i Herc. - przedział rzutów rożnych": [
-     "3",
-     "2",
-     "0-1",
-     "4+"
-    ],
-    "Mecz: Bośnia i Herc. wygra / powyżej 2.5 goli": [
-     "Tak (przynajmniej 1 warunek zostanie spełniony)",
-     "Nie (oba warunki nie zostaną spełnione)"
-    ],
-    "Mecz: więcej rzutów rożnych ": [
-     "1",
-     "2",
-     "Rowno"
-    ],
-    "Mecz: liczba rzutów rożnych": [
-     "Mniej niż 7.5",
-     "Więcej niż 7.5"
-    ],
-    "Mecz: Rumunia - liczba goli": [
-     "Więcej niż 3.5",
-     "Mniej niż 3.5"
-    ],
-    "Mecz: która drużyna strzeli gola": [
-     "Tylko 1.drużyna",
-     "Tylko 2.drużyna",
-     "Obie",
-     "Żadna"
-    ],
-    "Mecz: Rumunia wygra mecz": [
-     "Nie",
-     "Tak"
-    ],
-    "1.połowa: Rumunia - nie straci gola": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: dwójtyp/liczba goli": [
-     "10 / -3.5",
-     "12 / -3.5",
-     "12 / +3.5",
-     "02 / +3.5"
-    ],
-    "1.połowa/wynik meczu": [
-     "0/1",
-     "0/0",
-     "0/2",
-     "1/1"
-    ],
-    "1.połowa: suma goli": [
-     "Parz.",
-     "Niep."
-    ],
-    "Mecz: Remis / poniżej 2.5 gola": [
-     "Nie (oba warunki nie zostaną spełnione)",
-     "Tak (przynajmniej 1 warunek zostanie spełniony)"
-    ],
-    "Mecz: dwójtyp/obie drużyny strzelą gola w 2.połowie": [
-     "10/Tak",
-     "10/Nie",
-     "02/Nie",
-     "12/Tak"
-    ],
-    "Mecz: Rumunia - wygra co najmniej jedną połowę": [
-     "Tak",
-     "Nie"
-    ],
-    "2.połowa: 1.gol": [
-     "1",
-     "Nikt",
-     "2"
-    ],
-    "Mecz: przedział rzutów rożnych": [
-     "12+",
-     "9-11",
-     "0-8"
-    ],
-    "1.połowa: dwójtyp/obie drużyny strzelą gola w 1.połowie": [
-     "12/Nie",
-     "12/Tak",
-     "02/Nie",
-     "02/Tak"
-    ],
-    "1.połowa: handicap": [
-     "2 (+0.5)",
-     "1 (-0.5)"
-    ],
-    "Połowa z większą liczbą goli": [
-     "2.",
-     "1.",
-     "="
-    ],
-    "1.połowa: Rumunia - przedział rzutów rożnych": [
-     "2",
-     "3",
-     "0-1",
-     "4+"
-    ],
-    "Mecz: Bośnia i Herc. - nie straci gola": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: Rumunia wygra / min. jedna z drużyn nie straci gola": [
-     "Nie (oba warunki nie zostaną spełnione)",
-     "Tak (przynajmniej 1 warunek zostanie spełniony)"
-    ]
-   },
-   "tenis": {
-    "Zwycięzca meczu (krecz=zwrot)": [
-     "2",
-     "1"
-    ],
-    "Zwycięzca meczu (zwrot jeżeli przegra 1:2 w setach)": [
-     "2",
-     "1"
-    ],
-    "Mecz: handicap setowy (krecz=zwrot)": [
-     "1 (-1.5)",
-     "2 (+1.5)"
-    ],
-    "Mecz: liczba gemów": [
-     "Mniej niż 23.5",
-     "Więcej niż 23.5"
-    ],
-    "1.set: liczba gemów": [
-     "Mniej niż 12.5",
-     "Więcej niż 12.5"
-    ],
-    "Mecz: handicap gemowy": [
-     "2 (-1.5)",
-     "1 (+1.5)"
-    ],
-    "Mecz: Shelton B. - liczba gemów": [
-     "Mniej niż 12.5",
-     "Więcej niż 12.5"
-    ],
-    "Mecz: dokładny wynik": [
-     "2:0",
-     "2:1",
-     "1:2",
-     "0:2 "
-    ],
-    "Mecz: liczba setów (krecz=zwrot)": [
-     "Mniej niż 2.5",
-     "Więcej niż 2.5"
-    ],
-    "Mecz: Zverev A. - wygra co najmniej jeden set": [
-     "Nie",
-     "Tak"
-    ],
-    "1.set: dokładny wynik": [
-     "3:6",
-     "4:6",
-     "6:0",
-     "5:7"
-    ],
-    "Mecz: Shelton B. - wygra dokładnie jeden set": [
-     "Nie",
-     "Tak"
-    ],
-    "Mecz: Zverev A. - liczba gemów": [
-     "Więcej niż 12.5",
-     "Mniej niż 12.5"
-    ],
-    "Najpopularniejsze zakłady łączone": [
-     "Zverev wygra  mecz , powyżej  26.5 Gemach  w mecz"
-    ],
-    "1.set: handicap (gemy)": [
-     "1 (+1.5)",
-     "2 (-1.5)"
-    ],
-    "1.set: zwycięzca / liczba gemów w secie": [
-     "2/- 12.5",
-     "1/- 12.5",
-     "2/+ 12.5",
-     "1/+ 12.5"
-    ],
-    "Mecz: Shelton B. - liczba asów": [
-     "Więcej niż 11.5",
-     "Mniej niż 11.5"
-    ],
-    "Mecz: liczba asów": [
-     "Więcej niż 21.5",
-     "Mniej niż 21.5"
-    ],
-    "Mecz: więcej asów": [
-     "1",
-     "2",
-     "Rowno"
-    ],
-    "Mecz: Zverev A. - liczba podwójnych błędów": [
-     "Mniej niż 1.5",
-     "Więcej niż 1.5"
-    ],
-    "Mecz: liczba podwójnych błędów": [
-     "Więcej niż 1.5",
-     "Mniej niż 1.5"
-    ],
-    "Mecz: Zverev A. - liczba asów": [
-     "Mniej niż 8.5",
-     "Więcej niż 8.5"
-    ],
-    "Mecz: Shelton B. - liczba podwójnych błędów": [
-     "Mniej niż 1.5",
-     "Więcej niż 1.5"
-    ],
-    "Co najmniej jeden zawodnik wygra wszystkie swoje gemy serwisowe": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: krecz": [
-     "Tak",
-     "Nie"
-    ],
-    "1.set: stan po dwóch gemach - 1:1": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: pomoc lekarska": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: będzie tiebreak": [
-     "Tak",
-     "Nie"
-    ],
-    "1.set: stan po sześciu gemach - 3:3": [
-     "Tak",
-     "Nie"
-    ],
-    "As serwisowy będzie wcześniej niż podwójny błąd": [
-     "Nie",
-     "Tak"
-    ],
-    "Mecz: Shelton B. - wygra co najmniej jeden set": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: liczba zdobytych breaków": [
-     "Więcej niż 1.5",
-     "Mniej niż 1.5"
-    ],
-    "1. set: wykorzystana pilka setowa": [
-     "3.+",
-     "1.",
-     "2."
-    ],
-    "Mecz: dokładna liczba setów (krecz=zwrot)": [
-     "3",
-     "2"
-    ],
-    "W co najmniej jednym gemie będzie as i podwójny błąd serwisowy": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: Zverev A. - wygra swój pierwszy gem serwisowy": [
-     "Tak",
-     "Nie"
-    ],
-    "1.set: stan po czterech gemach - 2:2": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: Shelton B. - wygra swój pierwszy gem serwisowy": [
-     "Tak",
-     "Nie"
-    ],
-    "Spotkanie potrwa dłużej niż 120 minut": [
-     "Tak",
-     "Nie"
-    ],
-    "1.set": [
-     "2",
-     "1"
-    ],
-    "Mecz: Zverev A. - wygra dokładnie jeden set": [
-     "Tak",
-     "Nie"
-    ],
-    "Mecz: więcej podwójnych błędów": [
-     "2",
-     "1",
-     "Równo"
-    ],
-    "1.set / zwycięzca meczu": [
-     "1/2",
-     "2/1",
-     "1/1",
-     "2/2"
-    ]
-   }
-  },
+  "turniejow": 131,
+  "meczow_fortuny": 564,
+  "niedopasowane": [
+   "pilka: Bosnia & Herzegovina – Romania",
+   "pilka: Hungary – Northern Ireland",
+   "pilka: Ukraine – Georgia",
+   "pilka: Republic of Ireland – Kosovo",
+   "pilka: Israel – Austria",
+   "pilka: Denmark – Norway",
+   "pilka: Poland – Sweden",
+   "pilka: Wales – Portugal",
+   "tenis: Alexander Zverev – Ben Shelton"
+  ],
+  "rynki_nazwy": {},
   "sts": {
    "bledy": [],
-   "meczow_sts": 1724,
+   "meczow_sts": 1734,
    "sporty": {
-    "1": 1220,
-    "3": 400,
-    "166": 55,
+    "1": 1228,
+    "3": 401,
+    "166": 56,
     "19": 49
    },
-   "szczegoly_ramek": 13,
+   "szczegoly_ramek": 16,
    "szczegoly_odpowiedzi": "9 z 9",
    "szczegoly_tematy": {
     "f_f2414524_pl": 1,
-    "f_f2414192_pl": 3,
+    "f_f2414192_pl": 1,
     "f_f2414172_pl": 1,
-    "f_f2414480_pl": 1,
-    "f_f2414489_pl": 3,
-    "f_f2414182_pl": 1,
+    "f_f2414489_pl": 1,
+    "f_f2414480_pl": 2,
+    "f_f2414182_pl": 5,
     "f_f3803298_pl": 1,
-    "f_f2414483_pl": 1,
-    "f_f2414523_pl": 1
+    "f_f2414523_pl": 1,
+    "f_f2414483_pl": 3
    },
    "szczegoly_meczow": {
     "Bośnia i Hercegowina - Rumunia": {
-     "16m66825": 12,
-     "17m5bf6a1fd01e": 10,
-     "1m68932630": 138
+     "18m5bf6a1fd01e": 6,
+     "2m68932630": 83
     },
     "Węgry - Irlandia Północna": {
-     "16m66828": 10,
-     "17m6d79cc0bd2c": 10,
-     "1m68932770": 138
+     "18m6d79cc0bd2c": 6,
+     "2m68932770": 89
     },
     "Ukraina - Gruzja": {
-     "16m66827": 9,
-     "17mce53c3ce4ee": 9,
-     "1m68932772": 142
+     "18mce53c3ce4ee": 6,
+     "2m68932772": 87
     },
     "Irlandia - Kosowo": {
-     "16m66826": 10,
-     "17mb12eb64c50d": 9,
-     "1m68932742": 142
+     "18mb12eb64c50d": 6,
+     "2m68932742": 79
     },
     "Izrael - Austria": {
-     "16m66822": 9,
-     "17m3454799db53": 9,
-     "1m68932740": 142
+     "18m3454799db53": 6,
+     "2m68932740": 83
     },
     "Dania - Norwegia": {
-     "16m66824": 12,
-     "17ma2c5a126412": 9,
-     "1m68932054": 142
+     "18ma2c5a126412": 6,
+     "2m68932054": 83
     },
     "Polska - Szwecja": {
-     "16m65339": 11,
-     "17mf2cb64d7d54": 10,
-     "1m68932632": 138
+     "18mf2cb64d7d54": 6,
+     "2m68932632": 84
     },
     "Walia - Portugalia": {
-     "16m66823": 11,
-     "17ma2c0d444312": 9,
-     "1m68932056": 142
+     "18ma2c0d444312": 6,
+     "2m68932056": 82
     },
     "Zverev Alexander - Shelton Ben": {
-     "16m67112": 10,
-     "17md24835cf6cc": 26
+     "18md24835cf6cc": 31
     }
    },
    "rynki_przyklad": {
     "Bośnia i Hercegowina - Rumunia": {
      "1 Mecz": [
-      "Mecz | 1:1=2.02",
-      "Mecz | 2:X=3.9",
+      "Mecz | 1:1=2.5",
+      "Mecz | 2:X=2.65",
       "Mecz | 3:2=3.5"
      ],
-     "8 Następny gol": [
-      "1. gol | 6:1=1.72",
-      "1. gol | 7:nikt=14",
-      "1. gol | 8:2=2.3"
+     "7 ": [
+      "Wygra od stanu 1:1 | 1:=2.5",
+      "Wygra od stanu 1:1 | 2:=2.65",
+      "Wygra od stanu 1:1 | 3:=3.5"
      ],
-     "9 Ostatni gol": [
-      "Ostatni gol | 6:1=1.72",
-      "Ostatni gol | 7:nikt=14",
-      "Ostatni gol | 8:2=2.3"
+     "8 Następny gol": [
+      "3. gol | 6:1=2.1",
+      "3. gol | 7:nikt=4.45",
+      "3. gol | 8:2=2.65"
      ],
      "10 Podwójna szansa": [
-      "Podwójna szansa | 10:12=1.3",
-      "Podwójna szansa | 11:X2=1.82",
+      "Podwójna szansa | 10:12=1.51",
+      "Podwójna szansa | 11:X2=1.55",
       "Podwójna szansa | 9:1X=1.33"
      ],
      "11 Zakład bez remisu": [
-      "Zakład bez remisu | 4:1=1.52",
-      "Zakład bez remisu | 5:2=2.55"
+      "Zakład bez remisu | 4:1=1.63",
+      "Zakład bez remisu | 5:2=2.25"
      ],
      "14 Handicap 1X2": [
-      "Handicap 1X2 | 922:1 (2:0)=1.1",
-      "Handicap 1X2 | 923:X (2:0)=10.5",
-      "Handicap 1X2 | 924:2 (2:0)=21",
-      "Handicap 1X2 | 922:1 (3:0)=1.02",
-      "Handicap 1X2 | 923:X (3:0)=20",
-      "Handicap 1X2 | 924:2 (3:0)=55",
-      "Handicap 1X2 | 922:1 (1:0)=1.33",
-      "Handicap 1X2 | 923:X (1:0)=5.4"
-     ],
-     "17 Różnica zwycięstwa": [
-      "Różnica zwycięstwa | 1262:1. drużyna - 1 golem=4",
-      "Różnica zwycięstwa | 1263:1. drużyna - 2 golami=6",
-      "Różnica zwycięstwa | 1264:1. drużyna - 3+ golami=7.6",
-      "Różnica zwycięstwa | 1265:2. drużyna - 1 golem=5.4"
-     ],
-     "20 Handicap (z możliwym zwrotem)": [
-      "Handicap (z możliwym zwrotem) | 925:1 (+1)=1.13",
-      "Handicap (z możliwym zwrotem) | 926:2 (-1)=6.1",
-      "Handicap (z możliwym zwrotem) | 925:1 (+0)=1.52",
-      "Handicap (z możliwym zwrotem) | 926:2 (-0)=2.55",
-      "Handicap (z możliwym zwrotem) | 925:1 (-2)=6.25",
-      "Handicap (z możliwym zwrotem) | 926:2 (+2)=1.12"
+      "Handicap 1X2 | 922:1 (2:0)=1.06",
+      "Handicap 1X2 | 923:X (2:0)=12",
+      "Handicap 1X2 | 924:2 (2:0)=30",
+      "Handicap 1X2 | 922:1 (1:0)=1.32",
+      "Handicap 1X2 | 923:X (1:0)=4.7",
+      "Handicap 1X2 | 924:2 (1:0)=10",
+      "Handicap 1X2 | 922:1 (0:1)=6.4",
+      "Handicap 1X2 | 923:X (0:1)=3.8"
      ],
      "22 Handicap": [
-      "Handicap | 925:1 (-0.5)=2.02",
-      "Handicap | 926:2 (+0.5)=1.82",
-      "Handicap | 925:1 (-1.5)=3.6",
-      "Handicap | 926:2 (+1.5)=1.3",
-      "Handicap | 925:1 (+0.5)=1.33",
-      "Handicap | 926:2 (-0.5)=3.5"
-     ],
-     "23 Liczba goli (z możliwym zwrotem)": [
-      "Liczba goli (z możliwym zwrotem) | 12:+1=1.05",
-      "Liczba goli (z możliwym zwrotem) | 13:-1=10.5",
-      "Liczba goli (z możliwym zwrotem) | 12:+2=1.32",
-      "Liczba goli (z możliwym zwrotem) | 13:-2=3.45",
-      "Liczba goli (z możliwym zwrotem) | 12:+3=2.12",
-      "Liczba goli (z możliwym zwrotem) | 13:-3=1.72"
+      "Handicap | 925:1 (-0.5)=2.47",
+      "Handicap | 926:2 (+0.5)=1.53",
+      "Handicap | 925:1 (-1.5)=6.2",
+      "Handicap | 926:2 (+1.5)=1.12",
+      "Handicap | 925:1 (+0.5)=1.31",
+      "Handicap | 926:2 (-0.5)=3.4"
      ],
      "25 Liczba goli": [
-      "Liczba goli | 12:+1.5=1.22",
-      "Liczba goli | 13:-1.5=4.3",
-      "Liczba goli | 12:+0.5=1.04",
-      "Liczba goli | 13:-0.5=14",
-      "Liczba goli | 12:+4.5=4.9",
-      "Liczba goli | 13:-4.5=1.19"
+      "Liczba goli | 12:+6.5=21",
+      "Liczba goli | 12:+4.5=4",
+      "Liczba goli | 13:-4.5=1.24",
+      "Liczba goli | 12:+3.5=1.97",
+      "Liczba goli | 13:-3.5=1.83"
      ],
      "28 1. drużyna - liczba goli": [
-      "1. drużyna - liczba goli | 12:+1.5=1.85",
-      "1. drużyna - liczba goli | 13:-1.5=1.95",
-      "1. drużyna - liczba goli | 12:+0.5=1.18",
-      "1. drużyna - liczba goli | 13:-0.5=4.7",
-      "1. drużyna - liczba goli | 12:+4.5=14",
-      "1. drużyna - liczba goli | 13:-4.5=1.01"
+      "1. drużyna - liczba goli | 12:+1.5=1.59",
+      "1. drużyna - liczba goli | 13:-1.5=2.27",
+      "1. drużyna - liczba goli | 12:+4.5=26",
+      "1. drużyna - liczba goli | 12:+3.5=10",
+      "1. drużyna - liczba goli | 13:-3.5=1.03"
      ],
      "31 2. drużyna - liczba goli": [
-      "2. drużyna - liczba goli | 12:+1.5=2.6",
-      "2. drużyna - liczba goli | 13:-1.5=1.47",
-      "2. drużyna - liczba goli | 12:+0.5=1.35",
-      "2. drużyna - liczba goli | 13:-0.5=3.1",
-      "2. drużyna - liczba goli | 12:+4.5=16",
-      "2. drużyna - liczba goli | 13:-4.5=1.001"
+      "2. drużyna - liczba goli | 12:+1.5=1.84",
+      "2. drużyna - liczba goli | 13:-1.5=1.91",
+      "2. drużyna - liczba goli | 12:+4.5=35",
+      "2. drużyna - liczba goli | 12:+3.5=16"
      ],
-     "33 Dokładna liczba goli": [
-      "Dokładna liczba goli | 1217:0=14",
-      "Dokładna liczba goli | 1218:1=5.6",
-      "Dokładna liczba goli | 1219:2=3.7",
-      "Dokładna liczba goli | 1220:3=3.8"
+     "32 ": [
+      "Dokładna liczba goli | 1697:=4.45",
+      "Dokładna liczba goli | 1698:=2.8",
+      "Dokładna liczba goli | 1699:=3.35",
+      "Dokładna liczba goli | 1700:=3.9"
      ],
      "35 1. drużyna - dokładna liczba goli": [
-      "1. drużyna - dokładna liczba goli | 1237:0=4.7",
-      "1. drużyna - dokładna liczba goli | 1238:1=2.9",
-      "1. drużyna - dokładna liczba goli | 1239:2=3.4",
-      "1. drużyna - dokładna liczba goli | 1240:3+=3.6"
+      "1. drużyna - dokładna liczba goli | 1238:1=2.3",
+      "1. drużyna - dokładna liczba goli | 1239:2=2.45",
+      "1. drużyna - dokładna liczba goli | 1240:3+=3.85"
      ],
      "36 2. drużyna - dokładna liczba goli": [
-      "2. drużyna - dokładna liczba goli | 1237:0=3.1",
-      "2. drużyna - dokładna liczba goli | 1238:1=2.55",
-      "2. drużyna - dokładna liczba goli | 1239:2=4",
-      "2. drużyna - dokładna liczba goli | 1240:3+=6.4"
+      "2. drużyna - dokładna liczba goli | 1238:1=1.9",
+      "2. drużyna - dokładna liczba goli | 1239:2=2.55",
+      "2. drużyna - dokładna liczba goli | 1240:3+=5.4"
      ],
      "40 Suma goli": [
-      "Suma goli | 24:nieparzysta=1.95",
-      "Suma goli | 25:parzysta=1.88"
-     ],
-     "41 1. drużyna - suma goli": [
-      "1. drużyna - suma goli | 24:nieparzysta=1.98",
-      "1. drużyna - suma goli | 25:parzysta=1.85"
-     ],
-     "42 2. drużyna - suma goli": [
-      "2. drużyna - suma goli | 24:nieparzysta=2.05",
-      "2. drużyna - suma goli | 25:parzysta=1.77"
-     ],
-     "43 Obie drużyny - strzelą gola": [
-      "Obie drużyny - strzelą gola | 26:tak=1.62",
-      "Obie drużyny - strzelą gola | 27:nie=2.3"
-     ],
-     "44 Która drużyna strzeli gola": [
-      "Która drużyna strzeli gola | 231:brak goli=14",
-      "Która drużyna strzeli gola | 232:tylko 1. drużyna=3.8",
-      "Która drużyna strzeli gola | 233:tylko 2. drużyna=6.75",
-      "Która drużyna strzeli gola | 234:obie drużyny=1.62"
-     ],
-     "47 1. drużyna - wygra do zera": [
-      "1. drużyna - wygra do zera | 26:tak=3.8",
-      "1. drużyna - wygra do zera | 27:nie=1.25"
-     ],
-     "48 2. drużyna - wygra do zera": [
-      "2. drużyna - wygra do zera | 26:tak=6.75",
-      "2. drużyna - wygra do zera | 27:nie=1.1"
-     ],
-     "49 Wynik końcowy i obie drużyny - strzelą gola": [
-      "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=3.6",
-      "Wynik końcowy i obie drużyny - strzelą gola | 29:1 i nie=3.8",
-      "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=4.5",
-      "Wynik końcowy i obie drużyny - strzelą gola | 31:X i nie=14"
-     ],
-     "50 Liczba goli i obie drużyny - strzelą gola": [
-      "Liczba goli i obie drużyny - strzelą gola | 34:+2.5 i tak=1.88",
-      "Liczba goli i obie drużyny - strzelą gola | 35:-2.5 i tak=7.25",
-      "Liczba goli i obie drużyny - strzelą gola | 36:+2.5 i nie=8.75",
-      "Liczba goli i obie drużyny - strzelą gola | 37:-2.5 i nie=2.7"
+      "Suma goli | 24:nieparzysta=2",
+      "Suma goli | 25:parzysta=1.8"
      ],
      "51 Wynik końcowy i liczba goli": [
-      "Wynik końcowy i liczba goli | 235:1 i -1.5=9.75",
-      "Wynik końcowy i liczba goli | 236:1 i +1.5=2.3",
-      "Wynik końcowy i liczba goli | 237:X i -1.5=14",
-      "Wynik końcowy i liczba goli | 238:X i +1.5=4.5",
-      "Wynik końcowy i liczba goli | 235:1 i -4.5=2.4",
-      "Wynik końcowy i liczba goli | 236:1 i +4.5=7.75",
-      "Wynik końcowy i liczba goli | 237:X i -4.5=3.75",
-      "Wynik końcowy i liczba goli | 238:X i +4.5=49"
+      "Wynik końcowy i liczba goli | 236:1 i +2.5=2.55",
+      "Wynik końcowy i liczba goli | 237:X i -2.5=4.45",
+      "Wynik końcowy i liczba goli | 238:X i +2.5=5.5",
+      "Wynik końcowy i liczba goli | 240:2 i +2.5=3.55"
+     ],
+     "56 ": [
+      "Dokładny wynik | 72:=4.45",
+      "Dokładny wynik | 73:=4.7",
+      "Dokładny wynik | 74:=10",
+      "Dokładny wynik | 75:=33"
      ],
      "125 Następny gol w meczu - przedziały 15-minutowe": [
-      "1. gol - przedziały 15-minutowe | 180:1-15=2.75",
-      "1. gol - przedziały 15-minutowe | 181:16-30=3.6",
-      "1. gol - przedziały 15-minutowe | 182:31-45=4.6",
-      "1. gol - przedziały 15-minutowe | 183:46-60=8"
+      "3. gol - przedziały 15-minutowe | 183:46-60=2.4",
+      "3. gol - przedziały 15-minutowe | 184:61-75=3.55",
+      "3. gol - przedziały 15-minutowe | 185:76-90+=4.55",
+      "3. gol - przedziały 15-minutowe | 186:brak gola w meczu=4.45"
      ],
      "126 Następny gol w meczu - przedziały 10-minutowe": [
-      "1. gol - przedziały 10-minutowe | 187:1-10=3.8",
-      "1. gol - przedziały 10-minutowe | 188:11-20=4.3",
-      "1. gol - przedziały 10-minutowe | 189:21-30=5.5",
-      "1. gol - przedziały 10-minutowe | 190:31-40=7"
+      "3. gol - przedziały 10-minutowe | 191:41-50=6.5",
+      "3. gol - przedziały 10-minutowe | 192:51-60=3.55",
+      "3. gol - przedziały 10-minutowe | 193:61-70=4.9",
+      "3. gol - przedziały 10-minutowe | 194:71-80=6.75"
      ],
-     "132 Wynik - przedziały 10-minutowe": [
-      "Wynik od 1. do 10. minuty | 1:1=7",
-      "Wynik od 1. do 10. minuty | 2:X=1.2",
-      "Wynik od 1. do 10. minuty | 3:2=9.9"
+     "127 ": [
+      "Wynik od 46. do 60. minuty | 1:=4.35",
+      "Wynik od 46. do 60. minuty | 2:=1.4",
+      "Wynik od 46. do 60. minuty | 3:=5.6"
      ],
-     "258 Następny gol i wynik końcowy": [
-      "1. gol i wynik końcowy | 245:1 i 1=2.15",
-      "1. gol i wynik końcowy | 246:1 i X=8.25",
-      "1. gol i wynik końcowy | 247:1 i 2=17",
-      "1. gol i wynik końcowy | 248:2 i 1=10.5"
+     "128 ": [
+      "1. gol od 46. do 60. minuty | 6:=4.05",
+      "1. gol od 46. do 60. minuty | 7:=1.47",
+      "1. gol od 46. do 60. minuty | 8:=5.1"
      ],
-     "283 Dokładny wynik": [
-      "Dokładny wynik | 1783:0:0=14",
-      "Dokładny wynik | 1784:1:0=9",
-      "Dokładny wynik | 1785:2:0=10.5",
-      "Dokładny wynik | 1786:3:0=18"
+     "131 ": [
+      "Liczba goli od 46. do 60. minuty | 12:+0.5=2.45",
+      "Liczba goli od 46. do 60. minuty | 13:-0.5=1.5"
      ],
-     "811 Podwójna szansa i obie drużyny - strzelą gola": [
-      "Podwójna szansa i obie drużyny - strzelą gola | 929:1X i tak=2.1",
-      "Podwójna szansa i obie drużyny - strzelą gola | 930:1X i nie=3.1",
-      "Podwójna szansa i obie drużyny - strzelą gola | 931:12 i tak=2.3",
-      "Podwójna szansa i obie drużyny - strzelą gola | 932:12 i nie=2.55"
+     "133 ": [
+      "2. gol od 41. do 50. minuty | 6:=9",
+      "2. gol od 41. do 50. minuty | 7:=1.09",
+      "2. gol od 41. do 50. minuty | 8:=11"
+     ],
+     "136 ": [
+      "Liczba goli od 41. do 50. minuty | 12:+1.5=5.8",
+      "Liczba goli od 41. do 50. minuty | 13:-1.5=1.1"
+     ],
+     "137 ": [
+      "Wynik od 46. do 50. minuty | 1:=9",
+      "Wynik od 46. do 50. minuty | 2:=1.09",
+      "Wynik od 46. do 50. minuty | 3:=11.5"
+     ],
+     "138 ": [
+      "1. gol od 46. do 50. minuty | 6:=9",
+      "1. gol od 46. do 50. minuty | 7:=1.09",
+      "1. gol od 46. do 50. minuty | 8:=11"
+     ],
+     "141 ": [
+      "Liczba goli od 46. do 50. minuty | 12:+0.5=5.8",
+      "Liczba goli od 46. do 50. minuty | 13:-0.5=1.1"
+     ],
+     "188 ": [
+      "1. drużyna - liczba kartek | 12:+1.5=2.25",
+      "1. drużyna - liczba kartek | 13:-1.5=1.58",
+      "1. drużyna - liczba kartek | 12:+0.5=1.28",
+      "1. drużyna - liczba kartek | 13:-0.5=3.35",
+      "1. drużyna - liczba kartek | 12:+2.5=4.8",
+      "1. drużyna - liczba kartek | 13:-2.5=1.15"
+     ],
+     "191 ": [
+      "2. drużyna - liczba kartek | 12:+1.5=1.77",
+      "2. drużyna - liczba kartek | 13:-1.5=1.95",
+      "2. drużyna - liczba kartek | 12:+0.5=1.16",
+      "2. drużyna - liczba kartek | 13:-0.5=4.7",
+      "2. drużyna - liczba kartek | 12:+2.5=3.2",
+      "2. drużyna - liczba kartek | 13:-2.5=1.3"
      ],
      "812 Podwójna szansa i liczba goli": [
-      "Podwójna szansa i liczba goli | 935:1X i -1.5=6",
-      "Podwójna szansa i liczba goli | 936:12 i -1.5=5.75",
-      "Podwójna szansa i liczba goli | 937:X2 i -1.5=7.25",
-      "Podwójna szansa i liczba goli | 938:1X i +1.5=1.6",
-      "Podwójna szansa i liczba goli | 935:1X i -4.5=1.55",
-      "Podwójna szansa i liczba goli | 936:12 i -4.5=1.58",
-      "Podwójna szansa i liczba goli | 937:X2 i -4.5=2",
-      "Podwójna szansa i liczba goli | 938:1X i +4.5=6.75"
+      "Podwójna szansa i liczba goli | 935:1X i -4.5=1.5",
+      "Podwójna szansa i liczba goli | 936:12 i -4.5=1.9",
+      "Podwójna szansa i liczba goli | 937:X2 i -4.5=1.65",
+      "Podwójna szansa i liczba goli | 938:1X i +4.5=5.3",
+      "Podwójna szansa i liczba goli | 935:1X i -3.5=2.2",
+      "Podwójna szansa i liczba goli | 936:12 i -3.5=2.65",
+      "Podwójna szansa i liczba goli | 937:X2 i -3.5=2.45",
+      "Podwójna szansa i liczba goli | 938:1X i +3.5=2.35"
      ],
-     "813 Liczba goli - przedziały": [
-      "Liczba goli - przedziały | 1008:brak gola=14",
-      "Liczba goli - przedziały | 941:1-2=2.1",
-      "Liczba goli - przedziały | 942:1-3=1.45",
-      "Liczba goli - przedziały | 943:1-4=1.2"
+     "827 ": [
+      "Więcej rzutów rożnych od 46. do 60. minuty | 1:=2.45",
+      "Więcej rzutów rożnych od 46. do 60. minuty | 2:=2.4",
+      "Więcej rzutów rożnych od 46. do 60. minuty | 3:=3.4"
      ],
-     "814 1. drużyna - liczba goli - przedziały": [
-      "1. drużyna - liczba goli - przedziały | 1009:brak gola=4.7",
-      "1. drużyna - liczba goli - przedziały | 957:1-2=1.58",
-      "1. drużyna - liczba goli - przedziały | 958:1-3=1.3",
-      "1. drużyna - liczba goli - przedziały | 959:2-3=2.1"
+     "828 ": [
+      "1. rzut rożny od 46. do 60. minuty | 6:=2.15",
+      "1. rzut rożny od 46. do 60. minuty | 7:=3.35",
+      "1. rzut rożny od 46. do 60. minuty | 8:=2.8"
      ],
-     "815 2. drużyna - liczba goli - przedziały": [
-      "2. drużyna - liczba goli - przedziały | 1009:brak gola=3.1",
-      "2. drużyna - liczba goli - przedziały | 957:1-2=1.56",
-      "2. drużyna - liczba goli - przedziały | 958:1-3=1.38",
-      "2. drużyna - liczba goli - przedziały | 959:2-3=2.7"
+     "831 ": [
+      "Rzuty rożne - handicap od 46. do 60. minuty | 925:1 (-0.5)=2.45",
+      "Rzuty rożne - handicap od 46. do 60. minuty | 926:2 (+0.5)=1.5",
+      "Rzuty rożne - handicap od 46. do 60. minuty | 925:1 (+0.5)=1.3",
+      "Rzuty rożne - handicap od 46. do 60. minuty | 926:2 (-0.5)=3.3"
      ],
-     "816 Multiwynik": [
-      "Multiwynik | 1007:X=3.9",
-      "Multiwynik | 961:1:0, 2:0 lub 3:0=4.25",
-      "Multiwynik | 962:0:1, 0:2 lub 0:3=7.25",
-      "Multiwynik | 963:4:0, 5:0 lub 6:0=31"
+     "834 ": [
+      "Liczba rzutów rożnych od 46. do 60. minuty | 12:+0.5=1.3",
+      "Liczba rzutów rożnych od 46. do 60. minuty | 13:-0.5=3.3",
+      "Liczba rzutów rożnych od 46. do 60. minuty | 12:+1.5=2.2",
+      "Liczba rzutów rożnych od 46. do 60. minuty | 13:-1.5=1.6"
      ],
-     "1224 2. drużyna - strzeli gola": [
-      "2. drużyna - strzeli gola | 26:tak=1.35",
-      "2. drużyna - strzeli gola | 27:nie=3.1"
+     "837 ": [
+      "1. drużyna - liczba rzutów rożnych od 46. do 60. minuty | 12:+0.5=1.75",
+      "1. drużyna - liczba rzutów rożnych od 46. do 60. minuty | 13:-0.5=1.95"
      ],
-     "1229 1. drużyna - strzeli gola": [
-      "1. drużyna - strzeli gola | 26:tak=1.18",
-      "1. drużyna - strzeli gola | 27:nie=4.7"
+     "840 ": [
+      "2. drużyna - liczba rzutów rożnych od 46. do 60. minuty | 12:+0.5=2.1",
+      "2. drużyna - liczba rzutów rożnych od 46. do 60. minuty | 13:-0.5=1.65"
      ],
-     "52 Zawodnik - strzeli następnego gola": [
-      "Zawodnik - strzeli 1. gola | 1096544:Cirjan Catalin=15",
-      "Zawodnik - strzeli 1. gola | 1417763:Stoica Ianis=10",
-      "Zawodnik - strzeli 1. gola | 1572688:Dedic Amar=20",
-      "Zawodnik - strzeli 1. gola | 1642306:Dragusin Radu=25"
+     "842 ": [
+      "Więcej rzutów rożnych od 51. do 60. minuty | 1:=2.6",
+      "Więcej rzutów rożnych od 51. do 60. minuty | 2:=1.85",
+      "Więcej rzutów rożnych od 51. do 60. minuty | 3:=3.5"
+     ],
+     "843 ": [
+      "1. rzut rożny od 51. do 60. minuty | 6:=2.55",
+      "1. rzut rożny od 51. do 60. minuty | 7:=2.35",
+      "1. rzut rożny od 51. do 60. minuty | 8:=3.3"
+     ],
+     "846 ": [
+      "Rzuty rożne - handicap od 51. do 60. minuty | 925:1 (-0.5)=2.85",
+      "Rzuty rożne - handicap od 51. do 60. minuty | 926:2 (+0.5)=1.37",
+      "Rzuty rożne - handicap od 51. do 60. minuty | 925:1 (+0.5)=1.22",
+      "Rzuty rożne - handicap od 51. do 60. minuty | 926:2 (-0.5)=3.75"
+     ],
+     "849 ": [
+      "Liczba rzutów rożnych od 51. do 60. minuty | 12:+0.5=1.52",
+      "Liczba rzutów rożnych od 51. do 60. minuty | 13:-0.5=2.35",
+      "Liczba rzutów rożnych od 51. do 60. minuty | 12:+1.5=3.2",
+      "Liczba rzutów rożnych od 51. do 60. minuty | 13:-1.5=1.3"
+     ],
+     "852 ": [
+      "1. drużyna - liczba rzutów rożnych od 51. do 60. minuty | 12:+0.5=2.2",
+      "1. drużyna - liczba rzutów rożnych od 51. do 60. minuty | 13:-0.5=1.6"
      ]
     },
     "Węgry - Irlandia Północna": {
      "1 Mecz": [
-      "Mecz | 1:1=1.98",
-      "Mecz | 2:X=3.4",
-      "Mecz | 3:2=4.2"
+      "Mecz | 1:1=1.4",
+      "Mecz | 2:X=4",
+      "Mecz | 3:2=10"
+     ],
+     "7 ": [
+      "Wygra od stanu 1:0 | 1:=3.2",
+      "Wygra od stanu 1:0 | 2:=2.37",
+      "Wygra od stanu 1:0 | 3:=3.05"
      ],
      "8 Następny gol": [
-      "1. gol | 6:1=1.72",
-      "1. gol | 7:nikt=7.1",
-      "1. gol | 8:2=2.75"
-     ],
-     "9 Ostatni gol": [
-      "Ostatni gol | 6:1=1.72",
-      "Ostatni gol | 7:nikt=7.1",
-      "Ostatni gol | 8:2=2.75"
+      "2. gol | 6:1=2.6",
+      "2. gol | 7:nikt=3.25",
+      "2. gol | 8:2=2.55"
      ],
      "10 Podwójna szansa": [
-      "Podwójna szansa | 10:12=1.35",
-      "Podwójna szansa | 11:X2=1.85",
-      "Podwójna szansa | 9:1X=1.26"
+      "Podwójna szansa | 10:12=1.26",
+      "Podwójna szansa | 11:X2=3.05",
+      "Podwójna szansa | 9:1X=1.06"
      ],
      "11 Zakład bez remisu": [
-      "Zakład bez remisu | 4:1=1.42",
-      "Zakład bez remisu | 5:2=2.9"
+      "Zakład bez remisu | 4:1=1.08",
+      "Zakład bez remisu | 5:2=8"
      ],
      "14 Handicap 1X2": [
-      "Handicap 1X2 | 922:1 (2:0)=1.05",
-      "Handicap 1X2 | 923:X (2:0)=14",
-      "Handicap 1X2 | 924:2 (2:0)=44",
-      "Handicap 1X2 | 922:1 (3:0)=1.01",
-      "Handicap 1X2 | 923:X (3:0)=22",
-      "Handicap 1X2 | 924:2 (3:0)=95",
-      "Handicap 1X2 | 922:1 (1:0)=1.26",
-      "Handicap 1X2 | 923:X (1:0)=5.6"
-     ],
-     "17 Różnica zwycięstwa": [
-      "Różnica zwycięstwa | 1262:1. drużyna - 1 golem=3.5",
-      "Różnica zwycięstwa | 1263:1. drużyna - 2 golami=5.9",
-      "Różnica zwycięstwa | 1264:1. drużyna - 3+ golami=9.25",
-      "Różnica zwycięstwa | 1265:2. drużyna - 1 golem=5.6"
-     ],
-     "20 Handicap (z możliwym zwrotem)": [
-      "Handicap (z możliwym zwrotem) | 925:1 (+1)=1.07",
-      "Handicap (z możliwym zwrotem) | 926:2 (-1)=8.75",
-      "Handicap (z możliwym zwrotem) | 925:1 (+0)=1.42",
-      "Handicap (z możliwym zwrotem) | 926:2 (-0)=2.9",
-      "Handicap (z możliwym zwrotem) | 925:1 (-2)=7.6",
-      "Handicap (z możliwym zwrotem) | 926:2 (+2)=1.09"
+      "Handicap 1X2 | 922:1 (1:0)=1.06",
+      "Handicap 1X2 | 923:X (1:0)=12",
+      "Handicap 1X2 | 924:2 (1:0)=32",
+      "Handicap 1X2 | 922:1 (0:3)=31",
+      "Handicap 1X2 | 923:X (0:3)=12",
+      "Handicap 1X2 | 924:2 (0:3)=1.06",
+      "Handicap 1X2 | 922:1 (0:2)=10",
+      "Handicap 1X2 | 923:X (0:2)=4.2"
      ],
      "22 Handicap": [
-      "Handicap | 925:1 (-0.5)=1.98",
-      "Handicap | 926:2 (+0.5)=1.85",
-      "Handicap | 925:1 (-1.5)=3.9",
-      "Handicap | 926:2 (+1.5)=1.27",
-      "Handicap | 925:1 (-2.5)=9.25",
-      "Handicap | 926:2 (+2.5)=1.07"
-     ],
-     "23 Liczba goli (z możliwym zwrotem)": [
-      "Liczba goli (z możliwym zwrotem) | 12:+1=1.15",
-      "Liczba goli (z możliwym zwrotem) | 13:-1=5.6",
-      "Liczba goli (z możliwym zwrotem) | 12:+2=1.88",
-      "Liczba goli (z możliwym zwrotem) | 13:-2=1.95",
-      "Liczba goli (z możliwym zwrotem) | 12:+3=4",
-      "Liczba goli (z możliwym zwrotem) | 13:-3=1.25"
+      "Handicap | 925:1 (-0.5)=1.38",
+      "Handicap | 926:2 (+0.5)=3",
+      "Handicap | 925:1 (-1.5)=3.1",
+      "Handicap | 926:2 (+1.5)=1.36",
+      "Handicap | 925:1 (-2.5)=9.6",
+      "Handicap | 926:2 (+2.5)=1.05"
      ],
      "25 Liczba goli": [
-      "Liczba goli | 12:+1.5=1.5",
-      "Liczba goli | 13:-1.5=2.6",
-      "Liczba goli | 12:+0.5=1.1",
-      "Liczba goli | 13:-0.5=7.1",
-      "Liczba goli | 12:+4.5=10",
-      "Liczba goli | 13:-4.5=1.05"
+      "Liczba goli | 12:+1.5=1.34",
+      "Liczba goli | 13:-1.5=3.25",
+      "Liczba goli | 12:+4.5=16",
+      "Liczba goli | 13:-4.5=1.01",
+      "Liczba goli | 12:+3.5=6.2",
+      "Liczba goli | 13:-3.5=1.12"
      ],
      "28 1. drużyna - liczba goli": [
-      "1. drużyna - liczba goli | 12:+1.5=2.4",
-      "1. drużyna - liczba goli | 13:-1.5=1.55",
-      "1. drużyna - liczba goli | 12:+0.5=1.3",
-      "1. drużyna - liczba goli | 13:-0.5=3.4",
-      "1. drużyna - liczba goli | 12:+4.5=16",
-      "1. drużyna - liczba goli | 13:-4.5=1.003"
+      "1. drużyna - liczba goli | 12:+1.5=2.02",
+      "1. drużyna - liczba goli | 13:-1.5=1.75",
+      "1. drużyna - liczba goli | 12:+4.5=38",
+      "1. drużyna - liczba goli | 12:+3.5=19"
      ],
      "31 2. drużyna - liczba goli": [
-      "2. drużyna - liczba goli | 12:+1.5=4.3",
-      "2. drużyna - liczba goli | 13:-1.5=1.2",
-      "2. drużyna - liczba goli | 12:+0.5=1.7",
-      "2. drużyna - liczba goli | 13:-0.5=2.1",
-      "2. drużyna - liczba goli | 12:+4.5=17",
-      "2. drużyna - liczba goli | 13:-4.5=1.001"
+      "2. drużyna - liczba goli | 12:+1.5=6.2",
+      "2. drużyna - liczba goli | 13:-1.5=1.11",
+      "2. drużyna - liczba goli | 12:+0.5=1.98",
+      "2. drużyna - liczba goli | 13:-0.5=1.78",
+      "2. drużyna - liczba goli | 12:+4.5=55"
      ],
-     "33 Dokładna liczba goli": [
-      "Dokładna liczba goli | 1217:0=7.1",
-      "Dokładna liczba goli | 1218:1=3.5",
-      "Dokładna liczba goli | 1219:2=3.2",
-      "Dokładna liczba goli | 1220:3=4.3"
+     "32 ": [
+      "Dokładna liczba goli | 1696:=3.25",
+      "Dokładna liczba goli | 1697:=2.4",
+      "Dokładna liczba goli | 1698:=3.8",
+      "Dokładna liczba goli | 1699:=8.75"
      ],
      "35 1. drużyna - dokładna liczba goli": [
-      "1. drużyna - dokładna liczba goli | 1237:0=3.4",
-      "1. drużyna - dokładna liczba goli | 1238:1=2.6",
-      "1. drużyna - dokładna liczba goli | 1239:2=3.75",
-      "1. drużyna - dokładna liczba goli | 1240:3+=5.4"
+      "1. drużyna - dokładna liczba goli | 1238:1=1.75",
+      "1. drużyna - dokładna liczba goli | 1239:2=2.7",
+      "1. drużyna - dokładna liczba goli | 1240:3+=6.5"
      ],
      "36 2. drużyna - dokładna liczba goli": [
-      "2. drużyna - dokładna liczba goli | 1237:0=2.1",
-      "2. drużyna - dokładna liczba goli | 1238:1=2.5",
-      "2. drużyna - dokładna liczba goli | 1239:2=5.75",
-      "2. drużyna - dokładna liczba goli | 1240:3+=14"
+      "2. drużyna - dokładna liczba goli | 1237:0=1.8",
+      "2. drużyna - dokładna liczba goli | 1238:1=2.6",
+      "2. drużyna - dokładna liczba goli | 1239:2=8",
+      "2. drużyna - dokładna liczba goli | 1240:3+=33"
      ],
      "40 Suma goli": [
-      "Suma goli | 24:nieparzysta=1.95",
-      "Suma goli | 25:parzysta=1.88"
-     ],
-     "41 1. drużyna - suma goli": [
-      "1. drużyna - suma goli | 24:nieparzysta=2.05",
-      "1. drużyna - suma goli | 25:parzysta=1.78"
-     ],
-     "42 2. drużyna - suma goli": [
-      "2. drużyna - suma goli | 24:nieparzysta=2.35",
-      "2. drużyna - suma goli | 25:parzysta=1.62"
+      "Suma goli | 24:nieparzysta=1.8",
+      "Suma goli | 25:parzysta=2.05"
      ],
      "43 Obie drużyny - strzelą gola": [
-      "Obie drużyny - strzelą gola | 26:tak=2.25",
-      "Obie drużyny - strzelą gola | 27:nie=1.65"
+      "Obie drużyny - strzelą gola | 26:tak=2",
+      "Obie drużyny - strzelą gola | 27:nie=1.8"
      ],
-     "44 Która drużyna strzeli gola": [
-      "Która drużyna strzeli gola | 231:brak goli=7.1",
-      "Która drużyna strzeli gola | 232:tylko 1. drużyna=2.8",
-      "Która drużyna strzeli gola | 233:tylko 2. drużyna=6",
-      "Która drużyna strzeli gola | 234:obie drużyny=2.25"
-     ],
-     "47 1. drużyna - wygra do zera": [
-      "1. drużyna - wygra do zera | 26:tak=2.8",
-      "1. drużyna - wygra do zera | 27:nie=1.4"
-     ],
-     "48 2. drużyna - wygra do zera": [
-      "2. drużyna - wygra do zera | 26:tak=6",
-      "2. drużyna - wygra do zera | 27:nie=1.13"
+     "45 ": [
+      "1. drużyna - zachowa czyste konto | 26:=1.8",
+      "1. drużyna - zachowa czyste konto | 27:=1.95"
      ],
      "49 Wynik końcowy i obie drużyny - strzelą gola": [
-      "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=5.1",
-      "Wynik końcowy i obie drużyny - strzelą gola | 29:1 i nie=2.8",
-      "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=5.1",
-      "Wynik końcowy i obie drużyny - strzelą gola | 31:X i nie=7.1"
-     ],
-     "50 Liczba goli i obie drużyny - strzelą gola": [
-      "Liczba goli i obie drużyny - strzelą gola | 34:+2.5 i tak=2.95",
-      "Liczba goli i obie drużyny - strzelą gola | 35:-2.5 i tak=6.5",
-      "Liczba goli i obie drużyny - strzelą gola | 36:+2.5 i nie=10",
-      "Liczba goli i obie drużyny - strzelą gola | 37:-2.5 i nie=1.8"
+      "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=5",
+      "Wynik końcowy i obie drużyny - strzelą gola | 29:1 i nie=1.7",
+      "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=3.7",
+      "Wynik końcowy i obie drużyny - strzelą gola | 32:2 i tak=11.5"
      ],
      "51 Wynik końcowy i liczba goli": [
-      "Wynik końcowy i liczba goli | 235:1 i -1.5=5.75",
-      "Wynik końcowy i liczba goli | 236:1 i +1.5=2.65",
-      "Wynik końcowy i liczba goli | 237:X i -1.5=7.1",
-      "Wynik końcowy i liczba goli | 238:X i +1.5=5.1",
-      "Wynik końcowy i liczba goli | 235:1 i -4.5=2.02",
-      "Wynik końcowy i liczba goli | 236:1 i +4.5=17",
-      "Wynik końcowy i liczba goli | 237:X i -4.5=3.1",
-      "Wynik końcowy i liczba goli | 238:X i +4.5=100"
+      "Wynik końcowy i liczba goli | 235:1 i -2.5=1.95",
+      "Wynik końcowy i liczba goli | 236:1 i +2.5=3.55",
+      "Wynik końcowy i liczba goli | 237:X i -2.5=4.4",
+      "Wynik końcowy i liczba goli | 238:X i +2.5=20"
+     ],
+     "56 ": [
+      "Dokładny wynik | 67:=3.25",
+      "Dokładny wynik | 68:=4.5",
+      "Dokładny wynik | 69:=13.5",
+      "Dokładny wynik | 70:=65"
      ],
      "125 Następny gol w meczu - przedziały 15-minutowe": [
-      "1. gol - przedziały 15-minutowe | 180:1-15=3.5",
-      "1. gol - przedziały 15-minutowe | 181:16-30=4.2",
-      "1. gol - przedziały 15-minutowe | 182:31-45=4.8",
-      "1. gol - przedziały 15-minutowe | 183:46-60=7.25"
+      "2. gol - przedziały 15-minutowe | 183:46-60=2.85",
+      "2. gol - przedziały 15-minutowe | 184:61-75=3.85",
+      "2. gol - przedziały 15-minutowe | 185:76-90+=4.4",
+      "2. gol - przedziały 15-minutowe | 186:brak gola w meczu=3.25"
      ],
      "126 Następny gol w meczu - przedziały 10-minutowe": [
-      "1. gol - przedziały 10-minutowe | 187:1-10=5",
-      "1. gol - przedziały 10-minutowe | 188:11-20=5.25",
-      "1. gol - przedziały 10-minutowe | 189:21-30=6.25",
-      "1. gol - przedziały 10-minutowe | 190:31-40=7.5"
+      "2. gol - przedziały 10-minutowe | 191:41-50=8.25",
+      "2. gol - przedziały 10-minutowe | 192:51-60=4.2",
+      "2. gol - przedziały 10-minutowe | 193:61-70=5.4",
+      "2. gol - przedziały 10-minutowe | 194:71-80=7"
+     ],
+     "127 ": [
+      "Wynik od 46. do 60. minuty | 1:=5.8",
+      "Wynik od 46. do 60. minuty | 2:=1.3",
+      "Wynik od 46. do 60. minuty | 3:=5.7"
+     ],
+     "128 ": [
+      "1. gol od 46. do 60. minuty | 6:=5.4",
+      "1. gol od 46. do 60. minuty | 7:=1.35",
+      "1. gol od 46. do 60. minuty | 8:=5.3"
+     ],
+     "131 ": [
+      "Liczba goli od 46. do 60. minuty | 12:+0.5=2.9",
+      "Liczba goli od 46. do 60. minuty | 13:-0.5=1.35"
      ],
      "132 Wynik - przedziały 10-minutowe": [
-      "Wynik od 1. do 10. minuty | 1:1=8.1",
-      "Wynik od 1. do 10. minuty | 2:X=1.14",
-      "Wynik od 1. do 10. minuty | 3:2=13.5"
+      "Wynik od 41. do 50. minuty | 1:1=11.5",
+      "Wynik od 41. do 50. minuty | 2:X=1.06",
+      "Wynik od 41. do 50. minuty | 3:2=11.5"
      ],
-     "258 Następny gol i wynik końcowy": [
-      "1. gol i wynik końcowy | 245:1 i 1=2",
-      "1. gol i wynik końcowy | 246:1 i X=9.4",
-      "1. gol i wynik końcowy | 247:1 i 2=29",
-      "1. gol i wynik końcowy | 248:2 i 1=15"
+     "133 ": [
+      "1. gol od 41. do 50. minuty | 6:=11.5",
+      "1. gol od 41. do 50. minuty | 7:=1.06",
+      "1. gol od 41. do 50. minuty | 8:=11"
      ],
-     "283 Dokładny wynik": [
-      "Dokładny wynik | 1783:0:0=7.1",
-      "Dokładny wynik | 1784:1:0=5.25",
-      "Dokładny wynik | 1785:2:0=7.5",
-      "Dokładny wynik | 1786:3:0=16"
+     "136 ": [
+      "Liczba goli od 41. do 50. minuty | 12:+0.5=6.75",
+      "Liczba goli od 41. do 50. minuty | 13:-0.5=1.07"
+     ],
+     "137 ": [
+      "Wynik od 46. do 50. minuty | 1:=11.5",
+      "Wynik od 46. do 50. minuty | 2:=1.06",
+      "Wynik od 46. do 50. minuty | 3:=11.5"
+     ],
+     "138 ": [
+      "1. gol od 46. do 50. minuty | 6:=11.5",
+      "1. gol od 46. do 50. minuty | 7:=1.06",
+      "1. gol od 46. do 50. minuty | 8:=11"
+     ],
+     "141 ": [
+      "Liczba goli od 46. do 50. minuty | 12:+0.5=6.75",
+      "Liczba goli od 46. do 50. minuty | 13:-0.5=1.07"
+     ],
+     "188 ": [
+      "1. drużyna - liczba kartek | 12:+1.5=2.5",
+      "1. drużyna - liczba kartek | 13:-1.5=1.47",
+      "1. drużyna - liczba kartek | 12:+0.5=1.33",
+      "1. drużyna - liczba kartek | 13:-0.5=3.05",
+      "1. drużyna - liczba kartek | 12:+2.5=5.4",
+      "1. drużyna - liczba kartek | 13:-2.5=1.12"
+     ],
+     "191 ": [
+      "2. drużyna - liczba kartek | 12:+1.5=1.86",
+      "2. drużyna - liczba kartek | 13:-1.5=1.85",
+      "2. drużyna - liczba kartek | 12:+0.5=1.21",
+      "2. drużyna - liczba kartek | 13:-0.5=4",
+      "2. drużyna - liczba kartek | 12:+2.5=3.45",
+      "2. drużyna - liczba kartek | 13:-2.5=1.27"
      ],
      "811 Podwójna szansa i obie drużyny - strzelą gola": [
-      "Podwójna szansa i obie drużyny - strzelą gola | 929:1X i tak=2.7",
-      "Podwójna szansa i obie drużyny - strzelą gola | 930:1X i nie=2.1",
-      "Podwójna szansa i obie drużyny - strzelą gola | 931:12 i tak=3.6",
-      "Podwójna szansa i obie drużyny - strzelą gola | 932:12 i nie=1.98"
+      "Podwójna szansa i obie drużyny - strzelą gola | 929:1X i tak=2.1",
+      "Podwójna szansa i obie drużyny - strzelą gola | 930:1X i nie=1.65",
+      "Podwójna szansa i obie drużyny - strzelą gola | 931:12 i tak=3.2",
+      "Podwójna szansa i obie drużyny - strzelą gola | 932:12 i nie=1.65"
      ],
      "812 Podwójna szansa i liczba goli": [
-      "Podwójna szansa i liczba goli | 935:1X i -1.5=3.4",
-      "Podwójna szansa i liczba goli | 936:12 i -1.5=3.7",
-      "Podwójna szansa i liczba goli | 937:X2 i -1.5=4.25",
-      "Podwójna szansa i liczba goli | 938:1X i +1.5=1.82",
-      "Podwójna szansa i liczba goli | 935:1X i -4.5=1.3",
-      "Podwójna szansa i liczba goli | 936:12 i -4.5=1.42",
-      "Podwójna szansa i liczba goli | 937:X2 i -4.5=1.82",
-      "Podwójna szansa i liczba goli | 938:1X i +4.5=14.5"
+      "Podwójna szansa i liczba goli | 935:1X i -1.5=2.8",
+      "Podwójna szansa i liczba goli | 936:12 i -1.5=2.8",
+      "Podwójna szansa i liczba goli | 938:1X i +1.5=1.4",
+      "Podwójna szansa i liczba goli | 939:12 i +1.5=1.75",
+      "Podwójna szansa i liczba goli | 935:1X i -4.5=1.06",
+      "Podwójna szansa i liczba goli | 936:12 i -4.5=1.18",
+      "Podwójna szansa i liczba goli | 937:X2 i -4.5=2.2",
+      "Podwójna szansa i liczba goli | 938:1X i +4.5=18.5"
      ],
-     "813 Liczba goli - przedziały": [
-      "Liczba goli - przedziały | 1008:brak gola=7.1",
-      "Liczba goli - przedziały | 941:1-2=1.65",
-      "Liczba goli - przedziały | 942:1-3=1.28",
-      "Liczba goli - przedziały | 943:1-4=1.16"
+     "827 ": [
+      "Więcej rzutów rożnych od 46. do 60. minuty | 1:=3.2",
+      "Więcej rzutów rożnych od 46. do 60. minuty | 2:=2.25",
+      "Więcej rzutów rożnych od 46. do 60. minuty | 3:=2.7"
      ],
-     "814 1. drużyna - liczba goli - przedziały": [
-      "1. drużyna - liczba goli - przedziały | 1009:brak gola=3.4",
-      "1. drużyna - liczba goli - przedziały | 957:1-2=1.55",
-      "1. drużyna - liczba goli - przedziały | 958:1-3=1.35",
-      "1. drużyna - liczba goli - przedziały | 959:2-3=2.5"
+     "828 ": [
+      "1. rzut rożny od 46. do 60. minuty | 6:=2.7",
+      "1. rzut rożny od 46. do 60. minuty | 7:=3.05",
+      "1. rzut rożny od 46. do 60. minuty | 8:=2.35"
      ],
-     "815 2. drużyna - liczba goli - przedziały": [
-      "2. drużyna - liczba goli - przedziały | 1009:brak gola=2.1",
-      "2. drużyna - liczba goli - przedziały | 957:1-2=1.77",
-      "2. drużyna - liczba goli - przedziały | 958:1-3=1.65",
-      "2. drużyna - liczba goli - przedziały | 959:2-3=4.4"
+     "831 ": [
+      "Rzuty rożne - handicap od 46. do 60. minuty | 925:1 (-0.5)=3.15",
+      "Rzuty rożne - handicap od 46. do 60. minuty | 926:2 (+0.5)=1.3",
+      "Rzuty rożne - handicap od 46. do 60. minuty | 925:1 (+0.5)=1.42",
+      "Rzuty rożne - handicap od 46. do 60. minuty | 926:2 (-0.5)=2.7"
      ],
-     "816 Multiwynik": [
-      "Multiwynik | 1007:X=3.4",
-      "Multiwynik | 961:1:0, 2:0 lub 3:0=2.9",
-      "Multiwynik | 962:0:1, 0:2 lub 0:3=6",
-      "Multiwynik | 963:4:0, 5:0 lub 6:0=39"
+     "834 ": [
+      "Liczba rzutów rożnych od 46. do 60. minuty | 12:+0.5=1.35",
+      "Liczba rzutów rożnych od 46. do 60. minuty | 13:-0.5=3",
+      "Liczba rzutów rożnych od 46. do 60. minuty | 12:+1.5=2.4",
+      "Liczba rzutów rożnych od 46. do 60. minuty | 13:-1.5=1.5"
      ],
-     "1224 2. drużyna - strzeli gola": [
-      "2. drużyna - strzeli gola | 26:tak=1.68",
-      "2. drużyna - strzeli gola | 27:nie=2.1"
+     "837 ": [
+      "1. drużyna - liczba rzutów rożnych od 46. do 60. minuty | 12:+0.5=2.1",
+      "1. drużyna - liczba rzutów rożnych od 46. do 60. minuty | 13:-0.5=1.65"
      ],
-     "1229 1. drużyna - strzeli gola": [
-      "1. drużyna - strzeli gola | 26:tak=1.3",
-      "1. drużyna - strzeli gola | 27:nie=3.4"
-     ],
-     "52 Zawodnik - strzeli następnego gola": [
-      "Zawodnik - strzeli 1. gola | 1051141:Galbraith Ethan=17.5",
-      "Zawodnik - strzeli 1. gola | 1054795:Varga Barnabas=5",
-      "Zawodnik - strzeli 1. gola | 1064588:Szoboszlai Dominik=7",
-      "Zawodnik - strzeli 1. gola | 1120743:Schafer Andras=17.5"
+     "840 ": [
+      "2. drużyna - liczba rzutów rożnych od 46. do 60. minuty | 12:+0.5=1.9",
+      "2. drużyna - liczba rzutów rożnych od 46. do 60. minuty | 13:-0.5=1.8"
      ]
     },
     "Ukraina - Gruzja": {
      "1 Mecz": [
-      "Mecz | 1:1=2.15",
-      "Mecz | 2:X=3.25",
-      "Mecz | 3:2=3.7"
+      "Mecz | 1:1=1.43",
+      "Mecz | 2:X=4",
+      "Mecz | 3:2=9.4"
+     ],
+     "7 ": [
+      "Wygra od stanu 1:0 | 1:=3.15",
+      "Wygra od stanu 1:0 | 2:=2.5",
+      "Wygra od stanu 1:0 | 3:=2.9"
      ],
      "8 Następny gol": [
-      "1. gol | 6:1=1.8",
-      "1. gol | 7:nikt=7.75",
-      "1. gol | 8:2=2.5"
-     ],
-     "9 Ostatni gol": [
-      "Ostatni gol | 6:1=1.8",
-      "Ostatni gol | 7:nikt=7.75",
-      "Ostatni gol | 8:2=2.5"
+      "2. gol | 6:1=2.5",
+      "2. gol | 7:nikt=3.7",
+      "2. gol | 8:2=2.45"
      ],
      "10 Podwójna szansa": [
-      "Podwójna szansa | 10:12=1.37",
-      "Podwójna szansa | 11:X2=1.72",
-      "Podwójna szansa | 9:1X=1.3"
+      "Podwójna szansa | 10:12=1.27",
+      "Podwójna szansa | 11:X2=2.9",
+      "Podwójna szansa | 9:1X=1.07"
      ],
      "11 Zakład bez remisu": [
-      "Zakład bez remisu | 4:1=1.52",
-      "Zakład bez remisu | 5:2=2.55"
+      "Zakład bez remisu | 4:1=1.1",
+      "Zakład bez remisu | 5:2=7"
      ],
      "14 Handicap 1X2": [
-      "Handicap 1X2 | 922:1 (2:0)=1.07",
-      "Handicap 1X2 | 923:X (2:0)=12",
-      "Handicap 1X2 | 924:2 (2:0)=31",
-      "Handicap 1X2 | 922:1 (3:0)=1.01",
-      "Handicap 1X2 | 923:X (3:0)=21",
-      "Handicap 1X2 | 924:2 (3:0)=75",
-      "Handicap 1X2 | 922:1 (1:0)=1.3",
-      "Handicap 1X2 | 923:X (1:0)=5.25"
-     ],
-     "17 Różnica zwycięstwa": [
-      "Różnica zwycięstwa | 1262:1. drużyna - 1 golem=3.8",
-      "Różnica zwycięstwa | 1263:1. drużyna - 2 golami=6.4",
-      "Różnica zwycięstwa | 1264:1. drużyna - 3+ golami=10.5",
-      "Różnica zwycięstwa | 1265:2. drużyna - 1 golem=5.25"
-     ],
-     "20 Handicap (z możliwym zwrotem)": [
-      "Handicap (z możliwym zwrotem) | 925:1 (+1)=1.09",
-      "Handicap (z możliwym zwrotem) | 926:2 (-1)=7.25",
-      "Handicap (z możliwym zwrotem) | 925:1 (+0)=1.52",
-      "Handicap (z możliwym zwrotem) | 926:2 (-0)=2.55",
-      "Handicap (z możliwym zwrotem) | 925:1 (-2)=8.25",
-      "Handicap (z możliwym zwrotem) | 926:2 (+2)=1.08"
+      "Handicap 1X2 | 922:1 (1:0)=1.07",
+      "Handicap 1X2 | 923:X (1:0)=11",
+      "Handicap 1X2 | 924:2 (1:0)=29",
+      "Handicap 1X2 | 922:1 (0:3)=29",
+      "Handicap 1X2 | 923:X (0:3)=11",
+      "Handicap 1X2 | 924:2 (0:3)=1.07",
+      "Handicap 1X2 | 922:1 (0:2)=9.4",
+      "Handicap 1X2 | 923:X (0:2)=4.2"
      ],
      "22 Handicap": [
-      "Handicap | 925:1 (-0.5)=2.15",
-      "Handicap | 926:2 (+0.5)=1.72",
-      "Handicap | 925:1 (-1.5)=4.25",
-      "Handicap | 926:2 (+1.5)=1.24",
-      "Handicap | 925:1 (+0.5)=1.3",
-      "Handicap | 926:2 (-0.5)=3.7"
-     ],
-     "23 Liczba goli (z możliwym zwrotem)": [
-      "Liczba goli (z możliwym zwrotem) | 12:+1=1.13",
-      "Liczba goli (z możliwym zwrotem) | 13:-1=6.25",
-      "Liczba goli (z możliwym zwrotem) | 12:+2=1.72",
-      "Liczba goli (z możliwym zwrotem) | 13:-2=2.15",
-      "Liczba goli (z możliwym zwrotem) | 12:+3=3.5",
-      "Liczba goli (z możliwym zwrotem) | 13:-3=1.32"
+      "Handicap | 925:1 (-0.5)=1.41",
+      "Handicap | 926:2 (+0.5)=2.85",
+      "Handicap | 925:1 (-1.5)=3.05",
+      "Handicap | 926:2 (+1.5)=1.37",
+      "Handicap | 925:1 (-2.5)=9",
+      "Handicap | 926:2 (+2.5)=1.06"
      ],
      "25 Liczba goli": [
-      "Liczba goli | 12:+1.5=1.43",
-      "Liczba goli | 13:-1.5=2.85",
-      "Liczba goli | 12:+0.5=1.09",
-      "Liczba goli | 13:-0.5=7.75",
-      "Liczba goli | 12:+4.5=8.6",
-      "Liczba goli | 13:-4.5=1.07"
+      "Liczba goli | 12:+1.5=1.28",
+      "Liczba goli | 13:-1.5=3.6",
+      "Liczba goli | 12:+4.5=13",
+      "Liczba goli | 13:-4.5=1.02",
+      "Liczba goli | 12:+3.5=5.4",
+      "Liczba goli | 13:-3.5=1.15"
      ],
      "28 1. drużyna - liczba goli": [
-      "1. drużyna - liczba goli | 12:+1.5=2.4",
-      "1. drużyna - liczba goli | 13:-1.5=1.55",
-      "1. drużyna - liczba goli | 12:+0.5=1.3",
-      "1. drużyna - liczba goli | 13:-0.5=3.4",
-      "1. drużyna - liczba goli | 12:+4.5=16",
-      "1. drużyna - liczba goli | 13:-4.5=1.003"
+      "1. drużyna - liczba goli | 12:+1.5=1.92",
+      "1. drużyna - liczba goli | 13:-1.5=1.84",
+      "1. drużyna - liczba goli | 12:+4.5=37",
+      "1. drużyna - liczba goli | 12:+3.5=17"
      ],
      "31 2. drużyna - liczba goli": [
-      "2. drużyna - liczba goli | 12:+1.5=3.6",
-      "2. drużyna - liczba goli | 13:-1.5=1.27",
-      "2. drużyna - liczba goli | 12:+0.5=1.55",
-      "2. drużyna - liczba goli | 13:-0.5=2.4",
-      "2. drużyna - liczba goli | 12:+4.5=17",
-      "2. drużyna - liczba goli | 13:-4.5=1.001"
+      "2. drużyna - liczba goli | 12:+1.5=5.4",
+      "2. drużyna - liczba goli | 13:-1.5=1.14",
+      "2. drużyna - liczba goli | 12:+0.5=1.85",
+      "2. drużyna - liczba goli | 13:-0.5=1.9",
+      "2. drużyna - liczba goli | 12:+4.5=50"
      ],
-     "33 Dokładna liczba goli": [
-      "Dokładna liczba goli | 1217:0=7.75",
-      "Dokładna liczba goli | 1218:1=3.9",
-      "Dokładna liczba goli | 1219:2=3.2",
-      "Dokładna liczba goli | 1220:3=4.2"
+     "32 ": [
+      "Dokładna liczba goli | 1696:=3.7",
+      "Dokładna liczba goli | 1697:=2.45",
+      "Dokładna liczba goli | 1698:=3.6",
+      "Dokładna liczba goli | 1699:=7.5"
      ],
      "35 1. drużyna - dokładna liczba goli": [
-      "1. drużyna - dokładna liczba goli | 1237:0=3.4",
-      "1. drużyna - dokładna liczba goli | 1238:1=2.6",
-      "1. drużyna - dokładna liczba goli | 1239:2=3.75",
-      "1. drużyna - dokładna liczba goli | 1240:3+=5.4"
+      "1. drużyna - dokładna liczba goli | 1238:1=1.85",
+      "1. drużyna - dokładna liczba goli | 1239:2=2.6",
+      "1. drużyna - dokładna liczba goli | 1240:3+=5.8"
      ],
      "36 2. drużyna - dokładna liczba goli": [
-      "2. drużyna - dokładna liczba goli | 1237:0=2.4",
-      "2. drużyna - dokładna liczba goli | 1238:1=2.45",
-      "2. drużyna - dokładna liczba goli | 1239:2=4.9",
-      "2. drużyna - dokładna liczba goli | 1240:3+=10.5"
+      "2. drużyna - dokładna liczba goli | 1237:0=1.95",
+      "2. drużyna - dokładna liczba goli | 1238:1=2.5",
+      "2. drużyna - dokładna liczba goli | 1239:2=7",
+      "2. drużyna - dokładna liczba goli | 1240:3+=26"
      ],
      "40 Suma goli": [
-      "Suma goli | 24:nieparzysta=1.98",
-      "Suma goli | 25:parzysta=1.85"
-     ],
-     "41 1. drużyna - suma goli": [
-      "1. drużyna - suma goli | 24:nieparzysta=2.02",
-      "1. drużyna - suma goli | 25:parzysta=1.8"
-     ],
-     "42 2. drużyna - suma goli": [
-      "2. drużyna - suma goli | 24:nieparzysta=2.2",
-      "2. drużyna - suma goli | 25:parzysta=1.68"
+      "Suma goli | 24:nieparzysta=1.8",
+      "Suma goli | 25:parzysta=2"
      ],
      "43 Obie drużyny - strzelą gola": [
-      "Obie drużyny - strzelą gola | 26:tak=2.02",
-      "Obie drużyny - strzelą gola | 27:nie=1.8"
+      "Obie drużyny - strzelą gola | 26:tak=1.87",
+      "Obie drużyny - strzelą gola | 27:nie=1.92"
      ],
-     "44 Która drużyna strzeli gola": [
-      "Która drużyna strzeli gola | 231:brak goli=7.75",
-      "Która drużyna strzeli gola | 232:tylko 1. drużyna=3.25",
-      "Która drużyna strzeli gola | 233:tylko 2. drużyna=5.6",
-      "Która drużyna strzeli gola | 234:obie drużyny=2.02"
-     ],
-     "47 1. drużyna - wygra do zera": [
-      "1. drużyna - wygra do zera | 26:tak=3.25",
-      "1. drużyna - wygra do zera | 27:nie=1.32"
-     ],
-     "48 2. drużyna - wygra do zera": [
-      "2. drużyna - wygra do zera | 26:tak=5.6",
-      "2. drużyna - wygra do zera | 27:nie=1.14"
+     "45 ": [
+      "1. drużyna - zachowa czyste konto | 26:=1.9",
+      "1. drużyna - zachowa czyste konto | 27:=1.85"
      ],
      "49 Wynik końcowy i obie drużyny - strzelą gola": [
-      "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=5",
-      "Wynik końcowy i obie drużyny - strzelą gola | 29:1 i nie=3.25",
-      "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=4.6",
-      "Wynik końcowy i obie drużyny - strzelą gola | 31:X i nie=7.75"
-     ],
-     "50 Liczba goli i obie drużyny - strzelą gola": [
-      "Liczba goli i obie drużyny - strzelą gola | 34:+2.5 i tak=2.6",
-      "Liczba goli i obie drużyny - strzelą gola | 35:-2.5 i tak=6.1",
-      "Liczba goli i obie drużyny - strzelą gola | 36:+2.5 i nie=10.5",
-      "Liczba goli i obie drużyny - strzelą gola | 37:-2.5 i nie=1.95"
+      "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=4.55",
+      "Wynik końcowy i obie drużyny - strzelą gola | 29:1 i nie=1.85",
+      "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=3.65",
+      "Wynik końcowy i obie drużyny - strzelą gola | 32:2 i tak=10"
      ],
      "51 Wynik końcowy i liczba goli": [
-      "Wynik końcowy i liczba goli | 235:1 i -1.5=6.75",
-      "Wynik końcowy i liczba goli | 236:1 i +1.5=2.75",
-      "Wynik końcowy i liczba goli | 237:X i -1.5=7.75",
-      "Wynik końcowy i liczba goli | 238:X i +1.5=4.6",
-      "Wynik końcowy i liczba goli | 235:1 i -4.5=2.25",
-      "Wynik końcowy i liczba goli | 236:1 i +4.5=15",
-      "Wynik końcowy i liczba goli | 237:X i -4.5=3",
-      "Wynik końcowy i liczba goli | 238:X i +4.5=100"
+      "Wynik końcowy i liczba goli | 235:1 i -2.5=2.1",
+      "Wynik końcowy i liczba goli | 236:1 i +2.5=3.25",
+      "Wynik końcowy i liczba goli | 237:X i -2.5=4.5",
+      "Wynik końcowy i liczba goli | 238:X i +2.5=17"
+     ],
+     "56 ": [
+      "Dokładny wynik | 67:=3.7",
+      "Dokładny wynik | 68:=4.7",
+      "Dokładny wynik | 69:=13.5",
+      "Dokładny wynik | 70:=55"
      ],
      "125 Następny gol w meczu - przedziały 15-minutowe": [
-      "1. gol - przedziały 15-minutowe | 180:1-15=3.3",
-      "1. gol - przedziały 15-minutowe | 181:16-30=4",
-      "1. gol - przedziały 15-minutowe | 182:31-45=4.75",
-      "1. gol - przedziały 15-minutowe | 183:46-60=7.5"
+      "2. gol - przedziały 15-minutowe | 183:46-60=2.65",
+      "2. gol - przedziały 15-minutowe | 184:61-75=3.7",
+      "2. gol - przedziały 15-minutowe | 185:76-90+=4.45",
+      "2. gol - przedziały 15-minutowe | 186:brak gola w meczu=3.7"
      ],
      "126 Następny gol w meczu - przedziały 10-minutowe": [
-      "1. gol - przedziały 10-minutowe | 187:1-10=4.75",
-      "1. gol - przedziały 10-minutowe | 188:11-20=5.1",
-      "1. gol - przedziały 10-minutowe | 189:21-30=6.1",
-      "1. gol - przedziały 10-minutowe | 190:31-40=7.4"
+      "2. gol - przedziały 10-minutowe | 191:41-50=7.5",
+      "2. gol - przedziały 10-minutowe | 192:51-60=3.95",
+      "2. gol - przedziały 10-minutowe | 193:61-70=5.2",
+      "2. gol - przedziały 10-minutowe | 194:71-80=6.75"
+     ],
+     "127 ": [
+      "Wynik od 46. do 60. minuty | 1:=5.5",
+      "Wynik od 46. do 60. minuty | 2:=1.35",
+      "Wynik od 46. do 60. minuty | 3:=5.3"
+     ],
+     "128 ": [
+      "1. gol od 46. do 60. minuty | 6:=5.1",
+      "1. gol od 46. do 60. minuty | 7:=1.37",
+      "1. gol od 46. do 60. minuty | 8:=4.95"
+     ],
+     "131 ": [
+      "Liczba goli od 46. do 60. minuty | 12:+0.5=2.7",
+      "Liczba goli od 46. do 60. minuty | 13:-0.5=1.4"
      ],
      "132 Wynik - przedziały 10-minutowe": [
-      "Wynik od 1. do 10. minuty | 1:1=8.25",
-      "Wynik od 1. do 10. minuty | 2:X=1.16",
-      "Wynik od 1. do 10. minuty | 3:2=12"
+      "Wynik od 41. do 50. minuty | 1:1=11",
+      "Wynik od 41. do 50. minuty | 2:X=1.07",
+      "Wynik od 41. do 50. minuty | 3:2=10.5"
      ],
-     "258 Następny gol i wynik końcowy": [
-      "1. gol i wynik końcowy | 245:1 i 1=2.2",
-      "1. gol i wynik końcowy | 246:1 i X=8.4",
-      "1. gol i wynik końcowy | 247:1 i 2=24",
-      "1. gol i wynik końcowy | 248:2 i 1=15"
+     "133 ": [
+      "1. gol od 41. do 50. minuty | 6:=11",
+      "1. gol od 41. do 50. minuty | 7:=1.07",
+      "1. gol od 41. do 50. minuty | 8:=10.5"
      ],
-     "283 Dokładny wynik": [
-      "Dokładny wynik | 1783:0:0=7.75",
-      "Dokładny wynik | 1784:1:0=6.1",
-      "Dokładny wynik | 1785:2:0=8.75",
-      "Dokładny wynik | 1786:3:0=19"
+     "136 ": [
+      "Liczba goli od 41. do 50. minuty | 12:+0.5=6.5",
+      "Liczba goli od 41. do 50. minuty | 13:-0.5=1.08"
+     ],
+     "137 ": [
+      "Wynik od 46. do 50. minuty | 1:=11",
+      "Wynik od 46. do 50. minuty | 2:=1.07",
+      "Wynik od 46. do 50. minuty | 3:=10.5"
+     ],
+     "138 ": [
+      "1. gol od 46. do 50. minuty | 6:=11",
+      "1. gol od 46. do 50. minuty | 7:=1.07",
+      "1. gol od 46. do 50. minuty | 8:=10.5"
+     ],
+     "141 ": [
+      "Liczba goli od 46. do 50. minuty | 12:+0.5=6.5",
+      "Liczba goli od 46. do 50. minuty | 13:-0.5=1.08"
+     ],
+     "188 ": [
+      "1. drużyna - liczba kartek | 12:+1.5=2.22",
+      "1. drużyna - liczba kartek | 13:-1.5=1.58",
+      "1. drużyna - liczba kartek | 12:+0.5=1.27",
+      "1. drużyna - liczba kartek | 13:-0.5=3.45",
+      "1. drużyna - liczba kartek | 12:+2.5=4.5",
+      "1. drużyna - liczba kartek | 13:-2.5=1.17"
+     ],
+     "191 ": [
+      "2. drużyna - liczba kartek | 12:+1.5=1.9",
+      "2. drużyna - liczba kartek | 13:-1.5=1.81",
+      "2. drużyna - liczba kartek | 12:+0.5=1.2",
+      "2. drużyna - liczba kartek | 13:-0.5=4.1",
+      "2. drużyna - liczba kartek | 12:+2.5=3.65",
+      "2. drużyna - liczba kartek | 13:-2.5=1.25"
      ],
      "811 Podwójna szansa i obie drużyny - strzelą gola": [
-      "Podwójna szansa i obie drużyny - strzelą gola | 929:1X i tak=2.5",
-      "Podwójna szansa i obie drużyny - strzelą gola | 930:1X i nie=2.4",
-      "Podwójna szansa i obie drużyny - strzelą gola | 931:12 i tak=3.25",
-      "Podwójna szansa i obie drużyny - strzelą gola | 932:12 i nie=2.15"
+      "Podwójna szansa i obie drużyny - strzelą gola | 929:1X i tak=2",
+      "Podwójna szansa i obie drużyny - strzelą gola | 930:1X i nie=1.75",
+      "Podwójna szansa i obie drużyny - strzelą gola | 931:12 i tak=2.9",
+      "Podwójna szansa i obie drużyny - strzelą gola | 932:12 i nie=1.75"
      ],
      "812 Podwójna szansa i liczba goli": [
-      "Podwójna szansa i liczba goli | 935:1X i -1.5=3.8",
-      "Podwójna szansa i liczba goli | 936:12 i -1.5=4.1",
-      "Podwójna szansa i liczba goli | 937:X2 i -1.5=4.5",
-      "Podwójna szansa i liczba goli | 938:1X i +1.5=1.82",
-      "Podwójna szansa i liczba goli | 935:1X i -4.5=1.37",
-      "Podwójna szansa i liczba goli | 936:12 i -4.5=1.48",
-      "Podwójna szansa i liczba goli | 937:X2 i -4.5=1.75",
-      "Podwójna szansa i liczba goli | 938:1X i +4.5=13"
+      "Podwójna szansa i liczba goli | 935:1X i -1.5=3.1",
+      "Podwójna szansa i liczba goli | 936:12 i -1.5=3.1",
+      "Podwójna szansa i liczba goli | 938:1X i +1.5=1.35",
+      "Podwójna szansa i liczba goli | 939:12 i +1.5=1.65",
+      "Podwójna szansa i liczba goli | 935:1X i -4.5=1.07",
+      "Podwójna szansa i liczba goli | 936:12 i -4.5=1.2",
+      "Podwójna szansa i liczba goli | 937:X2 i -4.5=2.2",
+      "Podwójna szansa i liczba goli | 938:1X i +4.5=15.5"
      ],
-     "813 Liczba goli - przedziały": [
-      "Liczba goli - przedziały | 1008:brak gola=7.75",
-      "Liczba goli - przedziały | 941:1-2=1.72",
-      "Liczba goli - przedziały | 942:1-3=1.3",
-      "Liczba goli - przedziały | 943:1-4=1.16"
+     "827 ": [
+      "Więcej rzutów rożnych od 46. do 60. minuty | 1:=4.45",
+      "Więcej rzutów rożnych od 46. do 60. minuty | 2:=2.45",
+      "Więcej rzutów rożnych od 46. do 60. minuty | 3:=2.05"
      ],
-     "814 1. drużyna - liczba goli - przedziały": [
-      "1. drużyna - liczba goli - przedziały | 1009:brak gola=3.4",
-      "1. drużyna - liczba goli - przedziały | 957:1-2=1.55",
-      "1. drużyna - liczba goli - przedziały | 958:1-3=1.34",
-      "1. drużyna - liczba goli - przedziały | 959:2-3=2.5"
+     "828 ": [
+      "1. rzut rożny od 46. do 60. minuty | 6:=3.45",
+      "1. rzut rożny od 46. do 60. minuty | 7:=3.3",
+      "1. rzut rożny od 46. do 60. minuty | 8:=1.9"
      ],
-     "815 2. drużyna - liczba goli - przedziały": [
-      "2. drużyna - liczba goli - przedziały | 1009:brak gola=2.4",
-      "2. drużyna - liczba goli - przedziały | 957:1-2=1.65",
-      "2. drużyna - liczba goli - przedziały | 958:1-3=1.52",
-      "2. drużyna - liczba goli - przedziały | 959:2-3=3.6"
+     "831 ": [
+      "Rzuty rożne - handicap od 46. do 60. minuty | 925:1 (-0.5)=4.2",
+      "Rzuty rożne - handicap od 46. do 60. minuty | 926:2 (+0.5)=1.18",
+      "Rzuty rożne - handicap od 46. do 60. minuty | 925:1 (+0.5)=1.65",
+      "Rzuty rożne - handicap od 46. do 60. minuty | 926:2 (-0.5)=2.1"
      ],
-     "816 Multiwynik": [
-      "Multiwynik | 1007:X=3.25",
-      "Multiwynik | 961:1:0, 2:0 lub 3:0=3.4",
-      "Multiwynik | 962:0:1, 0:2 lub 0:3=5.75",
-      "Multiwynik | 963:4:0, 5:0 lub 6:0=45"
+     "834 ": [
+      "Liczba rzutów rożnych od 46. do 60. minuty | 12:+0.5=1.3",
+      "Liczba rzutów rożnych od 46. do 60. minuty | 13:-0.5=3.25",
+      "Liczba rzutów rożnych od 46. do 60. minuty | 12:+1.5=2.25",
+      "Liczba rzutów rożnych od 46. do 60. minuty | 13:-1.5=1.6"
      ],
-     "1224 2. drużyna - strzeli gola": [
-      "2. drużyna - strzeli gola | 26:tak=1.54",
-      "2. drużyna - strzeli gola | 27:nie=2.4"
+     "837 ": [
+      "1. drużyna - liczba rzutów rożnych od 46. do 60. minuty | 12:+0.5=2.45",
+      "1. drużyna - liczba rzutów rożnych od 46. do 60. minuty | 13:-0.5=1.5"
      ],
-     "1229 1. drużyna - strzeli gola": [
-      "1. drużyna - strzeli gola | 26:tak=1.3",
-      "1. drużyna - strzeli gola | 27:nie=3.4"
-     ],
-     "52 Zawodnik - strzeli następnego gola": [
-      "Zawodnik - strzeli 1. gola | 1061005:Mekvabishvili Anzor=25",
-      "Zawodnik - strzeli 1. gola | 1065576:Guliashvili Giorgi=10",
-      "Zawodnik - strzeli 1. gola | 1065828:Tsitaishvili Heorhii=17.5",
-      "Zawodnik - strzeli 1. gola | 1382937:Sikan Danilo=7"
+     "840 ": [
+      "2. drużyna - liczba rzutów rożnych od 46. do 60. minuty | 12:+0.5=1.6",
+      "2. drużyna - liczba rzutów rożnych od 46. do 60. minuty | 13:-0.5=2.15"
      ]
     }
    },
@@ -7981,48 +1508,24 @@
   "betclic": {
    "bledy": [],
    "niedopasowane": [
+    "pilka: Bosnia & Herzegovina – Romania (2026-11-17 20:45)",
+    "pilka: Hungary – Northern Ireland (2026-11-17 20:45)",
+    "pilka: Ukraine – Georgia (2026-11-17 20:45)",
+    "pilka: Republic of Ireland – Kosovo (2026-11-17 20:45)",
+    "pilka: Israel – Austria (2026-11-17 20:45)",
+    "pilka: Denmark – Norway (2026-11-17 20:45)",
+    "pilka: Poland – Sweden (2026-11-17 20:45)",
+    "pilka: Wales – Portugal (2026-11-17 20:45)",
     "tenis: Alexander Zverev – Ben Shelton (2026-11-17 20:30)"
    ],
-   "stron": 11,
-   "dopasowane": 8,
+   "stron": 4,
+   "dopasowane": 0,
    "nasze_mecze": 9,
-   "rynki_przyklad": {
-    "pilka": {
-     "Bośnia i Hercegowina - Rumunia": [
-      "Dokładny wynik",
-      "Gole Powyżej/Poniżej",
-      "Handicap",
-      "Którykolwiek zawodnik strzeli gola",
-      "Którykolwiek zawodnik strzeli gola lub zaliczy asystę",
-      "Liczba goli - Bośnia i Hercegowina",
-      "Liczba goli - Rumunia",
-      "Oba zespoły strzelą gola",
-      "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu",
-      "Podwójna Szansa",
-      "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)",
-      "Wynik meczu (z wyłączeniem dogrywki)"
-     ],
-     "Węgry - Irlandia Północna": [
-      "Dokładny wynik",
-      "Gole Powyżej/Poniżej",
-      "Handicap",
-      "Którykolwiek zawodnik strzeli gola",
-      "Którykolwiek zawodnik strzeli gola lub zaliczy asystę",
-      "Liczba goli - Irlandia Północna",
-      "Liczba goli - Węgry",
-      "Oba zespoły strzelą gola",
-      "Oba zespoły strzelą gola lub Powyżej 2,5 gola w meczu",
-      "Podwójna Szansa",
-      "Przewaga dwoma bramkami lub wygrana w meczu (reg. czas)",
-      "Wynik meczu (z wyłączeniem dogrywki)",
-      "Wynik meczu - Xtra Wygrana"
-     ]
-    }
-   },
-   "sekund": 8,
-   "z_kursami": 8
+   "rynki_przyklad": {},
+   "sekund": 3,
+   "z_kursami": 0
   }
  },
  "lista": "456e068aee90",
- "sekund": 56
+ "sekund": 48
 }
