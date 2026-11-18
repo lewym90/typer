@@ -1,10 +1,18 @@
 {
- "czas": "2026-11-17 14:00 UTC",
- "tryb": "popoludnie",
+ "czas": "2026-11-18 07:15 UTC",
+ "tryb": "rano",
  "sporty": [
   [
    "ufo:sprt:01",
    "Boks"
+  ],
+  [
+   "ufo:sprt:0q",
+   "Baseball"
+  ],
+  [
+   "ufo:sprt:23",
+   "Esport Valorant"
   ],
   [
    "ufo:sprt:02",
@@ -15,16 +23,20 @@
    "Badminton"
   ],
   [
-   "ufo:sprt:04",
-   "Esport DOTA2"
-  ],
-  [
    "ufo:sprt:26",
    "POJEDYNEK"
   ],
   [
+   "ufo:sprt:04",
+   "Esport DOTA2"
+  ],
+  [
    "ufo:sprt:27",
    "Szachy"
+  ],
+  [
+   "ufo:sprt:0v",
+   "Squash"
   ],
   [
    "ufo:sprt:0w",
@@ -149,6 +161,7 @@
  ],
  "sporty_uzyte": {
   "boks": "ufo:sprt:01",
+  "baseball": "ufo:sprt:0q",
   "hokej": "ufo:sprt:0w",
   "tenis": "ufo:sprt:0x",
   "pilka_reczna": "ufo:sprt:0y",
@@ -160,26 +173,24 @@
   "pilka": "ufo:sprt:00"
  },
  "bledy": [
-  "turnieje ufo:sprt:01 today: Expecting value: line 1 column 1 (char 0)",
+  "turnieje ufo:sprt:01 tomorrow: Expecting value: line 1 column 1 (char 0)",
+  "turnieje ufo:sprt:0q tomorrow: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:1r today: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:1r tomorrow: Expecting value: line 1 column 1 (char 0)",
-  "turnieje ufo:sprt:19 today: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:1y today: Expecting value: line 1 column 1 (char 0)",
-  "turnieje ufo:sprt:1y tomorrow: Expecting value: line 1 column 1 (char 0)",
-  "mecze ufo:tour:0c-01n: Expecting value: line 1 column 1 (char 0)",
-  "mecze ufo:tour:35-002: Expecting value: line 1 column 1 (char 0)"
+  "turnieje ufo:sprt:1y tomorrow: Expecting value: line 1 column 1 (char 0)"
  ],
- "turniejow": 213,
- "meczow_fortuny": 987,
+ "turniejow": 215,
+ "meczow_fortuny": 962,
  "inne_sporty": {
-  "pilka_reczna": 25,
-  "hokej": 59,
-  "koszykowka": 147,
-  "siatkowka": 17
+  "koszykowka": 143,
+  "siatkowka": 45,
+  "hokej": 82,
+  "pilka_reczna": 33
  },
- "w_ofercie_24h": 744,
- "odczytane": 736,
- "rynkow": 29094,
- "sekund": 198
+ "w_ofercie_24h": 770,
+ "odczytane": 764,
+ "rynkow": 19207,
+ "sekund": 202
 }
