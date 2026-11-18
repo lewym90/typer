@@ -2,33 +2,34 @@
  "zrodlo": "Sofascore",
  "pilka": {
   "wydarzen": {
-   "2026-11-17": 0
+   "2026-11-18": 0,
+   "2026-11-19": 0
   },
   "dopasowane": [],
   "niedopasowane": [
-   "Hungary – Northern Ireland 2026-11-17 20:45",
-   "Denmark – Norway 2026-11-17 20:45",
-   "Israel – Austria 2026-11-17 20:45",
-   "Republic of Ireland – Kosovo 2026-11-17 20:45",
-   "Ukraine – Georgia 2026-11-17 20:45",
-   "Bosnia & Herzegovina – Romania 2026-11-17 20:45",
-   "Poland – Sweden 2026-11-17 20:45",
-   "Wales – Portugal 2026-11-17 20:45"
+   "Coritiba – Santos 2026-11-18 23:30",
+   "Remo – Chapecoense 2026-11-19 00:00",
+   "Cruzeiro – Palmeiras 2026-11-19 00:30",
+   "Flamengo – Atletico Paranaense 2026-11-19 00:30",
+   "Corinthians – Botafogo 2026-11-19 01:30",
+   "Grêmio – Bahia 2026-11-19 01:30"
   ]
  },
  "tenis": {
   "wydarzen": {
-   "2026-11-17": 0
+   "2026-11-18": 0,
+   "2026-11-19": 0
   },
   "dopasowane": [],
   "niedopasowane": [
-   "Arthur Fils – Rafael Jodar 2026-11-17 14:00",
-   "Alexander Zverev – Ben Shelton 2026-11-17 20:30"
+   "Carlos Alcaraz – Daniil Medvedev 2026-11-18 14:00",
+   "Flavio Cobolli – Frances Tiafoe 2026-11-18 20:30"
   ]
  },
  "walki": {
   "wydarzen": {
-   "2026-11-17": 0
+   "2026-11-18": 0,
+   "2026-11-19": 0
   },
   "dopasowane": [],
   "niedopasowane": []
@@ -36,19 +37,19 @@
  "tryb": null,
  "log": [
   {
-   "url": "https://api.sofascore.com/api/v1/sport/football/scheduled-events/2026-11-17",
+   "url": "https://api.sofascore.com/api/v1/sport/football/scheduled-events/2026-11-18",
    "kod": 403,
    "typ": "application/json",
    "rozmiar": 48,
-   "ms": 153,
+   "ms": 154,
    "tryb": "api"
   },
   {
-   "url": "https://www.sofascore.com/api/v1/sport/football/scheduled-events/2026-11-17",
+   "url": "https://www.sofascore.com/api/v1/sport/football/scheduled-events/2026-11-18",
    "kod": 403,
    "typ": "application/json",
    "rozmiar": 48,
-   "ms": 140,
+   "ms": 138,
    "tryb": "www"
   },
   {
@@ -60,35 +61,57 @@
    "tryb": "przeglądarka – strona"
   },
   {
-   "url": "/sport/football/scheduled-events/2026-11-17",
+   "url": "/sport/football/scheduled-events/2026-11-18",
    "kod": 403,
    "tryb": "przeglądarka",
    "blad": null
   },
   {
-   "url": "https://api.sofascore.com/api/v1/sport/tennis/scheduled-events/2026-11-17",
+   "url": "https://api.sofascore.com/api/v1/sport/football/scheduled-events/2026-11-19",
    "kod": 403,
    "typ": "application/json",
    "rozmiar": 48,
-   "ms": 134,
+   "ms": 137,
    "tryb": "api"
   },
   {
-   "url": "https://www.sofascore.com/api/v1/sport/tennis/scheduled-events/2026-11-17",
+   "url": "https://www.sofascore.com/api/v1/sport/football/scheduled-events/2026-11-19",
    "kod": 403,
    "typ": "application/json",
    "rozmiar": 48,
-   "ms": 148,
+   "ms": 138,
    "tryb": "www"
   },
   {
-   "url": "/sport/tennis/scheduled-events/2026-11-17",
+   "url": "/sport/football/scheduled-events/2026-11-19",
    "kod": 403,
    "tryb": "przeglądarka",
    "blad": null
   },
   {
-   "url": "https://api.sofascore.com/api/v1/sport/mma/scheduled-events/2026-11-17",
+   "url": "https://api.sofascore.com/api/v1/sport/tennis/scheduled-events/2026-11-18",
+   "kod": 403,
+   "typ": "application/json",
+   "rozmiar": 48,
+   "ms": 132,
+   "tryb": "api"
+  },
+  {
+   "url": "https://www.sofascore.com/api/v1/sport/tennis/scheduled-events/2026-11-18",
+   "kod": 403,
+   "typ": "application/json",
+   "rozmiar": 48,
+   "ms": 150,
+   "tryb": "www"
+  },
+  {
+   "url": "/sport/tennis/scheduled-events/2026-11-18",
+   "kod": 403,
+   "tryb": "przeglądarka",
+   "blad": null
+  },
+  {
+   "url": "https://api.sofascore.com/api/v1/sport/tennis/scheduled-events/2026-11-19",
    "kod": 403,
    "typ": "application/json",
    "rozmiar": 48,
@@ -96,7 +119,29 @@
    "tryb": "api"
   },
   {
-   "url": "https://www.sofascore.com/api/v1/sport/mma/scheduled-events/2026-11-17",
+   "url": "https://www.sofascore.com/api/v1/sport/tennis/scheduled-events/2026-11-19",
+   "kod": 403,
+   "typ": "application/json",
+   "rozmiar": 48,
+   "ms": 143,
+   "tryb": "www"
+  },
+  {
+   "url": "/sport/tennis/scheduled-events/2026-11-19",
+   "kod": 403,
+   "tryb": "przeglądarka",
+   "blad": null
+  },
+  {
+   "url": "https://api.sofascore.com/api/v1/sport/mma/scheduled-events/2026-11-18",
+   "kod": 403,
+   "typ": "application/json",
+   "rozmiar": 48,
+   "ms": 140,
+   "tryb": "api"
+  },
+  {
+   "url": "https://www.sofascore.com/api/v1/sport/mma/scheduled-events/2026-11-18",
    "kod": 403,
    "typ": "application/json",
    "rozmiar": 48,
@@ -104,11 +149,33 @@
    "tryb": "www"
   },
   {
-   "url": "/sport/mma/scheduled-events/2026-11-17",
+   "url": "/sport/mma/scheduled-events/2026-11-18",
+   "kod": 403,
+   "tryb": "przeglądarka",
+   "blad": null
+  },
+  {
+   "url": "https://api.sofascore.com/api/v1/sport/mma/scheduled-events/2026-11-19",
+   "kod": 403,
+   "typ": "application/json",
+   "rozmiar": 48,
+   "ms": 124,
+   "tryb": "api"
+  },
+  {
+   "url": "https://www.sofascore.com/api/v1/sport/mma/scheduled-events/2026-11-19",
+   "kod": 403,
+   "typ": "application/json",
+   "rozmiar": 48,
+   "ms": 141,
+   "tryb": "www"
+  },
+  {
+   "url": "/sport/mma/scheduled-events/2026-11-19",
    "kod": 403,
    "tryb": "przeglądarka",
    "blad": null
   }
  ],
- "sekund": 6
+ "sekund": 7
 }
