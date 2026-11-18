@@ -1,5 +1,5 @@
 {
- "czas": "2026-11-17 22:36 UTC",
+ "czas": "2026-11-18 06:00 UTC",
  "wersja": "czytnik-3",
  "bukmacherzy": {
   "fortuna": {
@@ -224,7 +224,9 @@
  ],
  "diag": {
   "bledy": [
-   "turnieje ufo:sprt:19 today: Expecting value: line 1 column 1 (char 0)"
+   "turnieje ufo:sprt:01 tomorrow: Expecting value: line 1 column 1 (char 0)",
+   "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)",
+   "mecze ufo:tour:0x-6ve: Expecting value: line 1 column 1 (char 0)"
   ],
   "nasze_mecze": 9,
   "sporty": [
@@ -235,6 +237,10 @@
    [
     "ufo:sprt:0q",
     "Baseball"
+   ],
+   [
+    "ufo:sprt:23",
+    "Esport Valorant"
    ],
    [
     "ufo:sprt:02",
@@ -383,8 +389,8 @@
    "sporty walki": "ufo:sprt:19",
    "pilka": "ufo:sprt:00"
   },
-  "turniejow": 120,
-  "meczow_fortuny": 611,
+  "turniejow": 131,
+  "meczow_fortuny": 602,
   "niedopasowane": [
    "pilka: Bosnia & Herzegovina – Romania",
    "pilka: Hungary – Northern Ireland",
@@ -399,11 +405,11 @@
   "rynki_nazwy": {},
   "sts": {
    "bledy": [],
-   "meczow_sts": 1700,
+   "meczow_sts": 1702,
    "sporty": {
-    "1": 1177,
-    "3": 420,
-    "166": 55,
+    "1": 1181,
+    "3": 408,
+    "166": 65,
     "19": 48
    },
    "niedopasowane": [
