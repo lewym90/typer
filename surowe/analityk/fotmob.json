@@ -2,48 +2,48 @@
  "zrodlo": "FotMob",
  "proby": [
   {
-   "url": "https://www.fotmob.com/api/data/matches?date=20261118&timezone=Europe%2FWarsaw&ccode3=POL",
+   "url": "https://www.fotmob.com/api/data/matches?date=20261119&timezone=Europe%2FWarsaw&ccode3=POL",
    "kod": 200,
    "typ": "application/json; charset=utf-8",
-   "rozmiar": 35072,
-   "ms": 255,
-   "mecze": 65
+   "rozmiar": 29135,
+   "ms": 287,
+   "mecze": 57
   },
   {
-   "url": "https://www.fotmob.com/api/matches?date=20261118&timezone=Europe%2FWarsaw&ccode3=POL",
+   "url": "https://www.fotmob.com/api/matches?date=20261119&timezone=Europe%2FWarsaw&ccode3=POL",
    "kod": 404,
    "typ": "",
    "rozmiar": 0,
-   "ms": 12,
+   "ms": 34,
    "poczatek": ""
   },
   {
-   "url": "https://www.fotmob.com/api/data/matches?date=20261118",
+   "url": "https://www.fotmob.com/api/data/matches?date=20261119",
    "kod": 200,
    "typ": "application/json; charset=utf-8",
-   "rozmiar": 32455,
-   "ms": 42,
-   "mecze": 68
+   "rozmiar": 27379,
+   "ms": 45,
+   "mecze": 57
   }
  ],
  "dopasowane": [
   {
-   "nasz": "Coritiba – Santos",
-   "event_id": "34b8d9b2a641392b592e1dc5470e7622",
-   "start": "2026-11-18 23:30",
-   "fotmob_id": "5103711",
-   "fotmob": "Coritiba – Santos",
-   "zgodnosc": 1.0,
+   "nasz": "Vitoria – Bragantino-SP",
+   "event_id": "fa3ad7ccd23c6fe47c3062a2b69d3ddd",
+   "start": "2026-11-19 23:30",
+   "fotmob_id": "5103712",
+   "fotmob": "Vitória – RB Bragantino",
+   "zgodnosc": 0.987,
    "odwrocone": false,
    "url": null,
    "szczegoly": {
     "requests": [
      {
-      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5103711",
+      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5103712",
       "kod": 200,
       "typ": "application/json; charset=utf-8",
-      "rozmiar": 30026,
-      "ms": 35
+      "rozmiar": 24233,
+      "ms": 47
      }
     ],
     "dane": {
@@ -67,27 +67,88 @@
       "lawka_ile": 0,
       "nieobecni": [
        {
-        "id": 1509085,
-        "name": "Pedro Morisco",
-        "unavailability": {
-         "lastUpdated": "2026-11-17T10:16:32Z",
-         "type": "internationalDuty",
-         "expectedReturn": ""
-        },
-        "firstName": "Pedro",
-        "lastName": "Morisco"
-       },
-       {
-        "id": 1509078,
-        "name": "Lucas Ronier",
+        "id": 1165259,
+        "name": "Fabiano Souza",
         "unavailability": {
          "injuryId": 76,
-         "lastUpdated": "2026-08-09T13:12:05Z",
+         "lastUpdated": "2026-10-14T10:10:30Z",
          "type": "injury",
          "expectedReturn": "Out for season"
         },
-        "firstName": "Lucas",
-        "lastName": "Ronier"
+        "firstName": "Fabiano",
+        "lastName": "Souza"
+       },
+       {
+        "id": 1174633,
+        "name": "Ramon",
+        "unavailability": {
+         "injuryId": 74,
+         "lastUpdated": "2026-09-07T09:45:13Z",
+         "type": "injury",
+         "expectedReturn": "Out for season"
+        },
+        "firstName": "",
+        "lastName": "Ramon"
+       },
+       {
+        "id": 1255211,
+        "name": "Nathan Mendes",
+        "unavailability": {
+         "injuryId": 76,
+         "lastUpdated": "2026-06-04T10:31:32Z",
+         "type": "injury",
+         "expectedReturn": "Out for season"
+        },
+        "firstName": "Nathan",
+        "lastName": "Mendes"
+       },
+       {
+        "id": 1178845,
+        "name": "Camutanga",
+        "unavailability": {
+         "injuryId": 25,
+         "lastUpdated": "2026-11-01T09:53:35Z",
+         "type": "injury",
+         "expectedReturn": "Mid November 2026"
+        },
+        "firstName": "",
+        "lastName": "Camutanga"
+       },
+       {
+        "id": 1033147,
+        "name": "Riccieli",
+        "unavailability": {
+         "injuryId": 101,
+         "lastUpdated": "2026-11-01T09:57:50Z",
+         "type": "injury",
+         "expectedReturn": "Mid November 2026"
+        },
+        "firstName": "",
+        "lastName": "Riccieli"
+       },
+       {
+        "id": 1086044,
+        "name": "Edu",
+        "unavailability": {
+         "injuryId": 73,
+         "lastUpdated": "2026-11-01T09:54:34Z",
+         "type": "injury",
+         "expectedReturn": "Late November 2026"
+        },
+        "firstName": "",
+        "lastName": "Edu"
+       },
+       {
+        "id": 1461818,
+        "name": "Dudu",
+        "unavailability": {
+         "injuryId": 45,
+         "lastUpdated": "2026-03-12T09:14:10Z",
+         "type": "injury",
+         "expectedReturn": "Out for season"
+        },
+        "firstName": "",
+        "lastName": "Dudu"
        }
       ],
       "trener": null
@@ -104,61 +165,50 @@
       "lawka_ile": 0,
       "nieobecni": [
        {
-        "id": 959915,
-        "name": "Álvaro Barreal",
+        "id": 1256634,
+        "name": "Lucas Barbosa",
         "unavailability": {
          "lastUpdated": "0001-01-01T00:00:00",
          "type": "suspension"
         },
-        "firstName": "Álvaro",
-        "lastName": "Barreal"
-       },
-       {
-        "id": 1712138,
-        "name": "Gabriel Bontempo",
-        "unavailability": {
-         "lastUpdated": "2026-11-11T15:30:15Z",
-         "type": "internationalDuty",
-         "expectedReturn": ""
-        },
-        "firstName": "Gabriel",
-        "lastName": "Bontempo"
-       },
-       {
-        "id": 699694,
-        "name": "Lucas Veríssimo",
-        "unavailability": {
-         "injuryId": 42,
-         "lastUpdated": "2026-10-20T22:00:12Z",
-         "type": "injury",
-         "expectedReturn": "Late November 2026"
-        },
         "firstName": "Lucas",
-        "lastName": "Veríssimo"
+        "lastName": "Barbosa"
        },
        {
-        "id": 982426,
-        "name": "Gabriel Brazão",
+        "id": 1212487,
+        "name": "José Hurtado",
         "unavailability": {
-         "injuryId": 79,
-         "lastUpdated": "2026-09-18T05:16:05Z",
+         "injuryId": 69,
+         "lastUpdated": "2026-11-11T15:33:53Z",
          "type": "injury",
-         "expectedReturn": "Out for season"
+         "expectedReturn": "Doubtful"
         },
-        "firstName": "Gabriel",
-        "lastName": "Brazão"
+        "firstName": "José",
+        "lastName": "Hurtado"
        },
        {
-        "id": 1733364,
-        "name": "Vinicius Lira",
+        "id": 1382475,
+        "name": "Rodriguinho",
+        "unavailability": {
+         "injuryId": 14,
+         "lastUpdated": "2026-10-18T09:43:51Z",
+         "type": "injury",
+         "expectedReturn": "About a week"
+        },
+        "firstName": "",
+        "lastName": "Rodriguinho"
+       },
+       {
+        "id": 1719148,
+        "name": "Davi Gomes",
         "unavailability": {
          "injuryId": 76,
-         "lastUpdated": "2026-03-17T16:27:03Z",
+         "lastUpdated": "2026-03-31T17:23:44Z",
          "type": "injury",
-         "expectedReturn": "Out for season"
+         "expectedReturn": "Mid December 2026"
         },
-        "firstName": "Vinicius",
-        "lastName": "Lira"
+        "firstName": "Davi",
+        "lastName": "Gomes"
        }
       ],
       "trener": null
@@ -179,7 +229,7 @@
      "infoBox": {
       "legInfo": null,
       "Match Date": {
-       "utcTime": "2026-11-18T22:30:00.000Z",
+       "utcTime": "2026-11-19T22:30:00.000Z",
        "isDateCorrect": true
       },
       "Tournament": {
@@ -191,61 +241,61 @@
        "round": "35"
       },
       "Stadium": {
-       "name": "Estádio Major Antônio Couto Pereira",
-       "city": "Curitiba, Paraná",
+       "name": "Estádio Manoel Barradas",
+       "city": "Salvador, Bahia",
        "country": "Brazil",
-       "lat": -25.421096149,
-       "long": -49.259551764,
-       "capacity": 45563,
+       "lat": -12.919165391,
+       "long": -38.427081853,
+       "capacity": 35980,
        "surface": "grass"
       },
       "Referee": {
        "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/bra.png",
-       "text": "Braulio da Silva Machado",
+       "text": "Ramon Abatti Abel",
        "countryCode": "BRA",
        "country": "Brazil",
-       "id": 1001078386,
-       "leagueId": 8814,
-       "leagueName": "Série B",
+       "id": 1001074553,
+       "leagueId": 268,
+       "leagueName": "Série A",
        "stats": [
         {
          "type": "matches",
-         "value": 12,
+         "value": 38,
          "valueType": "total"
         },
         {
          "type": "yellowCards",
-         "value": 4.5,
+         "value": 5.08,
          "valueType": "perMatch",
-         "average": 4.91,
-         "total": 54,
-         "averageType": "below",
-         "fillPercentage": 39.25,
+         "average": 4.79,
+         "total": 193,
+         "averageType": "above",
+         "fillPercentage": 53.76,
          "averagePercentage": 50
         },
         {
          "type": "redCards",
-         "value": 0,
-         "valueType": "total"
-        },
-        {
-         "type": "unknown",
-         "value": 0,
-         "valueType": "total"
-        },
-        {
-         "type": "penalties",
          "value": 9,
          "valueType": "total"
         },
         {
+         "type": "unknown",
+         "value": 2,
+         "valueType": "total"
+        },
+        {
+         "type": "penalties",
+         "value": 11,
+         "valueType": "total"
+        },
+        {
          "type": "fouls",
-         "value": 25.58,
+         "value": 29.49,
          "valueType": "perMatch",
-         "average": 28.05,
-         "total": 307,
-         "averageType": "below",
-         "fillPercentage": 25.58,
+         "average": 26.97,
+         "total": 1032,
+         "averageType": "above",
+         "fillPercentage": 78.86,
          "averagePercentage": 50
         }
        ]
@@ -265,20 +315,21 @@
       "hasPlayoff",
       "table",
       "h2h",
-      "momentum"
+      "momentum",
+      "hasPassNetwork"
      ],
      "general": {
-      "matchId": "5103711",
-      "matchName": "Coritiba-vs-Santos_Wed, Nov 18, 2026, 22:30 UTC",
+      "matchId": "5103712",
+      "matchName": "Vitória-vs-RB Bragantino_Thu, Nov 19, 2026, 22:30 UTC",
       "matchRound": "35",
       "teamColors": {
        "darkMode": {
-        "home": "#00736C",
+        "home": "#FF1000",
         "away": "#ffffff"
        },
        "lightMode": {
-        "home": "#00736C",
-        "away": "#1b1b1b"
+        "home": "#B81808",
+        "away": "#000000"
        },
        "fontDarkMode": {
         "home": "rgba(255, 255, 255, 1.0)",
@@ -295,16 +346,16 @@
       "parentLeagueId": 268,
       "countryCode": "BRA",
       "homeTeam": {
-       "name": "Coritiba",
-       "id": 9767
+       "name": "Vitória",
+       "id": 7733
       },
       "awayTeam": {
-       "name": "Santos",
-       "id": 8514
+       "name": "RB Bragantino",
+       "id": 109705
       },
       "coverageLevel": "lower",
-      "matchTimeUTC": "Wed, Nov 18, 2026, 22:30 UTC",
-      "matchTimeUTCDate": "2026-11-18T22:30:00.000Z",
+      "matchTimeUTC": "Thu, Nov 19, 2026, 22:30 UTC",
+      "matchTimeUTCDate": "2026-11-19T22:30:00.000Z",
       "started": false,
       "finished": false,
       "gender": "male"
@@ -312,22 +363,22 @@
      "header": {
       "teams": [
        {
-        "name": "Coritiba",
-        "id": 9767,
+        "name": "Vitória",
+        "id": 7733,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/9767_small.png",
-        "pageUrl": "/teams/9767/overview/coritiba"
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/7733_small.png",
+        "pageUrl": "/teams/7733/overview/vitoria"
        },
        {
-        "name": "Santos",
-        "id": 8514,
+        "name": "RB Bragantino",
+        "id": 109705,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8514_small.png",
-        "pageUrl": "/teams/8514/overview/santos"
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/109705_small.png",
+        "pageUrl": "/teams/109705/overview/rb-bragantino"
        }
       ],
       "status": {
-       "utcTime": "2026-11-18T22:30:00.000Z",
+       "utcTime": "2026-11-19T22:30:00.000Z",
        "numberOfHomeRedCards": 0,
        "numberOfAwayRedCards": 0,
        "halfs": {},
@@ -344,957 +395,202 @@
    }
   },
   {
-   "nasz": "Remo – Chapecoense",
-   "event_id": "a96fe59de916f1d378f3dcce6733dd20",
-   "start": "2026-11-19 00:00",
-   "fotmob_id": "5103713",
-   "fotmob": "Remo – Chapecoense",
+   "nasz": "Vasco da Gama – Internacional",
+   "event_id": "2a054ad1a9985edb5db37136cf40a382",
+   "start": "2026-11-19 23:30",
+   "fotmob_id": "5103705",
+   "fotmob": "Vasco da Gama – Internacional",
    "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null,
    "szczegoly": {
     "requests": [
      {
-      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5103713",
+      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5103705",
       "kod": 200,
       "typ": "application/json; charset=utf-8",
-      "rozmiar": 37146,
-      "ms": 35
+      "rozmiar": 29530,
+      "ms": 45
      }
     ],
     "dane": {
      "lineup_klucze": [
       "matchId",
       "lineupType",
-      "source",
       "availableFilters",
       "homeTeam",
       "awayTeam"
      ],
-     "lineup_typ": "lastStarting11",
+     "lineup_typ": "standard",
      "homeTeam": {
-      "formacja": "5-4-1",
+      "formacja": null,
       "ocena": null,
       "klucze": [
        "id",
        "name",
-       "formation",
-       "starters",
-       "coach",
-       "subs",
-       "unavailable",
-       "averageStarterAge",
-       "totalStarterMarketValue",
-       "lastMatch"
+       "unavailable"
       ],
-      "wyjsciowi": [
-       {
-        "id": 936701,
-        "age": 38,
-        "optaId": "193242",
-        "name": "Marcelo",
-        "positionId": 11,
-        "usualPlayingPositionId": 0,
-        "shirtNumber": "88",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.1,
-         "y": 0.5,
-         "height": 0.195,
-         "width": 0.2
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.1,
-         "height": 0.2,
-         "width": 1
-        },
-        "marketValue": 406854,
-        "performance": {
-         "seasonRating": 7.01
-        },
-        "shortName": "M. Rangel",
-        "firstName": "",
-        "lastName": "Marcelo",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 319659,
-        "age": 34,
-        "optaId": "178368",
-        "name": "Marllon",
-        "positionId": 33,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "13",
-        "isCaptain": true,
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.357,
-         "y": 0.695,
-         "height": 0.195,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.305,
-         "y": 0.357,
-         "height": 0.2,
-         "width": 0.195
-        },
-        "marketValue": 553603,
-        "performance": {
-         "seasonGoals": 2,
-         "seasonAssists": 1,
-         "seasonRating": 6.6
-        },
-        "firstName": "",
-        "lastName": "Marllon",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 535944,
-        "age": 31,
-        "optaId": "178511",
-        "name": "Zé Welison",
-        "positionId": 35,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "28",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.357,
-         "y": 0.5,
-         "height": 0.195,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.357,
-         "height": 0.2,
-         "width": 0.195
-        },
-        "marketValue": 648903,
-        "performance": {
-         "seasonGoals": 1,
-         "seasonRating": 6.78
-        },
-        "shortName": "Zé Welison",
-        "firstName": "Zé",
-        "lastName": "Welison",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 834641,
-        "age": 28,
-        "optaId": "250510",
-        "name": "Duplexe Tchamba",
-        "positionId": 37,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "18",
-        "countryName": "Cameroon",
-        "countryCode": "CMR",
-        "horizontalLayout": {
-         "x": 0.357,
-         "y": 0.305,
-         "height": 0.195,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.695,
-         "y": 0.357,
-         "height": 0.2,
-         "width": 0.195
-        },
-        "marketValue": 652547,
-        "performance": {
-         "seasonAssists": 1,
-         "seasonRating": 6.76
-        },
-        "firstName": "Duplexe",
-        "lastName": "Tchamba",
-        "nationalTeamId": 6629,
-        "rankings": null
-       },
-       {
-        "id": 1336663,
-        "age": 28,
-        "optaId": "510384",
-        "name": "Marcelinho",
-        "positionId": 51,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "79",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.371,
-         "y": 0.89,
-         "height": 0.195,
-         "width": 0.243
-        },
-        "verticalLayout": {
-         "x": 0.11,
-         "y": 0.371,
-         "height": 0.2,
-         "width": 0.195
-        },
-        "marketValue": 270530,
-        "performance": {
-         "seasonGoals": 2,
-         "seasonAssists": 1,
-         "seasonRating": 6.72
-        },
-        "firstName": "",
-        "lastName": "Marcelinho",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 670799,
-        "age": 32,
-        "optaId": "201479",
-        "name": "Marlon",
-        "positionId": 59,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "6",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.371,
-         "y": 0.11,
-         "height": 0.195,
-         "width": 0.243
-        },
-        "verticalLayout": {
-         "x": 0.89,
-         "y": 0.371,
-         "height": 0.2,
-         "width": 0.195
-        },
-        "marketValue": 348819,
-        "performance": {
-         "seasonRating": 6.84
-        },
-        "firstName": "",
-        "lastName": "Marlon",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 1471036,
-        "age": 24,
-        "optaId": "612612",
-        "name": "David Braga",
-        "positionId": 72,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "26",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.613,
-         "y": 0.875,
-         "height": 0.195,
-         "width": 0.243
-        },
-        "verticalLayout": {
-         "x": 0.125,
-         "y": 0.613,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "performance": {
-         "seasonGoals": 1,
-         "seasonRating": 6.38
-        },
-        "shortName": "David Braga",
-        "firstName": "David",
-        "lastName": "Braga",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 1097836,
-        "age": 28,
-        "optaId": "478907",
-        "name": "Leonel Picco",
-        "positionId": 74,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "14",
-        "countryName": "Argentina",
-        "countryCode": "ARG",
-        "horizontalLayout": {
-         "x": 0.613,
-         "y": 0.625,
-         "height": 0.195,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.375,
-         "y": 0.613,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 1803527,
-        "performance": {
-         "seasonGoals": 3,
-         "seasonAssists": 1,
-         "seasonRating": 6.73
-        },
-        "firstName": "Leonel",
-        "lastName": "Picco",
-        "nationalTeamId": 6706,
-        "rankings": null
-       },
-       {
-        "id": 576129,
-        "age": 34,
-        "optaId": "204209",
-        "name": "Patrick",
-        "positionId": 76,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "8",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.613,
-         "y": 0.375,
-         "height": 0.195,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.625,
-         "y": 0.613,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 299591,
-        "performance": {
-         "seasonRating": 6.77
-        },
-        "firstName": "",
-        "lastName": "Patrick",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 1041427,
-        "age": 28,
-        "optaId": "500973",
-        "name": "Jája",
-        "positionId": 78,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "7",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.613,
-         "y": 0.125,
-         "height": 0.195,
-         "width": 0.243
-        },
-        "verticalLayout": {
-         "x": 0.875,
-         "y": 0.613,
-         "height": 0.2,
-         "width": 0.25
-        },
-        "marketValue": 1217280,
-        "performance": {
-         "seasonGoals": 9,
-         "seasonAssists": 1,
-         "seasonRating": 6.72
-        },
-        "shortName": "Jajá",
-        "firstName": "",
-        "lastName": "Jája",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 940855,
-        "age": 29,
-        "optaId": "225141",
-        "name": "Gabriel Taliari",
-        "positionId": 115,
-        "usualPlayingPositionId": 3,
-        "shirtNumber": "19",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.87,
-         "y": 0.5,
-         "height": 0.195,
-         "width": 0.257
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.87,
-         "height": 0.2,
-         "width": 1
-        },
-        "performance": {
-         "seasonGoals": 4,
-         "seasonAssists": 2,
-         "seasonRating": 6.65
-        },
-        "shortName": "G. Taliari",
-        "firstName": "Gabriel",
-        "lastName": "Taliari",
-        "nationalTeamId": 8256,
-        "rankings": null
-       }
-      ],
-      "lawka_ile": 12,
+      "wyjsciowi": null,
+      "lawka_ile": 0,
       "nieobecni": [
        {
-        "id": 319659,
-        "age": 34,
-        "name": "Marllon",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "marketValue": 553603,
+        "id": 339032,
+        "name": "Thiago Mendes",
         "unavailability": {
-         "type": "suspension",
-         "expectedReturn": "Mid November 2026",
-         "expectedReturnDate": "2026-11-19T00:00:00Z"
-        },
-        "performance": {
-         "seasonGoals": 2,
-         "seasonAssists": 1,
-         "seasonRating": 6.6
-        },
-        "firstName": "",
-        "lastName": "Marllon",
-        "nationalTeamId": 8256
-       },
-       {
-        "id": 981302,
-        "age": 28,
-        "name": "Poveda",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "marketValue": 565600,
-        "unavailability": {
-         "injuryId": 69,
+         "injuryId": 45,
+         "lastUpdated": "2026-11-16T21:42:18Z",
          "type": "injury",
-         "expectedReturn": "Late November 2026"
+         "expectedReturn": "Doubtful"
         },
-        "performance": {
-         "seasonRating": 5.84
-        },
-        "shortName": "G. Poveda",
-        "firstName": "",
-        "lastName": "Poveda",
-        "nationalTeamId": 8256
+        "firstName": "Thiago",
+        "lastName": "Mendes"
        },
        {
-        "id": 1028126,
-        "age": 26,
-        "name": "Jáderson",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "marketValue": 566045,
+        "id": 958860,
+        "name": "Santiago Sosa",
         "unavailability": {
          "injuryId": 69,
+         "lastUpdated": "2026-11-16T21:42:24Z",
          "type": "injury",
-         "expectedReturn": "Late November 2026"
+         "expectedReturn": "Doubtful"
         },
-        "performance": {
-         "seasonRating": 6.16
-        },
-        "firstName": "",
-        "lastName": "Jáderson",
-        "nationalTeamId": 8256
+        "firstName": "Santiago",
+        "lastName": "Sosa"
        },
        {
-        "id": 1317541,
-        "age": 28,
-        "name": "Matheus Felipe",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "marketValue": 604489,
+        "id": 1459657,
+        "name": "Cauan Barros",
         "unavailability": {
-         "injuryId": 69,
+         "injuryId": 21,
+         "lastUpdated": "2026-10-11T20:18:34Z",
+         "type": "injury",
+         "expectedReturn": "About 1-2 weeks"
+        },
+        "firstName": "Cauan",
+        "lastName": "Barros"
+       },
+       {
+        "id": 834032,
+        "name": "Carlos Cuesta",
+        "unavailability": {
+         "injuryId": 31,
+         "lastUpdated": "2026-11-01T09:53:46Z",
          "type": "injury",
          "expectedReturn": "Mid November 2026"
         },
-        "performance": {
-         "seasonRating": 6.74
-        },
-        "shortName": "M. Felipe",
-        "firstName": "Matheus",
-        "lastName": "Felipe",
-        "nationalTeamId": 8256
-       },
-       {
-        "id": 1058103,
-        "age": 28,
-        "name": "João Lucas",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "marketValue": 935149,
-        "unavailability": {
-         "injuryId": 70,
-         "type": "injury",
-         "expectedReturn": "Late November 2026"
-        },
-        "performance": {
-         "seasonRating": 6.59
-        },
-        "shortName": "João Lucas",
-        "firstName": "João",
-        "lastName": "Lucas",
-        "nationalTeamId": 8256
+        "firstName": "Carlos",
+        "lastName": "Cuesta"
        }
       ],
-      "trener": {
-       "id": 121959,
-       "age": 42,
-       "optaId": "8",
-       "name": "Thiago Carpini",
-       "countryName": "Brazil",
-       "countryCode": "BRA",
-       "firstName": "Thiago",
-       "lastName": "Carpini",
-       "nationalTeamId": 8256,
-       "primaryTeamId": 1626,
-       "primaryTeamName": "Remo",
-       "usualPlayingPositionId": null,
-       "isCoach": true
-      }
+      "trener": null
      },
      "awayTeam": {
-      "formacja": "4-2-3-1",
+      "formacja": null,
       "ocena": null,
       "klucze": [
        "id",
        "name",
-       "formation",
-       "starters",
-       "coach",
-       "subs",
-       "unavailable",
-       "averageStarterAge",
-       "lastMatch"
+       "unavailable"
       ],
-      "wyjsciowi": [
-       {
-        "id": 1738042,
-        "age": 23,
-        "optaId": "574953",
-        "name": "Gabriel Werner",
-        "positionId": 11,
-        "usualPlayingPositionId": 0,
-        "shirtNumber": "14",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.1,
-         "y": 0.5,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.1,
-         "height": 0.192,
-         "width": 1
-        },
-        "performance": {
-         "seasonRating": 5.75
-        },
-        "shortName": "G. Werner",
-        "firstName": "Gabriel",
-        "lastName": "Werner",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 1068532,
-        "age": 26,
-        "optaId": "476212",
-        "name": "Heitor",
-        "positionId": 32,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "5",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.875,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.125,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "performance": {
-         "seasonAssists": 1,
-         "seasonRating": 6.69
-        },
-        "firstName": "",
-        "lastName": "Heitor",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 816004,
-        "age": 29,
-        "optaId": "244676",
-        "name": "Victor Caetano",
-        "positionId": 34,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "25",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.625,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.375,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 528945,
-        "performance": {
-         "seasonRating": 6.57
-        },
-        "shortName": "V. Caetano",
-        "firstName": "Victor",
-        "lastName": "Caetano",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 1681803,
-        "age": 23,
-        "optaId": "574954",
-        "name": "Kauan",
-        "positionId": 36,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "21",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.375,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.625,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "performance": {
-         "seasonGoals": 1,
-         "seasonRating": 6.52
-        },
-        "shortName": "K. Faria",
-        "firstName": "",
-        "lastName": "Kauan",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 754373,
-        "age": 34,
-        "optaId": "226610",
-        "name": "Bruno Pacheco",
-        "positionId": 38,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "91",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.125,
-         "height": 0.25,
-         "width": 0.385
-        },
-        "verticalLayout": {
-         "x": 0.875,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 326695,
-        "performance": {
-         "seasonGoals": 1,
-         "seasonAssists": 3,
-         "seasonRating": 6.59
-        },
-        "shortName": "B. Pacheco",
-        "firstName": "Bruno",
-        "lastName": "Pacheco",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 1060636,
-        "age": 27,
-        "optaId": "475352",
-        "name": "Camilo",
-        "positionId": 64,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "27",
-        "isCaptain": true,
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.485,
-         "y": 0.7,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.3,
-         "y": 0.485,
-         "height": 0.192,
-         "width": 0.4
-        },
-        "marketValue": 1526691,
-        "performance": {
-         "seasonRating": 6.97
-        },
-        "firstName": "",
-        "lastName": "Camilo",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 535888,
-        "age": 31,
-        "optaId": "182586",
-        "name": "Yago",
-        "positionId": 66,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "88",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.485,
-         "y": 0.3,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.7,
-         "y": 0.485,
-         "height": 0.192,
-         "width": 0.4
-        },
-        "marketValue": 616963,
-        "performance": {
-         "seasonAssists": 1,
-         "seasonRating": 6.85
-        },
-        "shortName": "Yago Felipe",
-        "firstName": "",
-        "lastName": "Yago",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 1235079,
-        "age": 25,
-        "optaId": "533064",
-        "name": "Max",
-        "positionId": 83,
-        "usualPlayingPositionId": 3,
-        "shirtNumber": "22",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.678,
-         "y": 0.837,
-         "height": 0.25,
-         "width": 0.193
-        },
-        "verticalLayout": {
-         "x": 0.162,
-         "y": 0.678,
-         "height": 0.192,
-         "width": 0.325
-        },
-        "marketValue": 734892,
-        "performance": {
-         "seasonRating": 6.39
-        },
-        "firstName": "",
-        "lastName": "Max",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 202486,
-        "age": 37,
-        "optaId": "100655",
-        "name": "Giovanni Augusto",
-        "positionId": 85,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "10",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.678,
-         "y": 0.5,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.678,
-         "height": 0.192,
-         "width": 0.337
-        },
-        "marketValue": 482140,
-        "performance": {
-         "seasonGoals": 2,
-         "seasonAssists": 7,
-         "seasonRating": 7
-        },
-        "shortName": "G. Augusto",
-        "firstName": "Giovanni",
-        "lastName": "Augusto",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 1130746,
-        "age": 24,
-        "optaId": "482077",
-        "name": "Dylan Borrero",
-        "positionId": 87,
-        "usualPlayingPositionId": 3,
-        "shirtNumber": "77",
-        "countryName": "Colombia",
-        "countryCode": "COL",
-        "horizontalLayout": {
-         "x": 0.678,
-         "y": 0.163,
-         "height": 0.25,
-         "width": 0.385
-        },
-        "verticalLayout": {
-         "x": 0.837,
-         "y": 0.678,
-         "height": 0.192,
-         "width": 0.325
-        },
-        "marketValue": 1057161,
-        "performance": {
-         "seasonRating": 6.22
-        },
-        "shortName": "D. Borrero",
-        "firstName": "Dylan",
-        "lastName": "Borrero",
-        "nationalTeamId": 8258,
-        "rankings": null
-       },
-       {
-        "id": 1946070,
-        "age": 22,
-        "optaId": "747224",
-        "name": "Túlio",
-        "positionId": 115,
-        "usualPlayingPositionId": 3,
-        "shirtNumber": "9",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.87,
-         "y": 0.5,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.87,
-         "height": 0.192,
-         "width": 1
-        },
-        "performance": {
-         "seasonGoals": 3,
-         "seasonAssists": 1,
-         "seasonRating": 6.57
-        },
-        "firstName": "",
-        "lastName": "Túlio",
-        "nationalTeamId": 8256,
-        "rankings": null
-       }
-      ],
-      "lawka_ile": 12,
+      "wyjsciowi": null,
+      "lawka_ile": 0,
       "nieobecni": [
        {
-        "id": 1283773,
-        "age": 29,
-        "name": "Maurício Garcez",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "marketValue": 765026,
+        "id": 402830,
+        "name": "Guillermo Maripán",
         "unavailability": {
-         "injuryId": 74,
+         "lastUpdated": "0001-01-01T00:00:00",
+         "type": "suspension"
+        },
+        "firstName": "Guillermo",
+        "lastName": "Maripán"
+       },
+       {
+        "id": 172185,
+        "name": "Alan Patrick",
+        "unavailability": {
+         "injuryId": 69,
+         "lastUpdated": "2026-10-29T22:21:48Z",
+         "type": "injury",
+         "expectedReturn": "Doubtful"
+        },
+        "firstName": "Alan",
+        "lastName": "Patrick"
+       },
+       {
+        "id": 1320958,
+        "name": "Matheus Cunha",
+        "unavailability": {
+         "injuryId": 33,
+         "lastUpdated": "2026-10-27T22:23:35Z",
+         "type": "injury",
+         "expectedReturn": "About 1-2 weeks"
+        },
+        "firstName": "Matheus",
+        "lastName": "Cunha"
+       },
+       {
+        "id": 1260081,
+        "name": "Anthoni",
+        "unavailability": {
+         "injuryId": 14,
+         "lastUpdated": "2026-10-27T22:22:44Z",
+         "type": "injury",
+         "expectedReturn": "About a week"
+        },
+        "firstName": "",
+        "lastName": "Anthoni"
+       },
+       {
+        "id": 474448,
+        "name": "Antonio Sanabria",
+        "unavailability": {
+         "injuryId": 101,
+         "lastUpdated": "2026-11-01T10:41:35Z",
          "type": "injury",
          "expectedReturn": "Mid November 2026"
         },
-        "performance": {
-         "seasonGoals": 3,
-         "seasonRating": 6.77
-        },
-        "shortName": "M. Garcez",
-        "firstName": "Maurício",
-        "lastName": "Garcez",
-        "nationalTeamId": 8256
+        "firstName": "Antonio",
+        "lastName": "Sanabria"
        },
        {
-        "id": 1383652,
-        "age": 27,
-        "name": "Rafael Carvalheira",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
+        "id": 1244631,
+        "name": "Kayky",
         "unavailability": {
-         "injuryId": 76,
+         "injuryId": 30,
+         "lastUpdated": "2026-11-01T10:42:53Z",
          "type": "injury",
-         "expectedReturn": "Out for season"
+         "expectedReturn": "Late November 2026"
         },
-        "performance": {
-         "seasonGoals": 2,
-         "seasonRating": 6.4
+        "firstName": "",
+        "lastName": "Kayky"
+       },
+       {
+        "id": 1836585,
+        "name": "Benjamin Arhin",
+        "unavailability": {
+         "injuryId": 69,
+         "lastUpdated": "2026-11-01T10:41:44Z",
+         "type": "injury",
+         "expectedReturn": "Mid November 2026"
         },
-        "shortName": "R. Carvalheira",
-        "firstName": "Rafael",
-        "lastName": "Carvalheira",
-        "nationalTeamId": 8256
+        "firstName": "Benjamin",
+        "lastName": "Arhin"
+       },
+       {
+        "id": 553476,
+        "name": "Sergio Rochet",
+        "unavailability": {
+         "injuryId": 45,
+         "lastUpdated": "2026-11-01T09:58:12Z",
+         "type": "injury",
+         "expectedReturn": "Mid November 2026"
+        },
+        "firstName": "Sergio",
+        "lastName": "Rochet"
        }
       ],
-      "trener": {
-       "id": 1800019,
-       "age": 39,
-       "optaId": "35",
-       "name": "Rodrigo Chipp",
-       "countryName": "Brazil",
-       "countryCode": "BRA",
-       "firstName": "Rodrigo",
-       "lastName": "Chipp",
-       "nationalTeamId": 8256,
-       "primaryTeamId": 197693,
-       "primaryTeamName": "Chapecoense",
-       "usualPlayingPositionId": null,
-       "isCoach": true
-      }
+      "trener": null
      },
      "matchFacts_klucze": [
       "matchId",
@@ -1312,7 +608,7 @@
      "infoBox": {
       "legInfo": null,
       "Match Date": {
-       "utcTime": "2026-11-18T23:00:00.000Z",
+       "utcTime": "2026-11-19T22:30:00.000Z",
        "isDateCorrect": true
       },
       "Tournament": {
@@ -1324,36 +620,36 @@
        "round": "35"
       },
       "Stadium": {
-       "name": "Estádio Estadual Jornalista Edgar Augusto Proença",
-       "city": "Belém, Pará",
+       "name": "Estádio São Januário",
+       "city": "Rio de Janeiro, Rio de Janeiro",
        "country": "Brazil",
-       "lat": -1.381155582,
-       "long": -48.443956375,
-       "capacity": 53645,
+       "lat": -22.890903018,
+       "long": -43.228250742,
+       "capacity": 24584,
        "surface": "grass"
       },
       "Referee": {
        "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/bra.png",
-       "text": "Alex Gomes Stefano",
+       "text": "Paulo Cezar Zanovelli Da Silva",
        "countryCode": "BRA",
        "country": "Brazil",
-       "id": 1001078802,
-       "leagueId": 8814,
-       "leagueName": "Série B",
+       "id": 1001075543,
+       "leagueId": 268,
+       "leagueName": "Série A",
        "stats": [
         {
          "type": "matches",
-         "value": 18,
+         "value": 34,
          "valueType": "total"
         },
         {
          "type": "yellowCards",
-         "value": 4.72,
+         "value": 5.15,
          "valueType": "perMatch",
-         "average": 4.91,
-         "total": 85,
-         "averageType": "average",
-         "fillPercentage": 45.07,
+         "average": 4.79,
+         "total": 175,
+         "averageType": "above",
+         "fillPercentage": 54.66,
          "averagePercentage": 50
         },
         {
@@ -1363,22 +659,22 @@
         },
         {
          "type": "unknown",
-         "value": 0,
+         "value": 2,
          "valueType": "total"
         },
         {
          "type": "penalties",
-         "value": 9,
+         "value": 13,
          "valueType": "total"
         },
         {
          "type": "fouls",
-         "value": 29.06,
+         "value": 29.27,
          "valueType": "perMatch",
-         "average": 28.05,
-         "total": 523,
-         "averageType": "average",
-         "fillPercentage": 59.96,
+         "average": 26.97,
+         "total": 966,
+         "averageType": "above",
+         "fillPercentage": 76.42,
          "averagePercentage": 50
         }
        ]
@@ -1398,20 +694,21 @@
       "hasPlayoff",
       "table",
       "h2h",
-      "momentum"
+      "momentum",
+      "hasPassNetwork"
      ],
      "general": {
-      "matchId": "5103713",
-      "matchName": "Remo-vs-Chapecoense_Wed, Nov 18, 2026, 23:00 UTC",
+      "matchId": "5103705",
+      "matchName": "Vasco da Gama-vs-Internacional_Thu, Nov 19, 2026, 22:30 UTC",
       "matchRound": "35",
       "teamColors": {
        "darkMode": {
         "home": "#ffffff",
-        "away": "#007828"
+        "away": "#C00038"
        },
        "lightMode": {
-        "home": "#1C1F2F",
-        "away": "#007828"
+        "home": "#1a1a1a",
+        "away": "#C00038"
        },
        "fontDarkMode": {
         "home": "rgba(29, 29, 29, 1.0)",
@@ -1428,16 +725,16 @@
       "parentLeagueId": 268,
       "countryCode": "BRA",
       "homeTeam": {
-       "name": "Remo",
-       "id": 1626
+       "name": "Vasco da Gama",
+       "id": 10276
       },
       "awayTeam": {
-       "name": "Chapecoense",
-       "id": 197693
+       "name": "Internacional",
+       "id": 8702
       },
       "coverageLevel": "lower",
-      "matchTimeUTC": "Wed, Nov 18, 2026, 23:00 UTC",
-      "matchTimeUTCDate": "2026-11-18T23:00:00.000Z",
+      "matchTimeUTC": "Thu, Nov 19, 2026, 22:30 UTC",
+      "matchTimeUTCDate": "2026-11-19T22:30:00.000Z",
       "started": false,
       "finished": false,
       "gender": "male"
@@ -1445,22 +742,22 @@
      "header": {
       "teams": [
        {
-        "name": "Remo",
-        "id": 1626,
+        "name": "Vasco da Gama",
+        "id": 10276,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/1626_small.png",
-        "pageUrl": "/teams/1626/overview/remo"
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/10276_small.png",
+        "pageUrl": "/teams/10276/overview/vasco-da-gama"
        },
        {
-        "name": "Chapecoense",
-        "id": 197693,
+        "name": "Internacional",
+        "id": 8702,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/197693_small.png",
-        "pageUrl": "/teams/197693/overview/chapecoense"
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8702_small.png",
+        "pageUrl": "/teams/8702/overview/internacional"
        }
       ],
       "status": {
-       "utcTime": "2026-11-18T23:00:00.000Z",
+       "utcTime": "2026-11-19T22:30:00.000Z",
        "numberOfHomeRedCards": 0,
        "numberOfAwayRedCards": 0,
        "halfs": {},
@@ -1475,1144 +772,14 @@
     },
     "skad": "requests"
    }
-  },
-  {
-   "nasz": "Cruzeiro – Palmeiras",
-   "event_id": "8c090da10644d01073571175eb7a7426",
-   "start": "2026-11-19 00:30",
-   "fotmob_id": "5103709",
-   "fotmob": "Cruzeiro – Palmeiras",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null,
-   "szczegoly": {
-    "requests": [
-     {
-      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5103709",
-      "kod": 200,
-      "typ": "application/json; charset=utf-8",
-      "rozmiar": 51015,
-      "ms": 36
-     }
-    ],
-    "dane": {
-     "lineup_klucze": [
-      "matchId",
-      "lineupType",
-      "source",
-      "availableFilters",
-      "homeTeam",
-      "awayTeam"
-     ],
-     "lineup_typ": "lastStarting11",
-     "homeTeam": {
-      "formacja": "4-2-3-1",
-      "ocena": null,
-      "klucze": [
-       "id",
-       "name",
-       "formation",
-       "starters",
-       "coach",
-       "subs",
-       "unavailable",
-       "averageStarterAge",
-       "totalStarterMarketValue",
-       "lastMatch"
-      ],
-      "wyjsciowi": [
-       {
-        "id": 1732742,
-        "age": 20,
-        "optaId": "574167",
-        "name": "Otávio",
-        "positionId": 11,
-        "usualPlayingPositionId": 0,
-        "shirtNumber": "81",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.1,
-         "y": 0.5,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.1,
-         "height": 0.192,
-         "width": 1
-        },
-        "marketValue": 22505145,
-        "firstName": "",
-        "lastName": "Otávio",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 20446,
-        "age": 37,
-        "optaId": "42898",
-        "name": "Fágner",
-        "positionId": 32,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "23",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.875,
-         "height": 0.25,
-         "width": 0.385
-        },
-        "verticalLayout": {
-         "x": 0.125,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 368159,
-        "firstName": "",
-        "lastName": "Fágner",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 1488554,
-        "age": 22,
-        "optaId": "622275",
-        "name": "Jonathan Jesus",
-        "positionId": 34,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "34",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.625,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.375,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 15444255,
-        "shortName": "J. Jesus",
-        "firstName": "Jonathan",
-        "lastName": "Jesus",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 750046,
-        "age": 30,
-        "optaId": "225817",
-        "name": "Fabrício Bruno",
-        "positionId": 36,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "15",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.375,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.625,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 8232903,
-        "shortName": "F. Bruno",
-        "firstName": "Fabrício",
-        "lastName": "Bruno",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 805540,
-        "age": 29,
-        "optaId": "221465",
-        "name": "Gabriel Rojas",
-        "positionId": 38,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "27",
-        "countryName": "Argentina",
-        "countryCode": "ARG",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.125,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.875,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 2469687,
-        "firstName": "Gabriel",
-        "lastName": "Rojas",
-        "nationalTeamId": 6706,
-        "rankings": null
-       },
-       {
-        "id": 388605,
-        "age": 32,
-        "optaId": "131413",
-        "name": "Lucas Daniel Romero",
-        "positionId": 64,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "29",
-        "isCaptain": true,
-        "countryName": "Argentina",
-        "countryCode": "ARG",
-        "horizontalLayout": {
-         "x": 0.485,
-         "y": 0.7,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.3,
-         "y": 0.485,
-         "height": 0.192,
-         "width": 0.4
-        },
-        "marketValue": 1937720,
-        "firstName": "Lucas Daniel",
-        "lastName": "Romero",
-        "nationalTeamId": 6706,
-        "rankings": null
-       },
-       {
-        "id": 1733226,
-        "age": 18,
-        "optaId": "692659",
-        "name": "Zé Lucas",
-        "positionId": 66,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "5",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.485,
-         "y": 0.3,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.7,
-         "y": 0.485,
-         "height": 0.192,
-         "width": 0.4
-        },
-        "marketValue": 11513074,
-        "shortName": "Zé Lucas",
-        "firstName": "Zé",
-        "lastName": "Lucas",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 1626714,
-        "age": 20,
-        "optaId": "616556",
-        "name": "Keny Arroyo",
-        "positionId": 83,
-        "usualPlayingPositionId": 3,
-        "shirtNumber": "99",
-        "countryName": "Ecuador",
-        "countryCode": "ECU",
-        "horizontalLayout": {
-         "x": 0.678,
-         "y": 0.837,
-         "height": 0.25,
-         "width": 0.385
-        },
-        "verticalLayout": {
-         "x": 0.162,
-         "y": 0.678,
-         "height": 0.192,
-         "width": 0.325
-        },
-        "marketValue": 15766375,
-        "firstName": "Keny",
-        "lastName": "Arroyo",
-        "nationalTeamId": 6707,
-        "rankings": null
-       },
-       {
-        "id": 683709,
-        "age": 29,
-        "optaId": "217646",
-        "name": "Bruno Rodrigues",
-        "positionId": 85,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "9",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.678,
-         "y": 0.5,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.678,
-         "height": 0.192,
-         "width": 0.337
-        },
-        "marketValue": 1021377,
-        "shortName": "B. Rodrigues",
-        "firstName": "Bruno",
-        "lastName": "Rodrigues",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 580604,
-        "age": 29,
-        "optaId": "196850",
-        "name": "Gérson",
-        "positionId": 87,
-        "usualPlayingPositionId": 3,
-        "shirtNumber": "8",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.678,
-         "y": 0.163,
-         "height": 0.25,
-         "width": 0.193
-        },
-        "verticalLayout": {
-         "x": 0.837,
-         "y": 0.678,
-         "height": 0.192,
-         "width": 0.325
-        },
-        "marketValue": 18080752,
-        "firstName": "",
-        "lastName": "Gérson",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 964661,
-        "age": 24,
-        "optaId": "466459",
-        "name": "Kaio Jorge",
-        "positionId": 115,
-        "usualPlayingPositionId": 3,
-        "shirtNumber": "19",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.87,
-         "y": 0.5,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.87,
-         "height": 0.192,
-         "width": 1
-        },
-        "marketValue": 25033982,
-        "shortName": "Kaio Jorge",
-        "firstName": "Kaio",
-        "lastName": "Jorge",
-        "nationalTeamId": 8256,
-        "rankings": null
-       }
-      ],
-      "lawka_ile": 12,
-      "nieobecni": [
-       {
-        "id": 1488554,
-        "age": 22,
-        "name": "Jonathan Jesus",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "marketValue": 15444255,
-        "unavailability": {
-         "type": "suspension",
-         "expectedReturn": "Mid November 2026",
-         "expectedReturnDate": "2026-11-19T00:30:00Z"
-        },
-        "shortName": "J. Jesus",
-        "firstName": "Jonathan",
-        "lastName": "Jesus",
-        "nationalTeamId": 8256
-       },
-       {
-        "id": 1759878,
-        "age": 20,
-        "name": "Kauã Moraes",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "unavailability": {
-         "type": "suspension",
-         "expectedReturn": "Mid November 2026",
-         "expectedReturnDate": "2026-11-19T00:30:00Z"
-        },
-        "shortName": "K. Moraes",
-        "firstName": "Kauã",
-        "lastName": "Moraes",
-        "nationalTeamId": 8256
-       },
-       {
-        "id": 1372179,
-        "age": 21,
-        "name": "Wesley",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "unavailability": {
-         "type": "suspension",
-         "expectedReturn": "Mid November 2026",
-         "expectedReturnDate": "2026-11-19T00:30:00Z"
-        },
-        "firstName": "",
-        "lastName": "Wesley",
-        "nationalTeamId": 8256
-       },
-       {
-        "id": 1626714,
-        "age": 20,
-        "name": "Keny Arroyo",
-        "countryName": "Ecuador",
-        "countryCode": "ECU",
-        "marketValue": 15766375,
-        "unavailability": {
-         "type": "internationalDuty",
-         "expectedReturn": "Mid November 2026",
-         "expectedReturnDate": "2026-11-19T00:30:00Z"
-        },
-        "firstName": "Keny",
-        "lastName": "Arroyo",
-        "nationalTeamId": 6707
-       },
-       {
-        "id": 750046,
-        "age": 30,
-        "name": "Fabrício Bruno",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "marketValue": 8232903,
-        "unavailability": {
-         "injuryId": 45,
-         "type": "injury",
-         "expectedReturn": "About 1-2 weeks"
-        },
-        "shortName": "F. Bruno",
-        "firstName": "Fabrício",
-        "lastName": "Bruno",
-        "nationalTeamId": 8256
-       },
-       {
-        "id": 1185338,
-        "age": 26,
-        "name": "João Marcelo",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "marketValue": 2193591,
-        "unavailability": {
-         "injuryId": 14,
-         "type": "injury",
-         "expectedReturn": "Out for season"
-        },
-        "shortName": "J. Marcelo",
-        "firstName": "João",
-        "lastName": "Marcelo",
-        "nationalTeamId": 8256
-       },
-       {
-        "id": 1843214,
-        "age": 18,
-        "name": "Felipe Morais",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "unavailability": {
-         "injuryId": 87,
-         "type": "injury",
-         "expectedReturn": "Back in training"
-        },
-        "shortName": "F. Morais",
-        "firstName": "Felipe",
-        "lastName": "Morais",
-        "nationalTeamId": 8256
-       },
-       {
-        "id": 846369,
-        "age": 27,
-        "name": "Luis Sinisterra",
-        "countryName": "Colombia",
-        "countryCode": "COL",
-        "marketValue": 11053257,
-        "unavailability": {
-         "injuryId": 69,
-         "type": "injury",
-         "expectedReturn": "Late December 2026"
-        },
-        "firstName": "Luis",
-        "lastName": "Sinisterra",
-        "nationalTeamId": 8258
-       },
-       {
-        "id": 1090238,
-        "age": 25,
-        "name": "Gabriel Pec",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "marketValue": 7106197,
-        "unavailability": {
-         "injuryId": 2,
-         "type": "injury",
-         "expectedReturn": "Mid November 2026"
-        },
-        "shortName": "Gabriel Pec",
-        "firstName": "Gabriel",
-        "lastName": "Pec",
-        "nationalTeamId": 8256
-       }
-      ],
-      "trener": {
-       "id": 1381542,
-       "age": 54,
-       "optaId": "33",
-       "name": "Artur Jorge",
-       "countryName": "Portugal",
-       "countryCode": "POR",
-       "shortName": "A. Jorge",
-       "firstName": "Artur",
-       "lastName": "Jorge",
-       "nationalTeamId": 8361,
-       "primaryTeamId": 9781,
-       "primaryTeamName": "Cruzeiro",
-       "usualPlayingPositionId": null,
-       "isCoach": true
-      }
-     },
-     "awayTeam": {
-      "formacja": "3-4-2-1",
-      "ocena": null,
-      "klucze": [
-       "id",
-       "name",
-       "formation",
-       "starters",
-       "coach",
-       "subs",
-       "unavailable",
-       "averageStarterAge",
-       "totalStarterMarketValue",
-       "lastMatch"
-      ],
-      "wyjsciowi": [
-       {
-        "id": 1043826,
-        "age": 28,
-        "optaId": "475123",
-        "name": "Carlos Miguel",
-        "positionId": 11,
-        "usualPlayingPositionId": 0,
-        "shirtNumber": "1",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.1,
-         "y": 0.5,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.1,
-         "height": 0.192,
-         "width": 1
-        },
-        "marketValue": 9906207,
-        "shortName": "Carlos Miguel",
-        "firstName": "Carlos",
-        "lastName": "Miguel",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 851514,
-        "age": 29,
-        "optaId": "235586",
-        "name": "Murilo",
-        "positionId": 33,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "26",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.79,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.21,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.29
-        },
-        "marketValue": 5025138,
-        "firstName": "",
-        "lastName": "Murilo",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 274392,
-        "age": 33,
-        "optaId": "152745",
-        "name": "Gustavo Gómez",
-        "positionId": 35,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "15",
-        "isCaptain": true,
-        "countryName": "Paraguay",
-        "countryCode": "PAR",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.5,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.29
-        },
-        "marketValue": 2606462,
-        "shortName": "G. Gómez",
-        "firstName": "Gustavo",
-        "lastName": "Gómez",
-        "nationalTeamId": 6724,
-        "rankings": null
-       },
-       {
-        "id": 657969,
-        "age": 31,
-        "optaId": "213531",
-        "name": "Alexander Barboza",
-        "positionId": 37,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "2",
-        "countryName": "Argentina",
-        "countryCode": "ARG",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.21,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.79,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.29
-        },
-        "marketValue": 2681457,
-        "firstName": "Alexander",
-        "lastName": "Barboza",
-        "nationalTeamId": 6706,
-        "rankings": null
-       },
-       {
-        "id": 1358345,
-        "age": 22,
-        "optaId": "533499",
-        "name": "Agustín Giay",
-        "positionId": 62,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "4",
-        "countryName": "Argentina",
-        "countryCode": "ARG",
-        "horizontalLayout": {
-         "x": 0.485,
-         "y": 0.875,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.125,
-         "y": 0.485,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 13959482,
-        "firstName": "Agustín",
-        "lastName": "Giay",
-        "nationalTeamId": 6706,
-        "rankings": null
-       },
-       {
-        "id": 634868,
-        "age": 31,
-        "optaId": "219357",
-        "name": "Marlon Freitas",
-        "positionId": 64,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "17",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.485,
-         "y": 0.625,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.375,
-         "y": 0.485,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 4451417,
-        "shortName": "M. Freitas",
-        "firstName": "Marlon",
-        "lastName": "Freitas",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 452269,
-        "age": 31,
-        "optaId": "163562",
-        "name": "Lucas Evangelista",
-        "positionId": 66,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "30",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "horizontalLayout": {
-         "x": 0.485,
-         "y": 0.375,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.625,
-         "y": 0.485,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 2213230,
-        "shortName": "L. Evangelista",
-        "firstName": "Lucas",
-        "lastName": "Evangelista",
-        "nationalTeamId": 8256,
-        "rankings": null
-       },
-       {
-        "id": 861661,
-        "age": 28,
-        "optaId": "250005",
-        "name": "Joaquín Piquerez",
-        "positionId": 68,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "22",
-        "countryName": "Uruguay",
-        "countryCode": "URU",
-        "horizontalLayout": {
-         "x": 0.485,
-         "y": 0.125,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.875,
-         "y": 0.485,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 13071638,
-        "firstName": "Joaquín",
-        "lastName": "Piquerez",
-        "nationalTeamId": 5796,
-        "rankings": null
-       },
-       {
-        "id": 1059490,
-        "age": 25,
-        "optaId": "485914",
-        "name": "Mauricio",
-        "positionId": 84,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "18",
-        "countryName": "Paraguay",
-        "countryCode": "PAR",
-        "horizontalLayout": {
-         "x": 0.678,
-         "y": 0.7,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.3,
-         "y": 0.678,
-         "height": 0.192,
-         "width": 0.4
-        },
-        "marketValue": 19148055,
-        "firstName": "",
-        "lastName": "Mauricio",
-        "nationalTeamId": 6724,
-        "rankings": null
-       },
-       {
-        "id": 1023030,
-        "age": 29,
-        "optaId": "230376",
-        "name": "Jhon Arias",
-        "positionId": 86,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "11",
-        "countryName": "Colombia",
-        "countryCode": "COL",
-        "horizontalLayout": {
-         "x": 0.678,
-         "y": 0.3,
-         "height": 0.25,
-         "width": 0.193
-        },
-        "verticalLayout": {
-         "x": 0.7,
-         "y": 0.678,
-         "height": 0.192,
-         "width": 0.4
-        },
-        "marketValue": 15787863,
-        "firstName": "Jhon",
-        "lastName": "Arias",
-        "nationalTeamId": 8258,
-        "rankings": null
-       },
-       {
-        "id": 1216079,
-        "age": 25,
-        "optaId": "522982",
-        "name": "José López",
-        "positionId": 105,
-        "usualPlayingPositionId": 3,
-        "shirtNumber": "42",
-        "countryName": "Argentina",
-        "countryCode": "ARG",
-        "horizontalLayout": {
-         "x": 0.87,
-         "y": 0.5,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.5,
-         "y": 0.87,
-         "height": 0.192,
-         "width": 1
-        },
-        "marketValue": 32912021,
-        "firstName": "José",
-        "lastName": "López",
-        "nationalTeamId": 6706,
-        "rankings": null
-       }
-      ],
-      "lawka_ile": 12,
-      "nieobecni": [
-       {
-        "id": 861661,
-        "age": 28,
-        "name": "Joaquín Piquerez",
-        "countryName": "Uruguay",
-        "countryCode": "URU",
-        "marketValue": 13071638,
-        "unavailability": {
-         "injuryId": 69,
-         "type": "injury",
-         "expectedReturn": "About 1-2 weeks"
-        },
-        "firstName": "Joaquín",
-        "lastName": "Piquerez",
-        "nationalTeamId": 5796
-       },
-       {
-        "id": 851514,
-        "age": 29,
-        "name": "Murilo",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "marketValue": 5025138,
-        "unavailability": {
-         "injuryId": 69,
-         "type": "injury",
-         "expectedReturn": "Late November 2026"
-        },
-        "firstName": "",
-        "lastName": "Murilo",
-        "nationalTeamId": 8256
-       },
-       {
-        "id": 857176,
-        "age": 26,
-        "name": "Paulinho",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "marketValue": 6951946,
-        "unavailability": {
-         "injuryId": 101,
-         "type": "injury",
-         "expectedReturn": "About 1-2 weeks"
-        },
-        "firstName": "",
-        "lastName": "Paulinho",
-        "nationalTeamId": 8256
-       },
-       {
-        "id": 1483504,
-        "age": 22,
-        "name": "Jefté",
-        "countryName": "Brazil",
-        "countryCode": "BRA",
-        "marketValue": 4948392,
-        "unavailability": {
-         "injuryId": 70,
-         "type": "injury",
-         "expectedReturn": "Mid December 2026"
-        },
-        "firstName": "",
-        "lastName": "Jefté",
-        "nationalTeamId": 8256
-       }
-      ],
-      "trener": {
-       "id": 843411,
-       "age": 47,
-       "optaId": "12",
-       "name": "Abel Ferreira",
-       "countryName": "Portugal",
-       "countryCode": "POR",
-       "shortName": "A. Ferreira",
-       "firstName": "Abel",
-       "lastName": "Ferreira",
-       "nationalTeamId": 8361,
-       "primaryTeamId": 10283,
-       "primaryTeamName": "Palmeiras",
-       "usualPlayingPositionId": null,
-       "isCoach": true
-      }
-     },
-     "matchFacts_klucze": [
-      "matchId",
-      "highlights",
-      "playerOfTheMatch",
-      "events",
-      "infoBox",
-      "teamForm",
-      "poll",
-      "topPlayers",
-      "countryCode",
-      "QAData",
-      "matchInsightsConfig"
-     ],
-     "infoBox": {
-      "legInfo": null,
-      "Match Date": {
-       "utcTime": "2026-11-18T23:30:00.000Z",
-       "isDateCorrect": true
-      },
-      "Tournament": {
-       "id": 268,
-       "parentLeagueId": 268,
-       "link": "/leagues/268/overview/serie",
-       "leagueName": "Série A",
-       "roundName": "35",
-       "round": "35"
-      },
-      "Stadium": {
-       "name": "Estádio Governador Magalhães Pinto",
-       "city": "Belo Horizonte, Minas Gerais",
-       "country": "Brazil",
-       "lat": -19.865910228,
-       "long": -43.971069753,
-       "capacity": 62170,
-       "surface": "grass"
-      },
-      "Referee": {
-       "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/bra.png",
-       "text": "Anderson Daronco",
-       "countryCode": "BRA",
-       "country": "Brazil",
-       "id": 1001070326,
-       "leagueId": 268,
-       "leagueName": "Série A",
-       "stats": [
-        {
-         "type": "matches",
-         "value": 47,
-         "valueType": "total"
-        },
-        {
-         "type": "yellowCards",
-         "value": 4.7,
-         "valueType": "perMatch",
-         "average": 4.79,
-         "total": 221,
-         "averageType": "average",
-         "fillPercentage": 48.79,
-         "averagePercentage": 50
-        },
-        {
-         "type": "redCards",
-         "value": 9,
-         "valueType": "total"
-        },
-        {
-         "type": "unknown",
-         "value": 3,
-         "valueType": "total"
-        },
-        {
-         "type": "penalties",
-         "value": 13,
-         "valueType": "total"
-        },
-        {
-         "type": "fouls",
-         "value": 27.07,
-         "valueType": "perMatch",
-         "average": 26.97,
-         "total": 1191,
-         "averageType": "average",
-         "fillPercentage": 51.12,
-         "averagePercentage": 50
-        }
-       ]
-      },
-      "Attendance": null
-     },
-     "content_klucze": [
-      "matchFacts",
-      "liveticker",
-      "superlive",
-      "buzz",
-      "stats",
-      "playerStats",
-      "shotmap",
-      "weather",
-      "lineup",
-      "hasPlayoff",
-      "table",
-      "h2h",
-      "momentum"
-     ],
-     "general": {
-      "matchId": "5103709",
-      "matchName": "Cruzeiro-vs-Palmeiras_Wed, Nov 18, 2026, 23:30 UTC",
-      "matchRound": "35",
-      "teamColors": {
-       "darkMode": {
-        "home": "#3f54a5",
-        "away": "#006838"
-       },
-       "lightMode": {
-        "home": "#294492",
-        "away": "#006838"
-       },
-       "fontDarkMode": {
-        "home": "rgba(255, 255, 255, 1.0)",
-        "away": "rgba(255, 255, 255, 1.0)"
-       },
-       "fontLightMode": {
-        "home": "rgba(255, 255, 255, 1.0)",
-        "away": "rgba(255, 255, 255, 1.0)"
-       }
-      },
-      "leagueId": 268,
-      "leagueName": "Série A",
-      "leagueRoundName": "35",
-      "parentLeagueId": 268,
-      "countryCode": "BRA",
-      "homeTeam": {
-       "name": "Cruzeiro",
-       "id": 9781
-      },
-      "awayTeam": {
-       "name": "Palmeiras",
-       "id": 10283
-      },
-      "coverageLevel": "lower",
-      "matchTimeUTC": "Wed, Nov 18, 2026, 23:30 UTC",
-      "matchTimeUTCDate": "2026-11-18T23:30:00.000Z",
-      "started": false,
-      "finished": false,
-      "gender": "male"
-     },
-     "header": {
-      "teams": [
-       {
-        "name": "Cruzeiro",
-        "id": 9781,
-        "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/9781_small.png",
-        "pageUrl": "/teams/9781/overview/cruzeiro"
-       },
-       {
-        "name": "Palmeiras",
-        "id": 10283,
-        "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/10283_small.png",
-        "pageUrl": "/teams/10283/overview/palmeiras"
-       }
-      ],
-      "status": {
-       "utcTime": "2026-11-18T23:30:00.000Z",
-       "numberOfHomeRedCards": 0,
-       "numberOfAwayRedCards": 0,
-       "halfs": {},
-       "started": false,
-       "cancelled": false,
-       "finished": false
-      },
-      "events": null
-     },
-     "tabela_jest": true,
-     "h2h_jest": true
-    },
-    "skad": "requests"
-   }
-  },
-  {
-   "nasz": "Flamengo – Atletico Paranaense",
-   "event_id": "4ffeab0ae6c6a76e96262104d3a1d6e7",
-   "start": "2026-11-19 00:30",
-   "fotmob_id": "5103704",
-   "fotmob": "Flamengo – Athletico Paranaense",
-   "zgodnosc": 0.974,
-   "odwrocone": false,
-   "url": null
   }
  ],
  "niedopasowane": [
-  "Corinthians – Botafogo 2026-11-19 01:30",
-  "Grêmio – Bahia 2026-11-19 01:30"
+  "Orlando City SC – FC Cincinnati 2026-11-20 01:30",
+  "Sao Paulo – Fluminense 2026-11-20 01:30",
+  "Seattle Sounders FC – Real Salt Lake 2026-11-20 04:00"
  ],
  "requests_dziala": true,
- "meczow": 68,
+ "meczow": 57,
  "sekund": 0
 }
