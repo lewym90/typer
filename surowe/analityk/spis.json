@@ -1,14 +1,14 @@
 {
- "czas": "2026-11-19 08:00 UTC",
+ "czas": "2026-11-20 08:00 UTC",
  "wersja": "analityk-1",
  "nasze": {
-  "pilka": 5,
-  "tenis": 2,
-  "walki": 0
+  "pilka": 19,
+  "tenis": 0,
+  "walki": 3
  },
  "zrodla": {
   "ufcstats": {
-   "sekund": 6,
+   "sekund": 7,
    "blad": null,
    "start": [
     200,
@@ -20,65 +20,66 @@
    "zawodnicy_ze_statystykami": 0
   },
   "sofascore": {
-   "sekund": 7,
+   "sekund": 8,
    "blad": null,
    "tryb": null,
    "pilka": {
     "dopasowane": 0,
-    "niedopasowane": 5
+    "niedopasowane": 19
    },
    "tenis": {
     "dopasowane": 0,
-    "niedopasowane": 2
+    "niedopasowane": 0
    },
    "walki": {
     "dopasowane": 0,
-    "niedopasowane": 0
+    "niedopasowane": 3
    }
   },
   "fotmob": {
-   "sekund": 0,
+   "sekund": 1,
    "blad": null,
    "requests": true,
-   "meczow": 57,
-   "dopasowane": 2,
-   "niedopasowane": 3,
+   "meczow": 172,
+   "dopasowane": 12,
+   "niedopasowane": 7,
    "szczegoly": [
+    "requests",
     "requests",
     "requests"
    ]
   },
   "transfermarkt": {
-   "sekund": 3,
+   "sekund": 8,
    "blad": null,
    "start": [
     200
    ],
    "kluby": [
     [
-     "nk-rudes",
+     "kashiwa-reysol",
      200,
-     1
+     7
+    ],
+    [
+     "jef-united-chiba",
+     200,
+     5
+    ],
+    [
+     "kashima-antlers",
+     200,
+     4
     ],
     [
      null,
      null,
      null
-    ],
-    [
-     "vasco-da-gama-rio-de-janeiro",
-     200,
-     9
-    ],
-    [
-     "inter-miami-cf",
-     200,
-     7
     ]
    ]
   }
  },
  "ip": "188.68.247.201",
  "przegladarka": "ok",
- "sekund": 25
+ "sekund": 32
 }
