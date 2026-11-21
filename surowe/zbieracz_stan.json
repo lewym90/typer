@@ -1,6 +1,6 @@
 {
- "czas": "2026-11-20 14:00 UTC",
- "tryb": "popoludnie",
+ "czas": "2026-11-21 07:15 UTC",
+ "tryb": "rano",
  "sporty": [
   [
    "ufo:sprt:01",
@@ -29,6 +29,10 @@
   [
    "ufo:sprt:27",
    "Szachy"
+  ],
+  [
+   "ufo:sprt:0v",
+   "Squash"
   ],
   [
    "ufo:sprt:0w",
@@ -67,8 +71,16 @@
    "Florbal"
   ],
   [
+   "ufo:sprt:1r",
+   "Sporty motorowe"
+  ],
+  [
    "ufo:sprt:13",
    "Zakłady Specjalne"
+  ],
+  [
+   "ufo:sprt:35",
+   "eHokej"
   ],
   [
    "ufo:sprt:1v",
@@ -111,6 +123,10 @@
    "Futbol amerykański"
   ],
   [
+   "ufo:sprt:0h",
+   "Snooker"
+  ],
+  [
    "ufo:sprt:0i",
    "Koszykówka"
   ],
@@ -149,29 +165,33 @@
   "hokej": "ufo:sprt:0w",
   "tenis": "ufo:sprt:0x",
   "pilka_reczna": "ufo:sprt:0y",
+  "f1": "ufo:sprt:1r",
   "sporty walki": "ufo:sprt:19",
   "zuzel": "ufo:sprt:1y",
-  "f1": "ufo:sprt:2a",
   "koszykowka": "ufo:sprt:0i",
   "siatkowka": "ufo:sprt:0m",
   "pilka": "ufo:sprt:00"
  },
  "bledy": [
+  "turnieje ufo:sprt:01 tomorrow: Expecting value: line 1 column 1 (char 0)",
+  "turnieje ufo:sprt:0q tomorrow: Expecting value: line 1 column 1 (char 0)",
+  "turnieje ufo:sprt:1r tomorrow: Expecting value: line 1 column 1 (char 0)",
+  "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:1y today: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:1y tomorrow: Expecting value: line 1 column 1 (char 0)",
-  "mecze ufo:tour:0c-00z: Expecting value: line 1 column 1 (char 0)"
+  "mecze ufo:tour:0c-01l: Expecting value: line 1 column 1 (char 0)"
  ],
- "turniejow": 415,
- "meczow_fortuny": 2000,
+ "turniejow": 460,
+ "meczow_fortuny": 2094,
  "inne_sporty": {
-  "pilka_reczna": 50,
-  "hokej": 163,
-  "koszykowka": 140,
-  "siatkowka": 28,
-  "baseball": 1
+  "koszykowka": 192,
+  "siatkowka": 110,
+  "baseball": 3,
+  "hokej": 145,
+  "pilka_reczna": 74
  },
- "w_ofercie_24h": 1096,
- "odczytane": 1095,
- "rynkow": 81459,
- "sekund": 314
+ "w_ofercie_24h": 1502,
+ "odczytane": 1501,
+ "rynkow": 134616,
+ "sekund": 401
 }
