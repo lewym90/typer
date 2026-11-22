@@ -1,10 +1,18 @@
 {
- "czas": "2026-11-21 14:00 UTC",
- "tryb": "popoludnie",
+ "czas": "2026-11-22 07:15 UTC",
+ "tryb": "rano",
  "sporty": [
   [
    "ufo:sprt:01",
    "Boks"
+  ],
+  [
+   "ufo:sprt:0q",
+   "Baseball"
+  ],
+  [
+   "ufo:sprt:23",
+   "Esport Valorant"
   ],
   [
    "ufo:sprt:02",
@@ -27,12 +35,12 @@
    "Szachy"
   ],
   [
-   "ufo:sprt:0w",
-   "Hokej"
+   "ufo:sprt:0v",
+   "Squash"
   ],
   [
-   "ufo:sprt:07",
-   "Rugby"
+   "ufo:sprt:0w",
+   "Hokej"
   ],
   [
    "ufo:sprt:29",
@@ -69,6 +77,10 @@
   [
    "ufo:sprt:13",
    "Zakłady Specjalne"
+  ],
+  [
+   "ufo:sprt:35",
+   "eHokej"
   ],
   [
    "ufo:sprt:1v",
@@ -139,6 +151,10 @@
    "Siatkówka"
   ],
   [
+   "ufo:sprt:0n",
+   "Hokej na trawie"
+  ],
+  [
    "ufo:sprt:0o",
    "Piłka wodna"
   ],
@@ -153,6 +169,7 @@
  ],
  "sporty_uzyte": {
   "boks": "ufo:sprt:01",
+  "baseball": "ufo:sprt:0q",
   "hokej": "ufo:sprt:0w",
   "tenis": "ufo:sprt:0x",
   "pilka_reczna": "ufo:sprt:0y",
@@ -164,24 +181,27 @@
   "pilka": "ufo:sprt:00"
  },
  "bledy": [
+  "turnieje ufo:sprt:01 today: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:01 tomorrow: Expecting value: line 1 column 1 (char 0)",
+  "turnieje ufo:sprt:0q tomorrow: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:1r tomorrow: Expecting value: line 1 column 1 (char 0)",
+  "turnieje ufo:sprt:19 today: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:1y today: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:1y tomorrow: Expecting value: line 1 column 1 (char 0)",
-  "mecze ufo:tour:0c-00z: Expecting value: line 1 column 1 (char 0)",
-  "mecze ufo:tour:0x-6vl: Expecting value: line 1 column 1 (char 0)"
+  "mecze ufo:tour:0c-012: Expecting value: line 1 column 1 (char 0)",
+  "mecze ufo:tour:0c-01l: Expecting value: line 1 column 1 (char 0)"
  ],
- "turniejow": 458,
- "meczow_fortuny": 1948,
+ "turniejow": 371,
+ "meczow_fortuny": 1337,
  "inne_sporty": {
-  "hokej": 149,
-  "koszykowka": 253,
-  "pilka_reczna": 92,
-  "siatkowka": 112
+  "koszykowka": 178,
+  "siatkowka": 69,
+  "hokej": 121,
+  "pilka_reczna": 32
  },
- "w_ofercie_24h": 1454,
- "odczytane": 1453,
- "rynkow": 135573,
- "sekund": 403
+ "w_ofercie_24h": 1022,
+ "odczytane": 1021,
+ "rynkow": 96308,
+ "sekund": 290
 }
