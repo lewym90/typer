@@ -2,48 +2,48 @@
  "zrodlo": "FotMob",
  "proby": [
   {
-   "url": "https://www.fotmob.com/api/data/matches?date=20261122&timezone=Europe%2FWarsaw&ccode3=POL",
+   "url": "https://www.fotmob.com/api/data/matches?date=20261123&timezone=Europe%2FWarsaw&ccode3=POL",
    "kod": 200,
    "typ": "application/json; charset=utf-8",
-   "rozmiar": 185563,
-   "ms": 338,
-   "mecze": 381
+   "rozmiar": 51398,
+   "ms": 1451,
+   "mecze": 96
   },
   {
-   "url": "https://www.fotmob.com/api/matches?date=20261122&timezone=Europe%2FWarsaw&ccode3=POL",
+   "url": "https://www.fotmob.com/api/matches?date=20261123&timezone=Europe%2FWarsaw&ccode3=POL",
    "kod": 404,
    "typ": "",
    "rozmiar": 0,
-   "ms": 11,
+   "ms": 42,
    "poczatek": ""
   },
   {
-   "url": "https://www.fotmob.com/api/data/matches?date=20261122",
+   "url": "https://www.fotmob.com/api/data/matches?date=20261123",
    "kod": 200,
    "typ": "application/json; charset=utf-8",
-   "rozmiar": 184125,
-   "ms": 39,
-   "mecze": 388
+   "rozmiar": 47686,
+   "ms": 142,
+   "mecze": 98
   }
  ],
  "dopasowane": [
   {
-   "nasz": "Erzurum BB – Goztepe",
-   "event_id": "f687dcdffc83e8d365c3c00e857a5846",
-   "start": "2026-11-22 11:30",
-   "fotmob_id": "5904811",
-   "fotmob": "Erzurumspor FK – Göztepe",
-   "zgodnosc": 0.967,
+   "nasz": "Basaksehir – Çorum FK",
+   "event_id": "c1958a1dcd4f8228f4d09148fd6ea216",
+   "start": "2026-11-23 18:00",
+   "fotmob_id": "5904805",
+   "fotmob": "Başakşehir – Çorum FK",
+   "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null,
    "szczegoly": {
     "requests": [
      {
-      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5904811",
+      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5904805",
       "kod": 200,
       "typ": "application/json; charset=utf-8",
-      "rozmiar": 23775,
-      "ms": 34
+      "rozmiar": 17221,
+      "ms": 231
      }
     ],
     "dane": {
@@ -65,7 +65,56 @@
       ],
       "wyjsciowi": null,
       "lawka_ile": 0,
-      "nieobecni": [],
+      "nieobecni": [
+       {
+        "id": 1658140,
+        "name": "Saba Kharebashvili",
+        "unavailability": {
+         "injuryId": 121,
+         "lastUpdated": "2026-11-19T12:06:45Z",
+         "type": "injury",
+         "expectedReturn": "Doubtful"
+        },
+        "firstName": "Saba",
+        "lastName": "Kharebashvili"
+       },
+       {
+        "id": 814153,
+        "name": "Muhammed Şengezer",
+        "unavailability": {
+         "injuryId": 121,
+         "lastUpdated": "2026-11-19T12:06:37Z",
+         "type": "injury",
+         "expectedReturn": "Doubtful"
+        },
+        "firstName": "Muhammed",
+        "lastName": "Şengezer"
+       },
+       {
+        "id": 863858,
+        "name": "Yusuf Sarı",
+        "unavailability": {
+         "injuryId": 14,
+         "lastUpdated": "2026-11-19T12:06:08Z",
+         "type": "injury",
+         "expectedReturn": "Early January 2027"
+        },
+        "firstName": "Yusuf",
+        "lastName": "Sarı"
+       },
+       {
+        "id": 802462,
+        "name": "Christopher Opéri",
+        "unavailability": {
+         "injuryId": 87,
+         "lastUpdated": "2026-11-19T12:06:11Z",
+         "type": "injury",
+         "expectedReturn": "Doubtful"
+        },
+        "firstName": "Christopher",
+        "lastName": "Opéri"
+       }
+      ],
       "trener": null
      },
      "awayTeam": {
@@ -80,40 +129,28 @@
       "lawka_ile": 0,
       "nieobecni": [
        {
-        "id": 890155,
-        "name": "Ogün Bayrak",
+        "id": 955596,
+        "name": "Berat Özdemir",
+        "unavailability": {
+         "injuryId": 69,
+         "lastUpdated": "2026-11-19T12:08:14Z",
+         "type": "injury",
+         "expectedReturn": "Late December 2026"
+        },
+        "firstName": "Berat",
+        "lastName": "Özdemir"
+       },
+       {
+        "id": 45376,
+        "name": "Fredy",
         "unavailability": {
          "injuryId": 87,
-         "lastUpdated": "2026-10-29T12:36:08Z",
+         "lastUpdated": "2026-11-19T12:08:18Z",
          "type": "injury",
          "expectedReturn": "Doubtful"
         },
-        "firstName": "Ogün",
-        "lastName": "Bayrak"
-       },
-       {
-        "id": 891651,
-        "name": "Furkan Bayır",
-        "unavailability": {
-         "injuryId": 87,
-         "lastUpdated": "2026-11-19T12:25:16Z",
-         "type": "injury",
-         "expectedReturn": "Doubtful"
-        },
-        "firstName": "Furkan",
-        "lastName": "Bayır"
-       },
-       {
-        "id": 1642791,
-        "name": "Ibrahim Sabra",
-        "unavailability": {
-         "injuryId": 30,
-         "lastUpdated": "2026-10-30T11:13:43Z",
-         "type": "injury",
-         "expectedReturn": "Back in training"
-        },
-        "firstName": "Ibrahim",
-        "lastName": "Sabra"
+        "firstName": "",
+        "lastName": "Fredy"
        }
       ],
       "trener": null
@@ -127,14 +164,13 @@
       "teamForm",
       "poll",
       "topPlayers",
-      "insights",
       "countryCode",
       "QAData"
      ],
      "infoBox": {
       "legInfo": null,
       "Match Date": {
-       "utcTime": "2026-11-22T10:30:00.000Z",
+       "utcTime": "2026-11-23T17:00:00.000Z",
        "isDateCorrect": true
       },
       "Tournament": {
@@ -146,36 +182,36 @@
        "round": "12"
       },
       "Stadium": {
-       "name": "Kazım Karabekir Stadyumu",
-       "city": "Erzurum",
+       "name": "Başakşehir Fatih Terim Stadyumu",
+       "city": "İstanbul",
        "country": "Türkiye",
-       "lat": 39.911164059,
-       "long": 41.237976551,
-       "capacity": 23700,
+       "lat": 41.12274179,
+       "long": 28.808715345,
+       "capacity": 17319,
        "surface": "grass"
       },
       "Referee": {
        "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/tur.png",
-       "text": "Alper Akarsu",
+       "text": "Direnç Tonusluoğlu",
        "countryCode": "TUR",
        "country": "Türkiye",
-       "id": 1001070964,
+       "id": 1001077010,
        "leagueId": 165,
        "leagueName": "1. Lig",
        "stats": [
         {
          "type": "matches",
-         "value": 13,
+         "value": 22,
          "valueType": "total"
         },
         {
          "type": "yellowCards",
-         "value": 3.69,
+         "value": 4.95,
          "valueType": "perMatch",
          "average": 4.5,
-         "total": 48,
-         "averageType": "below",
-         "fillPercentage": 33.91,
+         "total": 109,
+         "averageType": "above",
+         "fillPercentage": 59.06,
          "averagePercentage": 50
         },
         {
@@ -190,17 +226,17 @@
         },
         {
          "type": "penalties",
-         "value": 1,
+         "value": 6,
          "valueType": "total"
         },
         {
          "type": "fouls",
-         "value": 22.85,
+         "value": 23.82,
          "valueType": "perMatch",
          "average": 24.65,
-         "total": 297,
-         "averageType": "below",
-         "fillPercentage": 42.86,
+         "total": 524,
+         "averageType": "average",
+         "fillPercentage": 46.72,
          "averagePercentage": 50
         }
        ]
@@ -224,17 +260,17 @@
       "hasPassNetwork"
      ],
      "general": {
-      "matchId": "5904811",
-      "matchName": "Erzurumspor FK-vs-Göztepe_Sun, Nov 22, 2026, 10:30 UTC",
+      "matchId": "5904805",
+      "matchName": "Başakşehir-vs-Çorum FK_Mon, Nov 23, 2026, 17:00 UTC",
       "matchRound": "12",
       "teamColors": {
        "darkMode": {
-        "home": "#0086C3",
-        "away": "#C80000"
+        "home": "#FC5000",
+        "away": "#b20021"
        },
        "lightMode": {
-        "home": "#0086C3",
-        "away": "#C80000"
+        "home": "#FC5000",
+        "away": "#b20021"
        },
        "fontDarkMode": {
         "home": "rgba(255, 255, 255, 1.0)",
@@ -251,16 +287,16 @@
       "parentLeagueId": 71,
       "countryCode": "INT",
       "homeTeam": {
-       "name": "Erzurumspor FK",
-       "id": 281467
+       "name": "Başakşehir",
+       "id": 1933
       },
       "awayTeam": {
-       "name": "Göztepe",
-       "id": 1925
+       "name": "Çorum FK",
+       "id": 357274
       },
       "coverageLevel": "lower",
-      "matchTimeUTC": "Sun, Nov 22, 2026, 10:30 UTC",
-      "matchTimeUTCDate": "2026-11-22T10:30:00.000Z",
+      "matchTimeUTC": "Mon, Nov 23, 2026, 17:00 UTC",
+      "matchTimeUTCDate": "2026-11-23T17:00:00.000Z",
       "started": false,
       "finished": false,
       "gender": "male"
@@ -268,22 +304,22 @@
      "header": {
       "teams": [
        {
-        "name": "Erzurumspor FK",
-        "id": 281467,
+        "name": "Başakşehir",
+        "id": 1933,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/281467_small.png",
-        "pageUrl": "/teams/281467/overview/erzurumspor-fk"
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/1933_small.png",
+        "pageUrl": "/teams/1933/overview/basaksehir"
        },
        {
-        "name": "Göztepe",
-        "id": 1925,
+        "name": "Çorum FK",
+        "id": 357274,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/1925_small.png",
-        "pageUrl": "/teams/1925/overview/goztepe"
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/357274_small.png",
+        "pageUrl": "/teams/357274/overview/corum-fk"
        }
       ],
       "status": {
-       "utcTime": "2026-11-22T10:30:00.000Z",
+       "utcTime": "2026-11-23T17:00:00.000Z",
        "numberOfHomeRedCards": 0,
        "numberOfAwayRedCards": 0,
        "halfs": {},
@@ -300,22 +336,22 @@
    }
   },
   {
-   "nasz": "Raków Częstochowa – Widzew Łódź",
-   "event_id": "ebfbf664a6dc0f805cce95655e5f32f6",
-   "start": "2026-11-22 12:15",
-   "fotmob_id": "5804045",
-   "fotmob": "Raków Częstochowa – Widzew Łódź",
+   "nasz": "Wieczysta Kraków – Motor Lublin",
+   "event_id": "73d2a041ea30b098a5826806dc784eb4",
+   "start": "2026-11-23 19:00",
+   "fotmob_id": "5804046",
+   "fotmob": "Wieczysta Kraków – Motor Lublin",
    "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null,
    "szczegoly": {
     "requests": [
      {
-      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5804045",
+      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5804046",
       "kod": 200,
       "typ": "application/json; charset=utf-8",
-      "rozmiar": 25495,
-      "ms": 42
+      "rozmiar": 20378,
+      "ms": 95
      }
     ],
     "dane": {
@@ -342,24 +378,64 @@
       "lawka_ile": 0,
       "nieobecni": [
        {
-        "id": 906950,
-        "age": 25,
-        "name": "Lamine Diaby-Fadiga",
-        "countryName": "Guinea",
-        "countryCode": "GUI",
-        "marketValue": 2281854,
+        "id": 770992,
+        "age": 28,
+        "name": "Kamil Pestka",
+        "countryName": "Poland",
+        "countryCode": "POL",
+        "marketValue": 172711,
+        "unavailability": {
+         "type": "suspension",
+         "expectedReturn": "Late November 2026",
+         "expectedReturnDate": "2026-11-23T19:00:00Z"
+        },
+        "performance": {
+         "seasonAssists": 1,
+         "seasonRating": 6.86
+        },
+        "firstName": "Kamil",
+        "lastName": "Pestka",
+        "nationalTeamId": 8568
+       },
+       {
+        "id": 555646,
+        "age": 29,
+        "name": "Mateusz Wieteska",
+        "countryName": "Poland",
+        "countryCode": "POL",
+        "marketValue": 239742,
         "unavailability": {
          "injuryId": 87,
          "type": "injury",
-         "expectedReturn": "Early December 2026"
+         "expectedReturn": "Doubtful"
         },
         "performance": {
-         "seasonGoals": 4,
-         "seasonRating": 6.63
+         "seasonGoals": 1,
+         "seasonRating": 6.58
         },
-        "firstName": "Lamine",
-        "lastName": "Diaby-Fadiga",
-        "nationalTeamId": 6289
+        "firstName": "Mateusz",
+        "lastName": "Wieteska",
+        "nationalTeamId": 8568
+       },
+       {
+        "id": 1073576,
+        "age": 24,
+        "name": "Stefan Feiertag",
+        "countryName": "Austria",
+        "countryCode": "AUT",
+        "marketValue": 383757,
+        "unavailability": {
+         "injuryId": 14,
+         "type": "injury",
+         "expectedReturn": "Late December 2026"
+        },
+        "performance": {
+         "seasonGoals": 1,
+         "seasonRating": 7.98
+        },
+        "firstName": "Stefan",
+        "lastName": "Feiertag",
+        "nationalTeamId": 8255
        }
       ],
       "trener": null
@@ -378,92 +454,44 @@
       "lawka_ile": 0,
       "nieobecni": [
        {
-        "id": 1019567,
-        "age": 26,
-        "name": "Dani Silva",
+        "id": 198099,
+        "age": 34,
+        "name": "Bartosz Bereszyński",
+        "countryName": "Poland",
+        "countryCode": "POL",
+        "marketValue": 278993,
+        "unavailability": {
+         "injuryId": 87,
+         "type": "injury",
+         "expectedReturn": "Doubtful"
+        },
+        "performance": {
+         "seasonGoals": 1,
+         "seasonRating": 6.89
+        },
+        "firstName": "Bartosz",
+        "lastName": "Bereszyński",
+        "nationalTeamId": 8568
+       },
+       {
+        "id": 388532,
+        "age": 31,
+        "name": "Ivo Rodrigues",
         "countryName": "Portugal",
         "countryCode": "POR",
-        "marketValue": 1461803,
+        "marketValue": 206081,
         "unavailability": {
-         "injuryId": 87,
+         "injuryId": 32,
          "type": "injury",
-         "expectedReturn": "Doubtful"
+         "expectedReturn": "Late December 2026"
         },
         "performance": {
-         "seasonRating": 6.41
+         "seasonAssists": 3,
+         "seasonRating": 7.01
         },
-        "firstName": "Dani",
-        "lastName": "Silva",
+        "firstName": "Ivo",
+        "lastName": "Rodrigues",
         "nationalTeamId": 8361
-       },
-       {
-        "id": 1177725,
-        "age": 23,
-        "name": "Mariusz Fornalczyk",
-        "countryName": "Poland",
-        "countryCode": "POL",
-        "marketValue": 942550,
-        "unavailability": {
-         "injuryId": 87,
-         "type": "injury",
-         "expectedReturn": "Doubtful"
-        },
-        "performance": {
-         "seasonGoals": 2,
-         "seasonAssists": 1,
-         "seasonRating": 6.61
-        },
-        "firstName": "Mariusz",
-        "lastName": "Fornalczyk",
-        "nationalTeamId": 8568
-       },
-       {
-        "id": 923762,
-        "age": 28,
-        "name": "Carlos Isaac",
-        "countryName": "Spain",
-        "countryCode": "ESP",
-        "marketValue": 407779,
-        "unavailability": {
-         "injuryId": 71,
-         "type": "injury",
-         "expectedReturn": "Back in training"
-        },
-        "firstName": "Carlos",
-        "lastName": "Isaac",
-        "nationalTeamId": 6720
-       },
-       {
-        "id": 1197036,
-        "age": 25,
-        "name": "Szymon Czyż",
-        "countryName": "Poland",
-        "countryCode": "POL",
-        "marketValue": 253710,
-        "unavailability": {
-         "injuryId": 76,
-         "type": "injury",
-         "expectedReturn": "Early January 2027"
-        },
-        "firstName": "Szymon",
-        "lastName": "Czyż",
-        "nationalTeamId": 8568
-       },
-       {
-        "id": 262739,
-        "age": 33,
-        "name": "Lukas Lerager",
-        "countryName": "Denmark",
-        "countryCode": "DEN",
-        "marketValue": 280213,
-        "unavailability": {
-         "injuryId": 76,
-         "type": "injury",
-         "expectedReturn": "Early January 2027"
-        },
-        "firstName": "Lukas",
-        "lastName": "Lerager",
-        "nationalTeamId": 8238
        }
       ],
       "trener": null
@@ -480,13 +508,12 @@
       "insights",
       "topScorers",
       "countryCode",
-      "QAData",
-      "matchInsightsConfig"
+      "QAData"
      ],
      "infoBox": {
       "legInfo": null,
       "Match Date": {
-       "utcTime": "2026-11-22T11:15:00.000Z",
+       "utcTime": "2026-11-23T18:00:00.000Z",
        "isDateCorrect": true
       },
       "Tournament": {
@@ -498,61 +525,61 @@
        "round": "15"
       },
       "Stadium": {
-       "name": "Miejski Stadion Piłkarski Raków",
-       "city": "Częstochowa",
+       "name": "Synerise Arena - Stadion Miejski im. Henryka Reymana",
+       "city": "Kraków",
        "country": "Poland",
-       "lat": 50.776763795,
-       "long": 19.159365035,
-       "capacity": 5500,
+       "lat": 50.063726852,
+       "long": 19.911818504,
+       "capacity": 33268,
        "surface": "grass"
       },
       "Referee": {
        "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/pol.png",
-       "text": "Łukasz Kuźma",
+       "text": "Paweł Malec",
        "countryCode": "POL",
        "country": "Poland",
-       "id": 1001072727,
+       "id": 1001079922,
        "leagueId": 196,
        "leagueName": "Ekstraklasa",
        "stats": [
         {
          "type": "matches",
-         "value": 40,
+         "value": 21,
          "valueType": "total"
         },
         {
          "type": "yellowCards",
-         "value": 3.88,
+         "value": 3.52,
          "valueType": "perMatch",
          "average": 4,
-         "total": 155,
-         "averageType": "average",
-         "fillPercentage": 46.91,
+         "total": 74,
+         "averageType": "below",
+         "fillPercentage": 38.13,
          "averagePercentage": 50
         },
         {
          "type": "redCards",
-         "value": 3,
+         "value": 2,
          "valueType": "total"
         },
         {
          "type": "unknown",
-         "value": 3,
+         "value": 0,
          "valueType": "total"
         },
         {
          "type": "penalties",
-         "value": 14,
+         "value": 9,
          "valueType": "total"
         },
         {
          "type": "fouls",
-         "value": 25.97,
+         "value": 20.86,
          "valueType": "perMatch",
-         "average": 24.97,
-         "total": 987,
-         "averageType": "above",
-         "fillPercentage": 54.58,
+         "average": 25,
+         "total": 438,
+         "averageType": "below",
+         "fillPercentage": 31.18,
          "averagePercentage": 50
         }
        ]
@@ -576,20 +603,20 @@
       "hasPassNetwork"
      ],
      "general": {
-      "matchId": "5804045",
-      "matchName": "Raków Częstochowa-vs-Widzew Łódź_Sun, Nov 22, 2026, 11:15 UTC",
+      "matchId": "5804046",
+      "matchName": "Wieczysta Kraków-vs-Motor Lublin_Mon, Nov 23, 2026, 18:00 UTC",
       "matchRound": "15",
       "teamColors": {
        "darkMode": {
-        "home": "#EC1B24",
-        "away": "#AC9861"
+        "home": "#fde73c",
+        "away": "#194899"
        },
        "lightMode": {
-        "home": "#EC1B24",
-        "away": "#AC9861"
+        "home": "#E09D00",
+        "away": "#194899"
        },
        "fontDarkMode": {
-        "home": "rgba(255, 255, 255, 1.0)",
+        "home": "rgba(29, 29, 29, 1.0)",
         "away": "rgba(255, 255, 255, 1.0)"
        },
        "fontLightMode": {
@@ -603,16 +630,16 @@
       "parentLeagueId": 196,
       "countryCode": "POL",
       "homeTeam": {
-       "name": "Raków Częstochowa",
-       "id": 4024
+       "name": "Wieczysta Kraków",
+       "id": 1286895
       },
       "awayTeam": {
-       "name": "Widzew Łódź",
-       "id": 8024
+       "name": "Motor Lublin",
+       "id": 89466
       },
       "coverageLevel": "lower",
-      "matchTimeUTC": "Sun, Nov 22, 2026, 11:15 UTC",
-      "matchTimeUTCDate": "2026-11-22T11:15:00.000Z",
+      "matchTimeUTC": "Mon, Nov 23, 2026, 18:00 UTC",
+      "matchTimeUTCDate": "2026-11-23T18:00:00.000Z",
       "started": false,
       "finished": false,
       "gender": "male"
@@ -620,22 +647,22 @@
      "header": {
       "teams": [
        {
-        "name": "Raków Częstochowa",
-        "id": 4024,
+        "name": "Wieczysta Kraków",
+        "id": 1286895,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/4024_small.png",
-        "pageUrl": "/teams/4024/overview/rakow-czestochowa"
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/1286895_small.png",
+        "pageUrl": "/teams/1286895/overview/wieczysta-krakow"
        },
        {
-        "name": "Widzew Łódź",
-        "id": 8024,
+        "name": "Motor Lublin",
+        "id": 89466,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8024_small.png",
-        "pageUrl": "/teams/8024/overview/widzew-odz"
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/89466_small.png",
+        "pageUrl": "/teams/89466/overview/motor-lublin"
        }
       ],
       "status": {
-       "utcTime": "2026-11-22T11:15:00.000Z",
+       "utcTime": "2026-11-23T18:00:00.000Z",
        "numberOfHomeRedCards": 0,
        "numberOfAwayRedCards": 0,
        "halfs": {},
@@ -652,22 +679,22 @@
    }
   },
   {
-   "nasz": "FC Twente Enschede – Willem II",
-   "event_id": "f73ffb41e418d1a67544b0fbf261693a",
-   "start": "2026-11-22 12:15",
-   "fotmob_id": "5781812",
-   "fotmob": "FC Twente – Willem II",
-   "zgodnosc": 0.957,
+   "nasz": "Monza – Fiorentina",
+   "event_id": "99776445d5a5f4ed008f9a6d6a1495b7",
+   "start": "2026-11-23 20:45",
+   "fotmob_id": "5749756",
+   "fotmob": "Monza – Fiorentina",
+   "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null,
    "szczegoly": {
     "requests": [
      {
-      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5781812",
+      "url": "https://www.fotmob.com/api/data/matchDetails?matchId=5749756",
       "kod": 200,
       "typ": "application/json; charset=utf-8",
-      "rozmiar": 41284,
-      "ms": 42
+      "rozmiar": 33829,
+      "ms": 358
      }
     ],
     "dane": {
@@ -681,7 +708,7 @@
      ],
      "lineup_typ": "predicted",
      "homeTeam": {
-      "formacja": "4-2-3-1",
+      "formacja": "3-4-2-1",
       "ocena": null,
       "klucze": [
        "id",
@@ -695,14 +722,14 @@
       ],
       "wyjsciowi": [
        {
-        "id": 588337,
-        "age": 30,
-        "name": "Joël Drommel",
+        "id": 1122424,
+        "age": 24,
+        "name": "Noel Törnqvist",
         "positionId": 11,
         "usualPlayingPositionId": 0,
-        "shirtNumber": "16",
-        "countryName": "Netherlands",
-        "countryCode": "NED",
+        "shirtNumber": "1",
+        "countryName": "Sweden",
+        "countryCode": "SWE",
         "horizontalLayout": {
          "x": 0.1,
          "y": 0.5,
@@ -715,309 +742,302 @@
          "height": 0.192,
          "width": 1
         },
-        "marketValue": 1614804,
+        "marketValue": 1467601,
         "performance": {
-         "seasonAssists": 2,
-         "seasonRating": 6.89
+         "seasonRating": 6.75
         },
-        "firstName": "Joël",
-        "lastName": "Drommel",
-        "nationalTeamId": 6708,
+        "firstName": "Noel",
+        "lastName": "Törnqvist",
+        "nationalTeamId": 8520,
         "rankings": null
        },
        {
-        "id": 956726,
-        "age": 25,
-        "name": "Bart van Rooij",
-        "positionId": 32,
+        "id": 1676901,
+        "age": 20,
+        "name": "Eddy Kouadio",
+        "positionId": 33,
         "usualPlayingPositionId": 1,
-        "shirtNumber": "28",
-        "countryName": "Netherlands",
-        "countryCode": "NED",
+        "shirtNumber": "60",
+        "countryName": "Italy",
+        "countryCode": "ITA",
         "horizontalLayout": {
          "x": 0.292,
-         "y": 0.875,
-         "height": 0.25,
-         "width": 0.385
-        },
-        "verticalLayout": {
-         "x": 0.125,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 10639575,
-        "performance": {
-         "seasonAssists": 1,
-         "seasonRating": 7.28
-        },
-        "firstName": "Bart",
-        "lastName": "van Rooij",
-        "nationalTeamId": 6708,
-        "rankings": null
-       },
-       {
-        "id": 298933,
-        "age": 33,
-        "name": "Robin Pröpper",
-        "positionId": 34,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "3",
-        "countryName": "Netherlands",
-        "countryCode": "NED",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.625,
+         "y": 0.79,
          "height": 0.25,
          "width": 0.192
         },
         "verticalLayout": {
-         "x": 0.375,
+         "x": 0.21,
          "y": 0.292,
          "height": 0.192,
-         "width": 0.25
+         "width": 0.29
         },
-        "marketValue": 923521,
-        "performance": {
-         "seasonGoals": 2,
-         "seasonRating": 7.16
-        },
-        "firstName": "Robin",
-        "lastName": "Pröpper",
-        "nationalTeamId": 6708,
-        "rankings": null
-       },
-       {
-        "id": 1709029,
-        "age": 18,
-        "name": "Ruud Nijstad",
-        "positionId": 36,
-        "usualPlayingPositionId": 1,
-        "shirtNumber": "4",
-        "countryName": "Netherlands",
-        "countryCode": "NED",
-        "horizontalLayout": {
-         "x": 0.292,
-         "y": 0.375,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.625,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 14773900,
+        "marketValue": 9995869,
         "performance": {
          "seasonGoals": 1,
-         "seasonRating": 7.11
+         "seasonRating": 6.71
         },
-        "firstName": "Ruud",
-        "lastName": "Nijstad",
-        "nationalTeamId": 6708,
+        "firstName": "Eddy",
+        "lastName": "Kouadio",
+        "nationalTeamId": 8204,
         "rankings": null
        },
        {
-        "id": 1391319,
-        "age": 23,
-        "name": "Aske Adelgaard",
-        "positionId": 38,
+        "id": 1507697,
+        "age": 22,
+        "name": "Saba Goglichidze",
+        "positionId": 35,
         "usualPlayingPositionId": 1,
-        "shirtNumber": "29",
-        "countryName": "Denmark",
-        "countryCode": "DEN",
+        "shirtNumber": "2",
+        "countryName": "Georgia",
+        "countryCode": "GEO",
         "horizontalLayout": {
          "x": 0.292,
-         "y": 0.125,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.875,
-         "y": 0.292,
-         "height": 0.192,
-         "width": 0.25
-        },
-        "marketValue": 1388174,
-        "performance": {
-         "seasonAssists": 1,
-         "seasonRating": 7.56
-        },
-        "firstName": "Aske",
-        "lastName": "Adelgaard",
-        "nationalTeamId": 8238,
-        "rankings": null
-       },
-       {
-        "id": 1074967,
-        "age": 28,
-        "name": "Ramiz Zerrouki",
-        "positionId": 64,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "6",
-        "countryName": "Algeria",
-        "countryCode": "ALG",
-        "horizontalLayout": {
-         "x": 0.485,
-         "y": 0.7,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.3,
-         "y": 0.485,
-         "height": 0.192,
-         "width": 0.4
-        },
-        "marketValue": 6118290,
-        "performance": {
-         "seasonGoals": 1,
-         "seasonAssists": 1,
-         "seasonRating": 7.61
-        },
-        "firstName": "Ramiz",
-        "lastName": "Zerrouki",
-        "nationalTeamId": 6317,
-        "rankings": null
-       },
-       {
-        "id": 1382346,
-        "age": 23,
-        "name": "Daouda Weidmann",
-        "positionId": 66,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "8",
-        "countryName": "France",
-        "countryCode": "FRA",
-        "horizontalLayout": {
-         "x": 0.485,
-         "y": 0.3,
-         "height": 0.25,
-         "width": 0.192
-        },
-        "verticalLayout": {
-         "x": 0.7,
-         "y": 0.485,
-         "height": 0.192,
-         "width": 0.4
-        },
-        "marketValue": 6523649,
-        "performance": {
-         "seasonGoals": 3,
-         "seasonAssists": 1,
-         "seasonRating": 7.54
-        },
-        "firstName": "Daouda",
-        "lastName": "Weidmann",
-        "nationalTeamId": 6723,
-        "rankings": null
-       },
-       {
-        "id": 1203490,
-        "age": 25,
-        "name": "Daan Rots",
-        "positionId": 83,
-        "usualPlayingPositionId": 3,
-        "shirtNumber": "11",
-        "countryName": "Netherlands",
-        "countryCode": "NED",
-        "horizontalLayout": {
-         "x": 0.678,
-         "y": 0.837,
-         "height": 0.25,
-         "width": 0.385
-        },
-        "verticalLayout": {
-         "x": 0.162,
-         "y": 0.678,
-         "height": 0.192,
-         "width": 0.325
-        },
-        "marketValue": 2246305,
-        "performance": {
-         "seasonGoals": 3,
-         "seasonAssists": 1,
-         "seasonRating": 7.22
-        },
-        "firstName": "Daan",
-        "lastName": "Rots",
-        "nationalTeamId": 6708,
-        "rankings": null
-       },
-       {
-        "id": 1298600,
-        "age": 23,
-        "name": "Younes Taha",
-        "positionId": 85,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "10",
-        "countryName": "Morocco",
-        "countryCode": "MAR",
-        "horizontalLayout": {
-         "x": 0.678,
          "y": 0.5,
          "height": 0.25,
          "width": 0.192
         },
         "verticalLayout": {
          "x": 0.5,
-         "y": 0.678,
+         "y": 0.292,
          "height": 0.192,
-         "width": 0.337
+         "width": 0.29
         },
-        "marketValue": 9070923,
+        "marketValue": 5341413,
         "performance": {
-         "seasonGoals": 2,
-         "seasonAssists": 3,
-         "seasonRating": 7.52
+         "seasonGoals": 1,
+         "seasonRating": 6.91
         },
-        "firstName": "Younes",
-        "lastName": "Taha",
-        "nationalTeamId": 6262,
+        "firstName": "Saba",
+        "lastName": "Goglichidze",
+        "nationalTeamId": 8268,
         "rankings": null
        },
        {
-        "id": 1353293,
-        "age": 22,
-        "name": "Sondre Ørjasæter",
-        "positionId": 87,
-        "usualPlayingPositionId": 3,
+        "id": 1524139,
+        "age": 23,
+        "name": "Lorenzo Lucchesi",
+        "positionId": 37,
+        "usualPlayingPositionId": 1,
+        "shirtNumber": "3",
+        "countryName": "Italy",
+        "countryCode": "ITA",
+        "horizontalLayout": {
+         "x": 0.292,
+         "y": 0.21,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.79,
+         "y": 0.292,
+         "height": 0.192,
+         "width": 0.29
+        },
+        "marketValue": 4343743,
+        "performance": {
+         "seasonRating": 6.12
+        },
+        "firstName": "Lorenzo",
+        "lastName": "Lucchesi",
+        "nationalTeamId": 8204,
+        "rankings": null
+       },
+       {
+        "id": 731600,
+        "age": 28,
+        "name": "Idrissa Touré",
+        "positionId": 62,
+        "usualPlayingPositionId": 2,
         "shirtNumber": "27",
-        "countryName": "Norway",
-        "countryCode": "NOR",
+        "countryName": "Germany",
+        "countryCode": "GER",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.875,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.125,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 2370175,
+        "performance": {
+         "seasonRating": 6.48
+        },
+        "firstName": "Idrissa",
+        "lastName": "Touré",
+        "nationalTeamId": 8570,
+        "rankings": null
+       },
+       {
+        "id": 1481909,
+        "age": 21,
+        "name": "Ebenezer Akinsanmiro",
+        "positionId": 64,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "14",
+        "countryName": "Nigeria",
+        "countryCode": "NGA",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.625,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.375,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 9290438,
+        "performance": {
+         "seasonAssists": 1,
+         "seasonRating": 6.9
+        },
+        "firstName": "Ebenezer",
+        "lastName": "Akinsanmiro",
+        "nationalTeamId": 6346,
+        "rankings": null
+       },
+       {
+        "id": 1415623,
+        "age": 21,
+        "name": "Leonardo Colombo",
+        "positionId": 66,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "21",
+        "countryName": "Italy",
+        "countryCode": "ITA",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.375,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.625,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 5191770,
+        "performance": {
+         "seasonRating": 6.23
+        },
+        "firstName": "Leonardo",
+        "lastName": "Colombo",
+        "nationalTeamId": 8204,
+        "rankings": null
+       },
+       {
+        "id": 824655,
+        "age": 28,
+        "name": "Ricardo Mangas",
+        "positionId": 68,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "7",
+        "countryName": "Portugal",
+        "countryCode": "POR",
+        "horizontalLayout": {
+         "x": 0.485,
+         "y": 0.125,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.875,
+         "y": 0.485,
+         "height": 0.192,
+         "width": 0.25
+        },
+        "marketValue": 1511376,
+        "performance": {
+         "seasonGoals": 1,
+         "seasonAssists": 2,
+         "seasonRating": 6.82
+        },
+        "firstName": "Ricardo",
+        "lastName": "Mangas",
+        "nationalTeamId": 8361,
+        "rankings": null
+       },
+       {
+        "id": 737339,
+        "age": 28,
+        "name": "Dany Mota",
+        "positionId": 84,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "47",
+        "countryName": "Portugal",
+        "countryCode": "POR",
         "horizontalLayout": {
          "x": 0.678,
-         "y": 0.163,
+         "y": 0.7,
          "height": 0.25,
          "width": 0.193
         },
         "verticalLayout": {
-         "x": 0.837,
+         "x": 0.3,
          "y": 0.678,
          "height": 0.192,
-         "width": 0.325
+         "width": 0.4
         },
-        "marketValue": 18089620,
+        "marketValue": 1612260,
         "performance": {
-         "seasonGoals": 2,
-         "seasonAssists": 7,
-         "seasonRating": 7.74
+         "seasonAssists": 2,
+         "seasonRating": 7.07
         },
-        "firstName": "Sondre",
-        "lastName": "Ørjasæter",
-        "nationalTeamId": 8492,
+        "firstName": "Dany",
+        "lastName": "Mota",
+        "nationalTeamId": 8361,
         "rankings": null
        },
        {
-        "id": 351999,
-        "age": 34,
-        "name": "Wout Weghorst",
-        "positionId": 115,
+        "id": 1453338,
+        "age": 19,
+        "name": "Jay Robinson",
+        "positionId": 86,
+        "usualPlayingPositionId": 2,
+        "shirtNumber": "46",
+        "countryName": "England",
+        "countryCode": "ENG",
+        "horizontalLayout": {
+         "x": 0.678,
+         "y": 0.3,
+         "height": 0.25,
+         "width": 0.192
+        },
+        "verticalLayout": {
+         "x": 0.7,
+         "y": 0.678,
+         "height": 0.192,
+         "width": 0.4
+        },
+        "marketValue": 11421453,
+        "performance": {
+         "seasonGoals": 2,
+         "seasonAssists": 1,
+         "seasonRating": 6.89
+        },
+        "firstName": "Jay",
+        "lastName": "Robinson",
+        "nationalTeamId": 8491,
+        "rankings": null
+       },
+       {
+        "id": 1585676,
+        "age": 21,
+        "name": "Gustavo Varela",
+        "positionId": 105,
         "usualPlayingPositionId": 3,
         "shirtNumber": "9",
-        "countryName": "Netherlands",
-        "countryCode": "NED",
+        "countryName": "Portugal",
+        "countryCode": "POR",
         "horizontalLayout": {
          "x": 0.87,
          "y": 0.5,
@@ -1030,110 +1050,88 @@
          "height": 0.192,
          "width": 1
         },
-        "marketValue": 1595814,
+        "marketValue": 7569905,
         "performance": {
          "seasonGoals": 9,
-         "seasonAssists": 2,
-         "seasonRating": 7.69
+         "seasonAssists": 1,
+         "seasonRating": 7.47
         },
-        "firstName": "Wout",
-        "lastName": "Weghorst",
-        "nationalTeamId": 6708,
+        "firstName": "Gustavo",
+        "lastName": "Varela",
+        "nationalTeamId": 8361,
         "rankings": null
        }
       ],
       "lawka_ile": 0,
       "nieobecni": [
        {
-        "id": 210822,
-        "age": 36,
-        "name": "Lars Unnerstall",
-        "positionId": 1000,
-        "countryName": "Germany",
-        "countryCode": "GER",
-        "marketValue": 648179,
-        "unavailability": {
-         "injuryId": 6,
-         "type": "injury",
-         "expectedReturn": "Day to day"
-        },
-        "performance": {
-         "seasonRating": 6.9
-        },
-        "firstName": "Lars",
-        "lastName": "Unnerstall",
-        "nationalTeamId": 8570
-       },
-       {
-        "id": 1209260,
-        "age": 24,
-        "name": "Max Bruns",
-        "positionId": 1000,
-        "countryName": "Netherlands",
-        "countryCode": "NED",
-        "marketValue": 2055194,
-        "unavailability": {
-         "injuryId": 6,
-         "type": "injury",
-         "expectedReturn": "Day to day"
-        },
-        "performance": {
-         "seasonAssists": 1,
-         "seasonRating": 7.5
-        },
-        "firstName": "Max",
-        "lastName": "Bruns",
-        "nationalTeamId": 6708
-       },
-       {
-        "id": 1408459,
-        "age": 23,
-        "name": "Stav Lemkin",
-        "positionId": 1000,
-        "countryName": "Israel",
-        "countryCode": "ISR",
-        "marketValue": 6629513,
-        "unavailability": {
-         "injuryId": 6,
-         "type": "injury",
-         "expectedReturn": "Day to day"
-        },
-        "firstName": "Stav",
-        "lastName": "Lemkin",
-        "nationalTeamId": 8567
-       },
-       {
-        "id": 1460786,
+        "id": 1830551,
         "age": 20,
-        "name": "Filip Thorvaldsen",
+        "name": "Yvan Kouadio Maye",
         "positionId": 1000,
-        "countryName": "Norway",
-        "countryCode": "NOR",
-        "marketValue": 6952380,
+        "countryName": "France",
+        "countryCode": "FRA",
+        "marketValue": 1772369,
         "unavailability": {
-         "injuryId": 98,
+         "injuryId": 121,
          "type": "injury",
-         "expectedReturn": "Day to day"
+         "expectedReturn": "Back in training"
         },
         "performance": {
-         "seasonRating": 6.65
+         "seasonRating": 6.36
         },
-        "firstName": "Filip",
-        "lastName": "Thorvaldsen",
-        "nationalTeamId": 8492
+        "firstName": "Yvan Kouadio",
+        "lastName": "Maye",
+        "nationalTeamId": 6723
+       },
+       {
+        "id": 41757,
+        "age": 51,
+        "name": "Ivan Jurić",
+        "positionId": 1100,
+        "countryName": "Croatia",
+        "countryCode": "CRO",
+        "unavailability": {
+         "type": "suspension",
+         "expectedReturn": "Late November 2026",
+         "expectedReturnDate": "2026-11-23T20:45:00Z"
+        },
+        "firstName": "Ivan",
+        "lastName": "Jurić",
+        "nationalTeamId": 10155
+       },
+       {
+        "id": 822440,
+        "age": 28,
+        "name": "Michael Folorunsho",
+        "positionId": 1000,
+        "countryName": "Italy",
+        "countryCode": "ITA",
+        "marketValue": 4113066,
+        "unavailability": {
+         "injuryId": 101,
+         "type": "injury",
+         "expectedReturn": "Early December 2026"
+        },
+        "performance": {
+         "seasonRating": 6.53
+        },
+        "firstName": "Michael",
+        "lastName": "Folorunsho",
+        "nationalTeamId": 8204
        }
       ],
       "trener": {
-       "id": 243552,
-       "age": 60,
-       "name": "John van den Brom",
-       "countryName": "Netherlands",
-       "countryCode": "NED",
-       "firstName": "John",
-       "lastName": "van den Brom",
-       "nationalTeamId": 6708,
-       "primaryTeamId": 8611,
-       "primaryTeamName": "FC Twente",
+       "id": 40168,
+       "age": 43,
+       "name": "Matteo Paro",
+       "countryName": "Italy",
+       "countryCode": "ITA",
+       "firstName": "Matteo",
+       "lastName": "Paro",
+       "nationalTeamId": 8204,
+       "primaryTeamId": 6504,
+       "primaryTeamName": "Monza",
        "usualPlayingPositionId": null,
        "isCoach": true
       }
@@ -1153,14 +1151,14 @@
       ],
       "wyjsciowi": [
        {
-        "id": 1034810,
-        "age": 25,
-        "name": "Maxime Delanghe",
+        "id": 182917,
+        "age": 36,
+        "name": "David de Gea",
         "positionId": 11,
         "usualPlayingPositionId": 0,
-        "shirtNumber": "26",
-        "countryName": "Belgium",
-        "countryCode": "BEL",
+        "shirtNumber": "43",
+        "countryName": "Spain",
+        "countryCode": "ESP",
         "horizontalLayout": {
          "x": 0.1,
          "y": 0.5,
@@ -1173,24 +1171,24 @@
          "height": 0.192,
          "width": 1
         },
-        "marketValue": 1187993,
+        "marketValue": 2482679,
         "performance": {
-         "seasonRating": 6.19
+         "seasonRating": 6.24
         },
-        "firstName": "Maxime",
-        "lastName": "Delanghe",
-        "nationalTeamId": 8263,
+        "firstName": "David",
+        "lastName": "de Gea",
+        "nationalTeamId": 6720,
         "rankings": null
        },
        {
-        "id": 574234,
-        "age": 29,
-        "name": "Hidde ter Avest",
+        "id": 1526689,
+        "age": 21,
+        "name": "Álex Jiménez",
         "positionId": 32,
         "usualPlayingPositionId": 1,
-        "shirtNumber": "5",
-        "countryName": "Netherlands",
-        "countryCode": "NED",
+        "shirtNumber": "20",
+        "countryName": "Spain",
+        "countryCode": "ESP",
         "horizontalLayout": {
          "x": 0.292,
          "y": 0.875,
@@ -1203,26 +1201,26 @@
          "height": 0.192,
          "width": 0.25
         },
-        "marketValue": 353768,
+        "marketValue": 20915798,
         "performance": {
-         "seasonGoals": 1,
-         "seasonAssists": 1,
-         "seasonRating": 6.47
+         "seasonGoals": 2,
+         "seasonAssists": 2,
+         "seasonRating": 7.09
         },
-        "firstName": "Hidde",
-        "lastName": "ter Avest",
-        "nationalTeamId": 6708,
+        "firstName": "Álex",
+        "lastName": "Jiménez",
+        "nationalTeamId": 6720,
         "rankings": null
        },
        {
-        "id": 1282595,
-        "age": 23,
-        "name": "Finn Stam",
+        "id": 1203661,
+        "age": 24,
+        "name": "Radu Drăgușin",
         "positionId": 34,
         "usualPlayingPositionId": 1,
         "shirtNumber": "3",
-        "countryName": "Netherlands",
-        "countryCode": "NED",
+        "countryName": "Romania",
+        "countryCode": "ROU",
         "horizontalLayout": {
          "x": 0.292,
          "y": 0.625,
@@ -1235,24 +1233,25 @@
          "height": 0.192,
          "width": 0.25
         },
-        "marketValue": 938025,
+        "marketValue": 16993549,
         "performance": {
-         "seasonRating": 6.18
+         "seasonAssists": 1,
+         "seasonRating": 6.55
         },
-        "firstName": "Finn",
-        "lastName": "Stam",
-        "nationalTeamId": 6708,
+        "firstName": "Radu",
+        "lastName": "Drăgușin",
+        "nationalTeamId": 9730,
         "rankings": null
        },
        {
-        "id": 1286065,
-        "age": 22,
-        "name": "Maxim Dekker",
+        "id": 935406,
+        "age": 27,
+        "name": "Luca Ranieri",
         "positionId": 36,
         "usualPlayingPositionId": 1,
-        "shirtNumber": "23",
-        "countryName": "Netherlands",
-        "countryCode": "NED",
+        "shirtNumber": "6",
+        "countryName": "Italy",
+        "countryCode": "ITA",
         "horizontalLayout": {
          "x": 0.292,
          "y": 0.375,
@@ -1265,24 +1264,24 @@
          "height": 0.192,
          "width": 0.25
         },
-        "marketValue": 838396,
+        "marketValue": 6561994,
         "performance": {
-         "seasonRating": 6.01
+         "seasonRating": 5.93
         },
-        "firstName": "Maxim",
-        "lastName": "Dekker",
-        "nationalTeamId": 6708,
+        "firstName": "Luca",
+        "lastName": "Ranieri",
+        "nationalTeamId": 8204,
         "rankings": null
        },
        {
-        "id": 1075242,
-        "age": 24,
-        "name": "Nathan Tjoe-A-On",
+        "id": 958421,
+        "age": 26,
+        "name": "João Mário",
         "positionId": 38,
         "usualPlayingPositionId": 1,
-        "shirtNumber": "24",
-        "countryName": "Indonesia",
-        "countryCode": "IDN",
+        "shirtNumber": "17",
+        "countryName": "Portugal",
+        "countryCode": "POR",
         "horizontalLayout": {
          "x": 0.292,
          "y": 0.125,
@@ -1295,25 +1294,25 @@
          "height": 0.192,
          "width": 0.25
         },
-        "marketValue": 386440,
+        "marketValue": 9078433,
         "performance": {
-         "seasonAssists": 2,
-         "seasonRating": 6.43
+         "seasonGoals": 1,
+         "seasonRating": 6.7
         },
-        "firstName": "Nathan",
-        "lastName": "Tjoe-A-On",
-        "nationalTeamId": 6324,
+        "firstName": "João",
+        "lastName": "Mário",
+        "nationalTeamId": 8361,
         "rankings": null
        },
        {
-        "id": 1667714,
-        "age": 20,
-        "name": "Anass Zarrouk",
+        "id": 1246009,
+        "age": 22,
+        "name": "Cher Ndour",
         "positionId": 64,
         "usualPlayingPositionId": 2,
-        "shirtNumber": "18",
-        "countryName": "Netherlands",
-        "countryCode": "NED",
+        "shirtNumber": "27",
+        "countryName": "Italy",
+        "countryCode": "ITA",
         "horizontalLayout": {
          "x": 0.485,
          "y": 0.7,
@@ -1326,25 +1325,25 @@
          "height": 0.192,
          "width": 0.4
         },
-        "marketValue": 805516,
+        "marketValue": 23746147,
         "performance": {
-         "seasonGoals": 1,
-         "seasonRating": 6.18
+         "seasonAssists": 2,
+         "seasonRating": 6.98
         },
-        "firstName": "Anass",
-        "lastName": "Zarrouk",
-        "nationalTeamId": 6708,
+        "firstName": "Cher",
+        "lastName": "Ndour",
+        "nationalTeamId": 8204,
         "rankings": null
        },
        {
-        "id": 1196739,
-        "age": 23,
-        "name": "Calvin Twigt",
+        "id": 1666494,
+        "age": 20,
+        "name": "Christ Inao Oulaï",
         "positionId": 66,
         "usualPlayingPositionId": 2,
-        "shirtNumber": "6",
-        "countryName": "Netherlands",
-        "countryCode": "NED",
+        "shirtNumber": "42",
+        "countryName": "Ivory Coast",
+        "countryCode": "CIV",
         "horizontalLayout": {
          "x": 0.485,
          "y": 0.3,
@@ -1357,25 +1356,24 @@
          "height": 0.192,
          "width": 0.4
         },
-        "marketValue": 1158560,
+        "marketValue": 27658444,
         "performance": {
-         "seasonAssists": 1,
-         "seasonRating": 6.63
+         "seasonRating": 6.66
         },
-        "firstName": "Calvin",
-        "lastName": "Twigt",
-        "nationalTeamId": 6708,
+        "firstName": "Christ Inao",
+        "lastName": "Oulaï",
+        "nationalTeamId": 6709,
         "rankings": null
        },
        {
-        "id": 304000,
-        "age": 31,
-        "name": "Tonny Vilhena",
+        "id": 1607566,
+        "age": 19,
+        "name": "Franco Mastantuono",
         "positionId": 83,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "52",
-        "countryName": "Netherlands",
-        "countryCode": "NED",
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "30",
+        "countryName": "Argentina",
+        "countryCode": "ARG",
         "horizontalLayout": {
          "x": 0.678,
          "y": 0.837,
@@ -1388,25 +1386,25 @@
          "height": 0.192,
          "width": 0.325
         },
-        "marketValue": 266832,
+        "marketValue": 51873721,
         "performance": {
-         "seasonGoals": 1,
-         "seasonRating": 6.57
+         "seasonGoals": 4,
+         "seasonRating": 7.4
         },
-        "firstName": "Tonny",
-        "lastName": "Vilhena",
-        "nationalTeamId": 6708,
+        "firstName": "Franco",
+        "lastName": "Mastantuono",
+        "nationalTeamId": 6706,
         "rankings": null
        },
        {
-        "id": 1697245,
-        "age": 20,
-        "name": "Uriël van Aalst",
+        "id": 875133,
+        "age": 28,
+        "name": "Pote",
         "positionId": 85,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "19",
-        "countryName": "Netherlands",
-        "countryCode": "NED",
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "28",
+        "countryName": "Portugal",
+        "countryCode": "POR",
         "horizontalLayout": {
          "x": 0.678,
          "y": 0.5,
@@ -1419,26 +1417,25 @@
          "height": 0.192,
          "width": 0.337
         },
-        "marketValue": 1258362,
+        "marketValue": 25200336,
         "performance": {
-         "seasonGoals": 2,
          "seasonAssists": 2,
-         "seasonRating": 6.98
+         "seasonRating": 6.7
         },
-        "firstName": "Uriël",
-        "lastName": "van Aalst",
-        "nationalTeamId": 6708,
+        "firstName": "",
+        "lastName": "Pote",
+        "nationalTeamId": 8361,
         "rankings": null
        },
        {
-        "id": 521471,
-        "age": 30,
-        "name": "Vito van Crooij",
+        "id": 1607014,
+        "age": 21,
+        "name": "Alieu Njie",
         "positionId": 87,
-        "usualPlayingPositionId": 2,
-        "shirtNumber": "32",
-        "countryName": "Netherlands",
-        "countryCode": "NED",
+        "usualPlayingPositionId": 3,
+        "shirtNumber": "25",
+        "countryName": "Sweden",
+        "countryCode": "SWE",
         "horizontalLayout": {
          "x": 0.678,
          "y": 0.163,
@@ -1451,25 +1448,26 @@
          "height": 0.192,
          "width": 0.325
         },
-        "marketValue": 449016,
+        "marketValue": 18030492,
         "performance": {
+         "seasonGoals": 3,
          "seasonAssists": 2,
-         "seasonRating": 6.7
+         "seasonRating": 7.32
         },
-        "firstName": "Vito",
-        "lastName": "van Crooij",
-        "nationalTeamId": 6708,
+        "firstName": "Alieu",
+        "lastName": "Njie",
+        "nationalTeamId": 8520,
         "rankings": null
        },
        {
-        "id": 1236033,
-        "age": 22,
-        "name": "Devin Haen",
+        "id": 1224237,
+        "age": 25,
+        "name": "Mateo Pellegrino",
         "positionId": 115,
         "usualPlayingPositionId": 3,
-        "shirtNumber": "9",
-        "countryName": "Netherlands",
-        "countryCode": "NED",
+        "shirtNumber": "32",
+        "countryName": "Argentina",
+        "countryCode": "ARG",
         "horizontalLayout": {
          "x": 0.87,
          "y": 0.5,
@@ -1482,69 +1480,84 @@
          "height": 0.192,
          "width": 1
         },
-        "marketValue": 3427640,
+        "marketValue": 22545764,
         "performance": {
-         "seasonGoals": 3,
-         "seasonAssists": 1,
-         "seasonRating": 6.69
+         "seasonGoals": 4,
+         "seasonRating": 6.83
         },
-        "firstName": "Devin",
-        "lastName": "Haen",
-        "nationalTeamId": 6708,
+        "firstName": "Mateo",
+        "lastName": "Pellegrino",
+        "nationalTeamId": 6706,
         "rankings": null
        }
       ],
       "lawka_ile": 0,
       "nieobecni": [
        {
-        "id": 728414,
-        "age": 28,
-        "name": "Justin Hoogma",
-        "positionId": 1000,
-        "countryName": "Netherlands",
-        "countryCode": "NED",
-        "marketValue": 254599,
+        "id": 2018923,
+        "age": 16,
+        "name": "Federico Croci",
+        "countryName": "Italy",
+        "countryCode": "ITA",
         "unavailability": {
-         "injuryId": 14,
-         "type": "injury",
-         "expectedReturn": "Day to day"
+         "type": "internationalDuty",
+         "expectedReturn": "Mid December 2026",
+         "expectedReturnDate": "2026-12-13T00:00:00Z"
         },
-        "performance": {
-         "seasonRating": 5.55
-        },
-        "firstName": "Justin",
-        "lastName": "Hoogma",
-        "nationalTeamId": 6708
+        "firstName": "Federico",
+        "lastName": "Croci",
+        "nationalTeamId": 8204
        },
        {
-        "id": 1414313,
-        "age": 23,
-        "name": "Amine Lachkar",
+        "id": 831474,
+        "age": 29,
+        "name": "Marin Pongračić",
         "positionId": 1000,
-        "countryName": "Netherlands",
-        "countryCode": "NED",
-        "marketValue": 672121,
+        "countryName": "Croatia",
+        "countryCode": "CRO",
+        "marketValue": 6241307,
         "unavailability": {
-         "injuryId": 47,
+         "injuryId": 69,
          "type": "injury",
-         "expectedReturn": "Day to day"
+         "expectedReturn": "Early December 2026"
         },
-        "firstName": "Amine",
-        "lastName": "Lachkar",
-        "nationalTeamId": 6708
+        "performance": {
+         "seasonGoals": 1,
+         "seasonRating": 6.58
+        },
+        "firstName": "Marin",
+        "lastName": "Pongračić",
+        "nationalTeamId": 10155
+       },
+       {
+        "id": 1093285,
+        "age": 26,
+        "name": "Fabiano Parisi",
+        "positionId": 1000,
+        "countryName": "Italy",
+        "countryCode": "ITA",
+        "marketValue": 6788131,
+        "unavailability": {
+         "injuryId": 76,
+         "type": "injury",
+         "expectedReturn": "Early December 2026"
+        },
+        "firstName": "Fabiano",
+        "lastName": "Parisi",
+        "nationalTeamId": 8204
        }
       ],
       "trener": {
-       "id": 422156,
-       "age": 57,
-       "name": "Jurgen Streppel",
-       "countryName": "Netherlands",
-       "countryCode": "NED",
-       "firstName": "Jurgen",
-       "lastName": "Streppel",
-       "nationalTeamId": 6708,
-       "primaryTeamId": 8525,
-       "primaryTeamName": "Willem II",
+       "id": 42632,
+       "age": 54,
+       "name": "Paolo Vanoli",
+       "countryName": "Italy",
+       "countryCode": "ITA",
+       "firstName": "Paolo",
+       "lastName": "Vanoli",
+       "nationalTeamId": 8204,
+       "primaryTeamId": 8535,
+       "primaryTeamName": "Fiorentina",
        "usualPlayingPositionId": null,
        "isCoach": true
       }
@@ -1567,53 +1580,53 @@
      "infoBox": {
       "legInfo": null,
       "Match Date": {
-       "utcTime": "2026-11-22T11:15:00.000Z",
+       "utcTime": "2026-11-23T19:45:00.000Z",
        "isDateCorrect": true
       },
       "Tournament": {
-       "id": 937276,
-       "parentLeagueId": 57,
-       "link": "/leagues/57/overview/eredivisie",
-       "leagueName": "Eredivisie",
-       "roundName": "13",
-       "round": "13"
+       "id": 55,
+       "parentLeagueId": 55,
+       "link": "/leagues/55/overview/serie",
+       "leagueName": "Serie A",
+       "roundName": "12",
+       "round": "12"
       },
       "Stadium": {
-       "name": "De Grolsch Veste",
-       "city": "Enschede",
-       "country": "Netherlands",
-       "lat": 52.236561452,
-       "long": 6.837702319,
-       "capacity": 30205,
+       "name": "U-Power Stadium",
+       "city": "Monza",
+       "country": "Italy",
+       "lat": 45.583064491,
+       "long": 9.308115542,
+       "capacity": 18568,
        "surface": "grass"
       },
       "Referee": {
-       "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/ned.png",
-       "text": "Serdar Gözübüyük",
-       "countryCode": "NED",
-       "country": "Netherlands",
-       "id": 1001071535,
-       "leagueId": 57,
-       "leagueName": "Eredivisie",
+       "imgUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/ita.png",
+       "text": "Daniele Doveri",
+       "countryCode": "ITA",
+       "country": "Italy",
+       "id": 1001072626,
+       "leagueId": 55,
+       "leagueName": "Serie A",
        "stats": [
         {
          "type": "matches",
-         "value": 57,
+         "value": 37,
          "valueType": "total"
         },
         {
          "type": "yellowCards",
-         "value": 3.47,
+         "value": 3.03,
          "valueType": "perMatch",
-         "average": 3.13,
-         "total": 198,
-         "averageType": "above",
-         "fillPercentage": 70,
+         "average": 3.66,
+         "total": 112,
+         "averageType": "below",
+         "fillPercentage": 41.3,
          "averagePercentage": 50
         },
         {
          "type": "redCards",
-         "value": 5,
+         "value": 1,
          "valueType": "total"
         },
         {
@@ -1623,17 +1636,17 @@
         },
         {
          "type": "penalties",
-         "value": 12,
+         "value": 7,
          "valueType": "total"
         },
         {
          "type": "fouls",
-         "value": 21.53,
+         "value": 23.3,
          "valueType": "perMatch",
-         "average": 21.39,
-         "total": 1184,
-         "averageType": "average",
-         "fillPercentage": 51.04,
+         "average": 24.72,
+         "total": 862,
+         "averageType": "below",
+         "fillPercentage": 40.77,
          "averagePercentage": 50
         }
        ]
@@ -1657,17 +1670,17 @@
       "hasPassNetwork"
      ],
      "general": {
-      "matchId": "5781812",
-      "matchName": "FC Twente-vs-Willem II_Sun, Nov 22, 2026, 11:15 UTC",
-      "matchRound": "13",
+      "matchId": "5749756",
+      "matchName": "Monza-vs-Fiorentina_Mon, Nov 23, 2026, 19:45 UTC",
+      "matchRound": "12",
       "teamColors": {
        "darkMode": {
-        "home": "#CA0216",
-        "away": "#0055a4"
+        "home": "#e10032",
+        "away": "#6f34af"
        },
        "lightMode": {
-        "home": "#CA0216",
-        "away": "#242C51"
+        "home": "#e10032",
+        "away": "#5F259F"
        },
        "fontDarkMode": {
         "home": "rgba(255, 255, 255, 1.0)",
@@ -1678,22 +1691,22 @@
         "away": "rgba(255, 255, 255, 1.0)"
        }
       },
-      "leagueId": 937276,
-      "leagueName": "Eredivisie",
-      "leagueRoundName": "13",
-      "parentLeagueId": 57,
-      "countryCode": "NED",
+      "leagueId": 55,
+      "leagueName": "Serie A",
+      "leagueRoundName": "12",
+      "parentLeagueId": 55,
+      "countryCode": "ITA",
       "homeTeam": {
-       "name": "FC Twente",
-       "id": 8611
+       "name": "Monza",
+       "id": 6504
       },
       "awayTeam": {
-       "name": "Willem II",
-       "id": 8525
+       "name": "Fiorentina",
+       "id": 8535
       },
       "coverageLevel": "lower",
-      "matchTimeUTC": "Sun, Nov 22, 2026, 11:15 UTC",
-      "matchTimeUTCDate": "2026-11-22T11:15:00.000Z",
+      "matchTimeUTC": "Mon, Nov 23, 2026, 19:45 UTC",
+      "matchTimeUTCDate": "2026-11-23T19:45:00.000Z",
       "started": false,
       "finished": false,
       "gender": "male"
@@ -1701,22 +1714,22 @@
      "header": {
       "teams": [
        {
-        "name": "FC Twente",
-        "id": 8611,
+        "name": "Monza",
+        "id": 6504,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8611_small.png",
-        "pageUrl": "/teams/8611/overview/fc-twente"
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/6504_small.png",
+        "pageUrl": "/teams/6504/overview/monza"
        },
        {
-        "name": "Willem II",
-        "id": 8525,
+        "name": "Fiorentina",
+        "id": 8535,
         "score": 0,
-        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8525_small.png",
-        "pageUrl": "/teams/8525/overview/willem-ii"
+        "imageUrl": "https://images.fotmob.com/image_resources/logo/teamlogo/8535_small.png",
+        "pageUrl": "/teams/8535/overview/fiorentina"
        }
       ],
       "status": {
-       "utcTime": "2026-11-22T11:15:00.000Z",
+       "utcTime": "2026-11-23T19:45:00.000Z",
        "numberOfHomeRedCards": 0,
        "numberOfAwayRedCards": 0,
        "halfs": {},
@@ -1733,384 +1746,61 @@
    }
   },
   {
-   "nasz": "Juventus – Venezia",
-   "event_id": "be2fcabc408be29ca01ce92ab266f8b7",
-   "start": "2026-11-22 12:30",
-   "fotmob_id": "5749754",
-   "fotmob": "Juventus – Venezia",
+   "nasz": "Levante – Elche CF",
+   "event_id": "afae1c9d986e4ab2200dc9bd44b6b6c4",
+   "start": "2026-11-23 21:00",
+   "fotmob_id": "5868135",
+   "fotmob": "Levante – Elche",
    "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null
   },
   {
-   "nasz": "Burnley – Blackburn Rovers",
-   "event_id": "9176cbaec3565e688e603baec257e246",
-   "start": "2026-11-22 13:00",
-   "fotmob_id": "5836935",
-   "fotmob": "Burnley – Blackburn Rovers",
+   "nasz": "Gimnasia La Plata – Newells Old Boys",
+   "event_id": "08d2a1ac62f06510d528e357ff1dbdc5",
+   "start": "2026-11-23 21:00",
+   "fotmob_id": "1000023198",
+   "fotmob": "Gimnasia LP – Newell's Old Boys",
+   "zgodnosc": 0.786,
+   "odwrocone": false,
+   "url": null
+  },
+  {
+   "nasz": "Brentford – Everton",
+   "event_id": "aa77e2a08a1a003b0bbb62a5f8e8ae42",
+   "start": "2026-11-23 21:00",
+   "fotmob_id": "5795517",
+   "fotmob": "Brentford – Everton",
    "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null
   },
   {
-   "nasz": "1. FC Kaiserslautern – Dynamo Dresden",
-   "event_id": "7ca047be895023baacc7727543d12658",
-   "start": "2026-11-22 13:30",
-   "fotmob_id": "5881730",
-   "fotmob": "Kaiserslautern – Dynamo Dresden",
-   "zgodnosc": 0.993,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Karlsruher SC – VfL Osnabrück",
-   "event_id": "1773ac462fd3a3c4f0106f744117a936",
-   "start": "2026-11-22 13:30",
-   "fotmob_id": "5881731",
-   "fotmob": "Karlsruher SC – VfL Osnabrück",
+   "nasz": "Internacional – Vitoria",
+   "event_id": "c1339bf6458b24fdfaa62305a6947a8c",
+   "start": "2026-11-23 23:30",
+   "fotmob_id": "5103720",
+   "fotmob": "Internacional – Vitória",
    "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null
   },
   {
-   "nasz": "SK Beveren – Gent",
-   "event_id": "fcd7f5c66b60aa95faa584015a438332",
-   "start": "2026-11-22 13:30",
-   "fotmob_id": "5811810",
-   "fotmob": "SK Beveren – Gent",
+   "nasz": "Botafogo – Sao Paulo",
+   "event_id": "d0352a1171c0a09774d5854eef621421",
+   "start": "2026-11-24 00:00",
+   "fotmob_id": "5103715",
+   "fotmob": "Botafogo – São Paulo",
    "zgodnosc": 1.0,
    "odwrocone": false,
    "url": null
-  },
-  {
-   "nasz": "Barcelona – Villarreal",
-   "event_id": "214a79b6e08dbe3f508844936158c038",
-   "start": "2026-11-22 14:00",
-   "fotmob_id": "5868133",
-   "fotmob": "Barcelona – Villarreal",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Kasimpasa SK – Alanyaspor",
-   "event_id": "a968e1c9f7f2e05bace52a2dd77ea90a",
-   "start": "2026-11-22 14:00",
-   "fotmob_id": "5904804",
-   "fotmob": "Kasımpaşa – Alanyaspor",
-   "zgodnosc": 0.941,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Torku Konyaspor – Besiktas JK",
-   "event_id": "1ed6ce5484f2a65ed50be17f8e06f425",
-   "start": "2026-11-22 14:00",
-   "fotmob_id": "5904808",
-   "fotmob": "Konyaspor – Beşiktaş",
-   "zgodnosc": 0.975,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Ajax – ADO Den Haag",
-   "event_id": "b192dbcfd675d0ee75492948b7d2a35f",
-   "start": "2026-11-22 14:30",
-   "fotmob_id": "5781804",
-   "fotmob": "Ajax – ADO Den Haag",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Sparta Rotterdam – AZ Alkmaar",
-   "event_id": "8e33c1a370f9763723426e4f0aa0fdd0",
-   "start": "2026-11-22 14:30",
-   "fotmob_id": "5781810",
-   "fotmob": "Sparta Rotterdam – AZ Alkmaar",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "GKS Katowice – Lech Poznań",
-   "event_id": "8640b47d5a83c4971e699026fdfa0a55",
-   "start": "2026-11-22 14:45",
-   "fotmob_id": "5804041",
-   "fotmob": "GKS Katowice – Lech Poznań",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Bologna – Udinese",
-   "event_id": "5bc13c44b33981f3185400163388267e",
-   "start": "2026-11-22 15:00",
-   "fotmob_id": "5749752",
-   "fotmob": "Bologna – Udinese",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Hull City – Brighton and Hove Albion",
-   "event_id": "230a356290e1a358e9dd2f7fa23de3b9",
-   "start": "2026-11-22 15:00",
-   "fotmob_id": "5795520",
-   "fotmob": "Hull City – Brighton & Hove Albion",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Sassuolo – Genoa",
-   "event_id": "76d4698a8417f32cb059f14a469939f3",
-   "start": "2026-11-22 15:00",
-   "fotmob_id": "5749759",
-   "fotmob": "Sassuolo – Genoa",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Paris FC – Angers",
-   "event_id": "9e5d4a91e379ddffa179b02bf9e09530",
-   "start": "2026-11-22 15:00",
-   "fotmob_id": "5802997",
-   "fotmob": "Paris FC – Angers",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Augsburg – FSV Mainz 05",
-   "event_id": "4c2262eccc903b9b1792325d09451c0a",
-   "start": "2026-11-22 15:30",
-   "fotmob_id": "5881224",
-   "fotmob": "Augsburg – Mainz 05",
-   "zgodnosc": 0.98,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "KV Kortrijk – Union Saint-Gilloise",
-   "event_id": "6cad97568ca4c6b7caeaaa79a6a3054c",
-   "start": "2026-11-22 16:00",
-   "fotmob_id": "5811814",
-   "fotmob": "Kortrijk – Union St.Gilloise",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Real Racing Club de Santander – Real Sociedad",
-   "event_id": "9718f9ea901236855faf57f77a0bd5b3",
-   "start": "2026-11-22 16:15",
-   "fotmob_id": "5868137",
-   "fotmob": "Racing Santander – Real Sociedad",
-   "zgodnosc": 0.986,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Go Ahead Eagles – Fortuna Sittard",
-   "event_id": "f0c241457472f32fc55b90b2b95b665b",
-   "start": "2026-11-22 16:45",
-   "fotmob_id": "5781809",
-   "fotmob": "Go Ahead Eagles – Fortuna Sittard",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Trabzonspor – Eyüpspor",
-   "event_id": "2f3dfa781742b66f1412e15c132ff871",
-   "start": "2026-11-22 17:00",
-   "fotmob_id": "5904803",
-   "fotmob": "Trabzonspor – Eyüpspor",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Lorient – Rennes",
-   "event_id": "8e6ee05b6ac28dc2357f72b9f5a0643e",
-   "start": "2026-11-22 17:15",
-   "fotmob_id": "5802993",
-   "fotmob": "Lorient – Rennes",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Wisła Płock – Legia Warszawa",
-   "event_id": "75444c554f01bdb9f00dcb311b59d871",
-   "start": "2026-11-22 17:30",
-   "fotmob_id": "5804047",
-   "fotmob": "Wisła Płock – Legia Warszawa",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Liverpool – Manchester United",
-   "event_id": "4c08b213ed416e8f41e038f42a42b962",
-   "start": "2026-11-22 17:30",
-   "fotmob_id": "5795521",
-   "fotmob": "Liverpool – Manchester United",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Werder Bremen – Hamburger SV",
-   "event_id": "9a214142c9b31ad8233dccad53f75d6d",
-   "start": "2026-11-22 17:30",
-   "fotmob_id": "5881232",
-   "fotmob": "Werder Bremen – Hamburger SV",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "AC Milan – Frosinone",
-   "event_id": "5faf836ce6c0fd72af5d1fe258c63bc6",
-   "start": "2026-11-22 18:00",
-   "fotmob_id": "5749750",
-   "fotmob": "Milan – Frosinone",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "CA Osasuna – Málaga",
-   "event_id": "893268e5503c4e58fbf137e4b5db7e93",
-   "start": "2026-11-22 18:30",
-   "fotmob_id": "5868136",
-   "fotmob": "Osasuna – Málaga",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Anderlecht – Leuven",
-   "event_id": "0a8990d4206c802cdba25a03b50e5d95",
-   "start": "2026-11-22 18:30",
-   "fotmob_id": "5811809",
-   "fotmob": "Anderlecht – OH Leuven",
-   "zgodnosc": 0.98,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Lommel SK – Standard Liege",
-   "event_id": "7aa1bde245aaf2cce32c37a7f177ed0f",
-   "start": "2026-11-22 19:15",
-   "fotmob_id": "5811816",
-   "fotmob": "Lommel – Standard Liège",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Atletico Paranaense – Remo",
-   "event_id": "dddc911eddfe6a3943d037b9494921be",
-   "start": "2026-11-22 20:00",
-   "fotmob_id": "5103721",
-   "fotmob": "Athletico Paranaense – Remo",
-   "zgodnosc": 0.974,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Rosario Central – Gimnasia Mendoza",
-   "event_id": "77a009ce637f0b9d8ffbdb5f81d194ba",
-   "start": "2026-11-22 20:00",
-   "fotmob_id": "1000023195",
-   "fotmob": "Rosario Central – Gimnasia Mendoza",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Atalanta BC – Inter Milan",
-   "event_id": "e22f82b10fe71d230248b88fef87e58f",
-   "start": "2026-11-22 20:45",
-   "fotmob_id": "5749751",
-   "fotmob": "Atalanta – Inter",
-   "zgodnosc": 0.953,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Marseille – Le Mans FC",
-   "event_id": "98fae24771271c96d5dd364e535405d2",
-   "start": "2026-11-22 20:45",
-   "fotmob_id": "5802994",
-   "fotmob": "Marseille – Le Mans",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Getafe – Atlético Madrid",
-   "event_id": "7a62fe738bd20cfff6027c52fec05d51",
-   "start": "2026-11-22 21:00",
-   "fotmob_id": "5868134",
-   "fotmob": "Getafe – Atlético Madrid",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Nashville SC – FC Cincinnati",
-   "event_id": "e6adbcba99b6b66ca3d16db6fb5d805d",
-   "start": "2026-11-22 22:00",
-   "fotmob_id": "6665006",
-   "fotmob": "Nashville SC – FC Cincinnati",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Fluminense – Mirassol",
-   "event_id": "fe93738d5c6aca8b60e7f18e1d685e98",
-   "start": "2026-11-22 22:30",
-   "fotmob_id": "5103714",
-   "fotmob": "Fluminense – Mirassol",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "River Plate – Lanus",
-   "event_id": "15bf5434d75b19b377d6a6867af1ef31",
-   "start": "2026-11-22 23:00",
-   "fotmob_id": "1000023193",
-   "fotmob": "River Plate – Lanús",
-   "zgodnosc": 1.0,
-   "odwrocone": false,
-   "url": null
-  },
-  {
-   "nasz": "Bragantino-SP – Vasco da Gama",
-   "event_id": "08f1d5a366e711c1e29845352bb8137d",
-   "start": "2026-11-22 23:30",
-   "fotmob_id": "5103718",
-   "fotmob": "RB Bragantino – Vasco da Gama",
-   "zgodnosc": 0.987,
-   "odwrocone": false,
-   "url": null
-  },
-  "… (+1)"
+  }
  ],
  "niedopasowane": [
-  "Guadalajara – Cruz Azul 2026-11-23 00:07",
-  "Instituto de Córdoba – Atlético Huracán 2026-11-23 02:00",
-  "Querétaro – Necaxa 2026-11-23 02:10",
-  "Vancouver Whitecaps FC – Real Salt Lake 2026-11-23 02:30"
+  "Santos – Grêmio 2026-11-24 01:00",
+  "St. Louis City SC – Los Angeles FC 2026-11-24 02:00"
  ],
  "requests_dziala": true,
- "meczow": 388,
- "sekund": 1
+ "meczow": 98,
+ "sekund": 2
 }
