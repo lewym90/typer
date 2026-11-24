@@ -1,6 +1,6 @@
 {
- "czas": "2026-11-24 07:15 UTC",
- "tryb": "rano",
+ "czas": "2026-11-24 14:00 UTC",
+ "tryb": "popoludnie",
  "sporty": [
   [
    "ufo:sprt:01",
@@ -31,10 +31,6 @@
    "Szachy"
   ],
   [
-   "ufo:sprt:0v",
-   "Squash"
-  ],
-  [
    "ufo:sprt:0w",
    "Hokej"
   ],
@@ -61,6 +57,10 @@
   [
    "ufo:sprt:11",
    "Florbal"
+  ],
+  [
+   "ufo:sprt:1r",
+   "Sporty motorowe"
   ],
   [
    "ufo:sprt:13",
@@ -148,32 +148,32 @@
   "hokej": "ufo:sprt:0w",
   "tenis": "ufo:sprt:0x",
   "pilka_reczna": "ufo:sprt:0y",
+  "f1": "ufo:sprt:1r",
   "sporty walki": "ufo:sprt:19",
   "zuzel": "ufo:sprt:1y",
-  "f1": "ufo:sprt:2a",
   "koszykowka": "ufo:sprt:0i",
   "siatkowka": "ufo:sprt:0m",
   "pilka": "ufo:sprt:00"
  },
  "bledy": [
   "turnieje ufo:sprt:01 today: Expecting value: line 1 column 1 (char 0)",
+  "turnieje ufo:sprt:1r today: Expecting value: line 1 column 1 (char 0)",
+  "turnieje ufo:sprt:1r tomorrow: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:19 today: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)",
   "turnieje ufo:sprt:1y today: Expecting value: line 1 column 1 (char 0)",
-  "turnieje ufo:sprt:1y tomorrow: Expecting value: line 1 column 1 (char 0)",
-  "turnieje ufo:sprt:2a today: Expecting value: line 1 column 1 (char 0)",
-  "turnieje ufo:sprt:2a tomorrow: Expecting value: line 1 column 1 (char 0)"
+  "turnieje ufo:sprt:1y tomorrow: Expecting value: line 1 column 1 (char 0)"
  ],
- "turniejow": 188,
- "meczow_fortuny": 1002,
+ "turniejow": 189,
+ "meczow_fortuny": 995,
  "inne_sporty": {
-  "koszykowka": 90,
-  "pilka_reczna": 20,
-  "siatkowka": 32,
-  "hokej": 63
+  "koszykowka": 122,
+  "hokej": 60,
+  "pilka_reczna": 18,
+  "siatkowka": 35
  },
  "w_ofercie_24h": 692,
- "odczytane": 689,
- "rynkow": 43969,
- "sekund": 185
+ "odczytane": 688,
+ "rynkow": 47540,
+ "sekund": 184
 }
