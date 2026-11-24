@@ -1,14 +1,14 @@
 {
- "czas": "2026-11-23 08:00 UTC",
+ "czas": "2026-11-24 08:00 UTC",
  "wersja": "analityk-1",
  "nasze": {
-  "pilka": 10,
+  "pilka": 21,
   "tenis": 0,
   "walki": 0
  },
  "zrodla": {
   "ufcstats": {
-   "sekund": 7,
+   "sekund": 6,
    "blad": null,
    "start": [
     200,
@@ -25,7 +25,7 @@
    "tryb": null,
    "pilka": {
     "dopasowane": 0,
-    "niedopasowane": 10
+    "niedopasowane": 21
    },
    "tenis": {
     "dopasowane": 0,
@@ -37,12 +37,12 @@
    }
   },
   "fotmob": {
-   "sekund": 2,
+   "sekund": 1,
    "blad": null,
    "requests": true,
-   "meczow": 98,
-   "dopasowane": 8,
-   "niedopasowane": 2,
+   "meczow": 155,
+   "dopasowane": 20,
+   "niedopasowane": 1,
    "szczegoly": [
     "requests",
     "requests",
@@ -50,36 +50,36 @@
    ]
   },
   "transfermarkt": {
-   "sekund": 3,
+   "sekund": 2,
    "blad": null,
    "start": [
     200
    ],
    "kluby": [
     [
-     "istanbul-basaksehir-fk",
+     "galatasaray-istanbul",
      200,
      6
     ],
     [
-     "corum-fk",
+     "vereinslos",
      200,
-     1
+     50
     ],
     [
-     "wieczysta-krakow",
-     200,
-     1
+     null,
+     null,
+     null
     ],
     [
-     "motor-lublin",
+     "sd-eibar",
      200,
-     1
+     4
     ]
    ]
   }
  },
  "ip": "188.68.247.201",
  "przegladarka": "ok",
- "sekund": 27
+ "sekund": 25
 }
