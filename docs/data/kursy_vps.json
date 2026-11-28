@@ -1,5 +1,5 @@
 {
- "czas": "2026-11-28 01:43 UTC",
+ "czas": "2026-11-28 02:25 UTC",
  "wersja": "czytnik-3",
  "bukmacherzy": {
   "fortuna": {
@@ -396,15 +396,11 @@
      ],
      "Którykolwiek zawodnik strzeli gola lub zaliczy asystę": [
       [
-       "T. Müller / S. Solans",
-       1.32
-      ],
-      [
        "T. Müller / R. Gauld",
        1.32
       ],
       [
-       "S. Solans / R. Gauld",
+       "T. Müller / S. Solans",
        1.34
       ],
       [
@@ -412,8 +408,8 @@
        1.35
       ],
       [
-       "S. Solans / R. Elloumi",
-       1.37
+       "S. Solans / R. Gauld",
+       1.36
       ],
       [
        "R. Elloumi / R. Gauld",
@@ -422,6 +418,10 @@
       [
        "T. Müller / K. Poku",
        1.37
+      ],
+      [
+       "S. Solans / R. Elloumi",
+       1.38
       ],
       [
        "T. Müller / M. Guilavogui",
@@ -452,28 +452,12 @@
        1.4
       ],
       [
-       "S. Solans / M. Guilavogui",
-       1.41
-      ],
-      [
-       "S. Solans / J. Shokalook",
-       1.41
-      ],
-      [
        "M. Guilavogui / R. Gauld",
        1.41
       ],
       [
        "J. Shokalook / R. Gauld",
        1.41
-      ],
-      [
-       "S. Solans / L. Rodrigues Dos Santos",
-       1.42
-      ],
-      [
-       "S. Solans / C. Sabaly",
-       1.42
       ],
       [
        "L. Rodrigues Dos Santos / R. Gauld",
@@ -500,6 +484,22 @@
        1.42
       ],
       [
+       "S. Solans / M. Guilavogui",
+       1.43
+      ],
+      [
+       "S. Solans / J. Shokalook",
+       1.43
+      ],
+      [
+       "S. Solans / L. Rodrigues Dos Santos",
+       1.44
+      ],
+      [
+       "S. Solans / C. Sabaly",
+       1.44
+      ],
+      [
        "R. Elloumi / M. Guilavogui",
        1.44
       ],
@@ -512,7 +512,7 @@
        1.44
       ],
       [
-       "S. Solans / Bruno Caicedo",
+       "R. Elloumi / L. Rodrigues Dos Santos",
        1.45
       ]
      ],
@@ -2350,37 +2350,36 @@
     "nazwa": "Columbus Crew - Inter Miami",
     "zgodnosc": 1.0,
     "kursy": {
-     "1": 2.75,
-     "X": 3.25,
-     "2": 2.42,
-     "12": 1.34,
-     "X2": 1.45,
-     "1X": 1.55,
-     "A o0.5": 1.27,
-     "H o0.5": 1.32,
-     "A -1.5": 4.7,
-     "Over 1.5": 1.29,
-     "Under 1.5": 3.3,
-     "Over 0.5": 1.04,
-     "Under 0.5": 8.8,
-     "Over 4.5": 6.2,
-     "Under 4.5": 1.09,
-     "Over 3.5": 3.25,
-     "Under 3.5": 1.3,
-     "Over 2.5": 1.92,
-     "Under 2.5": 1.79,
-     "H o1.5": 2.5,
-     "H o2.5": 6.0,
-     "A o1.5": 2.32,
-     "A o2.5": 5.2,
-     "BTTS Tak": 1.74,
-     "BTTS Nie": 1.98,
-     "1 & u2.5": 5.7,
-     "1 & o2.5": 4.35,
-     "X & u2.5": 4.0,
-     "X & o2.5": 12.0,
-     "2 & u2.5": 5.1,
-     "2 & o2.5": 3.8
+     "1": 2.85,
+     "X": 2.65,
+     "2": 2.85,
+     "12": 1.48,
+     "X2": 1.42,
+     "1X": 1.42,
+     "A o0.5": 1.65,
+     "H o0.5": 1.65,
+     "H -1.5": 6.8,
+     "Over 1.5": 1.86,
+     "Under 1.5": 1.85,
+     "Over 0.5": 1.18,
+     "Under 0.5": 4.3,
+     "Over 4.5": 17.0,
+     "Over 3.5": 8.0,
+     "Under 3.5": 1.05,
+     "Over 2.5": 3.65,
+     "Under 2.5": 1.24,
+     "H o1.5": 4.1,
+     "H o2.5": 11.0,
+     "A o1.5": 4.1,
+     "A o2.5": 11.0,
+     "BTTS Tak": 2.75,
+     "BTTS Nie": 1.39,
+     "1 & u2.5": 3.8,
+     "1 & o2.5": 7.75,
+     "X & u2.5": 2.6,
+     "X & o2.5": 31.0,
+     "2 & u2.5": 3.8,
+     "2 & o2.5": 7.75
     },
     "pelna": true
    }
@@ -2522,7 +2521,8 @@
  ],
  "diag": {
   "bledy": [
-   "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)"
+   "turnieje ufo:sprt:19 tomorrow: Expecting value: line 1 column 1 (char 0)",
+   "mecze ufo:tour:0c-00c: Expecting value: line 1 column 1 (char 0)"
   ],
   "nasze_mecze": 31,
   "sporty": [
@@ -2697,7 +2697,7 @@
    "sporty walki": "ufo:sprt:19",
    "pilka": "ufo:sprt:00"
   },
-  "turniejow": 264,
+  "turniejow": 262,
   "meczow_fortuny": 1323,
   "niedopasowane": [
    "pilka: Alanyaspor – Torku Konyaspor",
@@ -3271,12 +3271,12 @@
   },
   "sts": {
    "bledy": [],
-   "meczow_sts": 2088,
+   "meczow_sts": 2089,
    "sporty": {
-    "1": 1792,
-    "3": 111,
+    "1": 1800,
+    "3": 105,
     "166": 54,
-    "19": 131
+    "19": 130
    },
    "niedopasowane": [
     "pilka: Alanyaspor – Torku Konyaspor",
@@ -3307,19 +3307,20 @@
     "walki: Jordan O'Neill – Christopher Bajo",
     "walki: Tanio Pagliariccio – Igor Wojtas"
    ],
-   "szczegoly_ramek": 6,
+   "szczegoly_ramek": 4,
    "szczegoly_odpowiedzi": "4 z 4",
    "szczegoly_tematy": {
     "f_f2918424_pl": 1,
-    "f_f3787571_pl": 3,
+    "f_f3787571_pl": 1,
     "f_f3827028_pl": 1,
     "f_f2918410_pl": 1
    },
    "szczegoly_meczow": {
     "Columbus Crew - Inter Miami": {
-     "2m76609140": 86
+     "2m76609140": 99
     },
     "Real Salt Lake - Vancouver Whitecaps": {
+     "12maa9tb00ig6i": 12,
      "1m76907554": 139
     },
     "Kyoto Sanga - Cerezo Osaka": {
@@ -3332,233 +3333,226 @@
    "rynki_przyklad": {
     "Columbus Crew - Inter Miami": {
      "1 Mecz": [
-      "Mecz | 1:1=2.75",
-      "Mecz | 2:X=3.25",
-      "Mecz | 3:2=2.42"
+      "Mecz | 1:1=2.85",
+      "Mecz | 2:X=2.65",
+      "Mecz | 3:2=2.85"
      ],
      "7 ": [
-      "Wygra od stanu 0:0 | 1:=2.75",
-      "Wygra od stanu 0:0 | 2:=3.3",
-      "Wygra od stanu 0:0 | 3:=2.45"
+      "Wygra od stanu 0:0 | 1:=2.85",
+      "Wygra od stanu 0:0 | 2:=2.65",
+      "Wygra od stanu 0:0 | 3:=2.9"
      ],
      "8 Następny gol": [
-      "1. gol | 6:1=2.1",
-      "1. gol | 7:nikt=11",
-      "1. gol | 8:2=1.95"
+      "1. gol | 6:1=2.3",
+      "1. gol | 7:nikt=4.7",
+      "1. gol | 8:2=2.3"
      ],
      "10 Podwójna szansa": [
-      "Podwójna szansa | 10:12=1.34",
-      "Podwójna szansa | 11:X2=1.45",
-      "Podwójna szansa | 9:1X=1.55"
+      "Podwójna szansa | 10:12=1.48",
+      "Podwójna szansa | 11:X2=1.42",
+      "Podwójna szansa | 9:1X=1.42"
      ],
      "11 Zakład bez remisu": [
-      "Zakład bez remisu | 4:1=1.98",
-      "Zakład bez remisu | 5:2=1.75"
+      "Zakład bez remisu | 4:1=1.85",
+      "Zakład bez remisu | 5:2=1.86"
      ],
      "14 Handicap 1X2": [
-      "Handicap 1X2 | 922:1 (2:0)=1.18",
-      "Handicap 1X2 | 923:X (2:0)=7.2",
-      "Handicap 1X2 | 924:2 (2:0)=11",
-      "Handicap 1X2 | 922:1 (1:0)=1.55",
-      "Handicap 1X2 | 923:X (1:0)=4.3",
-      "Handicap 1X2 | 924:2 (1:0)=4.9",
-      "Handicap 1X2 | 922:1 (0:1)=5.9",
-      "Handicap 1X2 | 923:X (0:1)=4.6"
+      "Handicap 1X2 | 922:1 (1:0)=1.42",
+      "Handicap 1X2 | 923:X (1:0)=4.1",
+      "Handicap 1X2 | 924:2 (1:0)=7.6",
+      "Handicap 1X2 | 922:1 (0:1)=7.4",
+      "Handicap 1X2 | 923:X (0:1)=4.1",
+      "Handicap 1X2 | 924:2 (0:1)=1.42",
+      "Handicap 1X2 | 922:1 (0:2)=21",
+      "Handicap 1X2 | 923:X (0:2)=9.4"
      ],
      "22 Handicap": [
-      "Handicap | 925:1 (-0.5)=2.65",
-      "Handicap | 926:2 (+0.5)=1.42",
-      "Handicap | 925:1 (+0.5)=1.53",
-      "Handicap | 926:2 (-0.5)=2.37",
-      "Handicap | 925:1 (+1.5)=1.16",
-      "Handicap | 926:2 (-1.5)=4.7"
+      "Handicap | 925:1 (-0.5)=2.75",
+      "Handicap | 926:2 (+0.5)=1.4",
+      "Handicap | 925:1 (-1.5)=6.8",
+      "Handicap | 926:2 (+1.5)=1.08",
+      "Handicap | 925:1 (+0.5)=1.4",
+      "Handicap | 926:2 (-0.5)=2.75"
      ],
      "25 Liczba goli": [
-      "Liczba goli | 12:+1.5=1.29",
-      "Liczba goli | 13:-1.5=3.3",
-      "Liczba goli | 12:+0.5=1.04",
-      "Liczba goli | 13:-0.5=8.8",
-      "Liczba goli | 12:+4.5=6.2",
-      "Liczba goli | 13:-4.5=1.09"
+      "Liczba goli | 12:+1.5=1.86",
+      "Liczba goli | 13:-1.5=1.85",
+      "Liczba goli | 12:+0.5=1.18",
+      "Liczba goli | 13:-0.5=4.3",
+      "Liczba goli | 12:+4.5=17"
      ],
      "28 1. drużyna - liczba goli": [
-      "1. drużyna - liczba goli | 12:+1.5=2.5",
-      "1. drużyna - liczba goli | 13:-1.5=1.46",
-      "1. drużyna - liczba goli | 12:+0.5=1.33",
-      "1. drużyna - liczba goli | 13:-0.5=3.1",
-      "1. drużyna - liczba goli | 12:+2.5=6",
-      "1. drużyna - liczba goli | 13:-2.5=1.1"
+      "1. drużyna - liczba goli | 12:+1.5=4.1",
+      "1. drużyna - liczba goli | 13:-1.5=1.2",
+      "1. drużyna - liczba goli | 12:+0.5=1.65",
+      "1. drużyna - liczba goli | 13:-0.5=2.12",
+      "1. drużyna - liczba goli | 12:+2.5=11",
+      "1. drużyna - liczba goli | 13:-2.5=1.02"
      ],
      "31 2. drużyna - liczba goli": [
-      "2. drużyna - liczba goli | 12:+1.5=2.32",
-      "2. drużyna - liczba goli | 13:-1.5=1.54",
-      "2. drużyna - liczba goli | 12:+0.5=1.28",
-      "2. drużyna - liczba goli | 13:-0.5=3.35",
-      "2. drużyna - liczba goli | 12:+2.5=5.2",
-      "2. drużyna - liczba goli | 13:-2.5=1.13"
+      "2. drużyna - liczba goli | 12:+1.5=4.1",
+      "2. drużyna - liczba goli | 13:-1.5=1.19",
+      "2. drużyna - liczba goli | 12:+0.5=1.66",
+      "2. drużyna - liczba goli | 13:-0.5=2.1",
+      "2. drużyna - liczba goli | 12:+2.5=11",
+      "2. drużyna - liczba goli | 13:-2.5=1.02"
      ],
      "32 ": [
-      "Dokładna liczba goli | 1695:=11",
-      "Dokładna liczba goli | 1696:=4.5",
-      "Dokładna liczba goli | 1697:=3.35",
-      "Dokładna liczba goli | 1698:=3.95"
+      "Dokładna liczba goli | 1695:=4.7",
+      "Dokładna liczba goli | 1696:=2.75",
+      "Dokładna liczba goli | 1697:=3.2",
+      "Dokładna liczba goli | 1698:=5.6"
      ],
      "35 1. drużyna - dokładna liczba goli": [
-      "1. drużyna - dokładna liczba goli | 1237:0=3.15",
+      "1. drużyna - dokładna liczba goli | 1237:0=2.1",
       "1. drużyna - dokładna liczba goli | 1238:1=2.5",
-      "1. drużyna - dokładna liczba goli | 1239:2=3.95",
-      "1. drużyna - dokładna liczba goli | 1240:3+=6.5"
+      "1. drużyna - dokładna liczba goli | 1239:2=5.7",
+      "1. drużyna - dokładna liczba goli | 1240:3+=16"
      ],
      "36 2. drużyna - dokładna liczba goli": [
-      "2. drużyna - dokładna liczba goli | 1237:0=3.45",
-      "2. drużyna - dokładna liczba goli | 1238:1=2.6",
-      "2. drużyna - dokładna liczba goli | 1239:2=3.75",
-      "2. drużyna - dokładna liczba goli | 1240:3+=5.7"
+      "2. drużyna - dokładna liczba goli | 1237:0=2.1",
+      "2. drużyna - dokładna liczba goli | 1238:1=2.5",
+      "2. drużyna - dokładna liczba goli | 1239:2=5.7",
+      "2. drużyna - dokładna liczba goli | 1240:3+=16"
      ],
      "40 Suma goli": [
-      "Suma goli | 24:nieparzysta=1.9",
+      "Suma goli | 24:nieparzysta=1.95",
       "Suma goli | 25:parzysta=1.8"
      ],
      "43 Obie drużyny - strzelą gola": [
-      "Obie drużyny - strzelą gola | 26:tak=1.74",
-      "Obie drużyny - strzelą gola | 27:nie=1.98"
+      "Obie drużyny - strzelą gola | 26:tak=2.75",
+      "Obie drużyny - strzelą gola | 27:nie=1.39"
      ],
      "45 ": [
-      "1. drużyna - zachowa czyste konto | 26:=3.35",
-      "1. drużyna - zachowa czyste konto | 27:=1.27"
+      "1. drużyna - zachowa czyste konto | 26:=2.1",
+      "1. drużyna - zachowa czyste konto | 27:=1.65"
      ],
      "46 ": [
-      "2. drużyna - zachowa czyste konto | 26:=3.05",
-      "2. drużyna - zachowa czyste konto | 27:=1.32"
+      "2. drużyna - zachowa czyste konto | 26:=2.1",
+      "2. drużyna - zachowa czyste konto | 27:=1.65"
      ],
      "49 Wynik końcowy i obie drużyny - strzelą gola": [
-      "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=5.3",
-      "Wynik końcowy i obie drużyny - strzelą gola | 29:1 i nie=4.65",
-      "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=4.2",
-      "Wynik końcowy i obie drużyny - strzelą gola | 31:X i nie=11"
+      "Wynik końcowy i obie drużyny - strzelą gola | 28:1 i tak=9.75",
+      "Wynik końcowy i obie drużyny - strzelą gola | 29:1 i nie=3.45",
+      "Wynik końcowy i obie drużyny - strzelą gola | 30:X i tak=5.2",
+      "Wynik końcowy i obie drużyny - strzelą gola | 31:X i nie=4.7"
      ],
      "51 Wynik końcowy i liczba goli": [
-      "Wynik końcowy i liczba goli | 235:1 i -2.5=5.7",
-      "Wynik końcowy i liczba goli | 236:1 i +2.5=4.35",
-      "Wynik końcowy i liczba goli | 237:X i -2.5=4",
-      "Wynik końcowy i liczba goli | 238:X i +2.5=12"
+      "Wynik końcowy i liczba goli | 235:1 i -2.5=3.8",
+      "Wynik końcowy i liczba goli | 236:1 i +2.5=7.75",
+      "Wynik końcowy i liczba goli | 237:X i -2.5=2.6",
+      "Wynik końcowy i liczba goli | 238:X i +2.5=31"
      ],
      "56 ": [
-      "Dokładny wynik | 66:=11",
-      "Dokładny wynik | 67:=8.25",
-      "Dokładny wynik | 68:=13",
-      "Dokładny wynik | 69:=31"
+      "Dokładny wynik | 66:=4.7",
+      "Dokładny wynik | 67:=4.85",
+      "Dokładny wynik | 68:=11",
+      "Dokładny wynik | 69:=40"
      ],
-     "72 ": [
-      "1. połowa - wygra od stanu 0:0 | 1:=4.3",
-      "1. połowa - wygra od stanu 0:0 | 2:=1.75",
-      "1. połowa - wygra od stanu 0:0 | 3:=3.55"
+     "125 Następny gol w meczu - przedziały 15-minutowe": [
+      "1. gol - przedziały 15-minutowe | 183:46-60=3.05",
+      "1. gol - przedziały 15-minutowe | 184:61-75=2.95",
+      "1. gol - przedziały 15-minutowe | 185:76-90+=3.95",
+      "1. gol - przedziały 15-minutowe | 186:brak gola=4.7"
      ],
-     "92 ": [
-      "1. połowa - 1. drużyna - dokładna liczba goli | 1237:=1.3",
-      "1. połowa - 1. drużyna - dokładna liczba goli | 1238:=3.15",
-      "1. połowa - 1. drużyna - dokładna liczba goli | 1239:=16",
-      "1. połowa - 1. drużyna - dokładna liczba goli | 1240:=100"
+     "126 Następny gol w meczu - przedziały 10-minutowe": [
+      "1. gol - przedziały 10-minutowe | 192:51-60=3",
+      "1. gol - przedziały 10-minutowe | 193:61-70=3.9",
+      "1. gol - przedziały 10-minutowe | 194:71-80=5.6",
+      "1. gol - przedziały 10-minutowe | 195:81-90+=5.5"
      ],
-     "93 ": [
-      "1. połowa - 2. drużyna - dokładna liczba goli | 1237:=1.37",
-      "1. połowa - 2. drużyna - dokładna liczba goli | 1238:=2.95",
-      "1. połowa - 2. drużyna - dokładna liczba goli | 1239:=12.5",
-      "1. połowa - 2. drużyna - dokładna liczba goli | 1240:=80"
+     "127 ": [
+      "Wynik od 46. do 60. minuty | 1:=5.9",
+      "Wynik od 46. do 60. minuty | 2:=1.27",
+      "Wynik od 46. do 60. minuty | 3:=5.9"
      ],
-     "96 ": [
-      "1. połowa - 1. drużyna - zachowa czyste konto | 26:=1.45",
-      "1. połowa - 1. drużyna - zachowa czyste konto | 27:=2.65"
+     "128 ": [
+      "1. gol od 46. do 60. minuty | 6:=5.6",
+      "1. gol od 46. do 60. minuty | 7:=1.32",
+      "1. gol od 46. do 60. minuty | 8:=5.6"
      ],
-     "97 ": [
-      "1. połowa - 2. drużyna - zachowa czyste konto | 26:=1.35",
-      "1. połowa - 2. drużyna - zachowa czyste konto | 27:=2.95"
+     "131 ": [
+      "Liczba goli od 46. do 60. minuty | 12:+0.5=3",
+      "Liczba goli od 46. do 60. minuty | 13:-0.5=1.35"
      ],
-     "122 ": [
-      "2. połowa - 1. drużyna - zachowa czyste konto | 26:=2.3",
-      "2. połowa - 1. drużyna - zachowa czyste konto | 27:=1.55"
+     "132 Wynik - przedziały 10-minutowe": [
+      "Wynik od 51. do 60. minuty | 1:1=5.9",
+      "Wynik od 51. do 60. minuty | 2:X=1.27",
+      "Wynik od 51. do 60. minuty | 3:2=5.9"
      ],
-     "123 ": [
-      "2. połowa - 2. drużyna - zachowa czyste konto | 26:=2.25",
-      "2. połowa - 2. drużyna - zachowa czyste konto | 27:=1.57"
+     "133 ": [
+      "1. gol od 51. do 60. minuty | 6:=5.6",
+      "1. gol od 51. do 60. minuty | 7:=1.32",
+      "1. gol od 51. do 60. minuty | 8:=5.6"
      ],
-     "209 ": [
-      "1. połowa - 1. drużyna - liczba kartek | 12:+0.5=2.37",
-      "1. połowa - 1. drużyna - liczba kartek | 13:-0.5=1.5"
+     "136 ": [
+      "Liczba goli od 51. do 60. minuty | 12:+0.5=3",
+      "Liczba goli od 51. do 60. minuty | 13:-0.5=1.35"
      ],
-     "212 ": [
-      "1. połowa - 2. drużyna - liczba kartek | 12:+1.5=2.22",
-      "1. połowa - 2. drużyna - liczba kartek | 13:-1.5=1.56"
+     "137 ": [
+      "Wynik od 56. do 60. minuty | 1:=8.5",
+      "Wynik od 56. do 60. minuty | 2:=1.12",
+      "Wynik od 56. do 60. minuty | 3:=8.75"
+     ],
+     "138 ": [
+      "1. gol od 56. do 60. minuty | 6:=8.25",
+      "1. gol od 56. do 60. minuty | 7:=1.14",
+      "1. gol od 56. do 60. minuty | 8:=8.5"
+     ],
+     "141 ": [
+      "Liczba goli od 56. do 60. minuty | 12:+0.5=4.75",
+      "Liczba goli od 56. do 60. minuty | 13:-0.5=1.15"
      ],
      "811 Podwójna szansa i obie drużyny - strzelą gola": [
-      "Podwójna szansa i obie drużyny - strzelą gola | 929:1X i tak=2.35",
-      "Podwójna szansa i obie drużyny - strzelą gola | 930:1X i nie=3.15",
-      "Podwójna szansa i obie drużyny - strzelą gola | 931:12 i tak=2.5",
-      "Podwójna szansa i obie drużyny - strzelą gola | 932:12 i nie=2.2"
+      "Podwójna szansa i obie drużyny - strzelą gola | 929:1X i tak=3.3",
+      "Podwójna szansa i obie drużyny - strzelą gola | 930:1X i nie=1.95",
+      "Podwójna szansa i obie drużyny - strzelą gola | 931:12 i tak=4.75",
+      "Podwójna szansa i obie drużyny - strzelą gola | 932:12 i nie=1.8"
      ],
      "812 Podwójna szansa i liczba goli": [
-      "Podwójna szansa i liczba goli | 935:1X i -1.5=4.55",
-      "Podwójna szansa i liczba goli | 936:12 i -1.5=4.15",
-      "Podwójna szansa i liczba goli | 937:X2 i -1.5=4.4",
-      "Podwójna szansa i liczba goli | 938:1X i +1.5=1.9",
-      "Podwójna szansa i liczba goli | 935:1X i -4.5=1.52",
-      "Podwójna szansa i liczba goli | 936:12 i -4.5=1.42",
-      "Podwójna szansa i liczba goli | 937:X2 i -4.5=1.45",
-      "Podwójna szansa i liczba goli | 938:1X i +4.5=11"
+      "Podwójna szansa i liczba goli | 935:1X i -1.5=2.4",
+      "Podwójna szansa i liczba goli | 936:12 i -1.5=2.65",
+      "Podwójna szansa i liczba goli | 937:X2 i -1.5=2.4",
+      "Podwójna szansa i liczba goli | 938:1X i +1.5=2.55",
+      "Podwójna szansa i liczba goli | 935:1X i -4.5=1.3",
+      "Podwójna szansa i liczba goli | 936:12 i -4.5=1.35",
+      "Podwójna szansa i liczba goli | 937:X2 i -4.5=1.3",
+      "Podwójna szansa i liczba goli | 938:1X i +4.5=40"
      ],
-     "1034 ": [
-      "Którakolwiek drużyna - wygra | 26:=1.32",
-      "Którakolwiek drużyna - wygra | 27:=3.1"
+     "827 ": [
+      "Więcej rzutów rożnych od 61. do 75. minuty | 1:=2.55",
+      "Więcej rzutów rożnych od 61. do 75. minuty | 2:=2.4",
+      "Więcej rzutów rożnych od 61. do 75. minuty | 3:=3.2"
      ],
-     "1054 ": [
-      "Zawodnik - strzeli 1. gola i wynik końcowy | 1073:Mendez Brais i 1=15.5",
-      "Zawodnik - strzeli 1. gola i wynik końcowy | 1074:Mendez Brais i X=45",
-      "Zawodnik - strzeli 1. gola i wynik końcowy | 1075:Mendez Brais i 2=80",
-      "Zawodnik - strzeli 1. gola i wynik końcowy | 1073:Fillipi Riquelme i 1=95",
-      "Zawodnik - strzeli 1. gola i wynik końcowy | 1074:Fillipi Riquelme i X=45",
-      "Zawodnik - strzeli 1. gola i wynik końcowy | 1075:Fillipi Riquelme i 2=14.5",
-      "Zawodnik - strzeli 1. gola i wynik końcowy | 1073:Berterame German i 1=95",
-      "Zawodnik - strzeli 1. gola i wynik końcowy | 1074:Berterame German i X=45"
+     "828 ": [
+      "1. rzut rożny od 61. do 75. minuty | 6:=2.25",
+      "1. rzut rożny od 61. do 75. minuty | 7:=3.35",
+      "1. rzut rożny od 61. do 75. minuty | 8:=2.65"
      ],
-     "1059 ": [
-      "Zawodnik - strzeli co najmniej 2 gole | 1109685:Rodriguez Santiago=60",
-      "Zawodnik - strzeli co najmniej 2 gole | 1115965:Zaroury Anass=100",
-      "Zawodnik - strzeli co najmniej 2 gole | 122951:Casemiro=100",
-      "Zawodnik - strzeli co najmniej 2 gole | 1244748:Chambost Dylan=100"
+     "831 ": [
+      "Rzuty rożne - handicap od 61. do 75. minuty | 925:1 (+0.5)=1.3",
+      "Rzuty rożne - handicap od 61. do 75. minuty | 926:2 (-0.5)=3.15",
+      "Rzuty rożne - handicap od 61. do 75. minuty | 925:1 (-0.5)=2.55",
+      "Rzuty rożne - handicap od 61. do 75. minuty | 926:2 (+0.5)=1.45"
      ],
-     "1060 ": [
-      "Zawodnik - strzeli co najmniej 3 gole | 1109685:Rodriguez Santiago=100",
-      "Zawodnik - strzeli co najmniej 3 gole | 1115965:Zaroury Anass=100",
-      "Zawodnik - strzeli co najmniej 3 gole | 122951:Casemiro=100",
-      "Zawodnik - strzeli co najmniej 3 gole | 1244748:Chambost Dylan=100"
+     "834 ": [
+      "Liczba rzutów rożnych od 61. do 75. minuty | 12:+0.5=1.3",
+      "Liczba rzutów rożnych od 61. do 75. minuty | 13:-0.5=3.3",
+      "Liczba rzutów rożnych od 61. do 75. minuty | 12:+1.5=2.2",
+      "Liczba rzutów rożnych od 61. do 75. minuty | 13:-1.5=1.6"
      ],
-     "1224 2. drużyna - strzeli gola": [
-      "2. drużyna - strzeli gola | 26:tak=1.27",
-      "2. drużyna - strzeli gola | 27:nie=3.35"
+     "837 ": [
+      "1. drużyna - liczba rzutów rożnych od 61. do 75. minuty | 12:+0.5=1.8",
+      "1. drużyna - liczba rzutów rożnych od 61. do 75. minuty | 13:-0.5=1.9"
      ],
-     "1229 1. drużyna - strzeli gola": [
-      "1. drużyna - strzeli gola | 26:tak=1.32",
-      "1. drużyna - strzeli gola | 27:nie=3.05"
+     "840 ": [
+      "2. drużyna - liczba rzutów rożnych od 61. do 75. minuty | 12:+0.5=2",
+      "2. drużyna - liczba rzutów rożnych od 61. do 75. minuty | 13:-0.5=1.7"
      ],
-     "1891 ": [
-      "Zawodnik - strzeli gola bezpośrednio z rzutu wolnego | 1109685:Rodriguez Santiago=100",
-      "Zawodnik - strzeli gola bezpośrednio z rzutu wolnego | 1115965:Zaroury Anass=100",
-      "Zawodnik - strzeli gola bezpośrednio z rzutu wolnego | 122951:Casemiro=100",
-      "Zawodnik - strzeli gola bezpośrednio z rzutu wolnego | 1244748:Chambost Dylan=100"
-     ],
-     "2347 ": [
-      "Kartki - handicap | 925:1 (+1.5)=1.65",
-      "Kartki - handicap | 926:2 (-1.5)=2.1"
-     ],
-     "2394 ": [
-      "Segovia Telasco - strzały | 1:1+=1.8",
-      "Segovia Telasco - strzały | 2:2+=5.3",
-      "Segovia Telasco - strzały | 3:3+=14.5",
-      "Segovia Telasco - strzały | 4:4+=25",
-      "Berterame German - strzały | 1:1+=1.22",
-      "Berterame German - strzały | 2:2+=2.05",
-      "Berterame German - strzały | 3:3+=4.1",
-      "Berterame German - strzały | 4:4+=9.5"
+     "842 ": [
+      "Więcej rzutów rożnych od 61. do 70. minuty | 1:=3.05",
+      "Więcej rzutów rożnych od 61. do 70. minuty | 2:=1.9",
+      "Więcej rzutów rożnych od 61. do 70. minuty | 3:=3.75"
      ]
     },
     "Real Salt Lake - Vancouver Whitecaps": {
@@ -4121,10 +4115,10 @@
      ]
     }
    },
-   "sekund": 29,
+   "sekund": 31,
    "z_kursami": 3
   }
  },
  "lista": "a616cd7f315f",
- "sekund": 101
+ "sekund": 102
 }
